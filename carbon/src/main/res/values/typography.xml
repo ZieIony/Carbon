@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="carbon_text_headline_dark">#deffffff</color>
+    <color name="carbon_text_title_dark">#deffffff</color>
+    <color name="carbon_text_subhead_dark">#deffffff</color>
+    <color name="carbon_text_body2_dark">#deffffff</color>
+    <color name="carbon_text_body1_dark">#deffffff</color>
+    <color name="carbon_text_caption_dark">#8affffff</color>
+    <color name="carbon_text_menu_dark">#deffffff</color>
+    <color name="carbon_text_button_dark">#deffffff</color>
+
+
+    <color name="carbon_text_headline_light">#de000000</color>
+    <color name="carbon_text_title_light">#de000000</color>
+    <color name="carbon_text_subhead_light">#de000000</color>
+    <color name="carbon_text_body2_light">#de000000</color>
+    <color name="carbon_text_body1_light">#de000000</color>
+    <color name="carbon_text_caption_light">#8a000000</color>
+    <color name="carbon_text_menu_light">#de000000</color>
+    <color name="carbon_text_button_light">#de000000</color>
+
+
+    <style name="carbon_TextAppearance" parent="@android:style/TextAppearance"></style>
+
+
+    <style name="carbon_TextAppearance.Headline">
+        <item name="android:textSize">24sp</item>
+        <item name="carbon_textStyle">regular</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Headline.Dark">
+        <item name="android:textColor">@color/carbon_text_headline_dark</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Headline.Light">
+        <item name="android:textColor">@color/carbon_text_headline_light</item>
+    </style>
+
+
+    <style name="carbon_TextAppearance.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="carbon_textStyle">medium</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Title.Dark">
+        <item name="android:textColor">@color/carbon_text_title_dark</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Title.Light">
+        <item name="android:textColor">@color/carbon_text_title_light</item>
+    </style>
+
+
+    <style name="carbon_TextAppearance.Subhead">
+        <item name="android:textSize">16sp</item>
+        <item name="carbon_textStyle">regular</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Subhead.Dark">
+        <item name="android:textColor">@color/carbon_text_subhead_dark</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Subhead.Light">
+        <item name="android:textColor">@color/carbon_text_subhead_light</item>
+    </style>
+
+
+    <style name="carbon_TextAppearance.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="carbon_textStyle">medium</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Body2.Dark">
+        <item name="android:textColor">@color/carbon_text_body2_dark</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Body2.Light">
+        <item name="android:textColor">@color/carbon_text_body2_light</item>
+    </style>
+
+
+    <style name="carbon_TextAppearance.Body1">
+        <item name="android:textSize">14sp</item>
+        <item name="carbon_textStyle">regular</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Body1.Dark">
+        <item name="android:textColor">@color/carbon_text_body1_dark</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Body1.Light">
+        <item name="android:textColor">@color/carbon_text_body1_light</item>
+    </style>
+
+
+    <style name="carbon_TextAppearance.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="carbon_textStyle">regular</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Caption.Dark">
+        <item name="android:textColor">@color/carbon_text_caption_dark</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Caption.Light">
+        <item name="android:textColor">@color/carbon_text_caption_light</item>
+    </style>
+
+
+    <style name="carbon_TextAppearance.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="carbon_textStyle">medium</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Button.Dark">
+        <item name="android:textColor">@color/carbon_text_button_dark</item>
+    </style>
+
+    <style name="carbon_TextAppearance.Button.Light">
+        <item name="android:textColor">@color/carbon_text_button_light</item>
+    </style>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/carbon_snackbarContent"
+    android:orientation="horizontal"
+    android:background="?attr/carbon_colorBackground_inverse"
+    android:minHeight="48dp"
+    android:maxHeight="80dp"
+    android:minWidth="288dp"
+    android:maxWidth="568dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <pl.zielony.carbon.widget.TextView
+        android:id="@+id/carbon_messageText"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textAppearance="?attr/carbon_textAppearance_body2_inverse"
+        android:maxLines="2"
+        android:gravity="center_vertical" />
+
+    <pl.zielony.carbon.widget.Button
+        android:id="@+id/carbon_actionButton"
+        android:visibility="invisible"
+        app:carbon_textStyle="medium"
+        android:textSize="14sp"
+        android:background="@null"
+        app:carbon_touchMarginTop="6dp"
+        app:carbon_touchMarginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:textColor="?attr/carbon_colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp" />
+</LinearLayout>

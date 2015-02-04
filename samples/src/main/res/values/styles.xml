@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="carbon_Theme.Dark">
+        <!-- Customize your theme here. -->
+    </style>
+
+</resources>

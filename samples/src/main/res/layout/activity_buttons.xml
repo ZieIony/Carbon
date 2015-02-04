@@ -1,0 +1,52 @@
+<pl.zielony.carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <pl.zielony.carbon.widget.Button
+        android:text="Theme style"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <pl.zielony.carbon.widget.Button
+        style="@style/carbon_Button"
+        android:background="#ffffffff"
+        app:carbon_cornerRadius="2dp"
+        app:carbon_rippleColor="#40ff0000"
+        app:carbon_elevation="@dimen/carbon_elevationLow"
+        app:carbon_touchMarginTop="6dp"
+        app:carbon_touchMarginBottom="6dp"
+        app:carbon_touchMarginLeft="100dp"
+        app:carbon_touchMarginRight="100dp"
+        android:textColor="#ff0000ff"
+        android:text="Inline Style"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp" />
+
+    <pl.zielony.carbon.widget.Button
+        android:id="@+id/bunny"
+        android:background="@drawable/bunny"
+        app:carbon_rippleColor="@null"
+        app:carbon_elevation="@dimen/carbon_elevationLow"
+        android:text=""
+        android:padding="0dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <pl.zielony.carbon.widget.SVGActionButton
+        app:carbon_src="@raw/ic_shopping_cart_24px"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="@dimen/carbon_fabSize"
+        android:layout_height="@dimen/carbon_fabSize" />
+</pl.zielony.carbon.widget.LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="?attr/carbon_colorBackground"
+    android:layout_height="wrap_content">
+
+    <pl.zielony.carbon.widget.TextView
+        android:id="@+id/text"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:text="Row"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp" />
+
+    <pl.zielony.carbon.widget.TextView
+        android:id="@+id/beta"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:textColor="#ffff0000"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:text="beta"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp" />
+</LinearLayout>

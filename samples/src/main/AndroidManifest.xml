@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pl.zielony.samples">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="pl.zielony.samples.MainActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="pl.zielony.samples.ButtonsActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.ListRippleActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.ShadowActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.RobotoActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.SVGActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.StatusNavigationActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.AnimationsActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.SnackbarActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.TextFieldsActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.ZOrderActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.SaveStateActivity"
+            android:screenOrientation="sensor"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.DialogActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.ImageFadeActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.RadialTransitionActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+    </application>
+
+</manifest>

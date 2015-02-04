@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="carbon_padding">16dp</dimen>
+    <dimen name="carbon_paddingHalf" >8dp</dimen>
+
+    <dimen name="carbon_toolbarHeight">56dp</dimen>
+    <dimen name="carbon_toolbarTextSize">20sp</dimen>
+
+    <dimen name="carbon_statusBarHeight">25dp</dimen>
+
+    <dimen name="carbon_dialogPadding">24dp</dimen>
+
+    <dimen name="carbon_timelineTextSize">14sp</dimen>
+
+    <dimen name="carbon_avatarSize">40dp</dimen>
+
+    <dimen name="carbon_elevationFlat">0dp</dimen>
+    <dimen name="carbon_elevationLow">2dp</dimen>
+    <dimen name="carbon_elevationMedium">4dp</dimen>
+    <dimen name="carbon_elevationHigh">6dp</dimen>
+    <dimen name="carbon_elevationMax">8dp</dimen>
+
+    <dimen name="carbon_fabSize">56dp</dimen>
+    <dimen name="carbon_translation">2dp</dimen>
+    <dimen name="dip">1dp</dimen>
+
+    <integer name="carbon_snackbarDuration">2000</integer>
+</resources>
