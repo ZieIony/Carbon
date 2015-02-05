@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import pl.zielony.carbon.beta.Toolbar;
+import pl.zielony.carbon.widget.MaterialListAdapter;
 
 
 public class MainActivity extends Activity {
@@ -21,19 +22,19 @@ public class MainActivity extends Activity {
         toolbar.setText(R.string.app_name);
 
         ListView listView = (ListView) findViewById(R.id.list);
-        String[] items = new String[]{"Buttons", "ListView with ripple", "Large shadow", "Roboto",
+        String[] items = new String[]{"Buttons", "ListView with ripple", "Large shadow", "Roboto","Text appearance",
                 "SVG icons", "Status and navigation bars", "View animations", "Snackbar",
                 "TextFields", "Z order", "Saving state", "Dialog", "Image fade", "Radial transition"
         };
         final Class[] activities = new Class[]{ButtonsActivity.class, ListRippleActivity.class,
-                ShadowActivity.class, RobotoActivity.class, SVGActivity.class, StatusNavigationActivity.class,
+                ShadowActivity.class, RobotoActivity.class,TextAppearanceActivity.class, SVGActivity.class, StatusNavigationActivity.class,
                 AnimationsActivity.class, SnackbarActivity.class, TextFieldsActivity.class, ZOrderActivity.class,
                 SaveStateActivity.class, DialogActivity.class, ImageFadeActivity.class, RadialTransitionActivity.class};
         final boolean[] beta = new boolean[]{false, true,
-                false, false, false, false,
+                false, false,false, false, false,
                 false, false, true, false,
                 true, true, false, false};
-        listView.setAdapter(new MainListAdapter(items,beta));
+        listView.setAdapter(new MaterialListAdapter(new MainListAdapter(items,beta)));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
