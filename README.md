@@ -2,7 +2,7 @@
 
 Carbon
 ================
-Material Design implementation for Android 2.2 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
+Material Design implementation for Android 2.1 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
 
 ### Features
  - realtime, animated shadows
@@ -41,7 +41,7 @@ Yes. I just don't have time to set it up.
 ##### Can you add [put your feature name here]?
 If it's possible and reasonable, sure! Just let me know.
 
-##### The shadow's aren't working. It says something about the RenderScript
+##### The shadows aren't working. It says something about the RenderScript
 You have to add these lines to your android build config:
 
     renderscriptTargetApi 20
