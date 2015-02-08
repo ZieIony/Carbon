@@ -56,7 +56,7 @@ public class ShadowGenerator {
             Bitmap shadowBitmap = generateShadow(view.getContext(), blackShape, elevation);
 
             /*shadowCanvas.setBitmap(shadowBitmap);
-            paint.setColorFilter(null);
+            paint.setFilterColor(null);
             paint.setXfermode(porterDuffMode);
             shadowCanvas.drawBitmap(blackShape, 0, -elevation / 3, paint);*/
 
@@ -83,7 +83,7 @@ public class ShadowGenerator {
             Bitmap shadowBitmap = generateShadow(view.getContext(), blackShape, elevation);
 
             /*shadowCanvas.setBitmap(shadowBitmap);
-            paint.setColorFilter(null);
+            paint.setFilterColor(null);
             paint.setXfermode(porterDuffMode);
             shadowCanvas.drawBitmap(blackShape, 0, -elevation / 3, paint);*/
 

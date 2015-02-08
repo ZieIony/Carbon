@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pl.zielony.carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -21,6 +22,7 @@
                 android:paddingBottom="6dp"
                 android:layout_margin="@dimen/carbon_padding"
                 android:hint="login"
+                android:textAppearance="?attr/carbon_textAppearance_body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -30,6 +32,7 @@
                 android:paddingBottom="6dp"
                 android:layout_margin="@dimen/carbon_padding"
                 android:hint="password"
+                android:textAppearance="?attr/carbon_textAppearance_body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -45,23 +48,27 @@
                 android:layout_height="wrap_content" />
         </pl.zielony.carbon.widget.LinearLayout>
 
-        <pl.zielony.carbon.widget.LinearLayout
+        <FrameLayout
+            android:id="@+id/container"
             android:background="?attr/carbon_colorAccent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-        <pl.zielony.carbon.widget.LinearLayout
+
+        </FrameLayout>
+
+        <LinearLayout
             android:background="?attr/carbon_colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </pl.zielony.carbon.animation.TransitionLayout>
 
-    <pl.zielony.carbon.widget.Button
+    <pl.zielony.carbon.widget.SVGActionButton
         android:id="@+id/button"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_gravity="end|bottom"
-        android:text="animate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        app:carbon_src="@raw/ic_print_24px"
+        android:layout_width="@dimen/carbon_fabSize"
+        android:layout_height="@dimen/carbon_fabSize" />
 </pl.zielony.carbon.widget.FrameLayout>

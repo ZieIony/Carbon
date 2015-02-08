@@ -22,6 +22,7 @@ import com.nineoldandroids.animation.ValueAnimator;
  * Created by Marcin on 2014-12-04.
  */
 public class TransitionLayout extends FrameLayout {
+    private static final int DEFAULT_DURATION = 600;
     float radius = 0;
     float x, y;
     private Animator.AnimatorListener listener;
@@ -79,26 +80,30 @@ public class TransitionLayout extends FrameLayout {
         this.y = location[1] - location2[1] + view.getHeight() / 2;
     }
 
-    public void startTransition(TransitionType transitionType) {
+    public void startTransition(TransitionType transitionType){
+        startTransition(transitionType,DEFAULT_DURATION);
+    }
+
+    public void startTransition(TransitionType transitionType,int duration) {
         switch (transitionType) {
             case RadialExpand:
-                startRadialTransition(true);
+                startRadialTransition(true,duration);
                 inAnimation = true;
                 break;
             case RadialCollapse:
-                startRadialTransition(false);
+                startRadialTransition(false,duration);
                 inAnimation = false;
                 break;
         }
     }
 
-    private void startRadialTransition(boolean expand) {
+    private void startRadialTransition(boolean expand,int duration) {
         float dist = FloatMath.sqrt(x * x + y * y);
         dist = Math.max(dist, FloatMath.sqrt((getWidth() - x) * (getWidth() - x) + y * y));
         dist = Math.max(dist, FloatMath.sqrt(x * x + (getHeight() - y) * (getHeight() - y)));
         dist = Math.max(dist, FloatMath.sqrt((getWidth() - x) * (getWidth() - x) + (getHeight() - y) * (getHeight() - y)));
         animator = ValueAnimator.ofFloat(expand ? 0 : dist, expand ? dist : 0);
-        animator.setDuration(1000);
+        animator.setDuration(600);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

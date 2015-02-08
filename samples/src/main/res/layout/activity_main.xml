@@ -6,10 +6,31 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <pl.zielony.carbon.beta.Toolbar
+    <pl.zielony.carbon.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <pl.zielony.carbon.widget.SVGView
+            android:id="@+id/icon1"
+            app:carbon_rippleColor="?attr/carbon_rippleColor"
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            app:carbon_src="@raw/ic_today_24px"
+            android:layout_width="@dimen/carbon_toolbarHeight"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:padding="@dimen/carbon_padding" />
+
+        <pl.zielony.carbon.widget.SVGView
+            android:id="@+id/icon2"
+            app:carbon_rippleColor="?attr/carbon_rippleColor"
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            app:carbon_src="@raw/ic_print_24px"
+            android:layout_width="@dimen/carbon_toolbarHeight"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:padding="@dimen/carbon_padding" />
+    </pl.zielony.carbon.widget.Toolbar>
 
     <pl.zielony.carbon.widget.FrameLayout
         android:layout_width="match_parent"

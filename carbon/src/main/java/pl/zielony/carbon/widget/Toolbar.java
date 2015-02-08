@@ -1,4 +1,4 @@
-package pl.zielony.carbon.beta;
+package pl.zielony.carbon.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

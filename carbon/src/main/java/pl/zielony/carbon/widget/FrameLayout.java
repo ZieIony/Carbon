@@ -13,8 +13,10 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.nineoldandroids.animation.Animator;
@@ -323,4 +325,5 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         if (getBackground() instanceof RippleDrawable)
             ((RippleDrawable) getBackground()).onCancel(motionEvent);
     }
+
 }
