@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <pl.zielony.carbon.widget.CircularProgress
+        app:carbon_indeterminate="false"
+        android:layout_margin="@dimen/carbon_padding"
+        android:id="@+id/progressbar"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <pl.zielony.carbon.widget.CircularProgress
+        app:carbon_indeterminate="true"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <pl.zielony.carbon.widget.CircularProgress
+        app:carbon_indeterminate="true"
+        android:layout_margin="@dimen/carbon_padding"
+        app:carbon_arcBackground="#3fff0000"
+        app:carbon_arcColor="#ffff0000"
+        app:carbon_arcWidth="5dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <pl.zielony.carbon.widget.RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <pl.zielony.carbon.widget.SVGActionButton
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_src="@raw/ic_settings_input_svideo_24px"
+            android:layout_width="@dimen/carbon_fabSize"
+            android:layout_height="@dimen/carbon_fabSize" />
+
+        <pl.zielony.carbon.widget.CircularProgress
+            android:layout_gravity="center"
+            app:carbon_indeterminate="true"
+            android:layout_centerInParent="true"
+            android:layout_width="62dp"
+            android:layout_height="62dp" />
+
+    </pl.zielony.carbon.widget.RelativeLayout>
+
+</LinearLayout>

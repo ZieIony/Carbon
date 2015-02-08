@@ -77,6 +77,10 @@
             android:name="pl.zielony.samples.RadialTransitionActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
+        <activity
+            android:name="pl.zielony.samples.ProgressActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

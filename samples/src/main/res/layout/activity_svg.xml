@@ -6,30 +6,35 @@
     android:layout_height="match_parent">
 
     <pl.zielony.carbon.widget.SVGView
+        app:carbon_filterColor="?attr/carbon_colorBackground_inverse"
         app:carbon_src="@raw/ic_description_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <pl.zielony.carbon.widget.SVGView
+        app:carbon_filterColor="?attr/carbon_colorBackground_inverse"
         app:carbon_src="@raw/ic_dns_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <pl.zielony.carbon.widget.SVGView
+        app:carbon_filterColor="?attr/carbon_colorBackground_inverse"
         app:carbon_src="@raw/ic_face_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <pl.zielony.carbon.widget.SVGView
+        app:carbon_filterColor="?attr/carbon_colorBackground_inverse"
         app:carbon_src="@raw/ic_print_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <pl.zielony.carbon.widget.SVGView
+        app:carbon_filterColor="?attr/carbon_colorBackground_inverse"
         app:carbon_src="@raw/ic_settings_input_svideo_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"

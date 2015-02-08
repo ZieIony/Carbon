@@ -1,7 +1,6 @@
 package pl.zielony.carbon.widget;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -29,7 +28,7 @@ import pl.zielony.carbon.animation.DefaultAnimatorListener;
 public class SVGView extends View implements OnGestureListener {
     private static final String TAG = SVGView.class.getSimpleName();
     private int svgId;
-    private ColorStateList color;
+    private int filterColor;
     private Rect touchMargin;
     private Bitmap bitmap;
     private Paint paint = new Paint();
@@ -38,12 +37,12 @@ public class SVGView extends View implements OnGestureListener {
 
     public SVGView(Context context) {
         super(context);
-        init(null, 0);
+        init(null, R.attr.carbon_svgViewStyle);
     }
 
     public SVGView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, 0);
+        init(attrs, R.attr.carbon_svgViewStyle);
     }
 
     public SVGView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -54,9 +53,11 @@ public class SVGView extends View implements OnGestureListener {
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SVGView, defStyleAttr, 0);
         svgId = a.getResourceId(R.styleable.SVGView_carbon_src, 0);
-        color = a.getColorStateList(R.styleable.SVGView_carbon_filterColor);
-        if (color != null)
-            paint.setColorFilter(new LightingColorFilter(0, color.getColorForState(getDrawableState(), 0)));
+        int color = a.getColor(R.styleable.SVGView_carbon_rippleColor, 0);
+        if (color != 0)
+            setBackgroundDrawable(new RippleDrawable(color, getBackground()));
+        filterColor = a.getColor(R.styleable.SVGView_carbon_filterColor, 0);
+        paint.setColorFilter(new LightingColorFilter(0, filterColor));
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.SVGView_carbon_inAnimation, 0)];
         outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.SVGView_carbon_outAnimation, 0)];
 
@@ -96,7 +97,8 @@ public class SVGView extends View implements OnGestureListener {
             return false;
 
         gestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
+        super.onTouchEvent(event);
+        return true;
     }
 
     public void setSVGResource(int svgId) {
@@ -137,8 +139,7 @@ public class SVGView extends View implements OnGestureListener {
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if (color != null)
-            paint.setColorFilter(new LightingColorFilter(0, color.getColorForState(getDrawableState(), 0)));
+        paint.setColorFilter(new LightingColorFilter(0, filterColor));
     }
 
     @Override
@@ -149,13 +150,14 @@ public class SVGView extends View implements OnGestureListener {
         }
     }
 
-    public void setColorFilter(LightingColorFilter colorFilter) {
-        paint.setColorFilter(colorFilter);
+    public void setColorFilter(LightingColorFilter filterColor) {
+        paint.setColorFilter(filterColor);
         invalidate();
     }
 
-    public void setColorFilter(int color) {
-        paint.setColorFilter(new LightingColorFilter(0, color));
+    public void setFilterColor(int filterColor) {
+        this.filterColor = filterColor;
+        paint.setColorFilter(new LightingColorFilter(0, filterColor));
         invalidate();
     }
 
