@@ -50,6 +50,13 @@ You have to add these lines to your android build config:
 Carbon uses RenderScript for generating shadows. Gradle doesn't support renderscript very well, so it has to be done that way.
 
 ### Changelog
+##### 0.5.2
+ - added CircularProgress and a progress sample
+ - tweaked light theme a bit, now it's not only gray,
+ - changed radial transition sample to show transition between a fragment and a view
+ - updated Toolbar,
+ - SVGView color filter bugfixing
+
 ##### 0.5.1
  - added dark and light AppCompat themes
  - added a text appearance demo
