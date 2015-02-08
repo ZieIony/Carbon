@@ -160,7 +160,7 @@ public class AnimUtils {
         final ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
         final AccelerateDecelerateInterpolator interpolator = new AccelerateDecelerateInterpolator();
         animator.setInterpolator(interpolator);
-        animator.setDuration(1000);
+        animator.setDuration(800);
         if (listener != null)
             animator.addListener(listener);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -188,7 +188,7 @@ public class AnimUtils {
         final ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
         final AccelerateDecelerateInterpolator interpolator = new AccelerateDecelerateInterpolator();
         animator.setInterpolator(interpolator);
-        animator.setDuration(1000);
+        animator.setDuration(800);
         if (listener != null)
             animator.addListener(listener);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

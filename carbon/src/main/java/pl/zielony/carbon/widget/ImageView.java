@@ -59,9 +59,9 @@ public class ImageView extends android.widget.ImageView implements ShadowView,On
 
     private void init(AttributeSet attrs, int defStyle) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyle, 0);
-        int color = a.getColor(R.styleable.ImageView_carbon_rippleColor, 0);
-        if (color != 0)
-            setBackgroundDrawable(new RippleDrawable(color, getBackground()));
+        //int color = a.getColor(R.styleable.ImageView_carbon_rippleColor, 0);
+        //if (color != 0)
+          //  setBackgroundDrawable(new RippleDrawable(color, getBackground()));
         setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ImageView_carbon_inAnimation, 0)];
         outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ImageView_carbon_outAnimation, 0)];
@@ -106,7 +106,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView,On
             return false;
 
         gestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
+        super.onTouchEvent(event);
+        return true;
     }
 
     @Override

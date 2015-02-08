@@ -37,17 +37,17 @@ public class MainActivity extends Activity {
         });
 
         ListView listView = (ListView) findViewById(R.id.list);
-        String[] items = new String[]{"Buttons", "ListView with ripple", "Large shadow", "Roboto", "Text appearance",
+        String[] items = new String[]{"Picasso & Carbon", "Buttons", "ListView with ripple", "Large shadow", "Roboto", "Text appearance",
                 "SVG icons", "Status and navigation bars", "View animations", "Snackbar",
-                "TextFields", "Z order", "Saving state", "Dialog", "Image fade", "Radial transition","Progress bar"
+                "TextFields", "Z order", "Saving state", "Dialog", "Image fade", "Radial transition", "Progress bar"
         };
-        final Class[] activities = new Class[]{ButtonsActivity.class, ListRippleActivity.class,
+        final Class[] activities = new Class[]{PicassoActivity.class, ButtonsActivity.class, ListRippleActivity.class,
                 ShadowActivity.class, RobotoActivity.class, TextAppearanceActivity.class, SVGActivity.class, StatusNavigationActivity.class,
                 AnimationsActivity.class, SnackbarActivity.class, TextFieldsActivity.class, ZOrderActivity.class,
                 SaveStateActivity.class, DialogActivity.class, ImageFadeActivity.class, RadialTransitionActivity.class,
                 ProgressActivity.class
         };
-        final boolean[] beta = new boolean[]{false, true,
+        final boolean[] beta = new boolean[]{false, false, true,
                 false, false, false, false, false,
                 false, false, true, false,
                 true, true, false, false,
