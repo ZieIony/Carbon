@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Roboto regular"
         android:gravity="center_vertical"
         android:textSize="20sp"
@@ -15,7 +15,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         app:carbon_textStyle="regular" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Roboto light"
         android:gravity="center_vertical"
         android:textSize="20sp"
@@ -25,7 +25,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         app:carbon_textStyle="light" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Roboto bold"
         android:gravity="center_vertical"
         android:textSize="20sp"
@@ -35,7 +35,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         app:carbon_textStyle="bold" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Roboto italic"
         android:gravity="center_vertical"
         android:textSize="20sp"
@@ -45,7 +45,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         app:carbon_textStyle="italic" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Roboto condensed regular"
         android:gravity="center_vertical"
         android:textSize="20sp"
@@ -55,7 +55,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         app:carbon_textStyle="condensedRegular" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Roboto thin italic"
         android:gravity="center_vertical"
         android:textSize="20sp"

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.1"
 
     defaultConfig {
-        applicationId "pl.zielony.carbonsamples"
+        applicationId "tk.zielony.carbonsamples"
         minSdkVersion 7
         targetSdkVersion 21
         versionCode 1
@@ -24,6 +24,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.2'
-    compile project(':carbon')
+    compile 'tk.zielony:carbon:0.6.0'
     compile 'com.squareup.picasso:picasso:2.4.0'
 }

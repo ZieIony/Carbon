@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pl.zielony.carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.animation.TransitionLayout
+    <carbon.animation.TransitionLayout
         android:id="@+id/transition"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <pl.zielony.carbon.widget.LinearLayout
+        <carbon.widget.LinearLayout
             android:background="?attr/carbon_colorBackground"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <pl.zielony.carbon.widget.TextView
+            <carbon.widget.TextView
                 android:textSize="20sp"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <pl.zielony.carbon.widget.TextView
+            <carbon.widget.TextView
                 android:textSize="20sp"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
@@ -36,17 +36,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <pl.zielony.carbon.widget.Button
+            <carbon.widget.Button
                 android:text="login"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/carbon_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <pl.zielony.carbon.widget.Divider
+            <carbon.widget.Divider
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-        </pl.zielony.carbon.widget.LinearLayout>
+        </carbon.widget.LinearLayout>
 
         <FrameLayout
             android:id="@+id/container"
@@ -62,13 +62,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </pl.zielony.carbon.animation.TransitionLayout>
+    </carbon.animation.TransitionLayout>
 
-    <pl.zielony.carbon.widget.SVGActionButton
+    <carbon.widget.SVGActionButton
         android:id="@+id/button"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_gravity="end|bottom"
         app:carbon_src="@raw/ic_print_24px"
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize" />
-</pl.zielony.carbon.widget.FrameLayout>
+</carbon.widget.FrameLayout>

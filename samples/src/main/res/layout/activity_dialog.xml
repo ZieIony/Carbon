@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pl.zielony.carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.widget.Button
+    <carbon.widget.Button
         android:id="@+id/button"
         android:text="show dialog"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</pl.zielony.carbon.widget.LinearLayout>
+</carbon.widget.LinearLayout>

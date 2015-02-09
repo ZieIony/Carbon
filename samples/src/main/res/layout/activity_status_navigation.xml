@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.widget.StatusBar
+    <carbon.widget.StatusBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <pl.zielony.carbon.widget.NavigationBar
+    <carbon.widget.NavigationBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

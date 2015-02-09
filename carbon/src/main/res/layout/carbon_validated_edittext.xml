@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.beta.EditText
+    <carbon.beta.EditText
         android:id="@+id/text"
         app:carbon_textStyle="regular"
         android:textSize="16sp"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:visibility="invisible"
         android:id="@+id/error"
         app:carbon_textStyle="regular"

@@ -1,4 +1,4 @@
-<pl.zielony.carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,12 +6,12 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <pl.zielony.carbon.widget.FrameLayout
+    <carbon.widget.FrameLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="100dp">
 
-        <pl.zielony.carbon.widget.Button
+        <carbon.widget.Button
             android:text="Button1"
             app:carbon_elevation="2dp"
             android:background="#ffafafff"
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <pl.zielony.carbon.widget.Button
+        <carbon.widget.Button
             android:text="Button2"
             app:carbon_elevation="4dp"
             android:background="#ffffafaf"
@@ -29,12 +29,12 @@
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </pl.zielony.carbon.widget.FrameLayout>
+    </carbon.widget.FrameLayout>
 
-    <pl.zielony.carbon.widget.Button
+    <carbon.widget.Button
         android:id="@+id/button"
         android:text="Change Order"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</pl.zielony.carbon.widget.LinearLayout>
+</carbon.widget.LinearLayout>

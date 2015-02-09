@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pl.zielony.carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.widget.Button
+    <carbon.widget.Button
         android:text="Fly animation"
         android:id="@+id/button2"
         app:carbon_inAnimation="fly"
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp" />
 
-    <pl.zielony.carbon.widget.Button
+    <carbon.widget.Button
         android:text="Animate"
         android:id="@+id/button3"
         android:layout_gravity="right"
@@ -22,11 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp" />
 
-    <pl.zielony.carbon.widget.Divider
+    <carbon.widget.Divider
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <pl.zielony.carbon.widget.SVGActionButton
+    <carbon.widget.SVGActionButton
         android:id="@+id/fab"
         app:carbon_src="@raw/ic_shopping_cart_24px"
         app:carbon_inAnimation="pop"
@@ -36,7 +36,7 @@
         android:layout_height="@dimen/carbon_fabSize" />
 
 
-    <pl.zielony.carbon.widget.Button
+    <carbon.widget.Button
         android:text="Animate"
         android:id="@+id/button"
         android:layout_gravity="right"
@@ -45,4 +45,4 @@
         android:layout_height="40dp" />
 
 
-</pl.zielony.carbon.widget.LinearLayout>
+</carbon.widget.LinearLayout>

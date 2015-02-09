@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/carbon_toolbarHeight">
 
-    <pl.zielony.carbon.widget.SVGView
+    <carbon.widget.SVGView
         android:visibility="gone"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
@@ -19,7 +19,7 @@
         android:layout_marginLeft="@dimen/carbon_padding"
         android:scaleType="fitXY" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:id="@+id/carbon_toolbarTitle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

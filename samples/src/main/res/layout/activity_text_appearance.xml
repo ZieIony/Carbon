@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Headline"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
@@ -13,7 +13,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:textAppearance="?attr/carbon_textAppearance_headline" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Title"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
@@ -22,7 +22,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:textAppearance="?attr/carbon_textAppearance_title" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Subhead"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
@@ -31,7 +31,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:textAppearance="?attr/carbon_textAppearance_subhead" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Body 2"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
@@ -40,7 +40,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:textAppearance="?attr/carbon_textAppearance_body2" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Body 1"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
@@ -49,7 +49,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:textAppearance="?attr/carbon_textAppearance_body1" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Caption"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
@@ -58,7 +58,7 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:textAppearance="?attr/carbon_textAppearance_caption" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:text="Button"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pl.zielony.carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="horizontal"
@@ -7,7 +7,7 @@
     app:carbon_rippleColor="?attr/carbon_rippleColor"
     android:layout_height="wrap_content">
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:id="@+id/text"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="56dp" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:id="@+id/beta"
         android:gravity="center_vertical"
         android:textSize="16sp"
@@ -27,4 +27,4 @@
         android:text="beta"
         android:layout_width="wrap_content"
         android:layout_height="56dp" />
-</pl.zielony.carbon.widget.LinearLayout>
+</carbon.widget.LinearLayout>

@@ -1,4 +1,4 @@
-<pl.zielony.carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,12 +6,12 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <pl.zielony.carbon.widget.Toolbar
+    <carbon.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <pl.zielony.carbon.widget.SVGView
+        <carbon.widget.SVGView
             android:id="@+id/icon1"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
             app:carbon_inAnimation="pop"
@@ -21,7 +21,7 @@
             android:layout_height="@dimen/carbon_toolbarHeight"
             android:padding="@dimen/carbon_padding" />
 
-        <pl.zielony.carbon.widget.SVGView
+        <carbon.widget.SVGView
             android:id="@+id/icon2"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
             app:carbon_inAnimation="pop"
@@ -30,9 +30,9 @@
             android:layout_width="@dimen/carbon_toolbarHeight"
             android:layout_height="@dimen/carbon_toolbarHeight"
             android:padding="@dimen/carbon_padding" />
-    </pl.zielony.carbon.widget.Toolbar>
+    </carbon.widget.Toolbar>
 
-    <pl.zielony.carbon.widget.FrameLayout
+    <carbon.widget.FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -41,11 +41,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <pl.zielony.carbon.widget.SVGActionButton
+        <carbon.widget.SVGActionButton
             android:layout_gravity="right|bottom"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize"
             android:layout_margin="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_face_24px" />
-    </pl.zielony.carbon.widget.FrameLayout>
-</pl.zielony.carbon.widget.LinearLayout>
+    </carbon.widget.FrameLayout>
+</carbon.widget.LinearLayout>

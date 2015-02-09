@@ -13,7 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:id="@+id/carbon_messageText"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -22,7 +22,7 @@
         android:maxLines="2"
         android:gravity="center_vertical" />
 
-    <pl.zielony.carbon.widget.Button
+    <carbon.widget.Button
         android:id="@+id/carbon_actionButton"
         android:visibility="invisible"
         app:carbon_textStyle="medium"

@@ -1,0 +1,6 @@
+<project>
+    <modelVersion>0.6.0</modelVersion>
+    <groupId>tk.zielony</groupId>
+    <artifactId>carbon</artifactId>
+    <version>18</version>
+</project>

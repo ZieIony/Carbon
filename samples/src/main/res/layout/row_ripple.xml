@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pl.zielony.carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:background="?attr/carbon_colorBackground"
@@ -14,7 +14,7 @@
         android:layout_height="24dp"
         android:src="@drawable/ic_launcher" />
 
-    <pl.zielony.carbon.widget.TextView
+    <carbon.widget.TextView
         android:id="@+id/text"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
@@ -22,4 +22,4 @@
         android:text="Row"
         android:layout_width="match_parent"
         android:layout_height="56dp" />
-</pl.zielony.carbon.widget.LinearLayout>
+</carbon.widget.LinearLayout>

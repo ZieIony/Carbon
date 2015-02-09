@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.zielony.samples">
+    package="tk.zielony.carbonsamples">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="pl.zielony.samples.MainActivity"
+            android:name="tk.zielony.carbonsamples.MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
@@ -20,71 +20,71 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="pl.zielony.samples.ButtonsActivity"
+            android:name="tk.zielony.carbonsamples.ButtonsActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.ListRippleActivity"
+            android:name="tk.zielony.carbonsamples.ListRippleActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.ShadowActivity"
+            android:name="tk.zielony.carbonsamples.ShadowActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.RobotoActivity"
+            android:name="tk.zielony.carbonsamples.RobotoActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.TextAppearanceActivity"
+            android:name="tk.zielony.carbonsamples.TextAppearanceActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.SVGActivity"
+            android:name="tk.zielony.carbonsamples.SVGActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.StatusNavigationActivity"
+            android:name="tk.zielony.carbonsamples.StatusNavigationActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.AnimationsActivity"
+            android:name="tk.zielony.carbonsamples.AnimationsActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.SnackbarActivity"
+            android:name="tk.zielony.carbonsamples.SnackbarActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.TextFieldsActivity"
+            android:name="tk.zielony.carbonsamples.TextFieldsActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.ZOrderActivity"
+            android:name="tk.zielony.carbonsamples.ZOrderActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.SaveStateActivity"
+            android:name="tk.zielony.carbonsamples.SaveStateActivity"
             android:screenOrientation="sensor"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.DialogActivity"
+            android:name="tk.zielony.carbonsamples.DialogActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.ImageFadeActivity"
+            android:name="tk.zielony.carbonsamples.ImageFadeActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.RadialTransitionActivity"
+            android:name="tk.zielony.carbonsamples.RadialTransitionActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.ProgressActivity"
+            android:name="tk.zielony.carbonsamples.ProgressActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
-            android:name="pl.zielony.samples.PicassoActivity"
+            android:name="tk.zielony.carbonsamples.PicassoActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
     </application>

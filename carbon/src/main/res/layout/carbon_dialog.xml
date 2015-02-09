@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pl.zielony.carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/carbon_window"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pl.zielony.carbon.widget.LinearLayout
+    <carbon.widget.LinearLayout
         app:carbon_elevation="@dimen/carbon_elevationMax"
         android:layout_gravity="center"
         android:background="?attr/carbon_colorBackground"
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <pl.zielony.carbon.widget.TextView
+        <carbon.widget.TextView
             android:id="@+id/carbon_windowTitle"
             android:text="Title"
             android:textSize="20sp"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <pl.zielony.carbon.widget.FrameLayout
+        <carbon.widget.FrameLayout
             android:id="@+id/carbon_windowContent"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="24dp"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <pl.zielony.carbon.widget.Divider
+        <carbon.widget.Divider
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -48,7 +48,7 @@
             android:layout_gravity="right"
             android:layout_height="48dp">
 
-            <pl.zielony.carbon.widget.Button
+            <carbon.widget.Button
                 android:layout_gravity="center_vertical"
                 android:text="ok"
                 android:background="?attr/carbon_colorBackground"
@@ -57,5 +57,5 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </pl.zielony.carbon.widget.LinearLayout>
-</pl.zielony.carbon.widget.FrameLayout>
+    </carbon.widget.LinearLayout>
+</carbon.widget.FrameLayout>
