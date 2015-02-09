@@ -1,4 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.0/)
 
 Carbon
 ================
@@ -18,15 +19,23 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - Divider, StatusBar and NavigationBar drag&drop view
  - dark and light themes in standard and AppCompat versions
  - a radial transition animation
+ - circular progress indicators
 
-[![Alt text for your video](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](http://www.youtube.com/watch?v=YcTQ8a8sTpU)
+[![YouTube](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](http://www.youtube.com/watch?v=YcTQ8a8sTpU)
 
 ### Instalation
-There's no Maven package yet, so you have to clone the repository and import it as a module to your project:
- - clone the repo
- - open your project
- - right click the project -> New -> Module -> Import Existing Project
- - set the dependency
+Add the following line to dependencies:
+
+    compile 'tk.zielony:carbon:0.6.0'
+    
+And these two lines to android/defaultConfig:
+
+    renderscriptTargetApi 20
+    renderscriptSupportModeEnabled true
+    
+In case of any problems with these check the sample app.
+
+![Sample app](https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png)
 
 ### FAQ
 ##### Is it stable?
@@ -36,7 +45,7 @@ Seems like it's pretty stable. I'm testing it heavily on different devices and o
 No. Maybe one day.
 
 ##### Are you thinking about uploading the library to Maven?
-Yes. I just don't have time to set it up.
+Done!
 
 ##### Can you add [put your feature name here]?
 If it's possible and reasonable, sure! Just let me know.
@@ -50,6 +59,11 @@ You have to add these lines to your android build config:
 Carbon uses RenderScript for generating shadows. Gradle doesn't support renderscript very well, so it has to be done that way.
 
 ### Changelog
+##### 0.6.0
+ - namespace changed to just 'carbon' - less to write in xml
+ - uploaded to Maven repository
+ - added a sample for using the new image loading animation with Picasso
+ 
 ##### 0.5.2
  - added CircularProgress and a progress sample
  - tweaked light theme a bit, now it's not only gray,
