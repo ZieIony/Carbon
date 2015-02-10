@@ -92,7 +92,7 @@
     <orderEntry type="library" exported="" name="support-annotations-21.0.2" level="project" />
     <orderEntry type="library" exported="" name="androidsvg-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.2" level="project" />
-    <orderEntry type="library" exported="" name="carbon-0.6.0" level="project" />
+    <orderEntry type="module" module-name="carbon" exported="" />
   </component>
 </module>
 
