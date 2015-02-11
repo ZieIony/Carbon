@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.0/)
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.1/)
 
 Carbon
 ================
@@ -26,7 +26,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.6.0'
+    compile 'tk.zielony:carbon:0.6.1'
     
 And these two lines to android/defaultConfig:
 
@@ -38,6 +38,9 @@ In case of any problems with these check the sample app.
 ![Sample app](https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png)
 
 ### FAQ
+##### Why Android 2.1? Isn't 4.0 enough?
+I have an old Galaxy S with Android 2.3, so I did that to support my own phone. It's also fun to push the limits. Android 2.1 should work, the code compiles, but I have never checked that.
+
 ##### Is it stable?
 Seems like it's pretty stable. I'm testing it heavily on different devices and on real projects. There are minor problems with SVG rendering and shadow generation. Also the themes aren't perfect yet. These are the issues I know about. If you have something else, please let me know.
 
@@ -59,26 +62,31 @@ You have to add these lines to your android build config:
 Carbon uses RenderScript for generating shadows. Gradle doesn't support renderscript very well, so it has to be done that way.
 
 ### Changelog
+##### 0.6.1
+ - CircularProgress in and out animation,
+ - shadows improvements,
+ - elevation bugfix,
+ 
 ##### 0.6.0
- - namespace changed to just 'carbon' - less to write in xml
- - uploaded to Maven repository
+ - namespace changed to just 'carbon' - less to write in xml,
+ - uploaded to Maven repository,
  - added a sample for using the new image loading animation with Picasso
  
 ##### 0.5.2
- - added CircularProgress and a progress sample
+ - added CircularProgress and a progress sample,
  - tweaked light theme a bit, now it's not only gray,
- - changed radial transition sample to show transition between a fragment and a view
+ - changed radial transition sample to show transition between a fragment and a view,
  - updated Toolbar,
  - SVGView color filter bugfixing
 
 ##### 0.5.1
- - added dark and light AppCompat themes
- - added a text appearance demo
- - added touch ripples to the main list of demos
- - changed the demo theme to light
+ - added dark and light AppCompat themes,
+ - added a text appearance demo,
+ - added touch ripples to the main list of demos,
+ - changed the demo theme to light,
  - added this readme file
  
 ##### 0.5.0
- - added dark and light themes
- - cleaned up a bit
+ - added dark and light themes,
+ - cleaned up a bit,
  - the library is open-sourced as Carbon
