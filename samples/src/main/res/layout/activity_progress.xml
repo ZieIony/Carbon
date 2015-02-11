@@ -1,50 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:padding="@dimen/carbon_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <carbon.widget.CircularProgress
         app:carbon_indeterminate="false"
-        android:layout_margin="@dimen/carbon_padding"
-        android:id="@+id/progressbar"
+        android:id="@+id/progress1"
         android:layout_width="40dp"
         android:layout_height="40dp" />
 
+    <carbon.widget.Button
+        android:layout_gravity="right"
+        android:id="@+id/button1"
+        android:text="animate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <carbon.widget.CircularProgress
+        android:id="@+id/progress2"
         app:carbon_indeterminate="true"
-        android:layout_margin="@dimen/carbon_padding"
         android:layout_width="40dp"
         android:layout_height="40dp" />
 
+    <carbon.widget.Button
+        android:layout_gravity="right"
+        android:id="@+id/button2"
+        android:text="animate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <carbon.widget.CircularProgress
+        android:id="@+id/progress3"
         app:carbon_indeterminate="true"
-        android:layout_margin="@dimen/carbon_padding"
         app:carbon_arcBackground="#3fff0000"
         app:carbon_arcColor="#ffff0000"
         app:carbon_arcWidth="5dp"
         android:layout_width="40dp"
         android:layout_height="40dp" />
 
+    <carbon.widget.Button
+        android:layout_gravity="right"
+        android:id="@+id/button3"
+        android:text="animate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <carbon.widget.RelativeLayout
+        android:padding="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <carbon.widget.SVGActionButton
             android:layout_centerInParent="true"
-            android:layout_margin="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_settings_input_svideo_24px"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize" />
 
         <carbon.widget.CircularProgress
-            android:layout_gravity="center"
-            app:carbon_indeterminate="true"
             android:layout_centerInParent="true"
+            android:id="@+id/progress4"
+            app:carbon_indeterminate="true"
             android:layout_width="62dp"
             android:layout_height="62dp" />
 
     </carbon.widget.RelativeLayout>
 
-</LinearLayout>
+    <carbon.widget.Button
+        android:layout_gravity="right"
+        android:id="@+id/button4"
+        android:text="animate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</carbon.widget.LinearLayout>

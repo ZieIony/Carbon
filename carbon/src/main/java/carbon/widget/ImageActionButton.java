@@ -118,7 +118,8 @@ public class ImageActionButton extends ImageView implements ShadowView, OnGestur
             return false;
 
         gestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
+        super.onTouchEvent(event);
+        return true;
     }
 
     @Override
@@ -127,6 +128,7 @@ public class ImageActionButton extends ImageView implements ShadowView, OnGestur
     }
 
     public synchronized void setElevation(float elevation) {
+        elevation = Math.max(0,Math.min(elevation,25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;

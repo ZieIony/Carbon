@@ -294,7 +294,7 @@
         <item name="carbon_arcColor">?attr/carbon_colorPrimary</item>
         <item name="carbon_arcBackground">?attr/carbon_colorBackground</item>
         <item name="carbon_arcWidth">3dp</item>
-        <item name="carbon_inAnimation">fade</item>
-        <item name="carbon_outAnimation">fade</item>
+        <item name="carbon_inAnimation">progressWidth</item>
+        <item name="carbon_outAnimation">progressWidth</item>
     </style>
 </resources>

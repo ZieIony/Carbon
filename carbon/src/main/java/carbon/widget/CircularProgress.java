@@ -43,6 +43,7 @@ public class CircularProgress extends View {
         int arcBacground = a.getColor(R.styleable.CircularProgress_carbon_arcBackground, 0);
         drawable.setArcBackground(arcBacground);
         drawable.setArcWidth(a.getDimension(R.styleable.CircularProgress_carbon_arcWidth, 5));
+        drawable.setArcPadding(a.getDimension(R.styleable.CircularProgress_carbon_arcPadding, 0));
         drawable.setIndeterminate(a.getBoolean(R.styleable.CircularProgress_carbon_indeterminate, false));
 
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.CircularProgress_carbon_inAnimation, 0)];
@@ -71,5 +72,21 @@ public class CircularProgress extends View {
 
     public float getProgress() {
         return drawable.getProgress();
+    }
+
+    public float getArcWidth() {
+        return drawable.getArcWidth();
+    }
+
+    public void setArcWidth(float arcWidth) {
+        drawable.setArcWidth(arcWidth);
+    }
+
+    public void setArcPadding(float arcPadding) {
+        drawable.setArcPadding(arcPadding);
+    }
+
+    public float getArcPadding() {
+        return drawable.getArcPadding();
     }
 }

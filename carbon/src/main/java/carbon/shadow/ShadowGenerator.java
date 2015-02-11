@@ -1,6 +1,5 @@
 package carbon.shadow;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
@@ -11,20 +10,15 @@ import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 
-import com.nineoldandroids.view.ViewHelper;
-
 public class ShadowGenerator {
+    public static final float SHADOW_SCALE = 2.0f;
+
     private static RenderScript renderScript;
     private static ScriptIntrinsicBlur blurShader;
     private static Paint paint = new Paint();
     private static LightingColorFilter lightingColorFilter = new LightingColorFilter(0, 0);
 
-    private static Bitmap generateShadow(Context context, Bitmap bitmap, float radius) {
-        if (renderScript == null) {
-            renderScript = RenderScript.create(context);
-            blurShader = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
-        }
-
+    private static void blur(Bitmap bitmap, float radius) {
         Allocation inAllocation = Allocation.createFromBitmap(renderScript, bitmap,
                 Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
         Allocation outAllocation = Allocation.createTyped(renderScript, inAllocation.getType());
@@ -33,63 +27,51 @@ public class ShadowGenerator {
         blurShader.setInput(inAllocation);
         blurShader.forEach(outAllocation);
 
-        Bitmap blurredBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-        outAllocation.copyTo(blurredBitmap);
-        return blurredBitmap;
+        outAllocation.copyTo(bitmap);
     }
 
     public static Shadow generateShadow(View view, float elevation) {
+        if (renderScript == null) {
+            renderScript = RenderScript.create(view.getContext());
+            blurShader = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
+        }
+
         boolean isRect = ((ShadowView) view).isRect();
 
         int e = (int) Math.ceil(elevation);
-        Bitmap blackShape;
+        Bitmap bitmap;
         if (isRect) {
-            blackShape = Bitmap.createBitmap(e * 4+1, e * 4+1, Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap(e * 4 + 1, e * 4 + 1, Bitmap.Config.ARGB_8888);
 
-            Canvas shadowCanvas = new Canvas(blackShape);
+            Canvas shadowCanvas = new Canvas(bitmap);
             paint.setStyle(Paint.Style.FILL);
-            //paint.setXfermode(null);
             paint.setColor(0xff000000);
 
-            shadowCanvas.drawRect(e, e, e * 3+1, e * 3+1, paint);
+            shadowCanvas.drawRect(e, e, e * 3 + 1, e * 3 + 1, paint);
 
-            Bitmap shadowBitmap = generateShadow(view.getContext(), blackShape, elevation);
+            blur(bitmap, elevation);
 
-            /*shadowCanvas.setBitmap(shadowBitmap);
-            paint.setFilterColor(null);
-            paint.setXfermode(porterDuffMode);
-            shadowCanvas.drawBitmap(blackShape, 0, -elevation / 3, paint);*/
-
-            blackShape.recycle();
-
-            return new NinePatchShadow(shadowBitmap, elevation);
+            return new NinePatchShadow(bitmap, elevation);
         } else {
-            blackShape = Bitmap.createBitmap(view.getWidth() + e * 2, view.getHeight() + e * 2, Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap((int) (view.getWidth() / SHADOW_SCALE + e * 2), (int) (view.getHeight() / SHADOW_SCALE + e * 2), Bitmap.Config.ARGB_8888);
 
-            Canvas shadowCanvas = new Canvas(blackShape);
+            Canvas shadowCanvas = new Canvas(bitmap);
             paint.setStyle(Paint.Style.FILL);
             paint.setColorFilter(lightingColorFilter);
-            //paint.setXfermode(null);
 
             if (view.getDrawingCache() != null) {
                 shadowCanvas.drawBitmap(view.getDrawingCache(), e, e, paint);
             } else {
-                Bitmap cache = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+                Bitmap cache = Bitmap.createBitmap((int) (view.getWidth() / ShadowGenerator.SHADOW_SCALE), (int) (view.getHeight() / ShadowGenerator.SHADOW_SCALE), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(cache);
+                canvas.scale(1/SHADOW_SCALE, 1/SHADOW_SCALE);
                 view.draw(canvas);
                 shadowCanvas.drawBitmap(cache, e, e, paint);
             }
 
-            Bitmap shadowBitmap = generateShadow(view.getContext(), blackShape, elevation);
+            blur(bitmap, elevation);
 
-            /*shadowCanvas.setBitmap(shadowBitmap);
-            paint.setFilterColor(null);
-            paint.setXfermode(porterDuffMode);
-            shadowCanvas.drawBitmap(blackShape, 0, -elevation / 3, paint);*/
-
-            blackShape.recycle();
-
-            return new Shadow(shadowBitmap, elevation);
+            return new Shadow(bitmap, elevation);
         }
     }
 }

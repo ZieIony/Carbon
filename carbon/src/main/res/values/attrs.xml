@@ -45,6 +45,7 @@
         <enum name="pop" value="2" />
         <enum name="fly" value="3" />
         <enum name="brightnessSaturationFade" value="4" />
+        <enum name="progressWidth" value="5"/>
     </attr>
 
     <attr name="carbon_outAnimation" format="enum">
@@ -53,6 +54,7 @@
         <enum name="pop" value="2" />
         <enum name="fly" value="3" />
         <enum name="brightnessSaturationFade" value="4" />
+        <enum name="progressWidth" value="5"/>
     </attr>
 
     <attr name="carbon_textStyle" format="enum">
@@ -207,6 +209,7 @@
         <attr name="carbon_arcColor" format="color|reference" />
         <attr name="carbon_arcBackground" format="color|reference" />
         <attr name="carbon_arcWidth" format="dimension" />
+        <attr name="carbon_arcPadding" format="dimension" />
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
     </declare-styleable>

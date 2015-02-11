@@ -14,30 +14,6 @@ import carbon.R;
  * Created by Marcin on 2014-12-10.
  */
 public class ViewUtils {
-/*
-    public static int getAlpha(View v) {
-        int alpha = 255;
-        Animation animation = v.getAnimation();
-        if (animation != null) {
-            Transformation transformation = new Transformation();
-            animation.getTransformation(v.getDrawingTime(), transformation);
-            alpha = (int) (transformation.getAlpha() * 255);
-        }
-        return alpha;
-    }
-
-    public static void setAlpha(View v, int alpha) {
-        Animation animation = v.getAnimation();
-        if (animation != null) {
-            Transformation transformation = new Transformation();
-            animation.getTransformation(v.getDrawingTime(), transformation);
-            transformation.setAlpha(alpha/255.0f);
-        }else{
-           // Utils.
-        }
-
-    }*/
-
     public static int getColor(ColorDrawable drawable) {
         int color = 0;
         try {

@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{"Picasso & Carbon", "Buttons", "ListView with ripple", "Large shadow", "Roboto", "Text appearance",
                 "SVG icons", "Status and navigation bars", "View animations", "Snackbar",
-                "TextFields", "Z order", "Saving state", "Dialog", "Image fade", "Radial transition", "Progress bar"
+                "TextFields", "Z order", "Saving state", "Dialog", "Image fade", "Radial transition", "Progress"
         };
         final Class[] activities = new Class[]{PicassoActivity.class, ButtonsActivity.class, ListRippleActivity.class,
                 ShadowActivity.class, RobotoActivity.class, TextAppearanceActivity.class, SVGActivity.class, StatusNavigationActivity.class,

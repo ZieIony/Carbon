@@ -11,6 +11,8 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
+import carbon.widget.CircularProgress;
+
 /**
  * Created by Marcin on 2014-11-17.
  */
@@ -19,7 +21,7 @@ public class AnimUtils {
     }
 
     public enum Style {
-        None, Fade, Pop, Fly, BrightnessSaturationFade
+        None, Fade, Pop, Fly, BrightnessSaturationFade, ProgressWidth
     }
 
     public static Animator animateIn(View view, Style style, Animator.AnimatorListener listener) {
@@ -32,6 +34,8 @@ public class AnimUtils {
                 return flyIn(view, listener);
             case BrightnessSaturationFade:
                 return view instanceof ImageView ? brightnessSaturationFadeIn((ImageView) view, listener) : fadeIn(view, listener);
+            case ProgressWidth:
+                return view instanceof CircularProgress ? progressWidthIn((CircularProgress) view, listener) : fadeIn(view, listener);
         }
         if (listener != null)
             listener.onAnimationEnd(null);
@@ -48,6 +52,8 @@ public class AnimUtils {
                 return flyOut(view, listener);
             case BrightnessSaturationFade:
                 return view instanceof ImageView ? brightnessSaturationFadeOut((ImageView) view, listener) : fadeOut(view, listener);
+            case ProgressWidth:
+                return view instanceof CircularProgress ? progressWidthOut((CircularProgress) view, listener) : fadeOut(view, listener);
         }
         if (listener != null)
             listener.onAnimationEnd(null);
@@ -156,6 +162,44 @@ public class AnimUtils {
         return animator;
     }
 
+    public static ValueAnimator progressWidthIn(final CircularProgress circularProgress, Animator.AnimatorListener listener) {
+        final float arcWidth = circularProgress.getArcPadding();
+        ValueAnimator animator = ValueAnimator.ofFloat(0, arcWidth);
+        animator.setDuration(200);
+        animator.setInterpolator(new DecelerateInterpolator());
+        if (listener != null)
+            animator.addListener(listener);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float value = (Float) valueAnimator.getAnimatedValue();
+                circularProgress.setArcWidth(value);
+                circularProgress.setArcPadding(arcWidth - value);
+            }
+        });
+        animator.start();
+        return animator;
+    }
+
+    public static ValueAnimator progressWidthOut(final CircularProgress circularProgress, Animator.AnimatorListener listener) {
+        final float arcWidth = circularProgress.getArcWidth();
+        ValueAnimator animator = ValueAnimator.ofFloat(arcWidth, 0);
+        animator.setDuration(200);
+        animator.setInterpolator(new DecelerateInterpolator());
+        if (listener != null)
+            animator.addListener(listener);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float value = (Float) valueAnimator.getAnimatedValue();
+                circularProgress.setArcWidth(value);
+                circularProgress.setArcPadding(arcWidth - value);
+            }
+        });
+        animator.start();
+        return animator;
+    }
+
     public static ValueAnimator brightnessSaturationFadeIn(final ImageView imageView, Animator.AnimatorListener listener) {
         final ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
         final AccelerateDecelerateInterpolator interpolator = new AccelerateDecelerateInterpolator();
@@ -174,7 +218,7 @@ public class AnimUtils {
                 saturationMatrix.setSaturation((Float) animator.getAnimatedValue());
 
                 float scale = 2 - interpolator.getInterpolation(Math.min(fraction * 4 / 3, 1));
-                brightnessMatrix.setScale(scale, scale, scale,  interpolator.getInterpolation(Math.min(fraction * 2, 1)));
+                brightnessMatrix.setScale(scale, scale, scale, interpolator.getInterpolation(Math.min(fraction * 2, 1)));
 
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));

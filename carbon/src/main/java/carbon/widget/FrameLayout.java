@@ -13,10 +13,8 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.nineoldandroids.animation.Animator;
@@ -84,7 +82,9 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         a.recycle();
 
         paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
         setChildrenDrawingOrderEnabled(true);
+        setClipToPadding(false);
     }
 
     public void setVisibility(final int visibility) {
@@ -103,7 +103,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(!isEnabled())
+        if (!isEnabled())
             return false;
 
         gestureDetector.onTouchEvent(ev);
@@ -116,6 +116,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
     public synchronized void setElevation(float elevation) {
+        elevation = Math.max(0, Math.min(elevation, 25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;
@@ -219,16 +220,16 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
             int[] location = new int[2];
             child.getLocationOnScreen(location);
-            location[0] = (location[0] + child.getWidth()) / 2;
-            location[1] = (location[1] + child.getHeight()) / 2;
-            location[0] -= getRootView().getWidth() / 2;
-            location[1] += getRootView().getHeight();   // looks nice
-            float length = (float) Math.sqrt(location[0] * location[0] + location[1] * location[1]);
+            float x = location[0] + child.getWidth() / 2.0f;
+            float y = location[1] + child.getHeight() / 2.0f;
+            x -= getRootView().getWidth() / 2;
+            y += getRootView().getHeight() / 2;   // looks nice
+            float length = (float) Math.sqrt(x * x + y * y);
 
             canvas.save(Canvas.MATRIX_SAVE_FLAG);
             canvas.translate(
-                    location[0] / length * elevation / 3,
-                    location[1] / length * elevation / 3);
+                    x / length * elevation / 2,
+                    y / length * elevation / 2);
             canvas.translate(
                     child.getLeft(),
                     child.getTop());
@@ -237,6 +238,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
             } else {
                 canvas.concat(carbon.internal.ViewHelper.getMatrix(child));
             }
+            canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
             shadow.draw(canvas, child, paint);
             canvas.restore();
         }

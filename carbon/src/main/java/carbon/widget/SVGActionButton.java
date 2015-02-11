@@ -93,6 +93,7 @@ public class SVGActionButton extends SVGView implements ShadowView {
     }
 
     public synchronized void setElevation(float elevation) {
+        elevation = Math.max(0,Math.min(elevation,25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;
@@ -125,11 +126,6 @@ public class SVGActionButton extends SVGView implements ShadowView {
             }
         });
         animator.start();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
     }
 
     @Override

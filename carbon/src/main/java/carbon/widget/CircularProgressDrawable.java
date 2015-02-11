@@ -30,6 +30,8 @@ public class CircularProgressDrawable extends Drawable {
     float progress;
 
     boolean indeterminate;
+    private float arcWidth;
+    private float arcPadding;
 
     public CircularProgressDrawable() {
         startTime = System.currentTimeMillis();
@@ -42,7 +44,7 @@ public class CircularProgressDrawable extends Drawable {
         Rect bounds = getBounds();
         paint.setStrokeWidth(width);
         RectF boundsF = new RectF(bounds);
-        boundsF.inset(width / 2, width / 2);
+        boundsF.inset(width / 2 + arcPadding, width / 2 + arcPadding);
         paint.setXfermode(null);
 
         if (indeterminate) {
@@ -52,14 +54,14 @@ public class CircularProgressDrawable extends Drawable {
             float arc = Math.min((t - t2 + 1) % 1, (t2 - t + 1) % 1);
             arc = interpolator.getInterpolation(arc) * 2 * 300 + 30;
             paint.setColor(arcBackground);
-            canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2, paint);
+            canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2 - arcPadding, paint);
             paint.setColor(arcColor);
             canvas.drawArc(boundsF, (t * 360 - arc / 2 + 360) % 360, arc, false, paint);
         } else {
             long time = System.currentTimeMillis() - startTime;
             float t = Math.min((float) time / angleDuration, 1);
             paint.setColor(arcBackground);
-            canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2, paint);
+            canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2 - arcPadding, paint);
             paint.setColor(arcColor);
             canvas.drawArc(boundsF, interpolator2.getInterpolation(t) * 360 - 90, progress * 360, false, paint);
         }
@@ -113,7 +115,7 @@ public class CircularProgressDrawable extends Drawable {
         this.arcColor = color;
     }
 
-    public float getWidth() {
+    public float getArcWidth() {
         return width;
     }
 
@@ -137,4 +139,11 @@ public class CircularProgressDrawable extends Drawable {
         this.arcBackground = arcBackground;
     }
 
+    public void setArcPadding(float arcPadding) {
+        this.arcPadding = arcPadding;
+    }
+
+    public float getArcPadding() {
+        return arcPadding;
+    }
 }
