@@ -185,7 +185,11 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     protected void dispatchDraw(Canvas canvas) {
         Collections.sort(views, new ElevationComparator());
+        super.dispatchDraw(canvas);
+    }
 
+    @Override
+    public void draw(Canvas canvas) {
         if (cornerRadius > 0 && textureCanvas != null) {
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
             super.dispatchDraw(textureCanvas);

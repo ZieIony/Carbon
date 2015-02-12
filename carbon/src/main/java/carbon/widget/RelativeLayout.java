@@ -185,7 +185,11 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     protected void dispatchDraw(Canvas canvas) {
         Collections.sort(views, new ElevationComparator());
+        super.dispatchDraw(canvas);
+    }
 
+    @Override
+    public void draw(Canvas canvas) {
         if (cornerRadius > 0 && textureCanvas != null) {
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
             super.dispatchDraw(textureCanvas);

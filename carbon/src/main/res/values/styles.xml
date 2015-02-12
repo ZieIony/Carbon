@@ -19,6 +19,7 @@
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_circularProgressStyle">@style/carbon_CircularProgress</item>
+        <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
     </style>
 
     <style name="carbon_Theme.Dark">
@@ -117,6 +118,7 @@
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_circularProgressStyle">@style/carbon_CircularProgress</item>
+        <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
     </style>
 
     <style name="carbon_Theme.AppCompat.Dark">
@@ -203,6 +205,7 @@
         <item name="android:paddingLeft">@dimen/carbon_padding</item>
         <item name="android:paddingRight">@dimen/carbon_padding</item>
         <item name="android:minHeight">36dp</item>
+        <item name="android:minWidth">88dp</item>
         <item name="android:background">?attr/carbon_colorPrimary</item>
         <item name="carbon_elevation">@dimen/carbon_elevationLow</item>
         <item name="carbon_touchMarginTop">6dp</item>
@@ -210,6 +213,13 @@
         <item name="carbon_cornerRadius">2dp</item>
         <item name="android:textColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearance_button_inverse</item>
+    </style>
+
+    <style name="carbon_Button.Flat">
+        <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@null</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearance_button</item>
     </style>
 
     <style name="carbon_ToggleButton" parent="@android:style/Widget.Button.Toggle">
@@ -296,5 +306,10 @@
         <item name="carbon_arcWidth">3dp</item>
         <item name="carbon_inAnimation">progressWidth</item>
         <item name="carbon_outAnimation">progressWidth</item>
+    </style>
+
+    <style name="carbon_CardView">
+        <item name="android:background">?attr/carbon_colorBackground</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationLow</item>
     </style>
 </resources>

@@ -1,37 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<carbon.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_marginBottom="-8dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <carbon.widget.LinearLayout
-        android:orientation="vertical"
-        app:carbon_cornerRadius="2dp"
-        android:layout_margin="@dimen/carbon_paddingHalf"
-        app:carbon_elevation="@dimen/carbon_elevationLow"
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_weight="1"
+        android:layout_height="150dp" />
 
-        <ImageView
-            android:background="#ffffff"
-            android:scaleType="centerCrop"
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="150dp" />
-
-        <carbon.widget.TextView
-            android:id="@+id/text"
-            android:background="#ffffff"
-            android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding"
-            android:text="Image desc"
-            android:textAppearance="?attr/carbon_textAppearance_title"
-            android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:layout_height="@dimen/carbon_toolbarHeight" />
-
-    </carbon.widget.LinearLayout>
-</carbon.widget.LinearLayout>
+    <carbon.widget.TextView
+        android:id="@+id/text"
+        android:singleLine="true"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:text="Image desc"
+        android:textAppearance="?attr/carbon_textAppearance_title"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="@dimen/carbon_toolbarHeight" />
+</carbon.widget.CardView>

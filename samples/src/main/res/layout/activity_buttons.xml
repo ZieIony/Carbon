@@ -39,10 +39,17 @@
         android:background="@drawable/bunny"
         app:carbon_rippleColor="@null"
         app:carbon_elevation="@dimen/carbon_elevationLow"
-        android:text=""
         android:padding="0dp"
         android:layout_width="100dp"
         android:layout_height="100dp" />
+
+    <carbon.widget.Button
+        android:layout_gravity="right"
+        android:text="flat button"
+        style="@style/carbon_Button.Flat"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <carbon.widget.SVGActionButton
         app:carbon_src="@raw/ic_shopping_cart_24px"

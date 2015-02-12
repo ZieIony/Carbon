@@ -35,7 +35,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
 
     private void init(AttributeSet attrs, int defStyle) {
         inflate(getContext(), R.layout.carbon_toolbar, this);
-        content = (ViewGroup) findViewById(R.id.carbon_windowContent);
+        content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyle, 0);
         setElevation(a.getDimension(R.styleable.Toolbar_carbon_elevation, 0));

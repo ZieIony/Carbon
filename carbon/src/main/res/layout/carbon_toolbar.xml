@@ -35,7 +35,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:id="@+id/carbon_windowContent"
+        android:id="@+id/carbon_toolbarContent"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 

@@ -213,4 +213,10 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
     </declare-styleable>
+
+    <attr name="carbon_cardViewStyle" format="reference" />
+    <declare-styleable name="CardView">
+        <attr name="carbon_elevation" />
+        <attr name="android:background" />
+    </declare-styleable>
 </resources>

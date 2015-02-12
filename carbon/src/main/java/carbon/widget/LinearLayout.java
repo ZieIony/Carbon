@@ -181,17 +181,21 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     protected void dispatchDraw(Canvas canvas) {
         Collections.sort(views, new ElevationComparator());
+        super.dispatchDraw(canvas);
+    }
 
+    @Override
+    public void draw(Canvas canvas) {
         if (cornerRadius > 0 && textureCanvas != null) {
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            super.dispatchDraw(textureCanvas);
+            super.draw(textureCanvas);
 
             RectF rect = new RectF();
             rect.bottom = getHeight();
             rect.right = getWidth();
             canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
         } else {
-            super.dispatchDraw(canvas);
+            super.draw(canvas);
         }
     }
 

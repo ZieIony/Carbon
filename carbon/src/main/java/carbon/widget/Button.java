@@ -121,7 +121,7 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
     }
 
     public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0,Math.min(elevation,25));
+        elevation = Math.max(0, Math.min(elevation, 25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;
@@ -170,7 +170,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
     public void onPress(MotionEvent motionEvent) {
         if (getBackground() instanceof RippleDrawable)
             ((RippleDrawable) getBackground()).onPress(motionEvent);
-        setTranslationZ(getResources().getDimension(R.dimen.carbon_translation));
+        if (elevation != 0)
+            setTranslationZ(getResources().getDimension(R.dimen.carbon_translation));
     }
 
     @Override
@@ -192,7 +193,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
     public void onRelease(MotionEvent motionEvent) {
         if (getBackground() instanceof RippleDrawable)
             ((RippleDrawable) getBackground()).onRelease(motionEvent);
-        setTranslationZ(0);
+        if (elevation != 0)
+            setTranslationZ(0);
     }
 
     @Override
@@ -209,14 +211,15 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
     public void onCancel(MotionEvent motionEvent) {
         if (getBackground() instanceof RippleDrawable)
             ((RippleDrawable) getBackground()).onCancel(motionEvent);
-        setTranslationZ(0);
+        if (elevation != 0)
+            setTranslationZ(0);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if(!changed || getWidth() == 0 || getHeight() == 0)
+        if (!changed || getWidth() == 0 || getHeight() == 0)
             return;
 
         if (cornerRadius > 0) {
@@ -249,7 +252,7 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
     }
 
     public void getHitRect(Rect outRect) {
-        if(touchMargin==null) {
+        if (touchMargin == null) {
             super.getHitRect(outRect);
             return;
         }
