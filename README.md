@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.1/)
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.2-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.2/)
 
 Carbon
 ================
@@ -20,13 +20,14 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - dark and light themes in standard and AppCompat versions
  - a radial transition animation
  - circular progress indicators
+ - CardView with read shadows and rounded corners
 
 [![YouTube](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](http://www.youtube.com/watch?v=YcTQ8a8sTpU)
 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.6.1'
+    compile 'tk.zielony:carbon:0.6.2'
     
 And these two lines to android/defaultConfig:
 
@@ -36,6 +37,8 @@ And these two lines to android/defaultConfig:
 In case of any problems with these check the sample app.
 
 ![Sample app](https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png)
+![RecyclerView and CardView](https://github.com/ZieIony/Carbon/blob/master/images/recyclercards.png)
+![Circular progress indicators](https://github.com/ZieIony/Carbon/blob/master/images/progress.png)
 
 ### FAQ
 ##### Why Android 2.1? Isn't 4.0 enough?
@@ -62,6 +65,11 @@ You have to add these lines to your android build config:
 Carbon uses RenderScript for generating shadows. Gradle doesn't support renderscript very well, so it has to be done that way.
 
 ### Changelog
+##### 0.6.2
+ - added CardView and a sample,
+ - added a sample and a style for flat buttons,
+ - fixed rounded corners in layouts
+ 
 ##### 0.6.1
  - CircularProgress in and out animation,
  - shadows improvements,
