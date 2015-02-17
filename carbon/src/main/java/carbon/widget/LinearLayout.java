@@ -27,11 +27,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import carbon.Carbon;
 import carbon.GestureDetector;
 import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.drawable.RippleDrawable;
+import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -40,7 +43,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-20.
  */
-public class LinearLayout extends android.widget.LinearLayout implements ShadowView, OnGestureListener {
+public class LinearLayout extends android.widget.LinearLayout implements ShadowView, OnGestureListener, RippleView {
     private boolean isRect = true;
     private float elevation = 0;
     private float translationZ = 0;
@@ -53,6 +56,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     List<View> views;
     Map<View, Shadow> shadows = new HashMap<>();
     GestureDetector gestureDetector = new GestureDetector(this);
+    private RippleDrawable rippleDrawable;
 
     public LinearLayout(Context context) {
         super(context);
@@ -66,9 +70,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, 0);
-        int color = a.getColor(R.styleable.LinearLayout_carbon_rippleColor, 0);
-        if (color != 0)
-            setBackgroundDrawable(new RippleDrawable(color, getBackground()));
+        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
         setElevation(a.getDimension(R.styleable.LinearLayout_carbon_elevation, 0));
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.LinearLayout_carbon_inAnimation, 0)];
         outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.LinearLayout_carbon_outAnimation, 0)];
@@ -201,10 +203,10 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!isInEditMode()) {
-            if (!child.isShown() || !(child instanceof ShadowView))
-                return super.drawChild(canvas, child, drawingTime);
+        if (!child.isShown())
+            return super.drawChild(canvas, child, drawingTime);
 
+        if (!isInEditMode() && child instanceof ShadowView) {
             ShadowView shadowView = (ShadowView) child;
             float elevation = shadowView.getElevation() + shadowView.getTranslationZ();
             if (elevation < 0.01f)
@@ -241,6 +243,28 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
             shadow.draw(canvas, child, paint);
             canvas.restore();
+        }
+
+        if (child instanceof RippleView) {
+            RippleView rippleView = (RippleView) child;
+            RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
+            if (rippleDrawable != null){
+                if(rippleDrawable.getStyle()== RippleDrawable.Style.Borderless) {
+                    rippleDrawable.setBounds(child.getLeft(), child.getTop(), child.getRight(), child.getBottom());
+                    rippleDrawable.draw(canvas);
+                    return super.drawChild(canvas, child, drawingTime);
+                }
+
+                if(rippleDrawable.getStyle()== RippleDrawable.Style.Over) {
+                    boolean result = super.drawChild(canvas, child, drawingTime);
+                    int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG);
+                    canvas.clipRect(child.getLeft(), child.getTop(), child.getRight(), child.getBottom());
+                    rippleDrawable.setBounds(child.getLeft(), child.getTop(), child.getRight(), child.getBottom());
+                    rippleDrawable.draw(canvas);
+                    canvas.restoreToCount(saveCount);
+                    return result;
+                }
+            }
         }
 
         return super.drawChild(canvas, child, drawingTime);
@@ -287,8 +311,8 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     public void onPress(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onPress(motionEvent);
+        if (rippleDrawable!=null)
+            rippleDrawable.onPress(motionEvent);
     }
 
     @Override
@@ -308,8 +332,8 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     public void onRelease(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onRelease(motionEvent);
+        if (rippleDrawable!=null)
+            rippleDrawable.onRelease(motionEvent);
     }
 
     @Override
@@ -324,7 +348,17 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     public void onCancel(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onCancel(motionEvent);
+        if (rippleDrawable!=null)
+            rippleDrawable.onCancel(motionEvent);
+    }
+
+    @Override
+    public RippleDrawable getRippleDrawable() {
+        return rippleDrawable;
+    }
+
+    @Override
+    public void setRippleDrawable(RippleDrawable rippleDrawable) {
+        this.rippleDrawable = rippleDrawable;
     }
 }

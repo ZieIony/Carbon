@@ -27,11 +27,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import carbon.Carbon;
 import carbon.GestureDetector;
 import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.drawable.RippleDrawable;
+import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -40,7 +43,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-20.
  */
-public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, OnGestureListener {
+public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, OnGestureListener, RippleView {
     private boolean isRect = true;
     private float elevation = 0;
     private float translationZ = 0;
@@ -52,6 +55,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     List<View> views;
     Map<View, Shadow> shadows = new HashMap<>();
     GestureDetector gestureDetector = new GestureDetector(this);
+    private RippleDrawable rippleDrawable;
 
     public RelativeLayout(Context context) {
         super(context);
@@ -70,9 +74,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, 0);
-        int color = a.getColor(R.styleable.RelativeLayout_carbon_rippleColor, 0);
-        if (color != 0)
-            setBackgroundDrawable(new RippleDrawable(color, getBackground()));
+        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
         setElevation(a.getDimension(R.styleable.RelativeLayout_carbon_elevation, 0));
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_inAnimation, 0)];
         outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_outAnimation, 0)];
@@ -103,7 +105,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(!isEnabled())
+        if (!isEnabled())
             return false;
 
         gestureDetector.onTouchEvent(ev);
@@ -116,7 +118,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     }
 
     public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0,Math.min(elevation,25));
+        elevation = Math.max(0, Math.min(elevation, 25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;
@@ -291,8 +293,8 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     @Override
     public void onPress(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onPress(motionEvent);
+        if (rippleDrawable != null)
+            rippleDrawable.onPress(motionEvent);
     }
 
     @Override
@@ -312,8 +314,8 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     @Override
     public void onRelease(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onRelease(motionEvent);
+        if (rippleDrawable != null)
+            rippleDrawable.onRelease(motionEvent);
     }
 
     @Override
@@ -328,7 +330,17 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     @Override
     public void onCancel(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onCancel(motionEvent);
+        if (rippleDrawable != null)
+            rippleDrawable.onCancel(motionEvent);
+    }
+
+    @Override
+    public RippleDrawable getRippleDrawable() {
+        return rippleDrawable;
+    }
+
+    @Override
+    public void setRippleDrawable(RippleDrawable rippleDrawable) {
+        this.rippleDrawable = rippleDrawable;
     }
 }

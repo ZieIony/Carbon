@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.drawable;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

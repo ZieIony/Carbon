@@ -3,6 +3,7 @@ package tk.zielony.carbonsamples;
 import android.app.Activity;
 import android.os.Bundle;
 
+import carbon.widget.EditText;
 import carbon.widget.OnValidateListener;
 import carbon.beta.ValidatedEditText;
 
@@ -15,15 +16,6 @@ public class TextFieldsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_textfields);
 
-        ValidatedEditText textView = (ValidatedEditText) findViewById(R.id.longText);
-        textView.setError("Text too short");
-        textView.setOnValidateListener(new OnValidateListener() {
-            @Override
-            public boolean onValidate(String s) {
-                if (s.length() < 10)
-                    return false;
-                return true;
-            }
-        });
+        EditText editText = (EditText) findViewById(R.id.editText);
     }
 }

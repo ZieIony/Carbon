@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,17 +19,21 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 
+import carbon.Carbon;
 import carbon.GestureDetector;
 import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.drawable.DummyDrawable;
+import carbon.drawable.RippleDrawable;
+import carbon.drawable.RippleView;
 import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class Button extends android.widget.Button implements ShadowView, OnGestureListener {
+public class Button extends android.widget.Button implements ShadowView, OnGestureListener,RippleView {
     private float elevation = 0;
     private float translationZ = 0;
     private boolean isRect = true;
@@ -40,6 +45,7 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
     private Paint paint = new Paint();
     private Canvas textureCanvas;
     private float cornerRadius;
+    private RippleDrawable rippleDrawable;
 
     public Button(Context context) {
         super(context);
@@ -56,11 +62,9 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
         init(attrs, defStyle);
     }
 
-    private void init(AttributeSet attrs, int defStyle) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyle, 0);
-        int color = a.getColor(R.styleable.Button_carbon_rippleColor, 0);
-        if (color != 0)
-            setBackgroundDrawable(new RippleDrawable(color, getBackground()));
+    private void init(AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
+        Carbon.initRippleDrawable(this,attrs, defStyleAttr);
         setElevation(a.getDimension(R.styleable.Button_carbon_elevation, 0));
         if (!isInEditMode())
             setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.values()[a.getInt(R.styleable.Button_carbon_textStyle, Roboto.Style.Regular.ordinal())]));
@@ -168,8 +172,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
 
     @Override
     public void onPress(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onPress(motionEvent);
+        if (rippleDrawable!=null)
+            rippleDrawable.onPress(motionEvent);
         if (elevation != 0)
             setTranslationZ(getResources().getDimension(R.dimen.carbon_translation));
     }
@@ -191,8 +195,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
 
     @Override
     public void onRelease(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onRelease(motionEvent);
+        if (rippleDrawable!=null)
+            rippleDrawable.onRelease(motionEvent);
         if (elevation != 0)
             setTranslationZ(0);
     }
@@ -209,8 +213,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
 
     @Override
     public void onCancel(MotionEvent motionEvent) {
-        if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onCancel(motionEvent);
+        if (rippleDrawable!=null)
+            rippleDrawable.onCancel(motionEvent);
         if (elevation != 0)
             setTranslationZ(0);
     }
@@ -257,5 +261,19 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
             return;
         }
         outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
+    }
+
+    @Override
+    public Drawable getBackground() {
+        return rippleDrawable != null ? rippleDrawable : super.getBackground();
+    }
+
+    @Override
+    public RippleDrawable getRippleDrawable() {
+        return rippleDrawable;
+    }
+
+    public void setRippleDrawable(RippleDrawable rippleDrawable) {
+        this.rippleDrawable = rippleDrawable;
     }
 }
