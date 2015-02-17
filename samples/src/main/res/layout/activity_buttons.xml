@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
     <carbon.widget.Button
         android:text="Theme style"
         android:layout_margin="@dimen/carbon_padding"
@@ -56,4 +55,5 @@
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize" />
+
 </carbon.widget.LinearLayout>

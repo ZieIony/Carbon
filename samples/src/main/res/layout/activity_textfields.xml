@@ -4,9 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <carbon.beta.ValidatedEditText
-        android:id="@+id/longText"
+    <carbon.widget.EditText
+        android:layout_margin="@dimen/carbon_padding"
+        android:background="@null"
+        android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/carbon_padding"
+        android:paddingBottom="@dimen/carbon_padding"
+        android:text="hello text"/>
 
 </LinearLayout>

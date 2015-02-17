@@ -10,6 +10,7 @@ import com.nineoldandroids.animation.Animator;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.drawable.CircularProgressDrawable;
 
 /**
  * Created by Marcin on 2015-02-08.

@@ -22,12 +22,14 @@ import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.drawable.RippleDrawable;
+import carbon.drawable.RippleView;
 import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-12-04.
  */
-public class ImageActionButton extends ImageView implements ShadowView, OnGestureListener {
+public class ImageActionButton extends ImageView implements ShadowView, OnGestureListener ,RippleView{
     private float elevation = 0;
     private float translationZ = 0;
 
@@ -38,6 +40,7 @@ public class ImageActionButton extends ImageView implements ShadowView, OnGestur
     private AnimUtils.Style inAnim, outAnim;
     private Bitmap texture;
     private Canvas textureCanvas;
+    private RippleDrawable rippleDrawable;
 
     public ImageActionButton(Context context) {
         super(context, null, R.attr.carbon_fabStyle);
@@ -54,13 +57,11 @@ public class ImageActionButton extends ImageView implements ShadowView, OnGestur
         init(attrs, defStyle);
     }
 
-    private void init(AttributeSet attrs, int defStyle) {
+    private void init(AttributeSet attrs, int defStyleAttr) {
         paint.setAntiAlias(Carbon.antiAlias);
         paint.setStyle(Paint.Style.FILL);
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageActionButton, defStyle, 0);
-        int color = a.getColor(R.styleable.ImageActionButton_carbon_rippleColor, 0);
-        if (color != 0)
-            setBackgroundDrawable(new RippleDrawable(color, getBackground()));
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageActionButton, defStyleAttr, 0);
+        Carbon.initRippleDrawable(this,attrs, defStyleAttr);
         setElevation(a.getDimension(R.styleable.ImageActionButton_carbon_elevation, 0));
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ImageActionButton_carbon_inAnimation, 0)];
         outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ImageActionButton_carbon_outAnimation, 0)];
@@ -204,5 +205,15 @@ public class ImageActionButton extends ImageView implements ShadowView, OnGestur
     public void onCancel(MotionEvent motionEvent) {
         super.onCancel(motionEvent);
         setTranslationZ(0);
+    }
+
+    @Override
+    public RippleDrawable getRippleDrawable() {
+        return rippleDrawable;
+    }
+
+    @Override
+    public void setRippleDrawable(RippleDrawable rippleDrawable) {
+        this.rippleDrawable = rippleDrawable;
     }
 }

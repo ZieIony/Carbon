@@ -23,6 +23,7 @@ import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.drawable.RippleDrawable;
 import carbon.shadow.ShadowView;
 
 /**

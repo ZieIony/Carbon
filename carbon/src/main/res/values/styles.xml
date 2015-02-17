@@ -20,6 +20,7 @@
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_circularProgressStyle">@style/carbon_CircularProgress</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
+        <item name="carbon_editTextStyle">@style/carbon_EditText</item>
     </style>
 
     <style name="carbon_Theme.Dark">
@@ -311,5 +312,12 @@
     <style name="carbon_CardView">
         <item name="android:background">?attr/carbon_colorBackground</item>
         <item name="carbon_elevation">@dimen/carbon_elevationLow</item>
+    </style>
+
+    <style name="carbon_EditText" parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
+        <item name="carbon_dividerColor">?attr/carbon_colorPrimary</item>
+        <item name="carbon_dividerPadding">8dp</item>
+        <item name="android:background">@null</item>
     </style>
 </resources>

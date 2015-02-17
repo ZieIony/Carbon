@@ -38,8 +38,8 @@ public class ViewUtils {
             PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA);
             int theme = packageInfo.applicationInfo.theme;
 
-            TypedArray a = context.getTheme().obtainStyledAttributes(theme, R.styleable.carbon);
-            color = a.getColor(R.styleable.carbon_carbon_colorPrimary, 0);
+            TypedArray a = context.getTheme().obtainStyledAttributes(theme, R.styleable.Carbon);
+            color = a.getColor(R.styleable.Carbon_carbon_colorPrimary, 0);
         } catch (Exception e) {
             e.printStackTrace();
         }

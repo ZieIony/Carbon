@@ -45,4 +45,29 @@
         android:layout_height="40dp" />
 
 
+    <carbon.widget.Button
+        app:carbon_rippleColor="#42ffffff"
+        android:text="Background"
+        app:carbon_rippleStyle="background"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <carbon.widget.Button
+        app:carbon_rippleColor="#42ffffff"
+        android:text="Borderless"
+        android:textColor="#ff000000"
+        app:carbon_elevation="0dp"
+        app:carbon_rippleStyle="borderless"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <carbon.widget.Button
+        app:carbon_rippleColor="#42ffffff"
+        android:text="Over"
+        app:carbon_rippleStyle="over"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </carbon.widget.LinearLayout>

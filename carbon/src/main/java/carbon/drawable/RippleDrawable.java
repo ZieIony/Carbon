@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.drawable;
 
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -25,12 +25,17 @@ public class RippleDrawable extends Drawable {
     private static final int FADE_DURATION = 300;
 
     private Paint paint = new Paint();
-    private PointF touch;
+    private PointF hotspot;
     private int color;
     private Drawable background;
     private Interpolator interpolator;
     private float from, to;
-    private boolean pressed;
+    private boolean pressed, useHotspot;
+    private Style style;
+
+    public static enum Style {
+        Over, Background, Borderless
+    }
 
     public void onPress(MotionEvent motionEvent) {
         pressed = true;
@@ -51,18 +56,21 @@ public class RippleDrawable extends Drawable {
         }
     }
 
-    public RippleDrawable(int color, Drawable background) {
+    public RippleDrawable(int color) {
         this.color = color;
-        this.alpha = color>>24;
-        this.background = background;
+        this.alpha = color >> 24;
     }
 
     private void onPress(float x, float y) {
         from = 10;
-        to = Math.max(getBounds().width() / 2, getBounds().height() / 2);
+        Rect bounds = getBounds();
         interpolator = new DecelerateInterpolator();
         downTime = System.currentTimeMillis();
-        touch = new PointF(x, y);
+        if (useHotspot) {
+            hotspot = new PointF(x + bounds.left, y + bounds.top);
+        } else {
+            hotspot = new PointF(bounds.centerX(), bounds.centerY());
+        }
         paint.setAntiAlias(Carbon.antiAlias);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(color);
@@ -81,9 +89,12 @@ public class RippleDrawable extends Drawable {
     @Override
     public void draw(Canvas canvas) {
         Rect bounds = getBounds();
+        to = Math.max(bounds.width() / 2, bounds.height() / 2);
         if (background != null) {
-            background.setBounds(bounds);
+            int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG);
+            canvas.clipRect(bounds);
             background.draw(canvas);
+            canvas.restoreToCount(saveCount);
         }
 
         long time = System.currentTimeMillis();
@@ -104,8 +115,8 @@ public class RippleDrawable extends Drawable {
         if (downTime + duration > time) {
             float rippleInterp = interpolator.getInterpolation((time - downTime) / (float) duration);
             float radius = AnimUtils.lerp(rippleInterp, from, to);
-            float x = AnimUtils.lerp(rippleInterp, touch.x, bounds.centerX());
-            float y = AnimUtils.lerp(rippleInterp, touch.y, bounds.centerY());
+            float x = AnimUtils.lerp(rippleInterp, hotspot.x, bounds.centerX());
+            float y = AnimUtils.lerp(rippleInterp, hotspot.y, bounds.centerY());
 
             paint.setAlpha((int) (alpha * (1 - rippleInterp)));
             canvas.drawCircle(x, y, radius, paint);
@@ -126,5 +137,43 @@ public class RippleDrawable extends Drawable {
     @Override
     public int getOpacity() {
         return 0;
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
+    }
+
+    public boolean isHotspotEnabled() {
+        return useHotspot;
+    }
+
+    public void setHotspotEnabled(boolean useHotspot) {
+        this.useHotspot = useHotspot;
+    }
+
+    @Override
+    public void setBounds(int left, int top, int right, int bottom) {
+        super.setBounds(left, top, right, bottom);
+        if (background != null)
+            background.setBounds(left, top, right, bottom);
+    }
+
+    @Override
+    public void setBounds(Rect bounds) {
+        super.setBounds(bounds);
+        if (background != null)
+            background.setBounds(bounds);
+    }
+
+    public Drawable getBackground() {
+        return background;
+    }
+
+    public void setBackground(Drawable background) {
+        this.background = background;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="carbon">
+    <declare-styleable name="Carbon">
         <attr name="carbon_colorPrimary" format="reference|color" />
         <attr name="carbon_colorPrimaryDark" format="reference|color" />
         <attr name="carbon_colorAccent" format="reference|color" />
@@ -10,6 +10,12 @@
 
         <attr name="carbon_dividerColor" format="reference|color" />
         <attr name="carbon_rippleColor" format="reference|color" />
+        <attr name="carbon_rippleHotspot" format="boolean" />
+        <attr name="carbon_rippleStyle" format="enum">
+            <enum name="over" value="0"/>
+            <enum name="background" value="1"/>
+            <enum name="borderless" value="2"/>
+        </attr>
 
         <attr name="carbon_textAppearance_headline" format="reference" />
         <attr name="carbon_textAppearance_title" format="reference" />
@@ -45,7 +51,7 @@
         <enum name="pop" value="2" />
         <enum name="fly" value="3" />
         <enum name="brightnessSaturationFade" value="4" />
-        <enum name="progressWidth" value="5"/>
+        <enum name="progressWidth" value="5" />
     </attr>
 
     <attr name="carbon_outAnimation" format="enum">
@@ -54,7 +60,7 @@
         <enum name="pop" value="2" />
         <enum name="fly" value="3" />
         <enum name="brightnessSaturationFade" value="4" />
-        <enum name="progressWidth" value="5"/>
+        <enum name="progressWidth" value="5" />
     </attr>
 
     <attr name="carbon_textStyle" format="enum">
@@ -100,7 +106,6 @@
     </declare-styleable>
 
     <declare-styleable name="Button">
-        <attr name="carbon_rippleColor" />
         <attr name="carbon_elevation" />
         <attr name="carbon_textStyle" />
         <attr name="carbon_inAnimation" />
@@ -219,4 +224,17 @@
         <attr name="carbon_elevation" />
         <attr name="android:background" />
     </declare-styleable>
+
+    <attr name="carbon_editTextStyle" format="reference" />
+    <declare-styleable name="EditText">
+        <attr name="carbon_textStyle" />
+        <attr name="carbon_inAnimation" />
+        <attr name="carbon_outAnimation" />
+        <attr name="carbon_minCharacters" format="integer" />
+        <attr name="carbon_maxCharacters" format="integer" />
+        <attr name="carbon_pattern" format="string" />
+        <attr name="carbon_dividerColor" />
+        <attr name="carbon_dividerPadding" format="dimension" />
+    </declare-styleable>
+
 </resources>

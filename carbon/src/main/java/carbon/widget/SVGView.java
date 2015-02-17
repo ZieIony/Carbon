@@ -16,16 +16,19 @@ import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 import com.nineoldandroids.animation.Animator;
 
+import carbon.Carbon;
 import carbon.GestureDetector;
 import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.drawable.RippleDrawable;
+import carbon.drawable.RippleView;
 
 /**
  * Created by Marcin on 2014-12-02.
  */
-public class SVGView extends View implements OnGestureListener {
+public class SVGView extends View implements OnGestureListener, RippleView {
     private static final String TAG = SVGView.class.getSimpleName();
     private int svgId;
     private int filterColor;
@@ -34,6 +37,7 @@ public class SVGView extends View implements OnGestureListener {
     private Paint paint = new Paint();
     private AnimUtils.Style inAnim, outAnim;
     private GestureDetector gestureDetector = new GestureDetector(this);
+    private RippleDrawable rippleDrawable;
 
     public SVGView(Context context) {
         super(context);
@@ -53,9 +57,7 @@ public class SVGView extends View implements OnGestureListener {
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SVGView, defStyleAttr, 0);
         svgId = a.getResourceId(R.styleable.SVGView_carbon_src, 0);
-        int color = a.getColor(R.styleable.SVGView_carbon_rippleColor, 0);
-        if (color != 0)
-            setBackgroundDrawable(new RippleDrawable(color, getBackground()));
+        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
         filterColor = a.getColor(R.styleable.SVGView_carbon_filterColor, 0);
         paint.setColorFilter(new LightingColorFilter(0, filterColor));
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.SVGView_carbon_inAnimation, 0)];
@@ -102,6 +104,8 @@ public class SVGView extends View implements OnGestureListener {
     }
 
     public void setSVGResource(int svgId) {
+        if (this.svgId == svgId)
+            return;
         this.svgId = svgId;
         render();
     }
@@ -210,5 +214,15 @@ public class SVGView extends View implements OnGestureListener {
     public void onCancel(MotionEvent motionEvent) {
         if (getBackground() instanceof RippleDrawable)
             ((RippleDrawable) getBackground()).onCancel(motionEvent);
+    }
+
+    @Override
+    public RippleDrawable getRippleDrawable() {
+        return rippleDrawable;
+    }
+
+    @Override
+    public void setRippleDrawable(RippleDrawable rippleDrawable) {
+        this.rippleDrawable = rippleDrawable;
     }
 }
