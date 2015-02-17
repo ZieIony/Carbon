@@ -197,7 +197,7 @@ public class SVGView extends View implements OnGestureListener, RippleView {
     @Override
     public void onRelease(MotionEvent motionEvent) {
         if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onRelease(motionEvent);
+            ((RippleDrawable) getBackground()).onRelease();
     }
 
     @Override
@@ -213,7 +213,7 @@ public class SVGView extends View implements OnGestureListener, RippleView {
     @Override
     public void onCancel(MotionEvent motionEvent) {
         if (getBackground() instanceof RippleDrawable)
-            ((RippleDrawable) getBackground()).onCancel(motionEvent);
+            ((RippleDrawable) getBackground()).onCancel();
     }
 
     @Override

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <carbon.widget.Button
+        app:carbon_rippleColor="#42ffffff"
+        android:text="Background"
+        app:carbon_rippleStyle="background"
+        app:carbon_touchMargin="6dp"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp" />
+
+    <carbon.widget.Button
+        app:carbon_rippleColor="#42ff0000"
+        android:text="Borderless"
+        android:background="@null"
+        android:textColor="#ff000000"
+        app:carbon_elevation="0dp"
+        app:carbon_rippleStyle="borderless"
+        app:carbon_touchMargin="6dp"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp" />
+
+    <carbon.widget.Button
+        app:carbon_rippleColor="#42ffffff"
+        android:text="Over"
+        app:carbon_rippleStyle="over"
+        app:carbon_touchMargin="6dp"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp" />
+
+    <carbon.widget.ImageView
+        app:carbon_rippleColor="#42ffffff"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_margin="@dimen/carbon_padding"
+        android:src="@drawable/mazda" />
+</carbon.widget.LinearLayout>

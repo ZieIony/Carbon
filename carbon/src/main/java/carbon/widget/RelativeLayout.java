@@ -48,7 +48,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     private float elevation = 0;
     private float translationZ = 0;
     private AnimUtils.Style inAnim, outAnim;
-    private int cornerRadius;
+    private float cornerRadius;
     private Bitmap texture;
     private Canvas textureCanvas;
     private Paint paint = new Paint();
@@ -79,7 +79,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_inAnimation, 0)];
         outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_outAnimation, 0)];
 
-        cornerRadius = (int) a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0);
+        cornerRadius = a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0);
 
         a.recycle();
 
@@ -167,8 +167,12 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        if (changed)
-            initDrawing();
+
+        if (!changed || getWidth() == 0 || getHeight() == 0)
+            return;
+
+        initDrawing();
+
         views = new ArrayList<View>();
         for (int i = 0; i < getChildCount(); i++) {
             views.add(getChildAt(i));
@@ -203,50 +207,65 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         } else {
             super.dispatchDraw(canvas);
         }
+
+        if (rippleDrawable != null)
+            rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!isInEditMode()) {
-            if (!child.isShown() || !(child instanceof ShadowView))
-                return super.drawChild(canvas, child, drawingTime);
+        if (!child.isShown())
+            return super.drawChild(canvas, child, drawingTime);
 
+        if (!isInEditMode() && child instanceof ShadowView) {
             ShadowView shadowView = (ShadowView) child;
             float elevation = shadowView.getElevation() + shadowView.getTranslationZ();
-            if (elevation < 0.01f)
-                return super.drawChild(canvas, child, drawingTime);
+            if (elevation >= 0.01f) {
+                Shadow shadow = shadows.get(child);
+                if (shadow == null || shadow.elevation != elevation) {
+                    shadow = ShadowGenerator.generateShadow(child, elevation);
+                    shadows.put(child, shadow);
+                }
 
-            Shadow shadow = shadows.get(child);
-            if (shadow == null || shadow.elevation != elevation) {
-                shadow = ShadowGenerator.generateShadow(child, elevation);
-                shadows.put(child, shadow);
+                paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
+
+                int[] location = new int[2];
+                child.getLocationOnScreen(location);
+                float x = location[0] + child.getWidth() / 2.0f;
+                float y = location[1] + child.getHeight() / 2.0f;
+                x -= getRootView().getWidth() / 2;
+                y += getRootView().getHeight() / 2;   // looks nice
+                float length = (float) Math.sqrt(x * x + y * y);
+
+                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.translate(
+                        x / length * elevation / 2,
+                        y / length * elevation / 2);
+                canvas.translate(
+                        child.getLeft(),
+                        child.getTop());
+                if (Build.VERSION.SDK_INT >= 11) {
+                    canvas.concat(child.getMatrix());
+                } else {
+                    canvas.concat(carbon.internal.ViewHelper.getMatrix(child));
+                }
+                canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
+                shadow.draw(canvas, child, paint);
+                canvas.restoreToCount(saveCount);
             }
+        }
 
-            paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
-
-            int[] location = new int[2];
-            child.getLocationOnScreen(location);
-            float x = location[0] + child.getWidth() / 2.0f;
-            float y = location[1] + child.getHeight() / 2.0f;
-            x -= getRootView().getWidth() / 2;
-            y += getRootView().getHeight() / 2;   // looks nice
-            float length = (float) Math.sqrt(x * x + y * y);
-
-            canvas.save(Canvas.MATRIX_SAVE_FLAG);
-            canvas.translate(
-                    x / length * elevation / 2,
-                    y / length * elevation / 2);
-            canvas.translate(
-                    child.getLeft(),
-                    child.getTop());
-            if (Build.VERSION.SDK_INT >= 11) {
-                canvas.concat(child.getMatrix());
-            } else {
-                canvas.concat(carbon.internal.ViewHelper.getMatrix(child));
+        if (child instanceof RippleView) {
+            RippleView rippleView = (RippleView) child;
+            RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
+                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.translate(
+                        child.getLeft(),
+                        child.getTop());
+                rippleDrawable.draw(canvas);
+                canvas.restoreToCount(saveCount);
             }
-            canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
-            shadow.draw(canvas, child, paint);
-            canvas.restore();
         }
 
         return super.drawChild(canvas, child, drawingTime);
@@ -266,11 +285,11 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         return false;
     }
 
-    public int getCornerRadius() {
+    public float getCornerRadius() {
         return cornerRadius;
     }
 
-    public void setCornerRadius(int cornerRadius) {
+    public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         initDrawing();
     }
@@ -315,7 +334,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     public void onRelease(MotionEvent motionEvent) {
         if (rippleDrawable != null)
-            rippleDrawable.onRelease(motionEvent);
+            rippleDrawable.onRelease();
     }
 
     @Override
@@ -331,7 +350,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     public void onCancel(MotionEvent motionEvent) {
         if (rippleDrawable != null)
-            rippleDrawable.onCancel(motionEvent);
+            rippleDrawable.onCancel();
     }
 
     @Override

@@ -25,7 +25,6 @@ import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
-import carbon.drawable.DummyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.shadow.ShadowView;
@@ -33,7 +32,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class Button extends android.widget.Button implements ShadowView, OnGestureListener,RippleView {
+public class Button extends android.widget.Button implements ShadowView, OnGestureListener, RippleView {
     private float elevation = 0;
     private float translationZ = 0;
     private boolean isRect = true;
@@ -64,7 +63,7 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
-        Carbon.initRippleDrawable(this,attrs, defStyleAttr);
+        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
         setElevation(a.getDimension(R.styleable.Button_carbon_elevation, 0));
         if (!isInEditMode())
             setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.values()[a.getInt(R.styleable.Button_carbon_textStyle, Roboto.Style.Regular.ordinal())]));
@@ -84,7 +83,7 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
                 touchMargin = new Rect(left, top, right, bottom);
         }
 
-        cornerRadius = (int) a.getDimension(R.styleable.Button_carbon_cornerRadius, 0);
+        cornerRadius = a.getDimension(R.styleable.Button_carbon_cornerRadius, 0);
 
         a.recycle();
 
@@ -170,9 +169,34 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
         this.isRect = rect;
     }
 
+    public float getCornerRadius() {
+        return cornerRadius;
+    }
+
+    public void setCornerRadius(float cornerRadius) {
+        this.cornerRadius = cornerRadius;
+        initDrawing();
+    }
+
+    public AnimUtils.Style getOutAnim() {
+        return outAnim;
+    }
+
+    public void setOutAnim(AnimUtils.Style outAnim) {
+        this.outAnim = outAnim;
+    }
+
+    public AnimUtils.Style getInAnim() {
+        return inAnim;
+    }
+
+    public void setInAnim(AnimUtils.Style inAnim) {
+        this.inAnim = inAnim;
+    }
+
     @Override
     public void onPress(MotionEvent motionEvent) {
-        if (rippleDrawable!=null)
+        if (rippleDrawable != null)
             rippleDrawable.onPress(motionEvent);
         if (elevation != 0)
             setTranslationZ(getResources().getDimension(R.dimen.carbon_translation));
@@ -195,8 +219,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
 
     @Override
     public void onRelease(MotionEvent motionEvent) {
-        if (rippleDrawable!=null)
-            rippleDrawable.onRelease(motionEvent);
+        if (rippleDrawable != null)
+            rippleDrawable.onRelease();
         if (elevation != 0)
             setTranslationZ(0);
     }
@@ -213,8 +237,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
 
     @Override
     public void onCancel(MotionEvent motionEvent) {
-        if (rippleDrawable!=null)
-            rippleDrawable.onCancel(motionEvent);
+        if (rippleDrawable != null)
+            rippleDrawable.onCancel();
         if (elevation != 0)
             setTranslationZ(0);
     }
@@ -226,12 +250,19 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
         if (!changed || getWidth() == 0 || getHeight() == 0)
             return;
 
-        if (cornerRadius > 0) {
-            texture = null;
-            texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-            textureCanvas = new Canvas(texture);
-            paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-        }
+       initDrawing();
+
+        if (rippleDrawable != null)
+            rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+    }
+
+    private void initDrawing() {
+        if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
+            return;
+        texture = null;
+        texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        textureCanvas = new Canvas(texture);
+        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
     }
 
     @Override
@@ -239,6 +270,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
         if (cornerRadius > 0) {
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
             super.draw(textureCanvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(textureCanvas);
 
             RectF rect = new RectF();
             rect.bottom = getHeight();
@@ -246,6 +279,8 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
             canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
         } else {
             super.draw(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
         }
     }
 
@@ -275,5 +310,17 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
 
     public void setRippleDrawable(RippleDrawable rippleDrawable) {
         this.rippleDrawable = rippleDrawable;
+    }
+
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return super.verifyDrawable(who) || rippleDrawable == who;
+    }
+
+    @Override
+    public void invalidateDrawable(Drawable drawable) {
+        super.invalidateDrawable(drawable);
+        if (rippleDrawable != null && getParent() != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidate();
     }
 }

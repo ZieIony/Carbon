@@ -3,6 +3,7 @@ package carbon.drawable;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -42,17 +43,17 @@ public class RippleDrawable extends Drawable {
         onPress(motionEvent.getX(), motionEvent.getY());
     }
 
-    public void onRelease(MotionEvent motionEvent) {
+    public void onRelease() {
         if (pressed) {
             pressed = false;
-            RippleDrawable.this.onRelease();
+            internalOnRelease();
         }
     }
 
-    public void onCancel(MotionEvent motionEvent) {
+    public void onCancel() {
         if (pressed) {
             pressed = false;
-            RippleDrawable.this.onRelease();
+            internalOnRelease();
         }
     }
 
@@ -78,7 +79,7 @@ public class RippleDrawable extends Drawable {
         invalidateSelf();
     }
 
-    private void onRelease() {
+    private void internalOnRelease() {
         long time = System.currentTimeMillis();
         float animFrac = (time - downTime) / (float) duration;
         duration = RIPPLE_DURATION;
@@ -102,13 +103,21 @@ public class RippleDrawable extends Drawable {
         if (upTime + FADE_DURATION > time) {
             float highlightInterp = interpolator.getInterpolation((time - upTime) / (float) FADE_DURATION);
             paint.setAlpha((int) (alpha * (1 - highlightInterp)));
-            canvas.drawRect(bounds, paint);
+            if (style == Style.Borderless) {
+                canvas.drawCircle(bounds.centerX(), bounds.centerY(), to, paint);
+            } else {
+                canvas.drawRect(bounds, paint);
+            }
             invalidateSelf();
         }
 
         if (downTime > upTime) {
             paint.setAlpha(alpha);
-            canvas.drawRect(bounds, paint);
+            if (style == Style.Borderless) {
+                canvas.drawCircle(bounds.centerX(), bounds.centerY(), to, paint);
+            } else {
+                canvas.drawRect(bounds, paint);
+            }
             invalidateSelf();
         }
 
@@ -135,8 +144,14 @@ public class RippleDrawable extends Drawable {
     }
 
     @Override
+    public void jumpToCurrentState() {
+        super.jumpToCurrentState();
+        invalidateSelf();
+    }
+
+    @Override
     public int getOpacity() {
-        return 0;
+        return PixelFormat.TRANSLUCENT;
     }
 
     public Style getStyle() {

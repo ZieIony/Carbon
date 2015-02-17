@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import carbon.drawable.DummyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 
@@ -29,6 +28,8 @@ public class Carbon {
     }
 
     public static void initRippleDrawable(View view, AttributeSet attrs, int defStyleAttr) {
+        if (view.isInEditMode())
+            return;
         TypedArray a = view.getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
         int color = a.getColor(R.styleable.Carbon_carbon_rippleColor, 0);
         RippleDrawable.Style style = RippleDrawable.Style.values()[a.getInt(R.styleable.Carbon_carbon_rippleStyle, RippleDrawable.Style.Background.ordinal())];
@@ -41,11 +42,7 @@ public class Carbon {
             rippleDrawable.setHotspotEnabled(useHotspot);
             rippleDrawable.setStyle(style);
 
-            // TODO: setting callbacks may lead to memory leaks
             if (style == RippleDrawable.Style.Borderless) {
-                DummyDrawable dummyDrawable = new DummyDrawable();
-                dummyDrawable.linkedDrawable = rippleDrawable;
-                view.setBackgroundDrawable(dummyDrawable);
                 rippleDrawable.setCallback(view);
             } else if (style == RippleDrawable.Style.Background) {
                 rippleDrawable.setBackground(view.getBackground());

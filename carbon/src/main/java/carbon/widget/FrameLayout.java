@@ -207,46 +207,58 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!isInEditMode()) {
-            if (!child.isShown() || !(child instanceof ShadowView))
-                return super.drawChild(canvas, child, drawingTime);
+        if (!child.isShown())
+            return super.drawChild(canvas, child, drawingTime);
 
+        if (!isInEditMode() && child instanceof ShadowView) {
             ShadowView shadowView = (ShadowView) child;
             float elevation = shadowView.getElevation() + shadowView.getTranslationZ();
-            if (elevation < 0.01f)
-                return super.drawChild(canvas, child, drawingTime);
+            if (elevation >= 0.01f) {
+                Shadow shadow = shadows.get(child);
+                if (shadow == null || shadow.elevation != elevation) {
+                    shadow = ShadowGenerator.generateShadow(child, elevation);
+                    shadows.put(child, shadow);
+                }
 
-            Shadow shadow = shadows.get(child);
-            if (shadow == null || shadow.elevation != elevation) {
-                shadow = ShadowGenerator.generateShadow(child, elevation);
-                shadows.put(child, shadow);
+                paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
+
+                int[] location = new int[2];
+                child.getLocationOnScreen(location);
+                float x = location[0] + child.getWidth() / 2.0f;
+                float y = location[1] + child.getHeight() / 2.0f;
+                x -= getRootView().getWidth() / 2;
+                y += getRootView().getHeight() / 2;   // looks nice
+                float length = (float) Math.sqrt(x * x + y * y);
+
+                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.translate(
+                        x / length * elevation / 2,
+                        y / length * elevation / 2);
+                canvas.translate(
+                        child.getLeft(),
+                        child.getTop());
+                if (Build.VERSION.SDK_INT >= 11) {
+                    canvas.concat(child.getMatrix());
+                } else {
+                    canvas.concat(carbon.internal.ViewHelper.getMatrix(child));
+                }
+                canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
+                shadow.draw(canvas, child, paint);
+                canvas.restoreToCount(saveCount);
             }
+        }
 
-            paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
-
-            int[] location = new int[2];
-            child.getLocationOnScreen(location);
-            float x = location[0] + child.getWidth() / 2.0f;
-            float y = location[1] + child.getHeight() / 2.0f;
-            x -= getRootView().getWidth() / 2;
-            y += getRootView().getHeight() / 2;   // looks nice
-            float length = (float) Math.sqrt(x * x + y * y);
-
-            canvas.save(Canvas.MATRIX_SAVE_FLAG);
-            canvas.translate(
-                    x / length * elevation / 2,
-                    y / length * elevation / 2);
-            canvas.translate(
-                    child.getLeft(),
-                    child.getTop());
-            if (Build.VERSION.SDK_INT >= 11) {
-                canvas.concat(child.getMatrix());
-            } else {
-                canvas.concat(carbon.internal.ViewHelper.getMatrix(child));
+        if (child instanceof RippleView) {
+            RippleView rippleView = (RippleView) child;
+            RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
+                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.translate(
+                        child.getLeft(),
+                        child.getTop());
+                rippleDrawable.draw(canvas);
+                canvas.restoreToCount(saveCount);
             }
-            canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
-            shadow.draw(canvas, child, paint);
-            canvas.restore();
         }
 
         return super.drawChild(canvas, child, drawingTime);
@@ -315,7 +327,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     public void onRelease(MotionEvent motionEvent) {
         if (rippleDrawable != null)
-            rippleDrawable.onRelease(motionEvent);
+            rippleDrawable.onRelease();
     }
 
     @Override
@@ -331,7 +343,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     public void onCancel(MotionEvent motionEvent) {
         if (rippleDrawable != null)
-            rippleDrawable.onCancel(motionEvent);
+            rippleDrawable.onCancel();
     }
 
     @Override
