@@ -55,6 +55,11 @@ No. Maybe one day.
 ##### Are you thinking about uploading the library to Maven?
 Done!
 
+##### Do you plan to offer your Material elements as separate modules? I would prefer not to include the whole project only to use ripples.
+I thought about it, but it's not that easy, because almost everything is tightly integrated with other components. For example the ripple. Due to clipping issues in Android < 5.0 it's not possible to draw borderless backgrounds just by setting the background drawable. That's why I would have to export the ripple with all layouts only to make the borderless mode work.
+
+If you wish, you can copy RippleDrawable.java to your project and integrate it with your code manually.
+
 ##### Can you add [put your feature name here]?
 If it's possible and reasonable, sure! Just let me know.
 
