@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import carbon.Carbon;
-import carbon.GestureDetector;
-import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
@@ -43,7 +41,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-20.
  */
-public class FrameLayout extends android.widget.FrameLayout implements ShadowView, OnGestureListener, RippleView {
+public class FrameLayout extends android.widget.FrameLayout implements ShadowView, RippleView {
     private boolean isRect = true;
     private float elevation = 0;
     private float translationZ = 0;
@@ -54,7 +52,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     private Paint paint = new Paint();
     List<View> views;
     Map<View, Shadow> shadows = new HashMap<>();
-    GestureDetector gestureDetector = new GestureDetector(this);
     private RippleDrawable rippleDrawable;
 
     public FrameLayout(Context context) {
@@ -104,12 +101,10 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (!isEnabled())
-            return false;
-
-        gestureDetector.onTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
+            ((RippleDrawable)rippleDrawable).setHotspot(event.getX(), event.getY());
+        return super.dispatchTouchEvent(event);
     }
 
     @Override
@@ -287,63 +282,20 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         initDrawing();
     }
 
-    public AnimUtils.Style getOutAnim() {
+    public AnimUtils.Style getOutAnimation() {
         return outAnim;
     }
 
-    public void setOutAnim(AnimUtils.Style outAnim) {
+    public void setOutAnimation(AnimUtils.Style outAnim) {
         this.outAnim = outAnim;
     }
 
-    public AnimUtils.Style getInAnim() {
+    public AnimUtils.Style getInAnimation() {
         return inAnim;
     }
 
-    public void setInAnim(AnimUtils.Style inAnim) {
+    public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
-    }
-
-    @Override
-    public void onPress(MotionEvent motionEvent) {
-        if (rippleDrawable != null)
-            rippleDrawable.onPress(motionEvent);
-    }
-
-    @Override
-    public void onTap(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onDrag(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onMove(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onRelease(MotionEvent motionEvent) {
-        if (rippleDrawable != null)
-            rippleDrawable.onRelease();
-    }
-
-    @Override
-    public void onLongPress(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onMultiTap(MotionEvent motionEvent, int clicks) {
-
-    }
-
-    @Override
-    public void onCancel(MotionEvent motionEvent) {
-        if (rippleDrawable != null)
-            rippleDrawable.onCancel();
     }
 
     @Override

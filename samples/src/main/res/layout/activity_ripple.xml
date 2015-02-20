@@ -37,9 +37,14 @@
         android:layout_height="36dp" />
 
     <carbon.widget.ImageView
+        app:carbon_elevation="0dp"
+        android:clickable="true"
+        app:carbon_cornerRadius="0dp"
+        app:carbon_rippleStyle="over"
         app:carbon_rippleColor="#42ffffff"
         android:layout_width="100dp"
         android:layout_height="150dp"
         android:layout_margin="@dimen/carbon_padding"
+        android:scaleType="centerCrop"
         android:src="@drawable/mazda" />
 </carbon.widget.LinearLayout>

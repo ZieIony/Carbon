@@ -6,11 +6,12 @@
     android:layout_height="match_parent">
 
     <carbon.widget.LinearLayout
+        app:carbon_rippleStyle="over"
         android:id="@+id/carbon_cardContent"
         android:orientation="vertical"
         app:carbon_cornerRadius="2dp"
         android:layout_margin="@dimen/carbon_paddingHalf"
         app:carbon_elevation="@dimen/carbon_elevationLow"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </carbon.widget.LinearLayout>

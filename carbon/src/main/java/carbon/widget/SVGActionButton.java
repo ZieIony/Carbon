@@ -128,21 +128,5 @@ public class SVGActionButton extends SVGView implements ShadowView {
         animator.start();
     }
 
-    @Override
-    public void onPress(MotionEvent motionEvent) {
-        super.onPress(motionEvent);
-        setTranslationZ(getResources().getDimension(R.dimen.carbon_translation));
-    }
 
-    @Override
-    public void onRelease(MotionEvent motionEvent) {
-        super.onRelease(motionEvent);
-        setTranslationZ(0);
-    }
-
-    @Override
-    public void onCancel(MotionEvent motionEvent) {
-        super.onCancel(motionEvent);
-        setTranslationZ(0);
-    }
 }

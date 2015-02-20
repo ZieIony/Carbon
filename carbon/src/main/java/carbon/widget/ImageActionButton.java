@@ -16,9 +16,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 
-import carbon.GestureDetector;
 import carbon.Carbon;
-import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
@@ -29,14 +27,13 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-12-04.
  */
-public class ImageActionButton extends ImageView implements ShadowView, OnGestureListener ,RippleView{
+public class ImageActionButton extends ImageView implements ShadowView, RippleView {
     private float elevation = 0;
     private float translationZ = 0;
 
     Paint paint = new Paint();
     private boolean isRect = false;
 
-    GestureDetector gestureDetector = new GestureDetector(this);
     private AnimUtils.Style inAnim, outAnim;
     private Bitmap texture;
     private Canvas textureCanvas;
@@ -61,7 +58,7 @@ public class ImageActionButton extends ImageView implements ShadowView, OnGestur
         paint.setAntiAlias(Carbon.antiAlias);
         paint.setStyle(Paint.Style.FILL);
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageActionButton, defStyleAttr, 0);
-        Carbon.initRippleDrawable(this,attrs, defStyleAttr);
+        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
         setElevation(a.getDimension(R.styleable.ImageActionButton_carbon_elevation, 0));
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ImageActionButton_carbon_inAnimation, 0)];
         outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ImageActionButton_carbon_outAnimation, 0)];
@@ -114,22 +111,12 @@ public class ImageActionButton extends ImageView implements ShadowView, OnGestur
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if(!isEnabled())
-            return false;
-
-        gestureDetector.onTouchEvent(event);
-        super.onTouchEvent(event);
-        return true;
-    }
-
-    @Override
     public float getElevation() {
         return elevation;
     }
 
     public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0,Math.min(elevation,25));
+        elevation = Math.max(0, Math.min(elevation, 25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;
@@ -162,49 +149,6 @@ public class ImageActionButton extends ImageView implements ShadowView, OnGestur
             }
         });
         animator.start();
-    }
-
-    @Override
-    public void onPress(MotionEvent motionEvent) {
-        super.onPress(motionEvent);
-        setTranslationZ(getResources().getDimension(R.dimen.carbon_translation));
-    }
-
-    @Override
-    public void onTap(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onDrag(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onMove(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onRelease(MotionEvent motionEvent) {
-        super.onRelease(motionEvent);
-        setTranslationZ(0);
-    }
-
-    @Override
-    public void onLongPress(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onMultiTap(MotionEvent motionEvent, int clicks) {
-
-    }
-
-    @Override
-    public void onCancel(MotionEvent motionEvent) {
-        super.onCancel(motionEvent);
-        setTranslationZ(0);
     }
 
     @Override

@@ -46,8 +46,8 @@ public class EditText extends android.widget.EditText {
     public void init(AttributeSet attrs, int defStyle) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyle, 0);
         setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.EditText_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.EditText_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.EditText_carbon_outAnimation, 0)]);
+        setInAnimationation(AnimUtils.Style.values()[a.getInt(R.styleable.EditText_carbon_inAnimation, 0)]);
+        setOutAnimationation(AnimUtils.Style.values()[a.getInt(R.styleable.EditText_carbon_outAnimation, 0)]);
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
         setDividerPadding(a.getDimension(R.styleable.EditText_carbon_dividerPadding, 0));
         setDividerColor(a.getColor(R.styleable.EditText_carbon_dividerColor,0));
@@ -126,19 +126,19 @@ public class EditText extends android.widget.EditText {
         this.dividerPadding = dividerPadding;
     }
 
-    public AnimUtils.Style getOutAnim() {
+    public AnimUtils.Style getOutAnimation() {
         return outAnim;
     }
 
-    public void setOutAnimation(AnimUtils.Style outAnim) {
+    public void setOutAnimationation(AnimUtils.Style outAnim) {
         this.outAnim = outAnim;
     }
 
-    public AnimUtils.Style getInAnim() {
+    public AnimUtils.Style getInAnimation() {
         return inAnim;
     }
 
-    public void setInAnimation(AnimUtils.Style inAnim) {
+    public void setInAnimationation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
     }
 

@@ -159,19 +159,19 @@ public class Snackbar extends PopupWindow {
         requestLayout();
     }
 
-    public AnimUtils.Style getOutAnimation() {
+    public AnimUtils.Style getOutAnimationation() {
         return outAnim;
     }
 
-    public void setOutAnimation(AnimUtils.Style outAnim) {
+    public void setOutAnimationation(AnimUtils.Style outAnim) {
         this.outAnim = outAnim;
     }
 
-    public AnimUtils.Style getInAnimation() {
+    public AnimUtils.Style getInAnimationation() {
         return inAnim;
     }
 
-    public void setInAnimation(AnimUtils.Style inAnim) {
+    public void setInAnimationation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
     }
 

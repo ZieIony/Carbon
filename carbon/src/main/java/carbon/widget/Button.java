@@ -14,17 +14,19 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.ValueAnimator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import carbon.Carbon;
-import carbon.GestureDetector;
-import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.animation.ElevationStateAnimator;
+import carbon.animation.RippleStateAnimator;
+import carbon.animation.StateAnimator;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.shadow.ShadowView;
@@ -32,16 +34,13 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class Button extends android.widget.Button implements ShadowView, OnGestureListener, RippleView {
+public class Button extends android.widget.Button implements ShadowView, RippleView {
     private float elevation = 0;
     private float translationZ = 0;
     private boolean isRect = true;
 
-    GestureDetector gestureDetector = new GestureDetector(this);
-    private AnimUtils.Style inAnim, outAnim;
-    private Rect touchMargin;
     private Bitmap texture;
-    private Paint paint = new Paint();
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Canvas textureCanvas;
     private float cornerRadius;
     private RippleDrawable rippleDrawable;
@@ -63,111 +62,33 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
+
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+
         setElevation(a.getDimension(R.styleable.Button_carbon_elevation, 0));
         if (!isInEditMode())
             setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.values()[a.getInt(R.styleable.Button_carbon_textStyle, Roboto.Style.Regular.ordinal())]));
-        inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.Button_carbon_inAnimation, 0)];
-        outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.Button_carbon_outAnimation, 0)];
 
-        int touchMarginAll = (int) a.getDimension(R.styleable.Button_carbon_touchMargin, 0);
-        if (touchMarginAll > 0) {
-            touchMargin = new Rect(touchMarginAll, touchMarginAll, touchMarginAll, touchMarginAll);
-        } else {
-            touchMargin = new Rect();
-            int top = (int) a.getDimension(R.styleable.Button_carbon_touchMarginTop, 0);
-            int left = (int) a.getDimension(R.styleable.Button_carbon_touchMarginLeft, 0);
-            int right = (int) a.getDimension(R.styleable.Button_carbon_touchMarginRight, 0);
-            int bottom = (int) a.getDimension(R.styleable.Button_carbon_touchMarginBottom, 0);
-            if (top > 0 || left > 0 || right > 0 || bottom > 0)
-                touchMargin = new Rect(left, top, right, bottom);
-        }
-
-        cornerRadius = a.getDimension(R.styleable.Button_carbon_cornerRadius, 0);
+        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Button_carbon_inAnimation, 0)]);
+        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Button_carbon_outAnimation, 0)]);
+        initTouchMargin(a);
+        addStateAnimator(new RippleStateAnimator(this));
+        addStateAnimator(new ElevationStateAnimator(this));
+        setCornerRadius(a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
 
         a.recycle();
-
-        paint.setAntiAlias(true);
     }
 
-    public void setVisibility(final int visibility) {
-        if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
-            super.setVisibility(visibility);
-            AnimUtils.animateIn(this, inAnim, null);
-        } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
-            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    Button.super.setVisibility(visibility);
-                }
-            });
-        }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!isEnabled())
-            return false;
-
-        gestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
 
     @Override
     public void setText(CharSequence text, BufferType type) {
         super.setText(text.toString().toUpperCase(), type);
     }
 
-    @Override
-    public float getElevation() {
-        return elevation;
-    }
 
-    public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0, Math.min(elevation, 25));
-        if (elevation == this.elevation)
-            return;
-        this.elevation = elevation;
-        if (getParent() != null)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
-    public float getTranslationZ() {
-        return translationZ;
-    }
-
-    private synchronized void setTranslationZInternal(float translationZ) {
-        if (translationZ == this.translationZ)
-            return;
-        this.translationZ = translationZ;
-        if (getParent() != null)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
-    public void setTranslationZ(float translationZ) {
-        ValueAnimator animator = ValueAnimator.ofFloat(this.translationZ, translationZ);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.setDuration(300);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                setTranslationZInternal((Float) animation.getAnimatedValue());
-            }
-        });
-        animator.start();
-    }
-
-    @Override
-    public boolean isRect() {
-        return isRect;
-    }
-
-    @Override
-    public void setRect(boolean rect) {
-        this.isRect = rect;
-    }
+    // -------------------------------
+    // corners
+    // -------------------------------
 
     public float getCornerRadius() {
         return cornerRadius;
@@ -178,71 +99,6 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
         initDrawing();
     }
 
-    public AnimUtils.Style getOutAnim() {
-        return outAnim;
-    }
-
-    public void setOutAnim(AnimUtils.Style outAnim) {
-        this.outAnim = outAnim;
-    }
-
-    public AnimUtils.Style getInAnim() {
-        return inAnim;
-    }
-
-    public void setInAnim(AnimUtils.Style inAnim) {
-        this.inAnim = inAnim;
-    }
-
-    @Override
-    public void onPress(MotionEvent motionEvent) {
-        if (rippleDrawable != null)
-            rippleDrawable.onPress(motionEvent);
-        if (elevation != 0)
-            setTranslationZ(getResources().getDimension(R.dimen.carbon_translation));
-    }
-
-    @Override
-    public void onTap(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onDrag(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onMove(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onRelease(MotionEvent motionEvent) {
-        if (rippleDrawable != null)
-            rippleDrawable.onRelease();
-        if (elevation != 0)
-            setTranslationZ(0);
-    }
-
-    @Override
-    public void onLongPress(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onMultiTap(MotionEvent motionEvent, int clicks) {
-
-    }
-
-    @Override
-    public void onCancel(MotionEvent motionEvent) {
-        if (rippleDrawable != null)
-            rippleDrawable.onCancel();
-        if (elevation != 0)
-            setTranslationZ(0);
-    }
-
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -250,7 +106,7 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
         if (!changed || getWidth() == 0 || getHeight() == 0)
             return;
 
-       initDrawing();
+        initDrawing();
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
@@ -284,18 +140,22 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
         }
     }
 
+
+    // -------------------------------
+    // ripple
+    // -------------------------------
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
+            ((RippleDrawable) rippleDrawable).setHotspot(event.getX(), event.getY());
+        return super.dispatchTouchEvent(event);
+    }
+
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         setTranslationZ(enabled ? 0 : -elevation);
-    }
-
-    public void getHitRect(Rect outRect) {
-        if (touchMargin == null) {
-            super.getHitRect(outRect);
-            return;
-        }
-        outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
     }
 
     @Override
@@ -322,5 +182,135 @@ public class Button extends android.widget.Button implements ShadowView, OnGestu
         super.invalidateDrawable(drawable);
         if (rippleDrawable != null && getParent() != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidate();
+    }
+
+
+    // -------------------------------
+    // elevation
+    // -------------------------------
+
+    @Override
+    public float getElevation() {
+        return elevation;
+    }
+
+    public synchronized void setElevation(float elevation) {
+        elevation = Math.max(0, Math.min(elevation, 25));
+        if (elevation == this.elevation)
+            return;
+        this.elevation = elevation;
+        if (getParent() != null)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public float getTranslationZ() {
+        return translationZ;
+    }
+
+    public synchronized void setTranslationZ(float translationZ) {
+        if (translationZ == this.translationZ)
+            return;
+        this.translationZ = translationZ;
+        if (getParent() != null)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public boolean isRect() {
+        return isRect;
+    }
+
+    @Override
+    public void setRect(boolean rect) {
+        this.isRect = rect;
+    }
+
+
+    // -------------------------------
+    // touch margin
+    // -------------------------------
+
+    private Rect touchMargin;
+
+    private void initTouchMargin(TypedArray a) {
+        int touchMarginAll = (int) a.getDimension(R.styleable.Button_carbon_touchMargin, 0);
+        if (touchMarginAll > 0) {
+            touchMargin = new Rect(touchMarginAll, touchMarginAll, touchMarginAll, touchMarginAll);
+        } else {
+            touchMargin = new Rect();
+            int top = (int) a.getDimension(R.styleable.Button_carbon_touchMarginTop, 0);
+            int left = (int) a.getDimension(R.styleable.Button_carbon_touchMarginLeft, 0);
+            int right = (int) a.getDimension(R.styleable.Button_carbon_touchMarginRight, 0);
+            int bottom = (int) a.getDimension(R.styleable.Button_carbon_touchMarginBottom, 0);
+            if (top > 0 || left > 0 || right > 0 || bottom > 0)
+                touchMargin = new Rect(left, top, right, bottom);
+        }
+    }
+
+    public void getHitRect(Rect outRect) {
+        if (touchMargin == null) {
+            super.getHitRect(outRect);
+            return;
+        }
+        outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
+    }
+
+    // -------------------------------
+    // state animators
+    // -------------------------------
+
+    private List<StateAnimator> stateAnimators = new ArrayList<>();
+
+    public void removeStateAnimator(StateAnimator animator) {
+        stateAnimators.remove(animator);
+    }
+
+    public void addStateAnimator(StateAnimator animator) {
+        this.stateAnimators.add(animator);
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        for (StateAnimator animator : stateAnimators)
+            animator.stateChanged(getDrawableState());
+    }
+
+
+    // -------------------------------
+    // animations
+    // -------------------------------
+
+    private AnimUtils.Style inAnim, outAnim;
+
+    public void setVisibility(final int visibility) {
+        if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
+            super.setVisibility(visibility);
+            AnimUtils.animateIn(this, inAnim, null);
+        } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
+            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    Button.super.setVisibility(visibility);
+                }
+            });
+        }
+    }
+
+    public AnimUtils.Style getOutAnimation() {
+        return outAnim;
+    }
+
+    public void setOutAnimation(AnimUtils.Style outAnim) {
+        this.outAnim = outAnim;
+    }
+
+    public AnimUtils.Style getInAnimation() {
+        return inAnim;
+    }
+
+    public void setInAnimation(AnimUtils.Style inAnim) {
+        this.inAnim = inAnim;
     }
 }

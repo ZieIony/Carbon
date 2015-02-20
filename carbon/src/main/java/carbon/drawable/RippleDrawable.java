@@ -7,7 +7,6 @@ import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.view.MotionEvent;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
@@ -38,11 +37,6 @@ public class RippleDrawable extends Drawable {
         Over, Background, Borderless
     }
 
-    public void onPress(MotionEvent motionEvent) {
-        pressed = true;
-        onPress(motionEvent.getX(), motionEvent.getY());
-    }
-
     public void onRelease() {
         if (pressed) {
             pressed = false;
@@ -62,14 +56,14 @@ public class RippleDrawable extends Drawable {
         this.alpha = color >> 24;
     }
 
-    private void onPress(float x, float y) {
+    public void onPress() {
+        pressed = true;
         from = 10;
         Rect bounds = getBounds();
         interpolator = new DecelerateInterpolator();
         downTime = System.currentTimeMillis();
-        if (useHotspot) {
-            hotspot = new PointF(x + bounds.left, y + bounds.top);
-        } else {
+        if (!useHotspot) {
+            //hotspot = new PointF(x + bounds.left, y + bounds.top);
             hotspot = new PointF(bounds.centerX(), bounds.centerY());
         }
         paint.setAntiAlias(Carbon.antiAlias);
@@ -190,5 +184,13 @@ public class RippleDrawable extends Drawable {
 
     public void setBackground(Drawable background) {
         this.background = background;
+    }
+
+    public PointF getHotspot() {
+        return hotspot;
+    }
+
+    public void setHotspot(float x, float y) {
+        this.hotspot = new PointF(x, y);
     }
 }
