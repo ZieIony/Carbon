@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Carbon.iml" filepath="$PROJECT_DIR$/Carbon.iml" />
       <module fileurl="file://$PROJECT_DIR$/carbon/carbon.iml" filepath="$PROJECT_DIR$/carbon/carbon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/carbon-partial/carbon-partial.iml" filepath="$PROJECT_DIR$/carbon-partial/carbon-partial.iml" />
       <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" />
     </modules>
   </component>

@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/carbon" />
+            <option value="$PROJECT_DIR$/carbon-partial" />
             <option value="$PROJECT_DIR$/samples" />
           </set>
         </option>

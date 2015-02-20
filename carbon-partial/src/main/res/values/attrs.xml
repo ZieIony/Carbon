@@ -12,9 +12,57 @@
         <attr name="carbon_rippleColor" format="reference|color" />
         <attr name="carbon_rippleHotspot" format="boolean" />
         <attr name="carbon_rippleStyle" format="enum">
-            <enum name="over" value="0"/>
-            <enum name="background" value="1"/>
-            <enum name="borderless" value="2"/>
+            <enum name="over" value="0" />
+            <enum name="background" value="1" />
+            <enum name="borderless" value="2" />
+        </attr>
+
+        <attr name="carbon_elevation" format="dimension" />
+        <attr name="carbon_cornerRadius" format="dimension" />
+
+        <attr name="carbon_touchMargin" format="dimension" />
+        <attr name="carbon_touchMarginLeft" format="dimension" />
+        <attr name="carbon_touchMarginTop" format="dimension" />
+        <attr name="carbon_touchMarginRight" format="dimension" />
+        <attr name="carbon_touchMarginBottom" format="dimension" />
+
+        <attr name="carbon_inAnimation" format="enum">
+            <enum name="none" value="0" />
+            <enum name="fade" value="1" />
+            <enum name="pop" value="2" />
+            <enum name="fly" value="3" />
+            <enum name="brightnessSaturationFade" value="4" />
+            <enum name="progressWidth" value="5" />
+        </attr>
+
+        <attr name="carbon_outAnimation" format="enum">
+            <enum name="none" value="0" />
+            <enum name="fade" value="1" />
+            <enum name="pop" value="2" />
+            <enum name="fly" value="3" />
+            <enum name="brightnessSaturationFade" value="4" />
+            <enum name="progressWidth" value="5" />
+        </attr>
+
+        <attr name="carbon_textStyle" format="enum">
+            <enum name="black" value="0" />
+            <enum name="blackItalic" value="1" />
+            <enum name="bold" value="2" />
+            <enum name="boldItalic" value="3" />
+            <enum name="italic" value="4" />
+            <enum name="light" value="5" />
+            <enum name="lightItalic" value="6" />
+            <enum name="medium" value="7" />
+            <enum name="mediumItalic" value="8" />
+            <enum name="regular" value="9" />
+            <enum name="thin" value="10" />
+            <enum name="thinItalic" value="11" />
+            <enum name="condensedBold" value="12" />
+            <enum name="condensedBoldItalic" value="13" />
+            <enum name="condensedItalic" value="14" />
+            <enum name="condensedLight" value="15" />
+            <enum name="condensedLightItalic" value="16" />
+            <enum name="condensedRegular" value="17" />
         </attr>
 
         <attr name="carbon_textAppearance_headline" format="reference" />
@@ -36,53 +84,6 @@
 
     <attr name="carbon_filterColor" format="reference|color" />
     <attr name="carbon_src" format="reference" />
-    <attr name="carbon_elevation" format="dimension" />
-    <attr name="carbon_cornerRadius" format="dimension" />
-
-    <attr name="carbon_touchMargin" format="dimension" />
-    <attr name="carbon_touchMarginLeft" format="dimension" />
-    <attr name="carbon_touchMarginTop" format="dimension" />
-    <attr name="carbon_touchMarginRight" format="dimension" />
-    <attr name="carbon_touchMarginBottom" format="dimension" />
-
-    <attr name="carbon_inAnimation" format="enum">
-        <enum name="none" value="0" />
-        <enum name="fade" value="1" />
-        <enum name="pop" value="2" />
-        <enum name="fly" value="3" />
-        <enum name="brightnessSaturationFade" value="4" />
-        <enum name="progressWidth" value="5" />
-    </attr>
-
-    <attr name="carbon_outAnimation" format="enum">
-        <enum name="none" value="0" />
-        <enum name="fade" value="1" />
-        <enum name="pop" value="2" />
-        <enum name="fly" value="3" />
-        <enum name="brightnessSaturationFade" value="4" />
-        <enum name="progressWidth" value="5" />
-    </attr>
-
-    <attr name="carbon_textStyle" format="enum">
-        <enum name="black" value="0" />
-        <enum name="blackItalic" value="1" />
-        <enum name="bold" value="2" />
-        <enum name="boldItalic" value="3" />
-        <enum name="italic" value="4" />
-        <enum name="light" value="5" />
-        <enum name="lightItalic" value="6" />
-        <enum name="medium" value="7" />
-        <enum name="mediumItalic" value="8" />
-        <enum name="regular" value="9" />
-        <enum name="thin" value="10" />
-        <enum name="thinItalic" value="11" />
-        <enum name="condensedBold" value="12" />
-        <enum name="condensedBoldItalic" value="13" />
-        <enum name="condensedItalic" value="14" />
-        <enum name="condensedLight" value="15" />
-        <enum name="condensedLightItalic" value="16" />
-        <enum name="condensedRegular" value="17" />
-    </attr>
 
     <attr name="carbon_fabStyle" format="reference" />
     <declare-styleable name="SVGActionButton">
