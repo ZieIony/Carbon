@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.2-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.2/)
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.3-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.3/)
 
 Carbon
 ================
@@ -23,7 +23,8 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - dark and light themes in standard and AppCompat versions
  - a radial transition animation
  - circular progress indicators
- - CardView with read shadows and rounded corners
+ - CardView with real shadows and rounded corners
+ - state animators
 
 [![YouTube](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](http://www.youtube.com/watch?v=YcTQ8a8sTpU)
 
@@ -72,6 +73,13 @@ You have to add these lines to your android build config:
 Carbon uses RenderScript for generating shadows. Gradle doesn't support renderscript very well, so it has to be done that way.
 
 ### Changelog
+##### 0.6.3
+ - added ripple styles, demo and more ripple settings,
+ - added state animators,
+ - cleaned up a bit,
+ - fixed bug with setting background color,
+ - fixed bug with RelativeLayout's drawing
+
 ##### 0.6.2
  - added CardView and a sample,
  - added a sample and a style for flat buttons,
