@@ -25,8 +25,8 @@ public class NinePatchShadow extends Shadow {
         e = (int) Math.ceil(elevation);
         xDiv = new int[]{0, e * 2, e * 2 + 1, bitmap.getWidth()};
         yDiv = new int[]{0, e * 2, e * 2 + 1, bitmap.getHeight()};
-        xDivDst = new int[]{-e, e, 0,0};
-        yDivDst = new int[]{-e, e, 0,0};
+        xDivDst = new int[]{-e, e, 0, 0};
+        yDivDst = new int[]{-e, e, 0, 0};
     }
 
     @Override

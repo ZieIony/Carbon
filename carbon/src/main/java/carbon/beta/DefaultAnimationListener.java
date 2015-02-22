@@ -7,7 +7,7 @@ import static android.view.animation.Animation.AnimationListener;
 /**
  * Created by Marcin on 2014-11-17.
  */
-public class DefaultAnimationListener implements AnimationListener{
+public class DefaultAnimationListener implements AnimationListener {
     @Override
     public void onAnimationStart(Animation animation) {
 

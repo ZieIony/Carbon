@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import carbon.R;
-import carbon.beta.EditText;
 import carbon.widget.OnValidateListener;
 import carbon.widget.TextView;
 
@@ -66,7 +65,7 @@ public class ValidatedEditText extends android.widget.FrameLayout {
         return isValid;
     }
 
-    public void setError(String text){
+    public void setError(String text) {
         TextView error = (TextView) findViewById(R.id.error);
         error.setText(text);
     }

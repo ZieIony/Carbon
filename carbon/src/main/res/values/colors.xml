@@ -3,14 +3,16 @@
     <!-- dark theme -->
     <color name="carbon_white">#ffffffff</color>
     <color name="carbon_divider_dark">#1fffffff</color>
-    <color name="carbon_ripple_dark">#40cccccc</color>
+    <color name="carbon_ripple_dark">#42cccccc</color>
+    <color name="carbon_icon_light">#deffffff</color>
 
     <color name="carbon_background_dark">#ff333333</color>
 
     <!-- light theme -->
     <color name="carbon_black">#ff000000</color>
     <color name="carbon_divider_light">#1f000000</color>
-    <color name="carbon_ripple_light">#66999999</color>
+    <color name="carbon_ripple_light">#42999999</color>
+    <color name="carbon_icon_dark">#de000000</color>
 
     <color name="carbon_background_light">#ffeeeeee</color>
 

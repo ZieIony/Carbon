@@ -27,18 +27,18 @@ public class NavigationBar extends View {
 
     public NavigationBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs,R.attr.carbon_navigationBarStyle);
+        init(attrs, R.attr.carbon_navigationBarStyle);
     }
 
     public NavigationBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs,defStyleAttr);
+        init(attrs, defStyleAttr);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(getMeasuredWidth(), getNavigationBarHeight(getContext(),getResources().getConfiguration().orientation));
+        setMeasuredDimension(getMeasuredWidth(), getNavigationBarHeight(getContext(), getResources().getConfiguration().orientation));
     }
 
     private int getNavigationBarHeight(Context context, int orientation) {
@@ -54,7 +54,7 @@ public class NavigationBar extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        if(isInEditMode())
+        if (isInEditMode())
             return;
 
         setVisibility(View.GONE);

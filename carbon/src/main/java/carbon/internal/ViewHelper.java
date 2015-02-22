@@ -18,7 +18,7 @@ public class ViewHelper {
         if (animation == null)
             return new Matrix();
         Transformation transformation = new Transformation();
-        animation.getTransformation(view.getDrawingTime(),transformation);
+        animation.getTransformation(view.getDrawingTime(), transformation);
         return transformation.getMatrix();
     }
 }

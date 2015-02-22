@@ -64,7 +64,7 @@ public class ShadowGenerator {
             } else {
                 Bitmap cache = Bitmap.createBitmap((int) (view.getWidth() / ShadowGenerator.SHADOW_SCALE), (int) (view.getHeight() / ShadowGenerator.SHADOW_SCALE), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(cache);
-                canvas.scale(1/SHADOW_SCALE, 1/SHADOW_SCALE);
+                canvas.scale(1 / SHADOW_SCALE, 1 / SHADOW_SCALE);
                 view.draw(canvas);
                 shadowCanvas.drawBitmap(cache, e, e, paint);
             }

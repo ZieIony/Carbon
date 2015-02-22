@@ -80,24 +80,24 @@ public class TransitionLayout extends FrameLayout {
         this.y = location[1] - location2[1] + view.getHeight() / 2;
     }
 
-    public void startTransition(TransitionType transitionType){
-        startTransition(transitionType,DEFAULT_DURATION);
+    public void startTransition(TransitionType transitionType) {
+        startTransition(transitionType, DEFAULT_DURATION);
     }
 
-    public void startTransition(TransitionType transitionType,int duration) {
+    public void startTransition(TransitionType transitionType, int duration) {
         switch (transitionType) {
             case RadialExpand:
-                startRadialTransition(true,duration);
+                startRadialTransition(true, duration);
                 inAnimation = true;
                 break;
             case RadialCollapse:
-                startRadialTransition(false,duration);
+                startRadialTransition(false, duration);
                 inAnimation = false;
                 break;
         }
     }
 
-    private void startRadialTransition(boolean expand,int duration) {
+    private void startRadialTransition(boolean expand, int duration) {
         float dist = FloatMath.sqrt(x * x + y * y);
         dist = Math.max(dist, FloatMath.sqrt((getWidth() - x) * (getWidth() - x) + y * y));
         dist = Math.max(dist, FloatMath.sqrt(x * x + (getHeight() - y) * (getHeight() - y)));

@@ -9,6 +9,7 @@
         <attr name="carbon_colorError" format="reference|color" />
 
         <attr name="carbon_dividerColor" format="reference|color" />
+        <attr name="carbon_iconColor" format="reference|color" />
         <attr name="carbon_rippleColor" format="reference|color" />
         <attr name="carbon_rippleHotspot" format="boolean" />
         <attr name="carbon_rippleStyle" format="enum">
@@ -16,6 +17,12 @@
             <enum name="background" value="1"/>
             <enum name="borderless" value="2"/>
         </attr>
+
+        <attr name="carbon_touchMargin" format="dimension" />
+        <attr name="carbon_touchMarginLeft" format="dimension" />
+        <attr name="carbon_touchMarginTop" format="dimension" />
+        <attr name="carbon_touchMarginRight" format="dimension" />
+        <attr name="carbon_touchMarginBottom" format="dimension" />
 
         <attr name="carbon_textAppearance_headline" format="reference" />
         <attr name="carbon_textAppearance_title" format="reference" />
@@ -38,12 +45,6 @@
     <attr name="carbon_src" format="reference" />
     <attr name="carbon_elevation" format="dimension" />
     <attr name="carbon_cornerRadius" format="dimension" />
-
-    <attr name="carbon_touchMargin" format="dimension" />
-    <attr name="carbon_touchMarginLeft" format="dimension" />
-    <attr name="carbon_touchMarginTop" format="dimension" />
-    <attr name="carbon_touchMarginRight" format="dimension" />
-    <attr name="carbon_touchMarginBottom" format="dimension" />
 
     <attr name="carbon_inAnimation" format="enum">
         <enum name="none" value="0" />
@@ -85,15 +86,6 @@
     </attr>
 
     <attr name="carbon_fabStyle" format="reference" />
-    <declare-styleable name="SVGActionButton">
-        <attr name="carbon_elevation" />
-    </declare-styleable>
-    <declare-styleable name="ImageActionButton">
-        <attr name="carbon_rippleColor" />
-        <attr name="carbon_elevation" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
-    </declare-styleable>
 
     <attr name="carbon_statusBarStyle" format="reference" />
     <declare-styleable name="StatusBar">

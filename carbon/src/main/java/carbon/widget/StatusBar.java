@@ -40,7 +40,7 @@ public class StatusBar extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        if(isInEditMode())
+        if (isInEditMode())
             return;
 
         setVisibility(View.GONE);

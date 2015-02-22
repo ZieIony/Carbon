@@ -33,7 +33,7 @@ public class MaterialListAdapter implements android.widget.ListAdapter {
 
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
-adapter.unregisterDataSetObserver(observer);
+        adapter.unregisterDataSetObserver(observer);
     }
 
     @Override
@@ -58,12 +58,12 @@ adapter.unregisterDataSetObserver(observer);
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        final View view = adapter.getView(position,convertView,parent);
+        final View view = adapter.getView(position, convertView, parent);
         view.setClickable(true);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ListView)parent).performItemClick(view,position,getItemId(position));
+                ((ListView) parent).performItemClick(view, position, getItemId(position));
             }
         });
         return view;

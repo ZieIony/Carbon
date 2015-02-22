@@ -74,9 +74,9 @@ public class Snackbar extends PopupWindow {
         WindowManager.LayoutParams windowParams = (WindowManager.LayoutParams) getLayoutParams();
         windowParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         windowParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        windowParams.gravity = Gravity.BOTTOM|Gravity.LEFT|Gravity.RIGHT;
-        windowParams.horizontalMargin=0;
-        windowParams.verticalMargin=0;
+        windowParams.gravity = Gravity.BOTTOM | Gravity.LEFT | Gravity.RIGHT;
+        windowParams.horizontalMargin = 0;
+        windowParams.verticalMargin = 0;
         setLayoutParams(windowParams);
 
         handler = new Handler();
@@ -99,7 +99,7 @@ public class Snackbar extends PopupWindow {
         });
     }
 
-    public void hideImmediate(){
+    public void hideImmediate() {
         handler.removeCallbacks(hideRunnable);
         Snackbar.super.hide();
     }
@@ -145,12 +145,12 @@ public class Snackbar extends PopupWindow {
     public void setStyle(Style style) {
         this.style = style;
         MarginLayoutParams layoutParams = (MarginLayoutParams) content.getLayoutParams();
-        if(style==Style.Floating) {
+        if (style == Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             int margin = (int) getResources().getDimension(R.dimen.carbon_padding);
             layoutParams.setMargins(margin, margin, margin, margin);
-        }else{
+        } else {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.setMargins(0, 0, 0, 0);

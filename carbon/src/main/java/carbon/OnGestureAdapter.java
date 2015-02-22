@@ -3,8 +3,8 @@ package carbon;
 import android.view.MotionEvent;
 
 /**
-* Created by Marcin on 2014-12-20.
-*/
+ * Created by Marcin on 2014-12-20.
+ */
 public class OnGestureAdapter implements OnGestureListener {
 
     @Override

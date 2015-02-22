@@ -11,14 +11,13 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
@@ -28,11 +27,10 @@ import java.util.List;
 import java.util.Map;
 
 import carbon.Carbon;
-import carbon.GestureDetector;
-import carbon.OnGestureListener;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
+import carbon.animation.StateAnimator;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
@@ -43,18 +41,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-20.
  */
-public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView {
-    private boolean isRect = true;
-    private float elevation = 0;
-    private float translationZ = 0;
-    private AnimUtils.Style inAnim, outAnim;
-    private float cornerRadius;
-    private Bitmap texture;
-    private Canvas textureCanvas;
-    private Paint paint = new Paint();
-    List<View> views;
-    Map<View, Shadow> shadows = new HashMap<>();
-    private RippleDrawable rippleDrawable;
+public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
 
     public RelativeLayout(Context context) {
         super(context);
@@ -74,139 +61,31 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-        setElevation(a.getDimension(R.styleable.RelativeLayout_carbon_elevation, 0));
-        inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_inAnimation, 0)];
-        outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_outAnimation, 0)];
 
-        cornerRadius = a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0);
+        setElevation(a.getDimension(R.styleable.RelativeLayout_carbon_elevation, 0));
+
+        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_inAnimation, 0)]);
+        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_outAnimation, 0)]);
+        Carbon.initTouchMargin(this, attrs, defStyleAttr);
+        setCornerRadius(a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0));
 
         a.recycle();
 
-        paint.setAntiAlias(true);
-        paint.setFilterBitmap(true);
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
     }
 
-    public void setVisibility(final int visibility) {
-        if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
-            super.setVisibility(visibility);
-            AnimUtils.animateIn(this, inAnim, null);
-        } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
-            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    RelativeLayout.super.setVisibility(visibility);
-                }
-            });
-        }
-    }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
-            ((RippleDrawable)rippleDrawable).setHotspot(event.getX(), event.getY());
-        return super.dispatchTouchEvent(event);
-    }
-
-    @Override
-    public float getElevation() {
-        return elevation;
-    }
-
-    public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0, Math.min(elevation, 25));
-        if (elevation == this.elevation)
-            return;
-        this.elevation = elevation;
-        if (getParent() != null)
-            ((View) getParent()).invalidate();
-    }
-
-
-    @Override
-    public float getTranslationZ() {
-        return translationZ;
-    }
-
-    private synchronized void setTranslationZInternal(float translationZ) {
-        if (translationZ == this.translationZ)
-            return;
-        this.translationZ = translationZ;
-        if (getParent() != null)
-            ((View) getParent()).invalidate();
-    }
-
-    @Override
-    public void setTranslationZ(float translationZ) {
-        ValueAnimator animator = ValueAnimator.ofFloat(this.translationZ, translationZ);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.setDuration(300);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                setTranslationZInternal((Float) animation.getAnimatedValue());
-            }
-        });
-        animator.start();
-    }
-
-    @Override
-    public boolean isRect() {
-        return isRect;
-    }
-
-    @Override
-    public void setRect(boolean rect) {
-        this.isRect = rect;
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
-        if (!changed || getWidth() == 0 || getHeight() == 0)
-            return;
-
-        initDrawing();
-
-        views = new ArrayList<View>();
-        for (int i = 0; i < getChildCount(); i++) {
-            views.add(getChildAt(i));
-        }
-    }
-
-    private void initDrawing() {
-        if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
-            return;
-        texture = null;
-        texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        textureCanvas = new Canvas(texture);
-        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-    }
+    List<View> views;
+    Map<View, Shadow> shadows = new HashMap<>();
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        views = new ArrayList<View>();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
         super.dispatchDraw(canvas);
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        if (cornerRadius > 0 && textureCanvas != null) {
-            textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            super.dispatchDraw(textureCanvas);
-
-            RectF rect = new RectF();
-            rect.bottom = getHeight();
-            rect.right = getWidth();
-            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
-        } else {
-            super.dispatchDraw(canvas);
-        }
-
-        if (rippleDrawable != null)
-            rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
     @Override
@@ -282,6 +161,15 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         return false;
     }
 
+
+    // -------------------------------
+    // corners
+    // -------------------------------
+
+    private float cornerRadius;
+    private Canvas textureCanvas;
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+
     public float getCornerRadius() {
         return cornerRadius;
     }
@@ -289,6 +177,220 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         initDrawing();
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        if (!changed || getWidth() == 0 || getHeight() == 0)
+            return;
+
+        initDrawing();
+
+        if (rippleDrawable != null)
+            rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+    }
+
+    private void initDrawing() {
+        if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
+            return;
+        Bitmap texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        textureCanvas = new Canvas(texture);
+        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        if (cornerRadius > 0) {
+            textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+            super.draw(textureCanvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(textureCanvas);
+
+            RectF rect = new RectF();
+            rect.bottom = getHeight();
+            rect.right = getWidth();
+            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
+        } else {
+            super.draw(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
+        }
+    }
+
+
+    // -------------------------------
+    // ripple
+    // -------------------------------
+
+    private RippleDrawable rippleDrawable;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
+            ((RippleDrawable) rippleDrawable).setHotspot(event.getX(), event.getY());
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setTranslationZ(enabled ? 0 : -elevation);
+    }
+
+    @Override
+    public RippleDrawable getRippleDrawable() {
+        return rippleDrawable;
+    }
+
+    public void setRippleDrawable(RippleDrawable rippleDrawable) {
+        this.rippleDrawable = rippleDrawable;
+    }
+
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return super.verifyDrawable(who) || rippleDrawable == who;
+    }
+
+    @Override
+    public void invalidateDrawable(Drawable drawable) {
+        super.invalidateDrawable(drawable);
+        if (rippleDrawable != null && getParent() != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        setBackgroundDrawable(background);
+    }
+
+    @Override
+    public void setBackgroundDrawable(Drawable background) {
+        if (rippleDrawable == null || rippleDrawable.getBackground() == null) {
+            super.setBackgroundDrawable(background);
+            return;
+        }
+        rippleDrawable.setBackground(background);
+        super.setBackgroundDrawable(rippleDrawable);
+    }
+
+
+    // -------------------------------
+    // elevation
+    // -------------------------------
+
+    private float elevation = 0;
+    private float translationZ = 0;
+    private boolean isRect = true;
+
+    @Override
+    public float getElevation() {
+        return elevation;
+    }
+
+    public synchronized void setElevation(float elevation) {
+        elevation = Math.max(0, Math.min(elevation, 25));
+        if (elevation == this.elevation)
+            return;
+        this.elevation = elevation;
+        if (getParent() != null)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public float getTranslationZ() {
+        return translationZ;
+    }
+
+    public synchronized void setTranslationZ(float translationZ) {
+        if (translationZ == this.translationZ)
+            return;
+        this.translationZ = translationZ;
+        if (getParent() != null)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public boolean isRect() {
+        return isRect;
+    }
+
+    @Override
+    public void setRect(boolean rect) {
+        this.isRect = rect;
+    }
+
+
+    // -------------------------------
+    // touch margin
+    // -------------------------------
+
+    private Rect touchMargin;
+
+    @Override
+    public void setTouchMargin(Rect rect) {
+        touchMargin = rect;
+    }
+
+    @Override
+    public void setTouchMargin(int left, int top, int right, int bottom) {
+        touchMargin = new Rect(left, top, right, bottom);
+    }
+
+    @Override
+    public Rect getTouchMargin() {
+        return touchMargin;
+    }
+
+    public void getHitRect(Rect outRect) {
+        if (touchMargin == null) {
+            super.getHitRect(outRect);
+            return;
+        }
+        outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
+    }
+
+    // -------------------------------
+    // state animators
+    // -------------------------------
+
+    private List<StateAnimator> stateAnimators = new ArrayList<>();
+
+    public void removeStateAnimator(StateAnimator animator) {
+        stateAnimators.remove(animator);
+    }
+
+    public void addStateAnimator(StateAnimator animator) {
+        this.stateAnimators.add(animator);
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        for (StateAnimator animator : stateAnimators)
+            animator.stateChanged(getDrawableState());
+    }
+
+
+    // -------------------------------
+    // animations
+    // -------------------------------
+
+    private AnimUtils.Style inAnim, outAnim;
+
+    public void setVisibility(final int visibility) {
+        if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
+            super.setVisibility(visibility);
+            AnimUtils.animateIn(this, inAnim, null);
+        } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
+            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    RelativeLayout.super.setVisibility(visibility);
+                }
+            });
+        }
     }
 
     public AnimUtils.Style getOutAnimation() {
@@ -305,15 +407,5 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
-    }
-
-    @Override
-    public RippleDrawable getRippleDrawable() {
-        return rippleDrawable;
-    }
-
-    @Override
-    public void setRippleDrawable(RippleDrawable rippleDrawable) {
-        this.rippleDrawable = rippleDrawable;
     }
 }

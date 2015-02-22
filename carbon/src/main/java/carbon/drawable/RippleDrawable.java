@@ -44,13 +44,6 @@ public class RippleDrawable extends Drawable {
         }
     }
 
-    public void onCancel() {
-        if (pressed) {
-            pressed = false;
-            internalOnRelease();
-        }
-    }
-
     public RippleDrawable(int color) {
         this.color = color;
         this.alpha = color >> 24;
@@ -60,10 +53,14 @@ public class RippleDrawable extends Drawable {
         pressed = true;
         from = 10;
         Rect bounds = getBounds();
+        if (style == Style.Borderless) {
+            to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
+        } else {
+            to = Math.max(bounds.width(), bounds.height()) / 2.0f;
+        }
         interpolator = new DecelerateInterpolator();
         downTime = System.currentTimeMillis();
         if (!useHotspot) {
-            //hotspot = new PointF(x + bounds.left, y + bounds.top);
             hotspot = new PointF(bounds.centerX(), bounds.centerY());
         }
         paint.setAntiAlias(Carbon.antiAlias);
@@ -84,7 +81,6 @@ public class RippleDrawable extends Drawable {
     @Override
     public void draw(Canvas canvas) {
         Rect bounds = getBounds();
-        to = Math.max(bounds.width() / 2, bounds.height() / 2);
         if (background != null) {
             int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG);
             canvas.clipRect(bounds);

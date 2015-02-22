@@ -7,5 +7,6 @@ import android.view.animation.Animation;
  */
 public interface AnimatedView {
     void animateIn();
+
     void animateOut(Animation.AnimationListener animationListener);
 }

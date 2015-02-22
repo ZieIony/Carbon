@@ -90,10 +90,10 @@ public class AnimatedLayout extends FrameLayout implements AnimatedView {
         final List<View> views = getViews();
         //      views.remove(heroTo);
         for (View v : views) {
-      //      v.setVisibility(View.INVISIBLE);
+            //      v.setVisibility(View.INVISIBLE);
         }
 
-       // fadeIn(views);
+        // fadeIn(views);
 
         LayoutAnimation animation = new LayoutAnimation(from, to, this);
         animation.setInterpolator(new DecelerateInterpolator());

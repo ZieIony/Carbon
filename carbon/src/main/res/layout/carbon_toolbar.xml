@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="@dimen/carbon_toolbarHeight">
@@ -28,15 +29,12 @@
         android:text=""
         android:textAppearance="?attr/carbon_textAppearance_title_inverse" />
 
-    <FrameLayout
+    <carbon.widget.LinearLayout
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:id="@+id/carbon_toolbarContent"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/carbon_toolbarContent"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+</carbon.widget.LinearLayout>

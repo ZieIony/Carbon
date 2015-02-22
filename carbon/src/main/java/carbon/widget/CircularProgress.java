@@ -17,7 +17,6 @@ import carbon.drawable.CircularProgressDrawable;
  */
 public class CircularProgress extends View {
     private CircularProgressDrawable drawable;
-    private AnimUtils.Style inAnim, outAnim;
 
     public CircularProgress(Context context) {
         super(context);
@@ -53,20 +52,6 @@ public class CircularProgress extends View {
         a.recycle();
     }
 
-    public void setVisibility(final int visibility) {
-        if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
-            super.setVisibility(visibility);
-            AnimUtils.animateIn(this, inAnim, null);
-        } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
-            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    CircularProgress.super.setVisibility(visibility);
-                }
-            });
-        }
-    }
-
     public void setProgress(float progress) {
         drawable.setProgress(progress);
     }
@@ -89,5 +74,42 @@ public class CircularProgress extends View {
 
     public float getArcPadding() {
         return drawable.getArcPadding();
+    }
+
+
+    // -------------------------------
+    // animations
+    // -------------------------------
+
+    private AnimUtils.Style inAnim, outAnim;
+
+    public void setVisibility(final int visibility) {
+        if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
+            super.setVisibility(visibility);
+            AnimUtils.animateIn(this, inAnim, null);
+        } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
+            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    CircularProgress.super.setVisibility(visibility);
+                }
+            });
+        }
+    }
+
+    public AnimUtils.Style getOutAnimation() {
+        return outAnim;
+    }
+
+    public void setOutAnimation(AnimUtils.Style outAnim) {
+        this.outAnim = outAnim;
+    }
+
+    public AnimUtils.Style getInAnimation() {
+        return inAnim;
+    }
+
+    public void setInAnimation(AnimUtils.Style inAnim) {
+        this.inAnim = inAnim;
     }
 }

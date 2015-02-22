@@ -31,6 +31,7 @@
         <item name="carbon_colorBackground_inverse">@color/carbon_background_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
+        <item name="carbon_iconColor">@color/carbon_icon_dark</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -70,6 +71,7 @@
         <item name="carbon_colorBackground_inverse">@color/carbon_background_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
+        <item name="carbon_iconColor">@color/carbon_icon_light</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -130,6 +132,7 @@
         <item name="carbon_colorBackground_inverse">@color/carbon_background_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
+        <item name="carbon_iconColor">@color/carbon_icon_dark</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -169,6 +172,7 @@
         <item name="carbon_colorBackground_inverse">@color/carbon_background_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
+        <item name="carbon_iconColor">@color/carbon_icon_light</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -233,8 +237,10 @@
         <item name="android:clickable">true</item>
     </style>
 
-    <style name="carbon_FloatingActionButton" parent="@android:style/Widget.Button">
-        <item name="carbon_filterColor">?attr/carbon_colorBackground</item>
+    <style name="carbon_FloatingActionButton">
+        <item name="carbon_cornerRadius">28dp</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_filterColor">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">pop</item>
         <item name="carbon_outAnimation">pop</item>
         <item name="carbon_elevation">@dimen/carbon_elevationHigh</item>
@@ -257,7 +263,7 @@
     </style>
 
     <style name="carbon_SVGView">
-        <item name="carbon_filterColor">?attr/carbon_colorBackground</item>
+        <item name="carbon_filterColor">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">fade</item>
         <item name="carbon_outAnimation">fade</item>
     </style>

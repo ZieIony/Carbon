@@ -24,30 +24,30 @@ public class RootView extends android.widget.FrameLayout {
     @Override
     public void addView(final View view) {
         super.addView(view);
-        if(view instanceof AnimatedView)
+        if (view instanceof AnimatedView)
             ((AnimatedView) view).animateIn();
     }
 
     @Override
     public void removeView(final View view) {
-        if(view instanceof AnimatedView){
-            ((AnimatedView)view).animateOut(new DefaultAnimationListener(){
+        if (view instanceof AnimatedView) {
+            ((AnimatedView) view).animateOut(new DefaultAnimationListener() {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     _removeView(view);
                 }
             });
-        }else {
+        } else {
             super.removeView(view);
         }
     }
 
-    private void _removeView(View view){
+    private void _removeView(View view) {
         super.removeView(view);
     }
 
     public boolean onBack() {
-        if(getChildCount()>1) {
+        if (getChildCount() > 1) {
             removeView(getChildAt(getChildCount() - 1));
             return true;
         }

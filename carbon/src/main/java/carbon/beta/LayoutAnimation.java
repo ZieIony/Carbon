@@ -21,8 +21,8 @@ public class LayoutAnimation extends Animation {
 
     @Override
     protected void applyTransformation(float v, Transformation t) {
-        if(reversed)
-            v = 1-v;
+        if (reversed)
+            v = 1 - v;
 
         view.setClipRect(lerp(from.left, to.left, v),
                 lerp(from.top, to.top, v),

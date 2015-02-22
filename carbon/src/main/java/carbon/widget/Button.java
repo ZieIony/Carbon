@@ -34,16 +34,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class Button extends android.widget.Button implements ShadowView, RippleView {
-    private float elevation = 0;
-    private float translationZ = 0;
-    private boolean isRect = true;
-
-    private Bitmap texture;
-    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Canvas textureCanvas;
-    private float cornerRadius;
-    private RippleDrawable rippleDrawable;
+public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView,StateAnimatorView {
 
     public Button(Context context) {
         super(context);
@@ -64,15 +55,13 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.Button_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
 
         setElevation(a.getDimension(R.styleable.Button_carbon_elevation, 0));
-        if (!isInEditMode())
-            setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.values()[a.getInt(R.styleable.Button_carbon_textStyle, Roboto.Style.Regular.ordinal())]));
 
         setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Button_carbon_inAnimation, 0)]);
         setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Button_carbon_outAnimation, 0)]);
-        initTouchMargin(a);
-        addStateAnimator(new RippleStateAnimator(this));
+        Carbon.initTouchMargin(this, attrs, defStyleAttr);
         addStateAnimator(new ElevationStateAnimator(this));
         setCornerRadius(a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
 
@@ -89,6 +78,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     // -------------------------------
     // corners
     // -------------------------------
+
+    private float cornerRadius;
+    private Canvas textureCanvas;
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     public float getCornerRadius() {
         return cornerRadius;
@@ -115,8 +108,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     private void initDrawing() {
         if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
             return;
-        texture = null;
-        texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         textureCanvas = new Canvas(texture);
         paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
     }
@@ -145,6 +137,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     // ripple
     // -------------------------------
 
+    private RippleDrawable rippleDrawable;
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
@@ -156,11 +150,6 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         setTranslationZ(enabled ? 0 : -elevation);
-    }
-
-    @Override
-    public Drawable getBackground() {
-        return rippleDrawable != null ? rippleDrawable : super.getBackground();
     }
 
     @Override
@@ -184,10 +173,29 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             ((View) getParent()).postInvalidate();
     }
 
+    @Override
+    public void setBackground(Drawable background) {
+        setBackgroundDrawable(background);
+    }
+
+    @Override
+    public void setBackgroundDrawable(Drawable background) {
+        if (rippleDrawable == null || rippleDrawable.getBackground() == null) {
+            super.setBackgroundDrawable(background);
+            return;
+        }
+        rippleDrawable.setBackground(background);
+        super.setBackgroundDrawable(rippleDrawable);
+    }
+
 
     // -------------------------------
     // elevation
     // -------------------------------
+
+    private float elevation = 0;
+    private float translationZ = 0;
+    private boolean isRect = true;
 
     @Override
     public float getElevation() {
@@ -233,19 +241,19 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     private Rect touchMargin;
 
-    private void initTouchMargin(TypedArray a) {
-        int touchMarginAll = (int) a.getDimension(R.styleable.Button_carbon_touchMargin, 0);
-        if (touchMarginAll > 0) {
-            touchMargin = new Rect(touchMarginAll, touchMarginAll, touchMarginAll, touchMarginAll);
-        } else {
-            touchMargin = new Rect();
-            int top = (int) a.getDimension(R.styleable.Button_carbon_touchMarginTop, 0);
-            int left = (int) a.getDimension(R.styleable.Button_carbon_touchMarginLeft, 0);
-            int right = (int) a.getDimension(R.styleable.Button_carbon_touchMarginRight, 0);
-            int bottom = (int) a.getDimension(R.styleable.Button_carbon_touchMarginBottom, 0);
-            if (top > 0 || left > 0 || right > 0 || bottom > 0)
-                touchMargin = new Rect(left, top, right, bottom);
-        }
+    @Override
+    public void setTouchMargin(Rect rect) {
+        touchMargin = rect;
+    }
+
+    @Override
+    public void setTouchMargin(int left, int top, int right, int bottom) {
+        touchMargin = new Rect(left, top, right, bottom);
+    }
+
+    @Override
+    public Rect getTouchMargin() {
+        return touchMargin;
     }
 
     public void getHitRect(Rect outRect) {
@@ -312,5 +320,22 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
+    }
+
+
+    // -------------------------------
+    // roboto
+    // -------------------------------
+
+    Roboto.Style style;
+
+    public void setTextStyle(Roboto.Style style) {
+        this.style = style;
+        if (!isInEditMode())
+            super.setTypeface(Roboto.getTypeface(getContext(), style));
+    }
+
+    public Roboto.Style getTextStyle() {
+        return style;
     }
 }

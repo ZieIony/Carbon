@@ -1,7 +1,5 @@
 package carbon.animation;
 
-import android.view.View;
-
 import carbon.drawable.RippleView;
 
 /**
