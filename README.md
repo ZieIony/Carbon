@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.3-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.3/)
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.3.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.3.1/)
 
 Carbon
 ================
@@ -73,12 +73,14 @@ You have to add these lines to your android build config:
 Carbon uses RenderScript for generating shadows. Gradle doesn't support renderscript very well, so it has to be done that way.
 
 ### Changelog
+##### 0.6.3.1
+ - fixed bugs: setting corners for layouts, drawing 0dp views, null hotspot
+ 
 ##### 0.6.3
  - added ripple styles, demo and more ripple settings,
  - added state animators,
  - cleaned up a bit,
- - fixed bug with setting background color,
- - fixed bug with RelativeLayout's drawing
+ - fixed bugs: setting background color, RelativeLayout's drawing
 
 ##### 0.6.2
  - added CardView and a sample,
