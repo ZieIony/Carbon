@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,6 +21,7 @@ public class SVGView extends ImageView {
     private static final String TAG = SVGView.class.getSimpleName();
     private int svgId;
     private Bitmap bitmap;
+    private ColorStateList filterColor;
 
     public SVGView(Context context) {
         super(context);
@@ -39,9 +41,9 @@ public class SVGView extends ImageView {
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SVGView, defStyleAttr, 0);
         svgId = a.getResourceId(R.styleable.SVGView_carbon_src, 0);
-        int filterColor = a.getColor(R.styleable.SVGView_carbon_filterColor, 0);
-        if (filterColor != 0)
-            setColorFilter(new LightingColorFilter(0, filterColor));
+        filterColor = a.getColorStateList(R.styleable.SVGView_carbon_filterColor);
+        if (filterColor != null)
+            setColorFilter(new LightingColorFilter(0, filterColor.getColorForState(getDrawableState(), filterColor.getDefaultColor())));
         a.recycle();
     }
 
@@ -81,5 +83,12 @@ public class SVGView extends ImageView {
         } catch (NullPointerException e) {
             Log.e(TAG, "problem with the resource", e);
         }
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        if (filterColor != null)
+            setColorFilter(new LightingColorFilter(0, filterColor.getColorForState(getDrawableState(), filterColor.getDefaultColor())));
     }
 }

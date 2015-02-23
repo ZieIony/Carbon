@@ -47,12 +47,39 @@
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
-    <carbon.widget.SVGView
-        app:carbon_filterColor="#ffff0000"
-        app:carbon_src="@raw/ic_today_24px"
-        android:layout_margin="@dimen/carbon_padding"
-        android:layout_width="24dp"
-        android:layout_height="24dp" />
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <carbon.widget.LinearLayout
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.SVGView
+            android:duplicateParentState="true"
+            android:layout_gravity="center_vertical"
+            app:carbon_filterColor="@drawable/red_black_selector"
+            app:carbon_src="@raw/ic_today_24px"
+            android:layout_margin="@dimen/carbon_padding"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+        <carbon.widget.TextView
+            android:duplicateParentState="true"
+            android:layout_marginLeft="@dimen/carbon_padding"
+            android:gravity="center_vertical"
+            android:textColor="@drawable/red_black_selector"
+            android:textAppearance="?attr/carbon_textAppearance_body2"
+            android:text="press me"
+            android:layout_width="match_parent"
+            android:layout_height="56dp" />
+    </carbon.widget.LinearLayout>
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <carbon.widget.SVGView
         app:carbon_filterColor="#ff0000ff"
