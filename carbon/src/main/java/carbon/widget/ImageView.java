@@ -106,7 +106,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     @Override
     public void draw(Canvas canvas) {
-        if (cornerRadius > 0) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
             super.draw(textureCanvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)

@@ -25,7 +25,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.DefaultAnimatorListener;
 import carbon.animation.ElevationStateAnimator;
-import carbon.animation.RippleStateAnimator;
 import carbon.animation.StateAnimator;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -34,7 +33,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView,StateAnimatorView {
+public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
 
     public Button(Context context) {
         super(context);
@@ -115,7 +114,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     @Override
     public void draw(Canvas canvas) {
-        if (cornerRadius > 0) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
             super.draw(textureCanvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)

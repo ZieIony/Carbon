@@ -202,7 +202,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     public void draw(Canvas canvas) {
-        if (cornerRadius > 0) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
             super.draw(textureCanvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -211,6 +211,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
             RectF rect = new RectF();
             rect.bottom = getHeight();
             rect.right = getWidth();
+            paint.setAlpha(255);
             canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
         } else {
             super.draw(canvas);

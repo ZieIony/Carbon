@@ -19,6 +19,7 @@
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_circularProgressStyle">@style/carbon_CircularProgress</item>
+        <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
     </style>
@@ -121,7 +122,9 @@
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_circularProgressStyle">@style/carbon_CircularProgress</item>
+        <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
+        <item name="carbon_editTextStyle">@style/carbon_EditText</item>
     </style>
 
     <style name="carbon_Theme.AppCompat.Dark">
@@ -263,6 +266,7 @@
     </style>
 
     <style name="carbon_SVGView">
+        <item name="carbon_rippleColor">@null</item>
         <item name="carbon_filterColor">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">fade</item>
         <item name="carbon_outAnimation">fade</item>
@@ -293,6 +297,7 @@
     </style>
 
     <style name="carbon_ImageView">
+        <item name="carbon_rippleColor">@null</item>
         <item name="carbon_rippleStyle">over</item>
         <item name="carbon_inAnimation">brightnessSaturationFade</item>
         <item name="carbon_outAnimation">brightnessSaturationFade</item>
@@ -308,6 +313,15 @@
     </style>
 
     <style name="carbon_CircularProgress">
+        <item name="carbon_indeterminate">true</item>
+        <item name="carbon_arcColor">?attr/carbon_colorPrimary</item>
+        <item name="carbon_arcBackground">?attr/carbon_colorBackground</item>
+        <item name="carbon_arcWidth">3dp</item>
+        <item name="carbon_inAnimation">progressWidth</item>
+        <item name="carbon_outAnimation">progressWidth</item>
+    </style>
+
+    <style name="carbon_ProgressBar">
         <item name="carbon_indeterminate">true</item>
         <item name="carbon_arcColor">?attr/carbon_colorPrimary</item>
         <item name="carbon_arcBackground">?attr/carbon_colorBackground</item>

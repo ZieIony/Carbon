@@ -13,9 +13,9 @@
         <attr name="carbon_rippleColor" format="reference|color" />
         <attr name="carbon_rippleHotspot" format="boolean" />
         <attr name="carbon_rippleStyle" format="enum">
-            <enum name="over" value="0"/>
-            <enum name="background" value="1"/>
-            <enum name="borderless" value="2"/>
+            <enum name="over" value="0" />
+            <enum name="background" value="1" />
+            <enum name="borderless" value="2" />
         </attr>
 
         <attr name="carbon_touchMargin" format="dimension" />
@@ -45,6 +45,8 @@
     <attr name="carbon_src" format="reference" />
     <attr name="carbon_elevation" format="dimension" />
     <attr name="carbon_cornerRadius" format="dimension" />
+
+    <attr name="carbon_indeterminate" format="boolean" />
 
     <attr name="carbon_inAnimation" format="enum">
         <enum name="none" value="0" />
@@ -202,11 +204,22 @@
 
     <attr name="carbon_circularProgressStyle" format="reference" />
     <declare-styleable name="CircularProgress">
-        <attr name="carbon_indeterminate" format="boolean" />
+        <attr name="carbon_indeterminate" />
         <attr name="carbon_arcColor" format="color|reference" />
         <attr name="carbon_arcBackground" format="color|reference" />
         <attr name="carbon_arcWidth" format="dimension" />
         <attr name="carbon_arcPadding" format="dimension" />
+        <attr name="carbon_inAnimation" />
+        <attr name="carbon_outAnimation" />
+    </declare-styleable>
+
+    <attr name="carbon_progressBarStyle" format="reference" />
+    <declare-styleable name="ProgressBar">
+        <attr name="carbon_indeterminate" />
+        <attr name="carbon_barColor" format="color|reference" />
+        <attr name="carbon_barBackground" format="color|reference" />
+        <attr name="carbon_barWidth" format="dimension" />
+        <attr name="carbon_barPadding" format="dimension" />
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
     </declare-styleable>

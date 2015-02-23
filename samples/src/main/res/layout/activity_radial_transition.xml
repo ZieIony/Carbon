@@ -16,37 +16,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <carbon.widget.TextView
-                android:textSize="20sp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
+            <carbon.widget.LinearLayout
                 android:layout_margin="@dimen/carbon_padding"
-                android:hint="login"
-                android:textAppearance="?attr/carbon_textAppearance_body2"
+                app:carbon_elevation="@dimen/carbon_elevationLow"
+                app:carbon_cornerRadius="2dp"
+                android:orientation="vertical"
+                android:background="?attr/carbon_colorBackground"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
 
-            <carbon.widget.TextView
-                android:textSize="20sp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:layout_margin="@dimen/carbon_padding"
-                android:hint="password"
-                android:textAppearance="?attr/carbon_textAppearance_body2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <carbon.widget.TextView
+                    android:textSize="20sp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:hint="login"
+                    android:textAppearance="?attr/carbon_textAppearance_body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            <carbon.widget.Button
-                android:text="login"
-                android:layout_gravity="right"
-                android:layout_margin="@dimen/carbon_padding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <carbon.widget.TextView
+                    android:textSize="20sp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:hint="password"
+                    android:textAppearance="?attr/carbon_textAppearance_body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            <carbon.widget.Divider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </carbon.widget.LinearLayout>
+                <carbon.widget.Button
+                    android:text="login"
+                    android:layout_gravity="right"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </carbon.widget.LinearLayout>
+
+         </carbon.widget.LinearLayout>
 
         <FrameLayout
             android:id="@+id/container"

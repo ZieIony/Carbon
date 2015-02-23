@@ -25,7 +25,7 @@ public class RippleDrawable extends Drawable {
     private static final int FADE_DURATION = 300;
 
     private Paint paint = new Paint();
-    private PointF hotspot;
+    private PointF hotspot = new PointF();
     private int color;
     private Drawable background;
     private Interpolator interpolator;
@@ -40,7 +40,11 @@ public class RippleDrawable extends Drawable {
     public void onRelease() {
         if (pressed) {
             pressed = false;
-            internalOnRelease();
+            long time = System.currentTimeMillis();
+            float animFrac = (time - downTime) / (float) duration;
+            duration = RIPPLE_DURATION;
+            downTime = time - (long) (duration * animFrac);
+            upTime = System.currentTimeMillis();
         }
     }
 
@@ -61,21 +65,14 @@ public class RippleDrawable extends Drawable {
         interpolator = new DecelerateInterpolator();
         downTime = System.currentTimeMillis();
         if (!useHotspot) {
-            hotspot = new PointF(bounds.centerX(), bounds.centerY());
+            hotspot.x = bounds.centerX();
+            hotspot.y = bounds.centerY();
         }
         paint.setAntiAlias(Carbon.antiAlias);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(color);
         duration = LONGPRESS_DURATION;
         invalidateSelf();
-    }
-
-    private void internalOnRelease() {
-        long time = System.currentTimeMillis();
-        float animFrac = (time - downTime) / (float) duration;
-        duration = RIPPLE_DURATION;
-        downTime = time - (long) (duration * animFrac);
-        upTime = System.currentTimeMillis();
     }
 
     @Override
@@ -187,6 +184,7 @@ public class RippleDrawable extends Drawable {
     }
 
     public void setHotspot(float x, float y) {
-        this.hotspot = new PointF(x, y);
+        this.hotspot.x = x;
+        this.hotspot.y = y;
     }
 }
