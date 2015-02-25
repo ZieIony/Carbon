@@ -42,6 +42,8 @@ import carbon.shadow.ShadowView;
  * Created by Marcin on 2014-11-20.
  */
 public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
+    private boolean debugMode;
+
     public LinearLayout(Context context) {
         super(context);
         init(null, R.attr.carbon_linearLayoutStyle);
@@ -65,6 +67,12 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
         a.recycle();
 
+        if (isInEditMode()) {
+            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+            a.recycle();
+        }
+
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
     }
@@ -80,6 +88,9 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
         super.dispatchDraw(canvas);
+
+        if (debugMode)
+            Carbon.drawDebugInfo(this,canvas);
     }
 
     @Override
@@ -363,8 +374,9 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        for (StateAnimator animator : stateAnimators)
-            animator.stateChanged(getDrawableState());
+        if (stateAnimators != null)
+            for (StateAnimator animator : stateAnimators)
+                animator.stateChanged(getDrawableState());
     }
 
 

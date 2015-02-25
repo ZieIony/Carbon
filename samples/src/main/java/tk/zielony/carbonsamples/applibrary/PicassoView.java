@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.applibrary;
 
 import android.content.Context;
 import android.graphics.Bitmap;

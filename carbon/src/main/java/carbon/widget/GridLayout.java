@@ -6,19 +6,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import carbon.Carbon;
 import carbon.R;
@@ -27,41 +33,143 @@ import carbon.animation.DefaultAnimatorListener;
 import carbon.animation.StateAnimator;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.internal.ElevationComparator;
+import carbon.shadow.Shadow;
+import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowView;
 
 /**
- * Created by Marcin on 2015-01-22.
+ * Created by Marcin on 2014-11-20.
  */
-public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
+public class GridLayout extends android.support.v7.widget.GridLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
 
-    public ImageView(Context context) {
+    private boolean debugMode;
+
+    public GridLayout(Context context) {
         super(context);
-        init(null, R.attr.carbon_imageViewStyle);
+        init(null, R.attr.carbon_frameLayoutStyle);
     }
 
-    public ImageView(Context context, AttributeSet attrs) {
+    public GridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, R.attr.carbon_imageViewStyle);
+        init(attrs, R.attr.carbon_frameLayoutStyle);
     }
 
-    public ImageView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
+    public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(attrs, defStyleAttr);
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
-
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
+        setElevation(a.getDimension(R.styleable.FrameLayout_carbon_elevation, 0));
 
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.ImageView_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.ImageView_carbon_outAnimation, 0)]);
+        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.FrameLayout_carbon_inAnimation, 0)]);
+        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.FrameLayout_carbon_outAnimation, 0)]);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        setCornerRadius(a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
+        setCornerRadius(a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
 
         a.recycle();
+
+        if (isInEditMode()) {
+            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+            a.recycle();
+        }
+
+        setChildrenDrawingOrderEnabled(true);
+        setClipToPadding(false);
+    }
+
+
+    List<View> views;
+    Map<View, Shadow> shadows = new HashMap<>();
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        views = new ArrayList<View>();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
+        Collections.sort(views, new ElevationComparator());
+        super.dispatchDraw(canvas);
+
+        if (debugMode)
+            Carbon.drawDebugInfo(this,canvas);
+    }
+
+    @Override
+    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+        if (!child.isShown())
+            return super.drawChild(canvas, child, drawingTime);
+
+        if (!isInEditMode() && child instanceof ShadowView) {
+            ShadowView shadowView = (ShadowView) child;
+            float elevation = shadowView.getElevation() + shadowView.getTranslationZ();
+            if (elevation >= 0.01f) {
+                Shadow shadow = shadows.get(child);
+                if (shadow == null || shadow.elevation != elevation) {
+                    shadow = ShadowGenerator.generateShadow(child, elevation);
+                    shadows.put(child, shadow);
+                }
+
+                paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
+
+                int[] location = new int[2];
+                child.getLocationOnScreen(location);
+                float x = location[0] + child.getWidth() / 2.0f;
+                float y = location[1] + child.getHeight() / 2.0f;
+                x -= getRootView().getWidth() / 2;
+                y += getRootView().getHeight() / 2;   // looks nice
+                float length = (float) Math.sqrt(x * x + y * y);
+
+                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.translate(
+                        x / length * elevation / 2,
+                        y / length * elevation / 2);
+                canvas.translate(
+                        child.getLeft(),
+                        child.getTop());
+                if (Build.VERSION.SDK_INT >= 11) {
+                    canvas.concat(child.getMatrix());
+                } else {
+                    canvas.concat(carbon.internal.ViewHelper.getMatrix(child));
+                }
+                canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
+                shadow.draw(canvas, child, paint);
+                canvas.restoreToCount(saveCount);
+            }
+        }
+
+        if (child instanceof RippleView) {
+            RippleView rippleView = (RippleView) child;
+            RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
+                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.translate(
+                        child.getLeft(),
+                        child.getTop());
+                rippleDrawable.draw(canvas);
+                canvas.restoreToCount(saveCount);
+            }
+        }
+
+        return super.drawChild(canvas, child, drawingTime);
+    }
+
+    @Override
+    protected int getChildDrawingOrder(int childCount, int i) {
+        return views.indexOf(getChildAt(i));
+    }
+
+    protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {
+        final Rect frame = new Rect();
+        child.getHitRect(frame);
+        if (frame.contains((int) x, (int) y)) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -71,7 +179,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     private float cornerRadius;
     private Canvas textureCanvas;
-    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public float getCornerRadius() {
         return cornerRadius;
@@ -114,6 +222,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             RectF rect = new RectF();
             rect.bottom = getHeight();
             rect.right = getWidth();
+            paint.setAlpha(255);
             canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
         } else {
             super.draw(canvas);
@@ -291,7 +400,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    ImageView.super.setVisibility(visibility);
+                    GridLayout.super.setVisibility(visibility);
                 }
             });
         }

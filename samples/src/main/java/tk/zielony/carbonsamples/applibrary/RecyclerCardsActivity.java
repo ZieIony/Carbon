@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.applibrary;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.Arrays;
 import java.util.List;
+
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2014-12-15.

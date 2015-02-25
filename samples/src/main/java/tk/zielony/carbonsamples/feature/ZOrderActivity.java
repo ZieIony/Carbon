@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.feature;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 
 import carbon.shadow.ShadowView;
 import carbon.widget.Button;
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2014-12-15.

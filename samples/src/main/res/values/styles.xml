@@ -5,4 +5,20 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="AppTheme.Debug">
+        <item name="carbon_debugMode">true</item>
+    </style>
+
+    <style name="calcButtonStyle" parent="carbon_Button.Flat">
+        <item name="carbon_rippleColor">#42ffffff</item>
+        <item name="carbon_rippleStyle">borderless</item>
+        <item name="carbon_rippleHotspot">false</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="calcButtonStyle2" parent="calcButtonStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

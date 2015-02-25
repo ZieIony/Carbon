@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.applibrary;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2015-02-12.

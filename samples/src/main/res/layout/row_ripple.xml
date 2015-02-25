@@ -14,12 +14,22 @@
         android:layout_height="24dp"
         android:src="@drawable/ic_launcher" />
 
-    <carbon.widget.TextView
-        android:id="@+id/text"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:text="Row"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp" />
+        android:layout_height="wrap_content">
+
+        <carbon.widget.TextView
+            android:id="@+id/text"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
+            android:text="Row"
+            android:layout_width="match_parent"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Divider
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
+    </FrameLayout>
 </carbon.widget.LinearLayout>

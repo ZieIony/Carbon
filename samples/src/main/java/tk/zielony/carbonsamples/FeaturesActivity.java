@@ -10,12 +10,15 @@ import android.widget.ListView;
 
 import carbon.widget.MaterialListAdapter;
 import carbon.widget.Toolbar;
-import tk.zielony.carbonsamples.animation.ImageFadeActivity;
-import tk.zielony.carbonsamples.animation.ListRippleActivity;
-import tk.zielony.carbonsamples.animation.RadialTransitionActivity;
+import tk.zielony.carbonsamples.feature.RobotoActivity;
+import tk.zielony.carbonsamples.feature.SaveStateActivity;
+import tk.zielony.carbonsamples.feature.ShadowActivity;
+import tk.zielony.carbonsamples.feature.StatusNavigationActivity;
+import tk.zielony.carbonsamples.feature.TextAppearanceActivity;
+import tk.zielony.carbonsamples.feature.ZOrderActivity;
 
 
-public class AnimationsActivity extends Activity {
+public class FeaturesActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,24 +28,24 @@ public class AnimationsActivity extends Activity {
         final Handler handler = new Handler();
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setText("Animations");
+        toolbar.setText("Features");
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "Widget animations","Image fade", "List ripple", "Radial transition"
+                "Roboto", "Saving state", "Large shadow", "Status & navigation bars", "Text appearance", "Z order"
         };
         final Class[] activities = new Class[]{
-                tk.zielony.carbonsamples.animation.AnimationsActivity.class, ImageFadeActivity.class, ListRippleActivity.class, RadialTransitionActivity.class
+                RobotoActivity.class, SaveStateActivity.class, ShadowActivity.class, StatusNavigationActivity.class, TextAppearanceActivity.class, ZOrderActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, false,false,false
+                false, true, false, false, false, false
         };
         listView.setAdapter(new MaterialListAdapter(new MainListAdapter(items, beta)));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(AnimationsActivity.this, activities[position]));
+                startActivity(new Intent(FeaturesActivity.this, activities[position]));
             }
         });
     }

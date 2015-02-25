@@ -34,7 +34,7 @@ public class ProgressBarDrawable extends Drawable {
     public ProgressBarDrawable() {
         startTime = System.currentTimeMillis();
         paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
+        paint.setStyle(Paint.Style.FILL);
     }
 
     @Override

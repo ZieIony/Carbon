@@ -1,4 +1,4 @@
-package carbon.animation;
+package carbon.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,18 +10,22 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.util.FloatMath;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
+
+import carbon.animation.AnimUtils;
+import carbon.animation.DefaultAnimatorListener;
 
 /**
  * Created by Marcin on 2014-12-04.
  */
-public class TransitionLayout extends FrameLayout {
+public class TransitionLayout extends android.widget.FrameLayout {
     private static final int DEFAULT_DURATION = 600;
     float radius = 0;
     float x, y;
@@ -31,11 +35,12 @@ public class TransitionLayout extends FrameLayout {
     private Bitmap texture;
     private Canvas textureCanvas;
     private ValueAnimator animator;
-    private int currentView = 0;
+    private TransitionType currentTransition;
+    private int currentIndex = 0;
     private boolean inAnimation;
 
     public static enum TransitionType {
-        RadialExpand, RadialCollapse, FadeIn, FadeOut
+        Radial, Fade
     }
 
     public TransitionLayout(Context context) {
@@ -59,11 +64,13 @@ public class TransitionLayout extends FrameLayout {
         internalListener = new DefaultAnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animator) {
-                currentView++;
-                currentView %= getChildCount();
-                animator = null;
+                currentIndex++;
+                currentIndex %= getChildCount();
+                currentTransition = null;
             }
         };
+
+        setClipChildren(false);
     }
 
     public void setHotspot(float x, float y) {
@@ -81,71 +88,94 @@ public class TransitionLayout extends FrameLayout {
     }
 
     public void startTransition(TransitionType transitionType) {
-        startTransition(transitionType, DEFAULT_DURATION);
+        startTransition(transitionType, true, DEFAULT_DURATION);
     }
 
-    public void startTransition(TransitionType transitionType, int duration) {
+    public void startTransition(TransitionType transitionType, boolean in) {
+        startTransition(transitionType, in, DEFAULT_DURATION);
+    }
+
+    public void startTransition(TransitionType transitionType, boolean in, int duration) {
+        inAnimation = in;
+        currentTransition = transitionType;
         switch (transitionType) {
-            case RadialExpand:
-                startRadialTransition(true, duration);
-                inAnimation = true;
+            case Radial:
+                startRadialTransition(duration);
                 break;
-            case RadialCollapse:
-                startRadialTransition(false, duration);
-                inAnimation = false;
+            case Fade:
+                startFadeTransition(duration);
                 break;
         }
     }
 
-    private void startRadialTransition(boolean expand, int duration) {
+    private void startRadialTransition(int duration) {
         float dist = FloatMath.sqrt(x * x + y * y);
         dist = Math.max(dist, FloatMath.sqrt((getWidth() - x) * (getWidth() - x) + y * y));
         dist = Math.max(dist, FloatMath.sqrt(x * x + (getHeight() - y) * (getHeight() - y)));
         dist = Math.max(dist, FloatMath.sqrt((getWidth() - x) * (getWidth() - x) + (getHeight() - y) * (getHeight() - y)));
-        animator = ValueAnimator.ofFloat(expand ? 0 : dist, expand ? dist : 0);
-        animator.setDuration(600);
+        animator = ValueAnimator.ofFloat(inAnimation ? 0 : dist, inAnimation ? dist : 0);
+        animator.setDuration(duration);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 radius = (Float) animation.getAnimatedValue();
-                invalidate();
+                postInvalidate();
             }
         });
         animator.addListener(internalListener);
-        if (listener != null) {
+        if (listener != null)
             animator.addListener(listener);
-        }
+
+        texture = null;
+        texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        textureCanvas = new Canvas(texture);
+        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+
+        animator.start();
+    }
+
+    private void startFadeTransition(int duration) {
+        AnimUtils.fadeOut(this, null);
+        animator = ValueAnimator.ofFloat(inAnimation ? 0 : 1, inAnimation ? 1 : 0);
+        animator.setDuration(duration);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int topView = !inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
+                ViewHelper.setAlpha(getChildAt(topView), (Float) animation.getAnimatedValue());
+                postInvalidate();
+            }
+        });
+        animator.addListener(internalListener);
+        if (listener != null)
+            animator.addListener(listener);
         animator.start();
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        if (changed) {
-            texture = null;
-            texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-            textureCanvas = new Canvas(texture);
-            paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-        }
-    }
-
-    @Override
     protected void dispatchDraw(Canvas canvas) {
-        if (animator != null && animator.isRunning() && textureCanvas != null) {
-            int outView = inAnimation ? currentView : (currentView + 1) % getChildCount();
-            int inView = !inAnimation ? currentView : (currentView + 1) % getChildCount();
+        if (currentTransition == TransitionType.Radial && textureCanvas != null) {
+            int bottomView = inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
+            int topView = !inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
 
-            getChildAt(outView).draw(canvas);
+            drawChild(canvas,getChildAt(bottomView),getDrawingTime());
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            getChildAt(inView).draw(textureCanvas);
+            getChildAt(topView).draw(textureCanvas);
 
             RectF rect = new RectF();
             rect.bottom = getHeight();
             rect.right = getWidth();
             canvas.drawCircle(x, y, radius, paint);
+        } else if (currentTransition == TransitionType.Fade) {
+            int bottomView = inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
+            int topView = !inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
+
+            drawChild(canvas,getChildAt(bottomView),getDrawingTime());
+            drawChild(canvas,getChildAt(topView),getDrawingTime());
         } else {
-            getChildAt(currentView).draw(canvas);
+            drawChild(canvas, getChildAt(currentIndex), getDrawingTime());
         }
     }
 

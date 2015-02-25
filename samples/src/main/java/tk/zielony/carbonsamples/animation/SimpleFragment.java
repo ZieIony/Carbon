@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.animation;
 
 
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.widget.TextView;
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2015-02-08.

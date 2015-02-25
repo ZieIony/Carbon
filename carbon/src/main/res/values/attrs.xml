@@ -18,6 +18,8 @@
             <enum name="borderless" value="2" />
         </attr>
 
+        <attr name="carbon_debugMode" format="boolean" />
+
         <attr name="carbon_touchMargin" format="dimension" />
         <attr name="carbon_touchMarginLeft" format="dimension" />
         <attr name="carbon_touchMarginTop" format="dimension" />

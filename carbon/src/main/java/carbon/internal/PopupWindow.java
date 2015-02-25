@@ -43,7 +43,11 @@ public class PopupWindow extends LinearLayout {
             if (!visible)
                 return;
             visible = false;
-            windowManager.removeViewImmediate(this);
+            try {
+                windowManager.removeViewImmediate(this);
+            }catch (Exception e){
+
+            }
         }
     }
 }

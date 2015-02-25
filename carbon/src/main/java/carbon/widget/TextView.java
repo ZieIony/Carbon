@@ -92,8 +92,9 @@ public class TextView extends android.widget.TextView implements TouchMarginView
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        for (StateAnimator animator : stateAnimators)
-            animator.stateChanged(getDrawableState());
+        if (stateAnimators != null)
+            for (StateAnimator animator : stateAnimators)
+                animator.stateChanged(getDrawableState());
     }
 
 

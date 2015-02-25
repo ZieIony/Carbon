@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="@dimen/carbon_padding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:indeterminate="true"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_marginTop="@dimen/carbon_padding" />
+
+    <carbon.widget.ProgressBar
+        android:id="@+id/progress5"
+        app:carbon_indeterminate="true"
+        app:carbon_barWidth="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="@dimen/carbon_padding" />
+
+    <carbon.widget.ProgressBar
+        android:id="@+id/progress6"
+        app:carbon_indeterminate="false"
+        app:carbon_barBackground="#3fff0000"
+        app:carbon_barColor="#ffff0000"
+        app:carbon_barWidth="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="@dimen/carbon_padding" />
+</carbon.widget.LinearLayout>

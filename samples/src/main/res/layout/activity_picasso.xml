@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <tk.zielony.carbonsamples.PicassoView
+    <tk.zielony.carbonsamples.applibrary.PicassoView
         android:id="@+id/image"
         app:carbon_outAnimation="none"
         android:layout_gravity="center"

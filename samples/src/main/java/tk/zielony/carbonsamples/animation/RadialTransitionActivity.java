@@ -1,10 +1,11 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.animation;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-import carbon.animation.TransitionLayout;
+import carbon.widget.TransitionLayout;
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2015-01-24.
@@ -23,7 +24,7 @@ public class RadialTransitionActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 transitionView.setHotspot(v);
-                transitionView.startTransition(Math.random()>0.5f? TransitionLayout.TransitionType.RadialExpand: TransitionLayout.TransitionType.RadialCollapse);
+                transitionView.startTransition(TransitionLayout.TransitionType.Radial,Math.random()>0.5f);
             }
         });
     }

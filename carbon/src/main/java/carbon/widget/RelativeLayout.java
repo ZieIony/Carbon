@@ -43,6 +43,8 @@ import carbon.shadow.ShadowView;
  */
 public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
 
+    private boolean debugMode;
+
     public RelativeLayout(Context context) {
         super(context);
         init(null, R.attr.carbon_relativeLayoutStyle);
@@ -71,6 +73,12 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
         a.recycle();
 
+        if (isInEditMode()) {
+            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+            a.recycle();
+        }
+
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
     }
@@ -86,6 +94,9 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
         super.dispatchDraw(canvas);
+
+        if (debugMode)
+            Carbon.drawDebugInfo(this,canvas);
     }
 
     @Override
@@ -369,8 +380,9 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        for (StateAnimator animator : stateAnimators)
-            animator.stateChanged(getDrawableState());
+        if (stateAnimators != null)
+            for (StateAnimator animator : stateAnimators)
+                animator.stateChanged(getDrawableState());
     }
 
 

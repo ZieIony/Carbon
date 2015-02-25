@@ -2,6 +2,7 @@
 
     <style name="carbon_Theme" parent="android:Theme.NoTitleBar">
         <item name="carbon_colorError">#ffF44336</item>
+        <item name="carbon_debugMode">false</item>
 
         <item name="android:buttonStyle">@style/carbon_Button</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
@@ -105,6 +106,7 @@
 
     <style name="carbon_Theme.AppCompat" parent="Theme.AppCompat">
         <item name="carbon_colorError">#ffF44336</item>
+        <item name="carbon_debugMode">false</item>
 
         <item name="android:buttonStyle">@style/carbon_Button</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
@@ -323,9 +325,9 @@
 
     <style name="carbon_ProgressBar">
         <item name="carbon_indeterminate">true</item>
-        <item name="carbon_arcColor">?attr/carbon_colorPrimary</item>
-        <item name="carbon_arcBackground">?attr/carbon_colorBackground</item>
-        <item name="carbon_arcWidth">3dp</item>
+        <item name="carbon_barColor">?attr/carbon_colorPrimary</item>
+        <item name="carbon_barBackground">?attr/carbon_colorBackground</item>
+        <item name="carbon_barWidth">3dp</item>
         <item name="carbon_inAnimation">progressWidth</item>
         <item name="carbon_outAnimation">progressWidth</item>
     </style>

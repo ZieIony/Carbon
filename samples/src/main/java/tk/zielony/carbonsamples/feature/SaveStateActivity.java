@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.feature;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import carbon.beta.SaveState;
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2015-01-17.

@@ -1,9 +1,11 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.animation;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2014-12-15.
@@ -35,7 +37,7 @@ class ListRippleAdapter extends BaseAdapter {
         if(convertView!=null){
             view = convertView;
         }else{
-            view = View.inflate(parent.getContext(),R.layout.row_ripple,null);
+            view = View.inflate(parent.getContext(), R.layout.row_ripple,null);
         }
         TextView textView = (TextView) view.findViewById(R.id.text);
         textView.setText(items[position]);

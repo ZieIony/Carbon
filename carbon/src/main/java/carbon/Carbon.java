@@ -2,14 +2,18 @@ package carbon;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 
 import carbon.animation.RippleStateAnimator;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.widget.LinearLayout;
 import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 
@@ -82,4 +86,27 @@ public class Carbon {
 
     }
 
+    static Paint paint = new Paint();
+
+    public static void drawDebugInfo(ViewGroup viewGroup,Canvas canvas) {
+        paint.setAlpha(255);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        Rect rect = new Rect();
+        float vertLine = Math.min(10,viewGroup.getWidth()/3);
+        float horzLine = Math.min(10,viewGroup.getHeight()/3);
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            viewGroup.getChildAt(i).getHitRect(rect);
+            paint.setColor(0x7fff0000);
+            canvas.drawRect(rect, paint);
+            //paint.setStrokeWidth(2);
+            //canvas.drawLine(rect.left,rect.top,rect.left+vertLine,rect.top,paint);
+
+            viewGroup.getChildAt(i).getDrawingRect(rect);
+            rect.offset(viewGroup.getChildAt(i).getLeft(),viewGroup.getChildAt(i).getTop());
+            paint.setColor(0x7f00ff00);
+            canvas.drawRect(rect, paint);
+        }
+
+    }
 }

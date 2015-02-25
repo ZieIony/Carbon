@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 21
-        versionCode 22
-        versionName "0.6.3.1"
+        versionCode 23
+        versionName "0.6.4"
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
     }
@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.caverock:androidsvg:1.2.1'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.android.support:gridlayout-v7:21.0.3'
 }

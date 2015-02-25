@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import com.nineoldandroids.animation.Animator;
 
 import carbon.widget.Snackbar;
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2014-12-15.

@@ -280,8 +280,9 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        for (StateAnimator animator : stateAnimators)
-            animator.stateChanged(getDrawableState());
+        if (stateAnimators != null)
+            for (StateAnimator animator : stateAnimators)
+                animator.stateChanged(getDrawableState());
     }
 
 

@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.applibrary;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2015-01-22.

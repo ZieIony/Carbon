@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import carbon.widget.EditText;
 import carbon.widget.OnValidateListener;
 import carbon.beta.ValidatedEditText;
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2014-12-15.

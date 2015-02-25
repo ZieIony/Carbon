@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples;
+package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,15 +6,16 @@ import android.os.Handler;
 import android.view.View;
 
 import carbon.widget.CircularProgress;
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2014-12-15.
  */
-public class ProgressActivity extends Activity {
+public class CircularProgressActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_progress);
+        setContentView(R.layout.activity_circular_progress);
 
         final CircularProgress progress1 = (CircularProgress) findViewById(R.id.progress1);
         final Handler handler = new Handler();
