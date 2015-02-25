@@ -1,5 +1,6 @@
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.3.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.3.1/)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.4-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.4/)&nbsp;&nbsp;
+[![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
 ================
@@ -73,6 +74,15 @@ You have to add these lines to your android build config:
 Carbon uses RenderScript for generating shadows. Gradle doesn't support renderscript very well, so it has to be done that way.
 
 ### Changelog
+##### 0.6.4
+ - added GridLayout,
+ - rearranged the sample app,
+ - started working on calculator demo,
+ - added progress bar demo,
+ - added debug mode,
+ - color state list can now be passed as a filter color of SVGView,
+ - fixed bugs: uninitialized state animator list, window not attached to windowmanager
+
 ##### 0.6.3.1
  - fixed bugs: setting corners for layouts, drawing 0dp views, null hotspot
  
