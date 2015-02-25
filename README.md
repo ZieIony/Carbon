@@ -26,6 +26,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - circular progress indicators
  - CardView with real shadows and rounded corners
  - state animators
+ - debug mode showing draw and hit areas when in edit mode
 
 [![YouTube](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](http://www.youtube.com/watch?v=YcTQ8a8sTpU)
 
@@ -72,6 +73,26 @@ You have to add these lines to your android build config:
     renderscriptSupportModeEnabled true
     
 Carbon uses RenderScript for generating shadows. Gradle doesn't support renderscript very well, so it has to be done that way.
+
+##### What is the debug mode? How to enable it?
+
+Debug mode is a special rendering mode used for UI/UX debugging. Some of material components have touch areas larger than the actual components. It means that a user can tap outside a view and still trigger an action. Using debug mode you can preview all touch and draw areas in the editor. Red rectangles show hit areas, green rectanges - draw areas. Debug mode is also useful for SVG views debugging. SVG views appear empty, because SVG rendering is not supported in the editor.
+
+[![RecyclerView and CardView](https://github.com/ZieIony/Carbon/blob/master/images/debugmode2.png)](https://github.com/ZieIony/Carbon/blob/master/images/debugmode.png)
+
+To enable the debug mode, add the following line to your theme:
+
+    <item name="carbon_debugMode">true</item>
+    
+Then go to the editor and pick that theme to be used by the editor. You can create two themes, with and without the debug info, so you can switch between them.
+
+    <style name="AppTheme" parent="carbon_Theme.Light">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppTheme.Debug">
+        <item name="carbon_debugMode">true</item>
+    </style>
 
 ### Changelog
 ##### 0.6.4
