@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.DefaultAnimatorListener;
 import carbon.internal.PopupWindow;
 
 /**
@@ -91,7 +91,7 @@ public class Snackbar extends PopupWindow {
 
     public void hide() {
         handler.removeCallbacks(hideRunnable);
-        AnimUtils.animateOut(content, outAnim, new DefaultAnimatorListener() {
+        AnimUtils.animateOut(content, outAnim, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animator) {
                 Snackbar.super.hide();

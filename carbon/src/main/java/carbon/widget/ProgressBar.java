@@ -6,11 +6,10 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.DefaultAnimatorListener;
-import carbon.drawable.ProgressBarDrawable;
 import carbon.drawable.ProgressBarDrawable;
 
 /**
@@ -80,7 +79,7 @@ public class ProgressBar extends View {
             super.setVisibility(visibility);
             AnimUtils.animateIn(this, inAnim, null);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
-            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
+            AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     ProgressBar.super.setVisibility(visibility);

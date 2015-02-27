@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ import java.util.Map;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.DefaultAnimatorListener;
 import carbon.animation.StateAnimator;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -391,7 +391,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             super.setVisibility(visibility);
             AnimUtils.animateIn(this, inAnim, null);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
-            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
+            AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     LinearLayout.super.setVisibility(visibility);

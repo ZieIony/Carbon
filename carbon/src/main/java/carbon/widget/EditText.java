@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ import java.util.regex.Pattern;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.DefaultAnimatorListener;
 import carbon.animation.StateAnimator;
 
 /**
@@ -176,7 +176,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
             super.setVisibility(visibility);
             AnimUtils.animateIn(this, inAnim, null);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
-            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
+            AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     EditText.super.setVisibility(visibility);

@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
-import carbon.animation.DefaultAnimatorListener;
 import carbon.widget.Button;
 import carbon.widget.TransitionLayout;
 import tk.zielony.carbonsamples.R;
@@ -47,7 +47,7 @@ public class CalculatorActivity extends Activity {
                 if (number == 0) {
                     final TransitionLayout transitionLayout = (TransitionLayout) findViewById(R.id.transition);
                     transitionLayout.setHotspot(transitionLayout.getWidth(),transitionLayout.getHeight());
-                    transitionLayout.setListener(new DefaultAnimatorListener() {
+                    transitionLayout.setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animator) {
                             transitionLayout.setListener(null);

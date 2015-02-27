@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,6 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.DefaultAnimatorListener;
 import carbon.animation.ElevationStateAnimator;
 import carbon.animation.StateAnimator;
 import carbon.drawable.RippleDrawable;
@@ -297,7 +297,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             super.setVisibility(visibility);
             AnimUtils.animateIn(this, inAnim, null);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
-            AnimUtils.animateOut(this, outAnim, new DefaultAnimatorListener() {
+            AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     Button.super.setVisibility(visibility);
