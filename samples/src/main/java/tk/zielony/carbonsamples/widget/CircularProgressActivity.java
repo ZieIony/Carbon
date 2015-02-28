@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-import carbon.widget.CircularProgress;
+import carbon.widget.ProgressBar;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -17,7 +17,7 @@ public class CircularProgressActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circular_progress);
 
-        final CircularProgress progress1 = (CircularProgress) findViewById(R.id.progress1);
+        final ProgressBar progress1 = (ProgressBar) findViewById(R.id.progress1);
         final Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override

@@ -6,16 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:indeterminate="true"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_marginTop="@dimen/carbon_padding" />
-
     <carbon.widget.ProgressBar
         android:id="@+id/progress5"
-        app:carbon_indeterminate="true"
+        app:carbon_progressStyle="bar_indeterminate"
         app:carbon_barWidth="5dp"
         android:layout_width="match_parent"
         android:layout_height="5dp"
@@ -23,11 +16,20 @@
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress6"
-        app:carbon_indeterminate="false"
+        app:carbon_progressStyle="bar_determinate"
+        app:carbon_barWidth="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="@dimen/carbon_padding" />
+
+    <carbon.widget.ProgressBar
+        android:id="@+id/progress7"
+        app:carbon_progressStyle="bar_query"
         app:carbon_barBackground="#3fff0000"
         app:carbon_barColor="#ffff0000"
         app:carbon_barWidth="5dp"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_marginTop="@dimen/carbon_padding" />
+
 </carbon.widget.LinearLayout>

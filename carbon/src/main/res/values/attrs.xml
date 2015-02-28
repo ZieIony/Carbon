@@ -48,8 +48,6 @@
     <attr name="carbon_elevation" format="dimension" />
     <attr name="carbon_cornerRadius" format="dimension" />
 
-    <attr name="carbon_indeterminate" format="boolean" />
-
     <attr name="carbon_inAnimation" format="enum">
         <enum name="none" value="0" />
         <enum name="fade" value="1" />
@@ -204,20 +202,15 @@
         <attr name="android:background" />
     </declare-styleable>
 
-    <attr name="carbon_circularProgressStyle" format="reference" />
-    <declare-styleable name="CircularProgress">
-        <attr name="carbon_indeterminate" />
-        <attr name="carbon_arcColor" format="color|reference" />
-        <attr name="carbon_arcBackground" format="color|reference" />
-        <attr name="carbon_arcWidth" format="dimension" />
-        <attr name="carbon_arcPadding" format="dimension" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
-    </declare-styleable>
-
     <attr name="carbon_progressBarStyle" format="reference" />
     <declare-styleable name="ProgressBar">
-        <attr name="carbon_indeterminate" />
+        <attr name="carbon_progressStyle" format="enum" >
+            <enum name="bar_determinate" value="0"/>
+            <enum name="bar_indeterminate" value="1"/>
+            <enum name="bar_query" value="2"/>
+            <enum name="circular_determinate" value="3"/>
+            <enum name="circular_indeterminate" value="4"/>
+        </attr>
         <attr name="carbon_barColor" format="color|reference" />
         <attr name="carbon_barBackground" format="color|reference" />
         <attr name="carbon_barWidth" format="dimension" />

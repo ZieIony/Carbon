@@ -11,13 +11,19 @@ import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.drawable.CircularProgressDrawable;
 import carbon.drawable.ProgressBarDrawable;
+import carbon.drawable.ProgressDrawable;
 
 /**
  * Created by Marcin on 2015-02-08.
  */
 public class ProgressBar extends View {
-    private ProgressBarDrawable drawable;
+    private ProgressDrawable drawable;
+
+    public enum Style {
+        BarDeterminate, BarIndeterminate, BarQuery, CircularDeterminate, CircularIndeterminate
+    }
 
     public ProgressBar(Context context) {
         super(context);
@@ -35,16 +41,19 @@ public class ProgressBar extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        drawable = new ProgressBarDrawable();
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyle, 0);
+        Style style = Style.values()[a.getInt(R.styleable.ProgressBar_carbon_progressStyle, 0)];
+        if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {
+            drawable = new ProgressBarDrawable();
+        } else {
+            drawable = new CircularProgressDrawable();
+        }
+        drawable.setStyle(style);
         setBackgroundDrawable(drawable);
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyle, 0);
-        int color = a.getColor(R.styleable.ProgressBar_carbon_barColor, 0);
-        drawable.setBarColor(color);
-        int arcBacground = a.getColor(R.styleable.ProgressBar_carbon_barBackground, 0);
-        drawable.setBarBackground(arcBacground);
+        drawable.setBarColor(a.getColorStateList(R.styleable.ProgressBar_carbon_barColor));
+        drawable.setBarBackground(a.getColorStateList(R.styleable.ProgressBar_carbon_barBackground));
         drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
-        drawable.setIndeterminate(a.getBoolean(R.styleable.ProgressBar_carbon_indeterminate, false));
 
         inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ProgressBar_carbon_inAnimation, 0)];
         outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ProgressBar_carbon_outAnimation, 0)];
@@ -68,6 +77,14 @@ public class ProgressBar extends View {
         drawable.setBarWidth(arcWidth);
     }
 
+    public void setBarPadding(float padding) {
+        drawable.setBarPadding(padding);
+    }
+
+    public float getBarPadding() {
+        return drawable.getBarPadding();
+    }
+
 
     // -------------------------------
     // animations
@@ -77,9 +94,8 @@ public class ProgressBar extends View {
 
     public void setVisibility(final int visibility) {
         if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
-            ViewHelper.setAlpha(this, 0);
-            super.setVisibility(visibility);
             AnimUtils.animateIn(this, inAnim, null);
+            super.setVisibility(visibility);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
             AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override

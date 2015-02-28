@@ -11,7 +11,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
-import carbon.widget.CircularProgress;
+import carbon.widget.ProgressBar;
 
 /**
  * Created by Marcin on 2014-11-17.
@@ -35,7 +35,7 @@ public class AnimUtils {
             case BrightnessSaturationFade:
                 return view instanceof ImageView ? brightnessSaturationFadeIn((ImageView) view, listener) : fadeIn(view, listener);
             case ProgressWidth:
-                return view instanceof CircularProgress ? progressWidthIn((CircularProgress) view, listener) : fadeIn(view, listener);
+                return view instanceof ProgressBar ? progressWidthIn((ProgressBar) view, listener) : fadeIn(view, listener);
         }
         if (listener != null)
             listener.onAnimationEnd(null);
@@ -53,7 +53,7 @@ public class AnimUtils {
             case BrightnessSaturationFade:
                 return view instanceof ImageView ? brightnessSaturationFadeOut((ImageView) view, listener) : fadeOut(view, listener);
             case ProgressWidth:
-                return view instanceof CircularProgress ? progressWidthOut((CircularProgress) view, listener) : fadeOut(view, listener);
+                return view instanceof ProgressBar ? progressWidthOut((ProgressBar) view, listener) : fadeOut(view, listener);
         }
         if (listener != null)
             listener.onAnimationEnd(null);
@@ -61,6 +61,8 @@ public class AnimUtils {
     }
 
     public static Animator fadeIn(final View view, Animator.AnimatorListener listener) {
+        if(view.getVisibility()!=View.VISIBLE)
+            ViewHelper.setAlpha(view,0);
         ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -93,6 +95,8 @@ public class AnimUtils {
     }
 
     public static ValueAnimator popIn(final View view, Animator.AnimatorListener listener) {
+        if(view.getVisibility()!=View.VISIBLE)
+            ViewHelper.setAlpha(view,0);
         ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -129,6 +133,8 @@ public class AnimUtils {
     }
 
     public static ValueAnimator flyIn(final View view, Animator.AnimatorListener listener) {
+        if(view.getVisibility()!=View.VISIBLE)
+            ViewHelper.setAlpha(view,0);
         ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -162,8 +168,8 @@ public class AnimUtils {
         return animator;
     }
 
-    public static ValueAnimator progressWidthIn(final CircularProgress circularProgress, Animator.AnimatorListener listener) {
-        final float arcWidth = circularProgress.getArcPadding();
+    public static ValueAnimator progressWidthIn(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
+        final float arcWidth = circularProgress.getBarPadding();
         ValueAnimator animator = ValueAnimator.ofFloat(0, arcWidth);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -173,16 +179,16 @@ public class AnimUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float value = (Float) valueAnimator.getAnimatedValue();
-                circularProgress.setArcWidth(value);
-                circularProgress.setArcPadding(arcWidth - value);
+                circularProgress.setBarWidth(value);
+                circularProgress.setBarPadding(arcWidth - value);
             }
         });
         animator.start();
         return animator;
     }
 
-    public static ValueAnimator progressWidthOut(final CircularProgress circularProgress, Animator.AnimatorListener listener) {
-        final float arcWidth = circularProgress.getArcWidth();
+    public static ValueAnimator progressWidthOut(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
+        final float arcWidth = circularProgress.getBarWidth();
         ValueAnimator animator = ValueAnimator.ofFloat(arcWidth, 0);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -192,8 +198,8 @@ public class AnimUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float value = (Float) valueAnimator.getAnimatedValue();
-                circularProgress.setArcWidth(value);
-                circularProgress.setArcPadding(arcWidth - value);
+                circularProgress.setBarWidth(value);
+                circularProgress.setBarPadding(arcWidth - value);
             }
         });
         animator.start();
