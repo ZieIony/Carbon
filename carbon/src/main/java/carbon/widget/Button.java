@@ -17,7 +17,6 @@ import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +53,32 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
 
+        int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
+        if (ap != -1) {
+            TypedArray appearance = getContext().obtainStyledAttributes(ap, R.styleable.TextAppearance);
+            if (appearance != null) {
+                for (int i = 0; i < appearance.getIndexCount(); i++) {
+                    int attr = appearance.getIndex(i);
+                    if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
+                        setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
+                    } else if (attr == R.styleable.TextAppearance_carbon_textStyle) {
+                        setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                    }
+                }
+            }
+            appearance.recycle();
+        }
+
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-        setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.Button_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.Button_carbon_textAllCaps) {
+                setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
+            } else if (attr == R.styleable.Button_carbon_textStyle) {
+                setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.Button_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+            }
+        }
 
         setElevation(a.getDimension(R.styleable.Button_carbon_elevation, 0));
 
@@ -68,12 +91,13 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         a.recycle();
     }
 
-
-    @Override
-    public void setText(CharSequence text, BufferType type) {
-        super.setText(text.toString().toUpperCase(), type);
+    public void setAllCaps(boolean allCaps) {
+        if (allCaps) {
+            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
+        } else {
+            setTransformationMethod(null);
+        }
     }
-
 
     // -------------------------------
     // corners

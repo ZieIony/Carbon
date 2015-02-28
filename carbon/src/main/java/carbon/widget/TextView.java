@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +39,44 @@ public class TextView extends android.widget.TextView implements TouchMarginView
 
     public void init(AttributeSet attrs, int defStyle) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
-        setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.TextView_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+
+        int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
+        if (ap != -1) {
+            TypedArray appearance = getContext().obtainStyledAttributes(ap, R.styleable.TextAppearance);
+            if (appearance != null) {
+                for (int i = 0; i < appearance.getIndexCount(); i++) {
+                    int attr = appearance.getIndex(i);
+                    if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
+                        setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
+                    } else if (attr == R.styleable.TextAppearance_carbon_textStyle) {
+                        setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                    }
+                }
+            }
+            appearance.recycle();
+        }
+
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.TextView_carbon_textAllCaps) {
+                setAllCaps(a.getBoolean(R.styleable.TextView_carbon_textAllCaps, false));
+            } else if (attr == R.styleable.TextView_carbon_textStyle) {
+                setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.TextView_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+            }
+        }
+
         setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.TextView_carbon_inAnimation, 0)]);
         setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.TextView_carbon_outAnimation, 0)]);
         Carbon.initTouchMargin(this, attrs, defStyle);
         a.recycle();
+    }
+
+    public void setAllCaps(boolean allCaps) {
+        if (allCaps) {
+            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
+        } else {
+            setTransformationMethod(null);
+        }
     }
 
     // -------------------------------

@@ -47,6 +47,7 @@
     <attr name="carbon_src" format="reference" />
     <attr name="carbon_elevation" format="dimension" />
     <attr name="carbon_cornerRadius" format="dimension" />
+    <attr name="carbon_textAllCaps" format="boolean"/>
 
     <attr name="carbon_inAnimation" format="enum">
         <enum name="none" value="0" />
@@ -102,6 +103,8 @@
     <declare-styleable name="Button">
         <attr name="carbon_elevation" />
         <attr name="carbon_textStyle" />
+        <attr name="carbon_textAllCaps"/>
+        <attr name="android:textAppearance"/>
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
         <attr name="carbon_touchMargin" />
@@ -114,6 +117,8 @@
 
     <declare-styleable name="TextView">
         <attr name="carbon_textStyle" />
+        <attr name="carbon_textAllCaps"/>
+        <attr name="android:textAppearance"/>
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
     </declare-styleable>
@@ -242,6 +247,11 @@
         <attr name="carbon_indicatorColor" format="color|reference" />
         <attr name="carbon_indicatorWidth" format="dimension" />
         <attr name="carbon_tab" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="TextAppearance">
+        <attr name="carbon_textStyle" />
+        <attr name="carbon_textAllCaps" />
     </declare-styleable>
 
 </resources>

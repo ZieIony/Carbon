@@ -111,6 +111,7 @@
     <style name="carbon_TextAppearance.Button">
         <item name="android:textSize">14sp</item>
         <item name="carbon_textStyle">medium</item>
+        <item name="carbon_textAllCaps">true</item>
     </style>
 
     <style name="carbon_TextAppearance.Button.Dark">
