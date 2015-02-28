@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.4-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.4/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.5-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.5/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
@@ -27,13 +27,15 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - CardView with real shadows and rounded corners
  - state animators
  - debug mode showing draw and hit areas when in edit mode
+ - tab strip with animated underline
+ - fading edges
 
 [![YouTube](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](http://www.youtube.com/watch?v=YcTQ8a8sTpU)
 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.6.4'
+    compile 'tk.zielony:carbon:0.6.5'
     
 And these two lines to android/defaultConfig:
 
@@ -95,6 +97,13 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+##### 0.6.5
+ - added PagerTabStrip widget,
+ - started working on fading edges,
+ - added ripple sample to the animations activity,
+ - formatted the code,
+ - fixed bug with views visibility animation
+
 ##### 0.6.4
  - added GridLayout,
  - rearranged the sample app,
