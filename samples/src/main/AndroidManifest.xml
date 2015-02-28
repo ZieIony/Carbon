@@ -108,6 +108,10 @@
             android:name=".widget.TabsActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
+        <activity
+            android:name=".animation.ScrollViewActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".AnimationsActivity"

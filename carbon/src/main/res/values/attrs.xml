@@ -244,4 +244,11 @@
         <attr name="carbon_dividerPadding" format="dimension" />
     </declare-styleable>
 
+    <attr name="carbon_pagerTabStripStyle" format="reference" />
+    <declare-styleable name="PagerTabStrip">
+        <attr name="carbon_indicatorColor" format="color|reference" />
+        <attr name="carbon_indicatorWidth" format="dimension" />
+        <attr name="carbon_tab" format="reference" />
+    </declare-styleable>
+
 </resources>

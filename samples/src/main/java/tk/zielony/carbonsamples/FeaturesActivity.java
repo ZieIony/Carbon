@@ -25,8 +25,6 @@ public class FeaturesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        final Handler handler = new Handler();
-
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setText("Features");
 

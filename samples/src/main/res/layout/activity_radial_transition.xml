@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content" />
             </carbon.widget.LinearLayout>
 
-         </carbon.widget.LinearLayout>
+        </carbon.widget.LinearLayout>
 
         <FrameLayout
             android:id="@+id/container"

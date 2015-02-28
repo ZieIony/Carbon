@@ -23,6 +23,7 @@
         <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
+        <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
     </style>
 
     <style name="carbon_Theme.Dark">
@@ -127,6 +128,7 @@
         <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
+        <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
     </style>
 
     <style name="carbon_Theme.AppCompat.Dark">
@@ -342,5 +344,11 @@
         <item name="carbon_dividerColor">?attr/carbon_colorPrimary</item>
         <item name="carbon_dividerPadding">8dp</item>
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="carbon_PagerTabStrip">
+        <item name="carbon_indicatorColor">?attr/carbon_colorAccent</item>
+        <item name="carbon_indicatorWidth">2dp</item>
+        <item name="carbon_tab">@layout/carbon_tab</item>
     </style>
 </resources>

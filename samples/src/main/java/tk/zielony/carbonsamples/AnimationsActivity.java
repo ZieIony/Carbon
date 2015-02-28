@@ -13,6 +13,8 @@ import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.animation.ImageFadeActivity;
 import tk.zielony.carbonsamples.animation.ListRippleActivity;
 import tk.zielony.carbonsamples.animation.RadialTransitionActivity;
+import tk.zielony.carbonsamples.animation.RippleActivity;
+import tk.zielony.carbonsamples.animation.ScrollViewActivity;
 
 
 public class AnimationsActivity extends Activity {
@@ -22,20 +24,19 @@ public class AnimationsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        final Handler handler = new Handler();
-
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setText("Animations");
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "Widget animations","Image fade", "List ripple", "Radial transition"
+                "Widget animations", "Image fade", "List ripple", "Radial transition", "Touch ripple", "ScrollView"
         };
         final Class[] activities = new Class[]{
-                tk.zielony.carbonsamples.animation.AnimationsActivity.class, ImageFadeActivity.class, ListRippleActivity.class, RadialTransitionActivity.class
+                tk.zielony.carbonsamples.animation.AnimationsActivity.class, ImageFadeActivity.class, ListRippleActivity.class, RadialTransitionActivity.class,
+                RippleActivity.class, ScrollViewActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, false,false,false
+                false, false, false, false, false, true
         };
         listView.setAdapter(new MaterialListAdapter(new MainListAdapter(items, beta)));
 

@@ -10,17 +10,16 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.util.FloatMath;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import carbon.animation.AnimUtils;
-import carbon.animation.DefaultAnimatorListener;
 
 /**
  * Created by Marcin on 2014-12-04.
@@ -61,7 +60,7 @@ public class TransitionLayout extends android.widget.FrameLayout {
     private void init(AttributeSet attrs) {
         paint.setAntiAlias(true);
 
-        internalListener = new DefaultAnimatorListener() {
+        internalListener = new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animator) {
                 currentIndex++;
@@ -160,7 +159,7 @@ public class TransitionLayout extends android.widget.FrameLayout {
             int bottomView = inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
             int topView = !inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
 
-            drawChild(canvas,getChildAt(bottomView),getDrawingTime());
+            drawChild(canvas, getChildAt(bottomView), getDrawingTime());
             textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
             getChildAt(topView).draw(textureCanvas);
 
@@ -172,8 +171,8 @@ public class TransitionLayout extends android.widget.FrameLayout {
             int bottomView = inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
             int topView = !inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
 
-            drawChild(canvas,getChildAt(bottomView),getDrawingTime());
-            drawChild(canvas,getChildAt(topView),getDrawingTime());
+            drawChild(canvas, getChildAt(bottomView), getDrawingTime());
+            drawChild(canvas, getChildAt(topView), getDrawingTime());
         } else {
             drawChild(canvas, getChildAt(currentIndex), getDrawingTime());
         }

@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 
 import carbon.R;
 import carbon.animation.ElevationStateAnimator;
-import carbon.animation.RippleStateAnimator;
 
 /**
  * Created by Marcin on 2014-12-04.

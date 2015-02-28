@@ -3,14 +3,12 @@ package tk.zielony.carbonsamples.widget;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import carbon.widget.Button;
 import carbon.widget.CardView;
-import carbon.widget.FrameLayout;
 import carbon.widget.PagerTabStrip;
+import carbon.widget.ViewPager;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -26,11 +24,11 @@ public class TabsActivity extends Activity {
         pager.setAdapter(new PagerAdapter() {
             @Override
             public CharSequence getPageTitle(int position) {
-                return "Page "+position;
+                return "Page " + position;
             }
 
             public View getView(int position, ViewPager pager) {
-                return new FrameLayout(pager.getContext());
+                return new CardView(pager.getContext());
             }
 
             @Override
@@ -40,7 +38,7 @@ public class TabsActivity extends Activity {
 
             @Override
             public int getCount() {
-                return 3;
+                return 7;
             }
 
             @Override

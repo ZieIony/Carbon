@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.TextView
+            android:padding="@dimen/carbon_padding"
+            android:text="Hey, I'm a ScrollView.\n\nTry to scroll me up and down to see something nice."
+            android:textAppearance="?attr/carbon_textAppearance_body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </carbon.widget.ScrollView>
+</LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:carbon_rippleColor="#42ff0000"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
     android:layout_width="match_parent"

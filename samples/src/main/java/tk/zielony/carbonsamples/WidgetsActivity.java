@@ -27,21 +27,19 @@ public class WidgetsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        final Handler handler = new Handler();
-
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setText("Widgets");
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields","Tabs"
+                "Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields", "Tabs"
         };
         final Class[] activities = new Class[]{
                 ButtonsActivity.class, DialogActivity.class, CircularProgressActivity.class, ProgressBarsActivity.class,
                 SnackbarActivity.class, SVGActivity.class, TextFieldsActivity.class, TabsActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, true, false, true, false, false, true,true
+                false, true, false, true, false, false, true, false
         };
         listView.setAdapter(new MaterialListAdapter(new MainListAdapter(items, beta)));
 

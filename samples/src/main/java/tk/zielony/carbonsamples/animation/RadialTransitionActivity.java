@@ -17,14 +17,14 @@ public class RadialTransitionActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radial_transition);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,new SimpleFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new SimpleFragment()).commit();
 
         final TransitionLayout transitionView = (TransitionLayout) findViewById(R.id.transition);
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 transitionView.setHotspot(v);
-                transitionView.startTransition(TransitionLayout.TransitionType.Radial,Math.random()>0.5f);
+                transitionView.startTransition(TransitionLayout.TransitionType.Radial, Math.random() > 0.5f);
             }
         });
     }

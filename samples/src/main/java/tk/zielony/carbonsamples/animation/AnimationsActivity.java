@@ -34,9 +34,9 @@ public class AnimationsActivity extends Activity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(button2.getVisibility()!=View.VISIBLE){
+                if (button2.getVisibility() != View.VISIBLE) {
                     button2.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     button2.setVisibility(View.INVISIBLE);
                 }
             }

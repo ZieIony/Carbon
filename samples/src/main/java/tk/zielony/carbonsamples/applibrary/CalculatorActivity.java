@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
-import carbon.animation.DefaultAnimatorListener;
 import carbon.widget.Button;
 import carbon.widget.TransitionLayout;
 import tk.zielony.carbonsamples.R;
@@ -46,15 +46,15 @@ public class CalculatorActivity extends Activity {
             case R.id.del:
                 if (number == 0) {
                     final TransitionLayout transitionLayout = (TransitionLayout) findViewById(R.id.transition);
-                    transitionLayout.setHotspot(transitionLayout.getWidth(),transitionLayout.getHeight());
-                    transitionLayout.setListener(new DefaultAnimatorListener() {
+                    transitionLayout.setHotspot(transitionLayout.getWidth(), transitionLayout.getHeight());
+                    transitionLayout.setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animator) {
                             transitionLayout.setListener(null);
-                            transitionLayout.startTransition(TransitionLayout.TransitionType.Radial,false);
+                            transitionLayout.startTransition(TransitionLayout.TransitionType.Radial, false);
                         }
                     });
-                    transitionLayout.startTransition(TransitionLayout.TransitionType.Fade,true);
+                    transitionLayout.startTransition(TransitionLayout.TransitionType.Fade, true);
                 }
                 number = number / 10;
                 display.setText("" + number);
