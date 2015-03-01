@@ -6,6 +6,8 @@
     android:layout_height="match_parent">
 
     <carbon.widget.LinearLayout
+        android:clickable="true"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="over"
         android:id="@+id/carbon_cardContent"
         android:orientation="vertical"

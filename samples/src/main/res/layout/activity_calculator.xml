@@ -5,33 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <carbon.widget.TransitionLayout
-        android:id="@+id/transition"
+    <carbon.widget.FrameLayout
         app:carbon_elevation="@dimen/carbon_elevationLow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <carbon.widget.FrameLayout
-            android:background="#ffffffff"
+        <carbon.widget.TransitionLayout
+            android:id="@+id/transition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <carbon.widget.TextView
-                android:id="@+id/display"
-                app:carbon_textStyle="light"
-                android:textSize="60sp"
-                android:textColor="#ffA69DA1"
-                android:padding="@dimen/carbon_padding"
-                android:gravity="right"
+            <carbon.widget.FrameLayout
+                android:background="#ffffffff"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
-        </carbon.widget.FrameLayout>
+                android:layout_height="wrap_content">
 
-        <carbon.widget.FrameLayout
-            android:background="#ff00BCD4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </carbon.widget.TransitionLayout>
+                <carbon.widget.TextView
+                    android:id="@+id/display"
+                    app:carbon_textStyle="light"
+                    android:textSize="60sp"
+                    android:textColor="#ffA69DA1"
+                    android:padding="@dimen/carbon_padding"
+                    android:gravity="right"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </carbon.widget.FrameLayout>
+
+            <carbon.widget.FrameLayout
+                android:background="#ff00BCD4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </carbon.widget.TransitionLayout>
+    </carbon.widget.FrameLayout>
 
     <carbon.widget.LinearLayout
         android:orientation="horizontal"
