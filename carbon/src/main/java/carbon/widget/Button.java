@@ -33,16 +33,14 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
+public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
 
     public Button(Context context) {
-        super(context);
-        init(null, android.R.attr.buttonStyle);
+        this(context,null);
     }
 
     public Button(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, android.R.attr.buttonStyle);
+        this(context, attrs, android.R.attr.buttonStyle);
     }
 
     public Button(Context context, AttributeSet attrs, int defStyle) {
@@ -82,8 +80,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
         setElevation(a.getDimension(R.styleable.Button_carbon_elevation, 0));
 
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Button_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Button_carbon_outAnimation, 0)]);
+        Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         addStateAnimator(new ElevationStateAnimator(this));
         setCornerRadius(a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));

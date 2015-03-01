@@ -43,13 +43,11 @@ public class TransitionLayout extends android.widget.FrameLayout {
     }
 
     public TransitionLayout(Context context) {
-        super(context);
-        init(null);
+        this(context,null);
     }
 
     public TransitionLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs);
+        this(context, attrs,0);
     }
 
     public TransitionLayout(Context context, AttributeSet attrs, int defStyleAttr) {

@@ -13,13 +13,11 @@ import carbon.R;
  */
 public class Divider extends View {
     public Divider(Context context) {
-        super(context);
-        init(null, R.attr.carbon_dividerStyle);
+        this(context,null);
     }
 
     public Divider(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_dividerStyle);
+        this(context, attrs, R.attr.carbon_dividerStyle);
     }
 
     public Divider(Context context, AttributeSet attrs, int defStyleAttr) {

@@ -18,6 +18,24 @@
             <enum name="borderless" value="2" />
         </attr>
 
+        <attr name="carbon_inAnimation" format="enum">
+            <enum name="none" value="0" />
+            <enum name="fade" value="1" />
+            <enum name="pop" value="2" />
+            <enum name="fly" value="3" />
+            <enum name="brightnessSaturationFade" value="4" />
+            <enum name="progressWidth" value="5" />
+        </attr>
+
+        <attr name="carbon_outAnimation" format="enum">
+            <enum name="none" value="0" />
+            <enum name="fade" value="1" />
+            <enum name="pop" value="2" />
+            <enum name="fly" value="3" />
+            <enum name="brightnessSaturationFade" value="4" />
+            <enum name="progressWidth" value="5" />
+        </attr>
+
         <attr name="carbon_debugMode" format="boolean" />
 
         <attr name="carbon_touchMargin" format="dimension" />
@@ -48,24 +66,6 @@
     <attr name="carbon_elevation" format="dimension" />
     <attr name="carbon_cornerRadius" format="dimension" />
     <attr name="carbon_textAllCaps" format="boolean"/>
-
-    <attr name="carbon_inAnimation" format="enum">
-        <enum name="none" value="0" />
-        <enum name="fade" value="1" />
-        <enum name="pop" value="2" />
-        <enum name="fly" value="3" />
-        <enum name="brightnessSaturationFade" value="4" />
-        <enum name="progressWidth" value="5" />
-    </attr>
-
-    <attr name="carbon_outAnimation" format="enum">
-        <enum name="none" value="0" />
-        <enum name="fade" value="1" />
-        <enum name="pop" value="2" />
-        <enum name="fly" value="3" />
-        <enum name="brightnessSaturationFade" value="4" />
-        <enum name="progressWidth" value="5" />
-    </attr>
 
     <attr name="carbon_textStyle" format="enum">
         <enum name="black" value="0" />
@@ -105,8 +105,6 @@
         <attr name="carbon_textStyle" />
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
         <attr name="carbon_touchMargin" />
         <attr name="carbon_touchMarginLeft" />
         <attr name="carbon_touchMarginTop" />
@@ -119,8 +117,6 @@
         <attr name="carbon_textStyle" />
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
     </declare-styleable>
 
     <attr name="carbon_svgViewStyle" format="reference" />
@@ -128,8 +124,6 @@
         <attr name="carbon_rippleColor" />
         <attr name="carbon_filterColor" />
         <attr name="carbon_src" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
         <attr name="carbon_touchMargin" />
         <attr name="carbon_touchMarginLeft" />
         <attr name="carbon_touchMarginTop" />
@@ -141,8 +135,6 @@
     <declare-styleable name="FrameLayout">
         <attr name="carbon_rippleColor" />
         <attr name="carbon_elevation" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
 
@@ -150,8 +142,6 @@
     <declare-styleable name="RelativeLayout">
         <attr name="carbon_rippleColor" />
         <attr name="carbon_elevation" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
 
@@ -159,8 +149,6 @@
     <declare-styleable name="LinearLayout">
         <attr name="carbon_rippleColor" />
         <attr name="carbon_elevation" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
 
@@ -171,15 +159,7 @@
             <enum name="docked" value="1" />
         </attr>
         <attr name="android:background" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
         <attr name="carbon_duration" format="integer" />
-    </declare-styleable>
-
-    <attr name="carbon_shadowLayoutStyle" format="reference" />
-    <declare-styleable name="ShadowLayout">
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
     </declare-styleable>
 
     <attr name="carbon_toolbarStyle" format="reference" />
@@ -192,8 +172,6 @@
     <declare-styleable name="ImageView">
         <attr name="carbon_rippleColor" />
         <attr name="carbon_elevation" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
         <attr name="carbon_touchMargin" />
         <attr name="carbon_touchMarginLeft" />
         <attr name="carbon_touchMarginTop" />
@@ -220,8 +198,6 @@
         <attr name="carbon_barBackground" format="color|reference" />
         <attr name="carbon_barWidth" format="dimension" />
         <attr name="carbon_barPadding" format="dimension" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
     </declare-styleable>
 
     <attr name="carbon_cardViewStyle" format="reference" />
@@ -233,8 +209,6 @@
     <attr name="carbon_editTextStyle" format="reference" />
     <declare-styleable name="EditText">
         <attr name="carbon_textStyle" />
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
         <attr name="carbon_minCharacters" format="integer" />
         <attr name="carbon_maxCharacters" format="integer" />
         <attr name="carbon_pattern" format="string" />

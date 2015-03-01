@@ -3,12 +3,10 @@ package tk.zielony.carbonsamples;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import carbon.widget.MaterialListAdapter;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
 import tk.zielony.carbonsamples.feature.SaveStateActivity;
@@ -26,6 +24,7 @@ public class FeaturesActivity extends Activity {
         setContentView(R.layout.activity_demo);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setUpIconVisible(true);
         toolbar.setText("Features");
 
         ListView listView = (ListView) findViewById(R.id.list);
@@ -38,7 +37,7 @@ public class FeaturesActivity extends Activity {
         final boolean[] beta = new boolean[]{
                 false, true, false, false, false, false
         };
-        listView.setAdapter(new MaterialListAdapter(new MainListAdapter(items, beta)));
+        listView.setAdapter(new MainListAdapter(items, beta));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

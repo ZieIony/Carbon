@@ -12,13 +12,11 @@ import carbon.animation.ElevationStateAnimator;
 public class SVGActionButton extends SVGView {
 
     public SVGActionButton(Context context) {
-        super(context, null, R.attr.carbon_fabStyle);
-        init(null, R.attr.carbon_fabStyle);
+        this(context, null);
     }
 
     public SVGActionButton(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_fabStyle);
-        init(attrs, R.attr.carbon_fabStyle);
+        this(context, attrs, R.attr.carbon_fabStyle);
     }
 
     public SVGActionButton(Context context, AttributeSet attrs, int defStyle) {

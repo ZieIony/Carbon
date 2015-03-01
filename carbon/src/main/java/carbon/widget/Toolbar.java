@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -14,10 +15,10 @@ import carbon.shadow.ShadowView;
  */
 public class Toolbar extends LinearLayout implements ShadowView {
     private ViewGroup content;
+    private SVGView upIcon;
 
     public Toolbar(Context context) {
-        super(context);
-        init(null, R.attr.carbon_toolbarStyle);
+        this(context, null);
     }
 
     public Toolbar(Context context, AttributeSet attrs) {
@@ -28,6 +29,14 @@ public class Toolbar extends LinearLayout implements ShadowView {
     private void init(AttributeSet attrs, int defStyle) {
         inflate(getContext(), R.layout.carbon_toolbar, this);
         content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
+        upIcon = (SVGView) findViewById(R.id.carbon_upIcon);
+
+        upIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Activity) getContext()).onBackPressed();
+            }
+        });
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyle, 0);
         setElevation(a.getDimension(R.styleable.Toolbar_carbon_elevation, 0));  // this shouldn't be necessary
@@ -98,5 +107,18 @@ public class Toolbar extends LinearLayout implements ShadowView {
     public String getText() {
         TextView title = (TextView) findViewById(R.id.carbon_toolbarTitle);
         return (String) title.getText();
+    }
+
+    public void setUpIcon(int iconRes) {
+        if (iconRes == 0) {
+            upIcon.setVisibility(GONE);
+        } else {
+            upIcon.setSVGResource(iconRes);
+            upIcon.setVisibility(VISIBLE);
+        }
+    }
+
+    public void setUpIconVisible(boolean visible) {
+        upIcon.setVisibility(visible ? VISIBLE : GONE);
     }
 }

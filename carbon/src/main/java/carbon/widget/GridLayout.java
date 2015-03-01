@@ -41,18 +41,16 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-20.
  */
-public class GridLayout extends android.support.v7.widget.GridLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
+public class GridLayout extends android.support.v7.widget.GridLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
 
     private boolean debugMode;
 
     public GridLayout(Context context) {
-        super(context);
-        init(null, R.attr.carbon_frameLayoutStyle);
+        this(context,null);
     }
 
     public GridLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_frameLayoutStyle);
+        this(context, attrs, R.attr.carbon_frameLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -66,8 +64,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
         setElevation(a.getDimension(R.styleable.FrameLayout_carbon_elevation, 0));
 
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.FrameLayout_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.FrameLayout_carbon_outAnimation, 0)]);
+        Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         setCornerRadius(a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
 

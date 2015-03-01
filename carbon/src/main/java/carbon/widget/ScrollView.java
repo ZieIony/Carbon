@@ -21,13 +21,11 @@ public class ScrollView extends android.widget.ScrollView {
     private int overscrollMode;
 
     public ScrollView(Context context) {
-        super(context);
-        init();
+        this(context,null);
     }
 
     public ScrollView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
+        this(context, attrs,0);
     }
 
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr) {

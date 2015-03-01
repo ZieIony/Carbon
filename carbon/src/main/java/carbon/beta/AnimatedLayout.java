@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by Marcin on 2014-11-15.
  */
-public class AnimatedLayout extends FrameLayout implements AnimatedView {
+public class AnimatedLayout extends FrameLayout  {
     private Rect clipRect = new Rect();
     private float dim;
     private Rect from, to;

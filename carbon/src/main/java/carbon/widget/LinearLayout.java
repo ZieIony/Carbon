@@ -41,12 +41,11 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-20.
  */
-public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
+public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
     private boolean debugMode;
 
     public LinearLayout(Context context) {
-        super(context);
-        init(null, R.attr.carbon_linearLayoutStyle);
+        this(context,null);
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
@@ -60,8 +59,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
         setElevation(a.getDimension(R.styleable.LinearLayout_carbon_elevation, 0));
 
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.LinearLayout_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.LinearLayout_carbon_outAnimation, 0)]);
+        Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         setCornerRadius(a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
 

@@ -24,7 +24,7 @@ import carbon.animation.StateAnimator;
 /**
  * Created by Marcin on 2015-02-14.
  */
-public class EditText extends android.widget.EditText implements TouchMarginView {
+public class EditText extends android.widget.EditText implements TouchMarginView, AnimatedView {
     int maxCharacters;
     int minCharacters;
     private Pattern pattern;
@@ -33,13 +33,11 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     private Paint paint = new Paint();
 
     public EditText(Context context) {
-        super(context);
-        init(null, R.attr.carbon_editTextStyle);
+        this(context,null);
     }
 
     public EditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_editTextStyle);
+        this(context, attrs, R.attr.carbon_editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyle) {
@@ -47,12 +45,11 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         init(attrs, defStyle);
     }
 
-    public void init(AttributeSet attrs, int defStyle) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyle, 0);
+    public void init(AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
         setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.EditText_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.EditText_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.EditText_carbon_outAnimation, 0)]);
-        Carbon.initTouchMargin(this, attrs, defStyle);
+        Carbon.initAnimations(this, attrs, defStyleAttr);
+        Carbon.initTouchMargin(this, attrs, defStyleAttr);
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
         setDividerPadding(a.getDimension(R.styleable.EditText_carbon_dividerPadding, 0));

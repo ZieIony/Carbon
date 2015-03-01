@@ -20,16 +20,14 @@ import carbon.animation.StateAnimator;
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class TextView extends android.widget.TextView implements TouchMarginView {
+public class TextView extends android.widget.TextView implements TouchMarginView, AnimatedView {
 
     public TextView(Context context) {
-        super(context);
-        init(null, android.R.attr.textViewStyle);
+        this(context,null);
     }
 
     public TextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, android.R.attr.textViewStyle);
+        this(context, attrs, android.R.attr.textViewStyle);
     }
 
     public TextView(Context context, AttributeSet attrs, int defStyle) {
@@ -37,8 +35,8 @@ public class TextView extends android.widget.TextView implements TouchMarginView
         init(attrs, defStyle);
     }
 
-    public void init(AttributeSet attrs, int defStyle) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
+    public void init(AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
         if (ap != -1) {
@@ -65,9 +63,8 @@ public class TextView extends android.widget.TextView implements TouchMarginView
             }
         }
 
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.TextView_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.TextView_carbon_outAnimation, 0)]);
-        Carbon.initTouchMargin(this, attrs, defStyle);
+        Carbon.initAnimations(this, attrs, defStyleAttr);
+        Carbon.initTouchMargin(this, attrs, defStyleAttr);
         a.recycle();
     }
 

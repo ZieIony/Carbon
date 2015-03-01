@@ -16,8 +16,7 @@ public class CardView extends android.widget.LinearLayout {
     private LinearLayout content;
 
     public CardView(Context context) {
-        super(context);
-        init(null, R.attr.carbon_cardViewStyle);
+        this(context,null);
     }
 
     public CardView(Context context, AttributeSet attrs) {

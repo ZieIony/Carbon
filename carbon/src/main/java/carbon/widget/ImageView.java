@@ -33,16 +33,14 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2015-01-22.
  */
-public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
+public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
 
     public ImageView(Context context) {
-        super(context);
-        init(null, R.attr.carbon_imageViewStyle);
+        this(context,null);
     }
 
     public ImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_imageViewStyle);
+        this(context, attrs, R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs, int defStyle) {
@@ -53,14 +51,12 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
 
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-
         setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
-
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.ImageView_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.ImageView_carbon_outAnimation, 0)]);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
         setCornerRadius(a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
+
+        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        Carbon.initAnimations(this, attrs, defStyleAttr);
+        Carbon.initTouchMargin(this, attrs, defStyleAttr);
 
         a.recycle();
     }

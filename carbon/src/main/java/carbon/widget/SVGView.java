@@ -25,13 +25,11 @@ public class SVGView extends ImageView {
     private ColorStateList filterColor;
 
     public SVGView(Context context) {
-        super(context);
-        init(null, R.attr.carbon_svgViewStyle);
+        this(context, null);
     }
 
     public SVGView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_svgViewStyle);
+        this(context, attrs, R.attr.carbon_svgViewStyle);
     }
 
     public SVGView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -103,6 +101,6 @@ public class SVGView extends ImageView {
 
     private void updateColorFilter() {
         if (filterColor != null)
-            setColorFilter(new LightingColorFilter(0, filterColor.getColorForState(getDrawableState(), filterColor.getDefaultColor())));
+            super.setColorFilter(new LightingColorFilter(0, filterColor.getColorForState(getDrawableState(), filterColor.getDefaultColor())));
     }
 }

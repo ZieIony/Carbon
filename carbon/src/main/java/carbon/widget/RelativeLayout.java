@@ -41,18 +41,16 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-20.
  */
-public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView {
+public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
 
     private boolean debugMode;
 
     public RelativeLayout(Context context) {
-        super(context);
-        init(null, R.attr.carbon_relativeLayoutStyle);
+        this(context,null);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_relativeLayoutStyle);
+        this(context, attrs, R.attr.carbon_relativeLayoutStyle);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -66,8 +64,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
         setElevation(a.getDimension(R.styleable.RelativeLayout_carbon_elevation, 0));
 
-        setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_inAnimation, 0)]);
-        setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.RelativeLayout_carbon_outAnimation, 0)]);
+        Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         setCornerRadius(a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0));
 

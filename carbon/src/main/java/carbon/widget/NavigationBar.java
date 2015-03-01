@@ -21,13 +21,11 @@ import carbon.R;
  */
 public class NavigationBar extends View {
     public NavigationBar(Context context) {
-        super(context);
-        init(null, R.attr.carbon_navigationBarStyle);
+        this(context,null);
     }
 
     public NavigationBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_navigationBarStyle);
+        this(context, attrs, R.attr.carbon_navigationBarStyle);
     }
 
     public NavigationBar(Context context, AttributeSet attrs, int defStyleAttr) {

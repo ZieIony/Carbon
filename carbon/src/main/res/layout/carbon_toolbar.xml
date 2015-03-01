@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="@dimen/carbon_toolbarHeight">
 
     <carbon.widget.SVGView
+        android:clickable="true"
+        android:id="@+id/carbon_upIcon"
+        app:carbon_src="@raw/carbon_uparrow"
+        app:carbon_filterColor="?attr/carbon_iconColor"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleStyle="borderless"
+        app:carbon_rippleHotspot="false"
         android:visibility="gone"
-        android:layout_margin="@dimen/carbon_padding"
-        android:layout_width="24dp"
-        android:layout_height="24dp" />
-
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/icon"
-        android:layout_width="@dimen/carbon_avatarSize"
-        android:layout_height="@dimen/carbon_avatarSize"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/carbon_padding"
-        android:scaleType="fitXY" />
+        android:padding="@dimen/carbon_padding"
+        android:layout_width="56dp"
+        android:layout_height="56dp" />
 
     <carbon.widget.TextView
         android:id="@+id/carbon_toolbarTitle"

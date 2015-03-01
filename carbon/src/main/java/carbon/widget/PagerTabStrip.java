@@ -91,13 +91,11 @@ public class PagerTabStrip extends HorizontalScrollView {
     };
 
     public PagerTabStrip(Context context) {
-        super(context);
-        init(null, R.attr.carbon_pagerTabStripStyle);
+        this(context,null);
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_pagerTabStripStyle);
+        this(context, attrs, R.attr.carbon_pagerTabStripStyle);
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs, int defStyleAttr) {

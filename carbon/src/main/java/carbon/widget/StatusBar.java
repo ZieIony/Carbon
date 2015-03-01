@@ -19,13 +19,11 @@ import carbon.R;
  */
 public class StatusBar extends View {
     public StatusBar(Context context) {
-        super(context);
-        init(null, R.attr.carbon_statusBarStyle);
+        this(context,null);
     }
 
     public StatusBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_statusBarStyle);
+        this(context, attrs, R.attr.carbon_statusBarStyle);
     }
 
     public StatusBar(Context context, AttributeSet attrs, int defStyleAttr) {

@@ -9,6 +9,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.view.ViewHelper;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.drawable.CircularProgressDrawable;
@@ -18,7 +19,7 @@ import carbon.drawable.ProgressDrawable;
 /**
  * Created by Marcin on 2015-02-08.
  */
-public class ProgressBar extends View {
+public class ProgressBar extends View implements AnimatedView {
     private ProgressDrawable drawable;
 
     public enum Style {
@@ -26,13 +27,11 @@ public class ProgressBar extends View {
     }
 
     public ProgressBar(Context context) {
-        super(context);
-        init(null, R.attr.carbon_progressBarStyle);
+        this(context,null);
     }
 
     public ProgressBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, R.attr.carbon_progressBarStyle);
+        this(context, attrs, R.attr.carbon_progressBarStyle);
     }
 
     public ProgressBar(Context context, AttributeSet attrs, int defStyle) {
@@ -40,8 +39,8 @@ public class ProgressBar extends View {
         init(attrs, defStyle);
     }
 
-    private void init(AttributeSet attrs, int defStyle) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyle, 0);
+    private void init(AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyleAttr, 0);
         Style style = Style.values()[a.getInt(R.styleable.ProgressBar_carbon_progressStyle, 0)];
         if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {
             drawable = new ProgressBarDrawable();
@@ -55,8 +54,7 @@ public class ProgressBar extends View {
         drawable.setBarBackground(a.getColorStateList(R.styleable.ProgressBar_carbon_barBackground));
         drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
 
-        inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ProgressBar_carbon_inAnimation, 0)];
-        outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.ProgressBar_carbon_outAnimation, 0)];
+        Carbon.initAnimations(this, attrs, defStyleAttr);
 
         a.recycle();
     }

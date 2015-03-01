@@ -14,6 +14,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.view.ViewHelper;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.internal.PopupWindow;
@@ -21,7 +22,7 @@ import carbon.internal.PopupWindow;
 /**
  * Created by Marcin on 2015-01-07.
  */
-public class Snackbar extends PopupWindow {
+public class Snackbar extends PopupWindow implements AnimatedView {
     private TextView message;
     private Button button;
     private Style style;
@@ -35,6 +36,26 @@ public class Snackbar extends PopupWindow {
     };
     private Handler handler;
     private View content;
+
+    @Override
+    public AnimUtils.Style getOutAnimation() {
+        return outAnim;
+    }
+
+    @Override
+    public void setOutAnimation(AnimUtils.Style outAnim) {
+        this.outAnim = outAnim;
+    }
+
+    @Override
+    public AnimUtils.Style getInAnimation() {
+        return inAnim;
+    }
+
+    @Override
+    public void setInAnimation(AnimUtils.Style inAnim) {
+        this.inAnim = inAnim;
+    }
 
     public enum Style {
         Floating, Docked
@@ -53,7 +74,7 @@ public class Snackbar extends PopupWindow {
         setDuration(duration);
     }
 
-    private void init(AttributeSet attrs, int defStyle) {
+    private void init(AttributeSet attrs, int defStyleAttr) {
         content = inflate(getContext(), R.layout.carbon_snackbar, null);
         addView(content);
         ViewHelper.setAlpha(content, 0);
@@ -61,11 +82,10 @@ public class Snackbar extends PopupWindow {
         message = (TextView) findViewById(R.id.carbon_messageText);
         button = (Button) findViewById(R.id.carbon_actionButton);
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Snackbar, defStyle, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Snackbar, defStyleAttr, 0);
         style = Style.values()[a.getInt(R.styleable.Snackbar_carbon_layoutStyle, 0)];
         setStyle(style);
-        inAnim = AnimUtils.Style.values()[a.getInt(R.styleable.Snackbar_carbon_inAnimation, 0)];
-        outAnim = AnimUtils.Style.values()[a.getInt(R.styleable.Snackbar_carbon_inAnimation, 0)];
+        Carbon.initAnimations(this, attrs, defStyleAttr);
 
         duration = a.getInt(R.styleable.Snackbar_carbon_duration, 0);
 
@@ -157,22 +177,6 @@ public class Snackbar extends PopupWindow {
         }
         content.setLayoutParams(layoutParams);
         requestLayout();
-    }
-
-    public AnimUtils.Style getOutAnimationation() {
-        return outAnim;
-    }
-
-    public void setOutAnimationation(AnimUtils.Style outAnim) {
-        this.outAnim = outAnim;
-    }
-
-    public AnimUtils.Style getInAnimationation() {
-        return inAnim;
-    }
-
-    public void setInAnimationation(AnimUtils.Style inAnim) {
-        this.inAnim = inAnim;
     }
 
     public long getDuration() {

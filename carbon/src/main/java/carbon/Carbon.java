@@ -10,7 +10,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
+import carbon.animation.AnimUtils;
 import carbon.animation.RippleStateAnimator;
+import carbon.widget.AnimatedView;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.widget.StateAnimatorView;
@@ -38,6 +40,7 @@ public class Carbon {
         View view = (View) rippleView;
         if (view.isInEditMode())
             return;
+
         TypedArray a = view.getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
         int color = a.getColor(R.styleable.Carbon_carbon_rippleColor, 0);
 
@@ -107,5 +110,14 @@ public class Carbon {
             canvas.drawRect(rect, paint);
         }
 
+    }
+
+    public static void initAnimations(AnimatedView view, AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = ((View) view).getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+
+        view.setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Carbon_carbon_inAnimation, 0)]);
+        view.setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Carbon_carbon_outAnimation, 0)]);
+
+        a.recycle();
     }
 }

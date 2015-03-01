@@ -8,9 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import carbon.widget.MaterialListAdapter;
 import carbon.widget.Toolbar;
-
 
 public class MainActivity extends Activity {
 
@@ -46,7 +44,7 @@ public class MainActivity extends Activity {
         final boolean[] beta = new boolean[]{
                 false, false, false, false
         };
-        listView.setAdapter(new MaterialListAdapter(new MainListAdapter(items, beta)));
+        listView.setAdapter(new MainListAdapter(items, beta));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

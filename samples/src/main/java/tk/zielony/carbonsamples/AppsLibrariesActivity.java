@@ -3,12 +3,10 @@ package tk.zielony.carbonsamples;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import carbon.widget.MaterialListAdapter;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.applibrary.CalculatorActivity;
 import tk.zielony.carbonsamples.applibrary.PicassoActivity;
@@ -23,6 +21,7 @@ public class AppsLibrariesActivity extends Activity {
         setContentView(R.layout.activity_demo);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setUpIconVisible(true);
         toolbar.setText("Apps & Libraries");
 
         ListView listView = (ListView) findViewById(R.id.list);
@@ -32,7 +31,7 @@ public class AppsLibrariesActivity extends Activity {
         };
         final boolean[] beta = new boolean[]{true, false, false
         };
-        listView.setAdapter(new MaterialListAdapter(new MainListAdapter(items, beta)));
+        listView.setAdapter(new MainListAdapter(items, beta));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
