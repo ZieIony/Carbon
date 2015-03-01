@@ -30,7 +30,8 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - tab strip with animated underline
  - fading edges
 
-[![YouTube](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](http://www.youtube.com/watch?v=YcTQ8a8sTpU)
+![Calculator](https://github.com/ZieIony/Carbon/blob/master/images/calculator.png)
+![ScrollView](https://github.com/ZieIony/Carbon/blob/master/images/scrollview.png)
 
 ### Instalation
 Add the following line to dependencies:
