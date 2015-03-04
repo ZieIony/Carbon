@@ -7,6 +7,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
+import android.support.v8.renderscript.RSRuntimeException;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
@@ -18,8 +19,7 @@ public class ShadowGenerator {
     private static ScriptIntrinsicBlur blurShader;
     private static Paint paint = new Paint();
     private static LightingColorFilter lightingColorFilter = new LightingColorFilter(0, 0);
-
-    private static boolean software = System.getProperty("os.arch").equals("armv6");
+    private static boolean software = false;
 
     private static void blur(Bitmap bitmap, float radius) {
         if (software) {
@@ -77,8 +77,12 @@ public class ShadowGenerator {
 
     public static Shadow generateShadow(View view, float elevation) {
         if (!software && renderScript == null) {
-            renderScript = RenderScript.create(view.getContext());
-            blurShader = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
+            try {
+                renderScript = RenderScript.create(view.getContext());
+                blurShader = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
+            } catch (RSRuntimeException ignore) {
+                software = true;
+            }
         }
 
         boolean isRect = ((ShadowView) view).isRect();
