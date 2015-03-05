@@ -3,11 +3,14 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
+
+import java.lang.reflect.Method;
 
 import carbon.R;
 import carbon.drawable.EdgeEffect;
@@ -15,7 +18,7 @@ import carbon.drawable.EdgeEffect;
 /**
  * Created by Marcin on 2015-02-28.
  */
-public class ScrollView extends android.widget.ScrollView {
+public class ListView extends android.widget.ListView {
     private final int mTouchSlop;
     int glowColor;
     EdgeEffect edgeGlowTop;
@@ -28,23 +31,34 @@ public class ScrollView extends android.widget.ScrollView {
     public static final int OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
     public static final int OVER_SCROLL_NEVER = 2;
 
-    public ScrollView(Context context) {
+    public ListView(Context context) {
         this(context, null);
     }
 
-    public ScrollView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.scrollViewStyle);
+    public ListView(Context context, AttributeSet attrs) {
+        this(context, attrs, android.R.attr.listViewStyle);
     }
 
-    public ScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
         setOverScrollMode(OVER_SCROLL_IF_CONTENT_SCROLLS);
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, 0);
-        glowColor = a.getColor(R.styleable.ScrollView_carbon_glowColor, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ListView, defStyleAttr, 0);
+        glowColor = a.getColor(R.styleable.ListView_carbon_glowColor, 0);
         a.recycle();
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB && "samsung".equalsIgnoreCase(Build.MANUFACTURER)) {
+            try {
+                Method setEnableExcessScroll = android.widget.ListView.class.getMethod("setEnableExcessScroll", Boolean.TYPE);
+                if (setEnableExcessScroll != null) {
+                    setEnableExcessScroll.invoke(this, Boolean.FALSE);
+                }
+            } catch (Exception ignore) {
+                // Silently ignore
+            }
+        }
     }
 
     private int getScrollRange() {

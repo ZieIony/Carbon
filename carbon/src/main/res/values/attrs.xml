@@ -66,6 +66,7 @@
     <attr name="carbon_elevation" format="dimension" />
     <attr name="carbon_cornerRadius" format="dimension" />
     <attr name="carbon_textAllCaps" format="boolean"/>
+    <attr name="carbon_glowColor" format="color|reference"/>
 
     <attr name="carbon_textStyle" format="enum">
         <enum name="black" value="0" />
@@ -228,4 +229,11 @@
         <attr name="carbon_textAllCaps" />
     </declare-styleable>
 
+    <declare-styleable name="ScrollView">
+        <attr name="carbon_glowColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="ListView">
+        <attr name="carbon_glowColor"/>
+    </declare-styleable>
 </resources>

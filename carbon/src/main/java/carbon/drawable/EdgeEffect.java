@@ -4,6 +4,7 @@ package carbon.drawable;
  * Created by Marcin on 2015-02-28.
  */
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -17,53 +18,30 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-/**
- * This class performs the graphical effect used at the edges of scrollable widgets
- * when the user scrolls beyond the content bounds in 2D space.
- * <p/>
- * <p>EdgeEffect is stateful. Custom widgets using EdgeEffect should create an
- * instance for each edge that should show the effect, feed it input data using
- * the methods {@link #onAbsorb(int)}, {@link #onPull(float)}, and {@link #onRelease()},
- * and draw the effect using {@link #draw(Canvas)} in the widget's overridden
- * {@link android.view.View#draw(Canvas)} method. If {@link #isFinished()} returns
- * false after drawing, the edge effect's animation is not yet complete and the widget
- * should schedule another drawing pass to continue the animation.</p>
- * <p/>
- * <p>When drawing, widgets should draw their main content and child views first,
- * usually by invoking <code>super.draw(canvas)</code> from an overridden <code>draw</code>
- * method. (This will invoke onDraw and dispatch drawing to child views as needed.)
- * The edge effect may then be drawn on top of the view's content using the
- * {@link #draw(Canvas)} method.</p>
- */
-public class EdgeEffect {
+@TargetApi(14)
+public class EdgeEffect{
     @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "EdgeEffect";
 
-    // Time it will take the effect to fully recede in ms
     private static final int RECEDE_TIME = 600;
-
-    // Time it will take before a pulled glow begins receding in ms
     private static final int PULL_TIME = 167;
-
-    // Time it will take in ms for a pulled glow to decay to partial strength before release
     private static final int PULL_DECAY_TIME = 2000;
-
     private static final float MAX_ALPHA = 0.5f;
-
     private static final float MAX_GLOW_SCALE = 2.f;
-
     private static final float PULL_GLOW_BEGIN = 0.f;
-
-    // Minimum velocity that will be absorbed
     private static final int MIN_VELOCITY = 100;
-    // Maximum velocity, clamps at this value
     private static final int MAX_VELOCITY = 10000;
-
     private static final float EPSILON = 0.001f;
-
     private static final double ANGLE = Math.PI / 6;
     private static final float SIN = (float) Math.sin(ANGLE);
     private static final float COS = (float) Math.cos(ANGLE);
+    private static final int STATE_IDLE = 0;
+    private static final int STATE_PULL = 1;
+    private static final int STATE_ABSORB = 2;
+    private static final int STATE_RECEDE = 3;
+    private static final int STATE_PULL_DECAY = 4;
+    private static final float PULL_DISTANCE_ALPHA_GLOW_FACTOR = 0.8f;
+    private static final int VELOCITY_GLOW_FACTOR = 6;
 
     private float mGlowAlpha;
     private float mGlowScaleY;
@@ -77,16 +55,6 @@ public class EdgeEffect {
     private float mDuration;
 
     private final Interpolator mInterpolator;
-
-    private static final int STATE_IDLE = 0;
-    private static final int STATE_PULL = 1;
-    private static final int STATE_ABSORB = 2;
-    private static final int STATE_RECEDE = 3;
-    private static final int STATE_PULL_DECAY = 4;
-
-    private static final float PULL_DISTANCE_ALPHA_GLOW_FACTOR = 0.8f;
-
-    private static final int VELOCITY_GLOW_FACTOR = 6;
 
     private int mState = STATE_IDLE;
 
@@ -137,55 +105,18 @@ public class EdgeEffect {
         mBounds.set(mBounds.left, mBounds.top, width, (int) Math.min(height, h));
     }
 
-    /**
-     * Reports if this EdgeEffect's animation is finished. If this method returns false
-     * after a call to {@link #draw(Canvas)} the host widget should schedule another
-     * drawing pass to continue the animation.
-     *
-     * @return true if animation is finished, false if drawing should continue on the next frame.
-     */
     public boolean isFinished() {
         return mState == STATE_IDLE;
     }
 
-    /**
-     * Immediately finish the current animation.
-     * After this call {@link #isFinished()} will return true.
-     */
     public void finish() {
         mState = STATE_IDLE;
     }
 
-    /**
-     * A view should call this when content is pulled away from an edge by the user.
-     * This will update the state of the current visual effect and its associated animation.
-     * The host view should always {@link android.view.View#invalidate()} after this
-     * and draw the results accordingly.
-     * <p/>
-     * <p>Views using EdgeEffect should favor {@link #onPull(float, float)} when the displacement
-     * of the pull point is known.</p>
-     *
-     * @param deltaDistance Change in distance since the last call. Values may be 0 (no change) to
-     *                      1.f (full length of the view) or negative values to express change
-     *                      back toward the edge reached to initiate the effect.
-     */
     public void onPull(float deltaDistance) {
         onPull(deltaDistance, 0.5f);
     }
 
-    /**
-     * A view should call this when content is pulled away from an edge by the user.
-     * This will update the state of the current visual effect and its associated animation.
-     * The host view should always {@link android.view.View#invalidate()} after this
-     * and draw the results accordingly.
-     *
-     * @param deltaDistance Change in distance since the last call. Values may be 0 (no change) to
-     *                      1.f (full length of the view) or negative values to express change
-     *                      back toward the edge reached to initiate the effect.
-     * @param displacement  The displacement from the starting side of the effect of the point
-     *                      initiating the pull. In the case of touch this is the finger position.
-     *                      Values may be from 0-1.
-     */
     public void onPull(float deltaDistance, float displacement) {
         final long now = AnimationUtils.currentAnimationTimeMillis();
         mTargetDisplacement = displacement;
@@ -219,12 +150,6 @@ public class EdgeEffect {
         mGlowScaleYFinish = mGlowScaleY;
     }
 
-    /**
-     * Call when the object is released after being pulled.
-     * This will begin the "decay" phase of the effect. After calling this method
-     * the host view should {@link android.view.View#invalidate()} and thereby
-     * draw the results accordingly.
-     */
     public void onRelease() {
         mPullDistance = 0;
 
@@ -243,16 +168,6 @@ public class EdgeEffect {
         mDuration = RECEDE_TIME;
     }
 
-    /**
-     * Call when the effect absorbs an impact at the given velocity.
-     * Used when a fling reaches the scroll boundary.
-     * <p/>
-     * <p>When using a {@link android.widget.Scroller} or {@link android.widget.OverScroller},
-     * the method <code>getCurrVelocity</code> will provide a reasonable approximation
-     * to use here.</p>
-     *
-     * @param velocity Velocity at impact in pixels per second.
-     */
     public void onAbsorb(int velocity) {
         mState = STATE_ABSORB;
         velocity = Math.min(Math.max(MIN_VELOCITY, Math.abs(velocity)), MAX_VELOCITY);
@@ -277,34 +192,14 @@ public class EdgeEffect {
         mTargetDisplacement = 0.5f;
     }
 
-    /**
-     * Set the color of this edge effect in argb.
-     *
-     * @param color Color in argb
-     */
     public void setColor(int color) {
         mPaint.setColor(color);
     }
 
-    /**
-     * Return the color of this edge effect in argb.
-     *
-     * @return The color of this edge effect in argb
-     */
     public int getColor() {
         return mPaint.getColor();
     }
 
-    /**
-     * Draw into the provided canvas. Assumes that the canvas has been rotated
-     * accordingly and the size has been set. The effect will be drawn the full
-     * width of X=0 to X=width, beginning from Y=0 and extending to some factor <
-     * 1.f of height.
-     *
-     * @param canvas Canvas to draw into
-     * @return true if drawing should continue beyond this frame to continue the
-     * animation
-     */
     public boolean draw(Canvas canvas) {
         update();
 
@@ -333,12 +228,6 @@ public class EdgeEffect {
         return mState != STATE_IDLE || oneLastFrame;
     }
 
-    /**
-     * Return the maximum height that the edge effect will be drawn at given the original
-     * {@link #setSize(int, int) input size}.
-     *
-     * @return The maximum height of the edge effect
-     */
     public int getMaxHeight() {
         return (int) (mBounds.height() * MAX_GLOW_SCALE + 0.5f);
     }

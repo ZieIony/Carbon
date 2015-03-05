@@ -1,12 +1,13 @@
 <resources>
 
-    <style name="carbon_Theme" parent="android:Theme.NoTitleBar">
+    <style name="carbon_Theme.Dark" parent="android:Theme.NoTitleBar">
         <item name="carbon_colorError">#ffF44336</item>
         <item name="carbon_debugMode">false</item>
 
         <item name="android:buttonStyle">@style/carbon_Button</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:listViewStyle">@style/carbon_ListView</item>
+        <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
 
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
@@ -23,9 +24,7 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
-    </style>
 
-    <style name="carbon_Theme.Dark">
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
         <item name="carbon_colorAccent">#ff9ACE00</item>
@@ -65,7 +64,31 @@
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
     </style>
 
-    <style name="carbon_Theme.Light">
+    <style name="carbon_Theme.Light" parent="android:Theme.Light.NoTitleBar">
+        <item name="carbon_colorError">#ffF44336</item>
+        <item name="carbon_debugMode">false</item>
+
+        <item name="android:buttonStyle">@style/carbon_Button</item>
+        <item name="android:textViewStyle">@style/carbon_TextView</item>
+        <item name="android:listViewStyle">@style/carbon_ListView</item>
+        <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
+
+        <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
+        <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
+        <item name="carbon_statusBarStyle">@style/carbon_StatusBar</item>
+        <item name="carbon_navigationBarStyle">@style/carbon_NavigationBar</item>
+        <item name="carbon_svgViewStyle">@style/carbon_SVGView</item>
+        <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
+        <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
+        <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
+        <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
+        <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="carbon_dividerStyle">@style/carbon_Divider</item>
+        <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
+        <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
+        <item name="carbon_editTextStyle">@style/carbon_EditText</item>
+        <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
         <item name="carbon_colorAccent">#ff9ACE00</item>
@@ -104,13 +127,14 @@
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
     </style>
 
-    <style name="carbon_Theme.AppCompat" parent="Theme.AppCompat">
+    <style name="carbon_Theme.AppCompat.Dark" parent="Theme.AppCompat">
         <item name="carbon_colorError">#ffF44336</item>
         <item name="carbon_debugMode">false</item>
 
         <item name="android:buttonStyle">@style/carbon_Button</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:listViewStyle">@style/carbon_ListView</item>
+        <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
 
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
@@ -127,9 +151,7 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
-    </style>
 
-    <style name="carbon_Theme.AppCompat.Dark">
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
         <item name="carbon_colorAccent">#ff9ACE00</item>
@@ -169,7 +191,31 @@
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
     </style>
 
-    <style name="carbon_Theme.AppCompat.Light">
+    <style name="carbon_Theme.AppCompat.Light" parent="Theme.AppCompat.Light">
+        <item name="carbon_colorError">#ffF44336</item>
+        <item name="carbon_debugMode">false</item>
+
+        <item name="android:buttonStyle">@style/carbon_Button</item>
+        <item name="android:textViewStyle">@style/carbon_TextView</item>
+        <item name="android:listViewStyle">@style/carbon_ListView</item>
+        <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
+
+        <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
+        <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
+        <item name="carbon_statusBarStyle">@style/carbon_StatusBar</item>
+        <item name="carbon_navigationBarStyle">@style/carbon_NavigationBar</item>
+        <item name="carbon_svgViewStyle">@style/carbon_SVGView</item>
+        <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
+        <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
+        <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
+        <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
+        <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="carbon_dividerStyle">@style/carbon_Divider</item>
+        <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
+        <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
+        <item name="carbon_editTextStyle">@style/carbon_EditText</item>
+        <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
         <item name="carbon_colorAccent">#ff9ACE00</item>
@@ -308,6 +354,7 @@
     <style name="carbon_ListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">?attr/carbon_dividerColor</item>
         <item name="android:dividerHeight">1px</item>
+        <item name="carbon_glowColor">?attr/carbon_colorPrimary</item>
     </style>
 
     <style name="carbon_Divider">
@@ -339,5 +386,9 @@
         <item name="carbon_indicatorColor">?attr/carbon_colorAccent</item>
         <item name="carbon_indicatorWidth">2dp</item>
         <item name="carbon_tab">@layout/carbon_tab</item>
+    </style>
+
+    <style name="carbon_ScrollView">
+        <item name="carbon_glowColor">?attr/carbon_colorPrimary</item>
     </style>
 </resources>
