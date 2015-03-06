@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.5-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.5/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.6-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.6/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
@@ -36,7 +36,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.6.5'
+    compile 'tk.zielony:carbon:0.6.6'
     
 And these two lines to android/defaultConfig:
 
@@ -98,6 +98,16 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+##### 0.6.6
+ - merged circular and bar progress, added bar modes,
+ - textAllCaps compatibility mode,
+ - added up arrow to toolbar,
+ - software shadows,
+ - added ripple to CardView,
+ - tuned calculator a bit,
+ - working on edge effects for listview and scrollview
+ - fixed bugs: animations for progress bars, correct text appearance handling, styles and super constructor calls,
+
 ##### 0.6.5
  - added PagerTabStrip widget,
  - started working on fading edges,
