@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
+import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
 import tk.zielony.carbonsamples.widget.DialogActivity;
 import tk.zielony.carbonsamples.widget.ProgressBarsActivity;
@@ -31,14 +32,14 @@ public class WidgetsActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields", "Tabs"
+                "CheckBoxes & RadioButtons","Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields", "Tabs"
         };
         final Class[] activities = new Class[]{
-                ButtonsActivity.class, DialogActivity.class, CircularProgressActivity.class, ProgressBarsActivity.class,
+                CheckBoxRadioActivity.class,ButtonsActivity.class, DialogActivity.class, CircularProgressActivity.class, ProgressBarsActivity.class,
                 SnackbarActivity.class, SVGActivity.class, TextFieldsActivity.class, TabsActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, true, false, true, false, false, true, false
+                false,false, true, false, true, false, false, true, false
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

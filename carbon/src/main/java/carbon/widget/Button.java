@@ -168,12 +168,6 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
-    }
-
-    @Override
     public RippleDrawable getRippleDrawable() {
         return rippleDrawable;
     }
@@ -253,6 +247,12 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @Override
     public void setRect(boolean rect) {
         this.isRect = rect;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setTranslationZ(enabled ? 0 : -elevation);
     }
 
 

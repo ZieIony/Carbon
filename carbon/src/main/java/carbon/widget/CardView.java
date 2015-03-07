@@ -134,4 +134,10 @@ public class CardView extends android.widget.LinearLayout {
     public void setRect(boolean rect) {
         content.setRect(rect);
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        content.setTranslationZ(enabled ? 0 : -content.getElevation());
+    }
 }

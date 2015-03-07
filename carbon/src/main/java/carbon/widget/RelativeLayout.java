@@ -246,12 +246,6 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
-    }
-
-    @Override
     public RippleDrawable getRippleDrawable() {
         return rippleDrawable;
     }
@@ -331,6 +325,12 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     public void setRect(boolean rect) {
         this.isRect = rect;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setTranslationZ(enabled ? 0 : -elevation);
     }
 
 

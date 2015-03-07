@@ -24,6 +24,8 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+        <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
+        <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -33,6 +35,8 @@
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_dark</item>
+        <item name="carbon_colorDisabled">@color/carbon_white_30</item>
+        <item name="carbon_colorWidget">@color/carbon_white_70</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -88,6 +92,8 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+        <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
+        <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -97,6 +103,8 @@
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_light</item>
+        <item name="carbon_colorDisabled">@color/carbon_black_26</item>
+        <item name="carbon_colorWidget">@color/carbon_black_54</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -151,6 +159,8 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+        <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
+        <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -160,6 +170,8 @@
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_dark</item>
+        <item name="carbon_colorDisabled">@color/carbon_white_30</item>
+        <item name="carbon_colorWidget">@color/carbon_white_70</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -215,6 +227,8 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+        <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
+        <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -224,6 +238,8 @@
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_light</item>
+        <item name="carbon_colorDisabled">@color/carbon_black_26</item>
+        <item name="carbon_colorWidget">@color/carbon_black_54</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -354,7 +370,7 @@
     <style name="carbon_ListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">?attr/carbon_dividerColor</item>
         <item name="android:dividerHeight">1px</item>
-        <item name="carbon_glowColor">?attr/carbon_colorPrimary</item>
+        <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
     </style>
 
     <style name="carbon_Divider">
@@ -389,6 +405,22 @@
     </style>
 
     <style name="carbon_ScrollView">
-        <item name="carbon_glowColor">?attr/carbon_colorPrimary</item>
+        <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
+    </style>
+
+    <style name="carbon_CheckBox" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
+        <item name="carbon_checkCheckedColor">?attr/carbon_colorPrimary</item>
+        <item name="carbon_checkUncheckedColor">?attr/carbon_colorWidget</item>
+    </style>
+
+    <style name="carbon_RadioButton" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
+        <item name="carbon_radioCheckedColor">?attr/carbon_colorPrimary</item>
+        <item name="carbon_radioUncheckedColor">?attr/carbon_colorWidget</item>
     </style>
 </resources>

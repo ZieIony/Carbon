@@ -13,8 +13,7 @@ public class RippleStateAnimator extends StateAnimator {
     }
 
     @Override
-    public void stateChanged(int[] states) {
-        super.stateChanged(states);
+    protected void onPressedChanged() {
         if (view.getRippleDrawable() == null)
             return;
         if (pressed) {

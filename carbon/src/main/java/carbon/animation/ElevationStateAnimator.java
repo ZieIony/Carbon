@@ -21,8 +21,7 @@ public class ElevationStateAnimator extends StateAnimator {
     }
 
     @Override
-    public void stateChanged(int[] states) {
-        super.stateChanged(states);
+    protected void onPressedChanged() {
         if (pressed) {
             setTranslationZ(pressedElevation);
         } else {

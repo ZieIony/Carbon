@@ -112,6 +112,10 @@
             android:name=".animation.ScrollViewActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
+        <activity
+            android:name=".widget.CheckBoxRadioActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".AnimationsActivity"

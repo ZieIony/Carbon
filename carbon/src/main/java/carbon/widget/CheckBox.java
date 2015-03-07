@@ -2,14 +2,8 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
+import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -17,7 +11,6 @@ import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,57 +19,70 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.StateAnimator;
+import carbon.drawable.CheckableDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
-import carbon.shadow.ShadowView;
 
 /**
- * Created by Marcin on 2015-01-22.
+ * Created by Marcin on 2015-03-06.
  */
-public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
+public class CheckBox extends android.widget.CheckBox implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
+    private CheckableDrawable drawable;
 
-    public ImageView(Context context) {
-        this(context,null);
+    public CheckBox(Context context) {
+        this(context, null);
     }
 
-    public ImageView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_imageViewStyle);
+    public CheckBox(Context context, AttributeSet attrs) {
+        this(context, attrs, R.attr.carbon_checkBoxStyle);
     }
 
-    public ImageView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
+    public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
+    public void init(AttributeSet attrs, int defStyleAttr) {
+        drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
+        setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        setButtonDrawable(null);
 
-        setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
-        setCornerRadius(a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
+
+        int ap = a.getResourceId(R.styleable.CheckBox_android_textAppearance, -1);
+        if (ap != -1) {
+            TypedArray appearance = getContext().obtainStyledAttributes(ap, R.styleable.TextAppearance);
+            if (appearance != null) {
+                for (int i = 0; i < appearance.getIndexCount(); i++) {
+                    int attr = appearance.getIndex(i);
+                    if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
+                        setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
+                    } else if (attr == R.styleable.TextAppearance_carbon_textStyle) {
+                        setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                    }
+                }
+            }
+            appearance.recycle();
+        }
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.CheckBox_carbon_textAllCaps) {
+                setAllCaps(a.getBoolean(attr, false));
+            } else if (attr == R.styleable.CheckBox_carbon_textStyle) {
+                setTextStyle(Roboto.Style.values()[a.getInt(attr, Roboto.Style.Regular.ordinal())]);
+            }else if(attr==R.styleable.CheckBox_carbon_checkCheckedColor){
+                drawable.setCheckedColor(a.getColor(attr,0));
+            }else if(attr==R.styleable.CheckBox_carbon_checkUncheckedColor){
+                drawable.setUncheckedColor(a.getColor(attr,0));
+            }
+        }
+
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
-
         a.recycle();
-    }
-
-
-    // -------------------------------
-    // corners
-    // -------------------------------
-
-    private float cornerRadius;
-    private Canvas textureCanvas;
-    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-    public float getCornerRadius() {
-        return cornerRadius;
-    }
-
-    public void setCornerRadius(float cornerRadius) {
-        this.cornerRadius = cornerRadius;
-        initDrawing();
     }
 
     @Override
@@ -86,39 +92,17 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         if (!changed || getWidth() == 0 || getHeight() == 0)
             return;
 
-        initDrawing();
-
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
-    private void initDrawing() {
-        if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
-            return;
-        Bitmap texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        textureCanvas = new Canvas(texture);
-        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
-            textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            super.draw(textureCanvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(textureCanvas);
-
-            RectF rect = new RectF();
-            rect.bottom = getHeight();
-            rect.right = getWidth();
-            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
+    public void setAllCaps(boolean allCaps) {
+        if (allCaps) {
+            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
         } else {
-            super.draw(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
+            setTransformationMethod(null);
         }
     }
-
 
     // -------------------------------
     // ripple
@@ -168,59 +152,6 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         rippleDrawable.setBackground(background);
         super.setBackgroundDrawable(rippleDrawable);
     }
-
-
-    // -------------------------------
-    // elevation
-    // -------------------------------
-
-    private float elevation = 0;
-    private float translationZ = 0;
-    private boolean isRect = true;
-
-    @Override
-    public float getElevation() {
-        return elevation;
-    }
-
-    public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0, Math.min(elevation, 25));
-        if (elevation == this.elevation)
-            return;
-        this.elevation = elevation;
-        if (getParent() != null)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
-    public float getTranslationZ() {
-        return translationZ;
-    }
-
-    public synchronized void setTranslationZ(float translationZ) {
-        if (translationZ == this.translationZ)
-            return;
-        this.translationZ = translationZ;
-        if (getParent() != null)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
-    public boolean isRect() {
-        return isRect;
-    }
-
-    @Override
-    public void setRect(boolean rect) {
-        this.isRect = rect;
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
-    }
-
 
     // -------------------------------
     // touch margin
@@ -288,7 +219,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    ImageView.super.setVisibility(visibility);
+                    CheckBox.super.setVisibility(visibility);
                 }
             });
         }
@@ -308,5 +239,22 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
+    }
+
+
+    // -------------------------------
+    // roboto
+    // -------------------------------
+
+    Roboto.Style style;
+
+    public void setTextStyle(Roboto.Style style) {
+        this.style = style;
+        if (!isInEditMode())
+            super.setTypeface(Roboto.getTypeface(getContext(), style));
+    }
+
+    public Roboto.Style getTextStyle() {
+        return style;
     }
 }

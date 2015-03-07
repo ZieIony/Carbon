@@ -241,12 +241,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
-    }
-
-    @Override
     public RippleDrawable getRippleDrawable() {
         return rippleDrawable;
     }
@@ -326,6 +320,12 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     public void setRect(boolean rect) {
         this.isRect = rect;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setTranslationZ(enabled ? 0 : -elevation);
     }
 
 

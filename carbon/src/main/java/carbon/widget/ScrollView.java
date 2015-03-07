@@ -43,7 +43,7 @@ public class ScrollView extends android.widget.ScrollView {
         setOverScrollMode(OVER_SCROLL_IF_CONTENT_SCROLLS);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, 0);
-        glowColor = a.getColor(R.styleable.ScrollView_carbon_glowColor, 0);
+        glowColor = a.getColor(R.styleable.ScrollView_carbon_edgeEffectColor, 0);
         a.recycle();
     }
 
