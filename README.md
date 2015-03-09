@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.6-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.6/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.7-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.7/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
@@ -8,6 +8,12 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
 
 ![Circular progress indicators](https://github.com/ZieIony/Carbon/blob/master/images/progress.png)
 ![Text appearances](https://github.com/ZieIony/Carbon/blob/master/images/textappearances.png)
+![Calculator](https://github.com/ZieIony/Carbon/blob/master/images/calculator.png)
+![ScrollView](https://github.com/ZieIony/Carbon/blob/master/images/scrollview.png)
+![Sample app](https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png)
+![RecyclerView and CardView](https://github.com/ZieIony/Carbon/blob/master/images/recyclercards.png)
+![CheckBoxes](https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png)
+![PagerTabStrip](https://github.com/ZieIony/Carbon/blob/master/images/pagertabstrip.png)
 
 ### Features
  - realtime, animated shadows
@@ -29,9 +35,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - debug mode showing draw and hit areas when in edit mode
  - tab strip with animated underline
  - fading edges
-
-![Calculator](https://github.com/ZieIony/Carbon/blob/master/images/calculator.png)
-![ScrollView](https://github.com/ZieIony/Carbon/blob/master/images/scrollview.png)
+ - checkboxes and radiobuttons
 
 ### Instalation
 Add the following line to dependencies:
@@ -44,9 +48,6 @@ And these two lines to android/defaultConfig:
     renderscriptSupportModeEnabled true
     
 In case of any problems with these check the sample app.
-
-![Sample app](https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png)
-![RecyclerView and CardView](https://github.com/ZieIony/Carbon/blob/master/images/recyclercards.png)
 
 ### FAQ
 ##### Why Android 2.1? Isn't 4.0 enough?
@@ -98,6 +99,10 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+##### 0.6.7
+ - added CheckBox and RadioButton,
+ - added ListView, ScrollView and HorizontalScrollView with correct edge effects
+
 ##### 0.6.6
  - merged circular and bar progress, added bar modes,
  - textAllCaps compatibility mode,
@@ -105,8 +110,9 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
  - software shadows,
  - added ripple to CardView,
  - tuned calculator a bit,
- - working on edge effects for listview and scrollview
- - fixed bugs: animations for progress bars, correct text appearance handling, styles and super constructor calls,
+ - working on edge effects for listview and scrollview,
+ - Carbon themes extend correct Android and AppCompat themes,
+ - fixed bugs: animations for progress bars, correct text appearance handling, styles and super constructor calls
 
 ##### 0.6.5
  - added PagerTabStrip widget,
