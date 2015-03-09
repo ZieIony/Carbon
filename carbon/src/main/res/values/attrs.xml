@@ -211,10 +211,12 @@
 
     <attr name="carbon_editTextStyle" format="reference" />
     <declare-styleable name="EditText">
+        <attr name="carbon_textAllCaps" />
         <attr name="carbon_textStyle" />
         <attr name="carbon_minCharacters" format="integer" />
         <attr name="carbon_maxCharacters" format="integer" />
         <attr name="carbon_pattern" format="string" />
+        <attr name="carbon_errorMessage" format="string"/>
         <attr name="carbon_dividerColor" />
         <attr name="carbon_dividerPadding" format="dimension" />
     </declare-styleable>

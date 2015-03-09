@@ -43,9 +43,11 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        drawable = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
-        setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-        setButtonDrawable(null);
+        if(!isInEditMode()) {
+            drawable = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
+            setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+            setButtonDrawable(null);
+        }
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);
 
@@ -61,8 +63,8 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
                         setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
                     }
                 }
+                appearance.recycle();
             }
-            appearance.recycle();
         }
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);

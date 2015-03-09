@@ -3,14 +3,18 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.text.Editable;
+import android.text.TextPaint;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +29,46 @@ import carbon.animation.StateAnimator;
  * Created by Marcin on 2015-02-14.
  */
 public class EditText extends android.widget.EditText implements TouchMarginView, AnimatedView {
-    int maxCharacters;
-    int minCharacters;
-    private Pattern pattern;
-    float dividerPadding;
+    int dividerPadding;
     int dividerColor;
-    private Paint paint = new Paint();
+    int disabledColor = 0x4d000000;
+    int errorColor = 0xffff0000;
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    private Pattern pattern;
+    private String errorMessage;
+    TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    boolean error;
+
+    int minCharacters;
+    int maxCharacters;
+
+    int extraPaddingBottom = 0, extraPaddingTop = 0;
+
+    TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+
+    boolean floatingHint = false;
+
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (errorMessage != null && pattern != null)
+                error = !pattern.matcher(getText().toString()).matches();
+        }
+    };
 
     public EditText(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public EditText(Context context, AttributeSet attrs) {
@@ -47,30 +82,120 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
     public void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
-        setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.EditText_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+
+        int ap = a.getResourceId(R.styleable.RadioButton_android_textAppearance, -1);
+        if (ap != -1) {
+            TypedArray appearance = getContext().obtainStyledAttributes(ap, R.styleable.TextAppearance);
+            if (appearance != null) {
+                for (int i = 0; i < appearance.getIndexCount(); i++) {
+                    int attr = appearance.getIndex(i);
+                    if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
+                        setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
+                    } else if (attr == R.styleable.TextAppearance_carbon_textStyle) {
+                        setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                    }
+                }
+                appearance.recycle();
+            }
+        }
+
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.EditText_carbon_textAllCaps) {
+                setAllCaps(a.getBoolean(R.styleable.EditText_carbon_textAllCaps, false));
+            } else if (attr == R.styleable.EditText_carbon_textStyle) {
+                setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.EditText_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+            }
+        }
+
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
-        setDividerPadding(a.getDimension(R.styleable.EditText_carbon_dividerPadding, 0));
+        setDividerPadding((int) a.getDimension(R.styleable.EditText_carbon_dividerPadding, 0));
         setDividerColor(a.getColor(R.styleable.EditText_carbon_dividerColor, 0));
+        if (!isInEditMode())
+            setErrorMessage(a.getString(R.styleable.EditText_carbon_errorMessage));
 
         a.recycle();
+
+        if (!isInEditMode()) {
+            errorPaint.setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.Regular));
+            errorPaint.setTextSize(getResources().getDimension(R.dimen.carbon_errorTextSize));
+            errorPaint.setColor(errorColor);
+
+            labelPaint.setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.Regular));
+            labelPaint.setTextSize(getResources().getDimension(R.dimen.carbon_labelTextSize));
+            labelPaint.setColor(disabledColor);
+        }
+
+        addTextChangedListener(textWatcher);
+    }
+
+    public void setAllCaps(boolean allCaps) {
+        if (allCaps) {
+            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
+        } else {
+            setTransformationMethod(null);
+        }
+    }
+
+    private void updateLayout() {
+        int paddingBottom = getPaddingBottom() - extraPaddingBottom;
+        int dividerPadding = this.dividerPadding - extraPaddingBottom;
+        if (errorMessage != null || minCharacters > 0 || maxCharacters > 0) {
+            extraPaddingBottom = (int) (getResources().getDimension(R.dimen.carbon_errorTextSize) + getResources().getDimension(R.dimen.carbon_paddingHalf));
+        } else {
+            extraPaddingBottom = 0;
+        }
+        setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), paddingBottom + extraPaddingBottom);
+        this.dividerPadding = dividerPadding + extraPaddingBottom;
+    }
+
+    public void setErrorMessage(String text) {
+        this.errorMessage = text;
+        if (errorMessage == null)
+            error = false;
+        updateLayout();
+    }
+
+    @Override
+    public void setError(CharSequence text) {
+        setErrorMessage(text.toString());
+        error = errorMessage != null;
+    }
+
+    @Override
+    public void setError(CharSequence error, Drawable icon) {
+        this.setError(error);
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        paint.setColor(dividerColor);
-        paint.setStrokeWidth(2);
+        if (isFocused() && isEnabled()) {
+            paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.dip));
+        } else {
+            paint.setStrokeWidth(getResources().getDimension(R.dimen.dip));
+        }
+        if (isEnabled()) {
+            paint.setColor(error ? errorColor : dividerColor);
+            paint.setPathEffect(null);
+        } else {
+            paint.setColor(disabledColor);
+            paint.setPathEffect(new DashPathEffect(new float[]{getResources().getDimension(R.dimen.dip), 3 * getResources().getDimension(R.dimen.dip)}, 0));
+        }
         canvas.drawLine(0, getHeight() - dividerPadding, getWidth(), getHeight() - dividerPadding, paint);
+
+        if (error && errorMessage != null)
+            canvas.drawText(errorMessage, 0, getHeight() - dividerPadding + errorPaint.getTextSize() + getResources().getDimension(R.dimen.carbon_paddingHalf), errorPaint);
     }
 
     public String getPattern() {
         return pattern.pattern();
     }
 
-    public void setPattern(String pattern) {
+    public void setPattern(final String pattern) {
         if (pattern == null) {
             this.pattern = null;
             return;
@@ -84,6 +209,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
     public void setMinCharacters(int minCharacters) {
         this.minCharacters = minCharacters;
+        updateLayout();
     }
 
     public int getMaxCharacters() {
@@ -92,6 +218,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
     public void setMaxCharacters(int maxCharacters) {
         this.maxCharacters = maxCharacters;
+        updateLayout();
     }
 
     public int getDividerColor() {
@@ -102,12 +229,12 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         this.dividerColor = dividerColor;
     }
 
-    public float getDividerPadding() {
+    public int getDividerPadding() {
         return dividerPadding;
     }
 
-    public void setDividerPadding(float dividerPadding) {
-        this.dividerPadding = dividerPadding;
+    public void setDividerPadding(int dividerPadding) {
+        this.dividerPadding = dividerPadding + extraPaddingBottom;
     }
 
 

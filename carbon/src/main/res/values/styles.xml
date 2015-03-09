@@ -391,11 +391,13 @@
         <item name="carbon_elevation">@dimen/carbon_elevationLow</item>
     </style>
 
-    <style name="carbon_EditText" parent="@android:style/Widget.TextView">
-        <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
+    <style name="carbon_EditText" parent="@android:style/Widget.EditText">
+        <item name="android:textAppearance">?attr/carbon_textAppearance_subhead</item>
         <item name="carbon_dividerColor">?attr/carbon_colorPrimary</item>
         <item name="carbon_dividerPadding">8dp</item>
         <item name="android:background">@null</item>
+        <item name="android:paddingTop">@dimen/carbon_padding</item>
+        <item name="android:paddingBottom">@dimen/carbon_padding</item>
     </style>
 
     <style name="carbon_PagerTabStrip">
@@ -409,6 +411,8 @@
     </style>
 
     <style name="carbon_CheckBox" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:padding">0dp</item>
+        <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
@@ -417,6 +421,8 @@
     </style>
 
     <style name="carbon_RadioButton" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:padding">0dp</item>
+        <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>

@@ -57,6 +57,7 @@
             android:label="@string/app_name" />
         <activity
             android:name=".widget.TextFieldsActivity"
+            android:theme="@style/carbon_Theme.AppCompat.Light"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity

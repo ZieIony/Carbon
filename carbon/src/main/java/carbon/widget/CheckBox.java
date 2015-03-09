@@ -43,9 +43,11 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
-        setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-        setButtonDrawable(null);
+        if(!isInEditMode()) {
+            drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
+            setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+            setButtonDrawable(null);
+        }
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
 
@@ -61,8 +63,8 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
                         setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
                     }
                 }
+                appearance.recycle();
             }
-            appearance.recycle();
         }
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);

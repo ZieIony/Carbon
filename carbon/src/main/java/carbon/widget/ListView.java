@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
+import android.widget.ListAdapter;
 
 import java.lang.reflect.Method;
 
@@ -61,21 +62,50 @@ public class ListView extends android.widget.ListView {
         }
     }
 
-    private int getScrollRange() {
-        int scrollRange = 0;
-        if (getChildCount() > 0) {
-            View child = getChildAt(0);
-            scrollRange = Math.max(0,
-                    child.getHeight() - (getHeight() - getPaddingBottom() - getPaddingTop()));
+    @Override
+    public void setEmptyView(View emptyView) {
+        super.setEmptyView(emptyView);
+        if (getEmptyView() != null) {
+            if (getAdapter() != null && getAdapter().getCount() == 0) {
+                getEmptyView().setVisibility(View.VISIBLE);
+                setVisibility(View.GONE);
+            } else {
+                getEmptyView().setVisibility(View.INVISIBLE);
+                setVisibility(View.VISIBLE);
+            }
         }
-        return scrollRange;
+    }
+
+    private int getScrollRange() {
+        if (getAdapter() != null && getChildCount() > 0) {
+            if (getLastVisiblePosition() == getAdapter().getCount() - 1) {
+                return getChildAt(getChildCount() - 1).getBottom();
+            } else {
+                return Integer.MAX_VALUE;
+            }
+        }
+        return 0;
     }
 
     @Override
+    public void setAdapter(ListAdapter adapter) {
+        super.setAdapter(adapter);
+        if (getEmptyView() != null) {
+            if (adapter != null && adapter.getCount() == 0) {
+                getEmptyView().setVisibility(View.VISIBLE);
+                setVisibility(View.GONE);
+            } else {
+                getEmptyView().setVisibility(View.INVISIBLE);
+                setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+      @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (edgeEffectTop != null) {
-            final int scrollY = getScrollY();
+            final int scrollY = 0;
             if (!edgeEffectTop.isFinished()) {
                 final int restoreCount = canvas.save();
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
@@ -93,7 +123,7 @@ public class ListView extends android.widget.ListView {
                 final int height = getHeight();
 
                 canvas.translate(-width + getPaddingLeft(),
-                        Math.max(getScrollRange(), scrollY) + height);
+                        Math.max(getScrollRange(), scrollY));
                 canvas.rotate(180, width, 0);
                 edgeEffectBottom.setSize(width, height);
                 if (edgeEffectBottom.draw(canvas)) {
@@ -105,55 +135,50 @@ public class ListView extends android.widget.ListView {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        boolean result = super.onTouchEvent(ev);
-
+    public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                prevY = ev.getY();
+                break;
             case MotionEvent.ACTION_MOVE:
-                float deltaY = prevY - ev.getY();
+                float deltaY = ev.getY() - prevY;
 
-                if (!drag && Math.abs(deltaY) > mTouchSlop) {
-                    final ViewParent parent = getParent();
-                    if (parent != null) {
-                        parent.requestDisallowInterceptTouchEvent(true);
-                    }
-                    drag = true;
-                    if (deltaY > 0) {
-                        deltaY -= mTouchSlop;
-                    } else {
-                        deltaY += mTouchSlop;
-                    }
+                final ViewParent parent = getParent();
+                if (parent != null) {
+                    parent.requestDisallowInterceptTouchEvent(true);
                 }
-                if (drag) {
-                    final int oldY = getScrollY();
-                    final int range = getScrollRange();
-                    boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
-                    if (canOverscroll) {
-                        float pulledToY = oldY + deltaY;
-                        if (pulledToY < 0) {
-                            edgeEffectTop.onPull(deltaY / getHeight(), ev.getX() / getWidth());
-                            if (!edgeEffectBottom.isFinished())
-                                edgeEffectBottom.onRelease();
-                        } else if (pulledToY > range) {
-                            edgeEffectBottom.onPull(deltaY / getHeight(), 1.f - ev.getX() / getWidth());
-                            if (!edgeEffectTop.isFinished())
-                                edgeEffectTop.onRelease();
-                        }
-                        if (edgeEffectTop != null && (!edgeEffectTop.isFinished() || !edgeEffectBottom.isFinished()))
-                            postInvalidate();
+                final int range = getScrollRange();
+                boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
+                        (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+
+                if (canOverscroll) {
+                    if (getFirstVisiblePosition() == 0 && getChildAt(0).getTop() + deltaY > 0) {
+                        edgeEffectTop.onPull(deltaY / getHeight(), ev.getX() / getWidth());
+                        //if (!edgeEffectBottom.isFinished())
+                        //  edgeEffectBottom.onRelease();
+                    } else if (getLastVisiblePosition() == getAdapter().getCount() - 1 && getChildAt(getChildCount() - 1).getBottom() + deltaY < range) {
+                        edgeEffectBottom.onPull(deltaY / getHeight(), 1.f - ev.getX() / getWidth());
+                        //if (!edgeEffectTop.isFinished())
+                        //  edgeEffectTop.onRelease();
                     }
+                    if (edgeEffectTop != null && (!edgeEffectTop.isFinished() || !edgeEffectBottom.isFinished()))
+                        postInvalidate();
+
+                    prevY = ev.getY();
                 }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (drag)
-                    endDrag();
+                if (edgeEffectTop != null) {
+                    edgeEffectTop.onRelease();
+                    edgeEffectBottom.onRelease();
+                }
+                prevY = 0;
                 break;
         }
-        prevY = ev.getY();
 
+        boolean result = super.dispatchTouchEvent(ev);
         return result;
     }
 
@@ -185,16 +210,6 @@ public class ListView extends android.widget.ListView {
             }
         }
     }*/
-
-    private void endDrag() {
-        drag = false;
-
-        if (edgeEffectTop != null) {
-            edgeEffectTop.onRelease();
-            edgeEffectBottom.onRelease();
-        }
-    }
-
 
     @Override
     public void setOverScrollMode(int mode) {
