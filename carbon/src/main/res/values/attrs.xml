@@ -237,6 +237,11 @@
         <attr name="carbon_edgeEffectColor" />
     </declare-styleable>
 
+    <attr name="carbon_horizontalScrollViewStyle" format="reference" />
+    <declare-styleable name="HorizontalScrollView">
+        <attr name="carbon_edgeEffectColor" />
+    </declare-styleable>
+
     <declare-styleable name="ListView">
         <attr name="carbon_edgeEffectColor" />
     </declare-styleable>

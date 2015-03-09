@@ -91,9 +91,7 @@ public class ScrollView extends android.widget.ScrollView {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        boolean result = super.onTouchEvent(ev);
-
+    public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 float deltaY = prevY - ev.getY();
@@ -134,13 +132,19 @@ public class ScrollView extends android.widget.ScrollView {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (drag)
-                    endDrag();
+                if (drag) {
+                    drag = false;
+
+                    if (edgeEffectTop != null) {
+                        edgeEffectTop.onRelease();
+                        edgeEffectBottom.onRelease();
+                    }
+                }
                 break;
         }
         prevY = ev.getY();
 
-        return result;
+        return super.dispatchTouchEvent(ev);
     }
 
    /* @Override
@@ -171,16 +175,6 @@ public class ScrollView extends android.widget.ScrollView {
             }
         }
     }*/
-
-    private void endDrag() {
-        drag = false;
-
-        if (edgeEffectTop != null) {
-            edgeEffectTop.onRelease();
-            edgeEffectBottom.onRelease();
-        }
-    }
-
 
     @Override
     public void setOverScrollMode(int mode) {

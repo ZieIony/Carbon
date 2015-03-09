@@ -137,49 +137,59 @@ public class ListView extends android.widget.ListView {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                prevY = ev.getY();
-                break;
             case MotionEvent.ACTION_MOVE:
                 float deltaY = ev.getY() - prevY;
 
-                final ViewParent parent = getParent();
-                if (parent != null) {
-                    parent.requestDisallowInterceptTouchEvent(true);
-                }
-
-                final int range = getScrollRange();
-                boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                        (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
-
-                if (canOverscroll) {
-                    if (getFirstVisiblePosition() == 0 && getChildAt(0).getTop() + deltaY > 0) {
-                        edgeEffectTop.onPull(deltaY / getHeight(), ev.getX() / getWidth());
-                        //if (!edgeEffectBottom.isFinished())
-                        //  edgeEffectBottom.onRelease();
-                    } else if (getLastVisiblePosition() == getAdapter().getCount() - 1 && getChildAt(getChildCount() - 1).getBottom() + deltaY < range) {
-                        edgeEffectBottom.onPull(deltaY / getHeight(), 1.f - ev.getX() / getWidth());
-                        //if (!edgeEffectTop.isFinished())
-                        //  edgeEffectTop.onRelease();
+                if (!drag && Math.abs(deltaY) > mTouchSlop) {
+                    final ViewParent parent = getParent();
+                    if (parent != null) {
+                        parent.requestDisallowInterceptTouchEvent(true);
                     }
-                    if (edgeEffectTop != null && (!edgeEffectTop.isFinished() || !edgeEffectBottom.isFinished()))
-                        postInvalidate();
+                    drag = true;
+                    if (deltaY > 0) {
+                        deltaY -= mTouchSlop;
+                    } else {
+                        deltaY += mTouchSlop;
+                    }
+                }
+                if (drag) {
+                    final int range = getScrollRange();
+                    boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
+                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
-                    prevY = ev.getY();
+                    if (canOverscroll) {
+                        if (getFirstVisiblePosition() == 0 && getChildAt(0).getTop() + deltaY > 0) {
+                            edgeEffectTop.onPull(deltaY / getHeight(), ev.getX() / getWidth());
+                            if (!edgeEffectBottom.isFinished())
+                              edgeEffectBottom.onRelease();
+                        } else if (getLastVisiblePosition() == getAdapter().getCount() - 1 && getChildAt(getChildCount() - 1).getBottom() + deltaY < range) {
+                            edgeEffectBottom.onPull(deltaY / getHeight(), 1.f - ev.getX() / getWidth());
+                            if (!edgeEffectTop.isFinished())
+                              edgeEffectTop.onRelease();
+                        }
+                        if (edgeEffectTop != null && (!edgeEffectTop.isFinished() || !edgeEffectBottom.isFinished()))
+                            postInvalidate();
+
+                        prevY = ev.getY();
+                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (edgeEffectTop != null) {
-                    edgeEffectTop.onRelease();
-                    edgeEffectBottom.onRelease();
+                if(drag) {
+                    drag = false;
+
+                    if (edgeEffectTop != null) {
+                        edgeEffectTop.onRelease();
+                        edgeEffectBottom.onRelease();
+                    }
                 }
-                prevY = 0;
                 break;
         }
 
-        boolean result = super.dispatchTouchEvent(ev);
-        return result;
+        prevY = ev.getY();
+
+        return super.dispatchTouchEvent(ev);
     }
 
    /* @Override

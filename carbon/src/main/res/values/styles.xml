@@ -9,6 +9,7 @@
         <item name="android:listViewStyle">@style/carbon_ListView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
 
+        <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
         <item name="carbon_statusBarStyle">@style/carbon_StatusBar</item>
@@ -77,6 +78,7 @@
         <item name="android:listViewStyle">@style/carbon_ListView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
 
+        <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
         <item name="carbon_statusBarStyle">@style/carbon_StatusBar</item>
@@ -144,6 +146,7 @@
         <item name="android:listViewStyle">@style/carbon_ListView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
 
+        <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
         <item name="carbon_statusBarStyle">@style/carbon_StatusBar</item>
@@ -212,6 +215,7 @@
         <item name="android:listViewStyle">@style/carbon_ListView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
 
+        <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
         <item name="carbon_statusBarStyle">@style/carbon_StatusBar</item>
@@ -407,6 +411,10 @@
     </style>
 
     <style name="carbon_ScrollView">
+        <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
+    </style>
+
+    <style name="carbon_HorizontalScrollView">
         <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
     </style>
 

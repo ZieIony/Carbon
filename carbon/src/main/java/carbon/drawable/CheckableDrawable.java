@@ -235,19 +235,26 @@ public class CheckableDrawable extends Drawable {
         if (states != null) {
             boolean newChecked = false;
             for (int state : states) {
-                if (state == android.R.attr.state_checked) {
+                if (state == android.R.attr.state_checked)
                     newChecked = true;
-                }
             }
-            if (checked != newChecked) {
-                checked = newChecked;
-                downTime = System.currentTimeMillis();
-                invalidateSelf();
-            }
+            if (checked != newChecked)
+                setChecked(newChecked);
         }
         return super.onStateChange(states);
     }
 
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+        downTime = System.currentTimeMillis();
+        invalidateSelf();
+    }
+
+    public void setCheckedImmediate(boolean checked) {
+        this.checked = checked;
+        downTime = System.currentTimeMillis() - CHECK_DURATION - FILL_DURATION;
+        invalidateSelf();
+    }
 
     @Override
     public int getIntrinsicWidth() {

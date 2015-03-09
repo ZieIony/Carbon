@@ -21,7 +21,6 @@ public class CornersDrawable extends Drawable {
     private Canvas textureCanvas;
     private Paint paint;
 
-
     public CornersDrawable(Drawable drawable) {
         this.drawable = drawable;
         paint = new Paint();

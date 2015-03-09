@@ -82,6 +82,8 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
             }
         }
 
+        setCheckedImmediate(isChecked());
+
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         a.recycle();
@@ -104,6 +106,11 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
         } else {
             setTransformationMethod(null);
         }
+    }
+
+    public void setCheckedImmediate(boolean checked) {
+        super.setChecked(checked);
+        drawable.setCheckedImmediate(checked);
     }
 
     // -------------------------------

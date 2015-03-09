@@ -82,6 +82,8 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
             }
         }
 
+        setCheckedImmediate(isChecked());
+
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         a.recycle();
@@ -104,6 +106,11 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
         } else {
             setTransformationMethod(null);
         }
+    }
+
+    public void setCheckedImmediate(boolean checked) {
+        super.setChecked(checked);
+        drawable.setCheckedImmediate(checked);
     }
 
     // -------------------------------
