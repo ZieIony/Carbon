@@ -40,7 +40,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.6.6'
+    compile 'tk.zielony:carbon:0.6.7'
     
 And these two lines to android/defaultConfig:
 
