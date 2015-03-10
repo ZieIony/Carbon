@@ -1,11 +1,16 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.DashPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextPaint;
@@ -30,10 +35,11 @@ import carbon.animation.StateAnimator;
  */
 public class EditText extends android.widget.EditText implements TouchMarginView, AnimatedView {
     int dividerPadding;
-    int dividerColor;
+    ColorStateList dividerColor;
     int disabledColor = 0x4d000000;
     int errorColor = 0xffff0000;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Path linePath;
 
     private Pattern pattern;
     private String errorMessage;
@@ -66,6 +72,8 @@ public class EditText extends android.widget.EditText implements TouchMarginView
                 error = !pattern.matcher(getText().toString()).matches();
         }
     };
+    private Bitmap dashPathBitmap;
+    private BitmapShader dashPathShader;
 
     public EditText(Context context) {
         this(context, null);
@@ -113,7 +121,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
         setDividerPadding((int) a.getDimension(R.styleable.EditText_carbon_dividerPadding, 0));
-        setDividerColor(a.getColor(R.styleable.EditText_carbon_dividerColor, 0));
+        setDividerColor(a.getColorStateList(R.styleable.EditText_carbon_dividerColor));
         if (!isInEditMode())
             setErrorMessage(a.getString(R.styleable.EditText_carbon_errorMessage));
 
@@ -130,6 +138,15 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         }
 
         addTextChangedListener(textWatcher);
+
+        float dip = getResources().getDimension(R.dimen.dip);
+        dashPathBitmap = Bitmap.createBitmap((int) (dip * 4), (int) dip, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(dashPathBitmap);
+        paint.setColor(0xffffffff);
+        paint.setAlpha(255);
+        paint.setColor(disabledColor);
+        c.drawCircle(dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, paint);
+        dashPathShader = new BitmapShader(dashPathBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -179,13 +196,17 @@ public class EditText extends android.widget.EditText implements TouchMarginView
             paint.setStrokeWidth(getResources().getDimension(R.dimen.dip));
         }
         if (isEnabled()) {
-            paint.setColor(error ? errorColor : dividerColor);
-            paint.setPathEffect(null);
+            paint.setColor(error ? errorColor : dividerColor.getColorForState(getDrawableState(),dividerColor.getDefaultColor()));
+            paint.setShader(null);
+            canvas.drawLine(0, getHeight() - dividerPadding, getWidth(), getHeight() - dividerPadding, paint);
         } else {
-            paint.setColor(disabledColor);
-            paint.setPathEffect(new DashPathEffect(new float[]{getResources().getDimension(R.dimen.dip), 3 * getResources().getDimension(R.dimen.dip)}, 0));
+            Matrix matrix = new Matrix();
+            matrix.postTranslate(0, getHeight() - dividerPadding - paint.getStrokeWidth() / 2.0f);
+            dashPathShader.setLocalMatrix(matrix);
+            paint.setShader(dashPathShader);
+            canvas.drawRect(0, getHeight() - dividerPadding - paint.getStrokeWidth() / 2.0f,
+                    getWidth(), getHeight() - dividerPadding + paint.getStrokeWidth() / 2.0f, paint);
         }
-        canvas.drawLine(0, getHeight() - dividerPadding, getWidth(), getHeight() - dividerPadding, paint);
 
         if (error && errorMessage != null)
             canvas.drawText(errorMessage, 0, getHeight() - dividerPadding + errorPaint.getTextSize() + getResources().getDimension(R.dimen.carbon_paddingHalf), errorPaint);
@@ -221,12 +242,18 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         updateLayout();
     }
 
-    public int getDividerColor() {
+    public ColorStateList getDividerColor() {
         return dividerColor;
     }
 
     public void setDividerColor(int dividerColor) {
+        this.dividerColor = ColorStateList.valueOf(dividerColor);
+        postInvalidate();
+    }
+
+    public void setDividerColor(ColorStateList dividerColor) {
         this.dividerColor = dividerColor;
+        postInvalidate();
     }
 
     public int getDividerPadding() {
@@ -235,8 +262,8 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
     public void setDividerPadding(int dividerPadding) {
         this.dividerPadding = dividerPadding + extraPaddingBottom;
+        postInvalidate();
     }
-
 
     // -------------------------------
     // touch margin

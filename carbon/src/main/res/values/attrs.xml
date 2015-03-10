@@ -216,7 +216,7 @@
         <attr name="carbon_minCharacters" format="integer" />
         <attr name="carbon_maxCharacters" format="integer" />
         <attr name="carbon_pattern" format="string" />
-        <attr name="carbon_errorMessage" format="string"/>
+        <attr name="carbon_errorMessage" format="string" />
         <attr name="carbon_dividerColor" />
         <attr name="carbon_dividerPadding" format="dimension" />
     </declare-styleable>
@@ -225,7 +225,7 @@
     <declare-styleable name="PagerTabStrip">
         <attr name="carbon_indicatorColor" format="color|reference" />
         <attr name="carbon_indicatorWidth" format="dimension" />
-        <attr name="carbon_tab" format="reference" />
+        <attr name="carbon_fixedTabs" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="TextAppearance">
