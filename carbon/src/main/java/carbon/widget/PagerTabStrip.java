@@ -21,7 +21,6 @@ import carbon.R;
  */
 public class PagerTabStrip extends HorizontalScrollView {
     ViewPager viewPager;
-    private int tabResId = R.layout.carbon_tab;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     LinearLayout content;
     private float indicatorPos = 0;
@@ -32,15 +31,21 @@ public class PagerTabStrip extends HorizontalScrollView {
     DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator();
     boolean fixed = false;
 
+    private ValueAnimator animator, animator2;
+
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             position = (int) Math.round(position + positionOffset);
             if (position != selectedPage) {
-                ValueAnimator.clearAllAnimations();
                 View view = content.getChildAt(position);
 
-                ValueAnimator animator = ValueAnimator.ofFloat(indicatorPos, view.getLeft());
+                if (animator != null)
+                    animator.cancel();
+                if (animator2 != null)
+                    animator2.cancel();
+
+                animator = ValueAnimator.ofFloat(indicatorPos, view.getLeft());
                 animator.setDuration(200);
                 if (position > selectedPage)
                     animator.setStartDelay(100);
@@ -54,7 +59,7 @@ public class PagerTabStrip extends HorizontalScrollView {
                 });
                 animator.start();
 
-                ValueAnimator animator2 = ValueAnimator.ofFloat(indicatorPos2, view.getRight());
+                animator2 = ValueAnimator.ofFloat(indicatorPos2, view.getRight());
                 animator2.setDuration(200);
                 if (position < selectedPage)
                     animator2.setStartDelay(100);
@@ -68,9 +73,9 @@ public class PagerTabStrip extends HorizontalScrollView {
                 });
                 animator2.start();
 
-                content.getChildAt(selectedPage).findViewById(R.id.carbon_tabText).setSelected(false);
+                content.getChildAt(selectedPage).setSelected(false);
                 selectedPage = position;
-                content.getChildAt(selectedPage).findViewById(R.id.carbon_tabText).setSelected(true);
+                content.getChildAt(selectedPage).setSelected(true);
 
                 if (content.getChildAt(selectedPage).getLeft() - getScrollX() < 0) {
                     smoothScrollTo(content.getChildAt(selectedPage).getLeft(), 0);
@@ -89,8 +94,10 @@ public class PagerTabStrip extends HorizontalScrollView {
         }
     };
 
+    private TabBuilder tabBuilder;
+
     public PagerTabStrip(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs) {
@@ -107,12 +114,9 @@ public class PagerTabStrip extends HorizontalScrollView {
 
         setIndicatorColor(a.getColor(R.styleable.PagerTabStrip_carbon_indicatorColor, 0));
         setIndicatorHeight(a.getDimension(R.styleable.PagerTabStrip_carbon_indicatorWidth, 2));
-        setTabResource(a.getResourceId(R.styleable.PagerTabStrip_carbon_tab, R.layout.carbon_tab));
+        setFixed(a.getBoolean(R.styleable.PagerTabStrip_carbon_fixedTabs, true));
 
         a.recycle();
-
-        if (fixed)
-            setFillViewport(true);
 
         setHorizontalFadingEdgeEnabled(false);
         setHorizontalScrollBarEnabled(false);
@@ -138,16 +142,25 @@ public class PagerTabStrip extends HorizontalScrollView {
 
         if (viewPager == null)
             return;
-        PagerAdapter adapter = viewPager.getAdapter();
+        final PagerAdapter adapter = viewPager.getAdapter();
 
-        if (adapter == null || tabResId == 0)
+        if (adapter == null)
             return;
 
+        if (tabBuilder == null) {
+            tabBuilder = new TabBuilder() {
+                @Override
+                public View getView(int position) {
+                    View tab = inflate(getContext(), R.layout.carbon_tab, null);
+                    ((TextView) tab.findViewById(R.id.carbon_tabText)).setText(adapter.getPageTitle(position).toString().toUpperCase());
+                    return tab;
+                }
+            };
+        }
         for (int i = 0; i < adapter.getCount(); i++) {
-            View tab = inflate(getContext(), tabResId, null);
-            ((TextView) tab.findViewById(R.id.carbon_tabText)).setText(adapter.getPageTitle(i).toString().toUpperCase());
+            View tab = tabBuilder.getView(i);
             content.addView(tab, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
-            tab.findViewById(R.id.carbon_tabText).setSelected(i == 0);
+            tab.setSelected(i == 0);
             final int finalI = i;
             tab.setOnClickListener(new OnClickListener() {
                 @Override
@@ -161,23 +174,16 @@ public class PagerTabStrip extends HorizontalScrollView {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        if (content.getChildCount() == 0)
+            return;
         if (indicatorPos == indicatorPos2)
-            indicatorPos2 = content.getChildAt(0).getWidth();
+            indicatorPos2 = content.getChildAt(selectedPage).getWidth();
         paint.setColor(indicatorColor);
         canvas.drawRect(indicatorPos, getHeight() - indicatorHeight, indicatorPos2, getHeight(), paint);
     }
 
     public ViewPager getViewPager() {
         return viewPager;
-    }
-
-    public int getTabResource() {
-        return tabResId;
-    }
-
-    public void setTabResource(int tabResId) {
-        this.tabResId = tabResId;
-        initTabs();
     }
 
     public boolean isFixed() {
@@ -204,5 +210,10 @@ public class PagerTabStrip extends HorizontalScrollView {
 
     public void setIndicatorColor(int indicatorColor) {
         this.indicatorColor = indicatorColor;
+    }
+
+    public void setTabBuilder(TabBuilder tabBuilder) {
+        this.tabBuilder = tabBuilder;
+        initTabs();
     }
 }
