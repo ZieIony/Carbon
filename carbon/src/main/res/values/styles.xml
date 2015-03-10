@@ -407,7 +407,7 @@
     <style name="carbon_PagerTabStrip">
         <item name="carbon_indicatorColor">?attr/carbon_colorAccent</item>
         <item name="carbon_indicatorWidth">2dp</item>
-        <item name="carbon_tab">@layout/carbon_tab</item>
+        <item name="carbon_fixedTabs">true</item>
     </style>
 
     <style name="carbon_ScrollView">

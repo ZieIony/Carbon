@@ -101,7 +101,7 @@ public class ListView extends android.widget.ListView {
         }
     }
 
-      @Override
+    @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (edgeEffectTop != null) {
@@ -158,14 +158,14 @@ public class ListView extends android.widget.ListView {
                             (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
                     if (canOverscroll) {
-                        if (getFirstVisiblePosition() == 0 && getChildAt(0).getTop() + deltaY > 0) {
+                        if (getChildCount() > 0 && getFirstVisiblePosition() == 0 && getChildAt(0).getTop() + deltaY > 0) {
                             edgeEffectTop.onPull(deltaY / getHeight(), ev.getX() / getWidth());
                             if (!edgeEffectBottom.isFinished())
-                              edgeEffectBottom.onRelease();
-                        } else if (getLastVisiblePosition() == getAdapter().getCount() - 1 && getChildAt(getChildCount() - 1).getBottom() + deltaY < range) {
+                                edgeEffectBottom.onRelease();
+                        } else if (getChildCount() > 0 && getLastVisiblePosition() == getAdapter().getCount() - 1 && getChildAt(getChildCount() - 1).getBottom() + deltaY < range) {
                             edgeEffectBottom.onPull(deltaY / getHeight(), 1.f - ev.getX() / getWidth());
                             if (!edgeEffectTop.isFinished())
-                              edgeEffectTop.onRelease();
+                                edgeEffectTop.onRelease();
                         }
                         if (edgeEffectTop != null && (!edgeEffectTop.isFinished() || !edgeEffectBottom.isFinished()))
                             postInvalidate();
@@ -176,7 +176,7 @@ public class ListView extends android.widget.ListView {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if(drag) {
+                if (drag) {
                     drag = false;
 
                     if (edgeEffectTop != null) {
@@ -245,9 +245,9 @@ public class ListView extends android.widget.ListView {
 
     public void setEdgeEffectColor(int edgeEffectColor) {
         this.edgeEffectColor = edgeEffectColor;
-        if(edgeEffectTop !=null)
+        if (edgeEffectTop != null)
             edgeEffectTop.setColor(edgeEffectColor);
-        if(edgeEffectBottom !=null)
+        if (edgeEffectBottom != null)
             edgeEffectBottom.setColor(edgeEffectColor);
     }
 }

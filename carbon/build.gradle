@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 21
-        versionCode 26
-        versionName "0.6.7"
+        versionCode 27
+        versionName "0.6.7.1"
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
     }
