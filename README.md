@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.7.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.7.1/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.6.7.2-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.6.7.2/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
@@ -40,7 +40,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.6.7.1'
+    compile 'tk.zielony:carbon:0.6.7.2'
     
 And these two lines to android/defaultConfig:
 
@@ -99,6 +99,11 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+##### 0.6.7.2
+ - fixed issues with checkboxes and radiobuttons,
+ - added colorstatelist support to checkboxes and radiobuttons,
+ - fixed issue with z-order
+
 ##### 0.6.7.1
  - fixed issues with pagertabstrip, listview and edittext,
  - added tab builder to pagertabstrip
