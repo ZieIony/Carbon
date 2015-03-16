@@ -1,7 +1,5 @@
 package carbon.widget;
 
-import android.view.animation.Animation;
-
 import carbon.animation.AnimUtils;
 
 /**

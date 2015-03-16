@@ -3,6 +3,8 @@ package carbon.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,7 @@ import carbon.shadow.ShadowView;
  */
 public class Toolbar extends LinearLayout implements ShadowView {
     private ViewGroup content;
-    private SVGView upIcon;
+    private SVGView icon;
 
     public Toolbar(Context context) {
         this(context, null);
@@ -29,9 +31,9 @@ public class Toolbar extends LinearLayout implements ShadowView {
     private void init(AttributeSet attrs, int defStyle) {
         inflate(getContext(), R.layout.carbon_toolbar, this);
         content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
-        upIcon = (SVGView) findViewById(R.id.carbon_upIcon);
+        icon = (SVGView) findViewById(R.id.carbon_icon);
 
-        upIcon.setOnClickListener(new OnClickListener() {
+        icon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((Activity) getContext()).onBackPressed();
@@ -109,16 +111,34 @@ public class Toolbar extends LinearLayout implements ShadowView {
         return (String) title.getText();
     }
 
-    public void setUpIcon(int iconRes) {
+    public void setIcon(int iconRes) {
         if (iconRes == 0) {
-            upIcon.setVisibility(GONE);
+            icon.setVisibility(GONE);
         } else {
-            upIcon.setSVGResource(iconRes);
-            upIcon.setVisibility(VISIBLE);
+            icon.setSVGResource(iconRes);
+            icon.setVisibility(VISIBLE);
         }
     }
 
-    public void setUpIconVisible(boolean visible) {
-        upIcon.setVisibility(visible ? VISIBLE : GONE);
+    public void setIcon(Drawable drawable) {
+        if (drawable == null) {
+            icon.setVisibility(GONE);
+        } else {
+            icon.setImageDrawable(drawable);
+            icon.setVisibility(VISIBLE);
+        }
+    }
+
+    public void setIcon(Bitmap bitmap) {
+        if (bitmap == null) {
+            icon.setVisibility(GONE);
+        } else {
+            icon.setImageBitmap(bitmap);
+            icon.setVisibility(VISIBLE);
+        }
+    }
+
+    public void setIconVisible(boolean visible) {
+        icon.setVisibility(visible ? VISIBLE : GONE);
     }
 }

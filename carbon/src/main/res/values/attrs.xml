@@ -8,7 +8,7 @@
         <attr name="carbon_colorBackground_inverse" format="reference|color" />
         <attr name="carbon_colorError" format="reference|color" />
         <attr name="carbon_colorDisabled" format="reference|color" />
-        <attr name="carbon_colorWidget" format="reference|color" />
+        <attr name="carbon_colorControl" format="reference|color" />
 
         <attr name="carbon_dividerColor" format="reference|color" />
         <attr name="carbon_iconColor" format="reference|color" />
@@ -251,9 +251,7 @@
         <attr name="carbon_textStyle" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
-        <attr name="carbon_checkCheckedColor" format="reference|color" />
-        <attr name="carbon_checkUncheckedColor" format="reference|color" />
-        <attr name="carbon_checkDisabledColor" format="reference|color" />
+        <attr name="carbon_checkColor" format="reference|color" />
     </declare-styleable>
 
     <attr name="carbon_radioButtonStyle" />
@@ -261,8 +259,6 @@
         <attr name="carbon_textStyle" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
-        <attr name="carbon_radioCheckedColor" format="reference|color" />
-        <attr name="carbon_radioUncheckedColor" format="reference|color" />
-        <attr name="carbon_radioDisabledColor" format="reference|color" />
+        <attr name="carbon_radioColor" format="reference|color" />
     </declare-styleable>
 </resources>

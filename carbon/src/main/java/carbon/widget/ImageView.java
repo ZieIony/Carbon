@@ -17,7 +17,6 @@ import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ import carbon.shadow.ShadowView;
 public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
 
     public ImageView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public ImageView(Context context, AttributeSet attrs) {

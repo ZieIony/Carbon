@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -20,6 +21,7 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.StateAnimator;
 import carbon.drawable.CheckableDrawable;
+import carbon.drawable.ControlCheckedColorStateList;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 
@@ -43,11 +45,12 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        if(!isInEditMode()) {
-            drawable = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
-            setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-            setButtonDrawable(null);
-        }
+        if (isInEditMode())
+            return;
+
+        drawable = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
+        setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        setButtonDrawable(null);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);
 
@@ -75,12 +78,11 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
                 setAllCaps(a.getBoolean(R.styleable.RadioButton_carbon_textAllCaps, false));
             } else if (attr == R.styleable.RadioButton_carbon_textStyle) {
                 setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.RadioButton_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
-            }else if(attr==R.styleable.RadioButton_carbon_radioCheckedColor){
-                drawable.setCheckedColor(a.getColor(attr,0));
-            }else if(attr==R.styleable.RadioButton_carbon_radioUncheckedColor){
-                drawable.setUncheckedColor(a.getColor(attr,0));
             }
         }
+
+        ColorStateList csl = a.getColorStateList(R.styleable.RadioButton_carbon_radioColor);
+        drawable.setColor(csl != null ? csl : new ControlCheckedColorStateList(getContext()));
 
         setCheckedImmediate(isChecked());
 

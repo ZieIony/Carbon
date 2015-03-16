@@ -27,19 +27,19 @@ public class WidgetsActivity extends Activity {
         setContentView(R.layout.activity_demo);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setUpIconVisible(true);
+        toolbar.setIconVisible(true);
         toolbar.setText("Widgets");
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "CheckBoxes & RadioButtons","Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields", "Tabs"
+                "CheckBoxes & RadioButtons", "Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields", "Tabs"
         };
         final Class[] activities = new Class[]{
-                CheckBoxRadioActivity.class,ButtonsActivity.class, DialogActivity.class, CircularProgressActivity.class, ProgressBarsActivity.class,
+                CheckBoxRadioActivity.class, ButtonsActivity.class, DialogActivity.class, CircularProgressActivity.class, ProgressBarsActivity.class,
                 SnackbarActivity.class, SVGActivity.class, TextFieldsActivity.class, TabsActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false,false, true, false, true, false, false, true, false
+                false, false, true, false, true, false, false, true, false
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

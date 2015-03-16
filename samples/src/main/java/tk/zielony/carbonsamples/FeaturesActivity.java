@@ -24,7 +24,7 @@ public class FeaturesActivity extends Activity {
         setContentView(R.layout.activity_demo);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setUpIconVisible(true);
+        toolbar.setIconVisible(true);
         toolbar.setText("Features");
 
         ListView listView = (ListView) findViewById(R.id.list);

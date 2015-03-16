@@ -37,7 +37,7 @@
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_dark</item>
         <item name="carbon_colorDisabled">@color/carbon_white_30</item>
-        <item name="carbon_colorWidget">@color/carbon_white_70</item>
+        <item name="carbon_colorControl">@color/carbon_white_70</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -106,7 +106,7 @@
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_light</item>
         <item name="carbon_colorDisabled">@color/carbon_black_26</item>
-        <item name="carbon_colorWidget">@color/carbon_black_54</item>
+        <item name="carbon_colorControl">@color/carbon_black_54</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -174,7 +174,7 @@
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_dark</item>
         <item name="carbon_colorDisabled">@color/carbon_white_30</item>
-        <item name="carbon_colorWidget">@color/carbon_white_70</item>
+        <item name="carbon_colorControl">@color/carbon_white_70</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -243,7 +243,7 @@
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_light</item>
         <item name="carbon_colorDisabled">@color/carbon_black_26</item>
-        <item name="carbon_colorWidget">@color/carbon_black_54</item>
+        <item name="carbon_colorControl">@color/carbon_black_54</item>
 
         <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -419,22 +419,20 @@
     </style>
 
     <style name="carbon_CheckBox" parent="android:Widget.CompoundButton.CheckBox">
-        <item name="android:padding">0dp</item>
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
-        <item name="carbon_checkCheckedColor">?attr/carbon_colorPrimary</item>
-        <item name="carbon_checkUncheckedColor">?attr/carbon_colorWidget</item>
+        <item name="carbon_checkColor">@null</item>
     </style>
 
     <style name="carbon_RadioButton" parent="android:Widget.CompoundButton.RadioButton">
-        <item name="android:padding">0dp</item>
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
-        <item name="carbon_radioCheckedColor">?attr/carbon_colorPrimary</item>
-        <item name="carbon_radioUncheckedColor">?attr/carbon_colorWidget</item>
+        <item name="carbon_radioColor">@null</item>
     </style>
 </resources>

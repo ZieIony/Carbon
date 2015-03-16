@@ -14,12 +14,11 @@ import android.view.animation.TranslateAnimation;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.widget.AnimatedView;
 
 /**
  * Created by Marcin on 2014-11-29.
  */
-public class BottomSheet extends android.widget.FrameLayout  {
+public class BottomSheet extends android.widget.FrameLayout {
     private float dim;
     ViewGroup content;
 

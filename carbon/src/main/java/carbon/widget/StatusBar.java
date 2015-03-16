@@ -19,7 +19,7 @@ import carbon.R;
  */
 public class StatusBar extends View {
     public StatusBar(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public StatusBar(Context context, AttributeSet attrs) {

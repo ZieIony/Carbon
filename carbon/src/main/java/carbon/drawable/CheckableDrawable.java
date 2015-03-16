@@ -1,6 +1,7 @@
 package carbon.drawable;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -56,6 +57,7 @@ public class CheckableDrawable extends Drawable {
     long downTime;
     private BitmapShader checkedShader, filledShader;
     private PointF offset;
+    private ColorStateList color;
 
     public CheckableDrawable(Context context, int checkedRes, int uncheckedRes, int filledRes, PointF offset) {
         this.context = context;
@@ -258,7 +260,7 @@ public class CheckableDrawable extends Drawable {
 
     @Override
     public int getIntrinsicWidth() {
-        return (int) (context.getResources().getDimension(R.dimen.dip) * 24);
+        return (int) (context.getResources().getDimension(R.dimen.carbon_1dip) * 24);
     }
 
     @Override
@@ -302,5 +304,16 @@ public class CheckableDrawable extends Drawable {
         disabledFilter = new LightingColorFilter(0, disabledColor);
         disabledAlpha = Color.alpha(disabledColor);
         invalidateSelf();
+    }
+
+    public void setColor(ColorStateList colorStateList) {
+        this.color = colorStateList;
+        setCheckedColor(color.getColorForState(new int[]{android.R.attr.state_checked}, color.getDefaultColor()));
+        setUncheckedColor(color.getColorForState(new int[]{-android.R.attr.state_checked}, color.getDefaultColor()));
+        setDisabledColor(color.getColorForState(new int[]{-android.R.attr.state_enabled}, color.getDefaultColor()));
+    }
+
+    public ColorStateList getColor() {
+        return color;
     }
 }

@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import carbon.animation.AnimUtils;
 import carbon.animation.RippleStateAnimator;
-import carbon.widget.AnimatedView;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.widget.AnimatedView;
 import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 

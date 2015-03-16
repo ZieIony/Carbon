@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import carbon.widget.CheckBox;
-import carbon.widget.EditText;
 import tk.zielony.carbonsamples.R;
 
 /**

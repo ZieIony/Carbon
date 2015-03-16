@@ -36,7 +36,7 @@ import carbon.shadow.ShadowView;
 public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
 
     public Button(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public Button(Context context, AttributeSet attrs) {

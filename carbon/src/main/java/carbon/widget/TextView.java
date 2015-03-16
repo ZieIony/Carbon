@@ -23,7 +23,7 @@ import carbon.animation.StateAnimator;
 public class TextView extends android.widget.TextView implements TouchMarginView, AnimatedView {
 
     public TextView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public TextView(Context context, AttributeSet attrs) {
