@@ -45,7 +45,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     private boolean debugMode;
 
     public LinearLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
@@ -81,6 +81,13 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        if (views == null || views.size() != getChildCount()) {
+            views = new ArrayList<View>();
+            for (int i = 0; i < getChildCount(); i++)
+                views.add(getChildAt(i));
+        }
+        Collections.sort(views, new ElevationComparator());
+
         super.dispatchDraw(canvas);
 
         if (debugMode)
@@ -148,14 +155,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     protected int getChildDrawingOrder(int childCount, int child) {
-        if(views==null||views.size()!=getChildCount()) {
-            views = new ArrayList<View>();
-            for (int i = 0; i < getChildCount(); i++)
-                views.add(getChildAt(i));
-            Collections.sort(views, new ElevationComparator());
-        }
-
-        return views.indexOf(getChildAt(child));
+        return views != null ? views.indexOf(getChildAt(child)) : child;
     }
 
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {

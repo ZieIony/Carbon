@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -20,6 +21,7 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.StateAnimator;
 import carbon.drawable.CheckableDrawable;
+import carbon.drawable.ControlCheckedColorStateList;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 
@@ -43,11 +45,12 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        if(!isInEditMode()) {
-            drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
-            setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-            setButtonDrawable(null);
-        }
+        if (isInEditMode())
+            return;
+
+        drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
+        setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        setButtonDrawable(null);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
 
@@ -75,12 +78,11 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
                 setAllCaps(a.getBoolean(attr, false));
             } else if (attr == R.styleable.CheckBox_carbon_textStyle) {
                 setTextStyle(Roboto.Style.values()[a.getInt(attr, Roboto.Style.Regular.ordinal())]);
-            }else if(attr==R.styleable.CheckBox_carbon_checkCheckedColor){
-                drawable.setCheckedColor(a.getColor(attr,0));
-            }else if(attr==R.styleable.CheckBox_carbon_checkUncheckedColor){
-                drawable.setUncheckedColor(a.getColor(attr,0));
             }
         }
+
+        ColorStateList csl = a.getColorStateList(R.styleable.CheckBox_carbon_checkColor);
+        drawable.setColor(csl != null ? csl : new ControlCheckedColorStateList(getContext()));
 
         setCheckedImmediate(isChecked());
 
@@ -122,7 +124,7 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
-            ((RippleDrawable) rippleDrawable).setHotspot(event.getX(), event.getY());
+            rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
     }
 

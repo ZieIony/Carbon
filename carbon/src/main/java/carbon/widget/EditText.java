@@ -139,7 +139,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
         addTextChangedListener(textWatcher);
 
-        float dip = getResources().getDimension(R.dimen.dip);
+        float dip = getResources().getDimension(R.dimen.carbon_1dip);
         dashPathBitmap = Bitmap.createBitmap((int) (dip * 4), (int) dip, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(dashPathBitmap);
         paint.setColor(0xffffffff);
@@ -191,12 +191,12 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (isFocused() && isEnabled()) {
-            paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.dip));
+            paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
         } else {
-            paint.setStrokeWidth(getResources().getDimension(R.dimen.dip));
+            paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
         }
         if (isEnabled()) {
-            paint.setColor(error ? errorColor : dividerColor.getColorForState(getDrawableState(),dividerColor.getDefaultColor()));
+            paint.setColor(error ? errorColor : dividerColor.getColorForState(getDrawableState(), dividerColor.getDefaultColor()));
             paint.setShader(null);
             canvas.drawLine(0, getHeight() - dividerPadding, getWidth(), getHeight() - dividerPadding, paint);
         } else {

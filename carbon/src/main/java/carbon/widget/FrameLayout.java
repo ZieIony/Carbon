@@ -46,7 +46,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     private boolean debugMode;
 
     public FrameLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public FrameLayout(Context context, AttributeSet attrs) {
@@ -86,6 +86,13 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        if (views == null || views.size() != getChildCount()) {
+            views = new ArrayList<View>();
+            for (int i = 0; i < getChildCount(); i++)
+                views.add(getChildAt(i));
+        }
+        Collections.sort(views, new ElevationComparator());
+
         super.dispatchDraw(canvas);
 
         if (debugMode)
@@ -153,14 +160,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     protected int getChildDrawingOrder(int childCount, int child) {
-        if(views==null||views.size()!=getChildCount()) {
-            views = new ArrayList<View>();
-            for (int i = 0; i < getChildCount(); i++)
-                views.add(getChildAt(i));
-            Collections.sort(views, new ElevationComparator());
-        }
-
-        return views.indexOf(getChildAt(child));
+        return views != null ? views.indexOf(getChildAt(child)) : child;
     }
 
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {

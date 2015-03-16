@@ -200,9 +200,9 @@ public class ScrollView extends android.widget.ScrollView {
 
     public void setEdgeEffectColor(int edgeEffectColor) {
         this.edgeEffectColor = edgeEffectColor;
-        if(edgeEffectTop !=null)
+        if (edgeEffectTop != null)
             edgeEffectTop.setColor(edgeEffectColor);
-        if(edgeEffectBottom !=null)
+        if (edgeEffectBottom != null)
             edgeEffectBottom.setColor(edgeEffectColor);
     }
 }

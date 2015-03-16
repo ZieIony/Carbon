@@ -2,7 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="dip">1dp</dimen>
+    <dimen name="carbon_1dip">1dp</dimen>
     <dimen name="calcButtonSize">60dp</dimen>
     <dimen name="calcButtonSize2">48dp</dimen>
 </resources>

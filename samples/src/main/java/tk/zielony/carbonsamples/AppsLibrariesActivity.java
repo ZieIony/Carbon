@@ -21,7 +21,7 @@ public class AppsLibrariesActivity extends Activity {
         setContentView(R.layout.activity_demo);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setUpIconVisible(true);
+        toolbar.setIconVisible(true);
         toolbar.setText("Apps & Libraries");
 
         ListView listView = (ListView) findViewById(R.id.list);

@@ -22,11 +22,11 @@
 
         <carbon.widget.Button
             android:text="Button2"
-            app:carbon_elevation="4dp"
+            app:carbon_elevation="3dp"
             android:background="#ffffafaf"
             android:layout_gravity="left"
             android:layout_marginTop="@dimen/carbon_padding"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="70dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </carbon.widget.FrameLayout>

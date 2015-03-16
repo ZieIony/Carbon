@@ -13,7 +13,7 @@ import carbon.R;
  */
 public class Divider extends View {
     public Divider(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public Divider(Context context, AttributeSet attrs) {

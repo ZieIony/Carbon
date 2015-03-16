@@ -6,7 +6,6 @@ package carbon.drawable;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,7 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 @TargetApi(14)
-public class EdgeEffect{
+public class EdgeEffect {
     @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "EdgeEffect";
 
@@ -75,9 +74,9 @@ public class EdgeEffect{
     public EdgeEffect(Context context) {
         mPaint.setAntiAlias(true);
         //final TypedArray a = context.obtainStyledAttributes(
-          //      com.android.internal.R.styleable.EdgeEffect);
+        //      com.android.internal.R.styleable.EdgeEffect);
         final int themeColor = Color.RED;//a.getColor(
-                //com.android.internal.R.styleable.EdgeEffect_colorEdgeEffect, 0xff666666);
+        //com.android.internal.R.styleable.EdgeEffect_colorEdgeEffect, 0xff666666);
         //a.recycle();
         mPaint.setColor((themeColor & 0xffffff) | 0x33000000);
         mPaint.setStyle(Paint.Style.FILL);

@@ -21,7 +21,7 @@ import carbon.R;
  */
 public class NavigationBar extends View {
     public NavigationBar(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public NavigationBar(Context context, AttributeSet attrs) {

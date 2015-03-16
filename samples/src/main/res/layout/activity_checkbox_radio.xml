@@ -9,6 +9,9 @@
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         android:text="check me!"
         android:paddingLeft="@dimen/carbon_padding"
+        android:paddingTop="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:paddingBottom="@dimen/carbon_padding"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="48dp" />

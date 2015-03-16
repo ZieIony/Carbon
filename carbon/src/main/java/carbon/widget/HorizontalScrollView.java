@@ -133,7 +133,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (drag){
+                if (drag) {
                     drag = false;
 
                     if (edgeEffectLeft != null) {

@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.Carbon;
 import carbon.R;
@@ -27,7 +26,7 @@ public class ProgressBar extends View implements AnimatedView {
     }
 
     public ProgressBar(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public ProgressBar(Context context, AttributeSet attrs) {

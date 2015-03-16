@@ -2,14 +2,14 @@ apply plugin: 'com.android.library'
 //apply from: 'maven-push.gradle'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.0"
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 21
-        versionCode 27
-        versionName "0.6.7.1"
+        targetSdkVersion 22
+        versionCode 28
+        versionName "0.6.7.2"
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
     }
@@ -23,8 +23,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:support-v4:22.0.0'
     compile 'com.caverock:androidsvg:1.2.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:gridlayout-v7:21.0.3'

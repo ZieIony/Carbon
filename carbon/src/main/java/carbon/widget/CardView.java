@@ -16,7 +16,7 @@ public class CardView extends android.widget.LinearLayout {
     private LinearLayout content;
 
     public CardView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public CardView(Context context, AttributeSet attrs) {

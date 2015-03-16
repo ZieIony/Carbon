@@ -61,8 +61,8 @@ public class AnimUtils {
     }
 
     public static Animator fadeIn(final View view, Animator.AnimatorListener listener) {
-        if(view.getVisibility()!=View.VISIBLE)
-            ViewHelper.setAlpha(view,0);
+        if (view.getVisibility() != View.VISIBLE)
+            ViewHelper.setAlpha(view, 0);
         ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -95,8 +95,8 @@ public class AnimUtils {
     }
 
     public static ValueAnimator popIn(final View view, Animator.AnimatorListener listener) {
-        if(view.getVisibility()!=View.VISIBLE)
-            ViewHelper.setAlpha(view,0);
+        if (view.getVisibility() != View.VISIBLE)
+            ViewHelper.setAlpha(view, 0);
         ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -133,8 +133,8 @@ public class AnimUtils {
     }
 
     public static ValueAnimator flyIn(final View view, Animator.AnimatorListener listener) {
-        if(view.getVisibility()!=View.VISIBLE)
-            ViewHelper.setAlpha(view,0);
+        if (view.getVisibility() != View.VISIBLE)
+            ViewHelper.setAlpha(view, 0);
         ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
