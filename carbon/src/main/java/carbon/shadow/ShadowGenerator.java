@@ -22,6 +22,7 @@ public class ShadowGenerator {
     private static boolean software = false;
 
     private static void blur(Bitmap bitmap, float radius) {
+        radius = Math.max(0,Math.min(radius,25));
         if (software) {
             blurSoftware(bitmap, radius);
         } else {

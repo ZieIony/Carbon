@@ -391,8 +391,11 @@
     </style>
 
     <style name="carbon_CardView">
-        <item name="android:background">?attr/carbon_colorBackground</item>
-        <item name="carbon_elevation">@dimen/carbon_elevationLow</item>
+        <item name="carbon_cardBackground">?attr/carbon_colorBackground</item>
+        <item name="carbon_cardElevation">@dimen/carbon_elevationLow</item>
+        <item name="carbon_cardCornerRadius">2dp</item>
+        <item name="carbon_cardPadding">0dp</item>
+        <item name="android:padding">@dimen/carbon_paddingHalf</item>
     </style>
 
     <style name="carbon_EditText" parent="@android:style/Widget.EditText">

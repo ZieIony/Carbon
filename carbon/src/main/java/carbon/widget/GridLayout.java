@@ -296,7 +296,6 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     }
 
     public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0, Math.min(elevation, 25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;
