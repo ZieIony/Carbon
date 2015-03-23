@@ -296,7 +296,6 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     }
 
     public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0, Math.min(elevation, 25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;

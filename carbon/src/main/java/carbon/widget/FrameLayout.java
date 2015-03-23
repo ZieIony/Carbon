@@ -296,7 +296,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
     public synchronized void setElevation(float elevation) {
-        elevation = Math.max(0, Math.min(elevation, 25));
         if (elevation == this.elevation)
             return;
         this.elevation = elevation;

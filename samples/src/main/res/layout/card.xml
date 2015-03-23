@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:scaleType="centerCrop"
-        android:id="@+id/image"
+    <carbon.widget.LinearLayout
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleStyle="over"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="150dp" />
+        android:layout_height="wrap_content">
 
-    <carbon.widget.TextView
-        android:id="@+id/text"
-        android:singleLine="true"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:text="Image desc"
-        android:textAppearance="?attr/carbon_textAppearance_title"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="@dimen/carbon_toolbarHeight" />
+        <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <carbon.widget.TextView
+            android:id="@+id/text"
+            android:singleLine="true"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
+            android:text="Image desc"
+            android:textAppearance="?attr/carbon_textAppearance_title"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/carbon_toolbarHeight" />
+    </carbon.widget.LinearLayout>
 </carbon.widget.CardView>

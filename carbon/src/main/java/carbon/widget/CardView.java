@@ -12,7 +12,7 @@ import carbon.R;
 /**
  * Created by Marcin on 2015-02-12.
  */
-public class CardView extends android.widget.LinearLayout {
+public class CardView extends LinearLayout {
     private LinearLayout content;
 
     public CardView(Context context) {
@@ -25,119 +25,85 @@ public class CardView extends android.widget.LinearLayout {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        inflate(getContext(), R.layout.carbon_cardview, this);
-        content = (LinearLayout) findViewById(R.id.carbon_cardContent);
+        content = new LinearLayout(getContext());
+        content.setOrientation(VERTICAL);
+        content.setDuplicateParentStateEnabled(true);
+        super.addView(content,-1,generateDefaultLayoutParams());
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CardView, defStyle, 0);
-        content.setElevation(a.getDimension(R.styleable.CardView_carbon_elevation, 0));
-        int color = a.getColor(R.styleable.CardView_android_background, 0);
-        setBackgroundColor(color);
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.CardView_carbon_cardElevation) {
+                setCardElevation(a.getDimension(attr, 0));
+            } else if (attr == R.styleable.CardView_carbon_cardBackground) {
+                setCardBackgroundDrawable(a.getDrawable(attr));
+            } else if (attr == R.styleable.CardView_carbon_cardPadding) {
+                int padding = (int) a.getDimension(attr, 0);
+                setCardPadding(padding, padding, padding, padding);
+            } else if (attr == R.styleable.CardView_android_padding) {
+                int padding = (int) a.getDimension(attr, 0);
+                setPadding(padding, padding, padding, padding);
+            } else if (attr == R.styleable.CardView_carbon_cardCornerRadius) {
+                setCardCornerRadius(a.getDimension(attr, 0));
+            }
+        }
         a.recycle();
-
-        super.setBackgroundDrawable(null);
     }
 
     @Override
     public void addView(View child) {
-        if (content != null) {
-            content.addView(child);
-        } else {
-            super.addView(child);
-        }
+        content.addView(child);
     }
 
     @Override
     public void addView(View child, int index) {
-        if (content != null) {
-            content.addView(child, index);
-        } else {
-            super.addView(child, index);
-        }
+        content.addView(child, index);
     }
 
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (content != null) {
-            content.addView(child, index, params);
-        } else {
-            super.addView(child, index, params);
-        }
+        content.addView(child, index, params);
     }
 
     @Override
     public void addView(View child, ViewGroup.LayoutParams params) {
-        if (content != null) {
-            content.addView(child, params);
-        } else {
-            super.addView(child, params);
-        }
+        content.addView(child, params);
     }
 
     @Override
     public void addView(View child, int width, int height) {
-        if (content != null) {
-            content.addView(child, width, height);
-        } else {
-            super.addView(child, width, height);
-        }
+        content.addView(child, width, height);
     }
 
-    @Override
-    public void setBackgroundColor(int color) {
+    public LinearLayout getContent() {
+        return content;
+    }
+
+    public void setCardBackgroundColor(int color) {
         content.setBackgroundColor(color);
     }
 
-    @Override
-    public void setBackgroundResource(int resid) {
+    public void setCardBackgroundResource(int resid) {
         content.setBackgroundResource(resid);
     }
 
-    @Override
-    public void setBackground(Drawable background) {
+    public void setCardBackground(Drawable background) {
         content.setBackgroundDrawable(background);
     }
 
-    @Override
-    public void setBackgroundDrawable(Drawable background) {
+    public void setCardBackgroundDrawable(Drawable background) {
         content.setBackgroundDrawable(background);
     }
 
-    @Override
-    public Drawable getBackground() {
-        return content.getBackground();
+    public void setCardCornerRadius(float cornerRadius) {
+        content.setCornerRadius(cornerRadius);
     }
 
-    @Override
-    public float getElevation() {
-        return content.getElevation();
-    }
-
-    @Override
-    public synchronized void setElevation(float elevation) {
+    public void setCardElevation(float elevation) {
         content.setElevation(elevation);
     }
 
-    @Override
-    public float getTranslationZ() {
-        return content.getTranslationZ();
-    }
-
-    @Override
-    public void setTranslationZ(float translationZ) {
-        content.setTranslationZ(translationZ);
-    }
-
-    public boolean isRect() {
-        return content.isRect();
-    }
-
-    public void setRect(boolean rect) {
-        content.setRect(rect);
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        content.setTranslationZ(enabled ? 0 : -content.getElevation());
+    public void setCardPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom) {
+        content.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
 }
