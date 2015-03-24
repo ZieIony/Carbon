@@ -5,35 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <carbon.internal.FastLayout
+    <carbon.widget.Button
+        android:layout_marginTop="@dimen/carbon_padding"
         android:id="@+id/button"
-        android:background="?attr/carbon_colorBackground"
-        app:carbon_elevation="@dimen/carbon_elevationMax"
-        app:carbon_cornerRadius="2dp"
-        android:layout_margin="@dimen/carbon_padding"
+        android:text="button"
+        app:carbon_elevation="@dimen/carbon_elevationLow"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher"
-                android:minWidth="100dp"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:padding="@dimen/carbon_padding"
-                android:singleLine="true"
-                android:text="Launcher icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </carbon.internal.FastLayout>
 </carbon.widget.FrameLayout>
 

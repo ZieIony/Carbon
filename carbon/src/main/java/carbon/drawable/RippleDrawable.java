@@ -22,7 +22,8 @@ public class RippleDrawable extends Drawable {
     private long downTime, upTime;
     private static final int LONGPRESS_DURATION = 4000;
     private static final int RIPPLE_DURATION = 400;
-    private static final int FADE_DURATION = 300;
+    private static final int FADEIN_DURATION = 100;
+    private static final int FADEOUT_DURATION = 300;
 
     private Paint paint = new Paint();
     private PointF hotspot = new PointF();
@@ -30,8 +31,8 @@ public class RippleDrawable extends Drawable {
     private Drawable background;
     private Interpolator interpolator;
     private float from, to;
-    private boolean pressed, useHotspot;
-    private Style style;
+    private boolean pressed, useHotspot = true;
+    private Style style = Style.Background;
 
     public static enum Style {
         Over, Background, Borderless
@@ -87,8 +88,8 @@ public class RippleDrawable extends Drawable {
 
         long time = System.currentTimeMillis();
 
-        if (upTime + FADE_DURATION > time) {
-            float highlightInterp = interpolator.getInterpolation((time - upTime) / (float) FADE_DURATION);
+        if (upTime + FADEOUT_DURATION > time) {
+            float highlightInterp = interpolator.getInterpolation((time - upTime) / (float) FADEOUT_DURATION);
             paint.setAlpha((int) (alpha * (1 - highlightInterp)));
             if (style == Style.Borderless) {
                 canvas.drawCircle(bounds.centerX(), bounds.centerY(), to, paint);
@@ -99,7 +100,8 @@ public class RippleDrawable extends Drawable {
         }
 
         if (downTime > upTime) {
-            paint.setAlpha(alpha);
+            float highlightInterp = interpolator.getInterpolation(Math.min(time - downTime, FADEIN_DURATION) / (float) FADEIN_DURATION);
+            paint.setAlpha((int) (alpha * highlightInterp));
             if (style == Style.Borderless) {
                 canvas.drawCircle(bounds.centerX(), bounds.centerY(), to, paint);
             } else {

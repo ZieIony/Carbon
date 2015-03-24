@@ -19,6 +19,7 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.RippleStateAnimator;
 import carbon.animation.StateAnimator;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.ControlCheckedColorStateList;
@@ -133,8 +134,38 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
         return rippleDrawable;
     }
 
-    public void setRippleDrawable(RippleDrawable rippleDrawable) {
-        this.rippleDrawable = rippleDrawable;
+    public void setRippleDrawable(RippleDrawable newRipple) {
+        Drawable background = getBackground();
+        if (rippleDrawable != null) {
+            rippleDrawable.setCallback(null);
+            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
+                background = rippleDrawable.getBackground();
+            }
+        }
+
+        if (newRipple != null) {
+            newRipple.setCallback(this);
+            if (newRipple.getStyle() == RippleDrawable.Style.Background) {
+                newRipple.setBackground(background);
+                background = newRipple;
+            }
+        }
+
+        StateAnimator animator = null;
+        for (StateAnimator a : stateAnimators) {
+            if (a instanceof RippleStateAnimator) {
+                animator = a;
+                break;
+            }
+        }
+        if (animator != null && newRipple == null) {
+            stateAnimators.remove(animator);
+        } else if (animator == null && newRipple != null) {
+            addStateAnimator(new RippleStateAnimator(this));
+        }
+
+        super.setBackgroundDrawable(background);
+        rippleDrawable = newRipple;
     }
 
     @Override
@@ -156,13 +187,18 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
 
     @Override
     public void setBackgroundDrawable(Drawable background) {
-        if (rippleDrawable == null || rippleDrawable.getBackground() == null) {
-            super.setBackgroundDrawable(background);
+        if (background instanceof RippleDrawable) {
+            setRippleDrawable((RippleDrawable) background);
             return;
         }
-        rippleDrawable.setBackground(background);
-        super.setBackgroundDrawable(rippleDrawable);
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
+            rippleDrawable.setBackground(background);
+        } else {
+            super.setBackgroundDrawable(background);
+        }
     }
+
 
     // -------------------------------
     // touch margin

@@ -13,6 +13,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import carbon.animation.RippleStateAnimator;
+import carbon.drawable.RippleDrawable;
+import carbon.widget.CardView;
+import carbon.widget.LinearLayout;
+import carbon.widget.StateAnimatorView;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -56,13 +61,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
         public TextView text;
-        public View card;
+        public CardView card;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);
             text = (TextView) itemView.findViewById(R.id.text);
-            card = itemView;
+            card = (CardView) itemView;
+            LinearLayout content = card.getContent();
+            content.setClickable(true);
+            content.setFocusable(true);
+            content.setFocusableInTouchMode(true);
+            RippleDrawable rippleDrawable = new RippleDrawable(0x42ff0000);
+            rippleDrawable.setStyle(RippleDrawable.Style.Over);
+            rippleDrawable.setCallback(content);
+            rippleDrawable.setHotspotEnabled(true);
+            content.setRippleDrawable(rippleDrawable);
+            content.addStateAnimator(new RippleStateAnimator(content));
         }
     }
 }

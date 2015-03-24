@@ -11,11 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.animation.AnimUtils;
-import carbon.animation.RippleStateAnimator;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.widget.AnimatedView;
-import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 
 /**
@@ -53,17 +51,7 @@ public class Carbon {
             rippleDrawable.setCallback(view);
             rippleDrawable.setHotspotEnabled(useHotspot);
             rippleDrawable.setStyle(style);
-
-            if (style == RippleDrawable.Style.Borderless) {
-                rippleDrawable.setCallback(view);
-            } else if (style == RippleDrawable.Style.Background) {
-                rippleDrawable.setBackground(view.getBackground());
-                view.setBackgroundDrawable(rippleDrawable);
-            } else {
-                rippleDrawable.setCallback(view);
-            }
             rippleView.setRippleDrawable(rippleDrawable);
-            ((StateAnimatorView) view).addStateAnimator(new RippleStateAnimator(rippleView));
         }
 
         a.recycle();

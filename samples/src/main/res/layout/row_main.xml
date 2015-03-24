@@ -27,4 +27,5 @@
         android:text="beta"
         android:layout_width="wrap_content"
         android:layout_height="56dp" />
+
 </carbon.widget.LinearLayout>

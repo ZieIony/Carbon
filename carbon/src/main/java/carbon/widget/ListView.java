@@ -47,7 +47,7 @@ public class ListView extends android.widget.ListView {
         setOverScrollMode(OVER_SCROLL_IF_CONTENT_SCROLLS);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ListView, defStyleAttr, 0);
-        edgeEffectColor = a.getColor(R.styleable.ListView_carbon_edgeEffectColor, 0);
+        setEdgeEffectColor(a.getColor(R.styleable.ListView_carbon_edgeEffectColor, 0));
         a.recycle();
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB && "samsung".equalsIgnoreCase(Build.MANUFACTURER)) {

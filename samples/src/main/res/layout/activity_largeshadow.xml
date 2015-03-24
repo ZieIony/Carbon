@@ -1,0 +1,39 @@
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <carbon.internal.FastLayout
+        android:id="@+id/button"
+        android:background="?attr/carbon_colorBackground"
+        app:carbon_elevation="@dimen/carbon_elevationMax"
+        app:carbon_cornerRadius="2dp"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher"
+                android:minWidth="100dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:padding="@dimen/carbon_padding"
+                android:singleLine="true"
+                android:text="Launcher icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </carbon.internal.FastLayout>
+</carbon.widget.FrameLayout>
+

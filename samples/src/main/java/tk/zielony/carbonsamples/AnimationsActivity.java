@@ -35,7 +35,7 @@ public class AnimationsActivity extends Activity {
                 RippleActivity.class, ScrollViewActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, false, false, false, false, true
+                false, false, false, false, false, false
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 
