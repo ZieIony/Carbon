@@ -43,7 +43,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView {
         setOverScrollMode(OVER_SCROLL_IF_CONTENT_SCROLLS);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalScrollView, defStyleAttr, 0);
-        edgeEffectColor = a.getColor(R.styleable.HorizontalScrollView_carbon_edgeEffectColor, 0);
+        setEdgeEffectColor(a.getColor(R.styleable.HorizontalScrollView_carbon_edgeEffectColor, 0));
         a.recycle();
     }
 

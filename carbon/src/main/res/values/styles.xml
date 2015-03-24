@@ -407,7 +407,7 @@
         <item name="android:paddingBottom">@dimen/carbon_padding</item>
     </style>
 
-    <style name="carbon_PagerTabStrip">
+    <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">
         <item name="carbon_indicatorColor">?attr/carbon_colorAccent</item>
         <item name="carbon_indicatorWidth">2dp</item>
         <item name="carbon_fixedTabs">true</item>
@@ -428,6 +428,7 @@
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
         <item name="carbon_checkColor">@null</item>
+        <item name="android:background">@null</item>
     </style>
 
     <style name="carbon_RadioButton" parent="android:Widget.CompoundButton.RadioButton">
@@ -437,5 +438,6 @@
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
         <item name="carbon_radioColor">@null</item>
+        <item name="android:background">@null</item>
     </style>
 </resources>

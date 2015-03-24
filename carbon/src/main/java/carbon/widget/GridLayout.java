@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
@@ -16,6 +17,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -30,7 +32,9 @@ import java.util.Map;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.RippleStateAnimator;
 import carbon.animation.StateAnimator;
+import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
@@ -78,11 +82,15 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
+
+        if (getBackground() == null)
+            super.setBackgroundDrawable(emptyBackground);
     }
 
 
     List<View> views;
     Map<View, Shadow> shadows = new HashMap<>();
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
@@ -116,10 +124,17 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
                 paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
 
+                float[] childLocation = new float[]{(child.getLeft()+child.getRight())/2,(child.getTop()+child.getBottom())/2};
+                if(child.getAnimation()!=null){
+                    Transformation t = new Transformation();
+                    child.getAnimation().getTransformation(drawingTime,t);
+                    t.getMatrix().mapPoints(childLocation);
+                }
+
                 int[] location = new int[2];
-                child.getLocationOnScreen(location);
-                float x = location[0] + child.getWidth() / 2.0f;
-                float y = location[1] + child.getHeight() / 2.0f;
+                getLocationOnScreen(location);
+                float x = childLocation[0]+location[0];
+                float y = childLocation[1]+location[1];
                 x -= getRootView().getWidth() / 2;
                 y += getRootView().getHeight() / 2;   // looks nice
                 float length = (float) Math.sqrt(x * x + y * y);
@@ -178,8 +193,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     // -------------------------------
 
     private float cornerRadius;
-    private Canvas textureCanvas;
-    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+    private Path cornersClipPath;
 
     public float getCornerRadius() {
         return cornerRadius;
@@ -206,24 +220,22 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     private void initDrawing() {
         if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
             return;
-        Bitmap texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        textureCanvas = new Canvas(texture);
-        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        cornersClipPath = new Path();
+        RectF rect = new RectF();
+        rect.bottom = getHeight();
+        rect.right = getWidth();
+        cornersClipPath.addRoundRect(rect, cornerRadius, cornerRadius, Path.Direction.CW);
     }
 
     @Override
     public void draw(Canvas canvas) {
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
-            textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            super.draw(textureCanvas);
+            canvas.save(Canvas.CLIP_SAVE_FLAG);
+            canvas.clipPath(cornersClipPath);
+            super.draw(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(textureCanvas);
-
-            RectF rect = new RectF();
-            rect.bottom = getHeight();
-            rect.right = getWidth();
-            paint.setAlpha(255);
-            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
+                rippleDrawable.draw(canvas);
+            canvas.restore();
         } else {
             super.draw(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -237,11 +249,12 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
+    private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
-            ((RippleDrawable) rippleDrawable).setHotspot(event.getX(), event.getY());
+            rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
     }
 
@@ -250,8 +263,38 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
         return rippleDrawable;
     }
 
-    public void setRippleDrawable(RippleDrawable rippleDrawable) {
-        this.rippleDrawable = rippleDrawable;
+    public void setRippleDrawable(RippleDrawable newRipple) {
+        Drawable background = getBackground();
+        if (rippleDrawable != null) {
+            rippleDrawable.setCallback(null);
+            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
+                background = rippleDrawable.getBackground();
+            }
+        }
+
+        if (newRipple != null) {
+            newRipple.setCallback(this);
+            if (newRipple.getStyle() == RippleDrawable.Style.Background) {
+                newRipple.setBackground(background);
+                background = newRipple;
+            }
+        }
+
+        StateAnimator animator = null;
+        for (StateAnimator a : stateAnimators) {
+            if (a instanceof RippleStateAnimator) {
+                animator = a;
+                break;
+            }
+        }
+        if (animator != null && newRipple == null) {
+            stateAnimators.remove(animator);
+        } else if (animator == null && newRipple != null) {
+            addStateAnimator(new RippleStateAnimator(this));
+        }
+
+        super.setBackgroundDrawable(background==null?emptyBackground:background);
+        rippleDrawable = newRipple;
     }
 
     @Override
@@ -273,12 +316,16 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
     @Override
     public void setBackgroundDrawable(Drawable background) {
-        if (rippleDrawable == null || rippleDrawable.getBackground() == null) {
-            super.setBackgroundDrawable(background);
+        if (background instanceof RippleDrawable) {
+            setRippleDrawable((RippleDrawable) background);
             return;
         }
-        rippleDrawable.setBackground(background);
-        super.setBackgroundDrawable(rippleDrawable);
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
+            rippleDrawable.setBackground(background);
+        } else {
+            super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        }
     }
 
 

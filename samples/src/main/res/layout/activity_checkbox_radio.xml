@@ -87,7 +87,7 @@
         android:text=""
         android:padding="@dimen/carbon_padding"
         android:gravity="center_vertical"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_width="56dp"
         android:layout_height="56dp" />
 

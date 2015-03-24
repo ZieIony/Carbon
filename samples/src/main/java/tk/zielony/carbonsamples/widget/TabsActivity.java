@@ -1,10 +1,12 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import carbon.widget.CardView;
 import carbon.widget.PagerTabStrip;
@@ -28,7 +30,7 @@ public class TabsActivity extends Activity {
             }
 
             public View getView(int position, ViewPager pager) {
-                return new CardView(pager.getContext());
+                return new LinearLayout(pager.getContext());
             }
 
             @Override
@@ -47,6 +49,8 @@ public class TabsActivity extends Activity {
                 View view = getView(position, pager);
 
                 pager.addView(view);
+                int[] color = new int[]{0xff7fffff,0xff7f7fff,0xffff7f7f,0xffff7fff,0xffffff7f,0xff7f7f7f,0xff7fff7f};
+                view.setBackgroundColor(color[position]);
 
                 return view;
             }
