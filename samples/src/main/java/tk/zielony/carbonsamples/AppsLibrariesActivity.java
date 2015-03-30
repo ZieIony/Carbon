@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.applibrary.CalculatorActivity;
+import tk.zielony.carbonsamples.applibrary.DrawerActivity;
 import tk.zielony.carbonsamples.applibrary.PicassoActivity;
 import tk.zielony.carbonsamples.applibrary.RecyclerCardsActivity;
 
@@ -25,11 +26,11 @@ public class AppsLibrariesActivity extends Activity {
         toolbar.setText("Apps & Libraries");
 
         ListView listView = (ListView) findViewById(R.id.list);
-        String[] items = new String[]{"Calculator", "Picasso", "RecyclerView & cards"
+        String[] items = new String[]{"Calculator", "Picasso", "RecyclerView & cards", "Nawigation drawer"
         };
-        final Class[] activities = new Class[]{CalculatorActivity.class, PicassoActivity.class, RecyclerCardsActivity.class
+        final Class[] activities = new Class[]{CalculatorActivity.class, PicassoActivity.class, RecyclerCardsActivity.class, DrawerActivity.class
         };
-        final boolean[] beta = new boolean[]{true, false, false
+        final boolean[] beta = new boolean[]{true, false, false, true
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 
