@@ -1,15 +1,36 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewParent;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import carbon.R;
+import carbon.drawable.EdgeEffect;
 
 /**
  * Created by Marcin on 2015-02-28.
  */
 public class ViewPager extends android.support.v4.view.ViewPager {
+    private final int mTouchSlop;
+    int edgeEffectColor;
+    EdgeEffect edgeEffectLeft;
+    EdgeEffect edgeEffectRight;
+    private boolean drag = true;
+    private float prevX;
+    private int overscrollMode;
+
+    public static final int OVER_SCROLL_ALWAYS = 0;
+    public static final int OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
+    public static final int OVER_SCROLL_NEVER = 2;
+
     private final OnPageChangeListener internalOnPageChangeListener = new OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -31,15 +52,6 @@ public class ViewPager extends android.support.v4.view.ViewPager {
     };
     List<OnPageChangeListener> pageChangeListenerList = new ArrayList<>();
 
-    public ViewPager(Context context) {
-        super(context);
-    }
-
-    public ViewPager(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        super.setOnPageChangeListener(internalOnPageChangeListener);
-    }
-
     public void addOnPageChangeListener(OnPageChangeListener listener) {
         pageChangeListenerList.add(listener);
     }
@@ -54,4 +66,174 @@ public class ViewPager extends android.support.v4.view.ViewPager {
         pageChangeListenerList.clear();
         pageChangeListenerList.add(listener);
     }
+
+    public ViewPager(Context context) {
+        this(context, null);
+    }
+
+    public ViewPager(Context context, AttributeSet attrs) {
+        this(context, attrs, R.attr.carbon_viewPagerStyle);
+    }
+
+    public ViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs);
+        super.setOnPageChangeListener(internalOnPageChangeListener);
+
+        final ViewConfiguration configuration = ViewConfiguration.get(getContext());
+        mTouchSlop = configuration.getScaledTouchSlop();
+
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ViewPager, defStyleAttr, 0);
+        for(int i=0;i<a.getIndexCount();i++){
+            int attr = a.getIndex(i);
+            if(attr==R.styleable.ViewPager_carbon_edgeEffectColor){
+                setEdgeEffectColor(a.getColor(attr, 0));
+            }else if(attr==R.styleable.ViewPager_carbon_overScroll){
+                setOverScrollMode(a.getInt(attr,OVER_SCROLL_ALWAYS));
+            }
+        }
+        a.recycle();
+    }
+
+    private int getScrollRange() {
+        int scrollRange = 0;
+        if (getChildCount() == 0) {
+            return getWidth();
+        }
+        if (getChildCount() > 0 && getAdapter() != null) {
+            if (getCurrentItem() == getAdapter().getCount() - 1) {
+                View child = getChildAt(getChildCount() - 1);
+                scrollRange = Math.max(0,
+                        child.getRight() - (getWidth() - getPaddingRight() - getPaddingLeft()));
+            } else {
+                scrollRange = Integer.MAX_VALUE;
+            }
+        }
+        return scrollRange;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        if (edgeEffectLeft != null) {
+            final int scrollX = getScrollX();
+            if (!edgeEffectLeft.isFinished()) {
+                final int restoreCount = canvas.save();
+                final int height = getHeight() - getPaddingTop() - getPaddingBottom();
+
+                canvas.rotate(270);
+                canvas.translate(-height + getPaddingTop(), Math.min(0, scrollX));
+                edgeEffectLeft.setSize(height, getWidth());
+                if (edgeEffectLeft.draw(canvas)) {
+                    postInvalidate();
+                }
+                canvas.restoreToCount(restoreCount);
+            }
+            if (!edgeEffectRight.isFinished()) {
+                final int restoreCount = canvas.save();
+                final int width = getWidth();
+                final int height = getHeight() - getPaddingTop() - getPaddingBottom();
+
+                canvas.rotate(90);
+                canvas.translate(-getPaddingTop(),
+                        -(Math.max(getScrollRange(), scrollX) + width));
+                edgeEffectRight.setSize(height, width);
+                if (edgeEffectRight.draw(canvas)) {
+                    postInvalidate();
+                }
+                canvas.restoreToCount(restoreCount);
+            }
+        }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                float deltaX = prevX - ev.getX();
+
+                if (!drag && Math.abs(deltaX) > mTouchSlop) {
+                    final ViewParent parent = getParent();
+                    if (parent != null) {
+                        parent.requestDisallowInterceptTouchEvent(true);
+                    }
+                    drag = true;
+                    if (deltaX > 0) {
+                        deltaX -= mTouchSlop;
+                    } else {
+                        deltaX += mTouchSlop;
+                    }
+                }
+                if (drag) {
+                    final int oldX = getScrollX();
+                    final int range = getScrollRange();
+                    boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
+                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+
+                    if (canOverscroll) {
+                        float pulledToX = oldX + deltaX;
+                        if (pulledToX < 0) {
+                            edgeEffectLeft.onPull(deltaX / getWidth(), 1.f - ev.getY() / getHeight());
+                            if (!edgeEffectRight.isFinished())
+                                edgeEffectRight.onRelease();
+                        } else if (pulledToX > range) {
+                            edgeEffectRight.onPull(deltaX / getWidth(), ev.getY() / getHeight());
+                            if (!edgeEffectLeft.isFinished())
+                                edgeEffectLeft.onRelease();
+                        }
+                        if (edgeEffectLeft != null && (!edgeEffectLeft.isFinished() || !edgeEffectRight.isFinished()))
+                            postInvalidate();
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (drag) {
+                    drag = false;
+
+                    if (edgeEffectLeft != null) {
+                        edgeEffectLeft.onRelease();
+                        edgeEffectRight.onRelease();
+                    }
+                }
+                break;
+        }
+        prevX = ev.getX();
+
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void setOverScrollMode(int mode) {
+        if (mode != OVER_SCROLL_NEVER) {
+            if (edgeEffectLeft == null) {
+                Context context = getContext();
+                edgeEffectLeft = new EdgeEffect(context);
+                edgeEffectLeft.setColor(edgeEffectColor);
+                edgeEffectRight = new EdgeEffect(context);
+                edgeEffectRight.setColor(edgeEffectColor);
+            }
+        } else {
+            edgeEffectLeft = null;
+            edgeEffectRight = null;
+        }
+        try {
+            super.setOverScrollMode(OVER_SCROLL_NEVER);
+        }catch (Exception e){
+            // Froyo
+        }
+        this.overscrollMode = mode;
+    }
+
+    public int getEdgeEffectColor() {
+        return edgeEffectColor;
+    }
+
+    public void setEdgeEffectColor(int edgeEffectColor) {
+        this.edgeEffectColor = edgeEffectColor;
+        if (edgeEffectLeft != null)
+            edgeEffectLeft.setColor(edgeEffectColor);
+        if (edgeEffectRight != null)
+            edgeEffectRight.setColor(edgeEffectColor);
+    }
+
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -7,12 +8,14 @@
 
     <carbon.widget.PagerTabStrip
         android:id="@+id/pager_title_strip"
+        app:carbon_overScroll="always"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="top" />
 
     <carbon.widget.ViewPager
         android:id="@+id/pager"
+        app:carbon_overScroll="always"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 </LinearLayout>

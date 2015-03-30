@@ -69,6 +69,11 @@
     <attr name="carbon_cornerRadius" format="dimension" />
     <attr name="carbon_textAllCaps" format="boolean" />
     <attr name="carbon_edgeEffectColor" format="color|reference" />
+    <attr name="carbon_overScroll" format="enum">
+        <enum name="always" value="0" />
+        <enum name="ifContentScrolls" value="1" />
+        <enum name="never" value="2" />
+    </attr>
 
     <attr name="carbon_textStyle" format="enum">
         <enum name="black" value="0" />
@@ -206,10 +211,10 @@
     <attr name="carbon_cardViewStyle" format="reference" />
     <declare-styleable name="CardView">
         <attr name="carbon_cardElevation" format="dimension" />
-        <attr name="carbon_cardCornerRadius" format="dimension"/>
-        <attr name="carbon_cardBackground" format="color|reference"/>
-        <attr name="carbon_cardPadding" format="dimension"/>
-        <attr name="android:padding"/>
+        <attr name="carbon_cardCornerRadius" format="dimension" />
+        <attr name="carbon_cardBackground" format="color|reference" />
+        <attr name="carbon_cardPadding" format="dimension" />
+        <attr name="android:padding" />
     </declare-styleable>
 
     <attr name="carbon_editTextStyle" format="reference" />
@@ -238,15 +243,24 @@
 
     <declare-styleable name="ScrollView">
         <attr name="carbon_edgeEffectColor" />
+        <attr name="carbon_overScroll" />
     </declare-styleable>
 
     <attr name="carbon_horizontalScrollViewStyle" format="reference" />
     <declare-styleable name="HorizontalScrollView">
         <attr name="carbon_edgeEffectColor" />
+        <attr name="carbon_overScroll" />
+    </declare-styleable>
+
+    <attr name="carbon_viewPagerStyle" format="reference" />
+    <declare-styleable name="ViewPager">
+        <attr name="carbon_edgeEffectColor" />
+        <attr name="carbon_overScroll" />
     </declare-styleable>
 
     <declare-styleable name="ListView">
         <attr name="carbon_edgeEffectColor" />
+        <attr name="carbon_overScroll" />
     </declare-styleable>
 
     <attr name="carbon_checkBoxStyle" />

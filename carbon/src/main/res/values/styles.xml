@@ -27,6 +27,7 @@
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -96,6 +97,7 @@
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -164,6 +166,7 @@
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -233,6 +236,7 @@
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -418,6 +422,10 @@
     </style>
 
     <style name="carbon_HorizontalScrollView">
+        <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
+    </style>
+
+    <style name="carbon_ViewPager">
         <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
     </style>
 

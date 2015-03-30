@@ -44,10 +44,16 @@ public class ListView extends android.widget.ListView {
         super(context, attrs, defStyleAttr);
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
-        setOverScrollMode(OVER_SCROLL_IF_CONTENT_SCROLLS);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ListView, defStyleAttr, 0);
-        setEdgeEffectColor(a.getColor(R.styleable.ListView_carbon_edgeEffectColor, 0));
+        for(int i=0;i<a.getIndexCount();i++){
+            int attr = a.getIndex(i);
+            if(attr==R.styleable.ListView_carbon_edgeEffectColor){
+                setEdgeEffectColor(a.getColor(attr, 0));
+            }else if(attr==R.styleable.ListView_carbon_overScroll){
+                setOverScrollMode(a.getInt(attr,OVER_SCROLL_ALWAYS));
+            }
+        }
         a.recycle();
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB && "samsung".equalsIgnoreCase(Build.MANUFACTURER)) {
@@ -235,7 +241,11 @@ public class ListView extends android.widget.ListView {
             edgeEffectTop = null;
             edgeEffectBottom = null;
         }
-        super.setOverScrollMode(OVER_SCROLL_NEVER);
+        try {
+            super.setOverScrollMode(OVER_SCROLL_NEVER);
+        }catch (Exception e){
+            // Froyo
+        }
         this.overscrollMode = mode;
     }
 

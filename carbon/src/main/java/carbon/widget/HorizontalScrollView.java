@@ -40,10 +40,16 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView {
         super(context, attrs, defStyleAttr);
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
-        setOverScrollMode(OVER_SCROLL_IF_CONTENT_SCROLLS);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalScrollView, defStyleAttr, 0);
-        setEdgeEffectColor(a.getColor(R.styleable.HorizontalScrollView_carbon_edgeEffectColor, 0));
+        for(int i=0;i<a.getIndexCount();i++){
+            int attr = a.getIndex(i);
+            if(attr==R.styleable.HorizontalScrollView_carbon_edgeEffectColor){
+                setEdgeEffectColor(a.getColor(attr, 0));
+            }else if(attr==R.styleable.HorizontalScrollView_carbon_overScroll){
+                setOverScrollMode(a.getInt(attr,OVER_SCROLL_ALWAYS));
+            }
+        }
         a.recycle();
     }
 
@@ -118,11 +124,11 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView {
                     if (canOverscroll) {
                         float pulledToY = oldX + deltaX;
                         if (pulledToY < 0) {
-                            edgeEffectLeft.onPull(deltaX / getWidth(), ev.getY() / getHeight());
+                            edgeEffectLeft.onPull(deltaX / getWidth(), 1.f - ev.getY() / getHeight());
                             if (!edgeEffectRight.isFinished())
                                 edgeEffectRight.onRelease();
                         } else if (pulledToY > range) {
-                            edgeEffectRight.onPull(deltaX / getWidth(), 1.f - ev.getY() / getHeight());
+                            edgeEffectRight.onPull(deltaX / getWidth(), ev.getY() / getHeight());
                             if (!edgeEffectLeft.isFinished())
                                 edgeEffectLeft.onRelease();
                         }
@@ -162,7 +168,11 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView {
             edgeEffectLeft = null;
             edgeEffectRight = null;
         }
-        super.setOverScrollMode(OVER_SCROLL_NEVER);
+        try {
+            super.setOverScrollMode(OVER_SCROLL_NEVER);
+        }catch (Exception e){
+            // Froyo
+        }
         this.overscrollMode = mode;
     }
 

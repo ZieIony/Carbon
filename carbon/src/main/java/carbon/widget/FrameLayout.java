@@ -171,7 +171,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     protected int getChildDrawingOrder(int childCount, int child) {
-        return views != null ? views.indexOf(getChildAt(child)) : child;
+        return views != null ? indexOfChild(views.get(child)) : child;
     }
 
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {
