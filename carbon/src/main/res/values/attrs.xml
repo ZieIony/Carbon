@@ -167,6 +167,11 @@
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
 
+    <attr name="carbon_scrimInsetsLayoutStyle" format="reference" />
+    <declare-styleable name="ScrimInsetsLayout">
+        <attr name="carbon_insetForeground" format="color|reference"/>
+    </declare-styleable>
+
     <attr name="carbon_snackbarStyle" format="reference" />
     <declare-styleable name="Snackbar">
         <attr name="carbon_layoutStyle" format="enum">

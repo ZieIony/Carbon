@@ -19,6 +19,7 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
+        <item name="carbon_scrimInsetsLayoutStyle">@style/carbon_ScrimInsetsLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -90,6 +91,7 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
+        <item name="carbon_scrimInsetsLayoutStyle">@style/carbon_ScrimInsetsLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -160,6 +162,7 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
+        <item name="carbon_scrimInsetsLayoutStyle">@style/carbon_ScrimInsetsLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -231,6 +234,7 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
+        <item name="carbon_scrimInsetsLayoutStyle">@style/carbon_ScrimInsetsLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -362,6 +366,10 @@
 
     <style name="carbon_DrawerLayout">
         <item name="carbon_rippleColor">@null</item>
+    </style>
+
+    <style name="carbon_ScrimInsetsLayout" parent="carbon_FrameLayout">
+        <item name="carbon_insetForeground">?attr/carbon_colorPrimary</item>
     </style>
 
     <style name="carbon_Snackbar">
