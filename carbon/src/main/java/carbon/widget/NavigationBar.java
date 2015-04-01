@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import carbon.R;
 
 /**
@@ -57,26 +54,16 @@ public class NavigationBar extends View {
 
         setVisibility(View.GONE);
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
             return;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = ((Activity) getContext()).getWindow();
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationBar, defStyle, 0);
-            int color = a.getColor(R.styleable.NavigationBar_android_background, 0);
-            a.recycle();
+        setVisibility(VISIBLE);
+        Window window = ((Activity) getContext()).getWindow();
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationBar, defStyle, 0);
+        int color = a.getColor(R.styleable.NavigationBar_android_background, 0);
+        setBackgroundColor(color);
+        a.recycle();
 
-            window.setFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            try {
-                Method setStatusBarColorMethod = window.getClass().getMethod("setNavigationBarColor", int.class);
-                setStatusBarColorMethod.invoke(window, color);
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 }
