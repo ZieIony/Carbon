@@ -43,17 +43,19 @@ public class StatusBar extends View {
 
         setVisibility(View.GONE);
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
             return;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setVisibility(VISIBLE);
             Window window = ((Activity) getContext()).getWindow();
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.StatusBar, defStyle, 0);
             int color = a.getColor(R.styleable.StatusBar_android_background, 0);
+            setBackgroundColor(color);
             a.recycle();
 
-            window.setFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            try {
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            /*try {
                 Method setStatusBarColorMethod = window.getClass().getMethod("setStatusBarColor", int.class);
                 setStatusBarColorMethod.invoke(window, color);
             } catch (NoSuchMethodException e) {
@@ -62,7 +64,7 @@ public class StatusBar extends View {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 }

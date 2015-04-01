@@ -39,33 +39,33 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowView;
 
 /**
- * Created by Marcin on 2014-11-20.
+ * Created by Marcin on 2015-04-01.
  */
-public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
+public class DrawerLayout extends android.support.v4.widget.DrawerLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
     private boolean debugMode;
 
-    public LinearLayout(Context context) {
+    public DrawerLayout(Context context) {
         this(context, null);
     }
 
-    public LinearLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_linearLayoutStyle);
+    public DrawerLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, R.attr.carbon_drawerLayoutStyle);
     }
 
-    public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs);
+    public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         init(attrs, defStyleAttr);
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        setElevation(a.getDimension(R.styleable.LinearLayout_carbon_elevation, 0));
+        setElevation(a.getDimension(R.styleable.DrawerLayout_carbon_elevation, 0));
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        setCornerRadius(a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
+        setCornerRadius(a.getDimension(R.styleable.DrawerLayout_carbon_cornerRadius, 0));
 
         a.recycle();
 
@@ -119,17 +119,17 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
                 paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
 
-                float[] childLocation = new float[]{(child.getLeft()+child.getRight())/2,(child.getTop()+child.getBottom())/2};
-                if(child.getAnimation()!=null){
+                float[] childLocation = new float[]{(child.getLeft() + child.getRight()) / 2, (child.getTop() + child.getBottom()) / 2};
+                if (child.getAnimation() != null) {
                     Transformation t = new Transformation();
-                    child.getAnimation().getTransformation(drawingTime,t);
+                    child.getAnimation().getTransformation(drawingTime, t);
                     t.getMatrix().mapPoints(childLocation);
                 }
 
                 int[] location = new int[2];
                 getLocationOnScreen(location);
-                float x = childLocation[0]+location[0];
-                float y = childLocation[1]+location[1];
+                float x = childLocation[0] + location[0];
+                float y = childLocation[1] + location[1];
                 x -= getRootView().getWidth() / 2;
                 y += getRootView().getHeight() / 2;   // looks nice
                 float length = (float) Math.sqrt(x * x + y * y);
@@ -441,7 +441,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    LinearLayout.super.setVisibility(visibility);
+                    DrawerLayout.super.setVisibility(visibility);
                 }
             });
         }

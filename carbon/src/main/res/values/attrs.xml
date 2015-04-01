@@ -160,6 +160,13 @@
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
 
+    <attr name="carbon_drawerLayoutStyle" format="reference" />
+    <declare-styleable name="DrawerLayout">
+        <attr name="carbon_rippleColor" />
+        <attr name="carbon_elevation" />
+        <attr name="carbon_cornerRadius" />
+    </declare-styleable>
+
     <attr name="carbon_snackbarStyle" format="reference" />
     <declare-styleable name="Snackbar">
         <attr name="carbon_layoutStyle" format="enum">

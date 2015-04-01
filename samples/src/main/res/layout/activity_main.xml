@@ -4,37 +4,50 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <carbon.widget.Toolbar
-        android:id="@+id/toolbar"
+    <carbon.widget.LinearLayout
+        app:carbon_elevation="@dimen/carbon_elevationMax"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <carbon.widget.SVGView
-            android:id="@+id/icon1"
-            app:carbon_rippleColor="?attr/carbon_rippleColor"
-            app:carbon_rippleStyle="borderless"
-            app:carbon_inAnimation="pop"
-            app:carbon_outAnimation="pop"
-            android:clickable="true"
-            android:focusable="true"
-            app:carbon_src="@raw/ic_today_24px"
-            android:layout_width="@dimen/carbon_toolbarHeight"
-            android:layout_height="@dimen/carbon_toolbarHeight"
-            android:padding="@dimen/carbon_padding" />
+        <carbon.widget.StatusBar
+            android:background="?attr/carbon_colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <carbon.widget.SVGView
-            android:id="@+id/icon2"
-            app:carbon_rippleColor="?attr/carbon_rippleColor"
-            app:carbon_rippleStyle="borderless"
-            app:carbon_inAnimation="pop"
-            app:carbon_outAnimation="pop"
-            android:clickable="true"
-            android:focusable="true"
-            app:carbon_src="@raw/ic_print_24px"
-            android:layout_width="@dimen/carbon_toolbarHeight"
-            android:layout_height="@dimen/carbon_toolbarHeight"
-            android:padding="@dimen/carbon_padding" />
-    </carbon.widget.Toolbar>
+        <carbon.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:carbon_elevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <carbon.widget.SVGView
+                android:id="@+id/icon1"
+                app:carbon_rippleColor="?attr/carbon_rippleColor"
+                app:carbon_rippleStyle="borderless"
+                app:carbon_inAnimation="pop"
+                app:carbon_outAnimation="pop"
+                android:clickable="true"
+                android:focusable="true"
+                app:carbon_src="@raw/ic_today_24px"
+                android:layout_width="@dimen/carbon_toolbarHeight"
+                android:layout_height="@dimen/carbon_toolbarHeight"
+                android:padding="@dimen/carbon_padding" />
+
+            <carbon.widget.SVGView
+                android:id="@+id/icon2"
+                app:carbon_rippleColor="?attr/carbon_rippleColor"
+                app:carbon_rippleStyle="borderless"
+                app:carbon_inAnimation="pop"
+                app:carbon_outAnimation="pop"
+                android:clickable="true"
+                android:focusable="true"
+                app:carbon_src="@raw/ic_print_24px"
+                android:layout_width="@dimen/carbon_toolbarHeight"
+                android:layout_height="@dimen/carbon_toolbarHeight"
+                android:padding="@dimen/carbon_padding" />
+        </carbon.widget.Toolbar>
+    </carbon.widget.LinearLayout>
 
     <carbon.widget.FrameLayout
         android:layout_width="match_parent"

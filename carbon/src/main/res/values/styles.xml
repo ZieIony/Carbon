@@ -18,6 +18,7 @@
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
+        <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -88,6 +89,7 @@
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
+        <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -157,6 +159,7 @@
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
+        <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -227,6 +230,7 @@
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
+        <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -330,11 +334,11 @@
     </style>
 
     <style name="carbon_StatusBar">
-        <item name="android:background">?attr/carbon_colorPrimaryDark</item>
+        <item name="android:background">?attr/carbon_colorPrimary</item>
     </style>
 
     <style name="carbon_NavigationBar">
-        <item name="android:background">?attr/carbon_colorPrimaryDark</item>
+        <item name="android:background">?attr/carbon_colorPrimary</item>
     </style>
 
     <style name="carbon_SVGView">
@@ -353,6 +357,10 @@
     </style>
 
     <style name="carbon_LinearLayout">
+        <item name="carbon_rippleColor">@null</item>
+    </style>
+
+    <style name="carbon_DrawerLayout">
         <item name="carbon_rippleColor">@null</item>
     </style>
 
