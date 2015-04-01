@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.0/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.1/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
@@ -26,7 +26,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - roboto and roboto condensed fonts for buttons and text fields
  - predefined animation styles and visibility change animations
  - a saturation/brightness/alpha fade for ImageView
- - Divider, StatusBar and NavigationBar drag&drop view
+ - Divider, StatusBar and NavigationBar drag&drop views
  - dark and light themes in standard and AppCompat versions
  - a radial transition animation
  - circular progress indicators
@@ -36,11 +36,12 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - tab strip with animated underline
  - fading edges
  - checkboxes and radiobuttons
+ - DrawerLayout with real shadows
 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.7.0'
+    compile 'tk.zielony:carbon:0.7.1'
     
 And these two lines to android/defaultConfig:
 
@@ -99,6 +100,15 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+##### 0.7.1
+ - added ScrimInsetsLayout,
+ - translucent StatusBar and NavigationBar,
+ - 3rd constructor for LinearLayout,
+ - added DrawerLayout and a drawer sample,
+ - ViewPager edge effects,
+ - overscroll xml attr,
+ - fixed child drawing order
+
 ##### 0.7.0
  - added ripple fade in,
  - updated CardView,
