@@ -20,9 +20,10 @@ import carbon.R;
  */
 public class SVGView extends ImageView {
     private static final String TAG = SVGView.class.getSimpleName();
-    private int svgId;
     private Bitmap bitmap;
     private ColorStateList filterColor;
+    private int svgId;
+    private SVG svg;
 
     public SVGView(Context context) {
         this(context, null);
@@ -39,7 +40,7 @@ public class SVGView extends ImageView {
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SVGView, defStyleAttr, 0);
-        svgId = a.getResourceId(R.styleable.SVGView_carbon_src, 0);
+        setSVGResource(a.getResourceId(R.styleable.SVGView_carbon_src, 0));
         setColorFilter(a.getColorStateList(R.styleable.SVGView_carbon_filterColor));
         a.recycle();
     }
@@ -48,7 +49,37 @@ public class SVGView extends ImageView {
         if (this.svgId == svgId)
             return;
         this.svgId = svgId;
-        render();
+        if (svgId == 0) {
+            setImageBitmap(null);
+            return;
+        }
+        try {
+            svg = SVG.getFromResource(getContext(), svgId);
+        } catch (SVGParseException e) {
+            Log.e(TAG, "problem with the svg", e);
+        }
+        if (getLayoutParams() != null && (
+                MeasureSpec.getMode(getLayoutParams().width) == MeasureSpec.UNSPECIFIED ||
+                        MeasureSpec.getMode(getLayoutParams().height) == MeasureSpec.UNSPECIFIED)) {
+            requestLayout();
+        } else {
+            render();
+        }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int width = getMeasuredWidth(), height = getMeasuredHeight();
+        if (MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.EXACTLY && svg != null) {
+            width = (int) (svg.getDocumentWidth() * getResources().getDimension(R.dimen.carbon_1dip));
+            width += getPaddingLeft() + getPaddingRight();
+        }
+        if (MeasureSpec.getMode(heightMeasureSpec) != MeasureSpec.EXACTLY && svg != null) {
+            height = (int) (svg.getDocumentHeight() * getResources().getDimension(R.dimen.carbon_1dip));
+            height += getPaddingTop() + getPaddingBottom();
+        }
+        setMeasuredDimension(width, height);
     }
 
     @Override
@@ -58,28 +89,25 @@ public class SVGView extends ImageView {
         if (isInEditMode() || svgId == 0)
             return;
 
-        if (bitmap == null || changed && bitmap.getWidth() != right - left && bitmap.getHeight() != bottom - top)
+        if (bitmap == null || changed &&
+                bitmap.getWidth() != right - left - getPaddingLeft() - getPaddingRight() &&
+                bitmap.getHeight() != bottom - top - getPaddingTop() - getPaddingBottom())
             render();
     }
 
     private synchronized void render() {
-        if (svgId == 0 || getWidth() == 0)
+        if (svgId == 0)
             return;
-        try {
-            SVG svg = SVG.getFromResource(getContext(), svgId);
-            bitmap = Bitmap.createBitmap(getWidth() - getPaddingLeft() - getPaddingRight(),
-                    getHeight() - getPaddingTop() - getPaddingBottom(),
-                    Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
-            svg.setDocumentWidth(bitmap.getWidth());
-            svg.setDocumentHeight(bitmap.getHeight());
-            svg.renderToCanvas(canvas);
-            setImageBitmap(bitmap);
-        } catch (SVGParseException e) {
-            Log.e(TAG, "problem with the svg", e);
-        } catch (NullPointerException e) {
-            Log.e(TAG, "problem with the resource", e);
-        }
+        int width = getWidth() - getPaddingLeft() - getPaddingRight();
+        int height = getHeight() - getPaddingTop() - getPaddingBottom();
+        if (width <= 0 || height <= 0)
+            return;
+        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        svg.setDocumentWidth(width);
+        svg.setDocumentHeight(height);
+        svg.renderToCanvas(canvas);
+        setImageBitmap(bitmap);
     }
 
     @Override

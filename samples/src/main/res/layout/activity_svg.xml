@@ -16,8 +16,8 @@
         app:carbon_filterColor="?attr/carbon_colorBackground_inverse"
         app:carbon_src="@raw/ic_dns_24px"
         android:layout_margin="@dimen/carbon_padding"
-        android:layout_width="24dp"
-        android:layout_height="24dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <carbon.widget.SVGView
         app:carbon_filterColor="?attr/carbon_colorBackground_inverse"
