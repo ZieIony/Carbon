@@ -72,7 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             content.setClickable(true);
             content.setFocusable(true);
             content.setFocusableInTouchMode(true);
-            RippleDrawable rippleDrawable = new RippleDrawable(0x42ff0000);
+            RippleDrawable rippleDrawable = new RippleDrawable(0x42ff0000,itemView.getContext());
             rippleDrawable.setStyle(RippleDrawable.Style.Over);
             rippleDrawable.setCallback(content);
             rippleDrawable.setHotspotEnabled(true);

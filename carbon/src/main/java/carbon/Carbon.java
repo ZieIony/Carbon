@@ -47,7 +47,7 @@ public class Carbon {
             boolean useHotspot = a.getBoolean(R.styleable.Carbon_carbon_rippleHotspot, true);
 
             RippleDrawable rippleDrawable;
-            rippleDrawable = new RippleDrawable(color);
+            rippleDrawable = new RippleDrawable(color,view.getContext());
             rippleDrawable.setCallback(view);
             rippleDrawable.setHotspotEnabled(useHotspot);
             rippleDrawable.setStyle(style);

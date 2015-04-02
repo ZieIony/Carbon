@@ -1,5 +1,6 @@
 package carbon.drawable;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
@@ -7,8 +8,8 @@ import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 
 import carbon.Carbon;
 import carbon.animation.AnimUtils;
@@ -17,19 +18,32 @@ import carbon.animation.AnimUtils;
  * Created by Marcin on 2014-11-19.
  */
 public class RippleDrawable extends Drawable {
+    private static final class LogInterpolator implements Interpolator {
+        @Override
+        public float getInterpolation(float input) {
+            return 1 - (float) Math.pow(400, -input * 1.4);
+        }
+    }
+
     private final int alpha;
-    private long duration;
+    private long radiusDuration, opacityDuration;
     private long downTime, upTime;
-    private static final int LONGPRESS_DURATION = 4000;
-    private static final int RIPPLE_DURATION = 400;
+    private final float density;
     private static final int FADEIN_DURATION = 100;
-    private static final int FADEOUT_DURATION = 300;
+
+
+    private static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
+    private static final Interpolator DECEL_INTERPOLATOR = new LogInterpolator();
+
+    private static final float WAVE_TOUCH_DOWN_ACCELERATION = 1024.0f;
+    private static final float WAVE_TOUCH_UP_ACCELERATION = 3400.0f;
+    private static final float WAVE_OPACITY_DECAY_VELOCITY = 3.0f;
+
 
     private Paint paint = new Paint();
     private PointF hotspot = new PointF();
     private int color;
     private Drawable background;
-    private Interpolator interpolator;
     private float from, to;
     private boolean pressed, useHotspot = true;
     private Style style = Style.Background;
@@ -38,32 +52,20 @@ public class RippleDrawable extends Drawable {
         Over, Background, Borderless
     }
 
-    public void onRelease() {
-        if (pressed) {
-            pressed = false;
-            long time = System.currentTimeMillis();
-            float animFrac = (time - downTime) / (float) duration;
-            duration = RIPPLE_DURATION;
-            downTime = time - (long) (duration * animFrac);
-            upTime = System.currentTimeMillis();
-        }
-    }
-
-    public RippleDrawable(int color) {
+    public RippleDrawable(int color, Context context) {
         this.color = color;
         this.alpha = color >> 24;
+        density = context.getResources().getDisplayMetrics().density;
     }
 
     public void onPress() {
         pressed = true;
-        from = 10;
         Rect bounds = getBounds();
         if (style == Style.Borderless) {
             to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
         } else {
             to = Math.max(bounds.width(), bounds.height()) / 2.0f;
         }
-        interpolator = new DecelerateInterpolator();
         downTime = System.currentTimeMillis();
         if (!useHotspot) {
             hotspot.x = bounds.centerX();
@@ -72,8 +74,31 @@ public class RippleDrawable extends Drawable {
         paint.setAntiAlias(Carbon.antiAlias);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(color);
-        duration = LONGPRESS_DURATION;
+
+        radiusDuration = (long) (1000 * Math.sqrt(to / WAVE_TOUCH_DOWN_ACCELERATION * density) + 0.5);
+        opacityDuration = FADEIN_DURATION;
+
         invalidateSelf();
+    }
+
+    public void onRelease() {
+        if (pressed) {
+            pressed = false;
+            upTime = System.currentTimeMillis();
+
+            float rippleInterp = LINEAR_INTERPOLATOR.getInterpolation((upTime - downTime) / (float) radiusDuration);
+            from = AnimUtils.lerp(rippleInterp, 0, to);
+            Rect bounds = getBounds();
+            hotspot.x = AnimUtils.lerp(rippleInterp, hotspot.x, bounds.centerX());
+            hotspot.y = AnimUtils.lerp(rippleInterp, hotspot.y, bounds.centerY());
+            from = AnimUtils.lerp(rippleInterp, 0, to);
+            float remaining = Math.max(0, to - from);
+
+            radiusDuration = (int) (1000 * Math.sqrt(remaining / (WAVE_TOUCH_UP_ACCELERATION + WAVE_TOUCH_DOWN_ACCELERATION) * density) + 0.5);
+            opacityDuration = (int) (1000.0f / WAVE_OPACITY_DECAY_VELOCITY + 0.5f);
+
+            invalidateSelf();
+        }
     }
 
     @Override
@@ -88,37 +113,50 @@ public class RippleDrawable extends Drawable {
 
         long time = System.currentTimeMillis();
 
-        if (upTime + FADEOUT_DURATION > time) {
-            float highlightInterp = interpolator.getInterpolation((time - upTime) / (float) FADEOUT_DURATION);
-            paint.setAlpha((int) (alpha * (1 - highlightInterp)));
-            if (style == Style.Borderless) {
-                canvas.drawCircle(bounds.centerX(), bounds.centerY(), to, paint);
-            } else {
-                canvas.drawRect(bounds, paint);
-            }
-            invalidateSelf();
-        }
-
-        if (downTime > upTime) {
-            float highlightInterp = interpolator.getInterpolation(Math.min(time - downTime, FADEIN_DURATION) / (float) FADEIN_DURATION);
+        if (pressed) {
+            // bg
+            float highlightInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - downTime) / (float) FADEIN_DURATION), 1);
             paint.setAlpha((int) (alpha * highlightInterp));
             if (style == Style.Borderless) {
                 canvas.drawCircle(bounds.centerX(), bounds.centerY(), to, paint);
             } else {
                 canvas.drawRect(bounds, paint);
             }
-            invalidateSelf();
+
+            // ripple
+            float rippleInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - downTime) / (float) radiusDuration), 1);
+            float radius = to * rippleInterp;
+            float x = AnimUtils.lerp(rippleInterp, hotspot.x, bounds.centerX());
+            float y = AnimUtils.lerp(rippleInterp, hotspot.y, bounds.centerY());
+
+            paint.setAlpha((int) (alpha * (1 - rippleInterp)));
+            canvas.drawCircle(x, y, radius, paint);
+
+            if (highlightInterp < 1 || rippleInterp < 1)
+                invalidateSelf();
         }
 
-        if (downTime + duration > time) {
-            float rippleInterp = interpolator.getInterpolation((time - downTime) / (float) duration);
+        if (!pressed) {
+            // bg
+            float highlightInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - upTime) / (float) opacityDuration), 1);
+            paint.setAlpha((int) (alpha * (1 - highlightInterp)));
+            if (style == Style.Borderless) {
+                canvas.drawCircle(bounds.centerX(), bounds.centerY(), to, paint);
+            } else {
+                canvas.drawRect(bounds, paint);
+            }
+
+            // ripple
+            float rippleInterp = Math.min(DECEL_INTERPOLATOR.getInterpolation((time - upTime) / (float) radiusDuration), 1);
             float radius = AnimUtils.lerp(rippleInterp, from, to);
             float x = AnimUtils.lerp(rippleInterp, hotspot.x, bounds.centerX());
             float y = AnimUtils.lerp(rippleInterp, hotspot.y, bounds.centerY());
 
             paint.setAlpha((int) (alpha * (1 - rippleInterp)));
             canvas.drawCircle(x, y, radius, paint);
-            invalidateSelf();
+
+            if (highlightInterp < 1 || rippleInterp < 1)
+                invalidateSelf();
         }
     }
 
@@ -135,6 +173,8 @@ public class RippleDrawable extends Drawable {
     @Override
     public void jumpToCurrentState() {
         super.jumpToCurrentState();
+        if (background != null)
+            background.jumpToCurrentState();
         invalidateSelf();
     }
 
