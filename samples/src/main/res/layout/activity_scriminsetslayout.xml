@@ -1,0 +1,40 @@
+<carbon.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.LinearLayout
+        android:id="@+id/content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.Toolbar
+            app:carbon_elevation="@dimen/carbon_elevationMax"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </carbon.widget.LinearLayout>
+
+    <carbon.widget.ScrimInsetsLayout
+        android:id="@+id/drawerMenu"
+        android:fitsSystemWindows="true"
+        app:carbon_insetForeground="?attr/carbon_colorPrimaryDark"
+        app:carbon_elevation="@dimen/carbon_elevationMax"
+        android:layout_gravity="start"
+        android:orientation="vertical"
+        android:layout_width="240dp"
+        android:layout_height="match_parent">
+
+        <carbon.widget.ListView
+            android:id="@+id/drawerList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="?attr/carbon_colorBackground" />
+    </carbon.widget.ScrimInsetsLayout>
+</carbon.widget.DrawerLayout>

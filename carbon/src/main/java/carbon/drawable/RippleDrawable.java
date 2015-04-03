@@ -39,6 +39,8 @@ public class RippleDrawable extends Drawable {
     private static final float WAVE_TOUCH_UP_ACCELERATION = 3400.0f;
     private static final float WAVE_OPACITY_DECAY_VELOCITY = 3.0f;
 
+    private static final long RIPPLE_ENTER_DELAY = 80;
+
 
     private Paint paint = new Paint();
     private PointF hotspot = new PointF();
@@ -54,18 +56,14 @@ public class RippleDrawable extends Drawable {
 
     public RippleDrawable(int color, Context context) {
         this.color = color;
-        this.alpha = color >> 24;
+        this.alpha = (color >> 24) / 2;
         density = context.getResources().getDisplayMetrics().density;
     }
 
     public void onPress() {
         pressed = true;
         Rect bounds = getBounds();
-        if (style == Style.Borderless) {
-            to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
-        } else {
-            to = Math.max(bounds.width(), bounds.height()) / 2.0f;
-        }
+        to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
         downTime = System.currentTimeMillis();
         if (!useHotspot) {
             hotspot.x = bounds.centerX();
@@ -124,12 +122,11 @@ public class RippleDrawable extends Drawable {
             }
 
             // ripple
-            float rippleInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - downTime) / (float) radiusDuration), 1);
+            float rippleInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - downTime - RIPPLE_ENTER_DELAY) / (float) radiusDuration), 1);
             float radius = to * rippleInterp;
             float x = AnimUtils.lerp(rippleInterp, hotspot.x, bounds.centerX());
             float y = AnimUtils.lerp(rippleInterp, hotspot.y, bounds.centerY());
 
-            paint.setAlpha((int) (alpha * (1 - rippleInterp)));
             canvas.drawCircle(x, y, radius, paint);
 
             if (highlightInterp < 1 || rippleInterp < 1)
@@ -152,7 +149,6 @@ public class RippleDrawable extends Drawable {
             float x = AnimUtils.lerp(rippleInterp, hotspot.x, bounds.centerX());
             float y = AnimUtils.lerp(rippleInterp, hotspot.y, bounds.centerY());
 
-            paint.setAlpha((int) (alpha * (1 - rippleInterp)));
             canvas.drawCircle(x, y, radius, paint);
 
             if (highlightInterp < 1 || rippleInterp < 1)

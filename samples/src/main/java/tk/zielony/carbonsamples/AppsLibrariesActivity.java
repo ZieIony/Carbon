@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import carbon.widget.ScrimInsetsLayout;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.applibrary.CalculatorActivity;
 import tk.zielony.carbonsamples.applibrary.DrawerActivity;
 import tk.zielony.carbonsamples.applibrary.PicassoActivity;
 import tk.zielony.carbonsamples.applibrary.RecyclerCardsActivity;
+import tk.zielony.carbonsamples.applibrary.ScrimInsetsLayoutActivity;
 
 
 public class AppsLibrariesActivity extends Activity {
@@ -26,11 +28,14 @@ public class AppsLibrariesActivity extends Activity {
         toolbar.setText("Apps & Libraries");
 
         ListView listView = (ListView) findViewById(R.id.list);
-        String[] items = new String[]{"Calculator", "Picasso", "RecyclerView & cards", "Nawigation drawer"
+        String[] items = new String[]{
+                "Calculator", "Picasso", "RecyclerView & cards", "Nawigation drawer", "ScrimInsetsLayout (API 21+)"
         };
-        final Class[] activities = new Class[]{CalculatorActivity.class, PicassoActivity.class, RecyclerCardsActivity.class, DrawerActivity.class
+        final Class[] activities = new Class[]{
+                CalculatorActivity.class, PicassoActivity.class, RecyclerCardsActivity.class, DrawerActivity.class, ScrimInsetsLayoutActivity.class
         };
-        final boolean[] beta = new boolean[]{true, false, false, true
+        final boolean[] beta = new boolean[]{
+                true, false, false, false, true
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

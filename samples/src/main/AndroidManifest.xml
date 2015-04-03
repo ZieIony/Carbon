@@ -127,6 +127,14 @@
             android:name=".applibrary.DrawerActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
+        <activity
+            android:name=".applibrary.ScrimInsetsLayoutActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".animation.RippleComparisonActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".AnimationsActivity"
