@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.1/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.2-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.2/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
@@ -37,11 +37,12 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - fading edges
  - checkboxes and radiobuttons
  - DrawerLayout with real shadows
+ - ScrimInsetsLayout
 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.7.1'
+    compile 'tk.zielony:carbon:0.7.2'
     
 And these two lines to android/defaultConfig:
 
@@ -100,6 +101,11 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+##### 0.7.2
+ - updated RippleDrawable to mimic the original one
+ - added RippleDrawable comparison and a sample for ScrimInsetsLayout
+ - SVGView can now have its size set to wrap_content
+
 ##### 0.7.1
  - added ScrimInsetsLayout,
  - translucent StatusBar and NavigationBar,
