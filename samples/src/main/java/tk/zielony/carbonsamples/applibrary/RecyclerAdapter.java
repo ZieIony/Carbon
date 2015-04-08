@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -45,7 +46,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.text.setText(item.getText());
         holder.image.setImageBitmap(null);
         Picasso.with(holder.image.getContext()).cancelRequest(holder.image);
-        Picasso.with(holder.image.getContext()).load(item.getImage()).into(holder.image);
+        holder.image.setVisibility(View.INVISIBLE);
+        Picasso.with(holder.image.getContext()).load(item.getImage()).into((Target)holder.image);
         holder.itemView.setTag(item);
 
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.card.getLayoutParams();

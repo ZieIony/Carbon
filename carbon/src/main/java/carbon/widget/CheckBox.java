@@ -207,13 +207,28 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     private Rect touchMargin;
 
     @Override
-    public void setTouchMargin(Rect rect) {
-        touchMargin = rect;
+    public void setTouchMargin(int left, int top, int right, int bottom) {
+        touchMargin = new Rect(left, top, right, bottom);
     }
 
     @Override
-    public void setTouchMargin(int left, int top, int right, int bottom) {
-        touchMargin = new Rect(left, top, right, bottom);
+    public void setTouchMarginLeft(int margin) {
+        touchMargin.left = margin;
+    }
+
+    @Override
+    public void setTouchMarginTop(int margin) {
+        touchMargin.top = margin;
+    }
+
+    @Override
+    public void setTouchMarginRight(int margin) {
+        touchMargin.right = margin;
+    }
+
+    @Override
+    public void setTouchMarginBottom(int margin) {
+        touchMargin.bottom = margin;
     }
 
     @Override

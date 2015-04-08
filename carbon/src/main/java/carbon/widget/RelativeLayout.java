@@ -3,18 +3,21 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowInsets;
 import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
@@ -92,11 +95,9 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        if (views == null || views.size() != getChildCount()) {
-            views = new ArrayList<View>();
-            for (int i = 0; i < getChildCount(); i++)
-                views.add(getChildAt(i));
-        }
+        views = new ArrayList<View>();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
 
         super.dispatchDraw(canvas);
@@ -122,17 +123,17 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
                 paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
 
-                float[] childLocation = new float[]{(child.getLeft()+child.getRight())/2,(child.getTop()+child.getBottom())/2};
-                if(child.getAnimation()!=null){
+                float[] childLocation = new float[]{(child.getLeft() + child.getRight()) / 2, (child.getTop() + child.getBottom()) / 2};
+                if (child.getAnimation() != null) {
                     Transformation t = new Transformation();
-                    child.getAnimation().getTransformation(drawingTime,t);
+                    child.getAnimation().getTransformation(drawingTime, t);
                     t.getMatrix().mapPoints(childLocation);
                 }
 
                 int[] location = new int[2];
                 getLocationOnScreen(location);
-                float x = childLocation[0]+location[0];
-                float y = childLocation[1]+location[1];
+                float x = childLocation[0] + location[0];
+                float y = childLocation[1] + location[1];
                 x -= getRootView().getWidth() / 2;
                 y += getRootView().getHeight() / 2;   // looks nice
                 float length = (float) Math.sqrt(x * x + y * y);
@@ -191,7 +192,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     // -------------------------------
 
     private float cornerRadius;
-    private Path cornersClipPath;
+    private Canvas textureCanvas;
 
     public float getCornerRadius() {
         return cornerRadius;
@@ -218,26 +219,42 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     private void initDrawing() {
         if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
             return;
-        cornersClipPath = new Path();
-        RectF rect = new RectF();
-        rect.bottom = getHeight();
-        rect.right = getWidth();
-        cornersClipPath.addRoundRect(rect, cornerRadius, cornerRadius, Path.Direction.CW);
+        Bitmap texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        textureCanvas = new Canvas(texture);
+        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
     }
 
     @Override
     public void draw(Canvas canvas) {
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
-            canvas.save(Canvas.CLIP_SAVE_FLAG);
-            canvas.clipPath(cornersClipPath);
-            super.draw(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
-            canvas.restore();
+            textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+            super.draw(textureCanvas);
+
+            RectF rect = new RectF();
+            rect.bottom = getHeight();
+            rect.right = getWidth();
+            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
         } else {
             super.draw(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
+        }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(textureCanvas);
+        if (insetColor != 0) {
+            paint.setColor(insetColor);
+            paint.setAlpha(255);
+            if (insets.left != 0)
+                canvas.drawRect(0, 0, insets.left, getHeight(), paint);
+            if (insets.top != 0)
+                canvas.drawRect(0, 0, getWidth(), insets.top, paint);
+            if (insets.right != 0)
+                canvas.drawRect(getWidth() - insets.right, 0, getWidth(), getHeight(), paint);
+            if (insets.bottom != 0)
+                canvas.drawRect(0, getHeight() - insets.bottom, getWidth(), getHeight(), paint);
         }
     }
 
@@ -385,13 +402,28 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     private Rect touchMargin;
 
     @Override
-    public void setTouchMargin(Rect rect) {
-        touchMargin = rect;
+    public void setTouchMargin(int left, int top, int right, int bottom) {
+        touchMargin = new Rect(left, top, right, bottom);
     }
 
     @Override
-    public void setTouchMargin(int left, int top, int right, int bottom) {
-        touchMargin = new Rect(left, top, right, bottom);
+    public void setTouchMarginLeft(int margin) {
+        touchMargin.left = margin;
+    }
+
+    @Override
+    public void setTouchMarginTop(int margin) {
+        touchMargin.top = margin;
+    }
+
+    @Override
+    public void setTouchMarginRight(int margin) {
+        touchMargin.right = margin;
+    }
+
+    @Override
+    public void setTouchMarginBottom(int margin) {
+        touchMargin.bottom = margin;
     }
 
     @Override
@@ -464,5 +496,63 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
+    }
+
+
+    // -------------------------------
+    // insets
+    // -------------------------------
+
+    Rect insets = new Rect();
+    int insetColor;
+
+    public int getInsetColor() {
+        return insetColor;
+    }
+
+    public void setInsetColor(int insetsColor) {
+        this.insetColor = insetsColor;
+    }
+
+    public Rect getInset() {
+        return insets;
+    }
+
+    public void setInset(int left, int top, int right, int bottom) {
+        insets.set(left, top, right, bottom);
+    }
+
+    public void setInsetLeft(int inset) {
+        this.insets.left = inset;
+    }
+
+    public void setInsetTop(int inset) {
+        this.insets.top = inset;
+    }
+
+    public void setInsetRight(int inset) {
+        this.insets.right = inset;
+    }
+
+    public void setInsetBottom(int inset) {
+        this.insets.bottom = inset;
+    }
+
+    @Override
+    protected boolean fitSystemWindows(Rect insets) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH) {
+            this.insets.set(insets);
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+        return super.fitSystemWindows(insets);
+    }
+
+    @Override
+    public final WindowInsets onApplyWindowInsets(WindowInsets insets) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            this.insets.set(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(), insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+        return super.onApplyWindowInsets(insets);
     }
 }

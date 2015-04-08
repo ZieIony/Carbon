@@ -62,7 +62,7 @@ public class Carbon {
 
         int touchMarginAll = (int) a.getDimension(R.styleable.Carbon_carbon_touchMargin, 0);
         if (touchMarginAll > 0) {
-            view.setTouchMargin(new Rect(touchMarginAll, touchMarginAll, touchMarginAll, touchMarginAll));
+            view.setTouchMargin(touchMarginAll, touchMarginAll, touchMarginAll, touchMarginAll);
         } else {
             int top = (int) a.getDimension(R.styleable.Carbon_carbon_touchMarginTop, 0);
             int left = (int) a.getDimension(R.styleable.Carbon_carbon_touchMarginLeft, 0);

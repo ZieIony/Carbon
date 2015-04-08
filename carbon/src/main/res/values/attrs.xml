@@ -46,6 +46,13 @@
         <attr name="carbon_touchMarginRight" format="dimension" />
         <attr name="carbon_touchMarginBottom" format="dimension" />
 
+        <attr name="carbon_insetColor" format="color" />
+        <attr name="carbon_inset" format="dimension" />
+        <attr name="carbon_insetLeft" format="dimension" />
+        <attr name="carbon_insetTop" format="dimension" />
+        <attr name="carbon_insetRight" format="dimension" />
+        <attr name="carbon_insetBottom" format="dimension" />
+
         <attr name="carbon_textAppearance_headline" format="reference" />
         <attr name="carbon_textAppearance_title" format="reference" />
         <attr name="carbon_textAppearance_subhead" format="reference" />

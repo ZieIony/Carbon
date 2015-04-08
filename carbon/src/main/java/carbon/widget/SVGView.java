@@ -58,13 +58,8 @@ public class SVGView extends ImageView {
         } catch (SVGParseException e) {
             Log.e(TAG, "problem with the svg", e);
         }
-        if (getLayoutParams() != null && (
-                MeasureSpec.getMode(getLayoutParams().width) == MeasureSpec.UNSPECIFIED ||
-                        MeasureSpec.getMode(getLayoutParams().height) == MeasureSpec.UNSPECIFIED)) {
-            requestLayout();
-        } else {
-            render();
-        }
+
+        render();
     }
 
     @Override

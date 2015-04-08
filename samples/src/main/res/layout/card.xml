@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/carbon_paddingHalf"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <tk.zielony.carbonsamples.applibrary.PicassoView
+        app:carbon_outAnimation="none"
         android:scaleType="centerCrop"
         android:id="@+id/image"
         android:layout_width="match_parent"
