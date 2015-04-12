@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 
 import carbon.animation.AnimUtils;
 import carbon.drawable.RippleDrawable;
+import carbon.drawable.RippleDrawableCompat;
+import carbon.drawable.RippleDrawableLollipop;
 import carbon.drawable.RippleView;
 import carbon.widget.AnimatedView;
+import carbon.widget.InsetView;
 import carbon.widget.TouchMarginView;
 
 /**
@@ -47,7 +51,11 @@ public class Carbon {
             boolean useHotspot = a.getBoolean(R.styleable.Carbon_carbon_rippleHotspot, true);
 
             RippleDrawable rippleDrawable;
-            rippleDrawable = new RippleDrawable(color,view.getContext());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null);
+            } else {
+                rippleDrawable = new RippleDrawableCompat(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, view.getContext());
+            }
             rippleDrawable.setCallback(view);
             rippleDrawable.setHotspotEnabled(useHotspot);
             rippleDrawable.setStyle(style);
@@ -73,7 +81,25 @@ public class Carbon {
         }
 
         a.recycle();
+    }
 
+    public static void initInset(InsetView view, AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = ((View) view).getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+
+        if (a.hasValue(R.styleable.Carbon_carbon_inset)) {
+            int touchMarginAll = (int) a.getDimension(R.styleable.Carbon_carbon_inset, InsetView.INSET_NULL);
+            view.setInset(touchMarginAll, touchMarginAll, touchMarginAll, touchMarginAll);
+        } else {
+            int top = (int) a.getDimension(R.styleable.Carbon_carbon_insetTop, InsetView.INSET_NULL);
+            int left = (int) a.getDimension(R.styleable.Carbon_carbon_insetLeft, InsetView.INSET_NULL);
+            int right = (int) a.getDimension(R.styleable.Carbon_carbon_insetRight, InsetView.INSET_NULL);
+            int bottom = (int) a.getDimension(R.styleable.Carbon_carbon_insetBottom, InsetView.INSET_NULL);
+            view.setInset(left, top, right, bottom);
+        }
+
+        view.setInsetColor(a.getColor(R.styleable.Carbon_carbon_insetColor, 0));
+
+        a.recycle();
     }
 
     static Paint paint = new Paint();

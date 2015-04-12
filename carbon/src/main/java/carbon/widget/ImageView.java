@@ -24,7 +24,6 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.RippleStateAnimator;
 import carbon.animation.StateAnimator;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -139,36 +138,19 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     }
 
     public void setRippleDrawable(RippleDrawable newRipple) {
-        Drawable background = getBackground();
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
-            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
-                background = rippleDrawable.getBackground();
-            }
+            if(rippleDrawable.getStyle()== RippleDrawable.Style.Background)
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
             newRipple.setCallback(this);
             if (newRipple.getStyle() == RippleDrawable.Style.Background) {
-                newRipple.setBackground(background);
-                background = newRipple;
+                super.setBackgroundDrawable((Drawable) newRipple);
             }
         }
 
-        StateAnimator animator = null;
-        for (StateAnimator a : stateAnimators) {
-            if (a instanceof RippleStateAnimator) {
-                animator = a;
-                break;
-            }
-        }
-        if (animator != null && newRipple == null) {
-            stateAnimators.remove(animator);
-        } else if (animator == null && newRipple != null) {
-            addStateAnimator(new RippleStateAnimator(this));
-        }
-
-        super.setBackgroundDrawable(background);
         rippleDrawable = newRipple;
     }
 
@@ -197,10 +179,10 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         }
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
-            rippleDrawable.setBackground(background);
-        } else {
-            super.setBackgroundDrawable(background);
+            rippleDrawable.setCallback(null);
+            rippleDrawable = null;
         }
+        super.setBackgroundDrawable(background);
     }
 
 
@@ -316,6 +298,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
+        if(rippleDrawable!=null&&rippleDrawable.getStyle()!= RippleDrawable.Style.Background)
+            rippleDrawable.setState(getDrawableState());
         if (stateAnimators != null)
             for (StateAnimator animator : stateAnimators)
                 animator.stateChanged(getDrawableState());

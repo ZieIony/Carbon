@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -33,7 +34,6 @@ import java.util.Map;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.RippleStateAnimator;
 import carbon.animation.StateAnimator;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
@@ -46,7 +46,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-11-20.
  */
-public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
+public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView {
 
     private boolean debugMode;
 
@@ -71,6 +71,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
+        Carbon.initInset(this, attrs, defStyleAttr);
         setCornerRadius(a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0));
 
         a.recycle();
@@ -83,9 +84,6 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
-
-        if (getBackground() == null)
-            super.setBackgroundDrawable(emptyBackground);
     }
 
 
@@ -101,6 +99,18 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         Collections.sort(views, new ElevationComparator());
 
         super.dispatchDraw(canvas);
+        if (insetColor != 0) {
+            paint.setColor(insetColor);
+            paint.setAlpha(255);
+            if (insetLeft != 0)
+                canvas.drawRect(0, 0, insetLeft, getHeight(), paint);
+            if (insetTop != 0)
+                canvas.drawRect(0, 0, getWidth(), insetTop, paint);
+            if (insetRight != 0)
+                canvas.drawRect(getWidth() - insetRight, 0, getWidth(), getHeight(), paint);
+            if (insetBottom != 0)
+                canvas.drawRect(0, getHeight() - insetBottom, getWidth(), getHeight(), paint);
+        }
 
         if (debugMode)
             Carbon.drawDebugInfo(this, canvas);
@@ -243,19 +253,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-            rippleDrawable.draw(textureCanvas);
-        if (insetColor != 0) {
-            paint.setColor(insetColor);
-            paint.setAlpha(255);
-            if (insets.left != 0)
-                canvas.drawRect(0, 0, insets.left, getHeight(), paint);
-            if (insets.top != 0)
-                canvas.drawRect(0, 0, getWidth(), insets.top, paint);
-            if (insets.right != 0)
-                canvas.drawRect(getWidth() - insets.right, 0, getWidth(), getHeight(), paint);
-            if (insets.bottom != 0)
-                canvas.drawRect(0, getHeight() - insets.bottom, getWidth(), getHeight(), paint);
-        }
+            rippleDrawable.draw(canvas);
     }
 
 
@@ -279,36 +277,19 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     }
 
     public void setRippleDrawable(RippleDrawable newRipple) {
-        Drawable background = getBackground();
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
-            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
-                background = rippleDrawable.getBackground();
-            }
+            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
+                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
             newRipple.setCallback(this);
             if (newRipple.getStyle() == RippleDrawable.Style.Background) {
-                newRipple.setBackground(background);
-                background = newRipple;
+                super.setBackgroundDrawable((Drawable) newRipple);
             }
         }
 
-        StateAnimator animator = null;
-        for (StateAnimator a : stateAnimators) {
-            if (a instanceof RippleStateAnimator) {
-                animator = a;
-                break;
-            }
-        }
-        if (animator != null && newRipple == null) {
-            stateAnimators.remove(animator);
-        } else if (animator == null && newRipple != null) {
-            addStateAnimator(new RippleStateAnimator(this));
-        }
-
-        super.setBackgroundDrawable(background == null ? emptyBackground : background);
         rippleDrawable = newRipple;
     }
 
@@ -337,10 +318,10 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         }
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
-            rippleDrawable.setBackground(background);
-        } else {
-            super.setBackgroundDrawable(background == null ? emptyBackground : background);
+            rippleDrawable.setCallback(null);
+            rippleDrawable = null;
         }
+        super.setBackgroundDrawable(background == null ? emptyBackground : background);
     }
 
 
@@ -456,6 +437,8 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
+        if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
+            rippleDrawable.setState(getDrawableState());
         if (stateAnimators != null)
             for (StateAnimator animator : stateAnimators)
                 animator.stateChanged(getDrawableState());
@@ -503,7 +486,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     // insets
     // -------------------------------
 
-    Rect insets = new Rect();
+    int insetLeft = -1, insetTop = -1, insetRight = -1, insetBottom = -1;
     int insetColor;
 
     public int getInsetColor() {
@@ -514,45 +497,75 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         this.insetColor = insetsColor;
     }
 
-    public Rect getInset() {
-        return insets;
-    }
-
     public void setInset(int left, int top, int right, int bottom) {
-        insets.set(left, top, right, bottom);
+        insetLeft = left;
+        insetTop = top;
+        insetRight = right;
+        insetBottom = bottom;
     }
 
-    public void setInsetLeft(int inset) {
-        this.insets.left = inset;
+    public int getInsetLeft() {
+        return insetLeft;
     }
 
-    public void setInsetTop(int inset) {
-        this.insets.top = inset;
+    public void setInsetLeft(int insetLeft) {
+        this.insetLeft = insetLeft;
     }
 
-    public void setInsetRight(int inset) {
-        this.insets.right = inset;
+    public int getInsetTop() {
+        return insetTop;
     }
 
-    public void setInsetBottom(int inset) {
-        this.insets.bottom = inset;
+    public void setInsetTop(int insetTop) {
+        this.insetTop = insetTop;
+    }
+
+    public int getInsetRight() {
+        return insetRight;
+    }
+
+    public void setInsetRight(int insetRight) {
+        this.insetRight = insetRight;
+    }
+
+    public int getInsetBottom() {
+        return insetBottom;
+    }
+
+    public void setInsetBottom(int insetBottom) {
+        this.insetBottom = insetBottom;
     }
 
     @Override
     protected boolean fitSystemWindows(Rect insets) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH) {
-            this.insets.set(insets);
+            if (insetLeft == INSET_NULL)
+                insetLeft = insets.left;
+            if (insetTop == INSET_NULL)
+                insetTop = insets.top;
+            if (insetRight == INSET_NULL)
+                insetRight = insets.right;
+            if (insetBottom == INSET_NULL)
+                insetBottom = insets.bottom;
+            insets.set(insetLeft, insetTop, insetRight, insetBottom);
             ViewCompat.postInvalidateOnAnimation(this);
         }
         return super.fitSystemWindows(insets);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     @Override
     public final WindowInsets onApplyWindowInsets(WindowInsets insets) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            this.insets.set(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(), insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
-            ViewCompat.postInvalidateOnAnimation(this);
-        }
+        if (insetLeft == INSET_NULL)
+            insetLeft = insets.getSystemWindowInsetLeft();
+        if (insetTop == INSET_NULL)
+            insetTop = insets.getSystemWindowInsetTop();
+        if (insetRight == INSET_NULL)
+            insetRight = insets.getSystemWindowInsetRight();
+        if (insetBottom == INSET_NULL)
+            insetBottom = insets.getSystemWindowInsetBottom();
+        insets = insets.replaceSystemWindowInsets(insetLeft, insetTop, insetRight, insetBottom);
+        ViewCompat.postInvalidateOnAnimation(this);
         return super.onApplyWindowInsets(insets);
     }
 }

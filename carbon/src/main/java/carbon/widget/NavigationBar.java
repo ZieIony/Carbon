@@ -16,6 +16,7 @@ import carbon.R;
 /**
  * Created by Marcin on 2015-01-04.
  */
+@Deprecated
 public class NavigationBar extends View {
     public NavigationBar(Context context) {
         this(context, null);

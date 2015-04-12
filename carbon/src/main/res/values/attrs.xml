@@ -153,6 +153,13 @@
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
 
+    <attr name="carbon_gridLayoutStyle" format="reference" />
+    <declare-styleable name="GridLayout">
+        <attr name="carbon_rippleColor" />
+        <attr name="carbon_elevation" />
+        <attr name="carbon_cornerRadius" />
+    </declare-styleable>
+
     <attr name="carbon_relativeLayoutStyle" format="reference" />
     <declare-styleable name="RelativeLayout">
         <attr name="carbon_rippleColor" />

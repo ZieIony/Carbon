@@ -14,8 +14,8 @@ import com.squareup.picasso.Target;
 
 import java.util.List;
 
-import carbon.animation.RippleStateAnimator;
 import carbon.drawable.RippleDrawable;
+import carbon.drawable.RippleDrawableCompat;
 import carbon.widget.CardView;
 import carbon.widget.LinearLayout;
 import carbon.widget.StateAnimatorView;
@@ -74,12 +74,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             content.setClickable(true);
             content.setFocusable(true);
             content.setFocusableInTouchMode(true);
-            RippleDrawable rippleDrawable = new RippleDrawable(0x42ff0000,itemView.getContext());
+            RippleDrawable rippleDrawable = new RippleDrawableCompat(0x42ff0000,null,itemView.getContext());
             rippleDrawable.setStyle(RippleDrawable.Style.Over);
             rippleDrawable.setCallback(content);
             rippleDrawable.setHotspotEnabled(true);
             content.setRippleDrawable(rippleDrawable);
-            content.addStateAnimator(new RippleStateAnimator(content));
         }
     }
 }

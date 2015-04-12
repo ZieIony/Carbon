@@ -6,27 +6,17 @@
 
     <carbon.widget.LinearLayout
         android:id="@+id/content"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <carbon.widget.LinearLayout
+        <carbon.widget.Toolbar
             app:carbon_elevation="@dimen/carbon_elevationMax"
-            android:orientation="vertical"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <carbon.widget.StatusBar
-                android:background="?attr/carbon_colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <carbon.widget.Toolbar
-                app:carbon_elevation="0dp"
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </carbon.widget.LinearLayout>
     </carbon.widget.LinearLayout>
 
     <carbon.widget.LinearLayout
@@ -34,13 +24,16 @@
         app:carbon_elevation="@dimen/carbon_elevationMax"
         android:layout_gravity="start"
         android:orientation="vertical"
+        app:carbon_insetTop="0dp"
+        android:fitsSystemWindows="true"
         android:layout_width="240dp"
         android:layout_height="match_parent">
 
-        <carbon.widget.StatusBar
-            android:background="?attr/carbon_colorBackground"
+        <carbon.widget.ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="180dp"
+            android:src="@drawable/mazda"
+            android:scaleType="centerCrop"/>
 
         <carbon.widget.ListView
             android:id="@+id/drawerList"
