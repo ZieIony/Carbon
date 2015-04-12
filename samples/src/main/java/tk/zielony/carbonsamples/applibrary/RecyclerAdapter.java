@@ -1,5 +1,6 @@
 package tk.zielony.carbonsamples.applibrary;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -47,7 +48,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.image.setImageBitmap(null);
         Picasso.with(holder.image.getContext()).cancelRequest(holder.image);
         holder.image.setVisibility(View.INVISIBLE);
-        Picasso.with(holder.image.getContext()).load(item.getImage()).into((Target)holder.image);
+        //Picasso.with(holder.image.getContext()).load(item.getImage()).into((Target)holder.image);
+        Picasso.with(holder.image.getContext()).load(R.drawable.mazda).into((Target)holder.image);
         holder.itemView.setTag(item);
 
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.card.getLayoutParams();
@@ -74,6 +76,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             content.setClickable(true);
             content.setFocusable(true);
             content.setFocusableInTouchMode(true);
+            card.setCardBackgroundColor(Color.WHITE);
+
             RippleDrawable rippleDrawable = new RippleDrawableCompat(0x42ff0000,null,itemView.getContext());
             rippleDrawable.setStyle(RippleDrawable.Style.Over);
             rippleDrawable.setCallback(content);

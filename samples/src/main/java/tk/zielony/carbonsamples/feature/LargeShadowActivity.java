@@ -2,6 +2,7 @@ package tk.zielony.carbonsamples.feature;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -36,7 +37,7 @@ public class LargeShadowActivity extends Activity {
                 layoutParams.width = (int) ((float) valueAnimator.getAnimatedValue() * (getWindow().getDecorView().getWidth() - 100));
                 layoutParams.height = (int) ((float) valueAnimator.getAnimatedValue() * (getWindow().getDecorView().getHeight() - 100));
                 view.setLayoutParams(layoutParams);
-                ((View) view.getParent()).invalidate();
+                ((View) view.getParent()).postInvalidate();
             }
         });
         animator.start();

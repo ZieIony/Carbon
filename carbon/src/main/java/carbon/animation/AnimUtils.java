@@ -2,6 +2,8 @@ package carbon.animation;
 
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.internal.widget.ViewUtils;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -228,6 +230,7 @@ public class AnimUtils {
 
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
+                imageView.postInvalidate();
             }
         });
         animator.start();
@@ -256,6 +259,7 @@ public class AnimUtils {
 
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
+                imageView.postInvalidate();
             }
         });
         animator.start();

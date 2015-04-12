@@ -58,22 +58,24 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
     }
 
     public void onPress() {
-        pressed = true;
-        Rect bounds = getBounds();
-        to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
-        downTime = System.currentTimeMillis();
-        if (!useHotspot) {
-            hotspot.x = bounds.centerX();
-            hotspot.y = bounds.centerY();
+        if(!pressed) {
+            pressed = true;
+            Rect bounds = getBounds();
+            to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
+            downTime = System.currentTimeMillis();
+            if (!useHotspot) {
+                hotspot.x = bounds.centerX();
+                hotspot.y = bounds.centerY();
+            }
+            paint.setAntiAlias(Carbon.antiAlias);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(color);
+
+            radiusDuration = (long) (1000 * Math.sqrt(to / WAVE_TOUCH_DOWN_ACCELERATION * density) + 0.5);
+            opacityDuration = FADEIN_DURATION;
+
+            invalidateSelf();
         }
-        paint.setAntiAlias(Carbon.antiAlias);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(color);
-
-        radiusDuration = (long) (1000 * Math.sqrt(to / WAVE_TOUCH_DOWN_ACCELERATION * density) + 0.5);
-        opacityDuration = FADEIN_DURATION;
-
-        invalidateSelf();
     }
 
     public void onRelease() {

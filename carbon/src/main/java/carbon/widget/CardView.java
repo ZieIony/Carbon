@@ -43,7 +43,7 @@ public class CardView extends LinearLayout {
                 int padding = (int) a.getDimension(attr, 0);
                 setPadding(padding, padding, padding, padding);
             } else if (attr == R.styleable.CardView_carbon_cardCornerRadius) {
-                setCardCornerRadius(a.getDimension(attr, 0));
+                setCardCornerRadius((int) a.getDimension(attr, 0));
             }
         }
         a.recycle();
@@ -94,7 +94,7 @@ public class CardView extends LinearLayout {
         content.setBackgroundDrawable(background);
     }
 
-    public void setCardCornerRadius(float cornerRadius) {
+    public void setCardCornerRadius(int cornerRadius) {
         content.setCornerRadius(cornerRadius);
     }
 

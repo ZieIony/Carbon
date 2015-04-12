@@ -2,6 +2,7 @@ package tk.zielony.carbonsamples.feature;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -33,7 +34,7 @@ public class ShadowActivity extends Activity {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 ViewHelper.setTranslationX(view, (Float) animator.getAnimatedValue() - view.getWidth() / 2);
-                ((View) view.getParent()).invalidate();
+                ((View) view.getParent()).postInvalidate();
             }
         });
         animator.start();

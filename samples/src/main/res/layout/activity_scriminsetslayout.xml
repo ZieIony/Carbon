@@ -27,19 +27,25 @@
         android:layout_width="240dp"
         android:layout_height="match_parent">
 
-        <carbon.widget.ImageView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:src="@drawable/mazda"
-            android:scaleType="centerCrop"/>
+            android:layout_height="match_parent">
 
-        <carbon.widget.ListView
-            android:id="@+id/drawerList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"
-            android:background="?attr/carbon_colorBackground" />
+            <carbon.widget.ImageView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:src="@drawable/mazda"
+                android:scaleType="centerCrop" />
+
+            <carbon.widget.ListView
+                android:id="@+id/drawerList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:background="?attr/carbon_colorBackground" />
+        </LinearLayout>
     </carbon.widget.ScrimInsetsLayout>
 </carbon.widget.DrawerLayout>

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
+import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
 import tk.zielony.carbonsamples.feature.SaveStateActivity;
 import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.feature.StatusNavigationActivity;
@@ -30,13 +31,13 @@ public class FeaturesActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "Roboto", "Saving state", "Large shadow", "Animated shadow", "Status & navigation bars", "Text appearance", "Z order"
+                "Roboto", "Saving state", "Large shadow", "Animated shadow", "Status & navigation bars", "Text appearance", "Z order", "Rounded corners"
         };
         final Class[] activities = new Class[]{
-                RobotoActivity.class, SaveStateActivity.class, LargeShadowActivity.class, ShadowActivity.class, StatusNavigationActivity.class, TextAppearanceActivity.class, ZOrderActivity.class
+                RobotoActivity.class, SaveStateActivity.class, LargeShadowActivity.class, ShadowActivity.class, StatusNavigationActivity.class, TextAppearanceActivity.class, ZOrderActivity.class, RoundedCornersActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, true, false, false, false, false, false
+                false, true, false, false, false, false, false, false
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

@@ -1,6 +1,7 @@
 package carbon.beta;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -46,7 +47,7 @@ public class ValidatedEditText extends android.widget.FrameLayout {
                 if (validatelistener != null) {
                     isValid = validatelistener.onValidate(s.toString());
                     findViewById(R.id.error).setVisibility(isValid ? View.INVISIBLE : View.VISIBLE);
-                    invalidate();
+                    postInvalidate();
                 }
             }
 

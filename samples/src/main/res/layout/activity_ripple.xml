@@ -40,8 +40,6 @@
     <carbon.widget.ImageView
         app:carbon_elevation="0dp"
         android:clickable="true"
-        android:focusableInTouchMode="true"
-        android:focusable="true"
         app:carbon_cornerRadius="0dp"
         app:carbon_rippleStyle="over"
         app:carbon_rippleColor="#42ffffff"

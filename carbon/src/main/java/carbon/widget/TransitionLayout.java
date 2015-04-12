@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.view.MotionEvent;

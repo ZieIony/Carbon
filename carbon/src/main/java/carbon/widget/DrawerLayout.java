@@ -7,8 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
@@ -71,7 +73,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         Carbon.initInset(this, attrs, defStyleAttr);
-        setCornerRadius(a.getDimension(R.styleable.DrawerLayout_carbon_cornerRadius, 0));
+        setCornerRadius((int) a.getDimension(R.styleable.DrawerLayout_carbon_cornerRadius, 0));
 
         a.recycle();
 
@@ -98,6 +100,8 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         Collections.sort(views, new ElevationComparator());
 
         super.dispatchDraw(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
         if (insetColor != 0) {
             paint.setColor(insetColor);
             paint.setAlpha(255);
@@ -200,16 +204,18 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     // corners
     // -------------------------------
 
-    private float cornerRadius;
-    private Canvas textureCanvas;
+    private int cornerRadius;
+    private Path cornersMask;
+    private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
-    public float getCornerRadius() {
+    public int getCornerRadius() {
         return cornerRadius;
     }
 
-    public void setCornerRadius(float cornerRadius) {
+    public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
-        initDrawing();
+        if (cornerRadius > 0)
+            initCorners();
     }
 
     @Override
@@ -219,40 +225,35 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         if (!changed || getWidth() == 0 || getHeight() == 0)
             return;
 
-        initDrawing();
+        if (cornerRadius > 0)
+            initCorners();
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
-    private void initDrawing() {
-        if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
-            return;
-        Bitmap texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        textureCanvas = new Canvas(texture);
-        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+    private void initCorners() {
+        cornersMask = new Path();
+        cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
+        cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
     }
 
     @Override
     public void draw(Canvas canvas) {
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
-            textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            super.draw(textureCanvas);
+            int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
-            RectF rect = new RectF();
-            rect.bottom = getHeight();
-            rect.right = getWidth();
-            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
+            super.draw(canvas);
+
+            paint.setXfermode(pdMode);
+            canvas.drawPath(cornersMask, paint);
+
+            canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
         } else {
             super.draw(canvas);
         }
-    }
-
-    @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-            rippleDrawable.draw(canvas);
     }
 
 
@@ -547,7 +548,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
             if (insetBottom == INSET_NULL)
                 insetBottom = insets.bottom;
             insets.set(insetLeft, insetTop, insetRight, insetBottom);
-            ViewCompat.postInvalidateOnAnimation(this);
+            postInvalidate();
         }
         return super.fitSystemWindows(insets);
     }
@@ -564,7 +565,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         if (insetBottom == INSET_NULL)
             insetBottom = insets.getSystemWindowInsetBottom();
         insets = insets.replaceSystemWindowInsets(insetLeft, insetTop, insetRight, insetBottom);
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidate();
         return super.onApplyWindowInsets(insets);
     }
 }

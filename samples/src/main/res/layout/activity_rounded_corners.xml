@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.LinearLayout
+        app:carbon_cornerRadius="10dp"
+        android:orientation="vertical"
+        android:layout_width="200px"
+        android:layout_height="200px">
+
+        <tk.zielony.carbonsamples.applibrary.PicassoView
+            android:visibility="invisible"
+            app:carbon_inAnimation="none"
+            app:carbon_outAnimation="none"
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </carbon.widget.LinearLayout>
+</carbon.widget.LinearLayout>

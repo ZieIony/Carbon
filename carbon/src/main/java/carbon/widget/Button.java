@@ -6,7 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
@@ -83,7 +85,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         addStateAnimator(new ElevationStateAnimator(this));
-        setCornerRadius(a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
+        setCornerRadius((int) a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
 
         a.recycle();
     }
@@ -100,17 +102,19 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     // corners
     // -------------------------------
 
-    private float cornerRadius;
-    private Canvas textureCanvas;
-    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private int cornerRadius;
+    private Path cornersMask;
+    private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
-    public float getCornerRadius() {
+    public int getCornerRadius() {
         return cornerRadius;
     }
 
-    public void setCornerRadius(float cornerRadius) {
+    public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
-        initDrawing();
+        if (cornerRadius > 0)
+            initCorners();
     }
 
     @Override
@@ -120,32 +124,34 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         if (!changed || getWidth() == 0 || getHeight() == 0)
             return;
 
-        initDrawing();
+        if (cornerRadius > 0)
+            initCorners();
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
-    private void initDrawing() {
-        if (cornerRadius == 0 || getWidth() == 0 || getHeight() == 0)
-            return;
-        Bitmap texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        textureCanvas = new Canvas(texture);
-        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+    private void initCorners() {
+        cornersMask = new Path();
+        cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
+        cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
     }
 
     @Override
     public void draw(Canvas canvas) {
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
-            textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            super.draw(textureCanvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(textureCanvas);
+            int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
-            RectF rect = new RectF();
-            rect.bottom = getHeight();
-            rect.right = getWidth();
-            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
+            super.draw(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
+
+            paint.setXfermode(pdMode);
+            canvas.drawPath(cornersMask, paint);
+
+            canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
         } else {
             super.draw(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -175,7 +181,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
-            if(rippleDrawable.getStyle()== RippleDrawable.Style.Background)
+            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
@@ -333,7 +339,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if(rippleDrawable!=null&&rippleDrawable.getStyle()!= RippleDrawable.Style.Background)
+        if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
         if (stateAnimators != null)
             for (StateAnimator animator : stateAnimators)

@@ -59,7 +59,7 @@ public class ScrimInsetsLayout extends FrameLayout {
     protected boolean fitSystemWindows(Rect insets) {
         mInsets = new Rect(insets);
         setWillNotDraw(mInsetForeground == null);
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidate();
         if (mOnInsetsCallback != null) {
             mOnInsetsCallback.onInsetsChanged(insets);
         }
