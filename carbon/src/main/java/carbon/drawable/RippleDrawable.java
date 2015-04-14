@@ -10,8 +10,6 @@ import android.graphics.drawable.Drawable;
  */
 public interface RippleDrawable {
 
-    void setBackground(Drawable drawable);
-
     Drawable getBackground();
 
     public static enum Style {
@@ -31,8 +29,6 @@ public interface RippleDrawable {
     public int getOpacity();
 
     public Style getStyle();
-
-    public void setStyle(Style style);
 
     public boolean isHotspotEnabled();
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:carbon_insetColor="?attr/carbon_colorPrimary"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.RecentsList
+        android:padding="@dimen/carbon_padding"
+        android:id="@+id/recents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</carbon.widget.LinearLayout>

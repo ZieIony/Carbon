@@ -13,6 +13,7 @@ import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
 import tk.zielony.carbonsamples.widget.DialogActivity;
 import tk.zielony.carbonsamples.widget.ProgressBarsActivity;
+import tk.zielony.carbonsamples.widget.RecentsActivity;
 import tk.zielony.carbonsamples.widget.SVGActivity;
 import tk.zielony.carbonsamples.widget.SnackbarActivity;
 import tk.zielony.carbonsamples.widget.TabsActivity;
@@ -32,14 +33,14 @@ public class WidgetsActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "CheckBoxes & RadioButtons", "Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields", "Tabs"
+                "CheckBoxes & RadioButtons", "Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields", "Tabs","Recents"
         };
         final Class[] activities = new Class[]{
                 CheckBoxRadioActivity.class, ButtonsActivity.class, DialogActivity.class, CircularProgressActivity.class, ProgressBarsActivity.class,
-                SnackbarActivity.class, SVGActivity.class, TextFieldsActivity.class, TabsActivity.class
+                SnackbarActivity.class, SVGActivity.class, TextFieldsActivity.class, TabsActivity.class, RecentsActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, false, true, false, true, false, false, true, false
+                false, false, true, false, true, false, false, true, false,false
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

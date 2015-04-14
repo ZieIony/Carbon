@@ -52,13 +52,12 @@ public class Carbon {
 
             RippleDrawable rippleDrawable;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null);
+                rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null,style);
             } else {
-                rippleDrawable = new RippleDrawableCompat(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, view.getContext());
+                rippleDrawable = new RippleDrawableCompat(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, view.getContext(),style);
             }
             rippleDrawable.setCallback(view);
             rippleDrawable.setHotspotEnabled(useHotspot);
-            rippleDrawable.setStyle(style);
             rippleView.setRippleDrawable(rippleDrawable);
         }
 

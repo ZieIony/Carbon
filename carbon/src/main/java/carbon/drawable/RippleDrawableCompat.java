@@ -50,10 +50,11 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
     private boolean pressed, useHotspot = true;
     private RippleDrawable.Style style = RippleDrawable.Style.Background;
 
-    public RippleDrawableCompat(int color,Drawable background, Context context) {
+    public RippleDrawableCompat(int color,Drawable background, Context context,Style style) {
         this.color = color;
         this.alpha = (color >> 24) / 2;
         this.background = background;
+        this.style = style;
         density = context.getResources().getDisplayMetrics().density;
     }
 
@@ -182,10 +183,6 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
         return style;
     }
 
-    public void setStyle(RippleDrawable.Style style) {
-        this.style = style;
-    }
-
     public boolean isHotspotEnabled() {
         return useHotspot;
     }
@@ -210,10 +207,6 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
 
     public Drawable getBackground() {
         return background;
-    }
-
-    public void setBackground(Drawable background) {
-        this.background = background;
     }
 
     public PointF getHotspot() {

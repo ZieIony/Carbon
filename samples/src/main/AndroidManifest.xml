@@ -138,6 +138,10 @@
             android:name=".feature.RoundedCornersActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
+        <activity
+            android:name=".widget.RecentsActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".AnimationsActivity"

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:carbon_elevation="5dp"
+    app:carbon_cornerRadius="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="?attr/carbon_colorBackground"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight">
+
+        <ImageView
+            android:layout_width="@dimen/carbon_toolbarHeight"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:src="@drawable/ic_launcher"
+            android:padding="@dimen/carbon_padding" />
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_recentTitle"
+            android:textAppearance="?attr/carbon_textAppearance_title"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_toolbarHeight" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/carbon_recentContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</carbon.widget.LinearLayout>

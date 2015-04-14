@@ -2,8 +2,11 @@ package carbon.drawable;
 
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 
 /**
@@ -17,15 +20,11 @@ public class RippleDrawableLollipop extends android.graphics.drawable.RippleDraw
     private Style style;
     private boolean useHotspot;
 
-    public RippleDrawableLollipop(int color, Drawable background) {
-        super(ColorStateList.valueOf(color), background, new ColorDrawable(0xffffffff));
+    public RippleDrawableLollipop(int color, Drawable background, Style style) {
+        super(ColorStateList.valueOf(color), background, style == Style.Borderless ? null : new ColorDrawable(0xffffffff));
+        this.style = style;
         this.color = color;
         this.background = background;
-    }
-
-    @Override
-    public void setBackground(Drawable drawable) {
-
     }
 
     @Override
@@ -36,11 +35,6 @@ public class RippleDrawableLollipop extends android.graphics.drawable.RippleDraw
     @Override
     public Style getStyle() {
         return style;
-    }
-
-    @Override
-    public void setStyle(Style style) {
-        this.style = style;
     }
 
     @Override
@@ -57,4 +51,5 @@ public class RippleDrawableLollipop extends android.graphics.drawable.RippleDraw
     public int getColor() {
         return color;
     }
+
 }
