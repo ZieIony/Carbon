@@ -16,6 +16,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/fragment"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </carbon.widget.LinearLayout>
 
     <carbon.widget.ScrimInsetsLayout

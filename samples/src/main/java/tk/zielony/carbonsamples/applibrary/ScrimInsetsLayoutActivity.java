@@ -4,16 +4,21 @@ package tk.zielony.carbonsamples.applibrary;
  * Created by Marcin on 2015-03-30.
  */
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
-import carbon.widget.LinearLayout;
+import carbon.widget.FrameLayout;
 import carbon.widget.ListView;
 import carbon.widget.TextView;
 import carbon.widget.Toolbar;
@@ -25,7 +30,32 @@ public class ScrimInsetsLayoutActivity extends Activity {
     private static String[] fruits = new String[]{
             "Lime", "Lemon", "Orange", "Strawberry", "Blueberry", "Plum"
     };
+    private static int[] colors = new int[]{
+            0xffA5FF00, 0xffFFE900, 0xffFF9900, 0xffFF1000, 0xff6E00FF, 0xffCF60FF
+    };
     Toolbar toolbar;
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class FruitFragment extends Fragment {
+        private int color;
+
+        public FruitFragment() {
+
+        }
+
+        public FruitFragment(int color) {
+            this.color = color;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            FrameLayout layout = new FrameLayout(container.getContext());
+            layout.setBackgroundColor(color);
+            return layout;
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +103,7 @@ public class ScrimInsetsLayoutActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 setTitle(fruits[i]);
                 drawerLayout.closeDrawer(drawerMenu);
+                getFragmentManager().beginTransaction().disallowAddToBackStack().replace(R.id.fragment,new FruitFragment(colors[i])).commit();
             }
         });
     }

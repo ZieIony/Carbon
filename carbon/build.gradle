@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: 'maven-push.gradle'
+//apply from: 'maven-push.gradle'
 
 android {
     compileSdkVersion 22
@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 22
-        versionCode 31
-        versionName "0.7.2"
+        versionCode 32
+        versionName "0.7.3"
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
     }
