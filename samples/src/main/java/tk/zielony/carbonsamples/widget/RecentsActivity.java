@@ -1,6 +1,7 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -31,6 +32,16 @@ public class RecentsActivity extends Activity {
                 iv.setImageResource(R.drawable.mazda);
                 iv.setBackgroundColor(0xffffffff);
                 return iv;
+            }
+
+            @Override
+            public Drawable getIcon(int position) {
+                return getResources().getDrawable(R.drawable.ic_launcher);
+            }
+
+            @Override
+            public int getHeaderColor(int position) {
+                return 0xffffffff;
             }
 
             @Override

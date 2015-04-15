@@ -2,6 +2,9 @@ package carbon.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -68,9 +71,19 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
             View card = View.inflate(getContext(), R.layout.carbon_recent_card, null);
             TextView title = (TextView) card.findViewById(R.id.carbon_recentTitle);
             title.setText(adapter.getTitle(i));
+            android.widget.ImageView icon = (android.widget.ImageView) card.findViewById(R.id.carbon_recentIcon);
+            Drawable drawable = adapter.getIcon(i);
+            if (drawable == null) {
+                icon.setVisibility(View.GONE);
+            } else {
+                icon.setImageDrawable(drawable);
+            }
+            View header = card.findViewById(R.id.carbon_recentHeader);
+            header.setBackgroundColor(adapter.getHeaderColor(i));
             ViewGroup cardContent = (ViewGroup) card.findViewById(R.id.carbon_recentContent);
             cardContent.addView(adapter.getView(i));
-            card.setDrawingCacheEnabled(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                card.setLayerType(View.LAYER_TYPE_HARDWARE, null);
             addView(card);
         }
     }
@@ -80,9 +93,8 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
         int height = getHeight() - getPaddingTop() - getPaddingBottom();
         for (int i = 0; i < getChildCount(); i++) {
             float topSpace = height - width;
-            float maxScroll = getMaxScroll();
-            int y = (int) (topSpace * Math.pow(20, (i * width - scroll) / maxScroll));
-            float scale = y/topSpace/10+0.9f;
+            int y = (int) (topSpace * Math.pow(2, (i * width - scroll) / (float) width));
+            float scale = (float) (-Math.pow(2, -y / topSpace / 10.0f) + 19.0f / 10);
             ViewHelper.setTranslationX(getChildAt(i), getPaddingLeft());
             ViewHelper.setTranslationY(getChildAt(i), y + getPaddingTop());
             ViewHelper.setScaleX(getChildAt(i), scale);
