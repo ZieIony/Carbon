@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.2-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.2/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.3-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.3/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
@@ -38,11 +38,12 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - checkboxes and radiobuttons
  - DrawerLayout with real shadows
  - ScrimInsetsLayout
+ - Lollipop's recents list layout
 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.7.2'
+    compile 'tk.zielony:carbon:0.7.3'
     
 And these two lines to android/defaultConfig:
 
@@ -59,7 +60,7 @@ I have an old Galaxy S with Android 2.3, so I did that to support my own phone. 
 Seems like it's pretty stable. I'm testing it heavily on different devices and on real projects. There are minor problems with SVG rendering and shadow generation. Also the themes aren't perfect yet. These are the issues I know about. If you have something else, please let me know.
 
 ##### Are you using Lollipop's API on Lollipop devices?
-No. Maybe one day.
+Partially. On 5.+ Carbon uses Lollipop's native ripples. I'm working on having native shadows and rounded corners as well.
 
 ##### Are you thinking about uploading the library to Maven?
 Done!
@@ -101,6 +102,12 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+##### 0.7.3
+ - native ripples on 5.+,
+ - insets handling for all layouts,
+ - fixed bug with Fragment transactions,
+ - hardware accelerated rounded corners working for all versions of Android
+
 ##### 0.7.2
  - updated RippleDrawable to mimic the original one
  - added RippleDrawable comparison and a sample for ScrimInsetsLayout
