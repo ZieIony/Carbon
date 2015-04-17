@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
@@ -20,6 +21,7 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.view.WindowInsets;
 import android.view.animation.Transformation;
 
@@ -215,8 +217,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
     public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
-        if (cornerRadius > 0)
-            initCorners();
+        initCorners();
     }
 
     @Override
@@ -226,22 +227,37 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
         if (!changed || getWidth() == 0 || getHeight() == 0)
             return;
 
-        if (cornerRadius > 0)
-            initCorners();
+        initCorners();
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
     private void initCorners() {
-        cornersMask = new Path();
-        cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
-        cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+        if(cornerRadius>0) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+                cornersMask = new Path();
+                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+            }else{
+                setClipToOutline(true);
+                ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
+                    @Override
+                    public void getOutline(View view, Outline outline) {
+                        outline.setRoundRect(0,0,getWidth(),getHeight(),cornerRadius);
+                    }
+                };
+                setOutlineProvider(viewOutlineProvider);
+            }
+        }else{
+            setClipToOutline(false);
+            setOutlineProvider(null);
+        }
     }
 
     @Override
     public void draw(Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
