@@ -27,7 +27,7 @@ public class CardView extends LinearLayout {
     private void init(AttributeSet attrs, int defStyle) {
         content = new LinearLayout(getContext());
         content.setOrientation(VERTICAL);
-        super.addView(content,-1,generateDefaultLayoutParams());
+        super.addView(content, -1, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CardView, defStyle, 0);
         for (int i = 0; i < a.getIndexCount(); i++) {
