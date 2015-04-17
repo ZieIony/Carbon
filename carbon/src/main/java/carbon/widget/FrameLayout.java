@@ -3,8 +3,6 @@ package carbon.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Outline;
 import android.graphics.Paint;
@@ -14,10 +12,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -505,6 +501,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     int insetLeft = -1, insetTop = -1, insetRight = -1, insetBottom = -1;
     int insetColor;
+    private OnInsetsChangedListener onInsetsChangedListener;
 
     public int getInsetColor() {
         return insetColor;
@@ -565,6 +562,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
             if (insetBottom == INSET_NULL)
                 insetBottom = insets.bottom;
             insets.set(insetLeft, insetTop, insetRight, insetBottom);
+            if (onInsetsChangedListener != null)
+                onInsetsChangedListener.onInsetsChanged();
             postInvalidate();
         }
         return super.fitSystemWindows(insets);
@@ -582,7 +581,13 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         if (insetBottom == INSET_NULL)
             insetBottom = insets.getSystemWindowInsetBottom();
         insets = insets.replaceSystemWindowInsets(insetLeft, insetTop, insetRight, insetBottom);
+        if (onInsetsChangedListener != null)
+            onInsetsChangedListener.onInsetsChanged();
         postInvalidate();
         return super.onApplyWindowInsets(insets);
+    }
+
+    public void setOnInsetsListener(OnInsetsChangedListener onInsetsChangedListener) {
+        this.onInsetsChangedListener = onInsetsChangedListener;
     }
 }

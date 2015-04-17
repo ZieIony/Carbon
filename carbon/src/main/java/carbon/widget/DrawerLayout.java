@@ -504,6 +504,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
     int insetLeft = -1, insetTop = -1, insetRight = -1, insetBottom = -1;
     int insetColor;
+    private OnInsetsChangedListener onInsetsChangedListener;
 
     public int getInsetColor() {
         return insetColor;
@@ -564,6 +565,8 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
             if (insetBottom == INSET_NULL)
                 insetBottom = insets.bottom;
             insets.set(insetLeft, insetTop, insetRight, insetBottom);
+            if (onInsetsChangedListener != null)
+                onInsetsChangedListener.onInsetsChanged();
             postInvalidate();
         }
         return super.fitSystemWindows(insets);
@@ -581,7 +584,13 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         if (insetBottom == INSET_NULL)
             insetBottom = insets.getSystemWindowInsetBottom();
         insets = insets.replaceSystemWindowInsets(insetLeft, insetTop, insetRight, insetBottom);
+        if (onInsetsChangedListener != null)
+            onInsetsChangedListener.onInsetsChanged();
         postInvalidate();
         return super.onApplyWindowInsets(insets);
+    }
+
+    public void setOnInsetsListener(OnInsetsChangedListener onInsetsChangedListener) {
+        this.onInsetsChangedListener = onInsetsChangedListener;
     }
 }
