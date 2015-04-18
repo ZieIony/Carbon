@@ -6,10 +6,11 @@
     android:layout_height="match_parent">
 
     <carbon.widget.LinearLayout
+        android:layout_margin="@dimen/carbon_padding"
         app:carbon_cornerRadius="10dp"
         android:orientation="vertical"
-        android:layout_width="200px"
-        android:layout_height="200px">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <tk.zielony.carbonsamples.applibrary.PicassoView
             android:visibility="invisible"

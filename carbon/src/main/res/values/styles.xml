@@ -177,9 +177,13 @@
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
 
-        <item name="carbon_colorPrimary">#ff213C6B</item>
-        <item name="carbon_colorPrimaryDark">#ff162949</item>
-        <item name="carbon_colorAccent">#ff9ACE00</item>
+        <item name="colorPrimary">#ff213C6B</item>
+        <item name="colorPrimaryDark">#ff162949</item>
+        <item name="colorAccent">#ff9ACE00</item>
+
+        <item name="carbon_colorPrimary">?attr/colorPrimary</item>
+        <item name="carbon_colorPrimaryDark">?attr/colorPrimaryDark</item>
+        <item name="carbon_colorAccent">?attr/colorAccent</item>
         <item name="carbon_colorBackground">@color/carbon_background_dark</item>
         <item name="carbon_colorBackground_inverse">@color/carbon_background_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
@@ -250,9 +254,13 @@
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
 
-        <item name="carbon_colorPrimary">#ff213C6B</item>
-        <item name="carbon_colorPrimaryDark">#ff162949</item>
-        <item name="carbon_colorAccent">#ff9ACE00</item>
+        <item name="colorPrimary">#ff213C6B</item>
+        <item name="colorPrimaryDark">#ff162949</item>
+        <item name="colorAccent">#ff9ACE00</item>
+
+        <item name="carbon_colorPrimary">?attr/colorPrimary</item>
+        <item name="carbon_colorPrimaryDark">?attr/colorPrimaryDark</item>
+        <item name="carbon_colorAccent">?attr/colorAccent</item>
         <item name="carbon_colorBackground">@color/carbon_background_light</item>
         <item name="carbon_colorBackground_inverse">@color/carbon_background_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
