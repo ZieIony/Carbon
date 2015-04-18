@@ -230,12 +230,12 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
     private void initCorners() {
-        if(cornerRadius>0) {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (cornerRadius > 0) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || !isRect) {
                 cornersMask = new Path();
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            }else{
+            } else {
                 setClipToOutline(true);
                 ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
                     @Override
@@ -245,7 +245,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                 };
                 setOutlineProvider(viewOutlineProvider);
             }
-        }else{
+        } else {
             setClipToOutline(false);
             setOutlineProvider(null);
         }
@@ -253,7 +253,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     public void draw(Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || !isRect)) {
             int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
@@ -587,7 +587,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         return super.onApplyWindowInsets(insets);
     }
 
-    public void setOnInsetsListener(OnInsetsChangedListener onInsetsChangedListener) {
+    public void setOnInsetsChangedListener(OnInsetsChangedListener onInsetsChangedListener) {
         this.onInsetsChangedListener = onInsetsChangedListener;
     }
 }

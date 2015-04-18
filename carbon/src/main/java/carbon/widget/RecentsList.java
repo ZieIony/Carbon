@@ -3,7 +3,6 @@ package carbon.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.GestureDetector;

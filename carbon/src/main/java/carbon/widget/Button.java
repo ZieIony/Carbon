@@ -2,8 +2,6 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Outline;
 import android.graphics.Paint;
@@ -12,7 +10,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -133,12 +130,12 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     }
 
     private void initCorners() {
-        if(cornerRadius>0) {
+        if (cornerRadius > 0) {
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
                 cornersMask = new Path();
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            }else{
+            } else {
                 setClipToOutline(true);
                 ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
                     @Override
@@ -148,7 +145,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                 };
                 setOutlineProvider(viewOutlineProvider);
             }
-        }else{
+        } else {
             setClipToOutline(false);
             setOutlineProvider(null);
         }

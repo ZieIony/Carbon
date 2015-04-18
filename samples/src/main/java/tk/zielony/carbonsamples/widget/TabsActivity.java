@@ -30,7 +30,7 @@ public class TabsActivity extends Activity {
             }
 
             public View getView(int position, ViewPager pager) {
-                return new LinearLayout(pager.getContext());
+                return new CardView(pager.getContext());
             }
 
             @Override
@@ -49,8 +49,6 @@ public class TabsActivity extends Activity {
                 View view = getView(position, pager);
 
                 pager.addView(view);
-                int[] color = new int[]{0xff7fffff,0xff7f7fff,0xffff7f7f,0xffff7fff,0xffffff7f,0xff7f7f7f,0xff7fff7f};
-                view.setBackgroundColor(color[position]);
 
                 return view;
             }

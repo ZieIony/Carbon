@@ -2,8 +2,6 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Outline;
 import android.graphics.Paint;
@@ -12,10 +10,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -99,22 +95,22 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     }
 
     private void initCorners() {
-        if(cornerRadius>0) {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (cornerRadius > 0) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || !isRect) {
                 cornersMask = new Path();
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            }else{
+            } else {
                 setClipToOutline(true);
                 ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
                     @Override
                     public void getOutline(View view, Outline outline) {
-                        outline.setRoundRect(0,0,getWidth(),getHeight(),cornerRadius);
+                        outline.setRoundRect(0, 0, getWidth(), getHeight(), cornerRadius);
                     }
                 };
                 setOutlineProvider(viewOutlineProvider);
             }
-        }else{
+        } else {
             setClipToOutline(false);
             setOutlineProvider(null);
         }
@@ -122,7 +118,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     @Override
     public void draw(Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || !isRect)) {
             int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
@@ -164,7 +160,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
-            if(rippleDrawable.getStyle()== RippleDrawable.Style.Background)
+            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
@@ -322,7 +318,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if(rippleDrawable!=null&&rippleDrawable.getStyle()!= RippleDrawable.Style.Background)
+        if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
         if (stateAnimators != null)
             for (StateAnimator animator : stateAnimators)

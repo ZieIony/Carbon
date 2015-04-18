@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -137,7 +136,7 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
-            if(rippleDrawable.getStyle()== RippleDrawable.Style.Background)
+            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
@@ -244,7 +243,7 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if(rippleDrawable!=null&&rippleDrawable.getStyle()!= RippleDrawable.Style.Background)
+        if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
         if (stateAnimators != null)
             for (StateAnimator animator : stateAnimators)

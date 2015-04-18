@@ -8,8 +8,11 @@ import android.view.View;
  */
 public interface RecentsAdapter {
     String getTitle(int position);
+
     View getView(int position);
+
     Drawable getIcon(int position);
+
     int getHeaderColor(int position);
 
     int getCount();

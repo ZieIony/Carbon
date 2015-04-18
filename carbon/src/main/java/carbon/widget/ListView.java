@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,12 +46,12 @@ public class ListView extends android.widget.ListView {
         mTouchSlop = configuration.getScaledTouchSlop();
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ListView, defStyleAttr, 0);
-        for(int i=0;i<a.getIndexCount();i++){
+        for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if(attr==R.styleable.ListView_carbon_edgeEffectColor){
+            if (attr == R.styleable.ListView_carbon_edgeEffectColor) {
                 setEdgeEffectColor(a.getColor(attr, 0));
-            }else if(attr==R.styleable.ListView_carbon_overScroll){
-                setOverScrollMode(a.getInt(attr,OVER_SCROLL_ALWAYS));
+            } else if (attr == R.styleable.ListView_carbon_overScroll) {
+                setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
             }
         }
         a.recycle();
@@ -244,7 +243,7 @@ public class ListView extends android.widget.ListView {
         }
         try {
             super.setOverScrollMode(OVER_SCROLL_NEVER);
-        }catch (Exception e){
+        } catch (Exception e) {
             // Froyo
         }
         this.overscrollMode = mode;

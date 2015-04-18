@@ -12,7 +12,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextWatcher;

@@ -5,15 +5,18 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 
@@ -74,9 +77,7 @@ public class PagerTabStrip extends HorizontalScrollView {
                 });
                 animator2.start();
 
-                content.getChildAt(selectedPage).setSelected(false);
-                selectedPage = position;
-                content.getChildAt(selectedPage).setSelected(true);
+                setSelectedPage(position);
 
                 if (content.getChildAt(selectedPage).getLeft() - getScrollX() < 0) {
                     smoothScrollTo(content.getChildAt(selectedPage).getLeft(), 0);
@@ -217,4 +218,99 @@ public class PagerTabStrip extends HorizontalScrollView {
         this.tabBuilder = tabBuilder;
         initTabs();
     }
+
+    public void setSelectedPage(int position) {
+        content.getChildAt(selectedPage).setSelected(false);
+        selectedPage = position;
+        content.getChildAt(selectedPage).setSelected(true);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        return new SavedState(superState, selectedPage, getScrollX(), indicatorPos, indicatorPos2);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        final SavedState savedState = (SavedState) state;
+        super.onRestoreInstanceState(savedState.getSuperState());
+        setSelectedPage(savedState.getSelectedPage());
+        indicatorPos = savedState.getIndicatorPos();
+        indicatorPos2 = savedState.getIndicatorPos2();
+        post(new Runnable() {
+            public void run() {
+                ViewHelper.setScrollX(PagerTabStrip.this, savedState.getScroll());
+            }
+        });
+    }
+
+    @Override
+    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+        super.dispatchFreezeSelfOnly(container);
+    }
+
+    @Override
+    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+        super.dispatchThawSelfOnly(container);
+    }
+
+    protected static class SavedState extends BaseSavedState {
+        private final int selectedPage;
+        private final int scroll;
+        private final float indicatorPos;
+        private final float indicatorPos2;
+
+        private SavedState(Parcelable superState, int selectedPage, int scrollX, float indicatorPos, float indicatorPos2) {
+            super(superState);
+            this.selectedPage = selectedPage;
+            this.scroll = scrollX;
+            this.indicatorPos = indicatorPos;
+            this.indicatorPos2 = indicatorPos2;
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            selectedPage = in.readInt();
+            scroll = in.readInt();
+            indicatorPos = in.readFloat();
+            indicatorPos2 = in.readFloat();
+        }
+
+        public int getSelectedPage() {
+            return selectedPage;
+        }
+
+        public int getScroll() {
+            return scroll;
+        }
+
+        public float getIndicatorPos() {
+            return indicatorPos;
+        }
+
+        public float getIndicatorPos2() {
+            return indicatorPos2;
+        }
+
+        @Override
+        public void writeToParcel(Parcel destination, int flags) {
+            super.writeToParcel(destination, flags);
+            destination.writeInt(selectedPage);
+            destination.writeInt(scroll);
+            destination.writeFloat(indicatorPos);
+            destination.writeFloat(indicatorPos2);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+    }
+
 }
