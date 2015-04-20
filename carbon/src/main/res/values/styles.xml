@@ -333,7 +333,6 @@
     </style>
 
     <style name="carbon_FloatingActionButton">
-        <item name="carbon_cornerRadius">28dp</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_filterColor">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">pop</item>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.Button
+        android:layout_gravity="right|bottom"
+        android:layout_margin="@dimen/carbon_padding"
+        android:id="@+id/button"
+        android:text="press me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <carbon.widget.LinearLayout
+        android:visibility="invisible"
+        app:carbon_inAnimation="fly"
+        app:carbon_outAnimation="fly"
+        android:id="@+id/powerMenu"
+        android:background="#ffffffff"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        app:carbon_cornerRadius="2dp"
+        app:carbon_elevation="@dimen/carbon_elevationMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.TransitionLayout
+            android:id="@+id/transition"
+            android:layout_width="250dp"
+            android:layout_height="280dp">
+
+            <include
+                layout="@layout/screen_powermenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <include
+                layout="@layout/screen_poweroff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </carbon.widget.TransitionLayout>
+    </carbon.widget.LinearLayout>
+</carbon.widget.FrameLayout>

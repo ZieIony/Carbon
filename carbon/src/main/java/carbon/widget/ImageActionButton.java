@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
 import carbon.R;
@@ -28,6 +29,19 @@ public class ImageActionButton extends ImageView {
         setClickable(true);
         setRect(false);
         addStateAnimator(new ElevationStateAnimator(this));
+
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageActionButton, defStyleAttr, 0);
+        if (a != null) {
+            setCornerRadius((int) a.getDimension(R.styleable.ImageActionButton_carbon_cornerRadius, -1));
+            a.recycle();
+        }
     }
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        if (getCornerRadius() < 0)
+            setCornerRadius(Math.min(getWidth(), getHeight()) / 2);
+    }
 }

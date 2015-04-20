@@ -36,13 +36,13 @@ public class MainActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "Animations", "Apps & Libraries", "Features", "Widgets"
+                "Animations", "Apps & Libraries", "Features", "Widgets", "Demos"
         };
         final Class[] activities = new Class[]{
-                AnimationsActivity.class, AppsLibrariesActivity.class, FeaturesActivity.class, WidgetsActivity.class
+                AnimationsActivity.class, AppsLibrariesActivity.class, FeaturesActivity.class, WidgetsActivity.class, DemosActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, false, false, false
+                false, false, false, false, false
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

@@ -2,8 +2,6 @@ package carbon.animation;
 
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.internal.widget.ViewUtils;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -13,6 +11,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
+import carbon.R;
 import carbon.widget.ProgressBar;
 
 /**
@@ -74,6 +73,8 @@ public class AnimUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
+                if (view.getParent() != null)
+                    ((View) view.getParent()).postInvalidate();
             }
         });
         animator.start();
@@ -90,6 +91,8 @@ public class AnimUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
+                if (view.getParent() != null)
+                    ((View) view.getParent()).postInvalidate();
             }
         });
         animator.start();
@@ -110,6 +113,8 @@ public class AnimUtils {
                 ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
                 ViewHelper.setScaleX(view, (Float) valueAnimator.getAnimatedValue());
                 ViewHelper.setScaleY(view, (Float) valueAnimator.getAnimatedValue());
+                if (view.getParent() != null)
+                    ((View) view.getParent()).postInvalidate();
             }
         });
         animator.start();
@@ -128,6 +133,8 @@ public class AnimUtils {
                 ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
                 ViewHelper.setScaleX(view, (Float) valueAnimator.getAnimatedValue());
                 ViewHelper.setScaleY(view, (Float) valueAnimator.getAnimatedValue());
+                if (view.getParent() != null)
+                    ((View) view.getParent()).postInvalidate();
             }
         });
         animator.start();
@@ -146,7 +153,9 @@ public class AnimUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
-                ViewHelper.setTranslationY(view, view.getHeight() / 2.0f * (1 - (Float) valueAnimator.getAnimatedValue()));
+                ViewHelper.setTranslationY(view, Math.min(view.getHeight()/2,view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
+                if (view.getParent() != null)
+                    ((View) view.getParent()).postInvalidate();
             }
         });
         animator.start();
@@ -163,7 +172,9 @@ public class AnimUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
-                ViewHelper.setTranslationY(view, view.getHeight() / 2.0f * (1 - (Float) valueAnimator.getAnimatedValue()));
+                ViewHelper.setTranslationY(view, Math.min(view.getHeight()/2,view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
+                if (view.getParent() != null)
+                    ((View) view.getParent()).postInvalidate();
             }
         });
         animator.start();
@@ -230,7 +241,8 @@ public class AnimUtils {
 
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
-                imageView.postInvalidate();
+                if (imageView.getParent() != null)
+                    ((View) imageView.getParent()).postInvalidate();
             }
         });
         animator.start();
@@ -259,7 +271,8 @@ public class AnimUtils {
 
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
-                imageView.postInvalidate();
+                if (imageView.getParent() != null)
+                    ((View) imageView.getParent()).postInvalidate();
             }
         });
         animator.start();

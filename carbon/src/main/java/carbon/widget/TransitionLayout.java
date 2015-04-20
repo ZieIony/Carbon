@@ -184,4 +184,9 @@ public class TransitionLayout extends android.widget.FrameLayout {
     public void setListener(Animator.AnimatorListener listener) {
         this.listener = listener;
     }
+
+    public void setCurrentChild(int index){
+        currentIndex = index;
+        postInvalidate();
+    }
 }

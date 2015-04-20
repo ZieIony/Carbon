@@ -96,11 +96,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     private void initCorners() {
         if (cornerRadius > 0) {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || !isRect) {
-                cornersMask = new Path();
-                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
-                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP&&isRect)  {
                 setClipToOutline(true);
                 ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
                     @Override
@@ -109,8 +105,12 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
                     }
                 };
                 setOutlineProvider(viewOutlineProvider);
+            } else {
+                cornersMask = new Path();
+                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setClipToOutline(false);
             setOutlineProvider(null);
         }

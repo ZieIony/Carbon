@@ -21,6 +21,7 @@
     <dimen name="carbon_elevationMax">8dp</dimen>
 
     <dimen name="carbon_fabSize">56dp</dimen>
+    <dimen name="carbon_smallFabSize">40dp</dimen>
     <dimen name="carbon_translation">2dp</dimen>
     <dimen name="carbon_1dip">1dp</dimen>
 

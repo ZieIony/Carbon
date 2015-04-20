@@ -1,9 +1,9 @@
 package carbon.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -17,9 +17,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.WindowInsets;
-import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -136,11 +135,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                 paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
 
                 float[] childLocation = new float[]{(child.getLeft() + child.getRight()) / 2, (child.getTop() + child.getBottom()) / 2};
-                if (child.getAnimation() != null) {
-                    Transformation t = new Transformation();
-                    child.getAnimation().getTransformation(drawingTime, t);
-                    t.getMatrix().mapPoints(childLocation);
-                }
+                Matrix matrix = carbon.internal.ViewHelper.getMatrix(child);
+                matrix.mapPoints(childLocation);
 
                 int[] location = new int[2];
                 getLocationOnScreen(location);
@@ -157,11 +153,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                 canvas.translate(
                         child.getLeft(),
                         child.getTop());
-                if (Build.VERSION.SDK_INT >= 11) {
-                    canvas.concat(child.getMatrix());
-                } else {
-                    canvas.concat(carbon.internal.ViewHelper.getMatrix(child));
-                }
+
+                canvas.concat(matrix);
                 canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
                 shadow.draw(canvas, child, paint);
                 canvas.restoreToCount(saveCount);
@@ -231,11 +224,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     private void initCorners() {
         if (cornerRadius > 0) {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || !isRect) {
-                cornersMask = new Path();
-                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
-                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isRect) {
                 setClipToOutline(true);
                 ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
                     @Override
@@ -244,8 +233,12 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                     }
                 };
                 setOutlineProvider(viewOutlineProvider);
+            } else {
+                cornersMask = new Path();
+                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setClipToOutline(false);
             setOutlineProvider(null);
         }
@@ -552,42 +545,62 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     protected boolean fitSystemWindows(Rect insets) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH) {
-            if (insetLeft == INSET_NULL)
-                insetLeft = insets.left;
-            if (insetTop == INSET_NULL)
-                insetTop = insets.top;
-            if (insetRight == INSET_NULL)
-                insetRight = insets.right;
-            if (insetBottom == INSET_NULL)
-                insetBottom = insets.bottom;
-            insets.set(insetLeft, insetTop, insetRight, insetBottom);
-            if (onInsetsChangedListener != null)
-                onInsetsChangedListener.onInsetsChanged();
-            postInvalidate();
-        }
-        return super.fitSystemWindows(insets);
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
-    @Override
-    public final WindowInsets onApplyWindowInsets(WindowInsets insets) {
         if (insetLeft == INSET_NULL)
-            insetLeft = insets.getSystemWindowInsetLeft();
+            insetLeft = insets.left;
         if (insetTop == INSET_NULL)
-            insetTop = insets.getSystemWindowInsetTop();
+            insetTop = insets.top;
         if (insetRight == INSET_NULL)
-            insetRight = insets.getSystemWindowInsetRight();
+            insetRight = insets.right;
         if (insetBottom == INSET_NULL)
-            insetBottom = insets.getSystemWindowInsetBottom();
-        insets = insets.replaceSystemWindowInsets(insetLeft, insetTop, insetRight, insetBottom);
+            insetBottom = insets.bottom;
+        insets.set(insetLeft, insetTop, insetRight, insetBottom);
         if (onInsetsChangedListener != null)
             onInsetsChangedListener.onInsetsChanged();
         postInvalidate();
-        return super.onApplyWindowInsets(insets);
+        return super.fitSystemWindows(insets);
     }
 
     public void setOnInsetsChangedListener(OnInsetsChangedListener onInsetsChangedListener) {
         this.onInsetsChangedListener = onInsetsChangedListener;
     }
+
+
+    // -------------------------------
+    // ViewGroup utils
+    // -------------------------------
+
+    public List<View> findViewsById(int id) {
+        List<View> result = new ArrayList<>();
+        List<ViewGroup> groups = new ArrayList<>();
+        groups.add(this);
+        while (!groups.isEmpty()) {
+            ViewGroup group = groups.remove(0);
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (child.getId() == id)
+                    result.add(child);
+                if (child instanceof ViewGroup)
+                    groups.add((ViewGroup) child);
+            }
+        }
+        return result;
+    }
+
+    public List<View> findViewsWithTag(Object tag) {
+        List<View> result = new ArrayList<>();
+        List<ViewGroup> groups = new ArrayList<>();
+        groups.add(this);
+        while (!groups.isEmpty()) {
+            ViewGroup group = groups.remove(0);
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (tag.equals(child.getTag()))
+                    result.add(child);
+                if (child instanceof ViewGroup)
+                    groups.add((ViewGroup) child);
+            }
+        }
+        return result;
+    }
+
 }
