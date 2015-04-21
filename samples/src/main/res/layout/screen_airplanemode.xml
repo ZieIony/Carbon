@@ -2,7 +2,7 @@
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="#D32F2F"
+    android:background="#388E3C"
     android:layout_gravity="center"
     android:orientation="vertical"
     android:layout_height="match_parent">
@@ -35,7 +35,7 @@
                 app:carbon_inAnimation="fly"
                 android:id="@+id/powerOff"
                 android:layout_toRightOf="@id/progress"
-                android:text="Power Off"
+                android:text="Airplane Mode"
                 android:textAppearance="?attr/carbon_textAppearance_title_inverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -45,7 +45,7 @@
                 app:carbon_inAnimation="fly"
                 android:layout_toRightOf="@id/progress"
                 android:layout_below="@id/powerOff"
-                android:text="Shutting down..."
+                android:text="Switching Mode..."
                 android:textAppearance="?attr/carbon_textAppearance_caption_inverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

@@ -125,7 +125,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         if (!child.isShown())
             return super.drawChild(canvas, child, drawingTime);
 
-        if (!isInEditMode() && child instanceof ShadowView) {
+        if (!isInEditMode() && child instanceof ShadowView&&child.getWidth()>0&&child.getHeight()>0) {
             ShadowView shadowView = (ShadowView) child;
             float elevation = shadowView.getElevation() + shadowView.getTranslationZ();
             if (elevation >= 0.01f) {

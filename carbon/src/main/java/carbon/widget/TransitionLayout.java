@@ -1,17 +1,18 @@
 package carbon.widget;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.nineoldandroids.animation.Animator;
@@ -25,18 +26,19 @@ import carbon.animation.AnimUtils;
  * Created by Marcin on 2014-12-04.
  */
 public class TransitionLayout extends android.widget.FrameLayout {
-    private static final int DEFAULT_DURATION = 600;
+    public static final int DEFAULT_DURATION = 500;
     float radius = 0;
     float x, y;
     private Animator.AnimatorListener listener;
     private Animator.AnimatorListener internalListener;
-    Paint paint = new Paint();
-    private Bitmap texture;
-    private Canvas textureCanvas;
+    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private ValueAnimator animator;
     private TransitionType currentTransition;
-    private int currentIndex = 0;
+    private int currentIndex = 0, nextIndex = 0;
     private boolean inAnimation;
+
+    Path radialMask;
+    private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
     public static enum TransitionType {
         Radial, Fade
@@ -56,16 +58,18 @@ public class TransitionLayout extends android.widget.FrameLayout {
     }
 
     private void init(AttributeSet attrs) {
-        paint.setAntiAlias(true);
+        paint.setColor(0xffffffff);
 
         internalListener = new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animator) {
-                currentIndex++;
-                currentIndex %= getChildCount();
+                currentIndex = nextIndex;
                 currentTransition = null;
             }
         };
+
+        radialMask = new Path();
+        radialMask.setFillType(Path.FillType.INVERSE_WINDING);
 
         setClipChildren(false);
     }
@@ -84,15 +88,20 @@ public class TransitionLayout extends android.widget.FrameLayout {
         this.y = location[1] - location2[1] + view.getHeight() / 2;
     }
 
-    public void startTransition(TransitionType transitionType) {
-        startTransition(transitionType, true, DEFAULT_DURATION);
+    public void startTransition(int toChild) {
+        startTransition(toChild, TransitionType.Radial, DEFAULT_DURATION, true);
     }
 
-    public void startTransition(TransitionType transitionType, boolean in) {
-        startTransition(transitionType, in, DEFAULT_DURATION);
+    public void startTransition(int toChild, TransitionType transitionType) {
+        startTransition(toChild, transitionType, DEFAULT_DURATION, true);
     }
 
-    public void startTransition(TransitionType transitionType, boolean in, int duration) {
+    public void startTransition(int toChild, TransitionType transitionType, int duration) {
+        startTransition(toChild, transitionType, duration, true);
+    }
+
+    public void startTransition(int toChild, TransitionType transitionType, int duration, boolean in) {
+        nextIndex = toChild;
         inAnimation = in;
         currentTransition = transitionType;
         switch (transitionType) {
@@ -112,7 +121,7 @@ public class TransitionLayout extends android.widget.FrameLayout {
         dist = Math.max(dist, FloatMath.sqrt((getWidth() - x) * (getWidth() - x) + (getHeight() - y) * (getHeight() - y)));
         animator = ValueAnimator.ofFloat(inAnimation ? 0 : dist, inAnimation ? dist : 0);
         animator.setDuration(duration);
-        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setInterpolator(inAnimation ? new AccelerateInterpolator() : new DecelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -123,11 +132,6 @@ public class TransitionLayout extends android.widget.FrameLayout {
         animator.addListener(internalListener);
         if (listener != null)
             animator.addListener(listener);
-
-        texture = null;
-        texture = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        textureCanvas = new Canvas(texture);
-        paint.setShader(new BitmapShader(texture, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
 
         animator.start();
     }
@@ -153,22 +157,25 @@ public class TransitionLayout extends android.widget.FrameLayout {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        if (currentTransition == TransitionType.Radial && textureCanvas != null) {
-            int bottomView = inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
-            int topView = !inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
+        int bottomView = inAnimation ? currentIndex : nextIndex;
+        int topView = !inAnimation ? currentIndex : nextIndex;
 
+        if (currentTransition == TransitionType.Radial) {
             drawChild(canvas, getChildAt(bottomView), getDrawingTime());
-            textureCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-            getChildAt(topView).draw(textureCanvas);
 
-            RectF rect = new RectF();
-            rect.bottom = getHeight();
-            rect.right = getWidth();
-            canvas.drawCircle(x, y, radius, paint);
+            int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
+
+            drawChild(canvas, getChildAt(topView), getDrawingTime());
+
+            paint.setXfermode(pdMode);
+            radialMask.reset();
+            radialMask.addCircle(x,y,Math.max(radius,1), Path.Direction.CW);
+            canvas.drawPath(radialMask,paint);
+
+            canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
         } else if (currentTransition == TransitionType.Fade) {
-            int bottomView = inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
-            int topView = !inAnimation ? currentIndex : (currentIndex + 1) % getChildCount();
-
             drawChild(canvas, getChildAt(bottomView), getDrawingTime());
             drawChild(canvas, getChildAt(topView), getDrawingTime());
         } else {
@@ -185,7 +192,11 @@ public class TransitionLayout extends android.widget.FrameLayout {
         this.listener = listener;
     }
 
-    public void setCurrentChild(int index){
+    public int getCurrentChild() {
+        return currentIndex;
+    }
+
+    public void setCurrentChild(int index) {
         currentIndex = index;
         postInvalidate();
     }

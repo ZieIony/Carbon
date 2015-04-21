@@ -51,10 +51,10 @@ public class CalculatorActivity extends Activity {
                         @Override
                         public void onAnimationEnd(Animator animator) {
                             transitionLayout.setListener(null);
-                            transitionLayout.startTransition(TransitionLayout.TransitionType.Radial, false);
+                            transitionLayout.startTransition(1,TransitionLayout.TransitionType.Radial, TransitionLayout.DEFAULT_DURATION,false);
                         }
                     });
-                    transitionLayout.startTransition(TransitionLayout.TransitionType.Fade, true);
+                    transitionLayout.startTransition(0,TransitionLayout.TransitionType.Fade,  TransitionLayout.DEFAULT_DURATION,true);
                 }
                 number = number / 10;
                 display.setText("" + number);

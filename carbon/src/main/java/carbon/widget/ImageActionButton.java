@@ -26,7 +26,6 @@ public class ImageActionButton extends ImageView {
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        setClickable(true);
         setRect(false);
         addStateAnimator(new ElevationStateAnimator(this));
 

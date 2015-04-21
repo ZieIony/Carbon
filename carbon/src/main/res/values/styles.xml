@@ -333,6 +333,7 @@
     </style>
 
     <style name="carbon_FloatingActionButton">
+        <item name="android:clickable">true</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_filterColor">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">pop</item>

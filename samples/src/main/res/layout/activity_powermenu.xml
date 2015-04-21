@@ -14,6 +14,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <carbon.widget.TextView
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_gravity="center"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:textAppearance="?attr/carbon_textAppearance_body1"
+        android:text="This demo shows an implementation of the 'Advanced Power Menu Concept Android Lollipop' project by Igor Silva.\n\nhttps://dribbble.com/shots/1939117-Advanced-Power-Menu-Concept-Android-Lollipop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <carbon.widget.LinearLayout
         android:visibility="invisible"
         app:carbon_inAnimation="fly"
@@ -39,6 +49,16 @@
 
             <include
                 layout="@layout/screen_poweroff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <include
+                layout="@layout/screen_reboot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <include
+                layout="@layout/screen_airplanemode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </carbon.widget.TransitionLayout>
