@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.Region;
 import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.view.MotionEvent;
@@ -161,17 +162,22 @@ public class TransitionLayout extends android.widget.FrameLayout {
         int topView = !inAnimation ? currentIndex : nextIndex;
 
         if (currentTransition == TransitionType.Radial) {
+            int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG);
+            float r = (float) (radius / Math.sqrt(2));
+            canvas.clipRect(x - r, y - r, x + r, y + r, Region.Op.DIFFERENCE);
             drawChild(canvas, getChildAt(bottomView), getDrawingTime());
+            canvas.restoreToCount(saveCount);
 
             int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
+            saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
+            canvas.clipRect(x - radius, y - radius, x + radius, y + radius);
             drawChild(canvas, getChildAt(topView), getDrawingTime());
 
             paint.setXfermode(pdMode);
             radialMask.reset();
-            radialMask.addCircle(x,y,Math.max(radius,1), Path.Direction.CW);
-            canvas.drawPath(radialMask,paint);
+            radialMask.addCircle(x, y, Math.max(radius, 1), Path.Direction.CW);
+            canvas.drawPath(radialMask, paint);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);

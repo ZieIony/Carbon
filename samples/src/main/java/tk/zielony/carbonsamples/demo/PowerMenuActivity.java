@@ -21,13 +21,14 @@ import tk.zielony.carbonsamples.R;
  */
 public class PowerMenuActivity extends Activity {
     boolean vibration = false, volume = true, airplaneMode = false;
+    View powerMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_powermenu);
 
-        final View powerMenu = findViewById(R.id.powerMenu);
+        powerMenu = findViewById(R.id.powerMenu);
         final TransitionLayout transitionLayout = (TransitionLayout) findViewById(R.id.transition);
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
@@ -191,5 +192,14 @@ public class PowerMenuActivity extends Activity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(powerMenu.getVisibility()==View.VISIBLE){
+            powerMenu.setVisibility(View.INVISIBLE);
+            return;
+        }
+        super.onBackPressed();
     }
 }

@@ -73,6 +73,11 @@
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
     </style>
 
+    <style name="carbon_Theme.Dark.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="carbon_Theme.Light" parent="android:Theme.Light.NoTitleBar">
         <item name="carbon_colorError">#ffF44336</item>
         <item name="carbon_debugMode">false</item>
@@ -143,6 +148,11 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
+    </style>
+
+    <style name="carbon_Theme.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="carbon_Theme.AppCompat.Dark" parent="Theme.AppCompat">
@@ -222,6 +232,11 @@
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
     </style>
 
+    <style name="carbon_Theme.AppCompat.Dark.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="carbon_Theme.AppCompat.Light" parent="Theme.AppCompat.Light">
         <item name="carbon_colorError">#ffF44336</item>
         <item name="carbon_debugMode">false</item>
@@ -296,6 +311,11 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
+    </style>
+
+    <style name="carbon_Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="carbon_Button" parent="@android:style/Widget.Button">

@@ -22,7 +22,7 @@ public class ShadowGenerator {
     private static boolean software = false;
 
     private static void blur(Bitmap bitmap, float radius) {
-        radius = Math.max(0,Math.min(radius,25));
+        radius = Math.max(0, Math.min(radius, 25));
         if (software) {
             blurSoftware(bitmap, radius);
         } else {
@@ -110,6 +110,7 @@ public class ShadowGenerator {
             paint.setColorFilter(lightingColorFilter);
 
             if (view.getDrawingCache() != null) {
+                shadowCanvas.scale(1 / SHADOW_SCALE, 1 / SHADOW_SCALE, e, e);
                 shadowCanvas.drawBitmap(view.getDrawingCache(), e, e, paint);
             } else {
                 Bitmap cache = Bitmap.createBitmap((int) (view.getWidth() / ShadowGenerator.SHADOW_SCALE), (int) (view.getHeight() / ShadowGenerator.SHADOW_SCALE), Bitmap.Config.ARGB_8888);
