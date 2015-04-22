@@ -1,11 +1,12 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.3-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.3/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.4-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.4/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
 ================
 Material Design implementation for Android 2.1 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
 
+![Power menu demo](https://github.com/ZieIony/Carbon/blob/master/images/powermenu.png)
 ![Circular progress indicators](https://github.com/ZieIony/Carbon/blob/master/images/progress.png)
 ![Text appearances](https://github.com/ZieIony/Carbon/blob/master/images/textappearances.png)
 ![Calculator](https://github.com/ZieIony/Carbon/blob/master/images/calculator.png)
@@ -102,6 +103,14 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+##### 0.7.4
+ - clipToOutline on 5.+,
+ - added Power Menu demo,
+ - added OnInsetsChangedListener,
+ - remapped basic material colors in AppCompat theme,
+ - rewrote radial transitions,
+ - fixed bugs
+
 ##### 0.7.3
  - native ripples on 5.+,
  - insets handling for all layouts,
