@@ -43,12 +43,13 @@ import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
+import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2015-04-01.
  */
-public class DrawerLayout extends android.support.v4.widget.DrawerLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView {
+public class DrawerLayout extends android.support.v4.widget.DrawerLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView,CornerView {
     private boolean debugMode;
 
     public DrawerLayout(Context context) {
@@ -85,6 +86,9 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
+
+        if (getBackground() == null)
+            super.setBackgroundDrawable(emptyBackground);
     }
 
 
@@ -124,7 +128,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         if (!child.isShown())
             return super.drawChild(canvas, child, drawingTime);
 
-        if (!isInEditMode() && child instanceof ShadowView&&child.getWidth()>0&&child.getHeight()>0) {
+        if (!isInEditMode() && child instanceof ShadowView && child.getWidth() > 0 && child.getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             ShadowView shadowView = (ShadowView) child;
             float elevation = shadowView.getElevation() + shadowView.getTranslationZ();
             if (elevation >= 0.01f) {
@@ -134,7 +138,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
                     shadows.put(child, shadow);
                 }
 
-                paint.setAlpha((int) (127 * ViewHelper.getAlpha(child)));
+                paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
 
                 float[] childLocation = new float[]{(child.getLeft() + child.getRight()) / 2, (child.getTop() + child.getBottom()) / 2};
                 Matrix matrix = carbon.internal.ViewHelper.getMatrix(child);
@@ -226,29 +230,23 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
     private void initCorners() {
         if (cornerRadius > 0) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP&&isRect)  {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setClipToOutline(true);
-                ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
-                    @Override
-                    public void getOutline(View view, Outline outline) {
-                        outline.setRoundRect(0, 0, getWidth(), getHeight(), cornerRadius);
-                    }
-                };
-                setOutlineProvider(viewOutlineProvider);
+                setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setClipToOutline(false);
-            setOutlineProvider(null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
 
     @Override
     public void draw(Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || !isRect)) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
@@ -339,7 +337,6 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
     private float elevation = 0;
     private float translationZ = 0;
-    private boolean isRect = true;
 
     @Override
     public float getElevation() {
@@ -349,6 +346,8 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     public synchronized void setElevation(float elevation) {
         if (elevation == this.elevation)
             return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(elevation);
         this.elevation = elevation;
         if (getParent() != null)
             ((View) getParent()).postInvalidate();
@@ -362,19 +361,20 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     public synchronized void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
         if (getParent() != null)
             ((View) getParent()).postInvalidate();
     }
 
     @Override
-    public boolean isRect() {
-        return isRect;
-    }
-
-    @Override
-    public void setRect(boolean rect) {
-        this.isRect = rect;
+    public ShadowShape getShadowShape() {
+        if (cornerRadius == getWidth() / 2 && getWidth() == getHeight())
+            return ShadowShape.CIRCLE;
+        if (cornerRadius > 0)
+            return ShadowShape.ROUND_RECT;
+        return ShadowShape.RECT;
     }
 
     @Override

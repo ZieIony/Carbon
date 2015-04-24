@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 
 import carbon.R;
 import carbon.animation.ElevationStateAnimator;
+import carbon.shadow.ShadowShape;
 
 /**
  * Created by Marcin on 2014-12-04.
@@ -26,7 +27,6 @@ public class ImageActionButton extends ImageView {
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        setRect(false);
         addStateAnimator(new ElevationStateAnimator(this));
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageActionButton, defStyleAttr, 0);

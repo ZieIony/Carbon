@@ -27,14 +27,17 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.StateAnimator;
+import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2015-01-22.
  */
-public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
+public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView,CornerView {
+    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
 
     public ImageView(Context context) {
         this(context, null);
@@ -70,7 +73,6 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     private int cornerRadius;
     private Path cornersMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
-    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public int getCornerRadius() {
         return cornerRadius;
@@ -96,35 +98,27 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     private void initCorners() {
         if (cornerRadius > 0) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP&&isRect)  {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setClipToOutline(true);
-                ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
-                    @Override
-                    public void getOutline(View view, Outline outline) {
-                        outline.setRoundRect(0, 0, getWidth(), getHeight(), cornerRadius);
-                    }
-                };
-                setOutlineProvider(viewOutlineProvider);
+                setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setClipToOutline(false);
-            setOutlineProvider(null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
 
     @Override
     public void draw(Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || !isRect)) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
             super.draw(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
 
             paint.setXfermode(pdMode);
             canvas.drawPath(cornersMask, paint);
@@ -133,8 +127,6 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             paint.setXfermode(null);
         } else {
             super.draw(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
         }
     }
 
@@ -144,6 +136,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
+    private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -161,7 +154,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
             if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground());
+                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
@@ -202,7 +195,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             rippleDrawable.setCallback(null);
             rippleDrawable = null;
         }
-        super.setBackgroundDrawable(background);
+        super.setBackgroundDrawable(background == null ? emptyBackground : background);
     }
 
 
@@ -212,7 +205,6 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     private float elevation = 0;
     private float translationZ = 0;
-    private boolean isRect = true;
 
     @Override
     public float getElevation() {
@@ -222,6 +214,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     public synchronized void setElevation(float elevation) {
         if (elevation == this.elevation)
             return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(elevation);
         this.elevation = elevation;
         if (getParent() != null)
             ((View) getParent()).postInvalidate();
@@ -235,19 +229,20 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     public synchronized void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
         if (getParent() != null)
             ((View) getParent()).postInvalidate();
     }
 
     @Override
-    public boolean isRect() {
-        return isRect;
-    }
-
-    @Override
-    public void setRect(boolean rect) {
-        this.isRect = rect;
+    public ShadowShape getShadowShape() {
+        if (cornerRadius == getWidth() / 2 && getWidth() == getHeight())
+            return ShadowShape.CIRCLE;
+        if (cornerRadius > 0)
+            return ShadowShape.ROUND_RECT;
+        return ShadowShape.RECT;
     }
 
     @Override

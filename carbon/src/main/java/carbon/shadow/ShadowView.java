@@ -12,7 +12,5 @@ public interface ShadowView {
 
     void setTranslationZ(float translationZ);
 
-    boolean isRect();
-
-    void setRect(boolean rect);
+    ShadowShape getShadowShape();
 }

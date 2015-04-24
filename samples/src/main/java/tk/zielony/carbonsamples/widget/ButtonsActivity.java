@@ -16,8 +16,5 @@ public class ButtonsActivity extends Activity {
         setContentView(R.layout.activity_buttons);
 
         findViewById(R.id.button).setBackgroundColor(0xff00ff00);
-
-        Button button = (Button) findViewById(R.id.bunny);
-        button.setRect(false);
     }
 }

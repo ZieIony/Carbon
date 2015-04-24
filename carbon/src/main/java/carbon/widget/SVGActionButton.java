@@ -26,7 +26,6 @@ public class SVGActionButton extends SVGView {
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        setRect(false);
         addStateAnimator(new ElevationStateAnimator(this));
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SVGActionButton, defStyleAttr, 0);

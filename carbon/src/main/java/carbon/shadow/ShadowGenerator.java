@@ -13,7 +13,8 @@ import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 
 public class ShadowGenerator {
-    public static final float SHADOW_SCALE = 2.0f;
+    public static final float SHADOW_SCALE = 1.0f;
+    public static final int ALPHA = 51;
 
     private static RenderScript renderScript;
     private static ScriptIntrinsicBlur blurShader;
@@ -86,7 +87,7 @@ public class ShadowGenerator {
             }
         }
 
-        boolean isRect = ((ShadowView) view).isRect();
+        boolean isRect = ((ShadowView) view).getShadowShape()!=ShadowShape.CIRCLE;
 
         int e = (int) Math.ceil(elevation);
         Bitmap bitmap;
@@ -107,18 +108,10 @@ public class ShadowGenerator {
 
             Canvas shadowCanvas = new Canvas(bitmap);
             paint.setStyle(Paint.Style.FILL);
-            paint.setColorFilter(lightingColorFilter);
+            paint.setColor(0xff000000);
 
-            if (view.getDrawingCache() != null) {
-                shadowCanvas.scale(1 / SHADOW_SCALE, 1 / SHADOW_SCALE, e, e);
-                shadowCanvas.drawBitmap(view.getDrawingCache(), e, e, paint);
-            } else {
-                Bitmap cache = Bitmap.createBitmap((int) (view.getWidth() / ShadowGenerator.SHADOW_SCALE), (int) (view.getHeight() / ShadowGenerator.SHADOW_SCALE), Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(cache);
-                canvas.scale(1 / SHADOW_SCALE, 1 / SHADOW_SCALE);
-                view.draw(canvas);
-                shadowCanvas.drawBitmap(cache, e, e, paint);
-            }
+            int r = (int) (view.getWidth()/2 / ShadowGenerator.SHADOW_SCALE);
+            shadowCanvas.drawCircle(r + e, r + e, r, paint);
 
             blur(bitmap, elevation);
 
