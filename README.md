@@ -44,7 +44,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.7.3'
+    compile 'tk.zielony:carbon:0.7.4'
     
 And these two lines to android/defaultConfig:
 
@@ -61,7 +61,7 @@ I have an old Galaxy S with Android 2.3, so I did that to support my own phone. 
 Seems like it's pretty stable. I'm testing it heavily on different devices and on real projects. There are minor problems with SVG rendering and shadow generation. Also the themes aren't perfect yet. These are the issues I know about. If you have something else, please let me know.
 
 ##### Are you using Lollipop's API on Lollipop devices?
-Partially. On 5.+ Carbon uses Lollipop's native ripples. I'm working on having native shadows and rounded corners as well.
+Partially. On 5.+ Carbon uses Lollipop's native ripples, shadows and rounded corners. Also, the Carbon themes remap some of Material attributes.
 
 ##### Are you thinking about uploading the library to Maven?
 Done!
