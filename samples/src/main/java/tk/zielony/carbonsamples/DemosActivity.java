@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import carbon.widget.Toolbar;
+import tk.zielony.carbonsamples.demo.AutoCompleteDemo;
 import tk.zielony.carbonsamples.demo.PowerMenuActivity;
 import tk.zielony.carbonsamples.demo.ShareToolbarActivity;
 
@@ -25,13 +26,13 @@ public class DemosActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "Power Menu", "Share Toolbar"
+                "Power Menu", "Share Toolbar", "Auto Complete"
         };
         final Class[] activities = new Class[]{
-                PowerMenuActivity.class, ShareToolbarActivity.class
+                PowerMenuActivity.class, ShareToolbarActivity.class, AutoCompleteDemo.class
         };
         final boolean[] beta = new boolean[]{
-                false, true
+                false, true, true
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

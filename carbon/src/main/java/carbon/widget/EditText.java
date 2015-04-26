@@ -6,9 +6,9 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
@@ -17,9 +17,11 @@ import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.ValueAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,21 +42,19 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     int disabledColor = 0x4d000000;
     int errorColor = 0xffff0000;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Path linePath;
 
     private Pattern pattern;
     private String errorMessage;
     TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    boolean error;
+    boolean drawError;
 
     int minCharacters;
     int maxCharacters;
+    TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
     int extraPaddingBottom = 0, extraPaddingTop = 0;
 
     TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-
-    boolean floatingHint = false;
 
     TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -69,12 +69,36 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (errorMessage != null && pattern != null)
-                error = !pattern.matcher(getText().toString()).matches();
+            validate();
         }
     };
+
+    private void validate() {
+        String s = getText().toString();
+        // dictionary suggestions vs s.length()>0
+        /*try {
+            Field mTextField = getText().getClass().getDeclaredField("mText");
+            mTextField.setAccessible(true);
+            s = new String((char[])mTextField.get(getText()));
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }*/
+        if (errorMessage != null && pattern != null)
+            drawError = !pattern.matcher(s).matches();
+        counterError = minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters;
+        labelPaint.setColor(drawError | counterError ? errorColor : getDividerColor().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
+        counterPaint.setColor(drawError | counterError ? errorColor : disabledColor);
+        animateFloatingLabel(isFocused() && s.length() > 0);
+    }
+
     private Bitmap dashPathBitmap;
     private BitmapShader dashPathShader;
+    private float labelFrac = 0;
+    private boolean showFloatingLabel = true;
+    private boolean drawDivider = true;
+    private boolean counterError = false;
 
     public EditText(Context context) {
         this(context, null);
@@ -121,11 +145,16 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
-        setDividerPadding((int) a.getDimension(R.styleable.EditText_carbon_dividerPadding, 0));
+        dividerPadding = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
         ColorStateList dividerColor = a.getColorStateList(R.styleable.EditText_carbon_dividerColor);
         setDividerColor(dividerColor != null ? dividerColor : new ControlFocusedColorStateList(getContext()));
+        if (Color.alpha(getDividerColor().getDefaultColor()) == 0)
+            drawDivider = false;
         if (!isInEditMode())
-            setErrorMessage(a.getString(R.styleable.EditText_carbon_errorMessage));
+            setError(a.getString(R.styleable.EditText_carbon_errorMessage));
+        setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
+        setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
+        setFloatingLabelEnabled(a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false));
 
         a.recycle();
 
@@ -136,7 +165,9 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
             labelPaint.setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.Regular));
             labelPaint.setTextSize(getResources().getDimension(R.dimen.carbon_labelTextSize));
-            labelPaint.setColor(disabledColor);
+
+            counterPaint.setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.Regular));
+            counterPaint.setTextSize(getResources().getDimension(R.dimen.carbon_charCounterTextSize));
         }
 
         addTextChangedListener(textWatcher);
@@ -185,6 +216,11 @@ public class EditText extends android.widget.EditText implements TouchMarginView
                 }
             });
         }*/
+
+        validate();
+
+        if (isFocused() && getText().length() > 0)
+            labelFrac = 1;
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -197,27 +233,29 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
     private void updateLayout() {
         int paddingBottom = getPaddingBottom() - extraPaddingBottom;
-        int dividerPadding = this.dividerPadding - extraPaddingBottom;
-        if (errorMessage != null || minCharacters > 0 || maxCharacters > 0) {
-            extraPaddingBottom = (int) (getResources().getDimension(R.dimen.carbon_errorTextSize) + getResources().getDimension(R.dimen.carbon_paddingHalf));
-        } else {
-            extraPaddingBottom = 0;
-        }
-        setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), paddingBottom + extraPaddingBottom);
-        this.dividerPadding = dividerPadding + extraPaddingBottom;
-    }
+        extraPaddingBottom = 0;
+        if (errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE)
+            extraPaddingBottom += getResources().getDimension(R.dimen.carbon_errorTextSize);
+        if (drawDivider)
+            extraPaddingBottom += getResources().getDimension(R.dimen.carbon_padding);
 
-    public void setErrorMessage(String text) {
-        this.errorMessage = text;
-        if (errorMessage == null)
-            error = false;
-        updateLayout();
+        int paddingTop = getPaddingTop() - extraPaddingTop;
+        extraPaddingTop = 0;
+        if (showFloatingLabel && getHint() != null)
+            extraPaddingTop += getResources().getDimension(R.dimen.carbon_labelTextSize) + getResources().getDimension(R.dimen.carbon_paddingHalf);
+        setPadding(getPaddingLeft(), paddingTop + extraPaddingTop, getPaddingRight(), paddingBottom + extraPaddingBottom);
     }
 
     @Override
     public void setError(CharSequence text) {
-        setErrorMessage(text.toString());
-        error = errorMessage != null;
+        if (text == null) {
+            drawError = false;
+            errorMessage = null;
+        } else {
+            errorMessage = text.toString();
+            drawError = true;
+        }
+        updateLayout();
     }
 
     @Override
@@ -233,25 +271,52 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         } else {
             paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
         }
-        if (isEnabled()) {
-            paint.setColor(error ? errorColor : dividerColor.getColorForState(getDrawableState(), dividerColor.getDefaultColor()));
-            paint.setShader(null);
-            canvas.drawLine(0, getHeight() - dividerPadding, getWidth(), getHeight() - dividerPadding, paint);
-        } else {
-            Matrix matrix = new Matrix();
-            matrix.postTranslate(0, getHeight() - dividerPadding - paint.getStrokeWidth() / 2.0f);
-            dashPathShader.setLocalMatrix(matrix);
-            paint.setShader(dashPathShader);
-            canvas.drawRect(0, getHeight() - dividerPadding - paint.getStrokeWidth() / 2.0f,
-                    getWidth(), getHeight() - dividerPadding + paint.getStrokeWidth() / 2.0f, paint);
+        if (drawDivider) {
+            if (isEnabled()) {
+                paint.setColor(drawError || counterError ? errorColor : dividerColor.getColorForState(getDrawableState(), dividerColor.getDefaultColor()));
+                paint.setShader(null);
+                canvas.drawLine(getPaddingLeft(), getHeight() + dividerPadding - getPaddingBottom(), getWidth() - getPaddingRight(), getHeight() + dividerPadding - getPaddingBottom(), paint);
+            } else {
+                Matrix matrix = new Matrix();
+                matrix.postTranslate(0, getHeight() + dividerPadding - getPaddingBottom() - paint.getStrokeWidth() / 2.0f);
+                dashPathShader.setLocalMatrix(matrix);
+                paint.setShader(dashPathShader);
+                canvas.drawRect(getPaddingLeft(), getHeight() + dividerPadding - getPaddingBottom() - paint.getStrokeWidth() / 2.0f,
+                        getWidth() - getPaddingRight(), getHeight() + dividerPadding - getPaddingBottom() + paint.getStrokeWidth() / 2.0f, paint);
+            }
         }
 
-        if (error && errorMessage != null)
-            canvas.drawText(errorMessage, 0, getHeight() - dividerPadding + errorPaint.getTextSize() + getResources().getDimension(R.dimen.carbon_paddingHalf), errorPaint);
+        if(!isEnabled())
+            return;
 
-        if (minCharacters > 0 || maxCharacters < Integer.MAX_VALUE) {
-            canvas.drawText(errorMessage, 0, getHeight() - dividerPadding + errorPaint.getTextSize() + getResources().getDimension(R.dimen.carbon_paddingHalf), errorPaint);
+        if (drawError)
+            canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - getPaddingBottom() + extraPaddingBottom - 1, errorPaint);
+
+        if (getHint() != null && showFloatingLabel) {
+            String label = getHint().toString();
+            labelPaint.setAlpha((int) (255 * labelFrac));
+            canvas.drawText(label, getPaddingLeft(), getResources().getDimension(R.dimen.carbon_labelTextSize) * (2 - labelFrac) + getPaddingTop() - extraPaddingTop, labelPaint);
         }
+
+        int length = getText().length();
+        if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
+            String text = length + " / " + minCharacters + "-" + maxCharacters;
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - getPaddingBottom() + extraPaddingBottom - 1, counterPaint);
+        } else if (minCharacters > 0) {
+            String text = length + " / " + minCharacters + "+";
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - getPaddingBottom() + extraPaddingBottom - 1, counterPaint);
+        } else if (maxCharacters < Integer.MAX_VALUE) {
+            String text = length + " / " + maxCharacters;
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - getPaddingBottom() + extraPaddingBottom - 1, counterPaint);
+        }
+    }
+
+    public boolean isFloatingLabelEnabled() {
+        return showFloatingLabel;
+    }
+
+    public void setFloatingLabelEnabled(boolean showFloatingLabel) {
+        this.showFloatingLabel = showFloatingLabel;
     }
 
     public String getPattern() {
@@ -298,13 +363,30 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         postInvalidate();
     }
 
-    public int getDividerPadding() {
-        return dividerPadding;
+    private void animateFloatingLabel(boolean visible) {
+        ValueAnimator animator;
+        if (visible) {
+            animator = ValueAnimator.ofFloat(labelFrac, 1);
+            animator.setDuration((long) ((1 - labelFrac) * 200));
+        } else {
+            animator = ValueAnimator.ofFloat(labelFrac, 0);
+            animator.setDuration((long) (labelFrac * 200));
+        }
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                labelFrac = (float) animation.getAnimatedValue();
+                postInvalidate();
+            }
+        });
+        animator.start();
     }
 
-    public void setDividerPadding(int dividerPadding) {
-        this.dividerPadding = dividerPadding + extraPaddingBottom;
-        postInvalidate();
+    @Override
+    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
+        super.onFocusChanged(focused, direction, previouslyFocusedRect);
+        animateFloatingLabel(focused && getText().length() > 0);
     }
 
     // -------------------------------

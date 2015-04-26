@@ -27,6 +27,7 @@
 
     <dimen name="carbon_errorTextSize">12sp</dimen>
     <dimen name="carbon_labelTextSize">12sp</dimen>
+    <dimen name="carbon_charCounterTextSize">12sp</dimen>
 
     <integer name="carbon_snackbarDuration">2000</integer>
 </resources>

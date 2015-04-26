@@ -260,6 +260,7 @@
         <attr name="carbon_errorMessage" format="string" />
         <attr name="carbon_dividerColor" />
         <attr name="carbon_dividerPadding" format="dimension" />
+        <attr name="carbon_floatingLabel" format="boolean"/>
     </declare-styleable>
 
     <attr name="carbon_pagerTabStripStyle" format="reference" />

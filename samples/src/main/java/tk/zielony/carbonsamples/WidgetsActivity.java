@@ -40,7 +40,7 @@ public class WidgetsActivity extends Activity {
                 SnackbarActivity.class, SVGActivity.class, TextFieldsActivity.class, TabsActivity.class, RecentsActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false, false, true, false, true, false, false, true, false,false
+                false, false, true, false, true, false, false, false, false,false
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

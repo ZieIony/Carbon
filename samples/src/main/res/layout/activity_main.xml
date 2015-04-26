@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    app:carbon_insetColor="?attr/carbon_colorPrimary"
     android:orientation="vertical">
 
     <carbon.widget.Toolbar

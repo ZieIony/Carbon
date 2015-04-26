@@ -4,47 +4,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    app:carbon_insetColor="?attr/carbon_colorPrimary"
     android:orientation="vertical">
 
-    <carbon.widget.EditText
-        android:id="@+id/editText"
+    <carbon.widget.ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_padding"
-        android:paddingBottom="@dimen/carbon_padding"
-        android:paddingTop="@dimen/carbon_padding"
-        android:text="hello text"
-        app:carbon_pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" />
+        android:layout_height="match_parent">
 
-    <carbon.widget.EditText
-        android:id="@+id/editText3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_padding"
-        android:paddingBottom="@dimen/carbon_padding"
-        android:paddingTop="@dimen/carbon_padding"
-        android:text="hello text"
-        app:carbon_errorMessage="it's not an email"
-        app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$" />
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_padding"
-        android:paddingBottom="@dimen/carbon_padding"
-        android:paddingTop="@dimen/carbon_padding"
-        android:text="hello text" />
+            <carbon.widget.EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:text="hello text"
+                android:hint="email"
+                app:carbon_floatingLabel="true"
+                app:carbon_pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+            <carbon.widget.EditText
+                android:id="@+id/editText3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:text="hello text"
+                app:carbon_errorMessage="it's not an email"
+                android:hint="email"
+                app:carbon_floatingLabel="true"
+                app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$" />
 
-    <carbon.widget.CheckBox
-        android:id="@+id/enabled"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:checked="true"
-        android:text="enabled" />
+            <carbon.widget.EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                app:carbon_minCharacters="3" />
+
+            <carbon.widget.EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                app:carbon_maxCharacters="10" />
+
+            <carbon.widget.EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                app:carbon_minCharacters="3"
+                app:carbon_maxCharacters="10" />
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:text="hello text" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <carbon.widget.CheckBox
+                android:id="@+id/enabled"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:checked="true"
+                android:text="enabled" />
+        </carbon.widget.LinearLayout>
+    </carbon.widget.ScrollView>
 </carbon.widget.LinearLayout>

@@ -16,7 +16,7 @@
 
     <color name="carbon_background_light">#ffeeeeee</color>
 
-    <color name="carbon_debug">#ffff0000</color>
+    <color name="carbon_debug">#ffDE3226</color>
 
     <color name="carbon_white_30">#4dffffff</color>
     <color name="carbon_white_70">#b3ffffff</color>
