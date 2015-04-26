@@ -29,6 +29,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.StateAnimator;
+import carbon.drawable.ControlFocusedColorStateList;
 
 /**
  * Created by Marcin on 2015-02-14.
@@ -121,7 +122,8 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
         setDividerPadding((int) a.getDimension(R.styleable.EditText_carbon_dividerPadding, 0));
-        setDividerColor(a.getColorStateList(R.styleable.EditText_carbon_dividerColor));
+        ColorStateList dividerColor = a.getColorStateList(R.styleable.EditText_carbon_dividerColor);
+        setDividerColor(dividerColor != null ? dividerColor : new ControlFocusedColorStateList(getContext()));
         if (!isInEditMode())
             setErrorMessage(a.getString(R.styleable.EditText_carbon_errorMessage));
 
@@ -147,6 +149,42 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         paint.setColor(disabledColor);
         c.drawCircle(dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, paint);
         dashPathShader = new BitmapShader(dashPathBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
+
+        /*if (android.os.Build.VERSION.SDK_INT < 11) {
+            setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
+
+                @Override
+                public void onCreateContextMenu(ContextMenu menu, View v,
+                                                ContextMenu.ContextMenuInfo menuInfo) {
+                    // TODO Auto-generated method stub
+                    menu.clear();
+                }
+            });
+        } else {
+            setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    // TODO Auto-generated method stub
+                    return false;
+                }
+
+                public void onDestroyActionMode(ActionMode mode) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    // TODO Auto-generated method stub
+                    return false;
+                }
+
+                public boolean onActionItemClicked(ActionMode mode,
+                                                   MenuItem item) {
+                    // TODO Auto-generated method stub
+                    return false;
+                }
+            });
+        }*/
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -210,6 +248,10 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
         if (error && errorMessage != null)
             canvas.drawText(errorMessage, 0, getHeight() - dividerPadding + errorPaint.getTextSize() + getResources().getDimension(R.dimen.carbon_paddingHalf), errorPaint);
+
+        if (minCharacters > 0 || maxCharacters < Integer.MAX_VALUE) {
+            canvas.drawText(errorMessage, 0, getHeight() - dividerPadding + errorPaint.getTextSize() + getResources().getDimension(R.dimen.carbon_paddingHalf), errorPaint);
+        }
     }
 
     public String getPattern() {

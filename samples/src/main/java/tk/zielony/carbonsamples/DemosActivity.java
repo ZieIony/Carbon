@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.demo.PowerMenuActivity;
+import tk.zielony.carbonsamples.demo.ShareToolbarActivity;
 
 
 public class DemosActivity extends Activity {
@@ -24,13 +25,13 @@ public class DemosActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.list);
         String[] items = new String[]{
-                "Power Menu"
+                "Power Menu", "Share Toolbar"
         };
         final Class[] activities = new Class[]{
-                PowerMenuActivity.class
+                PowerMenuActivity.class, ShareToolbarActivity.class
         };
         final boolean[] beta = new boolean[]{
-                false
+                false, true
         };
         listView.setAdapter(new MainListAdapter(items, beta));
 

@@ -1,5 +1,6 @@
 package carbon.animation;
 
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.view.View;
@@ -153,7 +154,7 @@ public class AnimUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
-                ViewHelper.setTranslationY(view, Math.min(view.getHeight()/2,view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
+                ViewHelper.setTranslationY(view, Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
                 if (view.getParent() != null)
                     ((View) view.getParent()).postInvalidate();
             }
@@ -172,7 +173,7 @@ public class AnimUtils {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
-                ViewHelper.setTranslationY(view, Math.min(view.getHeight()/2,view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
+                ViewHelper.setTranslationY(view, Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
                 if (view.getParent() != null)
                     ((View) view.getParent()).postInvalidate();
             }
@@ -182,7 +183,7 @@ public class AnimUtils {
     }
 
     public static ValueAnimator progressWidthIn(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
-        final float arcWidth = circularProgress.getBarPadding()+circularProgress.getBarWidth();
+        final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
         ValueAnimator animator = ValueAnimator.ofFloat(0, arcWidth);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -201,7 +202,7 @@ public class AnimUtils {
     }
 
     public static ValueAnimator progressWidthOut(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
-        final float arcWidth = circularProgress.getBarPadding()+circularProgress.getBarWidth();
+        final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
         ValueAnimator animator = ValueAnimator.ofFloat(arcWidth, 0);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
@@ -281,5 +282,13 @@ public class AnimUtils {
 
     public static float lerp(float interpolation, float val1, float val2) {
         return val1 * (1 - interpolation) + val2 * interpolation;
+    }
+
+    public static int lerpColor(float interpolation, int val1, int val2) {
+        int a = (int) lerp(interpolation, val1 >> 24, val2 >> 24);
+        int r = (int) lerp(interpolation, (val1 >> 16) & 0xff, (val2 >> 16) & 0xff);
+        int g = (int) lerp(interpolation, (val1 >> 8) & 0xff, (val2 >> 8) & 0xff);
+        int b = (int) lerp(interpolation, val1 & 0xff, val2 & 0xff);
+        return Color.argb(a, r, g, b);
     }
 }

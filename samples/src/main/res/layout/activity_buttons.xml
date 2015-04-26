@@ -14,7 +14,6 @@
         android:layout_height="wrap_content" />
 
     <carbon.widget.Button
-        android:id="@+id/button"
         style="@style/carbon_Button"
         android:background="#ffffffff"
         app:carbon_cornerRadius="2dp"
@@ -25,7 +24,7 @@
         app:carbon_touchMarginLeft="100dp"
         app:carbon_touchMarginRight="100dp"
         android:textColor="#ff0000ff"
-        android:text="Inline Style"
+        android:text="Inline Stylee"
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
         android:paddingTop="0dp"

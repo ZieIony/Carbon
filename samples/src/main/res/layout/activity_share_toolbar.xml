@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.LinearLayout
+        android:id="@+id/shareToolbar"
+        android:layout_margin="@dimen/carbon_padding"
+        android:layout_gravity="bottom|right"
+        app:carbon_elevation="@dimen/carbon_elevationMax"
+        android:background="?attr/carbon_colorAccent"
+        app:carbon_cornerRadius="28dp"
+        android:layout_width="@dimen/carbon_fabSize"
+        android:layout_height="@dimen/carbon_fabSize">
+
+
+        <carbon.widget.SVGView
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            android:padding="@dimen/carbon_padding"
+            android:id="@+id/shareIcon"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
+            android:layout_width="@dimen/carbon_fabSize"
+            android:layout_height="@dimen/carbon_fabSize" />
+
+        <carbon.widget.SVGView
+            android:tag="animate"
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            app:carbon_filterColor="@color/carbon_black_54"
+            android:visibility="invisible"
+            android:padding="@dimen/carbon_padding"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
+            android:layout_width="@dimen/carbon_fabSize"
+            android:layout_height="@dimen/carbon_fabSize" />
+
+        <carbon.widget.SVGView
+            android:tag="animate"
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            app:carbon_filterColor="@color/carbon_black_54"
+            android:visibility="invisible"
+            android:padding="@dimen/carbon_padding"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
+            android:layout_width="@dimen/carbon_fabSize"
+            android:layout_height="@dimen/carbon_fabSize" />
+
+        <carbon.widget.SVGView
+            android:tag="animate"
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            app:carbon_filterColor="@color/carbon_black_54"
+            android:visibility="invisible"
+            android:padding="@dimen/carbon_padding"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
+            android:layout_width="@dimen/carbon_fabSize"
+            android:layout_height="@dimen/carbon_fabSize" />
+
+        <carbon.widget.SVGView
+            android:tag="animate"
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            app:carbon_filterColor="@color/carbon_black_54"
+            android:visibility="invisible"
+            android:padding="@dimen/carbon_padding"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
+            android:layout_width="@dimen/carbon_fabSize"
+            android:layout_height="@dimen/carbon_fabSize" />
+    </carbon.widget.LinearLayout>
+</carbon.widget.FrameLayout>

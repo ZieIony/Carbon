@@ -148,6 +148,10 @@
             android:name=".demo.PowerMenuActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
+        <activity
+            android:name=".demo.ShareToolbarActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".AnimationsActivity"

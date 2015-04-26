@@ -17,7 +17,8 @@ import carbon.animation.AnimUtils;
 /**
  * Created by Marcin on 2014-11-19.
  */
-public class RippleDrawableCompat extends Drawable implements RippleDrawable{
+public class RippleDrawableCompat extends Drawable implements RippleDrawable {
+
     private static final class LogInterpolator implements Interpolator {
         @Override
         public float getInterpolation(float input) {
@@ -48,9 +49,10 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
     private Drawable background;
     private float from, to;
     private boolean pressed, useHotspot = true;
+    private boolean bgActive;
     private RippleDrawable.Style style = RippleDrawable.Style.Background;
 
-    public RippleDrawableCompat(int color,Drawable background, Context context,Style style) {
+    public RippleDrawableCompat(int color, Drawable background, Context context, Style style) {
         this.color = color;
         this.alpha = (color >> 24) / 2;
         this.background = background;
@@ -59,7 +61,7 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
     }
 
     public void onPress() {
-        if(!pressed) {
+        if (!pressed) {
             pressed = true;
             Rect bounds = getBounds();
             to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
@@ -111,7 +113,7 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
 
         long time = System.currentTimeMillis();
 
-        if (pressed) {
+        if (bgActive) {
             // bg
             float highlightInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - downTime) / (float) FADEIN_DURATION), 1);
             paint.setAlpha((int) (alpha * highlightInterp));
@@ -120,8 +122,11 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
             } else {
                 canvas.drawRect(bounds, paint);
             }
+        }
 
+        if (pressed) {
             // ripple
+            float highlightInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - downTime) / (float) FADEIN_DURATION), 1);
             float rippleInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - downTime - RIPPLE_ENTER_DELAY) / (float) radiusDuration), 1);
             float radius = to * rippleInterp;
             float x = AnimUtils.lerp(rippleInterp, hotspot.x, bounds.centerX());
@@ -133,7 +138,7 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
                 invalidateSelf();
         }
 
-        if (!pressed) {
+        if (!bgActive) {
             // bg
             float highlightInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - upTime) / (float) opacityDuration), 1);
             paint.setAlpha((int) (alpha * (1 - highlightInterp)));
@@ -142,8 +147,11 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
             } else {
                 canvas.drawRect(bounds, paint);
             }
+        }
 
+        if (!pressed) {
             // ripple
+            float highlightInterp = Math.min(LINEAR_INTERPOLATOR.getInterpolation((time - upTime) / (float) opacityDuration), 1);
             float rippleInterp = Math.min(DECEL_INTERPOLATOR.getInterpolation((time - upTime) / (float) radiusDuration), 1);
             float radius = AnimUtils.lerp(rippleInterp, from, to);
             float x = AnimUtils.lerp(rippleInterp, hotspot.x, bounds.centerX());
@@ -168,10 +176,16 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
 
     @Override
     public void jumpToCurrentState() {
-        super.jumpToCurrentState();
         if (background != null)
             background.jumpToCurrentState();
-        invalidateSelf();
+        super.jumpToCurrentState();
+    }
+
+    @Override
+    public boolean setState(int[] stateSet) {
+        if (background != null)
+            background.setState(stateSet);
+        return super.setState(stateSet);
     }
 
     @Override
@@ -238,12 +252,12 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable{
             }
         }
 
-        if(enabled && pressed){
+        if (enabled && pressed) {
             onPress();
-        }else{
+        } else {
             onRelease();
         }
-        //setBackgroundActive(focused || (enabled && pressed));
+        bgActive = (focused || (enabled && pressed));
 
         return changed;
     }
