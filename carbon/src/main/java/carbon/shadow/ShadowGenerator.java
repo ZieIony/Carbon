@@ -5,12 +5,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RSRuntimeException;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
+
+import carbon.R;
+import carbon.widget.CornerView;
 
 public class ShadowGenerator {
     public static final float SHADOW_SCALE = 1.0f;
@@ -19,8 +23,8 @@ public class ShadowGenerator {
     private static RenderScript renderScript;
     private static ScriptIntrinsicBlur blurShader;
     private static Paint paint = new Paint();
-    private static LightingColorFilter lightingColorFilter = new LightingColorFilter(0, 0);
     private static boolean software = false;
+    static RectF roundRect = new RectF();
 
     private static void blur(Bitmap bitmap, float radius) {
         radius = Math.max(0, Math.min(radius, 25));
@@ -87,7 +91,10 @@ public class ShadowGenerator {
             }
         }
 
-        boolean isRect = ((ShadowView) view).getShadowShape()!=ShadowShape.CIRCLE;
+        ShadowView shadowView = (ShadowView) view;
+        CornerView cornerView = (CornerView) view;
+        boolean isRect = shadowView.getShadowShape() == ShadowShape.RECT ||
+                shadowView.getShadowShape() == ShadowShape.ROUND_RECT && cornerView.getCornerRadius() < view.getContext().getResources().getDimension(R.dimen.carbon_1dip) * 2.5;
 
         int e = (int) Math.ceil(elevation);
         Bitmap bitmap;
@@ -110,8 +117,13 @@ public class ShadowGenerator {
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(0xff000000);
 
-            int r = (int) (view.getWidth()/2 / ShadowGenerator.SHADOW_SCALE);
-            shadowCanvas.drawCircle(r + e, r + e, r, paint);
+            if (shadowView.getShadowShape() == ShadowShape.ROUND_RECT) {
+                roundRect.set(e, e, (int) (view.getWidth() / SHADOW_SCALE - e), (int) (view.getHeight() / SHADOW_SCALE - e));
+                shadowCanvas.drawRoundRect(roundRect, e, e, paint);
+            } else {
+                int r = (int) (view.getWidth() / 2 / SHADOW_SCALE);
+                shadowCanvas.drawCircle(r + e, r + e, r, paint);
+            }
 
             blur(bitmap, elevation);
 
