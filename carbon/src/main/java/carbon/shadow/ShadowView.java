@@ -13,4 +13,6 @@ public interface ShadowView {
     void setTranslationZ(float translationZ);
 
     ShadowShape getShadowShape();
+
+    Shadow getShadow();
 }

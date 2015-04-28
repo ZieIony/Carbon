@@ -51,7 +51,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
         this.adapter = adapter;
     }
 
-    public void performCompletion(){
+    public void performCompletion() {
 
     }
 }

@@ -286,7 +286,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
             }
         }
 
-        if(!isEnabled())
+        if (!isEnabled())
             return;
 
         if (drawError)

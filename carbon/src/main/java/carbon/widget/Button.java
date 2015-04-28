@@ -3,7 +3,6 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -31,14 +30,16 @@ import carbon.animation.StateAnimator;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.shadow.Shadow;
+import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView,CornerView {
-    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
+public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView {
+    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
         this(context, null);
@@ -122,7 +123,12 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if (!changed || getWidth() == 0 || getHeight() == 0)
+        if (!changed)
+            return;
+
+        shadow = null;
+
+        if (getWidth() == 0 || getHeight() == 0)
             return;
 
         initCorners();
@@ -240,6 +246,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     private float elevation = 0;
     private float translationZ = 0;
+    private Shadow shadow;
 
     @Override
     public float getElevation() {
@@ -284,6 +291,17 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         setTranslationZ(enabled ? 0 : -elevation);
+    }
+
+    @Override
+    public Shadow getShadow() {
+        float elevation = getElevation() + getTranslationZ();
+        if (elevation >= 0.01f && getWidth() > 0 && getHeight() > 0) {
+            if (shadow == null || shadow.elevation != elevation)
+                shadow = ShadowGenerator.generateShadow(this, elevation);
+            return shadow;
+        }
+        return null;
     }
 
 

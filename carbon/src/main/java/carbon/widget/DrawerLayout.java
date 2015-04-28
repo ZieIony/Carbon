@@ -1,11 +1,9 @@
 package carbon.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
@@ -20,8 +18,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.WindowInsets;
-import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -29,9 +25,7 @@ import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import carbon.Carbon;
 import carbon.R;
@@ -49,7 +43,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2015-04-01.
  */
-public class DrawerLayout extends android.support.v4.widget.DrawerLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView,CornerView {
+public class DrawerLayout extends android.support.v4.widget.DrawerLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
     private boolean debugMode;
 
     public DrawerLayout(Context context) {
@@ -93,7 +87,6 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
 
     List<View> views;
-    Map<View, Shadow> shadows = new HashMap<>();
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     @Override
@@ -128,16 +121,10 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         if (!child.isShown())
             return super.drawChild(canvas, child, drawingTime);
 
-        if (!isInEditMode() && child instanceof ShadowView && child.getWidth() > 0 && child.getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (!isInEditMode() && child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             ShadowView shadowView = (ShadowView) child;
-            float elevation = shadowView.getElevation() + shadowView.getTranslationZ();
-            if (elevation >= 0.01f) {
-                Shadow shadow = shadows.get(child);
-                if (shadow == null || shadow.elevation != elevation) {
-                    shadow = ShadowGenerator.generateShadow(child, elevation);
-                    shadows.put(child, shadow);
-                }
-
+            Shadow shadow = shadowView.getShadow();
+            if (shadow != null) {
                 paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
 
                 float[] childLocation = new float[]{(child.getLeft() + child.getRight()) / 2, (child.getTop() + child.getBottom()) / 2};
@@ -219,7 +206,12 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if (!changed || getWidth() == 0 || getHeight() == 0)
+        if (!changed)
+            return;
+
+        shadow = null;
+
+        if (getWidth() == 0 || getHeight() == 0)
             return;
 
         initCorners();
@@ -337,6 +329,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
     private float elevation = 0;
     private float translationZ = 0;
+    private Shadow shadow;
 
     @Override
     public float getElevation() {
@@ -381,6 +374,17 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         setTranslationZ(enabled ? 0 : -elevation);
+    }
+
+    @Override
+    public Shadow getShadow() {
+        float elevation = getElevation() + getTranslationZ();
+        if (elevation >= 0.01f && getWidth() > 0 && getHeight() > 0) {
+            if (shadow == null || shadow.elevation != elevation)
+                shadow = ShadowGenerator.generateShadow(this, elevation);
+            return shadow;
+        }
+        return null;
     }
 
 
