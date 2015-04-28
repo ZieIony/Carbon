@@ -2,6 +2,8 @@ package tk.zielony.carbonsamples.animation;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
 import tk.zielony.carbonsamples.R;
@@ -15,10 +17,11 @@ public class ListRippleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_ripple);
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
 
         String[] items = new String[]{"Blueberry", "Lime", "Lemon", "Orange", "Strawberry"};
-        listView.setAdapter(new ListRippleAdapter(items));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new ListRippleAdapter(items));
     }
 
 }

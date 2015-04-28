@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.beta;
 
 import android.content.Context;
 import android.graphics.Canvas;

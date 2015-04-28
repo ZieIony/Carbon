@@ -14,7 +14,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="tk.zielony.carbonsamples.MainActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,154 +23,111 @@
         </activity>
         <activity
             android:name=".widget.ButtonsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".animation.ListRippleActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".feature.LargeShadowActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".feature.ShadowActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".feature.RobotoActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".feature.TextAppearanceActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.SVGActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".animation.AnimationsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.SnackbarActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.TextFieldsActivity"
             android:theme="@style/carbon_Theme.AppCompat.Light"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".feature.ZOrderActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".feature.SaveStateActivity"
-            android:screenOrientation="sensor"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.DialogActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".animation.ImageFadeActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".animation.RadialTransitionActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.CircularProgressActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.ProgressBarsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".applibrary.PicassoActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".applibrary.RecyclerCardsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".animation.RippleActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".applibrary.CalculatorActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.TabsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".animation.ScrollViewActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.CheckBoxRadioActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".applibrary.DrawerActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".applibrary.ScrimInsetsLayoutActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".animation.RippleComparisonActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".feature.RoundedCornersActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".widget.RecentsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
 
         <activity
             android:name=".demo.PowerMenuActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".demo.ShareToolbarActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".demo.AutoCompleteDemo"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
 
         <activity
             android:name=".AnimationsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".AppsLibrariesActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".FeaturesActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".WidgetsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".DemosActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name" />
     </application>
 

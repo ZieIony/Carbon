@@ -1,13 +1,12 @@
 package tk.zielony.carbonsamples;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
+import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
 
 public class MainActivity extends Activity {
@@ -34,24 +33,16 @@ public class MainActivity extends Activity {
             }
         });
 
-        ListView listView = (ListView) findViewById(R.id.list);
-        String[] items = new String[]{
-                "Animations", "Apps & Libraries", "Features", "Widgets", "Demos"
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
+        ViewModel[] items = new ViewModel[]{
+                new ViewModel(WidgetsActivity.class, "Widgets"),
+                new ViewModel(FeaturesActivity.class, "Features"),
+                new ViewModel(AnimationsActivity.class, "Animations"),
+                new ViewModel(AppsLibrariesActivity.class, "Apps & Libraries"),
+                new ViewModel(DemosActivity.class, "Demos")
         };
-        final Class[] activities = new Class[]{
-                AnimationsActivity.class, AppsLibrariesActivity.class, FeaturesActivity.class, WidgetsActivity.class, DemosActivity.class
-        };
-        final boolean[] beta = new boolean[]{
-                false, false, false, false, false
-        };
-        listView.setAdapter(new MainListAdapter(items, beta));
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MainActivity.this, activities[position]));
-            }
-        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new MainListAdapter(items));
     }
 
 }

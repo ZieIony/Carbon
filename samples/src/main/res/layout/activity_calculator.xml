@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <carbon.widget.TransitionLayout
+        <carbon.beta.TransitionLayout
             android:id="@+id/transition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -37,7 +37,7 @@
                 android:background="#ff00BCD4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </carbon.widget.TransitionLayout>
+        </carbon.beta.TransitionLayout>
     </carbon.widget.FrameLayout>
 
     <carbon.widget.LinearLayout

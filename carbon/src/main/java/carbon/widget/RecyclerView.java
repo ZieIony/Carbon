@@ -1,26 +1,15 @@
 package carbon.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewParent;
-import android.widget.ListAdapter;
 
-import java.lang.reflect.Method;
-
-import carbon.R;
 import carbon.drawable.EdgeEffect;
 
 /**
- * Created by Marcin on 2015-02-28.
+ * Created by Marcin on 2015-04-28.
  */
-@Deprecated
-public class ListView extends android.widget.ListView {
+public class RecyclerView extends android.support.v7.widget.RecyclerView {
     private final int mTouchSlop;
     int edgeEffectColor;
     EdgeEffect edgeEffectTop;
@@ -33,57 +22,32 @@ public class ListView extends android.widget.ListView {
     public static final int OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
     public static final int OVER_SCROLL_NEVER = 2;
 
-    public ListView(Context context) {
+    public RecyclerView(Context context) {
         this(context, null);
     }
 
-    public ListView(Context context, AttributeSet attrs) {
+    public RecyclerView(Context context, AttributeSet attrs) {
         this(context, attrs, android.R.attr.listViewStyle);
     }
 
-    public ListView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ListView, defStyleAttr, 0);
+        /*TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, 0);
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.ListView_carbon_edgeEffectColor) {
+            if (attr == R.styleable.RecyclerView_carbon_edgeEffectColor) {
                 setEdgeEffectColor(a.getColor(attr, 0));
-            } else if (attr == R.styleable.ListView_carbon_overScroll) {
+            } else if (attr == R.styleable.RecyclerView_carbon_overScroll) {
                 setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
             }
         }
-        a.recycle();
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB && "samsung".equalsIgnoreCase(Build.MANUFACTURER)) {
-            try {
-                Method setEnableExcessScroll = android.widget.ListView.class.getMethod("setEnableExcessScroll", Boolean.TYPE);
-                if (setEnableExcessScroll != null) {
-                    setEnableExcessScroll.invoke(this, Boolean.FALSE);
-                }
-            } catch (Exception ignore) {
-                // Silently ignore
-            }
-        }
+        a.recycle();*/
     }
 
-    @Override
-    public void setEmptyView(View emptyView) {
-        super.setEmptyView(emptyView);
-        if (getEmptyView() != null) {
-            if (getAdapter() != null && getAdapter().getCount() == 0) {
-                getEmptyView().setVisibility(View.VISIBLE);
-                setVisibility(View.GONE);
-            } else {
-                getEmptyView().setVisibility(View.INVISIBLE);
-                setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    private int getScrollRange() {
+    /*private int getScrollRange() {
         if (getAdapter() != null && getChildCount() > 0) {
             if (getLastVisiblePosition() == getAdapter().getCount() - 1) {
                 return getChildAt(getChildCount() - 1).getBottom();
@@ -92,23 +56,9 @@ public class ListView extends android.widget.ListView {
             }
         }
         return 0;
-    }
+    }*/
 
-    @Override
-    public void setAdapter(ListAdapter adapter) {
-        super.setAdapter(adapter);
-        if (getEmptyView() != null) {
-            if (adapter != null && adapter.getCount() == 0) {
-                getEmptyView().setVisibility(View.VISIBLE);
-                setVisibility(View.GONE);
-            } else {
-                getEmptyView().setVisibility(View.INVISIBLE);
-                setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    @Override
+    /*@Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (edgeEffectTop != null) {
@@ -139,9 +89,9 @@ public class ListView extends android.widget.ListView {
                 canvas.restoreToCount(restoreCount);
             }
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
@@ -197,7 +147,7 @@ public class ListView extends android.widget.ListView {
         prevY = ev.getY();
 
         return super.dispatchTouchEvent(ev);
-    }
+    }*/
 
    /* @Override
     public void computeScroll() {
@@ -228,7 +178,7 @@ public class ListView extends android.widget.ListView {
         }
     }*/
 
-    @Override
+    /*@Override
     public void setOverScrollMode(int mode) {
         if (mode != OVER_SCROLL_NEVER) {
             if (edgeEffectTop == null) {
@@ -248,9 +198,9 @@ public class ListView extends android.widget.ListView {
             // Froyo
         }
         this.overscrollMode = mode;
-    }
+    }*/
 
-    public int getEdgeEffectColor() {
+   /* public int getEdgeEffectColor() {
         return edgeEffectColor;
     }
 
@@ -260,5 +210,5 @@ public class ListView extends android.widget.ListView {
             edgeEffectTop.setColor(edgeEffectColor);
         if (edgeEffectBottom != null)
             edgeEffectBottom.setColor(edgeEffectColor);
-    }
+    }*/
 }

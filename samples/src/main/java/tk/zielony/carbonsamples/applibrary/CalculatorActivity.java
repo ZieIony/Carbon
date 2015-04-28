@@ -9,7 +9,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.widget.Button;
-import carbon.widget.TransitionLayout;
+import carbon.beta.TransitionLayout;
 import tk.zielony.carbonsamples.R;
 
 /**

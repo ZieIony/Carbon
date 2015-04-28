@@ -13,7 +13,7 @@ import carbon.widget.FrameLayout;
 import carbon.widget.LinearLayout;
 import carbon.widget.SVGView;
 import carbon.widget.TextView;
-import carbon.widget.TransitionLayout;
+import carbon.beta.TransitionLayout;
 import tk.zielony.carbonsamples.R;
 
 /**

@@ -3,9 +3,10 @@ package tk.zielony.carbonsamples;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.animation.ImageFadeActivity;
@@ -27,26 +28,18 @@ public class AnimationsActivity extends Activity {
         toolbar.setIconVisible(true);
         toolbar.setText("Animations");
 
-        ListView listView = (ListView) findViewById(R.id.list);
-        String[] items = new String[]{
-                "Widget animations", "Image fade", "List ripple", "Ripple comparison (API 21+)", "Radial transition", "Touch ripple", "ScrollView"
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
+        ViewModel[] items = new ViewModel[]{
+                new ViewModel(tk.zielony.carbonsamples.animation.AnimationsActivity.class, "Widget animations"),
+                new ViewModel(ImageFadeActivity.class, "Image fade"),
+                new ViewModel(ListRippleActivity.class, "List ripple"),
+                new ViewModel(RippleComparisonActivity.class, "Ripple comparison", false,true),
+                new ViewModel(RadialTransitionActivity.class, "Radial transition"),
+                new ViewModel(RippleActivity.class, "Touch ripple"),
+                new ViewModel(ScrollViewActivity.class, "ScrollView")
         };
-        final Class[] activities = new Class[]{
-                tk.zielony.carbonsamples.animation.AnimationsActivity.class, ImageFadeActivity.class,
-                ListRippleActivity.class, RippleComparisonActivity.class, RadialTransitionActivity.class,
-                RippleActivity.class, ScrollViewActivity.class
-        };
-        final boolean[] beta = new boolean[]{
-                false, false, false, false, false, false, false
-        };
-        listView.setAdapter(new MainListAdapter(items, beta));
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(AnimationsActivity.this, activities[position]));
-            }
-        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new MainListAdapter(items));
     }
 
 }

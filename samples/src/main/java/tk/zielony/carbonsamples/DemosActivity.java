@@ -1,12 +1,10 @@
 package tk.zielony.carbonsamples;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
 
+import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.demo.AutoCompleteDemo;
 import tk.zielony.carbonsamples.demo.PowerMenuActivity;
@@ -24,24 +22,14 @@ public class DemosActivity extends Activity {
         toolbar.setIconVisible(true);
         toolbar.setText("Demos");
 
-        ListView listView = (ListView) findViewById(R.id.list);
-        String[] items = new String[]{
-                "Power Menu", "Share Toolbar", "Auto Complete"
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
+        ViewModel[] items = new ViewModel[]{
+                new ViewModel(PowerMenuActivity.class, "Power Menu"),
+                new ViewModel(ShareToolbarActivity.class, "Share Toolbar", true),
+                new ViewModel(AutoCompleteDemo.class, "Auto Complete", true)
         };
-        final Class[] activities = new Class[]{
-                PowerMenuActivity.class, ShareToolbarActivity.class, AutoCompleteDemo.class
-        };
-        final boolean[] beta = new boolean[]{
-                false, true, true
-        };
-        listView.setAdapter(new MainListAdapter(items, beta));
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(DemosActivity.this, activities[position]));
-            }
-        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new MainListAdapter(items));
     }
 
 }

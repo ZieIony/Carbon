@@ -5,7 +5,6 @@
     android:background="?attr/carbon_colorBackground"
     app:carbon_rippleColor="?attr/carbon_rippleColor"
     android:orientation="horizontal"
-    android:clickable="true"
     android:layout_height="wrap_content">
 
     <ImageView

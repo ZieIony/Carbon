@@ -32,4 +32,5 @@ dependencies {
     compile 'com.caverock:androidsvg:1.2.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:gridlayout-v7:21.0.3'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
 }

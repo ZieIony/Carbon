@@ -21,10 +21,21 @@
         android:id="@+id/beta"
         android:gravity="center_vertical"
         android:textSize="16sp"
-        android:textColor="#ffff0000"
+        android:textColor="#ffcf0000"
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
         android:text="beta"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp" />
+
+    <carbon.widget.TextView
+        android:id="@+id/lollipop"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:textColor="#ff7f00ff"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:text="Lollipop"
         android:layout_width="wrap_content"
         android:layout_height="56dp" />
 

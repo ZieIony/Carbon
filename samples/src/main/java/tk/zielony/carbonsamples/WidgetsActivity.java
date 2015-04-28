@@ -1,12 +1,10 @@
 package tk.zielony.carbonsamples;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
 
+import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
@@ -31,25 +29,21 @@ public class WidgetsActivity extends Activity {
         toolbar.setIconVisible(true);
         toolbar.setText("Widgets");
 
-        ListView listView = (ListView) findViewById(R.id.list);
-        String[] items = new String[]{
-                "CheckBoxes & RadioButtons", "Buttons", "Dialog", "Circular progress", "Progress bars", "Snackbar", "SVG icons", "Text fields", "Tabs","Recents"
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
+        ViewModel[] items = new ViewModel[]{
+                new ViewModel(CheckBoxRadioActivity.class, "CheckBoxes & RadioButtons"),
+                new ViewModel(ButtonsActivity.class, "Buttons"),
+                new ViewModel(DialogActivity.class, "Dialog", true),
+                new ViewModel(CircularProgressActivity.class, "Circular progress"),
+                new ViewModel(ProgressBarsActivity.class, "Progress bars", true),
+                new ViewModel(SnackbarActivity.class, "Snackbar"),
+                new ViewModel(SVGActivity.class, "SVG icons"),
+                new ViewModel(TextFieldsActivity.class, "Text fields"),
+                new ViewModel(TabsActivity.class, "Tabs"),
+                new ViewModel(RecentsActivity.class, "Recents")
         };
-        final Class[] activities = new Class[]{
-                CheckBoxRadioActivity.class, ButtonsActivity.class, DialogActivity.class, CircularProgressActivity.class, ProgressBarsActivity.class,
-                SnackbarActivity.class, SVGActivity.class, TextFieldsActivity.class, TabsActivity.class, RecentsActivity.class
-        };
-        final boolean[] beta = new boolean[]{
-                false, false, true, false, true, false, false, false, false,false
-        };
-        listView.setAdapter(new MainListAdapter(items, beta));
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(WidgetsActivity.this, activities[position]));
-            }
-        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new MainListAdapter(items));
     }
 
 }

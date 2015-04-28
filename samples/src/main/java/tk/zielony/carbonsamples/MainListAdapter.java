@@ -1,30 +1,39 @@
 package tk.zielony.carbonsamples;
 
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 /**
  * Created by Marcin on 2014-12-15.
  */
-class MainListAdapter extends BaseAdapter {
-    private final String[] items;
-    private boolean[] beta;
+class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
+    private final ViewModel[] items;
 
-    public MainListAdapter(String[] items, boolean[] beta) {
+    public MainListAdapter(ViewModel[] items) {
         this.items = items;
-        this.beta = beta;
     }
 
     @Override
-    public int getCount() {
-        return items.length;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row_main, parent, false));
     }
 
     @Override
-    public Object getItem(int position) {
-        return items[position];
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.textView.setText(items[position].name);
+        holder.beta.setVisibility(items[position].beta ? View.VISIBLE : View.GONE);
+        holder.lollipop.setVisibility(items[position].lollipop ? View.VISIBLE : View.GONE);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.getContext().startActivity(new Intent(v.getContext(), items[position].klass));
+            }
+        });
     }
 
     @Override
@@ -33,17 +42,20 @@ class MainListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
-        if (convertView != null) {
-            view = convertView;
-        } else {
-            view = View.inflate(parent.getContext(), R.layout.row_main, null);
-        }
-        TextView textView = (TextView) view.findViewById(R.id.text);
-        textView.setText(items[position]);
+    public int getItemCount() {
+        return items.length;
+    }
 
-        view.findViewById(R.id.beta).setVisibility(beta[position] ? View.VISIBLE : View.INVISIBLE);
-        return view;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        View beta, lollipop;
+
+        public ViewHolder(View view) {
+            super(view);
+            textView = (TextView) view.findViewById(R.id.text);
+            beta = view.findViewById(R.id.beta);
+            lollipop = view.findViewById(R.id.lollipop);
+
+        }
     }
 }
