@@ -199,6 +199,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
     public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
+        shadow = null;
         initCorners();
     }
 

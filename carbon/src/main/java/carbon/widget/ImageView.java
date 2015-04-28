@@ -81,6 +81,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
+        shadow = null;
         initCorners();
     }
 
