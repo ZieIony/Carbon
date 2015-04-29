@@ -55,7 +55,6 @@ class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
             textView = (TextView) view.findViewById(R.id.text);
             beta = view.findViewById(R.id.beta);
             lollipop = view.findViewById(R.id.lollipop);
-
         }
     }
 }

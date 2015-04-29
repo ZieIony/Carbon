@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.util.AttributeSet;
@@ -12,6 +13,7 @@ import android.util.Log;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 
@@ -123,7 +125,10 @@ public class SVGView extends ImageView {
     }
 
     private void updateColorFilter() {
-        if (filterColor != null)
-            super.setColorFilter(new LightingColorFilter(0, filterColor.getColorForState(getDrawableState(), filterColor.getDefaultColor())));
+        if (filterColor != null) {
+            int color = filterColor.getColorForState(getDrawableState(), filterColor.getDefaultColor());
+            super.setColorFilter(new LightingColorFilter(0, color));
+            setAlpha(Color.alpha(color));
+        }
     }
 }

@@ -1,6 +1,8 @@
 package tk.zielony.carbonsamples.animation;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,11 +21,11 @@ class ListRippleAdapter extends RecyclerView.Adapter<ListRippleAdapter.ViewHolde
 
     @Override
     public ListRippleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(View.inflate(parent.getContext(), R.layout.row_ripple, null));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row_ripple, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ListRippleAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ListRippleAdapter.ViewHolder holder, final int position) {
         holder.textView.setText(items[position]);
     }
 

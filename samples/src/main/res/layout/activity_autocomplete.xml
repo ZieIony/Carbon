@@ -7,20 +7,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <carbon.widget.FrameLayout
+    <carbon.widget.LinearLayout
         app:carbon_cornerRadius="2dp"
         app:carbon_elevation="@dimen/carbon_elevationMax"
+        android:layout_gravity="left|top"
         android:layout_margin="@dimen/carbon_paddingHalf"
         android:background="#ffffffff"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <carbon.widget.AutoCompleteTextView
-            android:id="@+id/search"
-            android:paddingLeft="@dimen/carbon_paddingHalf"
-            android:paddingRight="@dimen/carbon_paddingHalf"
-            app:carbon_dividerColor="#00000000"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_toolbarHeight" />
-    </carbon.widget.FrameLayout>
+            android:layout_height="wrap_content">
+
+            <carbon.widget.SVGView
+                android:layout_width="@dimen/carbon_toolbarHeight"
+                android:layout_height="@dimen/carbon_toolbarHeight"
+                app:carbon_src="@raw/ic_search_24px"
+                app:carbon_filterColor="@color/carbon_black_54"
+                android:padding="@dimen/carbon_padding"
+                android:layout_marginRight="@dimen/carbon_paddingHalf" />
+
+            <carbon.widget.AutoCompleteTextView
+                android:id="@+id/search"
+                app:carbon_dividerColor="#00000000"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/carbon_toolbarHeight" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/resultsDropDown"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <carbon.widget.Divider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <carbon.widget.RecyclerView
+                android:id="@+id/results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </carbon.widget.LinearLayout>
 </carbon.widget.FrameLayout>

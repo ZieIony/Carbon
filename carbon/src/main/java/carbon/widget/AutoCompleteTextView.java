@@ -15,6 +15,12 @@ import carbon.R;
 public class AutoCompleteTextView extends EditText implements TouchMarginView, AnimatedView {
     Filterable adapter;
 
+    public static interface OnAutoCompleteListener{
+        void onAutoComplete();
+    }
+
+    OnAutoCompleteListener autoCompleteListener;
+
     public AutoCompleteTextView(Context context) {
         this(context, null);
     }
@@ -43,15 +49,17 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
             @Override
             public void afterTextChanged(Editable s) {
                 adapter.getFilter().filter(s.toString());
+                if(autoCompleteListener!=null)
+                    autoCompleteListener.onAutoComplete();
             }
         });
     }
 
-    public <T extends ListAdapter & Filterable> void setAdapter(T adapter) {
+    public <T extends Filterable> void setAdapter(T adapter) {
         this.adapter = adapter;
     }
 
-    public void performCompletion() {
-
+    public void setOnAutoCompleteListener(OnAutoCompleteListener autoCompleteListener) {
+        this.autoCompleteListener = autoCompleteListener;
     }
 }

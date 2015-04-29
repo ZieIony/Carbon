@@ -161,6 +161,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
             super.draw(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
 
             paint.setXfermode(pdMode);
             canvas.drawPath(cornersMask, paint);
@@ -169,6 +171,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             paint.setXfermode(null);
         } else {
             super.draw(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
         }
     }
 

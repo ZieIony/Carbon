@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:background="?attr/carbon_colorBackground"
     app:carbon_rippleColor="?attr/carbon_rippleColor"
+    android:clickable="true"
     android:orientation="horizontal"
     android:layout_height="wrap_content">
 

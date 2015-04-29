@@ -126,6 +126,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
 
             super.draw(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
 
             paint.setXfermode(pdMode);
             canvas.drawPath(cornersMask, paint);
@@ -134,6 +136,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             paint.setXfermode(null);
         } else {
             super.draw(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
         }
     }
 
