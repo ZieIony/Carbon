@@ -74,8 +74,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             card = (CardView) itemView;
             LinearLayout content = card.getContent();
             content.setClickable(true);
-            content.setFocusable(true);
-            content.setFocusableInTouchMode(true);
             card.setCardBackgroundColor(Color.WHITE);
 
             RippleDrawable rippleDrawable = new RippleDrawableCompat(0x42ff0000,null,itemView.getContext(),RippleDrawable.Style.Over);

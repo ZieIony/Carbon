@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import carbon.widget.AutoCompleteTextView;
 import carbon.widget.RecyclerView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
@@ -21,7 +22,8 @@ import tk.zielony.carbonsamples.R;
 public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapter.ViewHolder> implements Filterable {
     String[] originalStrings;
     List<String> strings;
-    private AdapterView.OnItemClickListener onItemClickListener;
+    private OnHintClicked onHintClicked;
+    private AutoCompleteTextView.OnAutoCompleteListener onAutoCompleteListener;
 
     public AutoCompleteAdapter(String[] strings) {
         this.originalStrings = strings;
@@ -39,7 +41,7 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onItemClick(null, viewHolder.itemView, i, 0);
+                onHintClicked.onHintClicked(strings.get(i));
             }
         });
     }
@@ -68,12 +70,17 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 strings = (List<String>) results.values;
                 notifyDataSetChanged();
+                onAutoCompleteListener.onAutoComplete();
             }
         };
     }
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnHintClicked(OnHintClicked onHintClicked) {
+        this.onHintClicked = onHintClicked;
+    }
+
+    public void setOnAutoCompleteListener(AutoCompleteTextView.OnAutoCompleteListener onAutoCompleteListener) {
+        this.onAutoCompleteListener = onAutoCompleteListener;
     }
 
     public class ViewHolder extends android.support.v7.widget.RecyclerView.ViewHolder {

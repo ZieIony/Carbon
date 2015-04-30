@@ -26,7 +26,7 @@ public class DemosActivity extends Activity {
         ViewModel[] items = new ViewModel[]{
                 new ViewModel(PowerMenuActivity.class, "Power Menu"),
                 new ViewModel(ShareToolbarActivity.class, "Share Toolbar", true),
-                new ViewModel(AutoCompleteDemo.class, "Auto Complete", true)
+                new ViewModel(AutoCompleteDemo.class, "Auto Complete",true)
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

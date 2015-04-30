@@ -90,7 +90,8 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         counterError = minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters;
         labelPaint.setColor(drawError | counterError ? errorColor : getDividerColor().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
         counterPaint.setColor(drawError | counterError ? errorColor : disabledColor);
-        animateFloatingLabel(isFocused() && s.length() > 0);
+        if (showFloatingLabel)
+            animateFloatingLabel(isFocused() && s.length() > 0);
     }
 
     private Bitmap dashPathBitmap;

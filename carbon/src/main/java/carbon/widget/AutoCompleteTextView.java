@@ -5,7 +5,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.Filterable;
-import android.widget.ListAdapter;
 
 import carbon.R;
 
@@ -14,12 +13,11 @@ import carbon.R;
  */
 public class AutoCompleteTextView extends EditText implements TouchMarginView, AnimatedView {
     Filterable adapter;
+    TextWatcher autoCompleteTextWatcher;
 
     public static interface OnAutoCompleteListener{
         void onAutoComplete();
     }
-
-    OnAutoCompleteListener autoCompleteListener;
 
     public AutoCompleteTextView(Context context) {
         this(context, null);
@@ -35,7 +33,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
     }
 
     private void init() {
-        addTextChangedListener(new TextWatcher() {
+        autoCompleteTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -49,17 +47,19 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
             @Override
             public void afterTextChanged(Editable s) {
                 adapter.getFilter().filter(s.toString());
-                if(autoCompleteListener!=null)
-                    autoCompleteListener.onAutoComplete();
             }
-        });
+        };
+        addTextChangedListener(autoCompleteTextWatcher);
     }
 
     public <T extends Filterable> void setAdapter(T adapter) {
         this.adapter = adapter;
     }
 
-    public void setOnAutoCompleteListener(OnAutoCompleteListener autoCompleteListener) {
-        this.autoCompleteListener = autoCompleteListener;
+    public void performCompletion(String s){
+        removeTextChangedListener(autoCompleteTextWatcher);
+        setText(s);
+        setSelection(s.length());
+        addTextChangedListener(autoCompleteTextWatcher);
     }
 }

@@ -128,6 +128,8 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
             if (shadow != null) {
                 paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
 
+                float childElevation = shadowView.getElevation()+shadowView.getTranslationZ();
+
                 float[] childLocation = new float[]{(child.getLeft() + child.getRight()) / 2, (child.getTop() + child.getBottom()) / 2};
                 Matrix matrix = carbon.internal.ViewHelper.getMatrix(child);
                 matrix.mapPoints(childLocation);
@@ -142,8 +144,8 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
                 int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
                 canvas.translate(
-                        x / length * elevation / 2,
-                        y / length * elevation / 2);
+                        x / length * childElevation / 2,
+                        y / length * childElevation / 2);
                 canvas.translate(
                         child.getLeft(),
                         child.getTop());
@@ -200,7 +202,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
-        shadow = null;
+        invalidateShadow();
         initCorners();
     }
 
@@ -211,7 +213,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         if (!changed)
             return;
 
-        shadow = null;
+        invalidateShadow();
 
         if (getWidth() == 0 || getHeight() == 0)
             return;
@@ -387,6 +389,13 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
             return shadow;
         }
         return null;
+    }
+
+    @Override
+    public void invalidateShadow() {
+        shadow = null;
+        if (getParent() != null)
+            ((View) getParent()).postInvalidate();
     }
 
 

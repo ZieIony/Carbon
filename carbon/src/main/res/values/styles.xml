@@ -433,6 +433,10 @@
         <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
     </style>
 
+    <style name="carbon_RecyclerView" parent="@android:style/Widget.ListView">
+        <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
+    </style>
+
     <style name="carbon_Divider">
         <item name="android:background">?attr/carbon_dividerColor</item>
     </style>

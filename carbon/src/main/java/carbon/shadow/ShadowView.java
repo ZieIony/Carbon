@@ -15,4 +15,6 @@ public interface ShadowView {
     ShadowShape getShadowShape();
 
     Shadow getShadow();
+
+    void invalidateShadow();
 }

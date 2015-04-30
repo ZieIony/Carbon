@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 
 import carbon.widget.AutoCompleteTextView;
 import carbon.widget.RecyclerView;
@@ -14,7 +14,7 @@ import tk.zielony.carbonsamples.R;
  * Created by Marcin on 2015-04-26.
  */
 public class AutoCompleteDemo extends Activity {
-    String[] language = {"C", "C++", "Java", ".NET", "iPhone", "Android", "ASP.NET", "PHP"};
+    String[] language = {"Apple", "Lime", "Lemon", "Orange", "Strawberry", "Watermelon", "Blueberry", "Plum"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,12 @@ public class AutoCompleteDemo extends Activity {
 
         final View dropDown = findViewById(R.id.resultsDropDown);
 
+        final RecyclerView recycler = (RecyclerView) findViewById(R.id.results);
+        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        final ViewGroup.LayoutParams recyclerLayoutParams = recycler.getLayoutParams();
+        recyclerLayoutParams.height = (int) (Math.min(3, adapter.getItemCount()) * getResources().getDimension(R.dimen.carbon_toolbarHeight));
+        recycler.setLayoutParams(recyclerLayoutParams);
+
         final AutoCompleteTextView search = (AutoCompleteTextView) findViewById(R.id.search);
         search.setAdapter(adapter);
         search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -33,23 +39,34 @@ public class AutoCompleteDemo extends Activity {
                 dropDown.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
             }
         });
-        search.setOnAutoCompleteListener(new AutoCompleteTextView.OnAutoCompleteListener() {
+
+        adapter.setOnAutoCompleteListener(new AutoCompleteTextView.OnAutoCompleteListener() {
             @Override
             public void onAutoComplete() {
-                dropDown.requestLayout();
+                recyclerLayoutParams.height = (int) (Math.min(3, adapter.getItemCount()) * getResources().getDimension(R.dimen.carbon_toolbarHeight));
+                recycler.setLayoutParams(recyclerLayoutParams);
+                dropDown.setVisibility(View.VISIBLE);
             }
         });
-
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.results);
-        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         recycler.setAdapter(adapter);
-        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter.setOnHintClicked(new OnHintClicked() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                search.setText(language[position]);
+            public void onHintClicked(String hint) {
+                search.performCompletion(hint);
+                dropDown.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        View editText = getCurrentFocus();
+        if (editText != null && editText instanceof AutoCompleteTextView) {
+            editText.clearFocus();
+            return;
+        }
+        super.onBackPressed();
     }
 }
