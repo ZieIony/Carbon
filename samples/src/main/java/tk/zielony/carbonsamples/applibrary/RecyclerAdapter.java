@@ -48,8 +48,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.image.setImageBitmap(null);
         Picasso.with(holder.image.getContext()).cancelRequest(holder.image);
         holder.image.setVisibility(View.INVISIBLE);
-        //Picasso.with(holder.image.getContext()).load(item.getImage()).into((Target)holder.image);
-        Picasso.with(holder.image.getContext()).load(R.drawable.mazda).into((Target)holder.image);
+        Picasso.with(holder.image.getContext()).load(item.getImage()).into((Target)holder.image);
+        //Picasso.with(holder.image.getContext()).load(R.drawable.mazda).into((Target)holder.image);
         holder.itemView.setTag(item);
 
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.card.getLayoutParams();

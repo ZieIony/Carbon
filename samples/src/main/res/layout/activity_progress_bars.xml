@@ -4,34 +4,33 @@
     android:fitsSystemWindows="true"
     app:carbon_insetColor="?attr/carbon_colorPrimary"
     android:orientation="vertical"
-    android:padding="@dimen/carbon_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress5"
+        android:layout_margin="@dimen/carbon_padding"
         app:carbon_progressStyle="bar_indeterminate"
         app:carbon_barWidth="5dp"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_marginTop="@dimen/carbon_padding" />
+        android:layout_height="5dp" />
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress6"
+        android:layout_margin="@dimen/carbon_padding"
         app:carbon_progressStyle="bar_determinate"
         app:carbon_barWidth="5dp"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_marginTop="@dimen/carbon_padding" />
+        android:layout_height="5dp" />
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress7"
+        android:layout_margin="@dimen/carbon_padding"
         app:carbon_progressStyle="bar_query"
         app:carbon_barBackground="#3fff0000"
         app:carbon_barColor="#ffff0000"
         app:carbon_barWidth="5dp"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_marginTop="@dimen/carbon_padding" />
+        android:layout_height="5dp" />
 
 </carbon.widget.LinearLayout>

@@ -4,13 +4,13 @@
     android:fitsSystemWindows="true"
     app:carbon_insetColor="?attr/carbon_colorPrimary"
     android:orientation="vertical"
-    android:padding="@dimen/carbon_padding"
-    android:layout_width="match_parent"
+     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <carbon.widget.ProgressBar
         app:carbon_progressStyle="circular_determinate"
         android:id="@+id/progress1"
+        android:layout_margin="@dimen/carbon_padding"
         android:layout_width="40dp"
         android:layout_height="40dp" />
 
@@ -18,12 +18,14 @@
         android:layout_gravity="right"
         android:id="@+id/button1"
         android:text="animate"
+        android:layout_marginRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress2"
         app:carbon_progressStyle="circular_indeterminate"
+        android:layout_margin="@dimen/carbon_padding"
         android:layout_width="40dp"
         android:layout_height="40dp" />
 
@@ -31,6 +33,7 @@
         android:layout_gravity="right"
         android:id="@+id/button2"
         android:text="animate"
+        android:layout_marginRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -40,6 +43,7 @@
         app:carbon_barBackground="#3fff0000"
         app:carbon_barColor="#ffff0000"
         app:carbon_barWidth="5dp"
+        android:layout_margin="@dimen/carbon_padding"
         android:layout_width="40dp"
         android:layout_height="40dp" />
 
@@ -47,11 +51,12 @@
         android:layout_gravity="right"
         android:id="@+id/button3"
         android:text="animate"
+        android:layout_marginRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <carbon.widget.RelativeLayout
-        android:padding="@dimen/carbon_padding"
+        android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -73,6 +78,7 @@
     <carbon.widget.Button
         android:layout_gravity="right"
         android:id="@+id/button4"
+        android:layout_marginRight="@dimen/carbon_padding"
         android:text="animate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

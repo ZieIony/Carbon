@@ -438,6 +438,7 @@
     </style>
 
     <style name="carbon_RecyclerView" parent="@android:style/Widget.ListView">
+        <item name="android:fadingEdge">none</item>
         <item name="carbon_edgeEffectColor">?attr/carbon_colorPrimary</item>
     </style>
 
