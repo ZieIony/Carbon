@@ -31,6 +31,7 @@
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
+        <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -109,6 +110,7 @@
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
+        <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
 
         <item name="carbon_colorPrimary">#ff213C6B</item>
         <item name="carbon_colorPrimaryDark">#ff162949</item>
@@ -186,6 +188,7 @@
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
+        <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
 
         <item name="colorPrimary">#ff213C6B</item>
         <item name="colorPrimaryDark">#ff162949</item>
@@ -268,6 +271,7 @@
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
+        <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
 
         <item name="colorPrimary">#ff213C6B</item>
         <item name="colorPrimaryDark">#ff162949</item>

@@ -297,6 +297,7 @@
         <attr name="carbon_overScroll" />
     </declare-styleable>
 
+    <attr name="carbon_recyclerViewStyle" />
     <declare-styleable name="RecyclerView">
         <attr name="carbon_edgeEffectColor" />
     </declare-styleable>

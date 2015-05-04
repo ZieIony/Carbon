@@ -31,7 +31,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
     }
 
     public RecyclerView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.listViewStyle);
+        this(context, attrs, R.attr.carbon_recyclerViewStyle);
     }
 
     public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -146,14 +146,14 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (leftGlow != null)
-            leftGlow.setDisplacement(1-ev.getY() / getHeight());
-        if (rightGlow != null)
-            rightGlow.setDisplacement(ev.getY() / getHeight());
-        if (topGlow != null)
-            topGlow.setDisplacement(ev.getX() / getWidth());
-        if (bottomGlow != null)
-            bottomGlow.setDisplacement(1-ev.getX() / getWidth());
+        ensureTopGlow();
+        ensureLeftGlow();
+        ensureRightGlow();
+        ensureBottomGlow();
+        leftGlow.setDisplacement(1 - ev.getY() / getHeight());
+        rightGlow.setDisplacement(ev.getY() / getHeight());
+        topGlow.setDisplacement(ev.getX() / getWidth());
+        bottomGlow.setDisplacement(1 - ev.getX() / getWidth());
         return super.dispatchTouchEvent(ev);
     }
 
