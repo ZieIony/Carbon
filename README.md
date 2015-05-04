@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.7.4-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.7.4/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.8.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.8.0/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 Carbon
@@ -16,6 +16,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
 ![RecyclerView and CardView](https://github.com/ZieIony/Carbon/blob/master/images/recyclercards.png)
 ![CheckBoxes](https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png)
 ![PagerTabStrip](https://github.com/ZieIony/Carbon/blob/master/images/pagertabstrip.png)
+![Drawer](https://github.com/ZieIony/Carbon/blob/master/images/drawer.png)
 
 ### Features
  - realtime, animated shadows
@@ -28,7 +29,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - roboto and roboto condensed fonts for buttons and text fields
  - predefined animation styles and visibility change animations
  - a saturation/brightness/alpha fade for ImageView
- - Divider, StatusBar and NavigationBar drag&drop views
+ - Divider drag&drop view
  - dark and light themes in standard and AppCompat versions
  - a radial transition animation
  - circular progress indicators
@@ -37,15 +38,15 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - debug mode showing draw and hit areas when in edit mode
  - tab strip with animated underline
  - fading edges
- - checkboxes and radiobuttons
+ - animated checkboxes and radiobuttons
  - DrawerLayout with real shadows
- - ScrimInsetsLayout
+ - EditText with floating label, character counter and pattern validation
  - Lollipop's recents list layout
 
 ### Instalation
 Add the following line to dependencies:
 
-    compile 'tk.zielony:carbon:0.7.4'
+    compile 'tk.zielony:carbon:0.8.0'
     
 And these two lines to android/defaultConfig:
 
@@ -104,6 +105,12 @@ Then go to the editor and pick that theme to be used by the editor. You can crea
     </style>
 
 ### Changelog
+#####
+ - native shadows on 5.+
+ - RecyclerView and EditText
+ - AutoComplete demo
+ - fixed bugs with shadows and ripples
+
 ##### 0.7.4
  - clipToOutline on 5.+,
  - added Power Menu demo,
