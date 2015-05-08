@@ -52,7 +52,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="ok"
                 android:background="?attr/carbon_colorBackground"
-                android:textColor="?attr/carbon_colorAccent"
+                android:textColor="?attr/colorAccent"
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

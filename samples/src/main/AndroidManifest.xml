@@ -31,9 +31,6 @@
             android:name=".feature.LargeShadowActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".feature.ShadowActivity"
-            android:label="@string/app_name" />
-        <activity
             android:name=".feature.RobotoActivity"
             android:label="@string/app_name" />
         <activity
@@ -50,7 +47,6 @@
             android:label="@string/app_name" />
         <activity
             android:name=".widget.TextFieldsActivity"
-            android:theme="@style/carbon_Theme.AppCompat.Light"
             android:label="@string/app_name" />
         <activity
             android:name=".feature.ZOrderActivity"

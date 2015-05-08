@@ -16,7 +16,7 @@ public class ControlCheckedColorStateList extends ColorStateList {
                 new int[]{android.R.attr.state_checked},
                 new int[]{}
         }, new int[]{
-                getThemeColor(context, R.attr.carbon_colorPrimary),
+                getThemeColor(context, R.attr.colorAccent),
                 getThemeColor(context, R.attr.carbon_colorControl)
         });
     }

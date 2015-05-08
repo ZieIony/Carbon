@@ -16,7 +16,7 @@ public class ControlFocusedColorStateList extends ColorStateList {
                 new int[]{android.R.attr.state_focused},
                 new int[]{}
         }, new int[]{
-                getThemeColor(context, R.attr.carbon_colorAccent),
+                getThemeColor(context, R.attr.colorAccent),
                 getThemeColor(context, R.attr.carbon_colorControl)
         });
     }

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="Carbon">
-        <attr name="carbon_colorPrimary" format="reference|color" />
-        <attr name="carbon_colorPrimaryDark" format="reference|color" />
-        <attr name="carbon_colorAccent" format="reference|color" />
         <attr name="carbon_colorBackground" format="reference|color" />
         <attr name="carbon_colorBackground_inverse" format="reference|color" />
         <attr name="carbon_colorError" format="reference|color" />

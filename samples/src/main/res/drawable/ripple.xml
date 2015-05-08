@@ -3,7 +3,7 @@
     android:color="?attr/carbon_rippleColor">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="?attr/carbon_colorPrimary" />
+            <solid android:color="?attr/colorPrimary" />
         </shape>
     </item>
 </ripple>

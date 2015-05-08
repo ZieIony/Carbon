@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/carbon_colorPrimary"
+    app:carbon_insetColor="?attr/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 

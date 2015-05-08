@@ -2,7 +2,7 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    app:carbon_insetColor="?attr/carbon_colorPrimary"
+    app:carbon_insetColor="?attr/colorPrimary"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">

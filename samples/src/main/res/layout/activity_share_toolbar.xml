@@ -2,7 +2,7 @@
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/carbon_colorPrimary"
+    app:carbon_insetColor="?attr/colorPrimary"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/carbon_padding"
         android:layout_gravity="bottom|right"
         app:carbon_elevation="@dimen/carbon_elevationMax"
-        android:background="?attr/carbon_colorAccent"
+        android:background="?attr/colorAccent"
         app:carbon_cornerRadius="28dp"
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize">

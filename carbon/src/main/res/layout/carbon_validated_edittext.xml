@@ -20,7 +20,7 @@
         android:layout_height="32dp" />
 
     <FrameLayout
-        android:background="?attr/carbon_colorAccent"
+        android:background="?attr/colorAccent"
         android:textColorHint="#4c000000"
         android:id="@+id/line"
         android:layout_marginTop="7dp"
