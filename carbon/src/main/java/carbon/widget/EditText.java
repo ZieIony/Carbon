@@ -115,6 +115,9 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
+        if(isInEditMode())
+            return;
+
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.RadioButton_android_textAppearance, -1);
@@ -267,6 +270,9 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        if(isInEditMode())
+            return;
+
         if (isFocused() && isEnabled()) {
             paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
         } else {

@@ -8,12 +8,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 
@@ -83,10 +84,10 @@ public class SVGView extends ImageView {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if (isInEditMode() || svgId == 0)
+        if (isInEditMode())
             return;
 
-        if (bitmap == null || changed &&
+        if (svgId != 0 && bitmap == null || bitmap != null && changed &&
                 bitmap.getWidth() != right - left - getPaddingLeft() - getPaddingRight() &&
                 bitmap.getHeight() != bottom - top - getPaddingTop() - getPaddingBottom())
             render();
@@ -130,5 +131,37 @@ public class SVGView extends ImageView {
             super.setColorFilter(new LightingColorFilter(0, color));
             setAlpha(Color.alpha(color));
         }
+    }
+
+    @Override
+    public void setImageBitmap(Bitmap bm) {
+        super.setImageBitmap(bm);
+        bitmap = null;
+        svgId = 0;
+        svg = null;
+    }
+
+    @Override
+    public void setImageDrawable(Drawable drawable) {
+        super.setImageDrawable(drawable);
+        bitmap = null;
+        svgId = 0;
+        svg = null;
+    }
+
+    @Override
+    public void setImageResource(int resId) {
+        super.setImageResource(resId);
+        bitmap = null;
+        svgId = 0;
+        svg = null;
+    }
+
+    @Override
+    public void setImageURI(Uri uri) {
+        super.setImageURI(uri);
+        bitmap = null;
+        svgId = 0;
+        svg = null;
     }
 }
