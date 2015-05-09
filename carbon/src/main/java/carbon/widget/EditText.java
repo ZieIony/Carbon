@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextPaint;
@@ -126,9 +127,11 @@ public class EditText extends android.widget.EditText implements TouchMarginView
                 for (int i = 0; i < appearance.getIndexCount(); i++) {
                     int attr = appearance.getIndex(i);
                     if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
-                        setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                    } else if (attr == R.styleable.TextAppearance_carbon_textStyle) {
-                        setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                        setAllCaps(appearance.getBoolean(attr, true));
+                    } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                        String path = appearance.getString(attr);
+                        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                        setTypeface(typeface);
                     }
                 }
                 appearance.recycle();
@@ -138,9 +141,11 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.EditText_carbon_textAllCaps) {
-                setAllCaps(a.getBoolean(R.styleable.EditText_carbon_textAllCaps, false));
-            } else if (attr == R.styleable.EditText_carbon_textStyle) {
-                setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.EditText_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                setAllCaps(a.getBoolean(attr, false));
+            } else if (attr == R.styleable.EditText_carbon_fontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                setTypeface(typeface);
             }
         }
 
@@ -481,22 +486,6 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         this.inAnim = inAnim;
     }
 
-
-    // -------------------------------
-    // roboto
-    // -------------------------------
-
-    Roboto.Style style;
-
-    public void setTextStyle(Roboto.Style style) {
-        this.style = style;
-        if (!isInEditMode())
-            super.setTypeface(Roboto.getTypeface(getContext(), style));
-    }
-
-    public Roboto.Style getTextStyle() {
-        return style;
-    }
 
     // -------------------------------
     // tint

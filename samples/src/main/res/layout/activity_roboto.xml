@@ -15,7 +15,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_textStyle="regular" />
+        app:carbon_fontPath="carbon/Roboto-Regular.ttf" />
 
     <carbon.widget.TextView
         android:text="Roboto light"
@@ -25,7 +25,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_textStyle="light" />
+        app:carbon_fontPath="carbon/Roboto-Light.ttf" />
 
     <carbon.widget.TextView
         android:text="Roboto bold"
@@ -35,7 +35,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_textStyle="bold" />
+        app:carbon_fontPath="carbon/Roboto-Bold.ttf" />
 
     <carbon.widget.TextView
         android:text="Roboto italic"
@@ -45,7 +45,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_textStyle="italic" />
+        app:carbon_fontPath="carbon/Roboto-Italic.ttf" />
 
     <carbon.widget.TextView
         android:text="Roboto condensed regular"
@@ -55,7 +55,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_textStyle="condensedRegular" />
+        app:carbon_fontPath="carbon/RobotoCondensed-Regular.ttf" />
 
     <carbon.widget.TextView
         android:text="Roboto thin italic"
@@ -65,5 +65,5 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_textStyle="thinItalic" />
+        app:carbon_fontPath="carbon/Roboto-ThinItalic.ttf" />
 </carbon.widget.LinearLayout>

@@ -16,12 +16,12 @@
         <item name="carbon_rippleHotspot">false</item>
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">30sp</item>
-        <item name="carbon_textStyle">light</item>
+        <item name="carbon_fontPath">"carbon/Roboto-Light.ttf"</item>
     </style>
 
     <style name="calcButtonStyle2" parent="calcButtonStyle">
         <item name="android:textSize">16sp</item>
-        <item name="carbon_textStyle">regular</item>
+        <item name="carbon_fontPath">"carbon/Roboto-Regular.ttf"</item>
     </style>
 
 </resources>

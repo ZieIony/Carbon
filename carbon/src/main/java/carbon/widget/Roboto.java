@@ -33,25 +33,25 @@ public class Roboto {
     static Map<Style, String> typefacePaths = new HashMap<Style, String>();
 
     static {
-        typefacePaths.put(Style.Black, "Roboto-Black.ttf");
-        typefacePaths.put(Style.BlackItalic, "Roboto-BlackItalic.ttf");
-        typefacePaths.put(Style.Bold, "Roboto-Bold.ttf");
-        typefacePaths.put(Style.BoldItalic, "Roboto-BoldItalic.ttf");
-        typefacePaths.put(Style.Italic, "Roboto-Italic.ttf");
-        typefacePaths.put(Style.Light, "Roboto-Light.ttf");
-        typefacePaths.put(Style.LightItalic, "Roboto-LightItalic.ttf");
-        typefacePaths.put(Style.Medium, "Roboto-Medium.ttf");
-        typefacePaths.put(Style.MediumItalic, "Roboto-MediumItalic.ttf");
-        typefacePaths.put(Style.Regular, "Roboto-Regular.ttf");
-        typefacePaths.put(Style.Thin, "Roboto-Thin.ttf");
-        typefacePaths.put(Style.ThinItalic, "Roboto-ThinItalic.ttf");
+        typefacePaths.put(Style.Black, "carbon/Roboto-Black.ttf");
+        typefacePaths.put(Style.BlackItalic, "carbon/Roboto-BlackItalic.ttf");
+        typefacePaths.put(Style.Bold, "carbon/Roboto-Bold.ttf");
+        typefacePaths.put(Style.BoldItalic, "carbon/Roboto-BoldItalic.ttf");
+        typefacePaths.put(Style.Italic, "carbon/Roboto-Italic.ttf");
+        typefacePaths.put(Style.Light, "carbon/Roboto-Light.ttf");
+        typefacePaths.put(Style.LightItalic, "carbon/Roboto-LightItalic.ttf");
+        typefacePaths.put(Style.Medium, "carbon/Roboto-Medium.ttf");
+        typefacePaths.put(Style.MediumItalic, "carbon/Roboto-MediumItalic.ttf");
+        typefacePaths.put(Style.Regular, "carbon/Roboto-Regular.ttf");
+        typefacePaths.put(Style.Thin, "carbon/Roboto-Thin.ttf");
+        typefacePaths.put(Style.ThinItalic, "carbon/Roboto-ThinItalic.ttf");
 
-        typefacePaths.put(Style.CondensedBold, "RobotoCondensed-Bold.ttf");
-        typefacePaths.put(Style.CondensedBoldItalic, "RobotoCondensed-BoldItalic.ttf");
-        typefacePaths.put(Style.CondensedItalic, "RobotoCondensed-Italic.ttf");
-        typefacePaths.put(Style.CondensedLight, "RobotoCondensed-Light.ttf");
-        typefacePaths.put(Style.CondensedLightItalic, "RobotoCondensed-LightItalic.ttf");
-        typefacePaths.put(Style.CondensedRegular, "RobotoCondensed-Regular.ttf");
+        typefacePaths.put(Style.CondensedBold, "carbon/RobotoCondensed-Bold.ttf");
+        typefacePaths.put(Style.CondensedBoldItalic, "carbon/RobotoCondensed-BoldItalic.ttf");
+        typefacePaths.put(Style.CondensedItalic, "carbon/RobotoCondensed-Italic.ttf");
+        typefacePaths.put(Style.CondensedLight, "carbon/RobotoCondensed-Light.ttf");
+        typefacePaths.put(Style.CondensedLightItalic, "carbon/RobotoCondensed-LightItalic.ttf");
+        typefacePaths.put(Style.CondensedRegular, "carbon/RobotoCondensed-Regular.ttf");
     }
 
     public static android.graphics.Typeface getTypeface(Context context, Style style) {

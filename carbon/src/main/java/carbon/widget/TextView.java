@@ -3,6 +3,7 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -45,9 +46,11 @@ public class TextView extends android.widget.TextView implements TouchMarginView
                 for (int i = 0; i < appearance.getIndexCount(); i++) {
                     int attr = appearance.getIndex(i);
                     if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
-                        setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                    } else if (attr == R.styleable.TextAppearance_carbon_textStyle) {
-                        setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                        setAllCaps(appearance.getBoolean(attr, true));
+                    } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                        String path = appearance.getString(attr);
+                        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                        setTypeface(typeface);
                     }
                 }
             }
@@ -57,9 +60,11 @@ public class TextView extends android.widget.TextView implements TouchMarginView
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.TextView_carbon_textAllCaps) {
-                setAllCaps(a.getBoolean(R.styleable.TextView_carbon_textAllCaps, false));
-            } else if (attr == R.styleable.TextView_carbon_textStyle) {
-                setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.TextView_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                setAllCaps(a.getBoolean(attr, false));
+            } else if (attr == R.styleable.TextView_carbon_fontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                setTypeface(typeface);
             }
         }
 
@@ -177,22 +182,5 @@ public class TextView extends android.widget.TextView implements TouchMarginView
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
-    }
-
-
-    // -------------------------------
-    // roboto
-    // -------------------------------
-
-    Roboto.Style style;
-
-    public void setTextStyle(Roboto.Style style) {
-        this.style = style;
-        if (!isInEditMode())
-            super.setTypeface(Roboto.getTypeface(getContext(), style));
-    }
-
-    public Roboto.Style getTextStyle() {
-        return style;
     }
 }

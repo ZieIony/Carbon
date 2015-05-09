@@ -18,7 +18,7 @@
     <carbon.widget.TextView
         android:id="@+id/carbon_tabText"
         android:duplicateParentState="true"
-        app:carbon_textStyle="medium"
+        app:carbon_fontPath="carbon/Roboto-Medium"
         android:textSize="14sp"
         android:textColor="@drawable/carbon_tab_text"
         android:layout_alignBaseline="@+id/carbon_marker"

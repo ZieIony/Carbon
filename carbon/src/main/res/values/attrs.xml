@@ -82,26 +82,7 @@
         <enum name="never" value="2" />
     </attr>
 
-    <attr name="carbon_textStyle" format="enum">
-        <enum name="black" value="0" />
-        <enum name="blackItalic" value="1" />
-        <enum name="bold" value="2" />
-        <enum name="boldItalic" value="3" />
-        <enum name="italic" value="4" />
-        <enum name="light" value="5" />
-        <enum name="lightItalic" value="6" />
-        <enum name="medium" value="7" />
-        <enum name="mediumItalic" value="8" />
-        <enum name="regular" value="9" />
-        <enum name="thin" value="10" />
-        <enum name="thinItalic" value="11" />
-        <enum name="condensedBold" value="12" />
-        <enum name="condensedBoldItalic" value="13" />
-        <enum name="condensedItalic" value="14" />
-        <enum name="condensedLight" value="15" />
-        <enum name="condensedLightItalic" value="16" />
-        <enum name="condensedRegular" value="17" />
-    </attr>
+    <attr name="carbon_fontPath" format="string"/>
 
     <attr name="carbon_fabStyle" format="reference" />
     <declare-styleable name="SVGActionButton">
@@ -114,7 +95,7 @@
 
     <declare-styleable name="Button">
         <attr name="carbon_elevation" />
-        <attr name="carbon_textStyle" />
+        <attr name="carbon_fontPath" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
         <attr name="carbon_touchMargin" />
@@ -126,7 +107,7 @@
     </declare-styleable>
 
     <declare-styleable name="TextView">
-        <attr name="carbon_textStyle" />
+        <attr name="carbon_fontPath" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
     </declare-styleable>
@@ -238,7 +219,7 @@
     <attr name="carbon_editTextStyle" format="reference" />
     <declare-styleable name="EditText">
         <attr name="carbon_textAllCaps" />
-        <attr name="carbon_textStyle" />
+        <attr name="carbon_fontPath" />
         <attr name="carbon_minCharacters" format="integer" />
         <attr name="carbon_maxCharacters" format="integer" />
         <attr name="carbon_pattern" format="string" />
@@ -254,7 +235,7 @@
     </declare-styleable>
 
     <declare-styleable name="TextAppearance">
-        <attr name="carbon_textStyle" />
+        <attr name="carbon_fontPath" />
         <attr name="carbon_textAllCaps" />
     </declare-styleable>
 
@@ -279,14 +260,14 @@
 
     <attr name="carbon_checkBoxStyle" />
     <declare-styleable name="CheckBox">
-        <attr name="carbon_textStyle" />
+        <attr name="carbon_fontPath" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
     </declare-styleable>
 
     <attr name="carbon_radioButtonStyle" />
     <declare-styleable name="RadioButton">
-        <attr name="carbon_textStyle" />
+        <attr name="carbon_fontPath" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
     </declare-styleable>

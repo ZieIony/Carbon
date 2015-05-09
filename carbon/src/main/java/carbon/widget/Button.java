@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -65,8 +66,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                     int attr = appearance.getIndex(i);
                     if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
                         setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                    } else if (attr == R.styleable.TextAppearance_carbon_textStyle) {
-                        setTextStyle(Roboto.Style.values()[appearance.getInt(R.styleable.TextAppearance_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+                    } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                        String path = appearance.getString(attr);
+                        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                        setTypeface(typeface);
                     }
                 }
             }
@@ -79,8 +82,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             int attr = a.getIndex(i);
             if (attr == R.styleable.Button_carbon_textAllCaps) {
                 setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
-            } else if (attr == R.styleable.Button_carbon_textStyle) {
-                setTextStyle(Roboto.Style.values()[a.getInt(R.styleable.Button_carbon_textStyle, Roboto.Style.Regular.ordinal())]);
+            } else if (attr == R.styleable.Button_carbon_fontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                setTypeface(typeface);
             }
         }
 
@@ -420,22 +425,5 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
-    }
-
-
-    // -------------------------------
-    // roboto
-    // -------------------------------
-
-    Roboto.Style style;
-
-    public void setTextStyle(Roboto.Style style) {
-        this.style = style;
-        if (!isInEditMode())
-            super.setTypeface(Roboto.getTypeface(getContext(), style));
-    }
-
-    public Roboto.Style getTextStyle() {
-        return style;
     }
 }

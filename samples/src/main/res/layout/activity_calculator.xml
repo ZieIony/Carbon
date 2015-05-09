@@ -24,7 +24,7 @@
 
                 <carbon.widget.TextView
                     android:id="@+id/display"
-                    app:carbon_textStyle="light"
+                    app:carbon_fontPath="carbon/Roboto-Light.ttf"
                     android:textSize="60sp"
                     android:textColor="#ffA69DA1"
                     android:padding="@dimen/carbon_padding"
