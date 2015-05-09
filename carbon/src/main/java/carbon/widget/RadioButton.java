@@ -28,7 +28,7 @@ import carbon.drawable.RippleView;
 /**
  * Created by Marcin on 2015-03-06.
  */
-public class RadioButton extends android.widget.RadioButton implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
+public class RadioButton extends android.widget.RadioButton implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView,TintedView {
     private CheckableDrawable drawable;
 
     public RadioButton(Context context) {
@@ -81,14 +81,13 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
             }
         }
 
-        ColorStateList csl = a.getColorStateList(R.styleable.RadioButton_carbon_radioColor);
-        drawable.setColor(csl != null ? csl : new ControlCheckedColorStateList(getContext()));
+        a.recycle();
 
         setCheckedImmediate(isChecked());
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        a.recycle();
+        Carbon.initTint(this,attrs,defStyleAttr);
     }
 
     @Override
@@ -303,5 +302,27 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
 
     public Roboto.Style getTextStyle() {
         return style;
+    }
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list;
+        drawable.setColor(tint != null ? tint : new ControlCheckedColorStateList(getContext()));
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
     }
 }

@@ -8,7 +8,11 @@
         <attr name="carbon_colorControl" format="reference|color" />
 
         <attr name="carbon_dividerColor" format="reference|color" />
+        <attr name="carbon_edgeEffectColor" format="color|reference" />
         <attr name="carbon_iconColor" format="reference|color" />
+
+        <attr name="carbon_tint" format="color|reference" />
+
         <attr name="carbon_rippleColor" format="reference|color" />
         <attr name="carbon_rippleHotspot" format="boolean" />
         <attr name="carbon_rippleStyle" format="enum">
@@ -72,7 +76,6 @@
     <attr name="carbon_elevation" format="dimension" />
     <attr name="carbon_cornerRadius" format="dimension" />
     <attr name="carbon_textAllCaps" format="boolean" />
-    <attr name="carbon_edgeEffectColor" format="color|reference" />
     <attr name="carbon_overScroll" format="enum">
         <enum name="always" value="0" />
         <enum name="ifContentScrolls" value="1" />
@@ -107,16 +110,6 @@
 
     <declare-styleable name="ImageActionButton">
         <attr name="carbon_cornerRadius" />
-    </declare-styleable>
-
-    <attr name="carbon_statusBarStyle" format="reference" />
-    <declare-styleable name="StatusBar">
-        <attr name="android:background" />
-    </declare-styleable>
-
-    <attr name="carbon_navigationBarStyle" format="reference" />
-    <declare-styleable name="NavigationBar">
-        <attr name="android:background" />
     </declare-styleable>
 
     <declare-styleable name="Button">
@@ -185,11 +178,6 @@
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
 
-    <attr name="carbon_scrimInsetsLayoutStyle" format="reference" />
-    <declare-styleable name="ScrimInsetsLayout">
-        <attr name="carbon_insetForeground" format="color|reference"/>
-    </declare-styleable>
-
     <attr name="carbon_snackbarStyle" format="reference" />
     <declare-styleable name="Snackbar">
         <attr name="carbon_layoutStyle" format="enum">
@@ -255,9 +243,7 @@
         <attr name="carbon_maxCharacters" format="integer" />
         <attr name="carbon_pattern" format="string" />
         <attr name="carbon_errorMessage" format="string" />
-        <attr name="carbon_dividerColor" />
-        <attr name="carbon_dividerPadding" format="dimension" />
-        <attr name="carbon_floatingLabel" format="boolean"/>
+        <attr name="carbon_floatingLabel" format="boolean" />
     </declare-styleable>
 
     <attr name="carbon_pagerTabStripStyle" format="reference" />
@@ -273,24 +259,16 @@
     </declare-styleable>
 
     <declare-styleable name="ScrollView">
-        <attr name="carbon_edgeEffectColor" />
         <attr name="carbon_overScroll" />
     </declare-styleable>
 
     <attr name="carbon_horizontalScrollViewStyle" format="reference" />
     <declare-styleable name="HorizontalScrollView">
-        <attr name="carbon_edgeEffectColor" />
         <attr name="carbon_overScroll" />
     </declare-styleable>
 
     <attr name="carbon_viewPagerStyle" format="reference" />
     <declare-styleable name="ViewPager">
-        <attr name="carbon_edgeEffectColor" />
-        <attr name="carbon_overScroll" />
-    </declare-styleable>
-
-    <declare-styleable name="ListView">
-        <attr name="carbon_edgeEffectColor" />
         <attr name="carbon_overScroll" />
     </declare-styleable>
 
@@ -304,7 +282,6 @@
         <attr name="carbon_textStyle" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
-        <attr name="carbon_checkColor" format="reference|color" />
     </declare-styleable>
 
     <attr name="carbon_radioButtonStyle" />
@@ -312,6 +289,5 @@
         <attr name="carbon_textStyle" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
-        <attr name="carbon_radioColor" format="reference|color" />
     </declare-styleable>
 </resources>

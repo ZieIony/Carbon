@@ -28,7 +28,7 @@ import carbon.drawable.RippleView;
 /**
  * Created by Marcin on 2015-03-06.
  */
-public class CheckBox extends android.widget.CheckBox implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView {
+public class CheckBox extends android.widget.CheckBox implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView ,TintedView{
     private CheckableDrawable drawable;
 
     public CheckBox(Context context) {
@@ -81,14 +81,13 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
             }
         }
 
-        ColorStateList csl = a.getColorStateList(R.styleable.CheckBox_carbon_checkColor);
-        drawable.setColor(csl != null ? csl : new ControlCheckedColorStateList(getContext()));
+        a.recycle();
 
         setCheckedImmediate(isChecked());
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        a.recycle();
+        Carbon.initTint(this, attrs, defStyleAttr);
     }
 
     @Override
@@ -302,5 +301,27 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
 
     public Roboto.Style getTextStyle() {
         return style;
+    }
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list;
+        drawable.setColor(tint != null ? tint : new ControlCheckedColorStateList(getContext()));
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
     }
 }

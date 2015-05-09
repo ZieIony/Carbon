@@ -12,15 +12,12 @@
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
-        <item name="carbon_statusBarStyle">@style/carbon_StatusBar</item>
-        <item name="carbon_navigationBarStyle">@style/carbon_NavigationBar</item>
         <item name="carbon_svgViewStyle">@style/carbon_SVGView</item>
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_gridLayoutStyle">@style/carbon_GridLayout</item>
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
-        <item name="carbon_scrimInsetsLayoutStyle">@style/carbon_ScrimInsetsLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -92,15 +89,12 @@
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
-        <item name="carbon_statusBarStyle">@style/carbon_StatusBar</item>
-        <item name="carbon_navigationBarStyle">@style/carbon_NavigationBar</item>
         <item name="carbon_svgViewStyle">@style/carbon_SVGView</item>
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_gridLayoutStyle">@style/carbon_GridLayout</item>
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
-        <item name="carbon_scrimInsetsLayoutStyle">@style/carbon_ScrimInsetsLayout</item>
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
@@ -245,10 +239,6 @@
         <item name="carbon_rippleColor">@null</item>
     </style>
 
-    <style name="carbon_ScrimInsetsLayout" parent="carbon_FrameLayout">
-        <item name="carbon_insetForeground">?attr/colorPrimary</item>
-    </style>
-
     <style name="carbon_Snackbar">
         <item name="carbon_layoutStyle">floating</item>
         <item name="carbon_inAnimation">fly</item>
@@ -271,12 +261,12 @@
     <style name="carbon_ListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">?attr/carbon_dividerColor</item>
         <item name="android:dividerHeight">1px</item>
-        <item name="carbon_edgeEffectColor">?attr/colorPrimary</item>
+        <item name="carbon_tint">@null</item>
     </style>
 
     <style name="carbon_RecyclerView" parent="@android:style/Widget.ListView">
         <item name="android:fadingEdge">none</item>
-        <item name="carbon_edgeEffectColor">?attr/colorPrimary</item>
+        <item name="carbon_tint">@null</item>
     </style>
 
     <style name="carbon_Divider">
@@ -302,8 +292,7 @@
 
     <style name="carbon_EditText" parent="@android:style/Widget.EditText">
         <item name="android:textAppearance">?attr/carbon_textAppearance_subhead</item>
-        <item name="carbon_dividerColor">@null</item>
-        <item name="carbon_dividerPadding">@dimen/carbon_paddingHalf</item>
+        <item name="carbon_tint">@null</item>
         <item name="android:background">@null</item>
         <item name="carbon_floatingLabel">false</item>
         <item name="android:textCursorDrawable">@null</item>
@@ -333,7 +322,7 @@
         <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
-        <item name="carbon_checkColor">@null</item>
+        <item name="carbon_tint">@null</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -343,7 +332,7 @@
         <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
-        <item name="carbon_radioColor">@null</item>
+        <item name="carbon_tint">@null</item>
         <item name="android:background">@null</item>
     </style>
 </resources>

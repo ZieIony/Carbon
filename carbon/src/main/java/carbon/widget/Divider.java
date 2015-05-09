@@ -29,7 +29,7 @@ public class Divider extends View {
         if (attrs == null)
             return;
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationBar, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Divider, defStyleAttr, 0);
         int color = a.getColor(R.styleable.Divider_android_background, 0);
         setBackgroundColor(color);
         a.recycle();

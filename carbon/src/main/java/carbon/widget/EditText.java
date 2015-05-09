@@ -36,9 +36,8 @@ import carbon.drawable.ControlFocusedColorStateList;
 /**
  * Created by Marcin on 2015-02-14.
  */
-public class EditText extends android.widget.EditText implements TouchMarginView, AnimatedView {
+public class EditText extends android.widget.EditText implements TouchMarginView, AnimatedView, TintedView {
     int dividerPadding;
-    ColorStateList dividerColor;
     int disabledColor = 0x4d000000;
     int errorColor = 0xffff0000;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -88,7 +87,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         if (errorMessage != null && pattern != null)
             drawError = !pattern.matcher(s).matches();
         counterError = minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters;
-        labelPaint.setColor(drawError | counterError ? errorColor : getDividerColor().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
+        labelPaint.setColor(drawError | counterError ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
         counterPaint.setColor(drawError | counterError ? errorColor : disabledColor);
         if (showFloatingLabel)
             animateFloatingLabel(isFocused() && s.length() > 0);
@@ -115,7 +114,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        if(isInEditMode())
+        if (isInEditMode())
             return;
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
@@ -145,15 +144,8 @@ public class EditText extends android.widget.EditText implements TouchMarginView
             }
         }
 
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
         dividerPadding = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
-        ColorStateList dividerColor = a.getColorStateList(R.styleable.EditText_carbon_dividerColor);
-        setDividerColor(dividerColor != null ? dividerColor : new ControlFocusedColorStateList(getContext()));
-        if (Color.alpha(getDividerColor().getDefaultColor()) == 0)
-            drawDivider = false;
         if (!isInEditMode())
             setError(a.getString(R.styleable.EditText_carbon_errorMessage));
         setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
@@ -161,6 +153,10 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         setFloatingLabelEnabled(a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false));
 
         a.recycle();
+
+        Carbon.initAnimations(this, attrs, defStyleAttr);
+        Carbon.initTouchMargin(this, attrs, defStyleAttr);
+        Carbon.initTint(this, attrs, defStyleAttr);
 
         if (!isInEditMode()) {
             errorPaint.setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.Regular));
@@ -270,7 +266,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if(isInEditMode())
+        if (isInEditMode())
             return;
 
         if (isFocused() && isEnabled()) {
@@ -280,7 +276,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
         }
         if (drawDivider) {
             if (isEnabled()) {
-                paint.setColor(drawError || counterError ? errorColor : dividerColor.getColorForState(getDrawableState(), dividerColor.getDefaultColor()));
+                paint.setColor(drawError || counterError ? errorColor : tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
                 paint.setShader(null);
                 canvas.drawLine(getPaddingLeft(), getHeight() + dividerPadding - getPaddingBottom(), getWidth() - getPaddingRight(), getHeight() + dividerPadding - getPaddingBottom(), paint);
             } else {
@@ -354,20 +350,6 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     public void setMaxCharacters(int maxCharacters) {
         this.maxCharacters = maxCharacters;
         updateLayout();
-    }
-
-    public ColorStateList getDividerColor() {
-        return dividerColor;
-    }
-
-    public void setDividerColor(int dividerColor) {
-        this.dividerColor = ColorStateList.valueOf(dividerColor);
-        postInvalidate();
-    }
-
-    public void setDividerColor(ColorStateList dividerColor) {
-        this.dividerColor = dividerColor;
-        postInvalidate();
     }
 
     private void animateFloatingLabel(boolean visible) {
@@ -514,5 +496,28 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
     public Roboto.Style getTextStyle() {
         return style;
+    }
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list != null ? list : new ControlFocusedColorStateList(getContext());
+        if (Color.alpha(tint.getDefaultColor()) == 0)
+            drawDivider = false;
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
     }
 }

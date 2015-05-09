@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
@@ -9,17 +10,18 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.EdgeEffect;
+import carbon.drawable.TintPrimaryColorStateList;
 
 /**
  * Created by Marcin on 2015-02-28.
  */
-public class ScrollView extends android.widget.ScrollView {
+public class ScrollView extends android.widget.ScrollView implements TintedView {
     private final int mTouchSlop;
-    int edgeEffectColor;
-    EdgeEffect edgeEffectTop;
-    EdgeEffect edgeEffectBottom;
+    EdgeEffect topGlow;
+    EdgeEffect bottomGlow;
     private boolean drag = true;
     private float prevY;
     private int overscrollMode;
@@ -44,13 +46,13 @@ public class ScrollView extends android.widget.ScrollView {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, 0);
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.ScrollView_carbon_edgeEffectColor) {
-                setEdgeEffectColor(a.getColor(attr, 0));
-            } else if (attr == R.styleable.ScrollView_carbon_overScroll) {
+            if (attr == R.styleable.ScrollView_carbon_overScroll) {
                 setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
             }
         }
         a.recycle();
+
+        Carbon.initTint(this, attrs, defStyleAttr);
     }
 
     private int getScrollRange() {
@@ -66,20 +68,20 @@ public class ScrollView extends android.widget.ScrollView {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (edgeEffectTop != null) {
+        if (topGlow != null) {
             final int scrollY = getScrollY();
-            if (!edgeEffectTop.isFinished()) {
+            if (!topGlow.isFinished()) {
                 final int restoreCount = canvas.save();
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
 
                 canvas.translate(getPaddingLeft(), Math.min(0, scrollY));
-                edgeEffectTop.setSize(width, getHeight());
-                if (edgeEffectTop.draw(canvas)) {
+                topGlow.setSize(width, getHeight());
+                if (topGlow.draw(canvas)) {
                     postInvalidate();
                 }
                 canvas.restoreToCount(restoreCount);
             }
-            if (!edgeEffectBottom.isFinished()) {
+            if (!bottomGlow.isFinished()) {
                 final int restoreCount = canvas.save();
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
                 final int height = getHeight();
@@ -87,8 +89,8 @@ public class ScrollView extends android.widget.ScrollView {
                 canvas.translate(-width + getPaddingLeft(),
                         Math.max(getScrollRange(), scrollY) + height);
                 canvas.rotate(180, width, 0);
-                edgeEffectBottom.setSize(width, height);
-                if (edgeEffectBottom.draw(canvas)) {
+                bottomGlow.setSize(width, height);
+                if (bottomGlow.draw(canvas)) {
                     postInvalidate();
                 }
                 canvas.restoreToCount(restoreCount);
@@ -123,15 +125,15 @@ public class ScrollView extends android.widget.ScrollView {
                     if (canOverscroll) {
                         float pulledToY = oldY + deltaY;
                         if (pulledToY < 0) {
-                            edgeEffectTop.onPull(deltaY / getHeight(), ev.getX() / getWidth());
-                            if (!edgeEffectBottom.isFinished())
-                                edgeEffectBottom.onRelease();
+                            topGlow.onPull(deltaY / getHeight(), ev.getX() / getWidth());
+                            if (!bottomGlow.isFinished())
+                                bottomGlow.onRelease();
                         } else if (pulledToY > range) {
-                            edgeEffectBottom.onPull(deltaY / getHeight(), 1.f - ev.getX() / getWidth());
-                            if (!edgeEffectTop.isFinished())
-                                edgeEffectTop.onRelease();
+                            bottomGlow.onPull(deltaY / getHeight(), 1.f - ev.getX() / getWidth());
+                            if (!topGlow.isFinished())
+                                topGlow.onRelease();
                         }
-                        if (edgeEffectTop != null && (!edgeEffectTop.isFinished() || !edgeEffectBottom.isFinished()))
+                        if (topGlow != null && (!topGlow.isFinished() || !bottomGlow.isFinished()))
                             postInvalidate();
                     }
                 }
@@ -141,9 +143,9 @@ public class ScrollView extends android.widget.ScrollView {
                 if (drag) {
                     drag = false;
 
-                    if (edgeEffectTop != null) {
-                        edgeEffectTop.onRelease();
-                        edgeEffectBottom.onRelease();
+                    if (topGlow != null) {
+                        topGlow.onRelease();
+                        bottomGlow.onRelease();
                     }
                 }
                 break;
@@ -168,9 +170,9 @@ public class ScrollView extends android.widget.ScrollView {
 
                 if (canOverscroll) {
                     if (y < 0 && oldY >= 0) {
-                        edgeEffectTop.onAbsorb((int) mScroller.getCurrVelocity());
+                        topGlow.onAbsorb((int) mScroller.getCurrVelocity());
                     } else if (y > range && oldY <= range) {
-                        edgeEffectBottom.onAbsorb((int) mScroller.getCurrVelocity());
+                        bottomGlow.onAbsorb((int) mScroller.getCurrVelocity());
                     }
                 }
             }
@@ -185,16 +187,15 @@ public class ScrollView extends android.widget.ScrollView {
     @Override
     public void setOverScrollMode(int mode) {
         if (mode != OVER_SCROLL_NEVER) {
-            if (edgeEffectTop == null) {
+            if (topGlow == null) {
                 Context context = getContext();
-                edgeEffectTop = new EdgeEffect(context);
-                edgeEffectTop.setColor(edgeEffectColor);
-                edgeEffectBottom = new EdgeEffect(context);
-                edgeEffectBottom.setColor(edgeEffectColor);
+                topGlow = new EdgeEffect(context);
+                bottomGlow = new EdgeEffect(context);
+                updateTint();
             }
         } else {
-            edgeEffectTop = null;
-            edgeEffectBottom = null;
+            topGlow = null;
+            bottomGlow = null;
         }
         try {
             super.setOverScrollMode(OVER_SCROLL_NEVER);
@@ -204,15 +205,39 @@ public class ScrollView extends android.widget.ScrollView {
         this.overscrollMode = mode;
     }
 
-    public int getEdgeEffectColor() {
-        return edgeEffectColor;
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        updateTint();
     }
 
-    public void setEdgeEffectColor(int edgeEffectColor) {
-        this.edgeEffectColor = edgeEffectColor;
-        if (edgeEffectTop != null)
-            edgeEffectTop.setColor(edgeEffectColor);
-        if (edgeEffectBottom != null)
-            edgeEffectBottom.setColor(edgeEffectColor);
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list == null ? new TintPrimaryColorStateList(getContext()) : list;
+        updateTint();
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
+    }
+
+    private void updateTint() {
+        int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
+        if (topGlow != null)
+            topGlow.setColor(color);
+        if (bottomGlow != null)
+            bottomGlow.setColor(color);
     }
 }

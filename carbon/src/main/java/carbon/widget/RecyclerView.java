@@ -1,19 +1,21 @@
 package carbon.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
+import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import java.lang.reflect.Field;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.EdgeEffectCompat;
+import carbon.drawable.TintPrimaryColorStateList;
 
 /**
  * Created by Marcin on 2015-04-28.
  */
-public class RecyclerView extends android.support.v7.widget.RecyclerView {
+public class RecyclerView extends android.support.v7.widget.RecyclerView implements TintedView {
 
     private Field mLeftGlowField;
     private Field mRightGlowField;
@@ -24,7 +26,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
     private EdgeEffectCompat topGlow;
     private EdgeEffectCompat bottomGlow;
     private boolean clipToPadding;
-    private int edgeEffectColor;
 
     public RecyclerView(Context context) {
         this(context, null);
@@ -37,14 +38,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
     public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, 0);
-        for (int i = 0; i < a.getIndexCount(); i++) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.RecyclerView_carbon_edgeEffectColor) {
-                setEdgeEffectColor(a.getColor(attr, 0));
-            }
-        }
-        a.recycle();
+        Carbon.initTint(this, attrs, defStyleAttr);
 
         Class klass = android.support.v7.widget.RecyclerView.class;
         try {
@@ -66,7 +60,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
             return;
         }
         leftGlow = new EdgeEffectCompat(getContext());
-        leftGlow.setColor(edgeEffectColor);
+        if (tint != null)
+            leftGlow.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
         try {
             mLeftGlowField.set(this, leftGlow);
         } catch (IllegalAccessException e) {
@@ -84,7 +79,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
             return;
         }
         rightGlow = new EdgeEffectCompat(getContext());
-        rightGlow.setColor(edgeEffectColor);
+        if (tint != null)
+            rightGlow.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
         try {
             mRightGlowField.set(this, rightGlow);
         } catch (IllegalAccessException e) {
@@ -102,7 +98,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
             return;
         }
         topGlow = new EdgeEffectCompat(getContext());
-        topGlow.setColor(edgeEffectColor);
+        if (tint != null)
+            topGlow.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
         try {
             mTopGlowField.set(this, topGlow);
         } catch (IllegalAccessException e) {
@@ -121,7 +118,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
             return;
         }
         bottomGlow = new EdgeEffectCompat(getContext());
-        bottomGlow.setColor(edgeEffectColor);
+        if (tint != null)
+            bottomGlow.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
         try {
             mBottomGlowField.set(this, bottomGlow);
         } catch (IllegalAccessException e) {
@@ -157,15 +155,45 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView {
         return super.dispatchTouchEvent(ev);
     }
 
-    public void setEdgeEffectColor(int edgeEffectColor) {
-        this.edgeEffectColor = edgeEffectColor;
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        updateTint();
+    }
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list == null ? new TintPrimaryColorStateList(getContext()) : list;
+        updateTint();
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
+    }
+
+    private void updateTint() {
+        if (tint == null)
+            return;
+        int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
         if (leftGlow != null)
-            leftGlow.setColor(edgeEffectColor);
+            leftGlow.setColor(color);
         if (rightGlow != null)
-            rightGlow.setColor(edgeEffectColor);
+            rightGlow.setColor(color);
         if (topGlow != null)
-            topGlow.setColor(edgeEffectColor);
+            topGlow.setColor(color);
         if (bottomGlow != null)
-            bottomGlow.setColor(edgeEffectColor);
+            bottomGlow.setColor(color);
     }
 }

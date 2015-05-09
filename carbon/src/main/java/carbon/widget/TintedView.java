@@ -9,4 +9,6 @@ public interface TintedView {
     void setTint(ColorStateList list);
 
     void setTint(int color);
+
+    ColorStateList getTint();
 }

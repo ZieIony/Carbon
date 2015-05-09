@@ -18,6 +18,7 @@ import carbon.drawable.RippleDrawableLollipop;
 import carbon.drawable.RippleView;
 import carbon.widget.AnimatedView;
 import carbon.widget.InsetView;
+import carbon.widget.TintedView;
 import carbon.widget.TouchMarginView;
 
 /**
@@ -97,6 +98,14 @@ public class Carbon {
         }
 
         view.setInsetColor(a.getColor(R.styleable.Carbon_carbon_insetColor, 0));
+
+        a.recycle();
+    }
+
+    public static void initTint(TintedView view, AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = ((View) view).getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+
+        view.setTint(a.getColorStateList(R.styleable.Carbon_carbon_tint));
 
         a.recycle();
     }
