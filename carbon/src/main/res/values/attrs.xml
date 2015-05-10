@@ -208,13 +208,6 @@
     </declare-styleable>
 
     <attr name="carbon_cardViewStyle" format="reference" />
-    <declare-styleable name="CardView">
-        <attr name="carbon_cardElevation" format="dimension" />
-        <attr name="carbon_cardCornerRadius" format="dimension" />
-        <attr name="carbon_cardBackground" format="color|reference" />
-        <attr name="carbon_cardPadding" format="dimension" />
-        <attr name="android:padding" />
-    </declare-styleable>
 
     <attr name="carbon_editTextStyle" format="reference" />
     <declare-styleable name="EditText">

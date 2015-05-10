@@ -184,7 +184,7 @@ public class AnimUtils {
 
     public static ValueAnimator progressWidthIn(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
         final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
-        ValueAnimator animator = ValueAnimator.ofFloat(0, arcWidth);
+        ValueAnimator animator = ValueAnimator.ofFloat(circularProgress.getBarWidth(), arcWidth);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
@@ -203,7 +203,7 @@ public class AnimUtils {
 
     public static ValueAnimator progressWidthOut(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
         final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
-        ValueAnimator animator = ValueAnimator.ofFloat(arcWidth, 0);
+        ValueAnimator animator = ValueAnimator.ofFloat(circularProgress.getBarWidth(), 0);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
