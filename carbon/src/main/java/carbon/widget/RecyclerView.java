@@ -261,7 +261,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list == null ? new TintPrimaryColorStateList(getContext()) : list;
+        this.tint = list;
         updateTint();
     }
 
@@ -277,7 +277,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     private void updateTint() {
         if (tint == null)
-            return;
+            tint = new TintPrimaryColorStateList(getContext());
         int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
         if (leftGlow != null)
             leftGlow.setColor(color);

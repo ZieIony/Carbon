@@ -219,7 +219,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list == null ? new TintPrimaryColorStateList(getContext()) : list;
+        this.tint = list;
         updateTint();
     }
 
@@ -234,10 +234,11 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     }
 
     private void updateTint() {
+        if (tint == null)
+            tint = new TintPrimaryColorStateList(getContext());
         int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
         if (topGlow != null)
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
-    }
-}
+    }}

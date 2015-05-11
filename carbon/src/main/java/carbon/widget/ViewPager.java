@@ -239,7 +239,7 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list == null ? new TintPrimaryColorStateList(getContext()) : list;
+        this.tint = list;
         updateTint();
     }
 
@@ -254,6 +254,8 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
     }
 
     private void updateTint() {
+        if (tint == null)
+            tint = new TintPrimaryColorStateList(getContext());
         int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
         if (leftGlow != null)
             leftGlow.setColor(color);
