@@ -25,6 +25,7 @@ import carbon.drawable.CheckableDrawable;
 import carbon.drawable.ControlCheckedColorStateList;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.internal.TypefaceUtils;
 
 /**
  * Created by Marcin on 2015-03-06.
@@ -65,7 +66,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
                         setAllCaps(appearance.getBoolean(attr, true));
                     } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
                         String path = appearance.getString(attr);
-                        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                        Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                         setTypeface(typeface);
                     }
                 }
@@ -81,7 +82,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
                 setAllCaps(a.getBoolean(attr, false));
             } else if (attr == R.styleable.RadioButton_carbon_fontPath) {
                 String path = a.getString(attr);
-                Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
             }
         }

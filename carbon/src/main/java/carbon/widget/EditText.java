@@ -33,6 +33,7 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.StateAnimator;
 import carbon.drawable.ControlFocusedColorStateList;
+import carbon.internal.TypefaceUtils;
 
 /**
  * Created by Marcin on 2015-02-14.
@@ -130,7 +131,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
                         setAllCaps(appearance.getBoolean(attr, true));
                     } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
                         String path = appearance.getString(attr);
-                        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                        Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                         setTypeface(typeface);
                     }
                 }
@@ -144,7 +145,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
                 setAllCaps(a.getBoolean(attr, false));
             } else if (attr == R.styleable.EditText_carbon_fontPath) {
                 String path = a.getString(attr);
-                Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
             }
         }
