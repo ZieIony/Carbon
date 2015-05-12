@@ -17,6 +17,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.StateAnimator;
+import carbon.internal.TypefaceUtils;
 
 /**
  * Created by Marcin on 2014-11-07.
@@ -49,7 +50,7 @@ public class TextView extends android.widget.TextView implements TouchMarginView
                         setAllCaps(appearance.getBoolean(attr, true));
                     } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
                         String path = appearance.getString(attr);
-                        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                        Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                         setTypeface(typeface);
                     }
                 }
@@ -63,7 +64,7 @@ public class TextView extends android.widget.TextView implements TouchMarginView
                 setAllCaps(a.getBoolean(attr, false));
             } else if (attr == R.styleable.TextView_carbon_fontPath) {
                 String path = a.getString(attr);
-                Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
             }
         }

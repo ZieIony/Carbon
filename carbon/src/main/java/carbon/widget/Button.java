@@ -31,6 +31,7 @@ import carbon.animation.StateAnimator;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.internal.TypefaceUtils;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -68,7 +69,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                         setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
                     } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
                         String path = appearance.getString(attr);
-                        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                        Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                         setTypeface(typeface);
                     }
                 }
@@ -84,7 +85,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                 setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
             } else if (attr == R.styleable.Button_carbon_fontPath) {
                 String path = a.getString(attr);
-                Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), path);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
             }
         }
