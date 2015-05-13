@@ -26,7 +26,7 @@
         style="@style/carbon_Button.Flat"
         android:id="@+id/carbon_actionButton"
         android:visibility="invisible"
-        app:carbon_fontPath="carbon/Roboto-Medium"
+        app:carbon_fontPath="carbon/Roboto-Medium.ttf"
         android:textSize="14sp"
         app:carbon_touchMarginTop="6dp"
         app:carbon_touchMarginBottom="6dp"

@@ -497,8 +497,8 @@ public class EditText extends android.widget.EditText implements TouchMarginView
     @Override
     public void setTint(ColorStateList list) {
         this.tint = list != null ? list : new ControlFocusedColorStateList(getContext());
-        if (Color.alpha(tint.getDefaultColor()) == 0)
-            drawDivider = false;
+        drawDivider = Color.alpha(tint.getDefaultColor()) != 0;
+        updateLayout();
     }
 
     @Override
