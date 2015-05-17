@@ -8,9 +8,9 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
         <activity
             android:name="tk.zielony.carbonsamples.MainActivity"
@@ -98,6 +98,9 @@
             android:label="@string/app_name" />
         <activity
             android:name=".widget.RecentsActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".widget.HeaderActivity"
             android:label="@string/app_name" />
 
         <activity

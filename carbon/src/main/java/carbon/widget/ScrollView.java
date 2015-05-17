@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Region;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -53,6 +57,8 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         a.recycle();
 
         Carbon.initTint(this, attrs, defStyleAttr);
+
+        setClipToPadding(false);
     }
 
     private int getScrollRange() {
@@ -100,6 +106,8 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (header != null)
+            header.dispatchTouchEvent(ev);
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 float deltaY = prevY - ev.getY();
@@ -241,4 +249,100 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
-    }}
+    }
+
+
+    // -------------------------------
+    // header (do not copy)
+    // -------------------------------
+
+    View header;
+    private float parallax = 0.5f;
+    private int headerPadding = 0;
+    private int headerTint = 0;
+    Paint paint = new Paint();
+    private int minHeader = 0;
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        if (header != null) {
+            int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
+            int headerHeight = header.getMeasuredHeight();
+            float scroll = getScrollY();
+            canvas.clipRect(0, 0, getWidth(), Math.max(minHeader + scroll, headerHeight));
+            canvas.translate(0, scroll * parallax);
+            header.draw(canvas);
+
+            if (headerTint != 0) {
+                paint.setColor(headerTint);
+                paint.setAlpha((int) (Color.alpha(headerTint) * Math.min(headerHeight - minHeader, scroll) / (headerHeight - minHeader)));
+                canvas.drawRect(0, 0, getWidth(), Math.max(minHeader + scroll, headerHeight), paint);
+            }
+            canvas.restoreToCount(saveCount);
+
+            saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
+            canvas.clipRect(0, Math.max(minHeader + scroll, headerHeight), getWidth(), Integer.MAX_VALUE, Region.Op.REPLACE);
+            super.dispatchDraw(canvas);
+            canvas.restoreToCount(saveCount);
+        } else {
+            super.dispatchDraw(canvas);
+        }
+    }
+
+    public View getHeader() {
+        return header;
+    }
+
+    public void setHeader(View view) {
+        header = view;
+        requestLayout();
+    }
+
+    public void setHeader(int resId) {
+        header = LayoutInflater.from(getContext()).inflate(resId, this, false);
+        requestLayout();
+    }
+
+    public float getParallax() {
+        return parallax;
+    }
+
+    public void setParallax(float amount) {
+        parallax = amount;
+    }
+
+    public int getHeaderTint() {
+        return headerTint;
+    }
+
+    public void setHeaderTint(int color) {
+        headerTint = color;
+    }
+
+    public int getMinHeaderHeight() {
+        return minHeader;
+    }
+
+    public void setMinHeaderHeight(int height) {
+        minHeader = height;
+    }
+
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int paddingTop = getPaddingTop() - headerPadding;
+        if (header != null) {
+            measureChildWithMargins(header, widthMeasureSpec, 0, heightMeasureSpec, 0);
+            headerPadding = header.getMeasuredHeight();
+        } else {
+            headerPadding = 0;
+        }
+        setPadding(getPaddingLeft(), paddingTop + headerPadding, getPaddingRight(), getPaddingBottom());
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (header != null)
+            header.layout(0, 0, getWidth(), header.getMeasuredHeight());
+    }
+}
