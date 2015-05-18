@@ -13,24 +13,22 @@ import tk.zielony.carbonsamples.R;
  * Created by Marcin on 2014-12-15.
  */
 public class SnackbarActivity extends Activity {
-    private boolean invisible = false;
-    private Animator animator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snackbar);
 
-        final Snackbar snackbar = new Snackbar(this, "Hello world!", "dismiss", getResources().getInteger(R.integer.carbon_snackbarDuration));
-        snackbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.hide();
-            }
-        });
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final Snackbar snackbar = new Snackbar(SnackbarActivity.this, "Hello world!", "dismiss", getResources().getInteger(R.integer.carbon_snackbarDuration));
+                snackbar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackbar.hide();
+                    }
+                });
                 snackbar.setStyle(Snackbar.Style.Floating);
                 snackbar.show();
             }
@@ -38,6 +36,13 @@ public class SnackbarActivity extends Activity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final Snackbar snackbar = new Snackbar(SnackbarActivity.this, "Hello world!", "dismiss", getResources().getInteger(R.integer.carbon_snackbarDuration));
+                snackbar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackbar.hide();
+                    }
+                });
                 snackbar.setStyle(Snackbar.Style.Docked);
                 snackbar.show();
             }

@@ -88,19 +88,24 @@ public class ProgressBar extends View implements AnimatedView {
     // -------------------------------
 
     private AnimUtils.Style inAnim, outAnim;
+    private Animator animator;
 
     public void setVisibility(final int visibility) {
         if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
-            AnimUtils.animateIn(this, inAnim, null);
+            animator = AnimUtils.animateIn(this, inAnim, null);
             super.setVisibility(visibility);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
-            AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
+            animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     ProgressBar.super.setVisibility(visibility);
                 }
             });
         }
+    }
+
+    public Animator getAnimator() {
+        return animator;
     }
 
     public AnimUtils.Style getOutAnimation() {

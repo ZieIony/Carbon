@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/carbon_snackbarContent"
-    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="?attr/carbon_colorBackground_inverse"
-    android:minHeight="48dp"
     android:maxHeight="80dp"
-    android:minWidth="288dp"
     android:maxWidth="568dp"
+    android:minHeight="48dp"
+    android:minWidth="288dp"
+    android:orientation="horizontal"
     android:paddingLeft="24dp"
-    android:paddingRight="8dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:paddingRight="8dp">
 
     <carbon.widget.TextView
         android:id="@+id/carbon_messageText"
-        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:textAppearance="?attr/carbon_textAppearance_body2_inverse"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
         android:maxLines="2"
-        android:gravity="center_vertical" />
+        android:textAppearance="?attr/carbon_textAppearance_body2_inverse" />
 
     <carbon.widget.Button
-        style="@style/carbon_Button.Flat"
         android:id="@+id/carbon_actionButton"
+        style="@style/carbon_Button.Flat"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:textColor="?attr/colorAccent"
+        android:textSize="14sp"
         android:visibility="invisible"
         app:carbon_fontPath="carbon/Roboto-Medium.ttf"
-        android:textSize="14sp"
-        app:carbon_touchMarginTop="6dp"
         app:carbon_touchMarginBottom="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:textColor="?attr/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp" />
+        app:carbon_touchMarginTop="6dp" />
 </LinearLayout>

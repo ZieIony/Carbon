@@ -1,32 +1,38 @@
 package carbon.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.view.ViewHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.internal.PopupWindow;
 
 /**
  * Created by Marcin on 2015-01-07.
  */
-public class Snackbar extends PopupWindow implements AnimatedView {
+public class Snackbar extends FrameLayout implements AnimatedView, GestureDetector.OnGestureListener {
+    public interface OnDismissedListener {
+        void OnDismissed();
+    }
+
     private TextView message;
     private Button button;
     private Style style;
-    private AnimUtils.Style inAnim, outAnim;
     private long duration;
     private Runnable hideRunnable = new Runnable() {
         @Override
@@ -36,26 +42,12 @@ public class Snackbar extends PopupWindow implements AnimatedView {
     };
     private Handler handler;
     private View content;
+    OnDismissedListener onDismissedListener;
+    boolean swipeToDismiss = true, tapOutsideToDismiss = false;
 
-    @Override
-    public AnimUtils.Style getOutAnimation() {
-        return outAnim;
-    }
+    static List<Snackbar> next = new ArrayList<>();
 
-    @Override
-    public void setOutAnimation(AnimUtils.Style outAnim) {
-        this.outAnim = outAnim;
-    }
-
-    @Override
-    public AnimUtils.Style getInAnimation() {
-        return inAnim;
-    }
-
-    @Override
-    public void setInAnimation(AnimUtils.Style inAnim) {
-        this.inAnim = inAnim;
-    }
+    GestureDetector detector = new GestureDetector(this);
 
     public enum Style {
         Floating, Docked
@@ -77,7 +69,6 @@ public class Snackbar extends PopupWindow implements AnimatedView {
     private void init(AttributeSet attrs, int defStyleAttr) {
         content = inflate(getContext(), R.layout.carbon_snackbar, null);
         addView(content);
-        ViewHelper.setAlpha(content, 0);
 
         message = (TextView) findViewById(R.id.carbon_messageText);
         button = (Button) findViewById(R.id.carbon_actionButton);
@@ -91,43 +82,52 @@ public class Snackbar extends PopupWindow implements AnimatedView {
 
         a.recycle();
 
-        WindowManager.LayoutParams windowParams = (WindowManager.LayoutParams) getLayoutParams();
-        windowParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        windowParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        windowParams.gravity = Gravity.BOTTOM | Gravity.LEFT | Gravity.RIGHT;
-        windowParams.horizontalMargin = 0;
-        windowParams.verticalMargin = 0;
-        setLayoutParams(windowParams);
-
         handler = new Handler();
     }
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+    }
+
     public void show() {
-        super.show();
-        AnimUtils.animateIn(content, inAnim, null);
-        if (duration > 0)
-            handler.postDelayed(hideRunnable, duration);
+        synchronized (Snackbar.class) {
+            View decor = ((Activity) getContext()).getWindow().getDecorView();
+            ((ViewGroup) decor.findViewById(android.R.id.content)).addView(this, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+            if (!next.contains(this))
+                next.add(this);
+            if (next.indexOf(this) == 0) {
+                ViewHelper.setAlpha(content, 0);
+                AnimUtils.animateIn(content, getInAnimation(), null);
+                if (duration > 0)
+                    handler.postDelayed(hideRunnable, duration);
+            }
+        }
     }
 
     public void hide() {
         handler.removeCallbacks(hideRunnable);
-        AnimUtils.animateOut(content, outAnim, new AnimatorListenerAdapter() {
+        AnimUtils.animateOut(content, getOutAnimation(), new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animator) {
-                Snackbar.super.hide();
+                synchronized (Snackbar.class) {
+                    ((ViewGroup) getParent()).removeView(Snackbar.this);
+                    next.remove(Snackbar.this);
+                    if (next.size() != 0)
+                        next.get(0).show();
+                }
             }
         });
     }
 
-    public void hideImmediate() {
-        handler.removeCallbacks(hideRunnable);
-        Snackbar.super.hide();
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        super.onTouchEvent(event);
-        return true;
+        if (swipeToDismiss) {
+            if (detector.onTouchEvent(event))
+                return true;
+        }
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -164,16 +164,18 @@ public class Snackbar extends PopupWindow implements AnimatedView {
 
     public void setStyle(Style style) {
         this.style = style;
-        MarginLayoutParams layoutParams = (MarginLayoutParams) content.getLayoutParams();
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) content.getLayoutParams();
         if (style == Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             int margin = (int) getResources().getDimension(R.dimen.carbon_padding);
             layoutParams.setMargins(margin, margin, margin, margin);
+            layoutParams.gravity = Gravity.LEFT | Gravity.BOTTOM;
         } else {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.setMargins(0, 0, 0, 0);
+            layoutParams.gravity = Gravity.BOTTOM;
         }
         content.setLayoutParams(layoutParams);
         requestLayout();
@@ -185,5 +187,45 @@ public class Snackbar extends PopupWindow implements AnimatedView {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    private void fireOnDismissed() {
+        if (onDismissedListener != null)
+            onDismissedListener.OnDismissed();
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (Math.abs(velocityX) > 5) {
+            hide();
+            fireOnDismissed();
+        }
+        return true;
     }
 }
