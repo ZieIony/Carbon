@@ -24,7 +24,5 @@ public class RecyclerCardsActivity extends Activity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new RecyclerAdapter(items, R.layout.card));
-
-        recyclerView.setHeader(R.layout.header_scrollview);
     }
 }

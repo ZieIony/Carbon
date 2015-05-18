@@ -138,9 +138,6 @@ public class PagerTabStrip extends HorizontalScrollView {
     }
 
     private void initTabs() {
-        if (content == null)
-            return;
-
         content.removeAllViews();
 
         if (viewPager == null)
@@ -221,7 +218,10 @@ public class PagerTabStrip extends HorizontalScrollView {
     }
 
     public void setSelectedPage(int position) {
-        content.getChildAt(selectedPage).setSelected(false);
+        if (viewPager == null)
+            return;
+        if (content.getChildCount() > selectedPage)
+            content.getChildAt(selectedPage).setSelected(false);
         selectedPage = position;
         if (content.getChildCount() > selectedPage)
             content.getChildAt(selectedPage).setSelected(true);

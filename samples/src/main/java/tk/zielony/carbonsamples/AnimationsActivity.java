@@ -1,12 +1,9 @@
 package tk.zielony.carbonsamples;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.AdapterView;
 
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.animation.ImageFadeActivity;
@@ -14,7 +11,6 @@ import tk.zielony.carbonsamples.animation.ListRippleActivity;
 import tk.zielony.carbonsamples.animation.RadialTransitionActivity;
 import tk.zielony.carbonsamples.animation.RippleActivity;
 import tk.zielony.carbonsamples.animation.RippleComparisonActivity;
-import tk.zielony.carbonsamples.animation.ScrollViewActivity;
 
 
 public class AnimationsActivity extends Activity {
@@ -33,10 +29,9 @@ public class AnimationsActivity extends Activity {
                 new ViewModel(tk.zielony.carbonsamples.animation.AnimationsActivity.class, "Widget animations"),
                 new ViewModel(ImageFadeActivity.class, "Image fade"),
                 new ViewModel(ListRippleActivity.class, "List ripple"),
-                new ViewModel(RippleComparisonActivity.class, "Ripple comparison", false,true),
+                new ViewModel(RippleComparisonActivity.class, "Ripple comparison", false, true),
                 new ViewModel(RadialTransitionActivity.class, "Radial transition"),
-                new ViewModel(RippleActivity.class, "Touch ripple"),
-                new ViewModel(ScrollViewActivity.class, "ScrollView")
+                new ViewModel(RippleActivity.class, "Touch ripple")
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

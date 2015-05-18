@@ -52,6 +52,12 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             int attr = a.getIndex(i);
             if (attr == R.styleable.ScrollView_carbon_overScroll) {
                 setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
+            } else if (attr == R.styleable.ScrollView_carbon_headerTint) {
+                setHeaderTint(a.getColor(attr, 0));
+            } else if (attr == R.styleable.ScrollView_carbon_headerMinHeight) {
+                setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
+            } else if (attr == R.styleable.ScrollView_carbon_headerParallax) {
+                setHeaderParallax(a.getFloat(attr, 0.0f));
             }
         }
         a.recycle();
@@ -303,11 +309,11 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         requestLayout();
     }
 
-    public float getParallax() {
+    public float getHeaderParallax() {
         return parallax;
     }
 
-    public void setParallax(float amount) {
+    public void setHeaderParallax(float amount) {
         parallax = amount;
     }
 
@@ -319,11 +325,11 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         headerTint = color;
     }
 
-    public int getMinHeaderHeight() {
+    public int getHeaderMinHeight() {
         return minHeader;
     }
 
-    public void setMinHeaderHeight(int height) {
+    public void setHeaderMinHeight(int height) {
         minHeader = height;
     }
 

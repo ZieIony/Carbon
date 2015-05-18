@@ -10,14 +10,14 @@ import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
 import tk.zielony.carbonsamples.widget.DialogActivity;
-import tk.zielony.carbonsamples.widget.HeaderActivity;
 import tk.zielony.carbonsamples.widget.ProgressBarsActivity;
 import tk.zielony.carbonsamples.widget.RecentsActivity;
+import tk.zielony.carbonsamples.widget.RecyclerActivity;
 import tk.zielony.carbonsamples.widget.SVGActivity;
+import tk.zielony.carbonsamples.widget.ScrollViewActivity;
 import tk.zielony.carbonsamples.widget.SnackbarActivity;
 import tk.zielony.carbonsamples.widget.TabsActivity;
 import tk.zielony.carbonsamples.widget.TextFieldsActivity;
-
 
 public class WidgetsActivity extends Activity {
 
@@ -42,7 +42,8 @@ public class WidgetsActivity extends Activity {
                 new ViewModel(TextFieldsActivity.class, "Text fields"),
                 new ViewModel(TabsActivity.class, "Tabs"),
                 new ViewModel(RecentsActivity.class, "Recents"),
-                new ViewModel(HeaderActivity.class, "ScrollView with header")
+                new ViewModel(ScrollViewActivity.class, "ScrollView"),
+                new ViewModel(RecyclerActivity.class, "RecyclerView")
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

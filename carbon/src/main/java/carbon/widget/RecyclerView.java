@@ -2,6 +2,7 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -72,6 +73,19 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
+
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, 0);
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.RecyclerView_carbon_headerTint) {
+                setHeaderTint(a.getColor(attr, 0));
+            } else if (attr == R.styleable.RecyclerView_carbon_headerMinHeight) {
+                setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
+            } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
+                setHeaderParallax(a.getFloat(attr, 0.0f));
+            }
+        }
+        a.recycle();
 
         setClipToPadding(false);
     }
@@ -310,7 +324,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
             int headerHeight = header.getMeasuredHeight();
             float scroll = computeVerticalScrollOffset();
-            canvas.clipRect(0, 0, getWidth(), Math.max(minHeader + scroll, headerHeight));
+            canvas.clipRect(0, 0, getWidth(), Math.max(minHeader, headerHeight - scroll));
             canvas.translate(0, -scroll * parallax);
             header.draw(canvas);
 
@@ -322,7 +336,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             canvas.restoreToCount(saveCount);
 
             saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
-            canvas.clipRect(0, Math.max(minHeader + scroll, headerHeight)-scroll, getWidth(), Integer.MAX_VALUE, Region.Op.REPLACE);
+            canvas.clipRect(0, Math.max(minHeader, headerHeight - scroll), getWidth(), Integer.MAX_VALUE, Region.Op.REPLACE);
             super.dispatchDraw(canvas);
             canvas.restoreToCount(saveCount);
         } else {
@@ -344,11 +358,11 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         requestLayout();
     }
 
-    public float getParallax() {
+    public float getHeaderParallax() {
         return parallax;
     }
 
-    public void setParallax(float amount) {
+    public void setHeaderParallax(float amount) {
         parallax = amount;
     }
 
@@ -360,11 +374,11 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         headerTint = color;
     }
 
-    public int getMinHeaderHeight() {
+    public int getHeaderMinHeight() {
         return minHeader;
     }
 
-    public void setMinHeaderHeight(int height) {
+    public void setHeaderMinHeight(int height) {
         minHeader = height;
     }
 
