@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.ControlFocusedColorStateList;
 import carbon.internal.TypefaceUtils;
@@ -121,7 +122,7 @@ public class EditText extends android.widget.EditText implements TouchMarginView
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
 
-        int ap = a.getResourceId(R.styleable.RadioButton_android_textAppearance, -1);
+        int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
         if (ap != -1) {
             TypedArray appearance = getContext().obtainStyledAttributes(ap, R.styleable.TextAppearance);
             if (appearance != null) {

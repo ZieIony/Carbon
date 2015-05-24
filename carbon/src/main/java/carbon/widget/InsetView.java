@@ -6,7 +6,7 @@ package carbon.widget;
 public interface InsetView {
     public static int INSET_NULL = -1;
 
-    void setInset(int touchMarginAll, int touchMarginAll1, int touchMarginAll2, int touchMarginAll3);
+    void setInset(int left, int top, int right, int bottom);
 
     void setInsetColor(int color);
 }

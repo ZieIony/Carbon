@@ -20,7 +20,9 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.animation.StateAnimatorView;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.ControlCheckedColorStateList;
 import carbon.drawable.RippleDrawable;
@@ -30,7 +32,7 @@ import carbon.internal.TypefaceUtils;
 /**
  * Created by Marcin on 2015-03-06.
  */
-public class CheckBox extends android.widget.CheckBox implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView ,TintedView{
+public class CheckBox extends android.widget.CheckBox implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
     private CheckableDrawable drawable;
 
     public CheckBox(Context context) {

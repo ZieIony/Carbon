@@ -36,7 +36,7 @@
                 android:singleLine="true"
                 android:layout_marginLeft="@dimen/carbon_padding"
                 android:textAppearance="?attr/carbon_textAppearance_body2"
-                app:carbon_dividerColor="#00000000"
+                app:carbon_tint="#00000000"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/carbon_toolbarHeight">
 

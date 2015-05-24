@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleDrawableCompat;
 import carbon.drawable.RippleDrawableLollipop;
 import carbon.drawable.RippleView;
-import carbon.widget.AnimatedView;
 import carbon.widget.InsetView;
 import carbon.widget.TintedView;
 import carbon.widget.TouchMarginView;

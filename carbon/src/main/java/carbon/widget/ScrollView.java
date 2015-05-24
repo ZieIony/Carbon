@@ -169,7 +169,16 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         return super.dispatchTouchEvent(ev);
     }
 
-   /* @Override
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        try {
+            return super.onTouchEvent(ev);
+        } catch (IllegalArgumentException e) {  // pointer index out of range, see: http://stackoverflow.com/questions/16459196/java-lang-illegalargumentexception-pointerindex-out-of-range-exception-dispat/
+            return true;
+        }
+    }
+
+    /* @Override
     public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
             int oldX = getScrollX();

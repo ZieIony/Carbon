@@ -30,7 +30,9 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.animation.StateAnimatorView;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -514,7 +516,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     // insets
     // -------------------------------
 
-    int insetLeft = -1, insetTop = -1, insetRight = -1, insetBottom = -1;
+    int insetLeft = INSET_NULL, insetTop = INSET_NULL, insetRight = INSET_NULL, insetBottom = INSET_NULL;
     int insetColor;
     private OnInsetsChangedListener onInsetsChangedListener;
 

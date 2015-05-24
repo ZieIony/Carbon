@@ -11,6 +11,7 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.drawable.CircularProgressDrawable;
 import carbon.drawable.ProgressBarDrawable;
 import carbon.drawable.ProgressDrawable;

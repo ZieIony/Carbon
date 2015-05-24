@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
@@ -21,11 +23,16 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 
 /**
  * Created by Marcin on 2015-01-07.
  */
-public class Snackbar extends FrameLayout implements AnimatedView, GestureDetector.OnGestureListener {
+public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchListener {
+    public static int INFINITE = -1;
+    private float prevX, swipe;
+    private ValueAnimator animator;
+
     public interface OnDismissedListener {
         void OnDismissed();
     }
@@ -43,11 +50,9 @@ public class Snackbar extends FrameLayout implements AnimatedView, GestureDetect
     private Handler handler;
     private View content;
     OnDismissedListener onDismissedListener;
-    boolean swipeToDismiss = true, tapOutsideToDismiss = false;
+    boolean swipeToDismiss = true, tapOutsideToDismiss = true;
 
     static List<Snackbar> next = new ArrayList<>();
-
-    GestureDetector detector = new GestureDetector(this);
 
     public enum Style {
         Floating, Docked
@@ -68,6 +73,7 @@ public class Snackbar extends FrameLayout implements AnimatedView, GestureDetect
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         content = inflate(getContext(), R.layout.carbon_snackbar, null);
+        content.setOnTouchListener(this);
         addView(content);
 
         message = (TextView) findViewById(R.id.carbon_messageText);
@@ -91,43 +97,125 @@ public class Snackbar extends FrameLayout implements AnimatedView, GestureDetect
     }
 
     public void show() {
+        if (this.getParent() != null)
+            return;
         synchronized (Snackbar.class) {
-            View decor = ((Activity) getContext()).getWindow().getDecorView();
-            ((ViewGroup) decor.findViewById(android.R.id.content)).addView(this, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
             if (!next.contains(this))
                 next.add(this);
             if (next.indexOf(this) == 0) {
+                View decor = ((Activity) getContext()).getWindow().getDecorView();
+                ((ViewGroup) decor.findViewById(android.R.id.content)).addView(this,
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
                 ViewHelper.setAlpha(content, 0);
                 AnimUtils.animateIn(content, getInAnimation(), null);
-                if (duration > 0)
+                if (duration != INFINITE)
                     handler.postDelayed(hideRunnable, duration);
             }
         }
     }
 
+    public static void clearQueue() {
+        next.clear();
+    }
+
     public void hide() {
-        handler.removeCallbacks(hideRunnable);
-        AnimUtils.animateOut(content, getOutAnimation(), new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                synchronized (Snackbar.class) {
-                    ((ViewGroup) getParent()).removeView(Snackbar.this);
-                    next.remove(Snackbar.this);
-                    if (next.size() != 0)
-                        next.get(0).show();
+        synchronized (Snackbar.class) {
+            if (getParent() == null)
+                return;
+            handler.removeCallbacks(hideRunnable);
+            AnimUtils.animateOut(content, getOutAnimation(), new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    hideInternal();
                 }
-            }
-        });
+            });
+        }
+    }
+
+    private void hideInternal() {
+        synchronized (Snackbar.class) {
+            if (getParent() != null)
+                ((ViewGroup) getParent()).removeView(this);
+            if (next.contains(this))
+                next.remove(this);
+            if (next.size() != 0)
+                next.get(0).show();
+        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (swipeToDismiss) {
-            if (detector.onTouchEvent(event))
-                return true;
+        boolean hit = event.getY() > content.getTop() && getParent() != null;
+        if (tapOutsideToDismiss && !hit) {
+            hide();
+            return false;
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (swipeToDismiss && animator == null) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                swipe = 0;
+                prevX = event.getX();
+                handler.removeCallbacks(hideRunnable);
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                swipe += event.getX() - prevX;
+                prevX = event.getX();
+                ViewHelper.setTranslationX(content, swipe);
+                ViewHelper.setAlpha(content, 1 - Math.abs(swipe) / content.getWidth());
+                if (Math.abs(swipe) > content.getWidth() / 3) {
+                    handler.removeCallbacks(hideRunnable);
+                    animator = ObjectAnimator.ofFloat(swipe, getWidth() * Math.signum(swipe));
+                    animator.setDuration(200);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            float s = (Float) animation.getAnimatedValue();
+                            ViewHelper.setTranslationX(content, s);
+                            ViewHelper.setAlpha(content, 1 - Math.abs(s) / content.getWidth());
+                            Log.e("swipe", "" + (1 - Math.abs(s) / content.getWidth()));
+                            postInvalidate();
+                        }
+                    });
+                    animator.start();
+                    animator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            hideInternal();
+                            animator = null;
+                        }
+                    });
+                }
+            } else {
+                animator = ObjectAnimator.ofFloat(swipe, 0);
+                animator.setDuration(200);
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        float s = (Float) animation.getAnimatedValue();
+                        ViewHelper.setTranslationX(content, s);
+                        ViewHelper.setAlpha(content, 1 - Math.abs(s) / content.getWidth());
+                        Log.e("up", "" + (1 - Math.abs(s) / content.getWidth()));
+                        postInvalidate();
+                    }
+                });
+                animator.start();
+                animator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        animator = null;
+                        if (duration != INFINITE)
+                            handler.postDelayed(hideRunnable, duration);
+                    }
+                });
+            }
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -189,43 +277,19 @@ public class Snackbar extends FrameLayout implements AnimatedView, GestureDetect
         this.duration = duration;
     }
 
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
+    public boolean isSwipeToDismissEnabled() {
+        return swipeToDismiss;
     }
 
-    @Override
-    public void onShowPress(MotionEvent e) {
-
+    public void setSwipeToDismissEnabled(boolean swipeToDismiss) {
+        this.swipeToDismiss = swipeToDismiss;
     }
 
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
+    public boolean isTapOutsideToDismissEnabled() {
+        return tapOutsideToDismiss;
     }
 
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    private void fireOnDismissed() {
-        if (onDismissedListener != null)
-            onDismissedListener.OnDismissed();
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (Math.abs(velocityX) > 5) {
-            hide();
-            fireOnDismissed();
-        }
-        return true;
+    public void setTapOutsideToDismissEnabled(boolean tapOutsideToDismiss) {
+        this.tapOutsideToDismiss = tapOutsideToDismiss;
     }
 }

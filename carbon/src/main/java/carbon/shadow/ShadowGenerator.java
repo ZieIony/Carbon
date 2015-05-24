@@ -3,7 +3,6 @@ package carbon.shadow;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.v8.renderscript.Allocation;

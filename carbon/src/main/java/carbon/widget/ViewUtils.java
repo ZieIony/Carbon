@@ -1,14 +1,8 @@
 package carbon.widget;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 
 import java.lang.reflect.Field;
-
-import carbon.R;
 
 /**
  * Created by Marcin on 2014-12-10.

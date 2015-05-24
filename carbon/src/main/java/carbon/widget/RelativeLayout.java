@@ -30,7 +30,9 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.animation.StateAnimatorView;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -128,7 +130,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
             if (shadow != null) {
                 paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
 
-                float childElevation = shadowView.getElevation()+shadowView.getTranslationZ();
+                float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
 
                 float[] childLocation = new float[]{(child.getLeft() + child.getRight()) / 2, (child.getTop() + child.getBottom()) / 2};
                 Matrix matrix = carbon.internal.ViewHelper.getMatrix(child);
@@ -514,7 +516,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     // insets
     // -------------------------------
 
-    int insetLeft = -1, insetTop = -1, insetRight = -1, insetBottom = -1;
+    int insetLeft = INSET_NULL, insetTop = INSET_NULL, insetRight = INSET_NULL, insetBottom = INSET_NULL;
     int insetColor;
     private OnInsetsChangedListener onInsetsChangedListener;
 

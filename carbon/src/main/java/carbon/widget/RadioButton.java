@@ -20,7 +20,9 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.animation.StateAnimatorView;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.ControlCheckedColorStateList;
 import carbon.drawable.RippleDrawable;
@@ -30,7 +32,7 @@ import carbon.internal.TypefaceUtils;
 /**
  * Created by Marcin on 2015-03-06.
  */
-public class RadioButton extends android.widget.RadioButton implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView,TintedView {
+public class RadioButton extends android.widget.RadioButton implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
     private CheckableDrawable drawable;
 
     public RadioButton(Context context) {
@@ -93,7 +95,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initTint(this,attrs,defStyleAttr);
+        Carbon.initTint(this, attrs, defStyleAttr);
     }
 
     @Override

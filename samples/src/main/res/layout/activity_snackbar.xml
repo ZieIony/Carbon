@@ -8,19 +8,43 @@
     android:layout_height="match_parent">
 
     <carbon.widget.Button
-        android:text="Show floating snackbar"
+        android:text="Show snackbar"
         android:id="@+id/button"
         android:layout_gravity="left"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="40dp" />
 
-    <carbon.widget.Button
-        android:text="Show docked snackbar"
-        android:id="@+id/button2"
-        android:layout_gravity="left"
-        android:layout_margin="@dimen/carbon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+    <carbon.widget.CheckBox
+        android:padding="@dimen/carbon_padding"
+        android:checked="false"
+        android:id="@+id/swipe"
+        android:text="swipe to dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <carbon.widget.CheckBox
+        android:padding="@dimen/carbon_padding"
+        android:checked="false"
+        android:id="@+id/tap"
+        android:text="tap outside to dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <carbon.widget.CheckBox
+        android:padding="@dimen/carbon_padding"
+        android:checked="false"
+        android:id="@+id/floating"
+        android:text="floating snackbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <carbon.widget.CheckBox
+        android:padding="@dimen/carbon_padding"
+        android:checked="false"
+        android:id="@+id/infinite"
+        android:text="infinite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </carbon.widget.LinearLayout>

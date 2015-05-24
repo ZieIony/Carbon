@@ -2,11 +2,8 @@ package carbon.drawable;
 
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 
 /**

@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.widget.Filterable;
 
 import carbon.R;
+import carbon.animation.AnimatedView;
 
 /**
  * Created by Marcin on 2015-02-14.
@@ -15,7 +16,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
     Filterable adapter;
     TextWatcher autoCompleteTextWatcher;
 
-    public static interface OnAutoCompleteListener{
+    public static interface OnAutoCompleteListener {
         void onAutoComplete();
     }
 
@@ -56,7 +57,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
         this.adapter = adapter;
     }
 
-    public void performCompletion(String s){
+    public void performCompletion(String s) {
         removeTextChangedListener(autoCompleteTextWatcher);
         setText(s);
         setSelection(s.length());
