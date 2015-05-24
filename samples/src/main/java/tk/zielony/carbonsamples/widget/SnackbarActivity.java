@@ -2,7 +2,9 @@ package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import carbon.widget.CheckBox;
 import carbon.widget.Snackbar;
@@ -37,6 +39,12 @@ public class SnackbarActivity extends Activity {
                 snackbar.setTapOutsideToDismissEnabled(tapCheckBox.isChecked());
                 snackbar.setSwipeToDismissEnabled(swipeCheckBox.isChecked());
                 snackbar.show();
+                snackbar.setOnDismissedListener(new Snackbar.OnDismissedListener() {
+                    @Override
+                    public void onDismissed() {
+                        Log.e("Snackbar", "dismissed");
+                    }
+                });
             }
         });
 

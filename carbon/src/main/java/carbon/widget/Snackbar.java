@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +33,7 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
     private ValueAnimator animator;
 
     public interface OnDismissedListener {
-        void OnDismissed();
+        void onDismissed();
     }
 
     private TextView message;
@@ -124,6 +123,8 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
             if (getParent() == null)
                 return;
             handler.removeCallbacks(hideRunnable);
+            if (onDismissedListener != null)
+                onDismissedListener.onDismissed();
             AnimUtils.animateOut(content, getOutAnimation(), new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
@@ -168,7 +169,7 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
                 ViewHelper.setAlpha(content, 1 - Math.abs(swipe) / content.getWidth());
                 if (Math.abs(swipe) > content.getWidth() / 3) {
                     handler.removeCallbacks(hideRunnable);
-                    animator = ObjectAnimator.ofFloat(swipe, getWidth() * Math.signum(swipe));
+                    animator = ObjectAnimator.ofFloat(swipe, content.getWidth() * Math.signum(swipe));
                     animator.setDuration(200);
                     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
@@ -176,7 +177,6 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
                             float s = (Float) animation.getAnimatedValue();
                             ViewHelper.setTranslationX(content, s);
                             ViewHelper.setAlpha(content, 1 - Math.abs(s) / content.getWidth());
-                            Log.e("swipe", "" + (1 - Math.abs(s) / content.getWidth()));
                             postInvalidate();
                         }
                     });
@@ -198,7 +198,6 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
                         float s = (Float) animation.getAnimatedValue();
                         ViewHelper.setTranslationX(content, s);
                         ViewHelper.setAlpha(content, 1 - Math.abs(s) / content.getWidth());
-                        Log.e("up", "" + (1 - Math.abs(s) / content.getWidth()));
                         postInvalidate();
                     }
                 });
@@ -291,5 +290,9 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
 
     public void setTapOutsideToDismissEnabled(boolean tapOutsideToDismiss) {
         this.tapOutsideToDismiss = tapOutsideToDismiss;
+    }
+
+    public void setOnDismissedListener(OnDismissedListener onDismissedListener) {
+        this.onDismissedListener = onDismissedListener;
     }
 }
