@@ -205,10 +205,7 @@
             <enum name="circular_determinate" value="3" />
             <enum name="circular_indeterminate" value="4" />
         </attr>
-        <attr name="carbon_barColor" format="color|reference" />
-        <attr name="carbon_barBackground" format="color|reference" />
         <attr name="carbon_barWidth" format="dimension" />
-        <attr name="carbon_barPadding" format="dimension" />
     </declare-styleable>
 
     <attr name="carbon_cardViewStyle" format="reference" />
@@ -227,7 +224,6 @@
 
     <attr name="carbon_pagerTabStripStyle" format="reference" />
     <declare-styleable name="PagerTabStrip">
-        <attr name="carbon_indicatorColor" format="color|reference" />
         <attr name="carbon_indicatorWidth" format="dimension" />
         <attr name="carbon_fixedTabs" format="boolean" />
     </declare-styleable>

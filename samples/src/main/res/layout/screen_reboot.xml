@@ -18,7 +18,7 @@
             android:tag="animate"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_barColor="#ffffffff"
+            app:carbon_tint="#ffffffff"
             app:carbon_progressStyle="circular_indeterminate"
             android:layout_marginRight="@dimen/carbon_padding"
             android:id="@+id/progress"

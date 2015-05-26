@@ -40,8 +40,7 @@
     <carbon.widget.ProgressBar
         android:id="@+id/progress3"
         app:carbon_progressStyle="circular_indeterminate"
-        app:carbon_barBackground="#3fff0000"
-        app:carbon_barColor="#ffff0000"
+        app:carbon_tint="#ffff0000"
         app:carbon_barWidth="5dp"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="40dp"

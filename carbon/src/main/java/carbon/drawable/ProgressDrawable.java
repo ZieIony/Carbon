@@ -18,9 +18,8 @@ public abstract class ProgressDrawable extends Drawable {
     long sweepDuration = DEFAULT_SWEEP_DURATION;
     long sweepDelay = DEFAULT_SWEEP_OFFSET;
     final long startTime = System.currentTimeMillis();
-    Paint forePaint = new Paint(Paint.ANTI_ALIAS_FLAG), backPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    Paint forePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     ColorStateList barColor = ColorStateList.valueOf(Color.RED);
-    ColorStateList barBackground = ColorStateList.valueOf(Color.GRAY);
     float width = 5;
     float progress;
     float barPadding;
@@ -29,13 +28,11 @@ public abstract class ProgressDrawable extends Drawable {
 
     @Override
     public void setAlpha(int alpha) {
-        backPaint.setAlpha(alpha);
         forePaint.setAlpha(alpha);
     }
 
     @Override
     public void setColorFilter(ColorFilter cf) {
-        backPaint.setColorFilter(cf);
         forePaint.setColorFilter(cf);
     }
 
@@ -52,12 +49,6 @@ public abstract class ProgressDrawable extends Drawable {
     }
 
     private void updateColors() {
-        if (barBackground == null) {
-            int color = (0x54 << 24) + (barColor.getColorForState(getState(), barColor.getDefaultColor()) & 0xffffff);
-            backPaint.setColor(color);
-        } else {
-            backPaint.setColor(barBackground.getColorForState(getState(), barBackground.getDefaultColor()));
-        }
         forePaint.setColor(barColor.getColorForState(getState(), barColor.getDefaultColor()));
     }
 
@@ -112,20 +103,6 @@ public abstract class ProgressDrawable extends Drawable {
 
     public void setBarColor(ColorStateList barColor) {
         this.barColor = barColor;
-        updateColors();
-    }
-
-    public ColorStateList getBarBackground() {
-        return barBackground;
-    }
-
-    public void setBarBackground(int color) {
-        barBackground = ColorStateList.valueOf(color);
-        updateColors();
-    }
-
-    public void setBarBackground(ColorStateList barBackground) {
-        this.barBackground = barBackground;
         updateColors();
     }
 

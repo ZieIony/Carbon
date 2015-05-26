@@ -23,14 +23,12 @@ public class CircularProgressDrawable extends ProgressDrawable {
 
     public CircularProgressDrawable() {
         forePaint.setStyle(Paint.Style.STROKE);
-        backPaint.setStyle(Paint.Style.STROKE);
     }
 
     @Override
     public void draw(Canvas canvas) {
         Rect bounds = getBounds();
         forePaint.setStrokeWidth(width);
-        backPaint.setStrokeWidth(width);
         RectF boundsF = new RectF(bounds);
         boundsF.inset(width / 2 + barPadding, width / 2 + barPadding);
 
@@ -41,13 +39,13 @@ public class CircularProgressDrawable extends ProgressDrawable {
             float bar = Math.min((t - t2 + 1) % 1, (t2 - t + 1) % 1);
             bar = interpolator.getInterpolation(bar) * 2 * 300 + 30;
 
-            canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2 - barPadding, backPaint);
+            //canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2 - barPadding, backPaint);
             canvas.drawArc(boundsF, (t * 360 - bar / 2 + 360) % 360, bar, false, forePaint);
         } else {
             long time = System.currentTimeMillis() - startTime;
             float t = Math.min((float) time / angleDuration, 1);
 
-            canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2 - barPadding, backPaint);
+            //canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2 - barPadding, backPaint);
             canvas.drawArc(boundsF, interpolator2.getInterpolation(t) * 360 - 90, progress * 360, false, forePaint);
         }
         invalidateSelf();

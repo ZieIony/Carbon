@@ -3,7 +3,6 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -31,7 +30,6 @@ public class PagerTabStrip extends HorizontalScrollView {
     private int selectedPage = 0;
     private float indicatorPos2 = 0;
     float indicatorHeight;
-    int indicatorColor = Color.RED;
     DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator();
     boolean fixed = false;
 
@@ -114,7 +112,6 @@ public class PagerTabStrip extends HorizontalScrollView {
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagerTabStrip, defStyleAttr, 0);
 
-        setIndicatorColor(a.getColor(R.styleable.PagerTabStrip_carbon_indicatorColor, 0));
         setIndicatorHeight(a.getDimension(R.styleable.PagerTabStrip_carbon_indicatorWidth, 2));
         setFixed(a.getBoolean(R.styleable.PagerTabStrip_carbon_fixedTabs, true));
 
@@ -178,7 +175,7 @@ public class PagerTabStrip extends HorizontalScrollView {
             return;
         if (indicatorPos == indicatorPos2)
             indicatorPos2 = content.getChildAt(selectedPage).getWidth();
-        paint.setColor(indicatorColor);
+        paint.setColor(getTint().getColorForState(getDrawableState(), getTint().getDefaultColor()));
         canvas.drawRect(indicatorPos, getHeight() - indicatorHeight, indicatorPos2, getHeight(), paint);
     }
 
@@ -202,14 +199,6 @@ public class PagerTabStrip extends HorizontalScrollView {
     public void setIndicatorHeight(float indicatorHeight) {
         this.indicatorHeight = indicatorHeight;
         postInvalidate();
-    }
-
-    public int getIndicatorColor() {
-        return indicatorColor;
-    }
-
-    public void setIndicatorColor(int indicatorColor) {
-        this.indicatorColor = indicatorColor;
     }
 
     public void setTabBuilder(TabBuilder tabBuilder) {

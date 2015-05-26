@@ -27,7 +27,7 @@ import carbon.animation.AnimatedView;
 /**
  * Created by Marcin on 2015-01-07.
  */
-public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchListener {
+public class Snackbar extends FrameLayout implements AnimatedView {
     public static int INFINITE = -1;
     private float prevX, swipe;
     private ValueAnimator animator;
@@ -72,7 +72,6 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         content = inflate(getContext(), R.layout.carbon_snackbar, null);
-        content.setOnTouchListener(this);
         addView(content);
 
         message = (TextView) findViewById(R.id.carbon_messageText);
@@ -152,21 +151,24 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
             hide();
             return false;
         }
-        return super.onTouchEvent(event);
-    }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (swipeToDismiss && animator == null) {
+        if (hit && swipeToDismiss) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 swipe = 0;
                 prevX = event.getX();
                 handler.removeCallbacks(hideRunnable);
-            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (animator != null) {
+                    animator.cancel();
+                    swipe = ViewHelper.getTranslationX(content);
+                }
+                super.onTouchEvent(event);
+                return true;
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE && animator == null) {
                 swipe += event.getX() - prevX;
                 prevX = event.getX();
                 ViewHelper.setTranslationX(content, swipe);
                 ViewHelper.setAlpha(content, 1 - Math.abs(swipe) / content.getWidth());
+                postInvalidate();
                 if (Math.abs(swipe) > content.getWidth() / 3) {
                     handler.removeCallbacks(hideRunnable);
                     animator = ObjectAnimator.ofFloat(swipe, content.getWidth() * Math.signum(swipe));
@@ -189,7 +191,8 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
                         }
                     });
                 }
-            } else {
+                return true;
+            } else if (animator == null) {
                 animator = ObjectAnimator.ofFloat(swipe, 0);
                 animator.setDuration(200);
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -210,11 +213,12 @@ public class Snackbar extends FrameLayout implements AnimatedView, View.OnTouchL
                             handler.postDelayed(hideRunnable, duration);
                     }
                 });
+                super.onTouchEvent(event);
+                return true;
             }
-            return true;
         }
 
-        return false;
+        return super.onTouchEvent(event);
     }
 
     @Override

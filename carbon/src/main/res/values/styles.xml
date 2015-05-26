@@ -275,8 +275,7 @@
 
     <style name="carbon_ProgressBar">
         <item name="carbon_progressStyle">bar_indeterminate</item>
-        <item name="carbon_barColor">?attr/colorPrimary</item>
-        <item name="carbon_barBackground">@null</item>
+        <item name="carbon_tint">?attr/colorPrimary</item>
         <item name="carbon_barWidth">3dp</item>
         <item name="carbon_inAnimation">progressWidth</item>
         <item name="carbon_outAnimation">progressWidth</item>
@@ -298,7 +297,7 @@
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">
-        <item name="carbon_indicatorColor">?attr/colorAccent</item>
+        <item name="carbon_tint">?attr/colorAccent</item>
         <item name="carbon_indicatorWidth">2dp</item>
         <item name="carbon_fixedTabs">true</item>
     </style>

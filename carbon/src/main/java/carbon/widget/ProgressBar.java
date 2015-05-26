@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
@@ -19,7 +20,7 @@ import carbon.drawable.ProgressDrawable;
 /**
  * Created by Marcin on 2015-02-08.
  */
-public class ProgressBar extends View implements AnimatedView {
+public class ProgressBar extends View implements AnimatedView, TintedView {
     private ProgressDrawable drawable;
 
     public enum Style {
@@ -50,8 +51,6 @@ public class ProgressBar extends View implements AnimatedView {
         drawable.setStyle(style);
         setBackgroundDrawable(drawable);
 
-        drawable.setBarColor(a.getColorStateList(R.styleable.ProgressBar_carbon_barColor));
-        drawable.setBarBackground(a.getColorStateList(R.styleable.ProgressBar_carbon_barBackground));
         drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
@@ -124,4 +123,28 @@ public class ProgressBar extends View implements AnimatedView {
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
     }
+
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list;
+        drawable.setBarColor(list);
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
+    }
+
 }
