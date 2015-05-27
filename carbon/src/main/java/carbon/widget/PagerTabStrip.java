@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -17,12 +18,13 @@ import android.widget.LinearLayout;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
+import carbon.Carbon;
 import carbon.R;
 
 /**
  * Created by Marcin on 2015-02-26.
  */
-public class PagerTabStrip extends HorizontalScrollView {
+public class PagerTabStrip extends android.widget.HorizontalScrollView implements TintedView {
     ViewPager viewPager;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     LinearLayout content;
@@ -123,6 +125,8 @@ public class PagerTabStrip extends HorizontalScrollView {
         content = new LinearLayout(getContext());
         addView(content, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         initTabs();
+
+        Carbon.initTint(this, attrs, defStyleAttr);
     }
 
     public void setViewPager(final ViewPager viewPager) {
@@ -304,4 +308,35 @@ public class PagerTabStrip extends HorizontalScrollView {
         };
     }
 
+    @Override
+    public void setOverScrollMode(int mode) {
+        try {
+            super.setOverScrollMode(OVER_SCROLL_NEVER);
+        } catch (Exception e) {
+            // Froyo
+        }
+    }
+
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list;
+        postInvalidate();
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
+    }
 }

@@ -261,5 +261,6 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
             leftGlow.setColor(color);
         if (rightGlow != null)
             rightGlow.setColor(color);
+        postInvalidate();
     }
 }

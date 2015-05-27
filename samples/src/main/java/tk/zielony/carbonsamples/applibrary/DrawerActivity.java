@@ -7,6 +7,7 @@ package tk.zielony.carbonsamples.applibrary;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -35,6 +36,7 @@ public class DrawerActivity extends Activity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawerMenu = (LinearLayout) findViewById(R.id.drawerMenu);
         RecyclerView drawerList = (RecyclerView) findViewById(R.id.drawerList);
+        drawerList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
         drawerList.setAdapter(new FruitAdapter(fruits, new AdapterView.OnItemClickListener() {
             @Override

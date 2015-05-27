@@ -183,6 +183,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
         updateTint();
     }
 
+
     // -------------------------------
     // tint
     // -------------------------------
@@ -213,5 +214,6 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
             leftGlow.setColor(color);
         if (rightGlow != null)
             rightGlow.setColor(color);
+        postInvalidate();
     }
 }

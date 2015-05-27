@@ -264,6 +264,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
+        postInvalidate();
     }
 
 
