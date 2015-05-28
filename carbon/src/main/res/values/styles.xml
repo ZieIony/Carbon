@@ -190,7 +190,7 @@
     <style name="carbon_FloatingActionButton">
         <item name="android:clickable">true</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
-        <item name="carbon_filterColor">?attr/carbon_iconColor</item>
+        <item name="carbon_tint">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">pop</item>
         <item name="carbon_outAnimation">pop</item>
         <item name="carbon_elevation">@dimen/carbon_elevationHigh</item>
@@ -214,7 +214,7 @@
 
     <style name="carbon_SVGView">
         <item name="carbon_rippleColor">@null</item>
-        <item name="carbon_filterColor">?attr/carbon_iconColor</item>
+        <item name="carbon_tint">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">fade</item>
         <item name="carbon_outAnimation">fade</item>
     </style>

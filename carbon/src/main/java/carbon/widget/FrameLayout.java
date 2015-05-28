@@ -396,7 +396,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     public void invalidateShadow() {
         shadow = null;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 

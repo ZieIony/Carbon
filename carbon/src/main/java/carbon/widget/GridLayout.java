@@ -396,7 +396,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     @Override
     public void invalidateShadow() {
         shadow = null;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 

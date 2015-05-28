@@ -159,7 +159,7 @@
             android:layout_marginLeft="@dimen/carbon_padding"
             android:layout_marginRight="@dimen/carbon_padding"
             android:background="#ffffffff"
-            app:carbon_filterColor="@color/carbon_black_54"
+            app:carbon_tint="@color/carbon_black_54"
             android:padding="@dimen/carbon_paddingHalf"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"

@@ -396,7 +396,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     public void invalidateShadow() {
         shadow = null;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 

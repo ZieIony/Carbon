@@ -395,7 +395,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     @Override
     public void invalidateShadow() {
         shadow = null;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 

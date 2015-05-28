@@ -395,7 +395,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     public void invalidateShadow() {
         shadow = null;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 

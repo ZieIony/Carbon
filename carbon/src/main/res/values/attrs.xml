@@ -71,7 +71,6 @@
         <attr name="carbon_textAppearance_button_inverse" format="reference" />
     </declare-styleable>
 
-    <attr name="carbon_filterColor" format="reference|color" />
     <attr name="carbon_src" format="reference" />
     <attr name="carbon_elevation" format="dimension" />
     <attr name="carbon_cornerRadius" format="dimension" />
@@ -119,7 +118,6 @@
     <attr name="carbon_svgViewStyle" format="reference" />
     <declare-styleable name="SVGView">
         <attr name="carbon_rippleColor" />
-        <attr name="carbon_filterColor" />
         <attr name="carbon_src" />
         <attr name="carbon_touchMargin" />
         <attr name="carbon_touchMarginLeft" />

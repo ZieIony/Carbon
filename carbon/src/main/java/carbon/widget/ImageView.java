@@ -1,11 +1,14 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -39,7 +42,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2015-01-22.
  */
-public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView {
+public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public ImageView(Context context) {
@@ -64,6 +67,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
+        Carbon.initTint(this, attrs, defStyleAttr);
 
         a.recycle();
     }
@@ -279,7 +283,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     @Override
     public void invalidateShadow() {
         shadow = null;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -345,6 +349,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
+        updateTint();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
         if (stateAnimators != null)
@@ -392,5 +397,37 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
+    }
+
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list;
+        updateTint();
+        postInvalidate();
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
+    }
+
+    private void updateTint() {
+        if (tint != null) {
+            int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
+            setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP));
+            setAlpha(Color.alpha(color));
+        }
     }
 }

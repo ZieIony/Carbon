@@ -320,7 +320,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @Override
     public void invalidateShadow() {
         shadow = null;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 

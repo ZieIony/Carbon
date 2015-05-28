@@ -11,7 +11,7 @@
         android:clickable="true"
         android:id="@+id/carbon_icon"
         app:carbon_src="@raw/carbon_uparrow"
-        app:carbon_filterColor="?attr/carbon_iconColor"
+        app:carbon_tint="?attr/carbon_iconColor"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless"
         app:carbon_rippleHotspot="false"

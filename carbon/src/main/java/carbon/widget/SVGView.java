@@ -16,6 +16,7 @@ import android.util.Log;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
+import carbon.Carbon;
 import carbon.R;
 
 /**
@@ -44,7 +45,6 @@ public class SVGView extends ImageView {
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SVGView, defStyleAttr, 0);
         setSVGResource(a.getResourceId(R.styleable.SVGView_carbon_src, 0));
-        setColorFilter(a.getColorStateList(R.styleable.SVGView_carbon_filterColor));
         a.recycle();
     }
 
@@ -106,31 +106,6 @@ public class SVGView extends ImageView {
         svg.setDocumentHeight(height);
         svg.renderToCanvas(canvas);
         setImageBitmap(bitmap);
-    }
-
-    @Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
-        updateColorFilter();
-    }
-
-    @Override
-    public void setColorFilter(ColorFilter cf) {
-        filterColor = null;
-        super.setColorFilter(cf);
-    }
-
-    public void setColorFilter(ColorStateList stateList) {
-        filterColor = stateList;
-        updateColorFilter();
-    }
-
-    private void updateColorFilter() {
-        if (filterColor != null) {
-            int color = filterColor.getColorForState(getDrawableState(), filterColor.getDefaultColor());
-            super.setColorFilter(new LightingColorFilter(0, color));
-            setAlpha(Color.alpha(color));
-        }
     }
 
     @Override
