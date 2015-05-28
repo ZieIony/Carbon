@@ -148,16 +148,15 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
         if (adapter == null)
             return;
 
-        if (tabBuilder == null) {
-            tabBuilder = new TabBuilder() {
-                @Override
-                public View getView(int position) {
-                    View tab = inflate(getContext(), R.layout.carbon_tab, null);
-                    ((TextView) tab.findViewById(R.id.carbon_tabText)).setText(adapter.getPageTitle(position).toString().toUpperCase());
-                    return tab;
-                }
-            };
-        }
+        tabBuilder = new TabBuilder() {
+            @Override
+            public View getView(int position) {
+                View tab = inflate(getContext(), R.layout.carbon_tab, null);
+                ((TextView) tab.findViewById(R.id.carbon_tabText)).setText(adapter.getPageTitle(position).toString().toUpperCase());
+                return tab;
+            }
+        };
+
         for (int i = 0; i < adapter.getCount(); i++) {
             View tab = tabBuilder.getView(i);
             content.addView(tab, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
