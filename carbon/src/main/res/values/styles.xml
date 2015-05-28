@@ -34,38 +34,46 @@
         <item name="colorPrimaryDark">#ff162949</item>
         <item name="colorAccent">#ff9ACE00</item>
 
+        <item name="android:textColorPrimary">@color/carbon_white</item>
+        <item name="android:textColorSecondary">@color/carbon_white_70</item>
+        <item name="android:textColorTertiary">@color/carbon_white_30</item>
+
+        <item name="android:textColorPrimaryInverse">@color/carbon_black_87</item>
+        <item name="android:textColorSecondaryInverse">@color/carbon_black_54</item>
+        <item name="android:textColorTertiaryInverse">@color/carbon_black_26</item>
+
         <item name="carbon_colorBackground">@color/carbon_background_dark</item>
-        <item name="carbon_colorBackground_inverse">@color/carbon_background_light</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_background_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_dark</item>
         <item name="carbon_colorDisabled">@color/carbon_white_30</item>
-        <item name="carbon_colorControl">@color/carbon_white_70</item>
+        <item name="colorControlNormal">@color/carbon_white_70</item>
 
-        <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Dark
+        <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Dark
         </item>
-        <item name="carbon_textAppearance_title">@style/carbon_TextAppearance.Title.Dark</item>
-        <item name="carbon_textAppearance_subhead">@style/carbon_TextAppearance.Subhead.Dark</item>
-        <item name="carbon_textAppearance_body2">@style/carbon_TextAppearance.Body2.Dark</item>
-        <item name="carbon_textAppearance_body1">@style/carbon_TextAppearance.Body1.Dark</item>
-        <item name="carbon_textAppearance_caption">@style/carbon_TextAppearance.Caption.Dark</item>
-        <item name="carbon_textAppearance_button">@style/carbon_TextAppearance.Button.Dark</item>
-        <item name="carbon_textAppearance_headline_inverse">
+        <item name="carbon_textAppearanceTitle">@style/carbon_TextAppearance.Title.Dark</item>
+        <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Dark</item>
+        <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Dark</item>
+        <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Dark</item>
+        <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Dark</item>
+        <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Dark</item>
+        <item name="carbon_textAppearanceHeadlineInverse">
             @style/carbon_TextAppearance.Headline.Light
         </item>
-        <item name="carbon_textAppearance_title_inverse">@style/carbon_TextAppearance.Title.Light
+        <item name="carbon_textAppearanceTitleInverse">@style/carbon_TextAppearance.Title.Light
         </item>
-        <item name="carbon_textAppearance_subhead_inverse">
+        <item name="carbon_textAppearanceSubheadInverse">
             @style/carbon_TextAppearance.Subhead.Light
         </item>
-        <item name="carbon_textAppearance_body2_inverse">@style/carbon_TextAppearance.Body2.Light
+        <item name="carbon_textAppearanceBody2Inverse">@style/carbon_TextAppearance.Body2.Light
         </item>
-        <item name="carbon_textAppearance_body1_inverse">@style/carbon_TextAppearance.Body1.Light
+        <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Light
         </item>
-        <item name="carbon_textAppearance_caption_inverse">
+        <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Light
         </item>
-        <item name="carbon_textAppearance_button_inverse">
+        <item name="carbon_textAppearanceButtonInverse">
             @style/carbon_TextAppearance.Button.Light
         </item>
 
@@ -111,38 +119,46 @@
         <item name="colorPrimaryDark">#ff162949</item>
         <item name="colorAccent">#ff9ACE00</item>
 
+        <item name="android:textColorPrimary">@color/carbon_black_87</item>
+        <item name="android:textColorSecondary">@color/carbon_black_54</item>
+        <item name="android:textColorTertiary">@color/carbon_black_26</item>
+
+        <item name="android:textColorPrimaryInverse">@color/carbon_white</item>
+        <item name="android:textColorSecondaryInverse">@color/carbon_white_70</item>
+        <item name="android:textColorTertiaryInverse">@color/carbon_white_30</item>
+
         <item name="carbon_colorBackground">@color/carbon_background_light</item>
-        <item name="carbon_colorBackground_inverse">@color/carbon_background_dark</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_background_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_light</item>
         <item name="carbon_colorDisabled">@color/carbon_black_26</item>
-        <item name="carbon_colorControl">@color/carbon_black_54</item>
+        <item name="colorControlNormal">@color/carbon_black_54</item>
 
-        <item name="carbon_textAppearance_headline">@style/carbon_TextAppearance.Headline.Light
+        <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Light
         </item>
-        <item name="carbon_textAppearance_title">@style/carbon_TextAppearance.Title.Light</item>
-        <item name="carbon_textAppearance_subhead">@style/carbon_TextAppearance.Subhead.Light</item>
-        <item name="carbon_textAppearance_body2">@style/carbon_TextAppearance.Body2.Light</item>
-        <item name="carbon_textAppearance_body1">@style/carbon_TextAppearance.Body1.Light</item>
-        <item name="carbon_textAppearance_caption">@style/carbon_TextAppearance.Caption.Light</item>
-        <item name="carbon_textAppearance_button">@style/carbon_TextAppearance.Button.Light</item>
-        <item name="carbon_textAppearance_headline_inverse">
+        <item name="carbon_textAppearanceTitle">@style/carbon_TextAppearance.Title.Light</item>
+        <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Light</item>
+        <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Light</item>
+        <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Light</item>
+        <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Light</item>
+        <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Light</item>
+        <item name="carbon_textAppearanceHeadlineInverse">
             @style/carbon_TextAppearance.Headline.Dark
         </item>
-        <item name="carbon_textAppearance_title_inverse">@style/carbon_TextAppearance.Title.Dark
+        <item name="carbon_textAppearanceTitleInverse">@style/carbon_TextAppearance.Title.Dark
         </item>
-        <item name="carbon_textAppearance_subhead_inverse">
+        <item name="carbon_textAppearanceSubheadInverse">
             @style/carbon_TextAppearance.Subhead.Dark
         </item>
-        <item name="carbon_textAppearance_body2_inverse">@style/carbon_TextAppearance.Body2.Dark
+        <item name="carbon_textAppearanceBody2Inverse">@style/carbon_TextAppearance.Body2.Dark
         </item>
-        <item name="carbon_textAppearance_body1_inverse">@style/carbon_TextAppearance.Body1.Dark
+        <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Dark
         </item>
-        <item name="carbon_textAppearance_caption_inverse">
+        <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Dark
         </item>
-        <item name="carbon_textAppearance_button_inverse">@style/carbon_TextAppearance.Button.Dark
+        <item name="carbon_textAppearanceButtonInverse">@style/carbon_TextAppearance.Button.Dark
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
@@ -167,14 +183,14 @@
         <item name="carbon_touchMarginBottom">6dp</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="android:textColor">@null</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearance_button_inverse</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
     </style>
 
     <style name="carbon_Button.Flat">
         <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
         <item name="android:background">@null</item>
         <item name="android:textColor">@null</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearance_button</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
     </style>
 
     <style name="carbon_ToggleButton" parent="@android:style/Widget.Button.Toggle">
@@ -201,7 +217,7 @@
     </style>
 
     <style name="carbon_TextView" parent="@android:style/Widget.TextView">
-        <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
     </style>
 
     <style name="carbon_StatusBar">
@@ -289,7 +305,7 @@
     </style>
 
     <style name="carbon_EditText" parent="@android:style/Widget.EditText">
-        <item name="android:textAppearance">?attr/carbon_textAppearance_subhead</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
         <item name="carbon_tint">@null</item>
         <item name="android:background">@null</item>
         <item name="carbon_floatingLabel">false</item>
@@ -317,7 +333,7 @@
     <style name="carbon_CheckBox" parent="android:Widget.CompoundButton.CheckBox">
         <item name="android:paddingLeft">@dimen/carbon_padding</item>
         <item name="carbon_rippleColor">@null</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
         <item name="carbon_tint">@null</item>
@@ -327,7 +343,7 @@
     <style name="carbon_RadioButton" parent="android:Widget.CompoundButton.RadioButton">
         <item name="android:paddingLeft">@dimen/carbon_padding</item>
         <item name="carbon_rippleColor">@null</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearance_body1</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
         <item name="carbon_tint">@null</item>

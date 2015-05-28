@@ -8,35 +8,35 @@
     android:layout_height="match_parent">
 
     <carbon.widget.SVGView
-        app:carbon_tint="?attr/carbon_colorBackground_inverse"
+        app:carbon_tint="?attr/carbon_colorBackgroundInverse"
         app:carbon_src="@raw/ic_description_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <carbon.widget.SVGView
-        app:carbon_tint="?attr/carbon_colorBackground_inverse"
+        app:carbon_tint="?attr/carbon_colorBackgroundInverse"
         app:carbon_src="@raw/ic_dns_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <carbon.widget.SVGView
-        app:carbon_tint="?attr/carbon_colorBackground_inverse"
+        app:carbon_tint="?attr/carbon_colorBackgroundInverse"
         app:carbon_src="@raw/ic_face_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <carbon.widget.SVGView
-        app:carbon_tint="?attr/carbon_colorBackground_inverse"
+        app:carbon_tint="?attr/carbon_colorBackgroundInverse"
         app:carbon_src="@raw/ic_print_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <carbon.widget.SVGView
-        app:carbon_tint="?attr/carbon_colorBackground_inverse"
+        app:carbon_tint="?attr/carbon_colorBackgroundInverse"
         app:carbon_src="@raw/ic_settings_input_svideo_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
@@ -73,7 +73,7 @@
             android:layout_marginLeft="@dimen/carbon_padding"
             android:gravity="center_vertical"
             android:textColor="@drawable/red_black_selector"
-            android:textAppearance="?attr/carbon_textAppearance_body2"
+            android:textAppearance="?attr/carbon_textAppearanceBody2"
             android:text="press me"
             android:layout_width="match_parent"
             android:layout_height="56dp" />

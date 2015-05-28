@@ -22,6 +22,7 @@
     <color name="carbon_white_70">#b3ffffff</color>
     <color name="carbon_black_26">#42000000</color>
     <color name="carbon_black_54">#8a000000</color>
+    <color name="carbon_black_87">#de000000</color>
 
     <color name="carbon_tab_text_selected">#ff000000</color>
     <color name="carbon_tab_text_unselected">#8a000000</color>

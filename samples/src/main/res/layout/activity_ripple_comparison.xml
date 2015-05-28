@@ -20,7 +20,7 @@
     <Button
         android:layout_margin="@dimen/carbon_padding"
         android:text="LOLLIPOP BUTTON"
-        android:textAppearance="?attr/carbon_textAppearance_button_inverse"
+        android:textAppearance="?attr/carbon_textAppearanceButtonInverse"
         android:layout_width="100dp"
         android:layout_height="56dp"
         android:background="@drawable/ripple" />
@@ -37,7 +37,7 @@
     <Button
         android:layout_margin="@dimen/carbon_padding"
         android:text="LOLLIPOP BUTTON"
-        android:textAppearance="?attr/carbon_textAppearance_button_inverse"
+        android:textAppearance="?attr/carbon_textAppearanceButtonInverse"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@drawable/ripple" />

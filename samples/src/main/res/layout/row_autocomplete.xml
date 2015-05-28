@@ -10,7 +10,7 @@
     <carbon.widget.TextView
         android:paddingLeft="72dp"
         android:id="@+id/text"
-        android:textAppearance="?attr/carbon_textAppearance_body1"
+        android:textAppearance="?attr/carbon_textAppearanceBody1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical" />

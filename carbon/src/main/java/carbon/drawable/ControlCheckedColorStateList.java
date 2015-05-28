@@ -17,7 +17,7 @@ public class ControlCheckedColorStateList extends ColorStateList {
                 new int[]{}
         }, new int[]{
                 getThemeColor(context, R.attr.colorAccent),
-                getThemeColor(context, R.attr.carbon_colorControl)
+                getThemeColor(context, R.attr.colorControlNormal)
         });
     }
 

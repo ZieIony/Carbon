@@ -21,7 +21,7 @@
 
         <carbon.widget.TextView
             android:id="@+id/carbon_recentTitle"
-            android:textAppearance="?attr/carbon_textAppearance_title"
+            android:textAppearance="?attr/carbon_textAppearanceTitle"
             android:gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_weight="1"

@@ -25,7 +25,7 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:textAppearance="?attr/carbon_textAppearance_body2"
+        android:textAppearance="?attr/carbon_textAppearanceBody2"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding" />

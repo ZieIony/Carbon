@@ -32,7 +32,7 @@
                     android:paddingBottom="6dp"
                     android:layout_margin="@dimen/carbon_padding"
                     android:hint="login"
-                    android:textAppearance="?attr/carbon_textAppearance_body2"
+                    android:textAppearance="?attr/carbon_textAppearanceBody2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -42,7 +42,7 @@
                     android:paddingBottom="6dp"
                     android:layout_margin="@dimen/carbon_padding"
                     android:hint="password"
-                    android:textAppearance="?attr/carbon_textAppearance_body2"
+                    android:textAppearance="?attr/carbon_textAppearanceBody2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

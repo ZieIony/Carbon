@@ -4,7 +4,7 @@
     android:id="@+id/carbon_snackbarContent"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="?attr/carbon_colorBackground_inverse"
+    android:background="?attr/carbon_colorBackgroundInverse"
     android:maxHeight="80dp"
     android:maxWidth="568dp"
     android:minHeight="48dp"
@@ -20,7 +20,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:maxLines="2"
-        android:textAppearance="?attr/carbon_textAppearance_body2_inverse" />
+        android:textAppearance="?attr/carbon_textAppearanceBody2Inverse" />
 
     <carbon.widget.Button
         android:id="@+id/carbon_actionButton"

@@ -36,7 +36,7 @@
                 android:id="@+id/powerOff"
                 android:layout_toRightOf="@id/progress"
                 android:text="Power Off"
-                android:textAppearance="?attr/carbon_textAppearance_title_inverse"
+                android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -46,7 +46,7 @@
                 android:layout_toRightOf="@id/progress"
                 android:layout_below="@id/powerOff"
                 android:text="Shutting down..."
-                android:textAppearance="?attr/carbon_textAppearance_caption_inverse"
+                android:textAppearance="?attr/carbon_textAppearanceCaptionInverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

@@ -41,7 +41,7 @@
             android:layout_marginRight="@dimen/carbon_padding"
             android:layout_gravity="left|center_vertical"
             android:text="Power Off"
-            android:textAppearance="?attr/carbon_textAppearance_subhead"
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"
             app:carbon_inAnimation="fly" />
     </carbon.widget.LinearLayout>
 
@@ -79,7 +79,7 @@
             android:layout_marginRight="@dimen/carbon_padding"
             android:layout_gravity="left|center_vertical"
             android:text="Reboot"
-            android:textAppearance="?attr/carbon_textAppearance_subhead"
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"
             app:carbon_inAnimation="fly" />
     </carbon.widget.LinearLayout>
 
@@ -121,7 +121,7 @@
                 android:layout_gravity="left|center_vertical"
                 android:singleLine="true"
                 android:text="Airplane Mode"
-                android:textAppearance="?attr/carbon_textAppearance_subhead"
+                android:textAppearance="?attr/carbon_textAppearanceSubhead"
                 app:carbon_inAnimation="fly" />
 
             <carbon.widget.TextView
@@ -133,7 +133,7 @@
                 android:layout_gravity="left|bottom"
                 android:singleLine="true"
                 android:text="Airplane Mode is off"
-                android:textAppearance="?attr/carbon_textAppearance_caption"
+                android:textAppearance="?attr/carbon_textAppearanceCaption"
                 app:carbon_inAnimation="fly" />
         </FrameLayout>
     </carbon.widget.LinearLayout>

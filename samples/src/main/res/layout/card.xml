@@ -18,7 +18,7 @@
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
         android:text="Image desc"
-        android:textAppearance="?attr/carbon_textAppearance_title"
+        android:textAppearance="?attr/carbon_textAppearanceTitle"
         android:layout_width="match_parent"
         android:gravity="center_vertical"
         android:layout_height="@dimen/carbon_toolbarHeight" />
