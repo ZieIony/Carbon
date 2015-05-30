@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -62,22 +63,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
-        if (ap != -1) {
-            TypedArray appearance = getContext().obtainStyledAttributes(ap, R.styleable.TextAppearance);
-            if (appearance != null) {
-                for (int i = 0; i < appearance.getIndexCount(); i++) {
-                    int attr = appearance.getIndex(i);
-                    if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
-                        setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                    } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
-                        String path = appearance.getString(attr);
-                        Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                        setTypeface(typeface);
-                    }
-                }
-            }
-            appearance.recycle();
-        }
+        if (ap != -1)
+            setTextAppearance(ap);
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -109,6 +96,30 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             setTransformationMethod(null);
         }
     }
+
+    @Override
+    public void setTextAppearance(@NonNull Context context, int resid) {
+        super.setTextAppearance(context, resid);
+        setTextAppearance(resid);
+    }
+
+    private void setTextAppearance(int resid) {
+        TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
+        if (appearance != null) {
+            for (int i = 0; i < appearance.getIndexCount(); i++) {
+                int attr = appearance.getIndex(i);
+                if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
+                    setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
+                } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                    String path = appearance.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                }
+            }
+            appearance.recycle();
+        }
+    }
+
 
     // -------------------------------
     // corners

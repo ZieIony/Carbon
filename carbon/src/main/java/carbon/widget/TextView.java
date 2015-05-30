@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -42,22 +43,8 @@ public class TextView extends android.widget.TextView implements TouchMarginView
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
-        if (ap != -1) {
-            TypedArray appearance = getContext().obtainStyledAttributes(ap, R.styleable.TextAppearance);
-            if (appearance != null) {
-                for (int i = 0; i < appearance.getIndexCount(); i++) {
-                    int attr = appearance.getIndex(i);
-                    if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
-                        setAllCaps(appearance.getBoolean(attr, true));
-                    } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
-                        String path = appearance.getString(attr);
-                        Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                        setTypeface(typeface);
-                    }
-                }
-            }
-            appearance.recycle();
-        }
+        if (ap != -1)
+            setTextAppearance(ap);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
@@ -82,6 +69,30 @@ public class TextView extends android.widget.TextView implements TouchMarginView
             setTransformationMethod(null);
         }
     }
+
+    @Override
+    public void setTextAppearance(@NonNull Context context, int resid) {
+        super.setTextAppearance(context, resid);
+        setTextAppearance(resid);
+    }
+
+    private void setTextAppearance(int resid) {
+        TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
+        if (appearance != null) {
+            for (int i = 0; i < appearance.getIndexCount(); i++) {
+                int attr = appearance.getIndex(i);
+                if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
+                    setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
+                } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                    String path = appearance.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                }
+            }
+            appearance.recycle();
+        }
+    }
+
 
     // -------------------------------
     // touch margin
