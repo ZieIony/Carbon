@@ -2,6 +2,8 @@
 [![Maven Central](https://img.shields.io/badge/Maven%20Central-0.9.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.9.0/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
+Note that version 0.9.0 is not backwards-compatible. Most of the color attributes was replaced with carbon_tint.
+
 [![Google+](https://img.shields.io/badge/Google+-Zielony-red.svg)](https://plus.google.com/u/2/109054799904873578131)&nbsp;&nbsp;
 [![Twitter](https://img.shields.io/badge/Twitter-GreenMakesApps-blue.svg)](https://twitter.com/GreenMakesApps)
 
