@@ -636,18 +636,18 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
 
     @Override
-    protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
-        return super.generateDefaultLayoutParams();
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(super.generateDefaultLayoutParams());
     }
 
     @Override
     public android.widget.RelativeLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return super.generateLayoutParams(attrs);
+        return new LayoutParams(getContext(), attrs);
     }
 
     @Override
     protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-        return super.generateLayoutParams(p);
+        return new LayoutParams(p);
     }
 
     public static class LayoutParams extends android.widget.RelativeLayout.LayoutParams {
@@ -682,7 +682,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         }
 
         public LayoutParams(LayoutParams source) {
-            super(source);
+            super((MarginLayoutParams)source);
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;

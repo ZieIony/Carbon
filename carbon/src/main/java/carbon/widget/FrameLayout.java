@@ -633,18 +633,18 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     // -------------------------------
 
     @Override
-    protected android.widget.FrameLayout.LayoutParams generateDefaultLayoutParams() {
-        return super.generateDefaultLayoutParams();
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(super.generateDefaultLayoutParams());
     }
 
     @Override
     public android.widget.FrameLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return super.generateLayoutParams(attrs);
+        return new LayoutParams(getContext(), attrs);
     }
 
     @Override
     protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-        return super.generateLayoutParams(p);
+        return new LayoutParams(p);
     }
 
     public static class LayoutParams extends android.widget.FrameLayout.LayoutParams {
@@ -654,7 +654,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
 
-            TypedArray a = c.obtainStyledAttributes(attrs,R.styleable.FrameLayout_Layout);
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.FrameLayout_Layout);
             anchorView = a.getResourceId(R.styleable.FrameLayout_Layout_carbon_anchor, -1);
             anchorGravity = a.getInt(R.styleable.FrameLayout_Layout_carbon_anchorGravity, -1);
             a.recycle();
@@ -679,7 +679,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         }
 
         public LayoutParams(LayoutParams source) {
-            super(source);
+            super((MarginLayoutParams)source);
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;
