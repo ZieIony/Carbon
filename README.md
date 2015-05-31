@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.8.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.8.0/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.9.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.9.0/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 [![Google+](https://img.shields.io/badge/Google+-Zielony-red.svg)](https://plus.google.com/u/2/109054799904873578131)&nbsp;&nbsp;
@@ -25,15 +25,16 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - realtime, animated shadows
  - the touch ripple
  - an elevation system (changing z order changes view rendering order)
+ - widget tinting
  - rounded corners
  - SVG rendering
  - a floating action button view
  - text appearances, sizes, colors and many more useful definitions
- - roboto and roboto condensed fonts for buttons and text fields
+ - custom, xml-selectable fonts for all text Views
  - predefined animation styles and visibility change animations
  - a saturation/brightness/alpha fade for ImageView
  - Divider drag&drop view
- - dark and light themes in standard and AppCompat versions
+ - dark and light themes
  - a radial transition animation
  - circular progress indicators
  - CardView with real shadows and rounded corners
@@ -45,6 +46,7 @@ Material Design implementation for Android 2.1 and newer. This is not the exact 
  - DrawerLayout with real shadows
  - EditText with floating label, character counter and pattern validation
  - Lollipop's recents list layout
+ - Snackbar with swipe-to-dismiss, tap-outside-to-dismiss and message queue
 
 ### Instalation
 Moved to wiki: [Installation](https://github.com/ZieIony/Carbon/wiki/Installation)
