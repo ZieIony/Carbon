@@ -627,4 +627,78 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         return result;
     }
 
+
+    // -------------------------------
+    // anchors
+    // -------------------------------
+
+    @Override
+    protected android.widget.FrameLayout.LayoutParams generateDefaultLayoutParams() {
+        return super.generateDefaultLayoutParams();
+    }
+
+    @Override
+    public android.widget.FrameLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return super.generateLayoutParams(attrs);
+    }
+
+    @Override
+    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        return super.generateLayoutParams(p);
+    }
+
+    public static class LayoutParams extends android.widget.FrameLayout.LayoutParams {
+        public int anchorView;
+        private int anchorGravity;
+
+        public LayoutParams(Context c, AttributeSet attrs) {
+            super(c, attrs);
+
+            TypedArray a = c.obtainStyledAttributes(attrs,R.styleable.FrameLayout_Layout);
+            anchorView = a.getResourceId(R.styleable.FrameLayout_Layout_carbon_anchor, -1);
+            anchorGravity = a.getInt(R.styleable.FrameLayout_Layout_carbon_anchorGravity, -1);
+            a.recycle();
+        }
+
+        public LayoutParams(int w, int h) {
+            super(w, h);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public LayoutParams(ViewGroup.LayoutParams source) {
+            super(source);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public LayoutParams(ViewGroup.MarginLayoutParams source) {
+            super(source);
+        }
+
+        public LayoutParams(LayoutParams source) {
+            super(source);
+
+            this.anchorView = source.anchorView;
+            this.anchorGravity = source.anchorGravity;
+        }
+
+        public int getAnchorGravity() {
+            return anchorGravity;
+        }
+
+        public void setAnchorGravity(int anchorGravity) {
+            this.anchorGravity = anchorGravity;
+        }
+
+        public int getAnchorView() {
+            return anchorView;
+        }
+
+        public void setAnchorView(int anchorView) {
+            this.anchorView = anchorView;
+        }
+    }
 }

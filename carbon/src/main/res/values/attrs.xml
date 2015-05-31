@@ -86,6 +86,19 @@
 
     <attr name="carbon_fontPath" format="string" />
 
+    <attr name="carbon_anchor" format="reference" />
+    <attr name="carbon_anchorGravity" format="enum">
+        <enum name="top" value="0x00000030" />
+        <enum name="bottom" value="0x00000050" />
+        <enum name="left" value="0x00000003" />
+        <enum name="right" value="0x00000005" />
+        <enum name="start" value="0x00800003" />
+        <enum name="end" value="0x00800005" />
+        <enum name="center" value="0x00000011" />
+        <enum name="center_horizontal" value="0x00000001" />
+        <enum name="center_vertical" value="0x00000010" />
+    </attr>
+
     <attr name="carbon_fabStyle" format="reference" />
     <declare-styleable name="SVGActionButton">
         <attr name="carbon_cornerRadius" />
@@ -132,6 +145,11 @@
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
 
+    <declare-styleable name="FrameLayout_Layout">
+        <attr name="carbon_anchor" />
+        <attr name="carbon_anchorGravity" />
+    </declare-styleable>
+
     <attr name="carbon_gridLayoutStyle" format="reference" />
     <declare-styleable name="GridLayout">
         <attr name="carbon_rippleColor" />
@@ -144,6 +162,11 @@
         <attr name="carbon_rippleColor" />
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+    </declare-styleable>
+
+    <declare-styleable name="RelativeLayout_Layout">
+        <attr name="carbon_anchor" />
+        <attr name="carbon_anchorGravity" />
     </declare-styleable>
 
     <attr name="carbon_linearLayoutStyle" format="reference" />

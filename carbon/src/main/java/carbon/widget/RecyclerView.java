@@ -211,7 +211,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     @Override
-    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+    public boolean drawChild(Canvas canvas, View child, long drawingTime) {
         if (!child.isShown())
             return super.drawChild(canvas, child, drawingTime);
 
