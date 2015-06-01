@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#ffffffff" />
+
+    <FrameLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/topLayout"
+        android:background="#ffcccccc" />
+
+    <carbon.widget.SVGActionButton
+        android:layout_width="@dimen/carbon_fabSize"
+        android:layout_height="@dimen/carbon_fabSize"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/carbon_padding"
+        app:carbon_anchor="@id/bottomLayout"
+        app:carbon_anchorGravity="top" />
+</carbon.widget.RelativeLayout>

@@ -278,13 +278,19 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
 
     public void setVisibility(final int visibility) {
         if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
-            animator = AnimUtils.animateIn(this, inAnim, null);
+            animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator a) {
+                    animator = null;
+                }
+            });
             super.setVisibility(visibility);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
             animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationEnd(Animator animator) {
+                public void onAnimationEnd(Animator a) {
                     RadioButton.super.setVisibility(visibility);
+                    animator = null;
                 }
             });
         }

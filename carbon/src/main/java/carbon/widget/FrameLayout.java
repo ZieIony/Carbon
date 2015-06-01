@@ -13,7 +13,10 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -211,6 +214,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        layoutAnchoredViews();
 
         if (!changed)
             return;
@@ -479,13 +483,19 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     public void setVisibility(final int visibility) {
         if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
-            animator = AnimUtils.animateIn(this, inAnim, null);
+            animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator a) {
+                    animator = null;
+                }
+            });
             super.setVisibility(visibility);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
             animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationEnd(Animator animator) {
+                public void onAnimationEnd(Animator a) {
                     FrameLayout.super.setVisibility(visibility);
+                    animator = null;
                 }
             });
         }
@@ -638,13 +648,48 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
     @Override
-    public android.widget.FrameLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new LayoutParams(getContext(), attrs);
     }
 
     @Override
-    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
         return new LayoutParams(p);
+    }
+
+    private void layoutAnchoredViews() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            if (child.getVisibility() != GONE) {
+                LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                if (lp.anchorView != 0) {
+                    View anchorView = findViewById(lp.anchorView);
+                    if (anchorView != null && anchorView != child) {
+                        int left = child.getLeft();
+                        int right = child.getRight();
+                        int top = child.getTop();
+                        int bottom = child.getBottom();
+                        if ((lp.anchorGravity & Gravity.BOTTOM) != 0) {
+                            top = anchorView.getBottom() - lp.height / 2;
+                            bottom = top + lp.height;
+                        }
+                        if ((lp.anchorGravity & Gravity.TOP) != 0) {
+                            top = anchorView.getTop() - lp.height / 2;
+                            bottom = top + lp.height;
+                        }
+                        if ((lp.anchorGravity & Gravity.LEFT) != 0 || (GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.LEFT) != 0) {
+                            left = anchorView.getLeft() - lp.width / 2;
+                            right = left + lp.width;
+                        }
+                        if ((lp.anchorGravity & Gravity.RIGHT) != 0 || (GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.RIGHT) != 0) {
+                            left = anchorView.getRight() - lp.width / 2;
+                            right = left + lp.width;
+                        }
+                        child.layout(left, top, right, bottom);
+                    }
+                }
+            }
+        }
     }
 
     public static class LayoutParams extends android.widget.FrameLayout.LayoutParams {
@@ -679,7 +724,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         }
 
         public LayoutParams(LayoutParams source) {
-            super((MarginLayoutParams)source);
+            super((MarginLayoutParams) source);
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;

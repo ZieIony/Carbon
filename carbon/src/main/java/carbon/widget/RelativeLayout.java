@@ -13,7 +13,10 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -211,6 +214,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        layoutAnchoredViews();
 
         if (!changed)
             return;
@@ -479,13 +483,19 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     public void setVisibility(final int visibility) {
         if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
-            animator = AnimUtils.animateIn(this, inAnim, null);
+            animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator a) {
+                    animator = null;
+                }
+            });
             super.setVisibility(visibility);
         } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
             animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationEnd(Animator animator) {
+                public void onAnimationEnd(Animator a) {
                     RelativeLayout.super.setVisibility(visibility);
+                    animator = null;
                 }
             });
         }
@@ -628,8 +638,6 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     }
 
 
-
-
     // -------------------------------
     // anchors
     // -------------------------------
@@ -650,14 +658,49 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         return new LayoutParams(p);
     }
 
+    private void layoutAnchoredViews() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            if (child.getVisibility() != GONE) {
+                LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                if (lp.anchorView != 0) {
+                    View anchorView = findViewById(lp.anchorView);
+                    if (anchorView != null && anchorView != child) {
+                        int left = child.getLeft();
+                        int right = child.getRight();
+                        int top = child.getTop();
+                        int bottom = child.getBottom();
+                        if ((lp.anchorGravity & Gravity.BOTTOM) != 0) {
+                            top = anchorView.getBottom() - lp.height / 2;
+                            bottom = top + lp.height;
+                        }
+                        if ((lp.anchorGravity & Gravity.TOP) != 0) {
+                            top = anchorView.getTop() - lp.height / 2;
+                            bottom = top + lp.height;
+                        }
+                        if ((lp.anchorGravity & Gravity.LEFT) != 0 || (GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.LEFT) != 0) {
+                            left = anchorView.getLeft() - lp.width / 2;
+                            right = left + lp.width;
+                        }
+                        if ((lp.anchorGravity & Gravity.RIGHT) != 0 || (GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.RIGHT) != 0) {
+                            left = anchorView.getRight() - lp.width / 2;
+                            right = left + lp.width;
+                        }
+                        child.layout(left, top, right, bottom);
+                    }
+                }
+            }
+        }
+    }
+
     public static class LayoutParams extends android.widget.RelativeLayout.LayoutParams {
-        public int anchorView;
-        private int anchorGravity;
+        public int anchorView = 0;
+        private int anchorGravity = 0;
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
 
-            TypedArray a = c.obtainStyledAttributes(attrs,R.styleable.RelativeLayout_Layout);
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.RelativeLayout_Layout);
             anchorView = a.getResourceId(R.styleable.RelativeLayout_Layout_carbon_anchor, -1);
             anchorGravity = a.getInt(R.styleable.RelativeLayout_Layout_carbon_anchorGravity, -1);
             a.recycle();
@@ -682,7 +725,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         }
 
         public LayoutParams(LayoutParams source) {
-            super((MarginLayoutParams)source);
+            super((MarginLayoutParams) source);
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;
