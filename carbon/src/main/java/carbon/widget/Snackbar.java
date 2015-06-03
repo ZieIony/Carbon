@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -19,18 +21,48 @@ import com.nineoldandroids.view.ViewHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.AnimatedView;
 
 /**
  * Created by Marcin on 2015-01-07.
  */
-public class Snackbar extends FrameLayout implements AnimatedView {
+public class Snackbar extends android.widget.FrameLayout implements GestureDetector.OnGestureListener {
     public static int INFINITE = -1;
     private float prevX, swipe;
     private ValueAnimator animator;
+    private View pushedView;
+    GestureDetector gestureDetector = new GestureDetector(this);
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return true;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
+    }
 
     public interface OnDismissedListener {
         void onDismissed();
@@ -80,7 +112,6 @@ public class Snackbar extends FrameLayout implements AnimatedView {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Snackbar, defStyleAttr, 0);
         style = Style.values()[a.getInt(R.styleable.Snackbar_carbon_layoutStyle, 0)];
         setStyle(style);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
 
         duration = a.getInt(R.styleable.Snackbar_carbon_duration, 0);
 
@@ -94,7 +125,7 @@ public class Snackbar extends FrameLayout implements AnimatedView {
         super.onLayout(changed, left, top, right, bottom);
     }
 
-    public void show() {
+    public void show(final View view) {
         if (this.getParent() != null)
             return;
         synchronized (Snackbar.class) {
@@ -106,11 +137,29 @@ public class Snackbar extends FrameLayout implements AnimatedView {
                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                 ViewHelper.setAlpha(content, 0);
-                AnimUtils.animateIn(content, getInAnimation(), null);
+                AnimUtils.flyIn(content, null);
+                if (view != null) {
+                    pushedView = view;
+                    ValueAnimator animator = ValueAnimator.ofFloat(0, -1);
+                    animator.setDuration(200);
+                    animator.setInterpolator(new DecelerateInterpolator());
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                            ViewHelper.setTranslationY(view, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                        }
+                    });
+                    animator.start();
+                }
                 if (duration != INFINITE)
                     handler.postDelayed(hideRunnable, duration);
             }
         }
+    }
+
+    public void show() {
+        show(null);
     }
 
     public static void clearQueue() {
@@ -124,12 +173,26 @@ public class Snackbar extends FrameLayout implements AnimatedView {
             handler.removeCallbacks(hideRunnable);
             if (onDismissedListener != null)
                 onDismissedListener.onDismissed();
-            AnimUtils.animateOut(content, getOutAnimation(), new AnimatorListenerAdapter() {
+            AnimUtils.flyOut(content, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     hideInternal();
+                    pushedView = null;
                 }
             });
+            if (pushedView != null) {
+                ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
+                animator.setDuration(200);
+                animator.setInterpolator(new DecelerateInterpolator());
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                        ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                    }
+                });
+                animator.start();
+            }
         }
     }
 
@@ -142,6 +205,13 @@ public class Snackbar extends FrameLayout implements AnimatedView {
             if (next.size() != 0)
                 next.get(0).show();
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(gestureDetector.onTouchEvent(ev))
+            return true;
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
@@ -167,9 +237,9 @@ public class Snackbar extends FrameLayout implements AnimatedView {
                 swipe += event.getX() - prevX;
                 prevX = event.getX();
                 ViewHelper.setTranslationX(content, swipe);
-                ViewHelper.setAlpha(content, 1 - Math.abs(swipe) / content.getWidth());
+                ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(swipe) / content.getWidth()));
                 postInvalidate();
-                if (Math.abs(swipe) > content.getWidth() / 3) {
+                if (Math.abs(swipe) > content.getWidth() / 4) {
                     handler.removeCallbacks(hideRunnable);
                     animator = ObjectAnimator.ofFloat(swipe, content.getWidth() * Math.signum(swipe));
                     animator.setDuration(200);
@@ -178,7 +248,7 @@ public class Snackbar extends FrameLayout implements AnimatedView {
                         public void onAnimationUpdate(ValueAnimator animation) {
                             float s = (Float) animation.getAnimatedValue();
                             ViewHelper.setTranslationX(content, s);
-                            ViewHelper.setAlpha(content, 1 - Math.abs(s) / content.getWidth());
+                            ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs((Float) animator.getAnimatedValue()) / content.getWidth()));
                             postInvalidate();
                         }
                     });
@@ -188,8 +258,22 @@ public class Snackbar extends FrameLayout implements AnimatedView {
                         public void onAnimationEnd(Animator animation) {
                             hideInternal();
                             animator = null;
+                            pushedView = null;
                         }
                     });
+                    if (pushedView != null) {
+                        ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
+                        animator.setDuration(200);
+                        animator.setInterpolator(new DecelerateInterpolator());
+                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                                ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                            }
+                        });
+                        animator.start();
+                    }
                 }
                 return true;
             } else if (animator == null) {
@@ -200,7 +284,7 @@ public class Snackbar extends FrameLayout implements AnimatedView {
                     public void onAnimationUpdate(ValueAnimator animation) {
                         float s = (Float) animation.getAnimatedValue();
                         ViewHelper.setTranslationX(content, s);
-                        ViewHelper.setAlpha(content, 1 - Math.abs(s) / content.getWidth());
+                        ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(s) / content.getWidth()));
                         postInvalidate();
                     }
                 });
@@ -255,12 +339,12 @@ public class Snackbar extends FrameLayout implements AnimatedView {
 
     public void setStyle(Style style) {
         this.style = style;
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) content.getLayoutParams();
+        android.widget.FrameLayout.LayoutParams layoutParams = (android.widget.FrameLayout.LayoutParams) content.getLayoutParams();
         if (style == Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             int margin = (int) getResources().getDimension(R.dimen.carbon_padding);
-            layoutParams.setMargins(margin, margin, margin, margin);
+            layoutParams.setMargins(margin, 0, margin, margin);
             layoutParams.gravity = Gravity.LEFT | Gravity.BOTTOM;
         } else {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;

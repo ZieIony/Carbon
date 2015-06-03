@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import carbon.widget.CheckBox;
+import carbon.widget.SVGActionButton;
 import carbon.widget.Snackbar;
 import tk.zielony.carbonsamples.R;
 
@@ -24,6 +25,7 @@ public class SnackbarActivity extends Activity {
         final CheckBox swipeCheckBox = (CheckBox) findViewById(R.id.swipe);
         final CheckBox floatingCheckBox = (CheckBox) findViewById(R.id.floating);
         final CheckBox infiniteCheckBox = (CheckBox) findViewById(R.id.infinite);
+        final SVGActionButton fab = (SVGActionButton) findViewById(R.id.fab);
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +40,7 @@ public class SnackbarActivity extends Activity {
                 snackbar.setStyle(floatingCheckBox.isChecked() ? Snackbar.Style.Floating : Snackbar.Style.Docked);
                 snackbar.setTapOutsideToDismissEnabled(tapCheckBox.isChecked());
                 snackbar.setSwipeToDismissEnabled(swipeCheckBox.isChecked());
-                snackbar.show();
+                snackbar.show(fab);
                 snackbar.setOnDismissedListener(new Snackbar.OnDismissedListener() {
                     @Override
                     public void onDismissed() {
