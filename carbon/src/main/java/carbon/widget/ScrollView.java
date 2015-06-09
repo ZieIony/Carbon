@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Region;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -296,8 +295,8 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             }
             canvas.restoreToCount(saveCount);
 
-            saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
-            canvas.clipRect(0, Math.max(minHeader + scroll, headerHeight), getWidth(), Integer.MAX_VALUE, Region.Op.REPLACE);
+            saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG);
+            canvas.clipRect(0, Math.max(minHeader + scroll, headerHeight), getWidth(), Integer.MAX_VALUE);
             super.dispatchDraw(canvas);
             canvas.restoreToCount(saveCount);
         } else {

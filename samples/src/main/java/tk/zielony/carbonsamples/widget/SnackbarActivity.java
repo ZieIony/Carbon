@@ -44,7 +44,7 @@ public class SnackbarActivity extends Activity {
                 snackbar.setOnDismissedListener(new Snackbar.OnDismissedListener() {
                     @Override
                     public void onDismissed() {
-                        Log.e("Snackbar", "dismissed");
+                        Log.e("Snackbar "+snackbar.hashCode(), "dismissed");
                     }
                 });
             }

@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Region;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -335,8 +334,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             }
             canvas.restoreToCount(saveCount);
 
-            saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
-            canvas.clipRect(0, Math.max(minHeader, headerHeight - scroll), getWidth(), Integer.MAX_VALUE, Region.Op.REPLACE);
+            saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG);
+            canvas.clipRect(0, Math.max(minHeader, headerHeight - scroll), getWidth(), Integer.MAX_VALUE);
             super.dispatchDraw(canvas);
             canvas.restoreToCount(saveCount);
         } else {

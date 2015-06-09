@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -29,7 +30,7 @@ import carbon.animation.AnimUtils;
  */
 public class Snackbar extends android.widget.FrameLayout implements GestureDetector.OnGestureListener {
     public static int INFINITE = -1;
-    private float prevX, swipe;
+    private float swipe;
     private ValueAnimator animator;
     private View pushedView;
     GestureDetector gestureDetector = new GestureDetector(this);
@@ -51,7 +52,55 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return true;
+        boolean hit = e2.getY() > content.getTop() && getParent() != null;
+
+        if (hit && swipeToDismiss && animator == null) {
+            swipe = e2.getX() - e1.getX();
+            ViewHelper.setTranslationX(content, swipe);
+            ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(swipe) / content.getWidth()));
+            postInvalidate();
+            if (Math.abs(swipe) > content.getWidth() / 4) {
+                handler.removeCallbacks(hideRunnable);
+                animator = ObjectAnimator.ofFloat(swipe, content.getWidth() / 2.0f * Math.signum(swipe));
+                animator.setDuration(200);
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        float s = (Float) valueAnimator.getAnimatedValue();
+                        ViewHelper.setTranslationX(content, s);
+                        float alpha = Math.max(0, 1 - 2 * Math.abs((Float) valueAnimator.getAnimatedValue()) / content.getWidth());
+                        ViewHelper.setAlpha(content, alpha);
+                        postInvalidate();
+                    }
+                });
+                animator.start();
+                animator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        hideInternal();
+                        animator = null;
+                    }
+                });
+                if (pushedView != null) {
+                    ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
+                    animator.setDuration(200);
+                    animator.setInterpolator(new DecelerateInterpolator());
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                            Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
+                            ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                            if (pushedView.getParent() != null)
+                                ((View) pushedView.getParent()).postInvalidate();
+                        }
+                    });
+                    animator.start();
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -126,6 +175,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
     }
 
     public void show(final View view) {
+        pushedView = view;
         if (this.getParent() != null)
             return;
         synchronized (Snackbar.class) {
@@ -139,7 +189,6 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                 ViewHelper.setAlpha(content, 0);
                 AnimUtils.flyIn(content, null);
                 if (view != null) {
-                    pushedView = view;
                     ValueAnimator animator = ValueAnimator.ofFloat(0, -1);
                     animator.setDuration(200);
                     animator.setInterpolator(new DecelerateInterpolator());
@@ -147,7 +196,10 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                         @Override
                         public void onAnimationUpdate(ValueAnimator valueAnimator) {
                             MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                            Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                             ViewHelper.setTranslationY(view, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                            if (pushedView.getParent() != null)
+                                ((View) pushedView.getParent()).postInvalidate();
                         }
                     });
                     animator.start();
@@ -159,7 +211,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
     }
 
     public void show() {
-        show(null);
+        show(pushedView);
     }
 
     public static void clearQueue() {
@@ -177,7 +229,6 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     hideInternal();
-                    pushedView = null;
                 }
             });
             if (pushedView != null) {
@@ -188,7 +239,10 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                     @Override
                     public void onAnimationUpdate(ValueAnimator valueAnimator) {
                         MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                        Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                         ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                        if (pushedView.getParent() != null)
+                            ((View) pushedView.getParent()).postInvalidate();
                     }
                 });
                 animator.start();
@@ -209,7 +263,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(gestureDetector.onTouchEvent(ev))
+        if (gestureDetector.onTouchEvent(ev))
             return true;
         return super.dispatchTouchEvent(ev);
     }
@@ -225,58 +279,15 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
         if (hit && swipeToDismiss) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 swipe = 0;
-                prevX = event.getX();
                 handler.removeCallbacks(hideRunnable);
                 if (animator != null) {
                     animator.cancel();
+                    animator = null;
                     swipe = ViewHelper.getTranslationX(content);
                 }
                 super.onTouchEvent(event);
                 return true;
-            } else if (event.getAction() == MotionEvent.ACTION_MOVE && animator == null) {
-                swipe += event.getX() - prevX;
-                prevX = event.getX();
-                ViewHelper.setTranslationX(content, swipe);
-                ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(swipe) / content.getWidth()));
-                postInvalidate();
-                if (Math.abs(swipe) > content.getWidth() / 4) {
-                    handler.removeCallbacks(hideRunnable);
-                    animator = ObjectAnimator.ofFloat(swipe, content.getWidth() * Math.signum(swipe));
-                    animator.setDuration(200);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            float s = (Float) animation.getAnimatedValue();
-                            ViewHelper.setTranslationX(content, s);
-                            ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs((Float) animator.getAnimatedValue()) / content.getWidth()));
-                            postInvalidate();
-                        }
-                    });
-                    animator.start();
-                    animator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            hideInternal();
-                            animator = null;
-                            pushedView = null;
-                        }
-                    });
-                    if (pushedView != null) {
-                        ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
-                        animator.setDuration(200);
-                        animator.setInterpolator(new DecelerateInterpolator());
-                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                                MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                                ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
-                            }
-                        });
-                        animator.start();
-                    }
-                }
-                return true;
-            } else if (animator == null) {
+            } else if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && animator == null) {
                 animator = ObjectAnimator.ofFloat(swipe, 0);
                 animator.setDuration(200);
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -292,6 +303,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        animator.cancel();
                         animator = null;
                         if (duration != INFINITE)
                             handler.postDelayed(hideRunnable, duration);
