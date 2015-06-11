@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 
 import carbon.widget.LinearLayout;
 import carbon.widget.RecyclerView;
+import carbon.widget.RecyclerView.OnItemClickedListener;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
 
@@ -36,15 +37,17 @@ public class DrawerActivity extends Activity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawerMenu = (LinearLayout) findViewById(R.id.drawerMenu);
         RecyclerView drawerList = (RecyclerView) findViewById(R.id.drawerList);
-        drawerList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        drawerList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        drawerList.setAdapter(new FruitAdapter(fruits, new AdapterView.OnItemClickListener() {
+        FruitAdapter adapter = new FruitAdapter(fruits);
+        drawerList.setAdapter(adapter);
+        adapter.setOnItemClickedListener(new OnItemClickedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                setTitle(fruits[i]);
+            public void onItemClicked(int position) {
+                setTitle(fruits[position]);
                 drawerLayout.closeDrawer(drawerMenu);
             }
-        }));
+        });
     }
 
     @Override

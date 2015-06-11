@@ -47,6 +47,11 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
     }
 
     @Override
+    public Object getItem(int position) {
+        return strings.get(position);
+    }
+
+    @Override
     public int getItemCount() {
         return strings.size();
     }

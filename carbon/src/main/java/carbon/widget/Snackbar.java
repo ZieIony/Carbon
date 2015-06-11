@@ -89,7 +89,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                         @Override
                         public void onAnimationUpdate(ValueAnimator valueAnimator) {
                             MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                            Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
+                            Log.e("snackbar "+Snackbar.this.hashCode(),""+((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                             ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                             if (pushedView.getParent() != null)
                                 ((View) pushedView.getParent()).postInvalidate();
@@ -196,7 +196,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                         @Override
                         public void onAnimationUpdate(ValueAnimator valueAnimator) {
                             MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                            Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
+                            Log.e("snackbar "+Snackbar.this.hashCode(),""+((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                             ViewHelper.setTranslationY(view, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                             if (pushedView.getParent() != null)
                                 ((View) pushedView.getParent()).postInvalidate();
@@ -239,7 +239,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                     @Override
                     public void onAnimationUpdate(ValueAnimator valueAnimator) {
                         MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                        Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
+                        Log.e("snackbar "+Snackbar.this.hashCode(),""+((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                         ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                         if (pushedView.getParent() != null)
                             ((View) pushedView.getParent()).postInvalidate();

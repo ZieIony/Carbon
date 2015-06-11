@@ -53,7 +53,7 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
 
         drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
 
-        Carbon.initTint(this, attrs, defStyleAttr);
+        Carbon.initTint(this,attrs,defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
 
         a.recycle();

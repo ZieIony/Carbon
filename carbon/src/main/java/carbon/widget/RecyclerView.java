@@ -399,4 +399,29 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         if (header != null)
             header.layout(0, 0, getWidth(), header.getMeasuredHeight());
     }
+
+    public static abstract class Adapter<VH extends ViewHolder> extends android.support.v7.widget.RecyclerView.Adapter<VH>{
+        OnItemClickedListener onItemClickedListener;
+
+        public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+            this.onItemClickedListener = onItemClickedListener;
+        }
+
+        @Override
+        public void onBindViewHolder(VH holder, final int position) {
+            holder.itemView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onItemClickedListener!=null)
+                        onItemClickedListener.onItemClicked(position);
+                }
+            });
+        }
+
+        public abstract Object getItem(int position);
+    }
+
+    public interface OnItemClickedListener {
+        void onItemClicked(int position);
+    }
 }

@@ -25,7 +25,7 @@
         app:carbon_touchMarginLeft="100dp"
         app:carbon_touchMarginRight="100dp"
         android:textColor="#ff0000ff"
-        android:text="Inline Stylee"
+        android:text="Inline Style"
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
         android:paddingTop="0dp"

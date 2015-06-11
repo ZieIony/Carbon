@@ -25,11 +25,7 @@ public class RecyclerActivity extends Activity {
 
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new FruitAdapter(fruits, new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            }
-        }));
+        recyclerView.setAdapter(new FruitAdapter(fruits));
 
         recyclerView.setHeader(R.layout.header_scrollview);
     }
