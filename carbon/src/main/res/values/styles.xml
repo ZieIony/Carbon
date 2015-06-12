@@ -349,4 +349,9 @@
         <item name="carbon_tint">@null</item>
         <item name="android:background">@null</item>
     </style>
+
+    <style name="carbon_PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/carbon_popup_show</item>
+        <item name="android:windowExitAnimation">@anim/carbon_popup_hide</item>
+    </style>
 </resources>

@@ -12,7 +12,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-05-09.
  */
-public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> {
+public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder,String> {
     private String[] fruits;
 
     public FruitAdapter(String[] fruits) {
@@ -33,7 +33,7 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
     }
 
     @Override
-    public Object getItem(int position) {
+    public String getItem(int position) {
         return fruits[position];
     }
 

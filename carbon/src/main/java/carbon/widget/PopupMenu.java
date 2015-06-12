@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
 
@@ -23,7 +27,7 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
     private ViewTreeObserver mTreeObserver;
 
     public PopupMenu(Context context) {
-        super(LayoutInflater.from(context).inflate(R.layout.popup_menu_item_layout, null, false));
+        super(LayoutInflater.from(context).inflate(R.layout.carbon_popup, null, false));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);
@@ -34,8 +38,9 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
         mAnchorView = anchor;
         setOnDismissListener(this);
 
-        //setModal(true);
+        setTouchable(true);
         setFocusable(true);
+        setOutsideTouchable(true);
 
         if (anchor != null) {
             final boolean addGlobalListener = mTreeObserver == null;
@@ -48,13 +53,39 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
         final Resources res = getContentView().getContext().getResources();
         int maxWidth = res.getDisplayMetrics().widthPixels / 2;
 
-        setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
-        super.showAsDropDown(anchor);
-
         int margin = (int) res.getDimension(R.dimen.carbon_padding);
-        int[] location = new int[2];
-        mAnchorView.getLocationInWindow(location);
-        update(location[0] - margin, location[1] - margin, Math.min(mAnchorView.getWidth() * margin, maxWidth), 400);
+        int height = (int) res.getDimension(R.dimen.carbon_toolbarHeight);
+        int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
+        setWidth(Math.min(anchor.getWidth() + margin * 2, maxWidth));
+        setHeight(marginHalf * 2 + height * 3 + margin * 2);
+
+        setAnimationStyle(0);
+
+        int offset = 0;
+
+        if (anchor instanceof android.widget.TextView) {
+            TextView textView = (TextView) anchor;
+            String text = textView.getText().toString();
+            RecyclerView.Adapter adapter = getAdapter();
+            for (int i = 0; i < adapter.getItemCount(); i++) {
+                if (adapter.getItem(i).equals(text)) {
+                    LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
+                    manager.scrollToPositionWithOffset(i, 0);
+                    if (i == adapter.getItemCount() - 1) {
+                        offset = -height * 2;
+                    } else if (i == adapter.getItemCount() - 2) {
+                        offset = -height;
+                    }
+                    break;
+                }
+            }
+        }
+
+        super.showAsDropDown(anchor, -margin, -margin - anchor.getHeight() - marginHalf + offset);
+
+        View content = getContentView().findViewById(R.id.carbon_popupContent);
+        content.setVisibility(View.VISIBLE);
+
         return true;
     }
 
@@ -73,7 +104,20 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
         }
         return false;
     }
-/*
+
+    @Override
+    public void dismiss() {
+        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContent);
+        content.setVisibility(View.INVISIBLE);
+        content.getAnimator().addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                PopupMenu.super.dismiss();
+            }
+        });
+    }
+
+    /*
     private int measureContentWidth(android.support.v7.widget.RecyclerView.Adapter adapter) {
         // Menus don't tend to be long, so this is more sane than it looks.
         int width = 0;
@@ -130,7 +174,7 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
         });
     }
 
-    public RecyclerView.Adapter getAdapter(){
+    public RecyclerView.Adapter getAdapter() {
         return (RecyclerView.Adapter) recycler.getAdapter();
     }
 

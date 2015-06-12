@@ -3,7 +3,6 @@ package tk.zielony.carbonsamples.demo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -19,7 +18,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-04-29.
  */
-public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapter.ViewHolder> implements Filterable {
+public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapter.ViewHolder, String> implements Filterable {
     String[] originalStrings;
     List<String> strings;
     private OnHintClicked onHintClicked;
@@ -47,7 +46,7 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
     }
 
     @Override
-    public Object getItem(int position) {
+    public String getItem(int position) {
         return strings.get(position);
     }
 

@@ -21,6 +21,6 @@ public class PopupMenuActivity extends Activity {
         setContentView(R.layout.activity_popupmenu);
 
         Spinner spinner = (Spinner) findViewById(R.id.button1);
-        spinner.setAdapter(new FruitAdapter(fruits));
+        spinner.setItems(fruits);
     }
 }

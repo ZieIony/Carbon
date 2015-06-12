@@ -9,7 +9,9 @@
         android:layout_width="200dp"
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:layout_gravity="center"
-        android:background="#ffcccccc"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
         android:text="show popup"
-        android:textAppearance="?attr/carbon_textAppearanceBody2" />
+        android:textAppearance="?attr/carbon_textAppearanceSubhead" />
 </carbon.widget.FrameLayout>
