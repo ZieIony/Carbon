@@ -123,6 +123,11 @@
             android:label="@string/app_name" />
 
         <activity
+            android:theme="@style/RaisedButtonStyle"
+            android:name=".guidelines.ButtonsUsageActivity"
+            android:label="@string/app_name" />
+
+        <activity
             android:name=".AnimationsActivity"
             android:label="@string/app_name" />
         <activity
@@ -136,6 +141,9 @@
             android:label="@string/app_name" />
         <activity
             android:name=".DemosActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".GuidelinesActivity"
             android:label="@string/app_name" />
     </application>
 

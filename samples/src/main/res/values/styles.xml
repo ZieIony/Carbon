@@ -6,6 +6,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="RaisedButtonStyle" parent="AppTheme">
+        <item name="colorPrimary">#ff9C27B0</item>
+        <item name="colorAccent">#ffFF5252</item>
+        <item name="carbon_rippleColor">#42ffffff</item>
+    </style>
+
     <style name="AppTheme.Debug">
         <item name="carbon_debugMode">true</item>
     </style>

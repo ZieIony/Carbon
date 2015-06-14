@@ -55,6 +55,9 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
+        if(isInEditMode())
+            return;
+
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);

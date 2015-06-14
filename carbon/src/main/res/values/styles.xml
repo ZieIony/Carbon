@@ -186,6 +186,7 @@
         <item name="carbon_cornerRadius">2dp</item>
         <item name="android:textColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="carbon_Button.Flat">

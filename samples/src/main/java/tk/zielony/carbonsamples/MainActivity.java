@@ -39,7 +39,8 @@ public class MainActivity extends Activity {
                 new ViewModel(FeaturesActivity.class, "Features"),
                 new ViewModel(AnimationsActivity.class, "Animations"),
                 new ViewModel(AppsLibrariesActivity.class, "Apps & Libraries"),
-                new ViewModel(DemosActivity.class, "Demos")
+                new ViewModel(DemosActivity.class, "Demos"),
+                new ViewModel(GuidelinesActivity.class, "Guidelines")
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));
