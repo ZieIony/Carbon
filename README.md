@@ -11,6 +11,7 @@ Carbon
 ================
 Material Design implementation for Android 2.1 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
 
+![Buttons / Usage sample](https://github.com/ZieIony/Carbon/blob/master/images/buttonsusage.png)
 ![Auto complete demo](https://github.com/ZieIony/Carbon/blob/master/images/autocomplete.png)
 ![Power menu demo](https://github.com/ZieIony/Carbon/blob/master/images/powermenu.png)
 ![Circular progress indicators](https://github.com/ZieIony/Carbon/blob/master/images/progress.png)
