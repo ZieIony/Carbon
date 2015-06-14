@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import carbon.R;
 /**
  * Created by Marcin on 2015-06-11.
  */
-public class Spinner extends TextView {
+public class Spinner extends EditText {
     PopupMenu popupMenu;
 
     public Spinner(Context context) {
@@ -19,7 +20,7 @@ public class Spinner extends TextView {
     }
 
     public Spinner(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.textViewStyle);
+        this(context, attrs, R.attr.carbon_spinnerStyle);
     }
 
     public Spinner(Context context, AttributeSet attrs, int defStyle) {
@@ -28,6 +29,7 @@ public class Spinner extends TextView {
         popupMenu = new PopupMenu(context);
         defaultAdapter = new Adapter();
         popupMenu.setAdapter(defaultAdapter);
+        popupMenu.setTint(getTint());
 
         setOnClickListener(new OnClickListener() {
             @Override
@@ -109,5 +111,17 @@ public class Spinner extends TextView {
             super(itemView);
             tv = (TextView) itemView.findViewById(R.id.carbon_itemText);
         }
+    }
+
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    @Override
+    public void setTint(ColorStateList list) {
+        super.setTint(list);
+        if (popupMenu != null)
+            popupMenu.setTint(list);
     }
 }

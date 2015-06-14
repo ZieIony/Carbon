@@ -7,11 +7,10 @@
     <carbon.widget.Spinner
         android:id="@+id/button1"
         android:layout_width="200dp"
-        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
         android:layout_gravity="center"
-        android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
-        android:text="show popup"
-        android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+        android:text="show popup"/>
 </carbon.widget.FrameLayout>

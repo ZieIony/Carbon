@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:carbon_elevation="4dp"
-        android:background="#ffffffff" />
+        android:background="?attr/colorPrimary" />
 
     <carbon.widget.FrameLayout
         android:id="@+id/bottomLayout"

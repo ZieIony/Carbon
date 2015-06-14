@@ -242,6 +242,8 @@
         <attr name="android:textAppearance" />
     </declare-styleable>
 
+    <attr name="carbon_spinnerStyle" format="reference" />
+
     <attr name="carbon_pagerTabStripStyle" format="reference" />
     <declare-styleable name="PagerTabStrip">
         <attr name="carbon_indicatorWidth" format="dimension" />

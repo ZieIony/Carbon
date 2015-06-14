@@ -24,6 +24,7 @@
         <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
+        <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
@@ -109,6 +110,7 @@
         <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_editTextStyle">@style/carbon_EditText</item>
+        <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
@@ -305,11 +307,39 @@
     </style>
 
     <style name="carbon_EditText" parent="@android:style/Widget.EditText">
+        <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
         <item name="carbon_tint">@null</item>
         <item name="android:background">@null</item>
         <item name="carbon_floatingLabel">false</item>
         <item name="android:textCursorDrawable">@null</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="carbon_EditText.FloatingLabel" parent="carbon_EditText">
+        <item name="carbon_floatingLabel">true</item>
+        <item name="android:paddingTop">40dp</item>
+    </style>
+
+    <style name="carbon_EditText.ErrorLabel" parent="carbon_EditText">
+        <item name="carbon_floatingLabel">false</item>
+        <item name="android:paddingBottom">32dp</item>
+    </style>
+
+    <style name="carbon_EditText.Underline" parent="carbon_EditText">
+        <item name="carbon_floatingLabel">false</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="carbon_EditText.BothLabels" parent="carbon_EditText">
+        <item name="carbon_floatingLabel">true</item>
+        <item name="android:paddingTop">40dp</item>
+        <item name="android:paddingBottom">32dp</item>
+    </style>
+
+    <style name="carbon_Spinner" parent="carbon_EditText.Underline">
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="android:editable">false</item>
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">

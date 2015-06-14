@@ -2,11 +2,21 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -19,12 +29,17 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.drawable.EmptyDrawable;
+import carbon.drawable.RippleDrawable;
+import carbon.drawable.RippleView;
 import carbon.internal.TypefaceUtils;
+import carbon.shadow.ShadowShape;
 
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class TextView extends android.widget.TextView implements TouchMarginView, AnimatedView {
+public class TextView extends android.widget.TextView implements RippleView, TouchMarginView, AnimatedView {
+    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public TextView(Context context) {
         this(context, null);
@@ -57,9 +72,11 @@ public class TextView extends android.widget.TextView implements TouchMarginView
             }
         }
 
+        a.recycle();
+
+        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        a.recycle();
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -91,6 +108,88 @@ public class TextView extends android.widget.TextView implements TouchMarginView
             }
             appearance.recycle();
         }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        if (!changed)
+            return;
+
+        if (getWidth() == 0 || getHeight() == 0)
+            return;
+
+        if (rippleDrawable != null)
+            rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+    }
+
+
+    // -------------------------------
+    // ripple
+    // -------------------------------
+
+    private RippleDrawable rippleDrawable;
+    private EmptyDrawable emptyBackground = new EmptyDrawable();
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
+            rippleDrawable.setHotspot(event.getX(), event.getY());
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public RippleDrawable getRippleDrawable() {
+        return rippleDrawable;
+    }
+
+    public void setRippleDrawable(RippleDrawable newRipple) {
+        if (rippleDrawable != null) {
+            rippleDrawable.setCallback(null);
+            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
+                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
+        }
+
+        if (newRipple != null) {
+            newRipple.setCallback(this);
+            if (newRipple.getStyle() == RippleDrawable.Style.Background) {
+                super.setBackgroundDrawable((Drawable) newRipple);
+            }
+        }
+
+        rippleDrawable = newRipple;
+    }
+
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return super.verifyDrawable(who) || rippleDrawable == who;
+    }
+
+    @Override
+    public void invalidateDrawable(Drawable drawable) {
+        super.invalidateDrawable(drawable);
+        if (rippleDrawable != null && getParent() != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        setBackgroundDrawable(background);
+    }
+
+    @Override
+    public void setBackgroundDrawable(Drawable background) {
+        if (background instanceof RippleDrawable) {
+            setRippleDrawable((RippleDrawable) background);
+            return;
+        }
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
+            rippleDrawable.setCallback(null);
+            rippleDrawable = null;
+        }
+        super.setBackgroundDrawable(background == null ? emptyBackground : background);
     }
 
 
@@ -155,10 +254,13 @@ public class TextView extends android.widget.TextView implements TouchMarginView
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
+        if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
+            rippleDrawable.setState(getDrawableState());
         if (stateAnimators != null)
             for (StateAnimator animator : stateAnimators)
                 animator.stateChanged(getDrawableState());
     }
+
 
 
     // -------------------------------

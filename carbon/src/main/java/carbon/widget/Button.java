@@ -380,6 +380,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
     }
 
+
     // -------------------------------
     // state animators
     // -------------------------------

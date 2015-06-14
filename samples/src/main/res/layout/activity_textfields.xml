@@ -17,42 +17,57 @@
             android:orientation="vertical">
 
             <carbon.widget.EditText
+                android:background="#3fff0000"
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom|left"
                 android:layout_margin="@dimen/carbon_padding"
                 android:text="hello text"
                 android:hint="email"
-                app:carbon_floatingLabel="true"
+                style="@style/carbon_EditText.FloatingLabel"
                 app:carbon_pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" />
 
             <carbon.widget.EditText
+                android:background="#3fff0000"
                 android:id="@+id/editText3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="80dp"
+                android:paddingBottom="80dp"
+                android:gravity="bottom|left"
                 android:layout_margin="@dimen/carbon_padding"
                 android:text="hello text"
                 app:carbon_errorMessage="it's not an email"
                 android:hint="email"
-                app:carbon_floatingLabel="true"
+                style="@style/carbon_EditText.BothLabels"
                 app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$" />
 
             <carbon.widget.EditText
+                android:background="#3fff0000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom|left"
                 android:layout_margin="@dimen/carbon_padding"
+                style="@style/carbon_EditText.ErrorLabel"
                 app:carbon_minCharacters="3" />
 
             <carbon.widget.EditText
+                android:background="#3fff0000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom|left"
                 android:layout_margin="@dimen/carbon_padding"
+                style="@style/carbon_EditText.ErrorLabel"
                 app:carbon_maxCharacters="10" />
 
             <carbon.widget.EditText
+                android:background="#3fff0000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom|left"
                 android:layout_margin="@dimen/carbon_padding"
+                style="@style/carbon_EditText.ErrorLabel"
                 app:carbon_minCharacters="3"
                 app:carbon_maxCharacters="10" />
 

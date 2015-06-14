@@ -1,7 +1,9 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,12 +17,13 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
+import carbon.drawable.ControlFocusedColorStateList;
 
 /**
  * Created by Marcin on 2015-06-10.
  */
 public class PopupMenu extends PopupWindow implements View.OnKeyListener,
-        ViewTreeObserver.OnGlobalLayoutListener, PopupWindow.OnDismissListener {
+        ViewTreeObserver.OnGlobalLayoutListener, PopupWindow.OnDismissListener, TintedView {
 
     private RecyclerView recycler;
     private View mAnchorView;
@@ -204,4 +207,27 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
         return false;
     }*/
 
+
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = list != null ? list : new ControlFocusedColorStateList(getContentView().getContext());
+        recycler.setTint(list);
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTint(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
+    }
 }
