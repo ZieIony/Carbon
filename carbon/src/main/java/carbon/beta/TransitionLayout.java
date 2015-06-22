@@ -166,8 +166,7 @@ public class TransitionLayout extends android.widget.FrameLayout {
             drawChild(canvas, getChildAt(bottomView), getDrawingTime());
             canvas.restoreToCount(saveCount);
 
-            int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
-            saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
+            saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             canvas.clipRect(x - radius, y - radius, x + radius, y + radius);
             drawChild(canvas, getChildAt(topView), getDrawingTime());

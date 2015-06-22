@@ -174,10 +174,53 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     }
 
     @Override
-    public void invalidateDrawable(Drawable drawable) {
-        super.invalidateDrawable(drawable);
-        if (rippleDrawable != null && getParent() != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate();
+    public void invalidate(Rect dirty) {
+        super.invalidate(dirty);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate(dirty);
+    }
+
+    @Override
+    public void invalidate(int l, int t, int r, int b) {
+        super.invalidate(l, t, r, b);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate(l, t, r, b);
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate();
+    }
+
+    @Override
+    public void postInvalidateDelayed(long delayMilliseconds) {
+        super.postInvalidateDelayed(delayMilliseconds);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
+    }
+
+    @Override
+    public void postInvalidateDelayed(long delayMilliseconds, int left, int top, int right, int bottom) {
+        super.postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
     }
 
     @Override

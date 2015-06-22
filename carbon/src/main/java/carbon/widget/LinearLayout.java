@@ -248,8 +248,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     public void draw(Canvas canvas) {
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveFlags = Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, saveFlags);
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
 
@@ -306,10 +305,68 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    public void invalidateDrawable(Drawable drawable) {
-        super.invalidateDrawable(drawable);
-        if (rippleDrawable != null && getParent() != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate();
+    public void invalidate(Rect dirty) {
+        super.invalidate(dirty);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate(dirty);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).invalidate(dirty);
+    }
+
+    @Override
+    public void invalidate(int l, int t, int r, int b) {
+        super.invalidate(l, t, r, b);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate(l, t, r, b);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).invalidate(l, t, r, b);
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate();
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).invalidate();
+    }
+
+    @Override
+    public void postInvalidateDelayed(long delayMilliseconds) {
+        super.postInvalidateDelayed(delayMilliseconds);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
+    }
+
+    @Override
+    public void postInvalidateDelayed(long delayMilliseconds, int left, int top, int right, int bottom) {
+        super.postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
     }
 
     @Override
@@ -351,7 +408,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(elevation);
         this.elevation = elevation;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -366,7 +423,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
