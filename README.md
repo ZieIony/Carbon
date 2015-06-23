@@ -1,9 +1,6 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.9.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.9.0/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.10.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.10.0/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
-
-Note that version 0.9.0 is not backwards-compatible. Most of the color attributes was replaced with carbon_tint.
-
 [![Google+](https://img.shields.io/badge/Google+-Zielony-red.svg)](https://plus.google.com/u/2/109054799904873578131)&nbsp;&nbsp;
 [![Twitter](https://img.shields.io/badge/Twitter-GreenMakesApps-blue.svg)](https://twitter.com/GreenMakesApps)
 
@@ -11,6 +8,7 @@ Carbon
 ================
 Material Design implementation for Android 2.1 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
 
+![Spinner](https://github.com/ZieIony/Carbon/blob/master/images/spinner.png)
 ![Buttons / Usage sample](https://github.com/ZieIony/Carbon/blob/master/images/buttonsusage.png)
 ![Auto complete demo](https://github.com/ZieIony/Carbon/blob/master/images/autocomplete.png)
 ![Power menu demo](https://github.com/ZieIony/Carbon/blob/master/images/powermenu.png)
