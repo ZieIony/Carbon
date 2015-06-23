@@ -2,14 +2,25 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
+import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
+
+import carbon.Carbon;
 import carbon.R;
 
 /**
@@ -29,6 +40,30 @@ public class Spinner extends EditText {
 
     public Spinner(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
+        try {
+            Resources.Theme theme = context.getTheme();
+            TypedValue typedvalueattr = new TypedValue();
+            theme.resolveAttribute(R.attr.colorControlNormal, typedvalueattr, true);
+            int color = typedvalueattr.resourceId != 0 ? context.getResources().getColor(typedvalueattr.resourceId) : typedvalueattr.data;
+
+            int size = (int) (Carbon.getDip(getContext()) * 24);
+            Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+
+            SVG svg3 = SVG.getFromResource(context, R.raw.carbon_dropdown);
+            Canvas canvas = new Canvas(bitmap);
+            svg3.setDocumentWidth(bitmap.getWidth());
+            svg3.setDocumentHeight(bitmap.getHeight());
+            svg3.renderToCanvas(canvas);
+
+            BitmapDrawable dropdown = new BitmapDrawable(bitmap);
+            dropdown.setBounds(0, 0, size, size);
+            dropdown.setAlpha(Color.alpha(color));
+            dropdown.setColorFilter(new LightingColorFilter(0, color));
+            setCompoundDrawables(null, null, dropdown, null);
+        } catch (SVGParseException e) {
+
+        }
 
         popupMenu = new PopupMenu(context);
         defaultAdapter = new Adapter();

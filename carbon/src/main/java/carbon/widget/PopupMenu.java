@@ -3,9 +3,13 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
@@ -20,7 +24,7 @@ import carbon.drawable.ControlFocusedColorStateList;
 /**
  * Created by Marcin on 2015-06-10.
  */
-public class PopupMenu extends PopupWindow implements View.OnKeyListener, TintedView {
+public class PopupMenu extends PopupWindow implements TintedView {
 
     private RecyclerView recycler;
     private View mAnchorView;
@@ -31,18 +35,31 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener, Tinted
 
         recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        recycler.setOnKeyListener(this);
+        recycler.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP &&
+                        (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK)) {
+                    dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));
 
         setTouchable(true);
         setFocusable(true);
         setOutsideTouchable(true);
         setAnimationStyle(0);
+        setClippingEnabled(false);
     }
 
     public boolean show(View anchor) {
         mAnchorView = anchor;
 
-        super.showAsDropDown(anchor);
+        super.showAtLocation(anchor, Gravity.LEFT | Gravity.TOP, 0, 0);
 
         update();
 
@@ -55,7 +72,7 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener, Tinted
     public boolean showImmediate(View anchor) {
         mAnchorView = anchor;
 
-        super.showAsDropDown(anchor);
+        super.showAtLocation(anchor, Gravity.LEFT | Gravity.TOP, 0, 0);
 
         update();
 
@@ -72,15 +89,15 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener, Tinted
         final Resources res = getContentView().getContext().getResources();
 
         int margin = (int) res.getDimension(R.dimen.carbon_padding);
-        int height = (int) res.getDimension(R.dimen.carbon_toolbarHeight);
+        int itemHeight = (int) res.getDimension(R.dimen.carbon_toolbarHeight);
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
         int selectedItem = 0;
+        RecyclerView.Adapter adapter = getAdapter();
 
         if (mAnchorView instanceof android.widget.TextView) {
             TextView textView = (TextView) mAnchorView;
             String text = textView.getText().toString();
-            RecyclerView.Adapter adapter = getAdapter();
             for (int i = 0; i < adapter.getItemCount(); i++) {
                 if (adapter.getItem(i).equals(text)) {
                     selectedItem = i;
@@ -89,30 +106,33 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener, Tinted
             }
         }
 
-        int popupX = -margin;
-        int popupY = -margin - mAnchorView.getHeight() - marginHalf;
+        Rect windowRect = new Rect();
+        mAnchorView.getWindowVisibleDisplayFrame(windowRect);
+        int hWindow = windowRect.bottom - windowRect.top;
+        int wWindow = windowRect.right - windowRect.left;
 
-        int maxHeight = getMaxAvailableHeight(mAnchorView, popupY);
+        int[] location = new int[2];
+        mAnchorView.getLocationInWindow(location);
 
+        int maxHeightAbove = location[1] - windowRect.top - marginHalf - margin;
+        int maxItemsAbove = maxHeightAbove / itemHeight;
+        int maxHeightBelow = hWindow - location[1] - marginHalf - margin;
+        int maxItemsBelow = maxHeightBelow / itemHeight;
+
+        int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
+        int itemsAbove = Math.min(selectedItem, maxItemsAbove);
+
+        int popupX = location[0] - margin;
+        int popupY = location[1] - margin - itemsAbove * itemHeight - marginHalf;
         int popupWidth = mAnchorView.getWidth() + margin * 2;
-        int items = maxHeight / height;
-        int popupHeight = marginHalf * 2 + items * height + margin * 2;
+        int popupHeight = marginHalf * 2 + (itemsAbove + itemsBelow) * itemHeight + margin * 2;
 
         LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
-        manager.scrollToPositionWithOffset(selectedItem, 0);
+        manager.scrollToPositionWithOffset(selectedItem - itemsAbove, 0);
 
-        update(mAnchorView, popupX, popupY, popupWidth, popupHeight);
+        update(popupX, popupY, popupWidth, popupHeight);
 
         super.update();
-    }
-
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP &&
-                (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK)) {
-            dismiss();
-            return true;
-        }
-        return false;
     }
 
     @Override

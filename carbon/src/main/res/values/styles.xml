@@ -175,8 +175,8 @@
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>
-        <item name="android:paddingLeft">@dimen/carbon_padding</item>
-        <item name="android:paddingRight">@dimen/carbon_padding</item>
+        <item name="android:paddingLeft">@dimen/carbon_paddingHalf</item>
+        <item name="android:paddingRight">@dimen/carbon_paddingHalf</item>
         <item name="android:minHeight">36dp</item>
         <item name="android:minWidth">88dp</item>
         <item name="android:background">?attr/colorPrimary</item>
@@ -342,6 +342,12 @@
     <style name="carbon_Spinner" parent="carbon_EditText.Underline">
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="android:editable">false</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingRight">@dimen/carbon_padding</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">

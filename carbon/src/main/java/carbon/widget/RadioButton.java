@@ -54,7 +54,9 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
             return;
 
         drawable = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
-        setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        int size = (int) (Carbon.getDip(getContext())*24);
+        drawable.setBounds(0,0,size,size);
+        setCompoundDrawables(drawable, null, null, null);
         setButtonDrawable(null);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);

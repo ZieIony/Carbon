@@ -54,7 +54,9 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
             return;
 
         drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
-        setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        int size = (int) (Carbon.getDip(getContext())*24);
+        drawable.setBounds(0,0,size,size);
+        setCompoundDrawables(drawable, null, null, null);
         setButtonDrawable(null);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
