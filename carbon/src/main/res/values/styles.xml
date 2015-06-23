@@ -221,6 +221,7 @@
 
     <style name="carbon_TextView" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
+        <item name="carbon_rippleColor">@null</item>
     </style>
 
     <style name="carbon_StatusBar">

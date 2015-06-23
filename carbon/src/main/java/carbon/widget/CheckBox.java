@@ -338,6 +338,10 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

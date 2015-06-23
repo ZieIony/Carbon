@@ -111,6 +111,10 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

@@ -493,6 +493,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

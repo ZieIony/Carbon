@@ -3,13 +3,11 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -22,12 +20,10 @@ import carbon.drawable.ControlFocusedColorStateList;
 /**
  * Created by Marcin on 2015-06-10.
  */
-public class PopupMenu extends PopupWindow implements View.OnKeyListener,
-        ViewTreeObserver.OnGlobalLayoutListener, PopupWindow.OnDismissListener, TintedView {
+public class PopupMenu extends PopupWindow implements View.OnKeyListener, TintedView {
 
     private RecyclerView recycler;
     private View mAnchorView;
-    private ViewTreeObserver mTreeObserver;
 
     public PopupMenu(Context context) {
         super(LayoutInflater.from(context).inflate(R.layout.carbon_popup, null, false));
@@ -35,56 +31,20 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
 
         recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-    }
-
-    public boolean show(View anchor) {
-        mAnchorView = anchor;
-        setOnDismissListener(this);
+        recycler.setOnKeyListener(this);
 
         setTouchable(true);
         setFocusable(true);
         setOutsideTouchable(true);
-
-        if (anchor != null) {
-            final boolean addGlobalListener = mTreeObserver == null;
-            mTreeObserver = anchor.getViewTreeObserver(); // Refresh to latest
-            if (addGlobalListener) mTreeObserver.addOnGlobalLayoutListener(this);
-        } else {
-            return false;
-        }
-
-        final Resources res = getContentView().getContext().getResources();
-        int maxWidth = res.getDisplayMetrics().widthPixels / 2;
-
-        int margin = (int) res.getDimension(R.dimen.carbon_padding);
-        int height = (int) res.getDimension(R.dimen.carbon_toolbarHeight);
-        int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
-        setWidth(Math.min(anchor.getWidth() + margin * 2, maxWidth));
-        setHeight(marginHalf * 2 + height * 3 + margin * 2);
-
         setAnimationStyle(0);
+    }
 
-        int offset = 0;
+    public boolean show(View anchor) {
+        mAnchorView = anchor;
 
-        if (anchor instanceof android.widget.TextView) {
-            TextView textView = (TextView) anchor;
-            String text = textView.getText().toString();
-            RecyclerView.Adapter adapter = getAdapter();
-            for (int i = 0; i < adapter.getItemCount(); i++) {
-                if (adapter.getItem(i).equals(text)) {
-                    LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
-                    manager.scrollToPositionWithOffset(i, 0);
-                    if (i == adapter.getItemCount() - 1) {
-                        offset = -height * 2;
-                    } else if (i == adapter.getItemCount() - 2) {
-                        offset = -height;
-                    }
-                    break;
-                }
-            }
-        }
+        super.showAsDropDown(anchor);
 
-        super.showAsDropDown(anchor, -margin, -margin - anchor.getHeight() - marginHalf + offset);
+        update();
 
         View content = getContentView().findViewById(R.id.carbon_popupContent);
         content.setVisibility(View.VISIBLE);
@@ -92,16 +52,63 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
         return true;
     }
 
-    public void onDismiss() {
-        if (mTreeObserver != null) {
-            if (!mTreeObserver.isAlive()) mTreeObserver = mAnchorView.getViewTreeObserver();
-            mTreeObserver.removeGlobalOnLayoutListener(this);
-            mTreeObserver = null;
+    public boolean showImmediate(View anchor) {
+        mAnchorView = anchor;
+
+        super.showAsDropDown(anchor);
+
+        update();
+
+        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContent);
+        content.setVisibilityImmediate(View.VISIBLE);
+
+        return true;
+    }
+
+    public void update() {
+        if (mAnchorView == null)
+            return;
+
+        final Resources res = getContentView().getContext().getResources();
+
+        int margin = (int) res.getDimension(R.dimen.carbon_padding);
+        int height = (int) res.getDimension(R.dimen.carbon_toolbarHeight);
+        int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
+
+        int selectedItem = 0;
+
+        if (mAnchorView instanceof android.widget.TextView) {
+            TextView textView = (TextView) mAnchorView;
+            String text = textView.getText().toString();
+            RecyclerView.Adapter adapter = getAdapter();
+            for (int i = 0; i < adapter.getItemCount(); i++) {
+                if (adapter.getItem(i).equals(text)) {
+                    selectedItem = i;
+                    break;
+                }
+            }
         }
+
+        int popupX = -margin;
+        int popupY = -margin - mAnchorView.getHeight() - marginHalf;
+
+        int maxHeight = getMaxAvailableHeight(mAnchorView, popupY);
+
+        int popupWidth = mAnchorView.getWidth() + margin * 2;
+        int items = maxHeight / height;
+        int popupHeight = marginHalf * 2 + items * height + margin * 2;
+
+        LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
+        manager.scrollToPositionWithOffset(selectedItem, 0);
+
+        update(mAnchorView, popupX, popupY, popupWidth, popupHeight);
+
+        super.update();
     }
 
     public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_MENU) {
+        if (event.getAction() == KeyEvent.ACTION_UP &&
+                (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK)) {
             dismiss();
             return true;
         }
@@ -118,6 +125,10 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
                 PopupMenu.super.dismiss();
             }
         });
+    }
+
+    public void dismissImmediate() {
+        super.dismiss();
     }
 
     /*
@@ -146,26 +157,6 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
         }
         return width;
     }*/
-
-    @Override
-    public void onGlobalLayout() {
-        if (isShowing()) {
-            final View anchor = mAnchorView;
-            if (anchor == null || !anchor.isShown()) {
-                dismiss();
-            } else if (isShowing()) {
-                // Recompute window size and position
-                show(mAnchorView);
-            }
-        }
-    }
-
-    public void onViewDetachedFromWindow(View v) {
-        if (mTreeObserver != null) {
-            if (!mTreeObserver.isAlive()) mTreeObserver = v.getViewTreeObserver();
-            mTreeObserver.removeGlobalOnLayoutListener(this);
-        }
-    }
 
     public void setAdapter(RecyclerView.Adapter adapter) {
         recycler.setAdapter(adapter);
@@ -206,7 +197,6 @@ public class PopupMenu extends PopupWindow implements View.OnKeyListener,
         }
         return false;
     }*/
-
 
 
     // -------------------------------

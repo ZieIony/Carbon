@@ -339,6 +339,10 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

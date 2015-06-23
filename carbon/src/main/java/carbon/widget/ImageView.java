@@ -442,6 +442,10 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

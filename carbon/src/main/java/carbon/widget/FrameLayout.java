@@ -558,6 +558,10 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

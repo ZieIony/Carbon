@@ -612,6 +612,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

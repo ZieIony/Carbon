@@ -553,6 +553,10 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

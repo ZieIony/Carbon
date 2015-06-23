@@ -557,6 +557,10 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }

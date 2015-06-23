@@ -558,6 +558,10 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         }
     }
 
+    public void setVisibilityImmediate(final int visibility){
+        super.setVisibility(visibility);
+    }
+
     public Animator getAnimator() {
         return animator;
     }
