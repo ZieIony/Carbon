@@ -126,6 +126,9 @@
             android:theme="@style/RaisedButtonStyle"
             android:name=".guidelines.ButtonsUsageActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".guidelines.ToolbarsUsageActivity"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".AnimationsActivity"

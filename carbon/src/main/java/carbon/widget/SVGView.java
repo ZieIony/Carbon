@@ -25,7 +25,6 @@ import carbon.R;
 public class SVGView extends ImageView {
     private static final String TAG = SVGView.class.getSimpleName();
     private Bitmap bitmap;
-    private ColorStateList filterColor;
     private int svgId;
     private SVG svg;
 

@@ -26,6 +26,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:paddingLeft="@dimen/carbon_padding"
+        android:visibility="gone"
         android:text=""
         android:textColor="?android:attr/textColorPrimaryInverse"
         android:textAppearance="?attr/carbon_textAppearanceTitleInverse" />

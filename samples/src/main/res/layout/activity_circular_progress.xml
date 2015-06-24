@@ -55,7 +55,7 @@
         android:layout_height="wrap_content" />
 
     <carbon.widget.RelativeLayout
-        android:layout_margin="@dimen/carbon_padding"
+        android:padding="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 

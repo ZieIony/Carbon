@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="@dimen/carbon_padding"
-    android:orientation="horizontal">
+    app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.Spinner
         android:id="@+id/day"
-        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:text="1"
@@ -20,9 +22,9 @@
 
     <carbon.widget.Spinner
         android:id="@+id/month"
-        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_weight="1"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:text="Jan"
@@ -30,10 +32,10 @@
 
     <carbon.widget.Spinner
         android:id="@+id/year"
-        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:text="1987"

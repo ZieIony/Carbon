@@ -17,7 +17,6 @@
             android:orientation="vertical">
 
             <carbon.widget.EditText
-                android:background="#3fff0000"
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +28,6 @@
                 app:carbon_pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" />
 
             <carbon.widget.EditText
-                android:background="#3fff0000"
                 android:id="@+id/editText3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +42,6 @@
                 app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$" />
 
             <carbon.widget.EditText
-                android:background="#3fff0000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom|left"
@@ -53,7 +50,6 @@
                 app:carbon_minCharacters="3" />
 
             <carbon.widget.EditText
-                android:background="#3fff0000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom|left"
@@ -62,7 +58,6 @@
                 app:carbon_maxCharacters="10" />
 
             <carbon.widget.EditText
-                android:background="#3fff0000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom|left"

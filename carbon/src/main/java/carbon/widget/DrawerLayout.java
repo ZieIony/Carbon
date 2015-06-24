@@ -301,6 +301,19 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     }
 
     @Override
+    public void invalidateDrawable(Drawable drawable) {
+        super.invalidateDrawable(drawable);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate();
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).invalidate();
+    }
+
+    @Override
     public void invalidate(Rect dirty) {
         super.invalidate(dirty);
         if (getParent() == null || !(getParent() instanceof View))
@@ -363,6 +376,32 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
         if (getElevation() > 0 || getCornerRadius() > 0)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
+    }
+
+    @Override
+    public void postInvalidate() {
+        super.postInvalidate();
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidate();
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public void postInvalidate(int left, int top, int right, int bottom) {
+        super.postInvalidate(left, top, right, bottom);
+        if (getParent() == null || !(getParent() instanceof View))
+            return;
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidate(left, top, right, bottom);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).postInvalidate(left, top, right, bottom);
     }
 
     @Override

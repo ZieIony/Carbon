@@ -6,56 +6,57 @@
     android:layout_height="match_parent">
 
     <carbon.widget.LinearLayout
-        app:carbon_elevation="@dimen/carbon_elevationMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="?attr/carbon_colorBackground"
-        app:carbon_cornerRadius="2dp"
-        android:orientation="vertical"
         android:minWidth="280dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        app:carbon_cornerRadius="2dp"
+        app:carbon_elevation="@dimen/carbon_elevationMax">
 
         <carbon.widget.TextView
             android:id="@+id/carbon_windowTitle"
-            android:text="Title"
-            android:textSize="20sp"
-            android:padding="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginTop="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:padding="0dp"
+            android:text="Title"
+            android:textSize="20sp" />
 
         <carbon.widget.FrameLayout
             android:id="@+id/carbon_windowContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_marginRight="24dp" />
 
         <carbon.widget.Divider
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
+        <carbon.widget.FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_gravity="right"
-            android:layout_height="48dp">
+            android:paddingBottom="@dimen/carbon_paddingHalf"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
+            android:paddingTop="@dimen/carbon_paddingHalf">
 
             <carbon.widget.Button
-                android:layout_gravity="center_vertical"
-                android:text="ok"
-                android:background="?attr/carbon_colorBackground"
-                android:textColor="?attr/colorAccent"
+                app:carbon_elevation="0dp"
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="?attr/carbon_colorBackground"
+                android:text="ok"
+                android:textColor="?attr/colorAccent" />
+        </carbon.widget.FrameLayout>
     </carbon.widget.LinearLayout>
 </carbon.widget.FrameLayout>
