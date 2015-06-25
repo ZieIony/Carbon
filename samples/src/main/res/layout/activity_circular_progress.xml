@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <carbon.widget.SVGActionButton
+        <carbon.widget.FloatingActionButton
             android:layout_centerInParent="true"
             app:carbon_src="@raw/ic_settings_input_svideo_24px"
             android:layout_width="@dimen/carbon_fabSize"

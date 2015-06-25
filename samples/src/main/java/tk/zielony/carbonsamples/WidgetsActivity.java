@@ -10,6 +10,8 @@ import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
 import tk.zielony.carbonsamples.widget.DialogActivity;
+import tk.zielony.carbonsamples.widget.NavigationViewActivity;
+import tk.zielony.carbonsamples.widget.SliderActivity;
 import tk.zielony.carbonsamples.widget.SpinnerActivity;
 import tk.zielony.carbonsamples.widget.ProgressBarsActivity;
 import tk.zielony.carbonsamples.widget.RecentsActivity;
@@ -45,7 +47,9 @@ public class WidgetsActivity extends Activity {
                 new ViewModel(RecentsActivity.class, "Recents"),
                 new ViewModel(ScrollViewActivity.class, "ScrollView"),
                 new ViewModel(RecyclerActivity.class, "RecyclerView"),
-                new ViewModel(SpinnerActivity.class,"Spinner")
+                new ViewModel(SpinnerActivity.class,"Spinner"),
+                new ViewModel(NavigationViewActivity.class,"NavigationView"),
+                new ViewModel(SliderActivity.class,"Slider")
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <carbon.widget.SVGActionButton
+    <carbon.widget.FloatingActionButton
         android:id="@+id/fab"
         app:carbon_src="@raw/ic_shopping_cart_24px"
         android:layout_margin="@dimen/carbon_padding"

@@ -17,7 +17,7 @@
         android:orientation="horizontal"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-        <carbon.widget.SVGActionButton
+        <carbon.widget.FloatingActionButton
             android:id="@+id/powerOffIcon"
             android:tag="animate"
             android:layout_width="@dimen/carbon_smallFabSize"
@@ -54,7 +54,7 @@
         android:orientation="horizontal"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-        <carbon.widget.SVGActionButton
+        <carbon.widget.FloatingActionButton
             android:id="@+id/rebootIcon"
             android:tag="animate"
             android:layout_width="@dimen/carbon_smallFabSize"
@@ -92,7 +92,7 @@
         android:orientation="horizontal"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-        <carbon.widget.SVGActionButton
+        <carbon.widget.FloatingActionButton
             android:id="@+id/airplaneModeIcon"
             android:tag="animate"
             android:layout_width="@dimen/carbon_smallFabSize"
@@ -151,7 +151,7 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <carbon.widget.SVGActionButton
+        <carbon.widget.FloatingActionButton
             android:id="@+id/vibration"
             android:tag="animate"
             android:layout_width="@dimen/carbon_smallFabSize"
@@ -166,7 +166,7 @@
             app:carbon_outAnimation="none"
             app:carbon_src="@raw/ic_vibration_24px" />
 
-        <carbon.widget.SVGActionButton
+        <carbon.widget.FloatingActionButton
             android:id="@+id/volume"
             android:tag="animate"
             android:layout_width="@dimen/carbon_smallFabSize"

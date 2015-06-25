@@ -115,7 +115,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
         if (iconRes == 0) {
             icon.setVisibility(GONE);
         } else {
-            icon.setSVGResource(iconRes);
+            icon.setImageResource(iconRes);
             icon.setVisibility(VISIBLE);
         }
     }

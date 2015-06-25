@@ -20,7 +20,7 @@
         android:layout_below="@+id/topLayout"
         android:background="#ffffffff" />
 
-    <carbon.widget.SVGActionButton
+    <carbon.widget.FloatingActionButton
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize"
         android:layout_alignParentRight="true"

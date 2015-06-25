@@ -10,18 +10,17 @@ import carbon.animation.ElevationStateAnimator;
 /**
  * Created by Marcin on 2014-12-04.
  */
-@Deprecated
-public class ImageActionButton extends ImageView {
+public class FloatingActionButton extends SVGView {
 
-    public ImageActionButton(Context context) {
+    public FloatingActionButton(Context context) {
         this(context, null);
     }
 
-    public ImageActionButton(Context context, AttributeSet attrs) {
+    public FloatingActionButton(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.carbon_fabStyle);
     }
 
-    public ImageActionButton(Context context, AttributeSet attrs, int defStyle) {
+    public FloatingActionButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -29,9 +28,9 @@ public class ImageActionButton extends ImageView {
     private void init(AttributeSet attrs, int defStyleAttr) {
         addStateAnimator(new ElevationStateAnimator(this));
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageActionButton, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, 0);
         if (a != null) {
-            setCornerRadius((int) a.getDimension(R.styleable.ImageActionButton_carbon_cornerRadius, -1));
+            setCornerRadius((int) a.getDimension(R.styleable.FloatingActionButton_carbon_cornerRadius, -1));
             a.recycle();
         }
     }

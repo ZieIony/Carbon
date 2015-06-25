@@ -10,6 +10,7 @@ import carbon.animation.ElevationStateAnimator;
 /**
  * Created by Marcin on 2014-12-04.
  */
+@Deprecated
 public class SVGActionButton extends SVGView {
 
     public SVGActionButton(Context context) {

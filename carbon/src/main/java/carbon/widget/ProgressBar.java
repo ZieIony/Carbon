@@ -3,6 +3,8 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -44,16 +46,15 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyleAttr, 0);
         Style style = Style.values()[a.getInt(R.styleable.ProgressBar_carbon_progressStyle, 0)];
         if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {
-            drawable = new ProgressBarDrawable();
+            setDrawable(new ProgressBarDrawable());
         } else {
-            drawable = new CircularProgressDrawable();
+            setDrawable(new CircularProgressDrawable());
         }
         drawable.setStyle(style);
-        setBackgroundDrawable(drawable);
 
         drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
 
-        Carbon.initTint(this,attrs,defStyleAttr);
+        Carbon.initTint(this, attrs, defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
 
         a.recycle();
@@ -81,6 +82,46 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
 
     public float getBarPadding() {
         return drawable.getBarPadding();
+    }
+
+    public void setDrawable(ProgressDrawable newDrawable) {
+        this.drawable = newDrawable;
+
+        if (drawable != null)
+            drawable.setCallback(null);
+
+        if (newDrawable != null)
+            newDrawable.setCallback(this);
+    }
+
+    public ProgressDrawable getDrawable() {
+        return drawable;
+    }
+
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return super.verifyDrawable(who) || who == drawable;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        if (drawable != null)
+            drawable.draw(canvas);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        if (!changed)
+            return;
+
+        if (getWidth() == 0 || getHeight() == 0)
+            return;
+
+        if (drawable != null)
+            drawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
 
@@ -111,7 +152,7 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 

@@ -126,28 +126,21 @@
                         android:text="11.64 MB"
                         android:textSize="30sp" />
 
-                    <carbon.widget.FrameLayout
-                        android:id="@+id/progressContainer"
+                    <carbon.widget.ProgressBar
+                        android:id="@+id/progress"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="10dp"
                         android:layout_below="@id/totalValue"
-                        android:background="#42FF5252">
-
-                        <carbon.widget.ProgressBar
-                            android:id="@+id/progress"
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            app:carbon_progressStyle="bar_determinate"
-                            app:carbon_tint="?attr/colorAccent" />
-                    </carbon.widget.FrameLayout>
+                        android:background="#42FF5252"
+                        app:carbon_progressStyle="bar_determinate"
+                        app:carbon_tint="?attr/colorAccent" />
 
                     <carbon.widget.TextView
                         android:id="@+id/app"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/progressContainer"
+                        android:layout_below="@id/progress"
                         android:text="App" />
-
 
                     <carbon.widget.TextView
                         android:id="@+id/appValue"
@@ -162,9 +155,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/dataValue"
-                        android:layout_below="@id/progressContainer"
+                        android:layout_below="@id/progress"
                         android:text="Data" />
-
 
                     <carbon.widget.TextView
                         android:id="@+id/dataValue"

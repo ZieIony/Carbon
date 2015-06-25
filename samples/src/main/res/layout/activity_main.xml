@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <carbon.widget.SVGActionButton
+        <carbon.widget.FloatingActionButton
             android:layout_gravity="right|bottom"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize"

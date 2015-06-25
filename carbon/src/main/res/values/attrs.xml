@@ -100,6 +100,10 @@
     </attr>
 
     <attr name="carbon_fabStyle" format="reference" />
+    <declare-styleable name="FloatingActionButton">
+        <attr name="carbon_cornerRadius" />
+    </declare-styleable>
+
     <declare-styleable name="SVGActionButton">
         <attr name="carbon_cornerRadius" />
     </declare-styleable>
@@ -226,6 +230,11 @@
             <enum name="circular_indeterminate" value="4" />
         </attr>
         <attr name="carbon_barWidth" format="dimension" />
+    </declare-styleable>
+
+    <attr name="carbon_navigationViewStyle" format="reference"/>
+    <declare-styleable name="NavigationView">
+
     </declare-styleable>
 
     <attr name="carbon_cardViewStyle" format="reference" />

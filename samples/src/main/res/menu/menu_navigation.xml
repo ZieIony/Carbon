@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Fender" android:icon="@raw/ic_face_24px" />
+
+    <item android:title="Schecter" android:icon="@raw/ic_face_24px" />
+
+    <item android:title="Gibson" android:icon="@raw/ic_face_24px" />
+
+    <item android:title="Hagström" android:icon="@raw/ic_face_24px" />
+
+    <item android:title="Ibanez" android:icon="@raw/ic_face_24px" />
+
+</menu>

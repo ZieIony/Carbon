@@ -9,11 +9,11 @@ import android.view.View;
 
 import java.util.List;
 
+import carbon.beta.TransitionLayout;
 import carbon.widget.FrameLayout;
 import carbon.widget.LinearLayout;
 import carbon.widget.SVGView;
 import carbon.widget.TextView;
-import carbon.beta.TransitionLayout;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -151,7 +151,7 @@ public class PowerMenuActivity extends Activity {
                         TextView amStatus = (TextView) findViewById(R.id.airplaneModeStatus);
                         amStatus.setText("Airplane Mode is " + (airplaneMode ? "on" : "off"));
                         SVGView airplaneModeIcon = (SVGView) v.findViewById(R.id.airplaneModeIcon);
-                        airplaneModeIcon.setSVGResource(airplaneMode?R.raw.ic_airplanemode_on_24px:R.raw.ic_airplanemode_off_24px);
+                        airplaneModeIcon.setImageResource(airplaneMode ? R.raw.ic_airplanemode_on_24px : R.raw.ic_airplanemode_off_24px);
                     }
                 }, 3000);
             }
@@ -196,7 +196,7 @@ public class PowerMenuActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if(powerMenu.getVisibility()==View.VISIBLE){
+        if (powerMenu.getVisibility() == View.VISIBLE) {
             powerMenu.setVisibility(View.INVISIBLE);
             return;
         }

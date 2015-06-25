@@ -72,7 +72,7 @@
 
     </carbon.beta.TransitionLayout>
 
-    <carbon.widget.SVGActionButton
+    <carbon.widget.FloatingActionButton
         android:id="@+id/button"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_gravity="end|bottom"

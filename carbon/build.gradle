@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
-//apply from: 'maven-push.gradle'
+apply from: 'maven-push.gradle'
 
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        minSdkVersion 7
+        minSdkVersion 8
         targetSdkVersion 22
         versionCode 37
         versionName "0.10.0.1"
