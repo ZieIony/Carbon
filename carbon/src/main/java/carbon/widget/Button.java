@@ -177,7 +177,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
@@ -206,7 +206,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
@@ -240,7 +240,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     }
 
     @Override
-    public void invalidateDrawable(Drawable drawable) {
+    public void invalidateDrawable(@NonNull Drawable drawable) {
         super.invalidateDrawable(drawable);
         if (getParent() == null || !(getParent() instanceof View))
             return;
@@ -253,7 +253,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     }
 
     @Override
-    public void invalidate(Rect dirty) {
+    public void invalidate(@NonNull Rect dirty) {
         super.invalidate(dirty);
         if (getParent() == null || !(getParent() instanceof View))
             return;
@@ -471,7 +471,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         return touchMargin;
     }
 
-    public void getHitRect(Rect outRect) {
+    public void getHitRect(@NonNull Rect outRect) {
         if (touchMargin == null) {
             super.getHitRect(outRect);
             return;

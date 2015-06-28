@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -89,7 +90,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                         @Override
                         public void onAnimationUpdate(ValueAnimator valueAnimator) {
                             MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                            Log.e("snackbar "+Snackbar.this.hashCode(),""+((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
+                            Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                             ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                             if (pushedView.getParent() != null)
                                 ((View) pushedView.getParent()).postInvalidate();
@@ -196,7 +197,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                         @Override
                         public void onAnimationUpdate(ValueAnimator valueAnimator) {
                             MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                            Log.e("snackbar "+Snackbar.this.hashCode(),""+((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
+                            Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                             ViewHelper.setTranslationY(view, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                             if (pushedView.getParent() != null)
                                 ((View) pushedView.getParent()).postInvalidate();
@@ -239,7 +240,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                     @Override
                     public void onAnimationUpdate(ValueAnimator valueAnimator) {
                         MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                        Log.e("snackbar "+Snackbar.this.hashCode(),""+((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
+                        Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                         ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                         if (pushedView.getParent() != null)
                             ((View) pushedView.getParent()).postInvalidate();
@@ -262,14 +263,14 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
         if (gestureDetector.onTouchEvent(ev))
             return true;
         return super.dispatchTouchEvent(ev);
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
         boolean hit = event.getY() > content.getTop() && getParent() != null;
         if (tapOutsideToDismiss && !hit) {
             hide();
@@ -357,7 +358,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             int margin = (int) getResources().getDimension(R.dimen.carbon_padding);
             layoutParams.setMargins(margin, 0, margin, margin);
-            layoutParams.gravity = Gravity.LEFT | Gravity.BOTTOM;
+            layoutParams.gravity = Gravity.START | Gravity.BOTTOM;
         } else {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;

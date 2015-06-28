@@ -392,4 +392,11 @@
         <item name="android:windowEnterAnimation">@anim/carbon_popup_show</item>
         <item name="android:windowExitAnimation">@anim/carbon_popup_hide</item>
     </style>
+
+    <style name="carbon_SeekBar" parent="android:Widget.SeekBar">
+        <item name="carbon_rippleColor">@null</item>
+        <item name="carbon_tint">@null</item>
+        <item name="android:background">@null</item>
+    </style>
+
 </resources>

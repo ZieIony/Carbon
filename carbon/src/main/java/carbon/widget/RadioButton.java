@@ -142,7 +142,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     private RippleDrawable rippleDrawable;
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
@@ -176,7 +176,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     }
 
     @Override
-    public void invalidateDrawable(Drawable drawable) {
+    public void invalidateDrawable(@NonNull Drawable drawable) {
         super.invalidateDrawable(drawable);
         if (getParent() == null || !(getParent() instanceof View))
             return;
@@ -186,7 +186,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     }
 
     @Override
-    public void invalidate(Rect dirty) {
+    public void invalidate(@NonNull Rect dirty) {
         super.invalidate(dirty);
         if (getParent() == null || !(getParent() instanceof View))
             return;
@@ -311,7 +311,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
         return touchMargin;
     }
 
-    public void getHitRect(Rect outRect) {
+    public void getHitRect(@NonNull Rect outRect) {
         if (touchMargin == null) {
             super.getHitRect(outRect);
             return;

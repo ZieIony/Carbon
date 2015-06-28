@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -178,7 +179,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
         ensureTopGlow();
         ensureLeftGlow();
         ensureRightGlow();
@@ -201,8 +202,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
-        views = new ArrayList<View>();
+    protected void dispatchDraw(@NonNull Canvas canvas) {
+        views = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
@@ -244,7 +245,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                         child.getTop());
 
                 canvas.concat(matrix);
-                canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
                 shadow.draw(canvas, child, paint);
                 canvas.restoreToCount(saveCount);
             }

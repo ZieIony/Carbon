@@ -30,7 +30,7 @@ public class Roboto {
         CondensedRegular,
     }
 
-    static Map<Style, String> typefacePaths = new HashMap<Style, String>();
+    static Map<Style, String> typefacePaths = new HashMap<>();
 
     static {
         typefacePaths.put(Style.Black, "carbon/Roboto-Black.ttf");

@@ -16,7 +16,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
     Filterable adapter;
     TextWatcher autoCompleteTextWatcher;
 
-    public static interface OnAutoCompleteListener {
+    public interface OnAutoCompleteListener {
         void onAutoComplete();
     }
 

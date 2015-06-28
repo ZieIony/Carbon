@@ -16,7 +16,6 @@ import carbon.R;
 import carbon.widget.CornerView;
 
 public class ShadowGenerator {
-    public static final float SHADOW_SCALE = 1.0f;
     public static final int ALPHA = 51;
 
     private static RenderScript renderScript;
@@ -110,17 +109,17 @@ public class ShadowGenerator {
 
             return new NinePatchShadow(bitmap, elevation);
         } else {
-            bitmap = Bitmap.createBitmap((int) (view.getWidth() / SHADOW_SCALE + e * 2), (int) (view.getHeight() / SHADOW_SCALE + e * 2), Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap(view.getWidth() + e * 2, view.getHeight() + e * 2, Bitmap.Config.ARGB_8888);
 
             Canvas shadowCanvas = new Canvas(bitmap);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(0xff000000);
 
             if (shadowView.getShadowShape() == ShadowShape.ROUND_RECT) {
-                roundRect.set(e, e, (int) (view.getWidth() / SHADOW_SCALE - e), (int) (view.getHeight() / SHADOW_SCALE - e));
+                roundRect.set(e, e, view.getWidth() - e, view.getHeight() - e);
                 shadowCanvas.drawRoundRect(roundRect, e, e, paint);
             } else {
-                int r = (int) (view.getWidth() / 2 / SHADOW_SCALE);
+                int r = view.getWidth() / 2;
                 shadowCanvas.drawCircle(r + e, r + e, r, paint);
             }
 

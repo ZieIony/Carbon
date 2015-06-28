@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -173,7 +174,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         super.draw(canvas);
         if (content.getChildCount() == 0)
             return;
@@ -241,12 +242,12 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     }
 
     @Override
-    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+    protected void dispatchSaveInstanceState(@NonNull SparseArray<Parcelable> container) {
         super.dispatchFreezeSelfOnly(container);
     }
 
     @Override
-    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+    protected void dispatchRestoreInstanceState(@NonNull SparseArray<Parcelable> container) {
         super.dispatchThawSelfOnly(container);
     }
 
@@ -289,7 +290,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
         }
 
         @Override
-        public void writeToParcel(Parcel destination, int flags) {
+        public void writeToParcel(@NonNull Parcel destination, int flags) {
             super.writeToParcel(destination, flags);
             destination.writeInt(selectedPage);
             destination.writeInt(scroll);

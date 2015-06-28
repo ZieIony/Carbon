@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Region;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -78,7 +79,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         super.draw(canvas);
         if (topGlow != null) {
             final int scrollY = getScrollY();
@@ -111,7 +112,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
         if (header != null)
             header.dispatchTouchEvent(ev);
         switch (ev.getAction()) {
@@ -170,7 +171,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onTouchEvent(@NonNull MotionEvent ev) {
         try {
             return super.onTouchEvent(ev);
         } catch (IllegalArgumentException e) {  // pointer index out of range, see: http://stackoverflow.com/questions/16459196/java-lang-illegalargumentexception-pointerindex-out-of-range-exception-dispat/
@@ -280,7 +281,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     private int minHeader = 0;
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         if (header != null) {
             int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
             int headerHeight = header.getMeasuredHeight();

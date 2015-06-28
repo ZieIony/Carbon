@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -95,7 +96,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         views = new ArrayList<View>();
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
@@ -122,7 +123,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+    protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
         if (!child.isShown())
             return super.drawChild(canvas, child, drawingTime);
 
@@ -155,7 +156,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
                         child.getTop());
 
                 canvas.concat(matrix);
-                canvas.scale(ShadowGenerator.SHADOW_SCALE, ShadowGenerator.SHADOW_SCALE);
                 shadow.draw(canvas, child, paint);
                 canvas.restoreToCount(saveCount);
             }
@@ -185,10 +185,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {
         final Rect frame = new Rect();
         child.getHitRect(frame);
-        if (frame.contains((int) x, (int) y)) {
-            return true;
-        }
-        return false;
+        return frame.contains((int) x, (int) y);
     }
 
 
@@ -246,7 +243,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
@@ -271,7 +268,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
@@ -305,7 +302,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    public void invalidateDrawable(Drawable drawable) {
+    public void invalidateDrawable(@NonNull Drawable drawable) {
         super.invalidateDrawable(drawable);
         if (getParent() == null || !(getParent() instanceof View))
             return;
@@ -318,7 +315,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    public void invalidate(Rect dirty) {
+    public void invalidate(@NonNull Rect dirty) {
         super.invalidate(dirty);
         if (getParent() == null || !(getParent() instanceof View))
             return;
@@ -536,7 +533,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         return touchMargin;
     }
 
-    public void getHitRect(Rect outRect) {
+    public void getHitRect(@NonNull Rect outRect) {
         if (touchMargin == null) {
             super.getHitRect(outRect);
             return;
@@ -677,7 +674,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    protected boolean fitSystemWindows(Rect insets) {
+    protected boolean fitSystemWindows(@NonNull Rect insets) {
         if (insetLeft == INSET_NULL)
             insetLeft = insets.left;
         if (insetTop == INSET_NULL)

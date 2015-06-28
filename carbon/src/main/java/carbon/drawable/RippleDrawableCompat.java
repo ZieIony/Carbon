@@ -2,6 +2,7 @@ package carbon.drawable;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
@@ -26,7 +27,7 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable {
         }
     }
 
-    private final int alpha;
+    private int alpha;
     private long radiusDuration, opacityDuration;
     private long downTime, upTime;
     private final float density;
@@ -54,7 +55,7 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable {
 
     public RippleDrawableCompat(int color, Drawable background, Context context, Style style) {
         this.color = color;
-        this.alpha = (color >> 24) / 2;
+        this.alpha = Color.alpha(color)/2;
         this.background = background;
         this.style = style;
         density = context.getResources().getDisplayMetrics().density;
@@ -166,7 +167,7 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable {
 
     @Override
     public void setAlpha(int i) {
-
+        alpha = i / 2;
     }
 
     @Override

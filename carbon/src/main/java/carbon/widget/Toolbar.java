@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
     }
 
     @Override
-    public void addView(View child) {
+    public void addView(@NonNull View child) {
         if (content != null) {
             content.addView(child);
         } else {
@@ -57,7 +58,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
     }
 
     @Override
-    public void addView(View child, int index) {
+    public void addView(@NonNull View child, int index) {
         if (content != null) {
             content.addView(child, index);
         } else {
@@ -66,7 +67,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
     }
 
     @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
+    public void addView(@NonNull View child, int index, ViewGroup.LayoutParams params) {
         if (content != null) {
             content.addView(child, index, params);
         } else {
@@ -75,7 +76,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
     }
 
     @Override
-    public void addView(View child, ViewGroup.LayoutParams params) {
+    public void addView(@NonNull View child, ViewGroup.LayoutParams params) {
         if (content != null) {
             content.addView(child, params);
         } else {
@@ -84,7 +85,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
     }
 
     @Override
-    public void addView(View child, int width, int height) {
+    public void addView(@NonNull View child, int width, int height) {
         if (content != null) {
             content.addView(child, width, height);
         } else {

@@ -8,10 +8,10 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-06-26.
  */
-public class SliderActivity extends Activity{
+public class SeekBarActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_slider);
+        setContentView(R.layout.activity_seekbar);
     }
 }

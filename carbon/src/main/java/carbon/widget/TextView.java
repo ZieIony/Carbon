@@ -4,19 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewOutlineProvider;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -33,7 +27,6 @@ import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.TypefaceUtils;
-import carbon.shadow.ShadowShape;
 
 /**
  * Created by Marcin on 2014-11-07.
@@ -55,7 +48,7 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        if(isInEditMode())
+        if (isInEditMode())
             return;
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, 0);
@@ -127,6 +120,13 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
 
     // -------------------------------
     // ripple
@@ -136,7 +136,7 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
     private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
@@ -170,7 +170,7 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
     }
 
     @Override
-    public void invalidateDrawable(Drawable drawable) {
+    public void invalidateDrawable(@NonNull Drawable drawable) {
         super.invalidateDrawable(drawable);
         if (getParent() == null || !(getParent() instanceof View))
             return;
@@ -180,7 +180,7 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
     }
 
     @Override
-    public void invalidate(Rect dirty) {
+    public void invalidate(@NonNull Rect dirty) {
         super.invalidate(dirty);
         if (getParent() == null || !(getParent() instanceof View))
             return;
@@ -305,13 +305,14 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
         return touchMargin;
     }
 
-    public void getHitRect(Rect outRect) {
+    public void getHitRect(@NonNull Rect outRect) {
         if (touchMargin == null) {
             super.getHitRect(outRect);
             return;
         }
         outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
     }
+
 
     // -------------------------------
     // state animators
@@ -336,7 +337,6 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
             for (StateAnimator animator : stateAnimators)
                 animator.stateChanged(getDrawableState());
     }
-
 
 
     // -------------------------------
@@ -366,7 +366,7 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 
