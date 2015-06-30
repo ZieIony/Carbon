@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -11,11 +12,17 @@ import carbon.animation.AnimatedView;
 
 /**
  * Created by Marcin on 2015-02-14.
+ *
+ * This implementation extends EditText directly and uses TextWatcher for tracking text changes.
+ * This class can be used to create new material search fields with drop down menus separated by a seam.
  */
 public class AutoCompleteTextView extends EditText implements TouchMarginView, AnimatedView {
-    Filterable adapter;
-    TextWatcher autoCompleteTextWatcher;
+    protected Filterable adapter;
+    protected TextWatcher autoCompleteTextWatcher;
 
+    /**
+     * Listener for watching for auto complete events.
+     */
     public interface OnAutoCompleteListener {
         void onAutoComplete();
     }
@@ -24,6 +31,11 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
         this(context, null);
     }
 
+    /**
+     * XML constructor. Gets default parameters from R.attr.carbon_editTextStyle.
+     * @param context
+     * @param attrs
+     */
     public AutoCompleteTextView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.carbon_editTextStyle);
     }
@@ -53,10 +65,18 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
         addTextChangedListener(autoCompleteTextWatcher);
     }
 
-    public <T extends Filterable> void setAdapter(T adapter) {
+    /**
+     * Sets an adapter with items used for auto completion. The adapter cannot be null.
+     * @param adapter
+     */
+    public <T extends Filterable> void setAdapter(@NonNull T adapter) {
         this.adapter = adapter;
     }
 
+    /**
+     * Replaces the current text with s. Used by Adapter to set the selected item as text.
+     * @param s text to replace with
+     */
     public void performCompletion(String s) {
         removeTextChangedListener(autoCompleteTextWatcher);
         setText(s);

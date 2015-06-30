@@ -369,7 +369,7 @@
     </style>
 
     <style name="carbon_CheckBox" parent="android:Widget.CompoundButton.CheckBox">
-        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingLeft">@dimen/carbon_paddingHalf</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:button">@null</item>
@@ -379,7 +379,7 @@
     </style>
 
     <style name="carbon_RadioButton" parent="android:Widget.CompoundButton.RadioButton">
-        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingLeft">@dimen/carbon_paddingHalf</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:button">@null</item>

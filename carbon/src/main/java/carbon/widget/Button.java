@@ -42,14 +42,21 @@ import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-07.
+ *
+ * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other material features.
  */
 public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView {
-    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+    protected Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
         this(context, null);
     }
 
+    /**
+     * XML constructor. Gets default parameters from android.R.attr.buttonStyle.
+     * @param context
+     * @param attrs
+     */
     public Button(Context context, AttributeSet attrs) {
         this(context, attrs, android.R.attr.buttonStyle);
     }
@@ -92,6 +99,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         a.recycle();
     }
 
+    /**
+     * Changes text transformation method to caps.
+     * @param allCaps if true, Button will automatically capitalize all characters
+     */
     public void setAllCaps(boolean allCaps) {
         if (allCaps) {
             setTransformationMethod(new AllCapsTransformationMethod(getContext()));
@@ -132,10 +143,18 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     private Path cornersMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
+    /**
+     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     * @return corner radius, equal to or greater than 0.
+     */
     public int getCornerRadius() {
         return cornerRadius;
     }
 
+    /**
+     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     * @param cornerRadius
+     */
     public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
@@ -212,11 +231,13 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         return super.dispatchTouchEvent(event);
     }
 
+
     @Override
     public RippleDrawable getRippleDrawable() {
         return rippleDrawable;
     }
 
+    @Override
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
@@ -376,6 +397,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         return elevation;
     }
 
+    @Override
     public synchronized void setElevation(float elevation) {
         if (elevation == this.elevation)
             return;

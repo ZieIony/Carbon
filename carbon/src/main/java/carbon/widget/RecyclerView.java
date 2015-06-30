@@ -382,6 +382,26 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         minHeader = height;
     }
 
+    @Deprecated
+    public float getParallax() {
+        return parallax;
+    }
+
+    @Deprecated
+    public void setParallax(float amount) {
+        parallax = amount;
+    }
+
+    @Deprecated
+    public int getMinHeaderHeight() {
+        return minHeader;
+    }
+
+    @Deprecated
+    public void setMinHeaderHeight(int height) {
+        minHeader = height;
+    }
+
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int paddingTop = getPaddingTop() - headerPadding;
         if (header != null) {

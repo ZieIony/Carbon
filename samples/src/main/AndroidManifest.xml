@@ -104,6 +104,9 @@
         <activity
             android:name=".feature.ZOrderActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".feature.ContextWrapperActivity"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".applibrary.DrawerActivity"

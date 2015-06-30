@@ -9,10 +9,20 @@ import java.util.Locale;
 
 /**
  * Created by Marcin on 2015-02-28.
+ *
+ * Transformation method used for making all characters capitalized. Can be used by all classes
+ * derived from TextView.
+ *
+ * @see(android.widget.TextView)
  */
 public class AllCapsTransformationMethod implements TransformationMethod {
     private Locale mLocale;
 
+    /**
+     * Uses current locale.
+     *
+     * @param context Context to get locale from
+     */
     public AllCapsTransformationMethod(Context context) {
         mLocale = context.getResources().getConfiguration().locale;
     }
