@@ -10,6 +10,7 @@ import carbon.drawable.VectorDrawable;
 /**
  * Created by Marcin on 2014-12-02.
  */
+@Deprecated
 public class SVGView extends ImageView {
     public SVGView(Context context) {
         this(context, null);
@@ -27,7 +28,7 @@ public class SVGView extends ImageView {
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SVGView, defStyleAttr, 0);
         if (a.hasValue(R.styleable.SVGView_carbon_src))
-            setImageDrawable(new VectorDrawable(getContext(), a.getResourceId(R.styleable.SVGView_carbon_src, 0)));
+            setImageDrawable(new VectorDrawable(getResources(), a.getResourceId(R.styleable.SVGView_carbon_src, 0)));
         a.recycle();
     }
 
@@ -46,12 +47,4 @@ public class SVGView extends ImageView {
         setMeasuredDimension(width, height);
     }
 
-    @Override
-    public void setImageResource(int resId) {
-        try {
-            super.setImageResource(resId);
-        } catch (Exception e) {
-            setImageDrawable(new VectorDrawable(getContext(), resId));
-        }
-    }
 }

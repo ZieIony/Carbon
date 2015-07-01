@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.support.v7.internal.view.menu.MenuBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
@@ -75,14 +76,13 @@ public class NavigationView extends RecyclerView {
         public void onBindViewHolder(ViewHolder holder, final int position) {
             super.onBindViewHolder(holder, position);
             holder.tv.setText(items.getItem(position).getTitle());
-            holder.svg.setImageDrawable(items.getItem(position).getIcon());
+            holder.iv.setImageDrawable(items.getItem(position).getIcon());
         }
 
         @Override
         public int getItemCount() {
             return items.size();
         }
-
 
         public void setItems(Menu items) {
             this.items = items;
@@ -92,12 +92,12 @@ public class NavigationView extends RecyclerView {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
-        SVGView svg;
+        ImageView iv;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv = (TextView) itemView.findViewById(R.id.carbon_itemText);
-            svg = (SVGView) itemView.findViewById(R.id.carbon_itemIcon);
+            iv = (ImageView) itemView.findViewById(R.id.carbon_itemIcon);
         }
     }
 }

@@ -12,11 +12,6 @@
         android:orientation="vertical"
         app:carbon_insetColor="?attr/colorPrimary">
 
-        <carbon.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:carbon_elevation="@dimen/carbon_elevationMax" />
 
     </carbon.widget.LinearLayout>
 

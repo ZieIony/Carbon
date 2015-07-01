@@ -205,6 +205,7 @@
 
     <attr name="carbon_imageViewStyle" format="reference" />
     <declare-styleable name="ImageView">
+        <attr name="android:src" />
         <attr name="carbon_rippleColor" />
         <attr name="carbon_elevation" />
         <attr name="carbon_touchMargin" />
@@ -232,7 +233,7 @@
         <attr name="carbon_barWidth" format="dimension" />
     </declare-styleable>
 
-    <attr name="carbon_navigationViewStyle" format="reference"/>
+    <attr name="carbon_navigationViewStyle" format="reference" />
     <declare-styleable name="NavigationView">
 
     </declare-styleable>

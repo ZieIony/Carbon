@@ -35,6 +35,7 @@ import carbon.animation.StateAnimatorView;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.drawable.VectorDrawable;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -63,6 +64,10 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
 
         setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
+        int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
+        if (getDrawable() == null && ((resId & 0xffff0000) == 0x7f050000))
+            setImageDrawable(new VectorDrawable(getResources(), resId));
+
         setCornerRadius((int) a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
@@ -482,7 +487,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 

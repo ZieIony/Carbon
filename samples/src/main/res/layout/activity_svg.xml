@@ -7,16 +7,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <carbon.widget.SVGView
+    <carbon.widget.ImageView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        app:carbon_src="@raw/ic_description_24px"
+        android:src="@raw/ic_description_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
-    <carbon.widget.SVGView
+    <carbon.widget.ImageView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        app:carbon_src="@raw/ic_dns_24px"
+        android:src="@raw/ic_dns_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
