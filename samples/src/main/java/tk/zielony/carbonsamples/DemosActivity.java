@@ -8,6 +8,7 @@ import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.demo.AutoCompleteDemo;
 import tk.zielony.carbonsamples.demo.PowerMenuActivity;
+import tk.zielony.carbonsamples.demo.QuickReturnActivity;
 import tk.zielony.carbonsamples.demo.ShareToolbarActivity;
 
 
@@ -26,7 +27,8 @@ public class DemosActivity extends Activity {
         ViewModel[] items = new ViewModel[]{
                 new ViewModel(PowerMenuActivity.class, "Power Menu"),
                 new ViewModel(ShareToolbarActivity.class, "Share Toolbar", true),
-                new ViewModel(AutoCompleteDemo.class, "Auto Complete",true)
+                new ViewModel(AutoCompleteDemo.class, "Auto Complete", true),
+                new ViewModel(QuickReturnActivity.class, "Quick Return", false)
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

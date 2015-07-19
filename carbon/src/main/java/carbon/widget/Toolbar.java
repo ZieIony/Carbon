@@ -18,7 +18,7 @@ import carbon.shadow.ShadowView;
  */
 public class Toolbar extends LinearLayout implements ShadowView {
     private ViewGroup content;
-    private SVGView icon;
+    private ImageView icon;
 
     public Toolbar(Context context) {
         this(context, null);
@@ -32,7 +32,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
     private void init(AttributeSet attrs, int defStyle) {
         inflate(getContext(), R.layout.carbon_toolbar, this);
         content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
-        icon = (SVGView) findViewById(R.id.carbon_icon);
+        icon = (ImageView) findViewById(R.id.carbon_icon);
 
         icon.setOnClickListener(new OnClickListener() {
             @Override

@@ -9,6 +9,8 @@ import carbon.drawable.VectorDrawable;
 
 /**
  * Created by Marcin on 2014-12-02.
+ * @deprecated  Use {@link carbon.widget.ImageView} instead. ImageView class
+ * supports both bitmap and vector graphics
  */
 @Deprecated
 public class SVGView extends ImageView {

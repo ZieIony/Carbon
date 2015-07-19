@@ -350,6 +350,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     public void setHeader(View view) {
         header = view;
+        view.setLayoutParams(generateDefaultLayoutParams());
         requestLayout();
     }
 
@@ -382,21 +383,37 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         minHeader = height;
     }
 
+    /**
+     * @deprecated Naming convention change. Use {@link #getHeaderParallax()} instead
+     * @return parallax amount to the header applied when scrolling
+     */
     @Deprecated
     public float getParallax() {
         return parallax;
     }
 
+    /**
+     * @deprecated Naming convention change. Use {@link #setHeaderParallax(float)} instead
+     * @param amount parallax amount to apply to the header
+     */
     @Deprecated
     public void setParallax(float amount) {
         parallax = amount;
     }
 
+    /**
+     * @deprecated Naming convention change. Use {@link #getHeaderMinHeight()} instead
+     * @return min header height
+     */
     @Deprecated
     public int getMinHeaderHeight() {
         return minHeader;
     }
 
+    /**
+     * @deprecated Naming convention change. Use {@link #setHeaderMinHeight(int)} instead
+     * @param height min header height
+     */
     @Deprecated
     public void setMinHeaderHeight(int height) {
         minHeader = height;

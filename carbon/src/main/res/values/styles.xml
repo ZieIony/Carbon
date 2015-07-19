@@ -214,9 +214,9 @@
         <item name="carbon_outAnimation">pop</item>
         <item name="carbon_elevation">@dimen/carbon_elevationHigh</item>
         <item name="android:background">?attr/colorAccent</item>
-        <item name="android:padding">@dimen/carbon_padding</item>
         <item name="android:minWidth">@dimen/carbon_fabSize</item>
         <item name="android:minHeight">@dimen/carbon_fabSize</item>
+        <item name="android:scaleType">center</item>
     </style>
 
     <style name="carbon_TextView" parent="@android:style/Widget.TextView">

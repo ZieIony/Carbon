@@ -63,6 +63,11 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
         pageChangeListenerList.remove(listener);
     }
 
+    /**
+     * @deprecated Use {@link #addOnPageChangeListener(OnPageChangeListener)} instead. That method
+     * allows to add more than one listener.
+     * @param listener page changed listener
+     */
     @Deprecated
     @Override
     public void setOnPageChangeListener(OnPageChangeListener listener) {

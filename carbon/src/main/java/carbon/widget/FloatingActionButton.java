@@ -9,8 +9,11 @@ import carbon.animation.ElevationStateAnimator;
 
 /**
  * Created by Marcin on 2014-12-04.
+ *
+ * FAB implementation using an ImageView and rounded corners. Supports SVGs, animated shadows, ripples
+ * and other material features.
  */
-public class FloatingActionButton extends SVGView {
+public class FloatingActionButton extends ImageView {
 
     public FloatingActionButton(Context context) {
         this(context, null);

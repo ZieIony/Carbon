@@ -17,6 +17,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -223,9 +225,17 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     private RippleDrawable rippleDrawable;
     private EmptyDrawable emptyBackground = new EmptyDrawable();
+    private Transformation t = new Transformation();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        Animation a = getAnimation();
+        if(a!=null){
+            a.getTransformation(event.getEventTime(),t);
+            float[] loc = new float[]{event.getX(),event.getY()};
+            t.getMatrix().mapPoints(loc);
+            event.setLocation(loc[0],loc[1]);
+        }
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);

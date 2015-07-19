@@ -56,7 +56,8 @@
         android:layout_margin="@dimen/carbon_padding"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        app:carbon_src="@raw/ic_face_24px"
+        android:src="@raw/ic_face_24px"
+        app:carbon_rippleColor="#7fffffff"
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize" />
 

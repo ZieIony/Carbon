@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/carbon_toolbarHeight">
+    android:layout_height="wrap_content">
 
-    <carbon.widget.SVGView
+    <carbon.widget.ImageView
         app:carbon_inAnimation="none"
         app:carbon_outAnimation="none"
         android:clickable="true"
         android:id="@+id/carbon_icon"
-        app:carbon_src="@raw/carbon_uparrow"
+        android:src="@raw/carbon_uparrow"
         app:carbon_tint="?attr/carbon_iconColor"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless"

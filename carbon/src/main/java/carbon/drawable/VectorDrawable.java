@@ -20,14 +20,13 @@ public class VectorDrawable extends Drawable {
     SVG svg;
     Bitmap bitmap;
     private Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
-    int density,intWidth,intHeight;
+    int intWidth,intHeight;
 
     public VectorDrawable(Resources res, int resId) {
         if (resId == 0)
             return;
         try {
             svg = SVG.getFromResource(res, resId);
-            density = res.getDisplayMetrics().densityDpi;
             intWidth = (int)(svg.getDocumentWidth()*res.getDisplayMetrics().density);
             intHeight = (int) (svg.getDocumentHeight()*res.getDisplayMetrics().density);
             setBounds(0, 0, intWidth,intHeight);
@@ -45,7 +44,6 @@ public class VectorDrawable extends Drawable {
         svg.setDocumentWidth(width);
         svg.setDocumentHeight(height);
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        bitmap.setDensity(density);
         svg.renderToCanvas(new Canvas(bitmap));
         super.setBounds(left, top, right, bottom);
     }

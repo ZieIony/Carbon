@@ -16,12 +16,17 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,9 +164,20 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     private RippleDrawable rippleDrawable;
     private EmptyDrawable emptyBackground = new EmptyDrawable();
+    private Transformation t = new Transformation();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        Animation a = getAnimation();
+        if (a != null&&a.hasStarted()) {
+            a.getTransformation(getDrawingTime(), t);
+            float[] loc = new float[]{event.getX(), event.getY()};
+            //t.getMatrix().mapPoints(loc);
+            loc[0]-= ViewHelper.getTranslationX(this);
+            loc[1]-= ViewHelper.getTranslationY(this);
+            event.setLocation(loc[0], loc[1]);
+           // Log.e("mapped loc", "" + loc[0] + ", " + loc[1]);
+        }
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
@@ -429,9 +445,31 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     public void getHitRect(@NonNull Rect outRect) {
         if (touchMargin == null) {
             super.getHitRect(outRect);
+            Animation a = getAnimation();
+            if (a != null&&a.hasStarted()) {
+                a.getTransformation(System.currentTimeMillis(), t);
+                float[] loc = new float[]{outRect.left, outRect.top, outRect.right, outRect.bottom};
+                //t.getMatrix().mapPoints(loc);
+                loc[0]+= ViewHelper.getTranslationX(this);
+                loc[1]+= ViewHelper.getTranslationY(this);
+                loc[2]+= ViewHelper.getTranslationX(this);
+                loc[3]+= ViewHelper.getTranslationY(this);
+                outRect.set((int) loc[0], (int) loc[1], (int) loc[2], (int) loc[3]);
+            }
             return;
         }
         outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
+        Animation a = getAnimation();
+        if (a != null&&a.hasStarted()) {
+            a.getTransformation(System.currentTimeMillis(), t);
+            float[] loc = new float[]{outRect.left, outRect.top, outRect.right, outRect.bottom};
+            //t.getMatrix().mapPoints(loc);
+            loc[0]+= ViewHelper.getTranslationX(this);
+            loc[1]+= ViewHelper.getTranslationY(this);
+            loc[2]+= ViewHelper.getTranslationX(this);
+            loc[3]+= ViewHelper.getTranslationY(this);
+            outRect.set((int) loc[0], (int) loc[1], (int) loc[2], (int) loc[3]);
+        }
     }
 
     // -------------------------------
@@ -540,6 +578,9 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
             setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP));
             setAlpha(Color.alpha(color));
+        }else{
+            setColorFilter(null);
+            setAlpha(255);
         }
     }
 }

@@ -53,6 +53,6 @@
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize"
             android:layout_margin="@dimen/carbon_padding"
-            app:carbon_src="@raw/ic_face_24px" />
+            android:src="@raw/ic_face_24px" />
     </carbon.widget.FrameLayout>
 </carbon.widget.LinearLayout>

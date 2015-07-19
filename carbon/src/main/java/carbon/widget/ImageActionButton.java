@@ -9,6 +9,8 @@ import carbon.animation.ElevationStateAnimator;
 
 /**
  * Created by Marcin on 2014-12-04.
+ * @deprecated  Use {@link carbon.widget.FloatingActionButton} instead. FloatingActionButton class
+ * supports both bitmap and vector graphics and has a name consistent with Design Support Library
  */
 @Deprecated
 public class ImageActionButton extends ImageView {
