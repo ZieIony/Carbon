@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
+import carbon.Carbon;
 import carbon.R;
 
 /**
@@ -15,14 +16,18 @@ public class TintPrimaryColorStateList extends ColorStateList {
         super(new int[][]{
                 new int[]{}
         }, new int[]{
-                getThemeColor(context, R.attr.colorPrimary)
+                Carbon.getThemeColor(context, R.attr.colorPrimary)
         });
     }
 
+    /**
+     * @param context context
+     * @param attr    attribute to get from the current theme
+     * @return color from the current theme
+     * @deprecated use {@link carbon.Carbon#getThemeColor(Context, int)} instead. This method was duplicated in all ColorStateList implementations
+     */
+    @Deprecated
     public static int getThemeColor(Context context, int attr) {
-        Resources.Theme theme = context.getTheme();
-        TypedValue typedvalueattr = new TypedValue();
-        theme.resolveAttribute(attr, typedvalueattr, true);
-        return typedvalueattr.resourceId != 0 ? context.getResources().getColor(typedvalueattr.resourceId) : typedvalueattr.data;
+        return Carbon.getThemeColor(context, attr);
     }
 }

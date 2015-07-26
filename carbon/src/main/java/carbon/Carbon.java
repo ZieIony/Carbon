@@ -1,6 +1,7 @@
 package carbon;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -141,5 +142,12 @@ public class Carbon {
         view.setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Carbon_carbon_outAnimation, 0)]);
 
         a.recycle();
+    }
+
+    public static int getThemeColor(Context context, int attr) {
+        Resources.Theme theme = context.getTheme();
+        TypedValue typedvalueattr = new TypedValue();
+        theme.resolveAttribute(attr, typedvalueattr, true);
+        return typedvalueattr.resourceId != 0 ? context.getResources().getColor(typedvalueattr.resourceId) : typedvalueattr.data;
     }
 }
