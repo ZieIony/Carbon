@@ -83,6 +83,14 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         a.recycle();
     }
 
+    @Override
+    public void setImageResource(int resId) {
+        if ((resId & 0xffff0000) == 0x7f050000) {
+            setImageDrawable(new VectorDrawable(getResources(), resId));
+        } else {
+            super.setImageResource(resId);
+        }
+    }
 
     // -------------------------------
     // corners
@@ -169,14 +177,14 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
         Animation a = getAnimation();
-        if (a != null&&a.hasStarted()) {
+        if (a != null && a.hasStarted()) {
             a.getTransformation(getDrawingTime(), t);
             float[] loc = new float[]{event.getX(), event.getY()};
             //t.getMatrix().mapPoints(loc);
-            loc[0]-= ViewHelper.getTranslationX(this);
-            loc[1]-= ViewHelper.getTranslationY(this);
+            loc[0] -= ViewHelper.getTranslationX(this);
+            loc[1] -= ViewHelper.getTranslationY(this);
             event.setLocation(loc[0], loc[1]);
-           // Log.e("mapped loc", "" + loc[0] + ", " + loc[1]);
+            // Log.e("mapped loc", "" + loc[0] + ", " + loc[1]);
         }
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
@@ -446,28 +454,28 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         if (touchMargin == null) {
             super.getHitRect(outRect);
             Animation a = getAnimation();
-            if (a != null&&a.hasStarted()) {
+            if (a != null && a.hasStarted()) {
                 a.getTransformation(System.currentTimeMillis(), t);
                 float[] loc = new float[]{outRect.left, outRect.top, outRect.right, outRect.bottom};
                 //t.getMatrix().mapPoints(loc);
-                loc[0]+= ViewHelper.getTranslationX(this);
-                loc[1]+= ViewHelper.getTranslationY(this);
-                loc[2]+= ViewHelper.getTranslationX(this);
-                loc[3]+= ViewHelper.getTranslationY(this);
+                loc[0] += ViewHelper.getTranslationX(this);
+                loc[1] += ViewHelper.getTranslationY(this);
+                loc[2] += ViewHelper.getTranslationX(this);
+                loc[3] += ViewHelper.getTranslationY(this);
                 outRect.set((int) loc[0], (int) loc[1], (int) loc[2], (int) loc[3]);
             }
             return;
         }
         outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
         Animation a = getAnimation();
-        if (a != null&&a.hasStarted()) {
+        if (a != null && a.hasStarted()) {
             a.getTransformation(System.currentTimeMillis(), t);
             float[] loc = new float[]{outRect.left, outRect.top, outRect.right, outRect.bottom};
             //t.getMatrix().mapPoints(loc);
-            loc[0]+= ViewHelper.getTranslationX(this);
-            loc[1]+= ViewHelper.getTranslationY(this);
-            loc[2]+= ViewHelper.getTranslationX(this);
-            loc[3]+= ViewHelper.getTranslationY(this);
+            loc[0] += ViewHelper.getTranslationX(this);
+            loc[1] += ViewHelper.getTranslationY(this);
+            loc[2] += ViewHelper.getTranslationX(this);
+            loc[3] += ViewHelper.getTranslationY(this);
             outRect.set((int) loc[0], (int) loc[1], (int) loc[2], (int) loc[3]);
         }
     }
@@ -578,7 +586,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
             setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP));
             setAlpha(Color.alpha(color));
-        }else{
+        } else {
             setColorFilter(null);
             setAlpha(255);
         }

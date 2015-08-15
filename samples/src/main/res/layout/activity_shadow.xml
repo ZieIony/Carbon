@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="2dp"
+            app:carbon_cornerRadius="0dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="4dp"
+            app:carbon_cornerRadius="0dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="6dp"
+            app:carbon_cornerRadius="0dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+    </carbon.widget.LinearLayout>
+
+    <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="2dp"
+            app:carbon_cornerRadius="2dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="4dp"
+            app:carbon_cornerRadius="2dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="6dp"
+            app:carbon_cornerRadius="2dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+    </carbon.widget.LinearLayout>
+
+    <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="2dp"
+            app:carbon_cornerRadius="10dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="4dp"
+            app:carbon_cornerRadius="10dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="6dp"
+            app:carbon_cornerRadius="10dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+    </carbon.widget.LinearLayout>
+
+    <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="2dp"
+            app:carbon_cornerRadius="28dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="4dp"
+            app:carbon_cornerRadius="28dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <carbon.widget.Button
+            android:background="#ffffff"
+            android:layout_margin="@dimen/carbon_padding"
+            app:carbon_elevation="6dp"
+            app:carbon_cornerRadius="28dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+    </carbon.widget.LinearLayout>
+
+</carbon.widget.LinearLayout>

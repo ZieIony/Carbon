@@ -93,6 +93,9 @@
             android:name=".feature.AnchorActivity"
             android:label="@string/app_name" />
         <activity
+            android:name=".feature.ShadowActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".feature.LargeShadowActivity"
             android:label="@string/app_name" />
         <activity

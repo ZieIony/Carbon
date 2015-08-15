@@ -11,6 +11,7 @@ import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
 import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
+import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.feature.TextAppearanceActivity;
 import tk.zielony.carbonsamples.feature.ZOrderActivity;
 
@@ -29,6 +30,7 @@ public class FeaturesActivity extends Activity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
                 new ViewModel(RobotoActivity.class, "Roboto"),
+                new ViewModel(ShadowActivity.class, "Shadow"),
                 new ViewModel(LargeShadowActivity.class, "Large shadow"),
                 new ViewModel(TextAppearanceActivity.class, "Text appearance"),
                 new ViewModel(ZOrderActivity.class, "Z order"),

@@ -89,43 +89,23 @@ public class ShadowGenerator {
             }
         }
 
-        ShadowView shadowView = (ShadowView) view;
         CornerView cornerView = (CornerView) view;
-        boolean isRect = shadowView.getShadowShape() == ShadowShape.RECT ||
-                shadowView.getShadowShape() == ShadowShape.ROUND_RECT && cornerView.getCornerRadius() < view.getContext().getResources().getDimension(R.dimen.carbon_1dip) * 2.5;
 
         int e = (int) Math.ceil(elevation);
+        int c = Math.max(e,cornerView.getCornerRadius());
+
         Bitmap bitmap;
-        if (isRect) {
-            bitmap = Bitmap.createBitmap(e * 4 + 1, e * 4 + 1, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(e * 2 + 2 * c+1, e * 2 + 2 * c+1, Bitmap.Config.ARGB_8888);
 
-            Canvas shadowCanvas = new Canvas(bitmap);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setColor(0xff000000);
+        Canvas shadowCanvas = new Canvas(bitmap);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(0xff000000);
 
-            shadowCanvas.drawRect(e, e, e * 3 + 1, e * 3 + 1, paint);
+        roundRect.set(e, e, bitmap.getWidth() - e, bitmap.getHeight() - e);
+        shadowCanvas.drawRoundRect(roundRect, c, c, paint);
 
-            blur(bitmap, elevation);
+        blur(bitmap, elevation);
 
-            return new NinePatchShadow(bitmap, elevation);
-        } else {
-            bitmap = Bitmap.createBitmap(view.getWidth() + e * 2, view.getHeight() + e * 2, Bitmap.Config.ARGB_8888);
-
-            Canvas shadowCanvas = new Canvas(bitmap);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setColor(0xff000000);
-
-            if (shadowView.getShadowShape() == ShadowShape.ROUND_RECT) {
-                roundRect.set(e, e, view.getWidth() - e, view.getHeight() - e);
-                shadowCanvas.drawRoundRect(roundRect, e, e, paint);
-            } else {
-                int r = view.getWidth() / 2;
-                shadowCanvas.drawCircle(r + e, r + e, r, paint);
-            }
-
-            blur(bitmap, elevation);
-
-            return new Shadow(bitmap, elevation);
-        }
+        return new NinePatchShadow(bitmap, elevation, c);
     }
 }
