@@ -23,28 +23,28 @@
 
     <carbon.widget.SVGView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        app:carbon_src="@raw/ic_face_24px"
+        android:src="@raw/ic_face_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <carbon.widget.SVGView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        app:carbon_src="@raw/ic_print_24px"
+        android:src="@raw/ic_print_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <carbon.widget.SVGView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        app:carbon_src="@raw/ic_settings_input_svideo_24px"
+        android:src="@raw/ic_settings_input_svideo_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <carbon.widget.SVGView
         app:carbon_tint="#ff00ff00"
-        app:carbon_src="@raw/ic_shopping_cart_24px"
+        android:src="@raw/ic_shopping_cart_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
@@ -63,7 +63,7 @@
             android:duplicateParentState="true"
             android:layout_gravity="center_vertical"
             app:carbon_tint="@drawable/red_black_selector"
-            app:carbon_src="@raw/ic_today_24px"
+            android:src="@raw/ic_today_24px"
             android:layout_margin="@dimen/carbon_padding"
             android:layout_width="24dp"
             android:layout_height="24dp" />
@@ -85,7 +85,7 @@
 
     <carbon.widget.SVGView
         app:carbon_tint="#ff0000ff"
-        app:carbon_src="@raw/ic_wallet_travel_24px"
+        android:src="@raw/ic_wallet_travel_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />

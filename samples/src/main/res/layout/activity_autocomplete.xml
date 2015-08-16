@@ -25,7 +25,7 @@
             <carbon.widget.SVGView
                 android:layout_width="@dimen/carbon_toolbarHeight"
                 android:layout_height="@dimen/carbon_toolbarHeight"
-                app:carbon_src="@raw/ic_search_24px"
+                android:src="@raw/ic_search_24px"
                 app:carbon_tint="@color/carbon_black_54"
                 android:focusableInTouchMode="true"
                 android:focusable="true"

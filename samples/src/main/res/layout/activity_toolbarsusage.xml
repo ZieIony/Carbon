@@ -24,7 +24,7 @@
                 app:carbon_outAnimation="pop"
                 app:carbon_rippleColor="?attr/carbon_rippleColor"
                 app:carbon_rippleStyle="borderless"
-                app:carbon_src="@raw/ic_print_24px" />
+                android:src="@raw/ic_print_24px" />
 
             <carbon.widget.SVGView
                 android:layout_width="@dimen/carbon_toolbarHeight"
@@ -36,7 +36,7 @@
                 app:carbon_outAnimation="pop"
                 app:carbon_rippleColor="?attr/carbon_rippleColor"
                 app:carbon_rippleStyle="borderless"
-                app:carbon_src="@raw/ic_search_24px" />
+                android:src="@raw/ic_search_24px" />
 
             <FrameLayout
                 android:layout_width="match_parent"

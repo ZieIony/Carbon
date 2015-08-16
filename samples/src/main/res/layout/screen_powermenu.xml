@@ -32,7 +32,7 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_src="@raw/ic_settings_power_24px" />
+            android:src="@raw/ic_settings_power_24px" />
 
         <carbon.widget.TextView
             android:tag="animate"
@@ -70,7 +70,7 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_src="@raw/ic_refresh_24px" />
+            android:src="@raw/ic_refresh_24px" />
 
         <carbon.widget.TextView
             android:tag="animate"
@@ -107,7 +107,7 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_src="@raw/ic_airplanemode_off_24px" />
+            android:src="@raw/ic_airplanemode_off_24px" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -164,7 +164,7 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_src="@raw/ic_vibration_24px" />
+            android:src="@raw/ic_vibration_24px" />
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/volume"
@@ -177,6 +177,6 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_src="@raw/ic_volume_up_24px" />
+            android:src="@raw/ic_volume_up_24px" />
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

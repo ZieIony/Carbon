@@ -11,6 +11,7 @@ import java.util.List;
 
 import carbon.beta.TransitionLayout;
 import carbon.widget.FrameLayout;
+import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
 import carbon.widget.SVGView;
 import carbon.widget.TextView;
@@ -150,7 +151,7 @@ public class PowerMenuActivity extends Activity {
                         airplaneMode = !airplaneMode;
                         TextView amStatus = (TextView) findViewById(R.id.airplaneModeStatus);
                         amStatus.setText("Airplane Mode is " + (airplaneMode ? "on" : "off"));
-                        SVGView airplaneModeIcon = (SVGView) v.findViewById(R.id.airplaneModeIcon);
+                        ImageView airplaneModeIcon = (ImageView) v.findViewById(R.id.airplaneModeIcon);
                         airplaneModeIcon.setImageResource(airplaneMode ? R.raw.ic_airplanemode_on_24px : R.raw.ic_airplanemode_off_24px);
                     }
                 }, 3000);
@@ -163,11 +164,11 @@ public class PowerMenuActivity extends Activity {
                 if (vibration) {
                     vibration = false;
                     v.setBackgroundColor(0xffffffff);
-                    ((SVGView) v).setColorFilter(getResources().getColor(R.color.carbon_black_54));
+                    ((ImageView) v).setColorFilter(getResources().getColor(R.color.carbon_black_54));
                 } else {
                     vibration = true;
                     v.setBackgroundColor(0xff00695D);
-                    ((SVGView) v).setColorFilter(0xffffffff);
+                    ((ImageView) v).setColorFilter(0xffffffff);
                     Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(500);
                 }
@@ -181,11 +182,11 @@ public class PowerMenuActivity extends Activity {
                 if (volume) {
                     volume = false;
                     v.setBackgroundColor(0xffffffff);
-                    ((SVGView) v).setColorFilter(getResources().getColor(R.color.carbon_black_54));
+                    ((ImageView) v).setColorFilter(getResources().getColor(R.color.carbon_black_54));
                 } else {
                     volume = true;
                     v.setBackgroundColor(0xff00695D);
-                    ((SVGView) v).setColorFilter(0xffffffff);
+                    ((ImageView) v).setColorFilter(0xffffffff);
                     v.playSoundEffect(SoundEffectConstants.CLICK);
                 }
                 powerMenu.postInvalidate();
