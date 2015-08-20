@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Region;
 import android.util.AttributeSet;
-import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -114,10 +113,10 @@ public class TransitionLayout extends android.widget.FrameLayout {
     }
 
     private void startRadialTransition(int duration) {
-        float dist = FloatMath.sqrt(x * x + y * y);
-        dist = Math.max(dist, FloatMath.sqrt((getWidth() - x) * (getWidth() - x) + y * y));
-        dist = Math.max(dist, FloatMath.sqrt(x * x + (getHeight() - y) * (getHeight() - y)));
-        dist = Math.max(dist, FloatMath.sqrt((getWidth() - x) * (getWidth() - x) + (getHeight() - y) * (getHeight() - y)));
+        float dist = (float) Math.sqrt(x * x + y * y);
+        dist = (float) Math.max(dist, Math.sqrt((getWidth() - x) * (getWidth() - x) + y * y));
+        dist = (float) Math.max(dist, Math.sqrt(x * x + (getHeight() - y) * (getHeight() - y)));
+        dist = (float) Math.max(dist, Math.sqrt((getWidth() - x) * (getWidth() - x) + (getHeight() - y) * (getHeight() - y)));
         animator = ValueAnimator.ofFloat(inAnimation ? 0 : dist, inAnimation ? dist : 0);
         animator.setDuration(duration);
         animator.setInterpolator(inAnimation ? new AccelerateInterpolator() : new DecelerateInterpolator());
