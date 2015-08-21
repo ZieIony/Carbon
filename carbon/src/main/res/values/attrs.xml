@@ -102,6 +102,7 @@
     <attr name="carbon_fabStyle" format="reference" />
     <declare-styleable name="FloatingActionButton">
         <attr name="carbon_cornerRadius" />
+        <attr name="android:background" />
     </declare-styleable>
 
     <declare-styleable name="SVGActionButton">
@@ -214,6 +215,7 @@
         <attr name="carbon_touchMarginRight" />
         <attr name="carbon_touchMarginBottom" />
         <attr name="carbon_cornerRadius" />
+        <attr name="android:enabled"/>
     </declare-styleable>
 
     <attr name="carbon_dividerStyle" format="reference" />

@@ -72,6 +72,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
         if (getDrawable() == null && ((resId & 0xffff0000) == 0x7f050000))
             setImageDrawable(new VectorDrawable(getResources(), resId));
+        setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled,true));
 
         setCornerRadius((int) a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
 

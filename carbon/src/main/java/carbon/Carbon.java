@@ -106,7 +106,15 @@ public class Carbon {
     public static void initTint(TintedView view, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = ((View) view).getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
 
-        view.setTint(a.getColorStateList(R.styleable.Carbon_carbon_tint));
+        if(a.hasValue(R.styleable.Carbon_carbon_tint)) {
+            try{
+                view.setTint(a.getColor(R.styleable.Carbon_carbon_tint,0));
+            }catch (Exception e) {
+                view.setTint(a.getColorStateList(R.styleable.Carbon_carbon_tint));
+            }
+        }else{
+            view.setTint(null);
+        }
 
         a.recycle();
     }

@@ -3,40 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.Toolbar
         android:id="@+id/toolbar"
-        app:carbon_elevation="@dimen/carbon_elevationMax"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:carbon_elevation="@dimen/carbon_elevationMax">
 
         <carbon.widget.SVGView
             android:id="@+id/icon1"
-            app:carbon_rippleColor="?attr/carbon_rippleColor"
-            app:carbon_rippleStyle="borderless"
-            app:carbon_inAnimation="pop"
-            app:carbon_outAnimation="pop"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@raw/ic_today_24px"
             android:layout_width="@dimen/carbon_toolbarHeight"
             android:layout_height="@dimen/carbon_toolbarHeight"
-            android:padding="@dimen/carbon_padding" />
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/carbon_padding"
+            android:src="@raw/ic_today_24px"
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            app:carbon_rippleColor="?attr/carbon_rippleColor"
+            app:carbon_rippleStyle="borderless" />
 
         <carbon.widget.SVGView
             android:id="@+id/icon2"
-            app:carbon_rippleColor="?attr/carbon_rippleColor"
-            app:carbon_rippleStyle="borderless"
-            app:carbon_inAnimation="pop"
-            app:carbon_outAnimation="pop"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@raw/ic_print_24px"
             android:layout_width="@dimen/carbon_toolbarHeight"
             android:layout_height="@dimen/carbon_toolbarHeight"
-            android:padding="@dimen/carbon_padding" />
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/carbon_padding"
+            android:src="@raw/ic_print_24px"
+            app:carbon_inAnimation="pop"
+            app:carbon_outAnimation="pop"
+            app:carbon_rippleColor="?attr/carbon_rippleColor"
+            app:carbon_rippleStyle="borderless" />
     </carbon.widget.Toolbar>
 
     <carbon.widget.FrameLayout
@@ -49,9 +49,9 @@
             android:layout_height="match_parent" />
 
         <carbon.widget.FloatingActionButton
-            android:layout_gravity="right|bottom"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize"
+            android:layout_gravity="right|bottom"
             android:layout_margin="@dimen/carbon_padding"
             android:src="@raw/ic_face_24px" />
     </carbon.widget.FrameLayout>
