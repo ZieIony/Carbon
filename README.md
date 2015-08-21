@@ -8,7 +8,7 @@
 
 Carbon
 ================
-Material Design implementation for Android 2.1 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
+Material Design implementation for Android 2.2 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
 
 ![Anchors](https://github.com/ZieIony/Carbon/blob/master/images/anchors.png)
 ![Spinner](https://github.com/ZieIony/Carbon/blob/master/images/spinner.png)
