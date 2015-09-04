@@ -10,6 +10,9 @@ Carbon
 ================
 Material Design implementation for Android 2.2 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
 
+### Samples
+[![Sample App](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](https://www.youtube.com/watch?v=YcTQ8a8sTpU)
+
 ![Anchors](https://github.com/ZieIony/Carbon/blob/master/images/anchors.png)
 ![Spinner](https://github.com/ZieIony/Carbon/blob/master/images/spinner.png)
 ![Buttons / Usage sample](https://github.com/ZieIony/Carbon/blob/master/images/buttonsusage.png)
@@ -54,11 +57,25 @@ Material Design implementation for Android 2.2 and newer. This is not the exact 
  - view anchors
  - Spinner with PopupMenu
 
-### Instalation
-Moved to wiki: [Installation](https://github.com/ZieIony/Carbon/wiki/Installation)
+### [Installation](https://github.com/ZieIony/Carbon/wiki/Installation)
 
-### FAQ
-Moved to wiki: [FAQ](https://github.com/ZieIony/Carbon/wiki/FAQ)
+### [FAQ](https://github.com/ZieIony/Carbon/wiki/FAQ)
 
-### Changelog
-Moved to wiki: [Changelog](https://github.com/ZieIony/Carbon/wiki/Changelog)
+### [Changelog](https://github.com/ZieIony/Carbon/wiki/Changelog)
+
+### License
+```
+Copyright 2015 Marcin Korniluk 'Zielony'
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
