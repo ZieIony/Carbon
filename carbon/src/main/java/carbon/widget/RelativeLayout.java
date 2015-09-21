@@ -770,19 +770,19 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
                         int right = child.getRight();
                         int top = child.getTop();
                         int bottom = child.getBottom();
-                        if ((lp.anchorGravity & Gravity.BOTTOM) != 0) {
+                        if ((lp.anchorGravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
                             top = anchorView.getBottom() - lp.height / 2;
                             bottom = top + lp.height;
                         }
-                        if ((lp.anchorGravity & Gravity.TOP) != 0) {
+                        if ((lp.anchorGravity & Gravity.TOP) == Gravity.TOP) {
                             top = anchorView.getTop() - lp.height / 2;
                             bottom = top + lp.height;
                         }
-                        if ((lp.anchorGravity & Gravity.LEFT) != 0 || (GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.LEFT) != 0) {
+                        if ((GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.LEFT) == Gravity.LEFT) {
                             left = anchorView.getLeft() - lp.width / 2;
                             right = left + lp.width;
                         }
-                        if ((lp.anchorGravity & Gravity.RIGHT) != 0 || (GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.RIGHT) != 0) {
+                        if ((GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.RIGHT) == Gravity.RIGHT) {
                             left = anchorView.getRight() - lp.width / 2;
                             right = left + lp.width;
                         }

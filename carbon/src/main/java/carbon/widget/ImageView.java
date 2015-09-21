@@ -16,12 +16,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
@@ -70,9 +68,9 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
         setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
         int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
-        if (getDrawable() == null && ((resId & 0xffff0000) == 0x7f050000))
+        if (getContext().getResources().getResourceTypeName(resId).equals("raw"))
             setImageDrawable(new VectorDrawable(getResources(), resId));
-        setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled,true));
+        setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled, true));
 
         setCornerRadius((int) a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
 
@@ -86,7 +84,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     @Override
     public void setImageResource(int resId) {
-        if ((resId & 0xffff0000) == 0x7f050000) {
+        if (getContext().getResources().getResourceTypeName(resId).equals("raw")) {
             setImageDrawable(new VectorDrawable(getResources(), resId));
         } else {
             super.setImageResource(resId);

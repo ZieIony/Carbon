@@ -55,7 +55,7 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearance(ap);
+            setTextAppearanceIntenal(ap);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
@@ -86,10 +86,15 @@ public class TextView extends android.widget.TextView implements RippleView, Tou
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearance(resid);
+        setTextAppearanceIntenal(resid);
     }
 
-    private void setTextAppearance(int resid) {
+    public void setTextAppearance(int resid) {
+        super.setTextAppearance(getContext(),resid);
+        setTextAppearanceIntenal(resid);
+    }
+
+    private void setTextAppearanceIntenal(int resid){
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {

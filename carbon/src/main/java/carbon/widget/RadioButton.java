@@ -63,7 +63,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
 
         int ap = a.getResourceId(R.styleable.RadioButton_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearance(ap);
+            setTextAppearanceIntenal(ap);
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -109,10 +109,15 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearance(resid);
+        setTextAppearanceIntenal(resid);
     }
 
-    private void setTextAppearance(int resid) {
+    public void setTextAppearance(int resid) {
+        super.setTextAppearance(getContext(),resid);
+        setTextAppearanceIntenal(resid);
+    }
+
+    private void setTextAppearanceIntenal(int resid){
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {

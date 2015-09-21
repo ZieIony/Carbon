@@ -19,6 +19,7 @@ import carbon.shadow.ShadowView;
 public class Toolbar extends LinearLayout implements ShadowView {
     private ViewGroup content;
     private ImageView icon;
+    private TextView title;
 
     public Toolbar(Context context) {
         this(context, null);
@@ -32,6 +33,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
     private void init(AttributeSet attrs, int defStyle) {
         inflate(getContext(), R.layout.carbon_toolbar, this);
         content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
+        title = (TextView) findViewById(R.id.carbon_toolbarTitle);
         icon = (ImageView) findViewById(R.id.carbon_icon);
 
         icon.setOnClickListener(new OnClickListener() {
@@ -94,7 +96,6 @@ public class Toolbar extends LinearLayout implements ShadowView {
     }
 
     public void setText(String text) {
-        TextView title = (TextView) findViewById(R.id.carbon_toolbarTitle);
         if (text != null) {
             title.setText(text);
             title.setVisibility(View.VISIBLE);
@@ -108,8 +109,11 @@ public class Toolbar extends LinearLayout implements ShadowView {
     }
 
     public String getText() {
-        TextView title = (TextView) findViewById(R.id.carbon_toolbarTitle);
         return (String) title.getText();
+    }
+
+    public View getTitleView(){
+        return title;
     }
 
     public void setIcon(int iconRes) {
@@ -137,6 +141,14 @@ public class Toolbar extends LinearLayout implements ShadowView {
             icon.setImageBitmap(bitmap);
             icon.setVisibility(VISIBLE);
         }
+    }
+
+    public Drawable getIcon(){
+        return icon.getDrawable();
+    }
+
+    public View getIconView(){
+        return icon;
     }
 
     public void setIconVisible(boolean visible) {

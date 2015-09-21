@@ -30,41 +30,41 @@ public class CarbonResources extends Resources {
 
     @Nullable
     @Override
-    public Drawable getDrawable(int id, Theme theme) throws NotFoundException {
-        if ((id & 0xffff0000) == 0x7f050000) {
-            return new VectorDrawable(this, id);
+    public Drawable getDrawable(int resId, Theme theme) throws NotFoundException {
+        if (getResourceTypeName(resId).equals("raw")) {
+            return new VectorDrawable(this, resId);
         } else {
-            return super.getDrawable(id, theme);
+            return super.getDrawable(resId, theme);
         }
     }
 
     @Nullable
     @Override
-    public Drawable getDrawable(int id) throws NotFoundException {
-        if ((id & 0xffff0000) == 0x7f050000) {
-            return new VectorDrawable(this, id);
+    public Drawable getDrawable(int resId) throws NotFoundException {
+        if (getResourceTypeName(resId).equals("raw")) {
+            return new VectorDrawable(this, resId);
         } else {
-            return super.getDrawable(id);
+            return super.getDrawable(resId);
         }
     }
 
     @Nullable
     @Override
-    public Drawable getDrawableForDensity(int id, int density, Theme theme) {
-        if ((id & 0xffff0000) == 0x7f050000) {
-            return new VectorDrawable(this, id);
+    public Drawable getDrawableForDensity(int resId, int density, Theme theme) {
+        if (getResourceTypeName(resId).equals("raw")) {
+            return new VectorDrawable(this, resId);
         } else {
-            return super.getDrawableForDensity(id, density, theme);
+            return super.getDrawableForDensity(resId, density, theme);
         }
     }
 
     @Nullable
     @Override
-    public Drawable getDrawableForDensity(int id, int density) throws NotFoundException {
-        if ((id & 0xffff0000) == 0x7f050000) {
-            return new VectorDrawable(this, id);
+    public Drawable getDrawableForDensity(int resId, int density) throws NotFoundException {
+        if (getResourceTypeName(resId).equals("raw")) {
+            return new VectorDrawable(this, resId);
         } else {
-            return super.getDrawableForDensity(id, density);
+            return super.getDrawableForDensity(resId, density);
         }
     }
 
