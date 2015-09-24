@@ -3,10 +3,8 @@ package carbon;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 
 import carbon.drawable.VectorDrawable;
@@ -31,7 +29,7 @@ public class CarbonResources extends Resources {
     @Nullable
     @Override
     public Drawable getDrawable(int resId, Theme theme) throws NotFoundException {
-        if (getResourceTypeName(resId).equals("raw")) {
+        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
             return new VectorDrawable(this, resId);
         } else {
             return super.getDrawable(resId, theme);
@@ -41,7 +39,7 @@ public class CarbonResources extends Resources {
     @Nullable
     @Override
     public Drawable getDrawable(int resId) throws NotFoundException {
-        if (getResourceTypeName(resId).equals("raw")) {
+        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
             return new VectorDrawable(this, resId);
         } else {
             return super.getDrawable(resId);
@@ -51,7 +49,7 @@ public class CarbonResources extends Resources {
     @Nullable
     @Override
     public Drawable getDrawableForDensity(int resId, int density, Theme theme) {
-        if (getResourceTypeName(resId).equals("raw")) {
+        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
             return new VectorDrawable(this, resId);
         } else {
             return super.getDrawableForDensity(resId, density, theme);
@@ -61,7 +59,7 @@ public class CarbonResources extends Resources {
     @Nullable
     @Override
     public Drawable getDrawableForDensity(int resId, int density) throws NotFoundException {
-        if (getResourceTypeName(resId).equals("raw")) {
+        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
             return new VectorDrawable(this, resId);
         } else {
             return super.getDrawableForDensity(resId, density);

@@ -69,7 +69,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
         setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
         int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
-        if (getContext().getResources().getResourceTypeName(resId).equals("raw"))
+        if (resId != 0 && getContext().getResources().getResourceTypeName(resId).equals("raw"))
             setImageDrawable(new VectorDrawable(getResources(), resId));
         setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled, true));
 
@@ -85,7 +85,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     @Override
     public void setImageResource(int resId) {
-        if (getContext().getResources().getResourceTypeName(resId).equals("raw")) {
+        if (resId != 0 && getContext().getResources().getResourceTypeName(resId).equals("raw")) {
             setImageDrawable(new VectorDrawable(getResources(), resId));
         } else {
             super.setImageResource(resId);
