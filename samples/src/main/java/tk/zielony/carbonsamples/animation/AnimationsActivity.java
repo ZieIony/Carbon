@@ -11,6 +11,9 @@ import tk.zielony.carbonsamples.R;
  * Created by Marcin on 2014-12-15.
  */
 public class AnimationsActivity extends Activity {
+    int fabVisibility = View.VISIBLE;
+    int buttonVisibility = View.VISIBLE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +24,12 @@ public class AnimationsActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fab.getVisibility() != View.VISIBLE) {
+                if (fabVisibility != View.VISIBLE) {
                     fab.setVisibility(View.VISIBLE);
+                    fabVisibility = View.VISIBLE;
                 } else {
                     fab.setVisibility(View.INVISIBLE);
+                    fabVisibility = View.INVISIBLE;
                 }
             }
         });
@@ -34,10 +39,12 @@ public class AnimationsActivity extends Activity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (button2.getVisibility() != View.VISIBLE) {
+                if (buttonVisibility != View.VISIBLE) {
                     button2.setVisibility(View.VISIBLE);
+                    buttonVisibility = View.VISIBLE;
                 } else {
                     button2.setVisibility(View.INVISIBLE);
+                    buttonVisibility = View.INVISIBLE;
                 }
             }
         });

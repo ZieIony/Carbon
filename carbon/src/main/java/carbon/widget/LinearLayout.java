@@ -25,6 +25,7 @@ import android.view.ViewOutlineProvider;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
@@ -577,19 +578,30 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     private Animator animator;
 
     public void setVisibility(final int visibility) {
-        if (getVisibility() != View.VISIBLE && visibility == View.VISIBLE && inAnim != null) {
+        if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
+            if (animator != null)
+                animator.cancel();
+            super.setVisibility(visibility);
+            if (outAnim == AnimUtils.Style.None)
+                return;
             animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator a) {
                     animator = null;
                 }
             });
-            super.setVisibility(visibility);
-        } else if (getVisibility() == View.VISIBLE && visibility != View.VISIBLE) {
+        } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
+            if (animator != null)
+                animator.cancel();
+            if (inAnim == AnimUtils.Style.None) {
+                super.setVisibility(visibility);
+                return;
+            }
             animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator a) {
-                    LinearLayout.super.setVisibility(visibility);
+                    if (((ValueAnimator) a).getAnimatedFraction() == 1)
+                        LinearLayout.super.setVisibility(visibility);
                     animator = null;
                 }
             });

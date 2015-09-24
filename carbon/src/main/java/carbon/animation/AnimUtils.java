@@ -26,7 +26,7 @@ public class AnimUtils {
         None, Fade, Pop, Fly, BrightnessSaturationFade, ProgressWidth
     }
 
-    public static Animator animateIn(View view, Style style, Animator.AnimatorListener listener) {
+    public static ValueAnimator animateIn(View view, Style style, Animator.AnimatorListener listener) {
         switch (style) {
             case Fade:
                 return fadeIn(view, listener);
@@ -44,7 +44,7 @@ public class AnimUtils {
         return null;
     }
 
-    public static Animator animateOut(View view, Style style, Animator.AnimatorListener listener) {
+    public static ValueAnimator animateOut(View view, Style style, Animator.AnimatorListener listener) {
         switch (style) {
             case Fade:
                 return fadeOut(view, listener);
@@ -62,11 +62,12 @@ public class AnimUtils {
         return null;
     }
 
-    public static Animator fadeIn(final View view, Animator.AnimatorListener listener) {
+    public static ValueAnimator fadeIn(final View view, Animator.AnimatorListener listener) {
         if (view.getVisibility() != View.VISIBLE)
             ViewHelper.setAlpha(view, 0);
-        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
-        animator.setDuration(200);
+        float start = ViewHelper.getAlpha(view);
+        ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
+        animator.setDuration((long) (200*(1-start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -82,9 +83,10 @@ public class AnimUtils {
         return animator;
     }
 
-    public static Animator fadeOut(final View view, Animator.AnimatorListener listener) {
-        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 0);
-        animator.setDuration(200);
+    public static ValueAnimator fadeOut(final View view, Animator.AnimatorListener listener) {
+        float start = ViewHelper.getAlpha(view);
+        ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
+        animator.setDuration((long) (200*start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -103,8 +105,9 @@ public class AnimUtils {
     public static ValueAnimator popIn(final View view, Animator.AnimatorListener listener) {
         if (view.getVisibility() != View.VISIBLE)
             ViewHelper.setAlpha(view, 0);
-        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
-        animator.setDuration(200);
+        float start = ViewHelper.getAlpha(view);
+        ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
+        animator.setDuration((long) (200*(1-start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -123,8 +126,9 @@ public class AnimUtils {
     }
 
     public static ValueAnimator popOut(final View view, Animator.AnimatorListener listener) {
-        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 0);
-        animator.setDuration(200);
+        float start = ViewHelper.getAlpha(view);
+        ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
+        animator.setDuration((long) (200*start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -145,8 +149,9 @@ public class AnimUtils {
     public static ValueAnimator flyIn(final View view, Animator.AnimatorListener listener) {
         if (view.getVisibility() != View.VISIBLE)
             ViewHelper.setAlpha(view, 0);
-        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
-        animator.setDuration(200);
+        float start = ViewHelper.getAlpha(view);
+        ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
+        animator.setDuration((long) (200*(1-start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -164,8 +169,9 @@ public class AnimUtils {
     }
 
     public static ValueAnimator flyOut(final View view, Animator.AnimatorListener listener) {
-        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 0);
-        animator.setDuration(200);
+        float start = ViewHelper.getAlpha(view);
+        ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
+        animator.setDuration((long) (200*start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -184,8 +190,9 @@ public class AnimUtils {
 
     public static ValueAnimator progressWidthIn(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
         final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
+        float start = circularProgress.getBarWidth();
         ValueAnimator animator = ValueAnimator.ofFloat(circularProgress.getBarWidth(), arcWidth);
-        animator.setDuration(200);
+        animator.setDuration((long) (200*(arcWidth-start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -203,8 +210,9 @@ public class AnimUtils {
 
     public static ValueAnimator progressWidthOut(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
         final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
-        ValueAnimator animator = ValueAnimator.ofFloat(circularProgress.getBarWidth(), 0);
-        animator.setDuration(200);
+        float start = circularProgress.getBarWidth();
+        ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
+        animator.setDuration((long) (200*start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
