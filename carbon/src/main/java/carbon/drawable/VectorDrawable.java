@@ -52,8 +52,13 @@ public class VectorDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
+        int width = getBounds().width();
+        int height = getBounds().height();
+        if(width<=0||height<=0)
+            return;
+
         if (bitmap == null) {
-            bitmap = Bitmap.createBitmap(getBounds().width(), getBounds().height(), Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
             state.svg.renderToCanvas(new Canvas(bitmap));
         }
         canvas.drawBitmap(bitmap, getBounds().left, getBounds().top, state.paint);
