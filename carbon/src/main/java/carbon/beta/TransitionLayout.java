@@ -190,6 +190,11 @@ public class TransitionLayout extends android.widget.FrameLayout {
         return false;
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return getChildAt(getCurrentChild()).dispatchTouchEvent(ev);
+    }
+
     public void setListener(Animator.AnimatorListener listener) {
         this.listener = listener;
     }

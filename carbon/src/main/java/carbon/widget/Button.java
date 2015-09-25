@@ -555,7 +555,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             if (animator != null)
                 animator.cancel();
             super.setVisibility(visibility);
-            if (outAnim == AnimUtils.Style.None)
+            if (inAnim == AnimUtils.Style.None)
                 return;
             animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
                 @Override
@@ -566,7 +566,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
-            if (inAnim == AnimUtils.Style.None) {
+            if (outAnim == AnimUtils.Style.None) {
                 super.setVisibility(visibility);
                 return;
             }
