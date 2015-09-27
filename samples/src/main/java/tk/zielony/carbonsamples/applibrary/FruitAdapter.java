@@ -5,6 +5,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import carbon.widget.RecyclerView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
@@ -13,9 +15,9 @@ import tk.zielony.carbonsamples.R;
  * Created by Marcin on 2015-05-09.
  */
 public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder,String> {
-    private String[] fruits;
+    private List<String> fruits;
 
-    public FruitAdapter(String[] fruits) {
+    public FruitAdapter(List<String> fruits) {
         this.fruits = fruits;
     }
 
@@ -29,17 +31,17 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder,S
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
-        holder.tv.setText(fruits[position]);
+        holder.tv.setText(fruits.get(position));
     }
 
     @Override
     public String getItem(int position) {
-        return fruits[position];
+        return fruits.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return fruits.length;
+        return fruits.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

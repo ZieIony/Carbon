@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.RecyclerView;
@@ -16,15 +20,15 @@ import tk.zielony.carbonsamples.applibrary.FruitAdapter;
  * Created by Marcin on 2015-07-19.
  */
 public class QuickReturnActivity extends Activity {
+    private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quickreturn);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new FruitAdapter(new String[]{
-                "Strawberry", "Apple", "Orange", "Lemon", "Banana", "Beer", "Lime", "Watermelon", "Blueberry", "Plum", "Blackberry"
-        }));
+        recyclerView.setAdapter(new FruitAdapter(fruits));
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView.addOnScrollListener(new android.support.v7.widget.RecyclerView.OnScrollListener() {

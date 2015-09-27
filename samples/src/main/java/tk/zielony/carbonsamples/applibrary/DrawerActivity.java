@@ -11,6 +11,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import carbon.widget.LinearLayout;
 import carbon.widget.RecyclerView;
 import carbon.widget.RecyclerView.OnItemClickedListener;
@@ -18,9 +22,7 @@ import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
 
 public class DrawerActivity extends Activity {
-    private static String[] fruits = new String[]{
-            "Lime", "Lemon", "Orange", "Strawberry", "Blueberry", "Plum"
-    };
+    private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
 
     private DrawerLayout drawerLayout;
     private LinearLayout drawerMenu;
@@ -44,7 +46,7 @@ public class DrawerActivity extends Activity {
         adapter.setOnItemClickedListener(new OnItemClickedListener() {
             @Override
             public void onItemClicked(int position) {
-                setTitle(fruits[position]);
+                setTitle(fruits.get(position));
                 drawerLayout.closeDrawer(drawerMenu);
             }
         });
