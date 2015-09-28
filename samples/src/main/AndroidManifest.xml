@@ -66,6 +66,9 @@
         <activity
             android:name=".widget.SeekBarActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".widget.ToolbarActivity"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".animation.RippleComparisonActivity"
