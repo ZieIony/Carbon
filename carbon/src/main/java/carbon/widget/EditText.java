@@ -2,6 +2,7 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -13,19 +14,27 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.PopupWindow;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -35,7 +44,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.ControlFocusedColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
@@ -47,6 +55,12 @@ import carbon.internal.TypefaceUtils;
  */
 public class EditText extends android.widget.EditText implements RippleView, TouchMarginView, AnimatedView, TintedView {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+
+    private static final int ID_CUT = android.R.id.cut;
+    private static final int ID_COPY = android.R.id.copy;
+    private static final int ID_PASTE = android.R.id.paste;
+    private static final int ID_COPY_URL = android.R.id.copyUrl;
+    private static final int ID_SELECT_ALL = android.R.id.selectAll;
 
     int dividerPadding;
     int disabledColor = 0x4d000000;
@@ -185,41 +199,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         paddingError = getResources().getDimension(R.dimen.carbon_paddingHalf);
         paddingLabel = getResources().getDimension(R.dimen.carbon_paddingHalf);
 
-        /*if (android.os.Build.VERSION.SDK_INT < 11) {
-            setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
-
-                @Override
-                public void onCreateContextMenu(ContextMenu menu, View v,
-                                                ContextMenu.ContextMenuInfo menuInfo) {
-                    // TODO Auto-generated method stub
-                    menu.clear();
-                }
-            });
-        } else {
-            setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    // TODO Auto-generated method stub
-                    return false;
-                }
-
-                public void onDestroyActionMode(ActionMode mode) {
-                    // TODO Auto-generated method stub
-
-                }
-
-                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    // TODO Auto-generated method stub
-                    return false;
-                }
-
-                public boolean onActionItemClicked(ActionMode mode,
-                                                   MenuItem item) {
-                    // TODO Auto-generated method stub
-                    return false;
-                }
-            });
-        }*/
+        initActionModeCallback();
 
         validate();
 
@@ -242,11 +222,11 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     }
 
     public void setTextAppearance(int resid) {
-        super.setTextAppearance(getContext(),resid);
+        super.setTextAppearance(getContext(), resid);
         setTextAppearanceIntenal(resid);
     }
 
-    private void setTextAppearanceIntenal(int resid){
+    private void setTextAppearanceIntenal(int resid) {
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
@@ -407,6 +387,185 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+    }
+
+
+    // -------------------------------
+    // popup
+    // -------------------------------
+
+
+    EditorMenu popupMenu;
+    private boolean isShowingPopup = false;
+
+    private void initSelectionHandle(){
+        try {
+            final Field fEditor = TextView.class.getDeclaredField("mEditor");
+            fEditor.setAccessible(true);
+            final Object editor = fEditor.get(this);
+
+            final Field fSelectHandleLeft = editor.getClass().getDeclaredField("mSelectHandleLeft");
+            final Field fSelectHandleRight =
+                    editor.getClass().getDeclaredField("mSelectHandleRight");
+            final Field fSelectHandleCenter =
+                    editor.getClass().getDeclaredField("mSelectHandleCenter");
+
+            fSelectHandleLeft.setAccessible(true);
+            fSelectHandleRight.setAccessible(true);
+            fSelectHandleCenter.setAccessible(true);
+
+            final Resources res = getContext().getResources();
+
+        //    fSelectHandleLeft.set(editor, res.getDrawable(R.drawable.text_select_handle_left));
+          //  fSelectHandleRight.set(editor, res.getDrawable(R.drawable.text_select_handle_right));
+            //fSelectHandleCenter.set(editor, res.getDrawable(R.drawable.text_select_handle_middle));
+        } catch (final Exception ignored) {
+        }
+    }
+
+    private void initActionModeCallback() {
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+            setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                public void onDestroyActionMode(ActionMode mode) {
+                }
+
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    popupMenu = new EditorMenu(getContext());
+                    popupMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            isShowingPopup = false;
+                        }
+                    });
+                    popupMenu.initCopyVisible(menu.findItem(ID_COPY));
+                    popupMenu.initCutVisible(menu.findItem(ID_CUT));
+                    popupMenu.initPasteVisible(menu.findItem(ID_PASTE));
+                    popupMenu.initSelectAllVisible(menu.findItem(ID_SELECT_ALL));
+                    if (popupMenu.hasVisibleItems()) {
+                        popupMenu.show(EditText.this);
+                        isShowingPopup = true;
+                    }
+                    return false;
+                }
+
+                public boolean onActionItemClicked(ActionMode mode,
+                                                   MenuItem item) {
+                    return false;
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onCreateContextMenu(ContextMenu menu) {
+        popupMenu = new EditorMenu(getContext());
+        popupMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                isShowingPopup = false;
+            }
+        });
+
+        super.onCreateContextMenu(menu);
+        popupMenu.initCopyVisible(menu.findItem(ID_COPY));
+        popupMenu.initCutVisible(menu.findItem(ID_CUT));
+        popupMenu.initPasteVisible(menu.findItem(ID_PASTE));
+        popupMenu.initSelectAllVisible(menu.findItem(ID_SELECT_ALL));
+        if (popupMenu.hasVisibleItems()) {
+            popupMenu.show(EditText.this);
+            isShowingPopup = true;
+        }
+        menu.clear();
+    }
+
+    @Override
+    protected boolean setFrame(int l, int t, int r, int b) {
+        boolean result = super.setFrame(l, t, r, b);
+
+        if (popupMenu != null)
+            popupMenu.update();
+
+        return result;
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        if (isShowingPopup)
+            popupMenu.showImmediate(EditText.this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        if (isShowingPopup)
+            popupMenu.dismissImmediate();
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        //begin boilerplate code that allows parent classes to save state
+        Parcelable superState = super.onSaveInstanceState();
+
+        SavedState ss = new SavedState(superState);
+        //end
+
+        ss.stateToSave = this.isShowingPopup ? 1 : 0;
+
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        //begin boilerplate code so parent classes can restore state
+        if (!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        //end
+
+        this.isShowingPopup = ss.stateToSave > 0;
+    }
+
+    static class SavedState extends BaseSavedState {
+        int stateToSave;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            this.stateToSave = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(@NonNull Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(this.stateToSave);
+        }
+
+        //required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
     }
 
 
@@ -658,7 +817,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 
@@ -691,9 +850,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     @Override
     public void setTint(ColorStateList list) {
-        if(list==null){
+        if (list == null) {
             setTint(0x00ffffff);
-        }else {
+        } else {
             this.tint = list;
             drawDivider = Color.alpha(tint.getDefaultColor()) != 0;
         }
@@ -701,9 +860,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     @Override
     public void setTint(int color) {
-        if(color==0){
+        if (color == 0) {
             setTint(new ControlFocusedColorStateList(getContext()));
-        }else {
+        } else {
             setTint(ColorStateList.valueOf(color));
         }
     }

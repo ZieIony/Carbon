@@ -316,6 +316,9 @@
         <item name="carbon_floatingLabel">false</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSelectHandle">@drawable/abc_btn_check_material</item>
+        <item name="android:textSelectHandleLeft">@drawable/abc_btn_check_material</item>
+        <item name="android:textSelectHandleRight">@drawable/abc_btn_check_material</item>
     </style>
 
     <style name="carbon_EditText.FloatingLabel" parent="carbon_EditText">

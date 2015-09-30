@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/carbon_padding">
+
+    <carbon.widget.LinearLayout
+        android:id="@+id/carbon_menuContent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:background="#ffffffff"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/carbon_paddingHalf"
+        android:paddingRight="@dimen/carbon_paddingHalf"
+        android:visibility="invisible"
+        app:carbon_elevation="@dimen/carbon_elevationHigh"
+        app:carbon_inAnimation="fade"
+        app:carbon_outAnimation="fade">
+
+        <carbon.widget.Button
+            android:id="@+id/carbon_cut"
+            style="@style/carbon_Button.Flat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="cut"/>
+
+        <carbon.widget.Button
+            android:id="@+id/carbon_copy"
+            style="@style/carbon_Button.Flat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="copy"/>
+
+        <carbon.widget.Button
+            android:id="@+id/carbon_paste"
+            style="@style/carbon_Button.Flat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="paste"/>
+
+        <carbon.widget.Button
+            android:id="@+id/carbon_selectAll"
+            style="@style/carbon_Button.Flat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="select all"/>
+    </carbon.widget.LinearLayout>
+</carbon.widget.LinearLayout>

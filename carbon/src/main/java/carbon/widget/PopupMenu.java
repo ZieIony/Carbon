@@ -26,7 +26,7 @@ import carbon.drawable.ControlFocusedColorStateList;
  */
 public class PopupMenu extends PopupWindow implements TintedView {
 
-    private RecyclerView recycler;
+    protected RecyclerView recycler;
     private View mAnchorView;
 
     public PopupMenu(Context context) {
