@@ -316,30 +316,26 @@
         <item name="carbon_floatingLabel">false</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:paddingBottom">16dp</item>
-        <item name="android:textSelectHandle">@drawable/abc_btn_check_material</item>
-        <item name="android:textSelectHandleLeft">@drawable/abc_btn_check_material</item>
-        <item name="android:textSelectHandleRight">@drawable/abc_btn_check_material</item>
     </style>
 
     <style name="carbon_EditText.FloatingLabel" parent="carbon_EditText">
         <item name="carbon_floatingLabel">true</item>
-        <item name="android:paddingTop">40dp</item>
+
     </style>
 
     <style name="carbon_EditText.ErrorLabel" parent="carbon_EditText">
         <item name="carbon_floatingLabel">false</item>
-        <item name="android:paddingBottom">32dp</item>
+
     </style>
 
     <style name="carbon_EditText.Underline" parent="carbon_EditText">
         <item name="carbon_floatingLabel">false</item>
-        <item name="android:paddingBottom">16dp</item>
+
     </style>
 
     <style name="carbon_EditText.BothLabels" parent="carbon_EditText">
         <item name="carbon_floatingLabel">true</item>
-        <item name="android:paddingTop">40dp</item>
-        <item name="android:paddingBottom">32dp</item>
+
     </style>
 
     <style name="carbon_Spinner" parent="carbon_EditText.Underline">

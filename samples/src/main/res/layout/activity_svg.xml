@@ -9,42 +9,42 @@
 
     <carbon.widget.ImageView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        android:src="@raw/ic_description_24px"
+        app:carbon_src="@raw/ic_description_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
     <carbon.widget.ImageView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        android:src="@raw/ic_dns_24px"
+        app:carbon_src="@raw/ic_dns_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <carbon.widget.SVGView
+    <carbon.widget.ImageView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        android:src="@raw/ic_face_24px"
+        app:carbon_src="@raw/ic_face_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
-    <carbon.widget.SVGView
+    <carbon.widget.ImageView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        android:src="@raw/ic_print_24px"
+        app:carbon_src="@raw/ic_print_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
-    <carbon.widget.SVGView
+    <carbon.widget.ImageView
         app:carbon_tint="?attr/carbon_colorBackgroundInverse"
-        android:src="@raw/ic_settings_input_svideo_24px"
+        app:carbon_src="@raw/ic_settings_input_svideo_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
 
-    <carbon.widget.SVGView
+    <carbon.widget.ImageView
         app:carbon_tint="#ff00ff00"
-        android:src="@raw/ic_shopping_cart_24px"
+        app:carbon_src="@raw/ic_shopping_cart_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />
@@ -59,11 +59,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <carbon.widget.SVGView
+        <carbon.widget.ImageView
             android:duplicateParentState="true"
             android:layout_gravity="center_vertical"
             app:carbon_tint="@drawable/red_black_selector"
-            android:src="@raw/ic_today_24px"
+            app:carbon_src="@raw/ic_today_24px"
             android:layout_margin="@dimen/carbon_padding"
             android:layout_width="24dp"
             android:layout_height="24dp" />
@@ -83,9 +83,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <carbon.widget.SVGView
+    <carbon.widget.ImageView
         app:carbon_tint="#ff0000ff"
-        android:src="@raw/ic_wallet_travel_24px"
+        app:carbon_src="@raw/ic_wallet_travel_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="24dp"
         android:layout_height="24dp" />

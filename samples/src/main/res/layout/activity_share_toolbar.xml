@@ -18,56 +18,56 @@
         android:layout_height="@dimen/carbon_fabSize">
 
 
-        <carbon.widget.SVGView
+        <carbon.widget.ImageView
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             android:padding="@dimen/carbon_padding"
             android:id="@+id/shareIcon"
-            android:src="@raw/ic_airplanemode_on_24px"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize" />
 
-        <carbon.widget.SVGView
+        <carbon.widget.ImageView
             android:tag="animate"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             app:carbon_tint="@color/carbon_black_54"
             android:visibility="invisible"
             android:padding="@dimen/carbon_padding"
-            android:src="@raw/ic_airplanemode_on_24px"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize" />
 
-        <carbon.widget.SVGView
+        <carbon.widget.ImageView
             android:tag="animate"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             app:carbon_tint="@color/carbon_black_54"
             android:visibility="invisible"
             android:padding="@dimen/carbon_padding"
-            android:src="@raw/ic_airplanemode_on_24px"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize" />
 
-        <carbon.widget.SVGView
+        <carbon.widget.ImageView
             android:tag="animate"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             app:carbon_tint="@color/carbon_black_54"
             android:visibility="invisible"
             android:padding="@dimen/carbon_padding"
-            android:src="@raw/ic_airplanemode_on_24px"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize" />
 
-        <carbon.widget.SVGView
+        <carbon.widget.ImageView
             android:tag="animate"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             app:carbon_tint="@color/carbon_black_54"
             android:visibility="invisible"
             android:padding="@dimen/carbon_padding"
-            android:src="@raw/ic_airplanemode_on_24px"
+            app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize" />
     </carbon.widget.LinearLayout>

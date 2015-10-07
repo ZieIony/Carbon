@@ -69,7 +69,10 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
         setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
         int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
-        if (resId != 0 && getContext().getResources().getResourceTypeName(resId).equals("raw"))
+        int resId2 = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
+        if (resId == 0)
+            resId = resId2;
+        if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
             setImageDrawable(new VectorDrawable(getResources(), resId));
         setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled, true));
 
@@ -517,15 +520,15 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
+            if (inAnim != AnimUtils.Style.None) {
+                animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator a) {
+                        animator = null;
+                    }
+                });
+            }
             super.setVisibility(visibility);
-            if (inAnim == AnimUtils.Style.None)
-                return;
-            animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator a) {
-                    animator = null;
-                }
-            });
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();

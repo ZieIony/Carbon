@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight">
 
-            <carbon.widget.SVGView
+            <carbon.widget.ImageView
                 android:layout_width="@dimen/carbon_toolbarHeight"
                 android:layout_height="@dimen/carbon_toolbarHeight"
                 android:clickable="true"
@@ -24,9 +24,9 @@
                 app:carbon_outAnimation="pop"
                 app:carbon_rippleColor="?attr/carbon_rippleColor"
                 app:carbon_rippleStyle="borderless"
-                android:src="@raw/ic_print_24px" />
+                app:carbon_src="@raw/ic_print_24px" />
 
-            <carbon.widget.SVGView
+            <carbon.widget.ImageView
                 android:layout_width="@dimen/carbon_toolbarHeight"
                 android:layout_height="@dimen/carbon_toolbarHeight"
                 android:clickable="true"
@@ -36,7 +36,7 @@
                 app:carbon_outAnimation="pop"
                 app:carbon_rippleColor="?attr/carbon_rippleColor"
                 app:carbon_rippleStyle="borderless"
-                android:src="@raw/ic_search_24px" />
+                app:carbon_src="@raw/ic_search_24px" />
 
             <FrameLayout
                 android:layout_width="match_parent"

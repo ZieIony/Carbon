@@ -22,10 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <carbon.widget.SVGView
+            <carbon.widget.ImageView
                 android:layout_width="@dimen/carbon_toolbarHeight"
                 android:layout_height="@dimen/carbon_toolbarHeight"
-                android:src="@raw/ic_search_24px"
+                app:carbon_src="@raw/ic_search_24px"
                 app:carbon_tint="@color/carbon_black_54"
                 android:focusableInTouchMode="true"
                 android:focusable="true"

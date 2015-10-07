@@ -582,15 +582,15 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
+            if (inAnim != AnimUtils.Style.None) {
+                animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator a) {
+                        animator = null;
+                    }
+                });
+            }
             super.setVisibility(visibility);
-            if (inAnim == AnimUtils.Style.None)
-                return;
-            animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator a) {
-                    animator = null;
-                }
-            });
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();

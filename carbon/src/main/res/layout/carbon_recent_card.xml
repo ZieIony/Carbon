@@ -27,14 +27,14 @@
             android:layout_weight="1"
             android:layout_height="@dimen/carbon_toolbarHeight" />
 
-        <carbon.widget.SVGView
+        <carbon.widget.ImageView
             android:id="@+id/carbon_recentClose"
             android:padding="@dimen/carbon_paddingHalf"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
             app:carbon_rippleStyle="borderless"
             android:layout_width="@dimen/carbon_toolbarHeight"
             android:layout_height="@dimen/carbon_toolbarHeight"
-            android:src="@raw/carbon_uparrow" />
+            app:carbon_src="@raw/carbon_uparrow" />
     </LinearLayout>
 
     <FrameLayout

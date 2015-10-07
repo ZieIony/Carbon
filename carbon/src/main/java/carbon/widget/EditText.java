@@ -2,7 +2,6 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -23,10 +22,13 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.ContextMenu;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.PopupWindow;
 
@@ -48,6 +50,7 @@ import carbon.drawable.ControlFocusedColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
+import carbon.drawable.VectorDrawable;
 import carbon.internal.TypefaceUtils;
 
 /**
@@ -62,7 +65,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private static final int ID_COPY_URL = android.R.id.copyUrl;
     private static final int ID_SELECT_ALL = android.R.id.selectAll;
 
-    int dividerPadding;
+    int DIVIDER_PADDING;
     int disabledColor = 0x4d000000;
     int errorColor = 0xffff0000;
 
@@ -76,6 +79,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
     TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+
+    int internalPaddingTop = 0, internalPaddingBottom = 0;
 
     TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -121,7 +126,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private boolean drawDivider = true;
     private boolean counterError = false;
 
-    float labelTextSize, paddingError, paddingLabel;
+    float PADDING_ERROR, PADDING_LABEL;
 
     public EditText(Context context) {
         this(context, null);
@@ -158,7 +163,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         }
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
-        dividerPadding = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
+        DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
 
         if (!isInEditMode())
             setError(a.getString(R.styleable.EditText_carbon_errorMessage));
@@ -195,9 +200,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         paint.setColor(disabledColor);
         c.drawCircle(dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, paint);
         dashPathShader = new BitmapShader(dashPathBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
-        labelTextSize = getResources().getDimension(R.dimen.carbon_labelTextSize);
-        paddingError = getResources().getDimension(R.dimen.carbon_paddingHalf);
-        paddingLabel = getResources().getDimension(R.dimen.carbon_paddingHalf);
+        PADDING_ERROR = getResources().getDimension(R.dimen.carbon_paddingHalf);
+        PADDING_LABEL = getResources().getDimension(R.dimen.carbon_paddingHalf);
 
         initActionModeCallback();
 
@@ -205,6 +209,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         if (isFocused() && getText().length() > 0)
             labelFrac = 1;
+
+        initSelectionHandle();
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -265,6 +271,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (isInEditMode())
             return;
 
+        int paddingTop = getPaddingTop() + internalPaddingTop;
+        int paddingBottom = getPaddingBottom() + internalPaddingBottom;
+
         if (isFocused() && isEnabled()) {
             paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
         } else {
@@ -274,14 +283,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             if (isEnabled()) {
                 paint.setColor(drawError || counterError ? errorColor : tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
                 paint.setShader(null);
-                canvas.drawLine(getPaddingLeft(), getHeight() - getPaddingBottom() + dividerPadding, getWidth() - getPaddingRight(), getHeight() - getPaddingBottom() + dividerPadding, paint);
+                canvas.drawLine(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
             } else {
                 Matrix matrix = new Matrix();
-                matrix.postTranslate(0, getHeight() - getPaddingBottom() + dividerPadding - paint.getStrokeWidth() / 2.0f);
+                matrix.postTranslate(0, getHeight() - paddingBottom + DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f);
                 dashPathShader.setLocalMatrix(matrix);
                 paint.setShader(dashPathShader);
-                canvas.drawRect(getPaddingLeft(), getHeight() - getPaddingBottom() - dividerPadding - paint.getStrokeWidth() / 2.0f,
-                        getWidth() - getPaddingRight(), getHeight() - getPaddingBottom() - dividerPadding + paint.getStrokeWidth() / 2.0f, paint);
+                canvas.drawRect(getPaddingLeft(), getHeight() - paddingBottom - DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f,
+                        getWidth() - getPaddingRight(), getHeight() - paddingBottom - DIVIDER_PADDING + paint.getStrokeWidth() / 2.0f, paint);
             }
         }
 
@@ -289,24 +298,24 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             return;
 
         if (drawError)
-            canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - getPaddingBottom() + dividerPadding + paddingError + labelTextSize, errorPaint);
+            canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), errorPaint);
 
         if (getHint() != null && showFloatingLabel) {
             String label = getHint().toString();
             labelPaint.setAlpha((int) (255 * labelFrac));
-            canvas.drawText(label, getPaddingLeft(), getPaddingTop() + labelTextSize * (1 - labelFrac) - paddingLabel, labelPaint);
+            canvas.drawText(label, getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
         }
 
         int length = getText().length();
         if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
             String text = length + " / " + minCharacters + "-" + maxCharacters;
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - getPaddingBottom() + dividerPadding + paddingError + labelTextSize, counterPaint);
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), counterPaint);
         } else if (minCharacters > 0) {
             String text = length + " / " + minCharacters + "+";
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - getPaddingBottom() + dividerPadding + paddingError + labelTextSize, counterPaint);
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), counterPaint);
         } else if (maxCharacters < Integer.MAX_VALUE) {
             String text = length + " / " + maxCharacters;
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - getPaddingBottom() + dividerPadding + paddingError + labelTextSize, counterPaint);
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), counterPaint);
         }
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -321,6 +330,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         this.showFloatingLabel = showFloatingLabel;
     }
 
+    public boolean canShowError() {
+        return (pattern != null || drawError) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE;
+    }
+
     public String getPattern() {
         return pattern.pattern();
     }
@@ -328,9 +341,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     public void setPattern(final String pattern) {
         if (pattern == null) {
             this.pattern = null;
-            return;
+        } else {
+            this.pattern = Pattern.compile(pattern);
         }
-        this.pattern = Pattern.compile(pattern);
     }
 
     public int getMinCharacters() {
@@ -389,6 +402,38 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.UNSPECIFIED) {
+            int paddingTop = getPaddingTop();
+            int paddingBottom = getPaddingBottom();
+            if (showFloatingLabel)
+                internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
+            if (canShowError()) {
+                internalPaddingBottom = (int) (errorPaint.getTextSize());
+                if (!drawDivider)
+                    internalPaddingBottom += PADDING_ERROR;
+            }
+            setPadding(getPaddingLeft(), paddingTop, getPaddingRight(), paddingBottom);
+        }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    public int getPaddingBottom() {
+        return super.getPaddingBottom() - internalPaddingBottom;
+    }
+
+    @Override
+    public int getPaddingTop() {
+        return super.getPaddingTop() - internalPaddingTop;
+    }
+
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding(left, top + internalPaddingTop, right, bottom + internalPaddingBottom);
+    }
+
 
     // -------------------------------
     // popup
@@ -397,29 +442,128 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     EditorMenu popupMenu;
     private boolean isShowingPopup = false;
+    WindowManager brokenWindowManager = new WindowManager() {
+        @Override
+        public Display getDefaultDisplay() {
+            return null;
+        }
 
-    private void initSelectionHandle(){
+        @Override
+        public void removeViewImmediate(View view) {
+
+        }
+
+        @Override
+        public void addView(View view, ViewGroup.LayoutParams params) {
+            final WindowManager.LayoutParams wparams
+                    = (WindowManager.LayoutParams) params;
+            view.setLayoutParams(wparams);
+        }
+
+        @Override
+        public void updateViewLayout(View view, ViewGroup.LayoutParams params) {
+            final WindowManager.LayoutParams wparams
+                    = (WindowManager.LayoutParams) params;
+            view.setLayoutParams(wparams);
+        }
+
+        @Override
+        public void removeView(View view) {
+
+        }
+    };
+
+    @Override
+    public int getSelectionStart() {
         try {
-            final Field fEditor = TextView.class.getDeclaredField("mEditor");
-            fEditor.setAccessible(true);
-            final Object editor = fEditor.get(this);
+            if (brokenWindowManager != null) {
+                Field ccmf = android.widget.TextView.class.getDeclaredField("mCursorControllerMenu");
+                ccmf.setAccessible(true);
+                Object ccm = ccmf.get(this);
+                {
+                    Field pwf = ccm.getClass().getDeclaredField("mPopupWindow");
+                    pwf.setAccessible(true);
+                    PopupWindow pw = (PopupWindow) pwf.get(ccm);
+                    Field wmf = pw.getClass().getDeclaredField("mWindowManager");
+                    wmf.setAccessible(true);
+                    wmf.set(pw, brokenWindowManager);
+                }
+                {
+                    Field pwf = ccm.getClass().getDeclaredField("mPopupWindowArrowDown");
+                    pwf.setAccessible(true);
+                    PopupWindow pw = (PopupWindow) pwf.get(ccm);
+                    Field wmf = pw.getClass().getDeclaredField("mWindowManager");
+                    wmf.setAccessible(true);
+                    wmf.set(pw, brokenWindowManager);
+                }
+                {
+                    Field pwf = ccm.getClass().getDeclaredField("mPopupWindowArrowUp");
+                    pwf.setAccessible(true);
+                    PopupWindow pw = (PopupWindow) pwf.get(ccm);
+                    Field wmf = pw.getClass().getDeclaredField("mWindowManager");
+                    wmf.setAccessible(true);
+                    wmf.set(pw, brokenWindowManager);
+                }
+                brokenWindowManager = null;
+            }
+        } catch (Exception e) {
 
-            final Field fSelectHandleLeft = editor.getClass().getDeclaredField("mSelectHandleLeft");
-            final Field fSelectHandleRight =
-                    editor.getClass().getDeclaredField("mSelectHandleRight");
-            final Field fSelectHandleCenter =
-                    editor.getClass().getDeclaredField("mSelectHandleCenter");
+        }
+        return super.getSelectionStart();
+    }
 
-            fSelectHandleLeft.setAccessible(true);
-            fSelectHandleRight.setAccessible(true);
-            fSelectHandleCenter.setAccessible(true);
+    private void initSelectionHandle() {
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+            try {
+                final Field fEditor = android.widget.TextView.class.getDeclaredField("mEditor");
+                fEditor.setAccessible(true);
+                final Object editor = fEditor.get(this);
 
-            final Resources res = getContext().getResources();
+                final Field fSelectHandleLeft = editor.getClass().getDeclaredField("mSelectHandleLeft");
+                final Field fSelectHandleRight = editor.getClass().getDeclaredField("mSelectHandleRight");
+                final Field fSelectHandleCenter = editor.getClass().getDeclaredField("mSelectHandleCenter");
 
-        //    fSelectHandleLeft.set(editor, res.getDrawable(R.drawable.text_select_handle_left));
-          //  fSelectHandleRight.set(editor, res.getDrawable(R.drawable.text_select_handle_right));
-            //fSelectHandleCenter.set(editor, res.getDrawable(R.drawable.text_select_handle_middle));
-        } catch (final Exception ignored) {
+                fSelectHandleLeft.setAccessible(true);
+                fSelectHandleRight.setAccessible(true);
+                fSelectHandleCenter.setAccessible(true);
+
+                VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
+                leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleLeft.set(editor, leftHandle);
+
+                VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
+                rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleRight.set(editor, rightHandle);
+
+                VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
+                middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleCenter.set(editor, middleHandle);
+            } catch (final Exception ignored) {
+            }
+        } else {
+            try {
+                final Field fSelectHandleLeft = android.widget.TextView.class.getDeclaredField("mSelectHandleLeft");
+                final Field fSelectHandleRight = android.widget.TextView.class.getDeclaredField("mSelectHandleRight");
+                final Field fSelectHandleCenter = android.widget.TextView.class.getDeclaredField("mSelectHandleCenter");
+
+                fSelectHandleLeft.setAccessible(true);
+                fSelectHandleRight.setAccessible(true);
+                fSelectHandleCenter.setAccessible(true);
+
+                VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
+                leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleLeft.set(this, leftHandle);
+
+                VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
+                rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleRight.set(this, rightHandle);
+
+                VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
+                middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleCenter.set(this, middleHandle);
+            } catch (final Exception ignored) {
+            }
+
         }
     }
 
@@ -442,10 +586,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                             isShowingPopup = false;
                         }
                     });
-                    popupMenu.initCopyVisible(menu.findItem(ID_COPY));
-                    popupMenu.initCutVisible(menu.findItem(ID_CUT));
-                    popupMenu.initPasteVisible(menu.findItem(ID_PASTE));
-                    popupMenu.initSelectAllVisible(menu.findItem(ID_SELECT_ALL));
+                    popupMenu.initCopy(menu.findItem(ID_COPY));
+                    popupMenu.initCut(menu.findItem(ID_CUT));
+                    popupMenu.initPaste(menu.findItem(ID_PASTE));
+                    popupMenu.initSelectAll(menu.findItem(ID_SELECT_ALL));
                     if (popupMenu.hasVisibleItems()) {
                         popupMenu.show(EditText.this);
                         isShowingPopup = true;
@@ -472,10 +616,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         });
 
         super.onCreateContextMenu(menu);
-        popupMenu.initCopyVisible(menu.findItem(ID_COPY));
-        popupMenu.initCutVisible(menu.findItem(ID_CUT));
-        popupMenu.initPasteVisible(menu.findItem(ID_PASTE));
-        popupMenu.initSelectAllVisible(menu.findItem(ID_SELECT_ALL));
+        popupMenu.initCopy(menu.findItem(ID_COPY));
+        popupMenu.initCut(menu.findItem(ID_CUT));
+        popupMenu.initPaste(menu.findItem(ID_PASTE));
+        popupMenu.initSelectAll(menu.findItem(ID_SELECT_ALL));
         if (popupMenu.hasVisibleItems()) {
             popupMenu.show(EditText.this);
             isShowingPopup = true;
@@ -790,15 +934,15 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
+            if (inAnim != AnimUtils.Style.None) {
+                animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator a) {
+                        animator = null;
+                    }
+                });
+            }
             super.setVisibility(visibility);
-            if (inAnim == AnimUtils.Style.None)
-                return;
-            animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator a) {
-                    animator = null;
-                }
-            });
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();

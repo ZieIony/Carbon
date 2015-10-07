@@ -24,7 +24,7 @@
             android:layout_height="@dimen/carbon_toolbarHeight"
             android:padding="@dimen/carbon_padding"
             android:scaleType="centerInside"
-            android:src="@raw/ic_refresh_24px"
+            app:carbon_src="@raw/ic_refresh_24px"
             app:carbon_tint="#ffffffff" />
     </carbon.widget.Toolbar>
 </carbon.widget.LinearLayout>

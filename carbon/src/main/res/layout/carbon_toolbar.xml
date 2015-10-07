@@ -11,7 +11,7 @@
         android:layout_height="56dp"
         android:clickable="true"
         android:padding="@dimen/carbon_padding"
-        android:src="@raw/carbon_uparrow"
+        app:carbon_src="@raw/carbon_uparrow"
         android:visibility="gone"
         app:carbon_inAnimation="none"
         app:carbon_outAnimation="none"

@@ -65,6 +65,8 @@ public class Spinner extends EditText {
             setCompoundDrawables(null, null, dropdown, null);
         } catch (SVGParseException e) {
 
+        }catch(IllegalArgumentException e){
+
         }
 
         popupMenu = new PopupMenu(context);
