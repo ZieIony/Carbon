@@ -1,10 +1,10 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,11 +19,12 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/carbon_padding"
-            app:carbon_src="@raw/ic_today_24px"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
-            app:carbon_rippleStyle="borderless" />
+            app:carbon_rippleStyle="borderless"
+            app:carbon_src="@raw/ic_today_24px"
+            app:carbon_tint="?attr/carbon_iconColor"/>
 
         <carbon.widget.ImageView
             android:id="@+id/icon2"
@@ -32,11 +33,12 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/carbon_padding"
-            app:carbon_src="@raw/ic_print_24px"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
-            app:carbon_rippleStyle="borderless" />
+            app:carbon_rippleStyle="borderless"
+            app:carbon_src="@raw/ic_print_24px"
+            app:carbon_tint="?attr/carbon_iconColor"/>
     </carbon.widget.Toolbar>
 
     <carbon.widget.FrameLayout
@@ -46,13 +48,13 @@
         <carbon.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <carbon.widget.FloatingActionButton
             android:layout_width="@dimen/carbon_fabSize"
             android:layout_height="@dimen/carbon_fabSize"
             android:layout_gravity="right|bottom"
             android:layout_margin="@dimen/carbon_padding"
-            app:carbon_src="@raw/ic_face_24px" />
+            app:carbon_src="@raw/ic_face_24px"/>
     </carbon.widget.FrameLayout>
 </carbon.widget.LinearLayout>

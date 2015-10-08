@@ -18,18 +18,17 @@
 
             <carbon.widget.EditText
                 android:id="@+id/editText"
-                style="@style/carbon_EditText.FloatingLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="bottom|left"
                 android:hint="email"
                 android:text="hello text"
+                app:carbon_floatingLabel="true"
                 app:carbon_pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"/>
 
             <carbon.widget.EditText
                 android:id="@+id/editText3"
-                style="@style/carbon_EditText.BothLabels"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
@@ -37,18 +36,18 @@
                 android:hint="email"
                 android:text="hello text"
                 app:carbon_errorMessage="it's not an email"
+                app:carbon_floatingLabel="true"
                 app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"/>
 
             <carbon.widget.EditText
-                style="@style/carbon_EditText.ErrorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="bottom|left"
+                app:carbon_floatingLabel="true"
                 app:carbon_minCharacters="3"/>
 
             <carbon.widget.EditText
-                style="@style/carbon_EditText.ErrorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
@@ -56,7 +55,6 @@
                 app:carbon_maxCharacters="10"/>
 
             <carbon.widget.EditText
-                style="@style/carbon_EditText.ErrorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"

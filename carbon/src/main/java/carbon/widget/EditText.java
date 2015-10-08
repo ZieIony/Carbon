@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -142,20 +141,17 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        if (isInEditMode())
-            return;
-
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearanceIntenal(ap);
+            setTextAppearanceInternal(ap);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.EditText_carbon_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, false));
-            } else if (attr == R.styleable.EditText_carbon_fontPath) {
+            } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
@@ -224,22 +220,22 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearanceIntenal(resid);
+        setTextAppearanceInternal(resid);
     }
 
     public void setTextAppearance(int resid) {
         super.setTextAppearance(getContext(), resid);
-        setTextAppearanceIntenal(resid);
+        setTextAppearanceInternal(resid);
     }
 
-    private void setTextAppearanceIntenal(int resid) {
+    private void setTextAppearanceInternal(int resid) {
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
                 int attr = appearance.getIndex(i);
                 if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
                     setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);
@@ -552,14 +548,17 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
                 VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
                 leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                leftHandle.setAlpha(127);
                 fSelectHandleLeft.set(this, leftHandle);
 
                 VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
                 rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                rightHandle.setAlpha(127);
                 fSelectHandleRight.set(this, rightHandle);
 
                 VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
                 middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                middleHandle.setAlpha(127);
                 fSelectHandleCenter.set(this, middleHandle);
             } catch (final Exception ignored) {
             }
@@ -597,8 +596,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                     return false;
                 }
 
-                public boolean onActionItemClicked(ActionMode mode,
-                                                   MenuItem item) {
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     return false;
                 }
             });
@@ -995,15 +993,17 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public void setTint(ColorStateList list) {
         if (list == null) {
-            setTint(0x00ffffff);
+            tint = null;
+            drawDivider = false;
         } else {
             this.tint = list;
-            drawDivider = Color.alpha(tint.getDefaultColor()) != 0;
+            drawDivider = true;
         }
     }
 
     @Override
     public void setTint(int color) {
+        drawDivider = true;
         if (color == 0) {
             setTint(new ControlFocusedColorStateList(getContext()));
         } else {

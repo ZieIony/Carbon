@@ -203,6 +203,7 @@
     <declare-styleable name="Toolbar">
         <attr name="carbon_elevation"/>
         <attr name="android:background"/>
+        <attr name="android:text"/>
     </declare-styleable>
 
     <attr name="carbon_imageViewStyle" format="reference"/>

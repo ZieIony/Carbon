@@ -45,7 +45,7 @@ import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-07.
- *
+ * <p/>
  * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other material features.
  */
 public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView {
@@ -57,6 +57,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     /**
      * XML constructor. Gets default parameters from android.R.attr.buttonStyle.
+     *
      * @param context
      * @param attrs
      */
@@ -70,14 +71,14 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        if(isInEditMode())
+        if (isInEditMode())
             return;
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearanceIntenal(ap);
+            setTextAppearanceInternal(ap);
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -85,7 +86,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             int attr = a.getIndex(i);
             if (attr == R.styleable.Button_carbon_textAllCaps) {
                 setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
-            } else if (attr == R.styleable.Button_carbon_fontPath) {
+            } else if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
@@ -104,6 +105,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     /**
      * Changes text transformation method to caps.
+     *
      * @param allCaps if true, Button will automatically capitalize all characters
      */
     public void setAllCaps(boolean allCaps) {
@@ -117,22 +119,22 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearanceIntenal(resid);
+        setTextAppearanceInternal(resid);
     }
 
     public void setTextAppearance(int resid) {
-        super.setTextAppearance(getContext(),resid);
-        setTextAppearanceIntenal(resid);
+        super.setTextAppearance(getContext(), resid);
+        setTextAppearanceInternal(resid);
     }
 
-    private void setTextAppearanceIntenal(int resid){
+    private void setTextAppearanceInternal(int resid) {
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
                 int attr = appearance.getIndex(i);
                 if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
                     setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);
@@ -153,6 +155,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     /**
      * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     *
      * @return corner radius, equal to or greater than 0.
      */
     public int getCornerRadius() {
@@ -161,6 +164,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     /**
      * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     *
      * @param cornerRadius
      */
     public void setCornerRadius(int cornerRadius) {
@@ -236,11 +240,11 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
         Animation a = getAnimation();
-        if(a!=null){
-            a.getTransformation(event.getEventTime(),t);
-            float[] loc = new float[]{event.getX(),event.getY()};
+        if (a != null) {
+            a.getTransformation(event.getEventTime(), t);
+            float[] loc = new float[]{event.getX(), event.getY()};
             t.getMatrix().mapPoints(loc);
-            event.setLocation(loc[0],loc[1]);
+            event.setLocation(loc[0], loc[1]);
         }
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
@@ -581,7 +585,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 

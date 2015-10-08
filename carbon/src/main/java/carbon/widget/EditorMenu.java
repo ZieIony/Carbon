@@ -78,11 +78,12 @@ public class EditorMenu extends PopupWindow {
         int[] location = new int[2];
         editText.getLocationInWindow(location);
 
-        int popupX = location[0] - margin;
-        int popupY = location[1] - margin;
-
         LinearLayout content = (LinearLayout) getContentView().findViewById(R.id.carbon_menuContent);
         content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec((int) content.getContext().getResources().getDimension(R.dimen.carbon_toolbarHeight), View.MeasureSpec.EXACTLY));
+
+        int popupX = location[0] - margin;
+        int popupY = location[1] - margin-content.getMeasuredHeight();
+
         update(popupX, popupY, content.getMeasuredWidth() + margin * 2, content.getMeasuredHeight() + margin * 2);
 
         super.update();

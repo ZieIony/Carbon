@@ -17,8 +17,7 @@ public class ButtonsUsageActivity extends Activity{
         setContentView(R.layout.activity_buttonsusage);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setText("Settings");
-        toolbar.setIcon(R.raw.carbon_uparrow);
+        toolbar.setIconVisible(true);
 
         ProgressBar progress = (ProgressBar) findViewById(R.id.progress);
         progress.setProgress(0.8f);

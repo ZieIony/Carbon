@@ -28,7 +28,6 @@
         android:paddingLeft="@dimen/carbon_padding"
         android:text=""
         android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
-        android:textColor="?android:attr/textColorPrimaryInverse"
         android:visibility="gone" />
 
     <carbon.widget.LinearLayout

@@ -45,6 +45,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyle, 0);
         setElevation(a.getDimension(R.styleable.Toolbar_carbon_elevation, 0));  // this shouldn't be necessary
+        setText(a.getString(R.styleable.Toolbar_android_text));
         int color = a.getColor(R.styleable.Toolbar_android_background, 0);
         setBackgroundColor(color);
         a.recycle();

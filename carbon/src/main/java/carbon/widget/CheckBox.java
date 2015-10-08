@@ -51,20 +51,19 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        if (isInEditMode())
-            return;
-
         drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
-        int size = (int) (Carbon.getDip(getContext())*24);
-        drawable.setBounds(0,0,size,size);
-        setCompoundDrawables(drawable, null, null, null);
-        setButtonDrawable(null);
+        int size = (int) (Carbon.getDip(getContext()) * 24);
+        drawable.setBounds(0, 0, size, size);
+        if (!isInEditMode()) {
+            setCompoundDrawables(drawable, null, null, null);
+            setButtonDrawable(null);
+        }
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.CheckBox_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearanceIntenal(ap);
+            setTextAppearanceInternal(ap);
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -72,7 +71,7 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
             int attr = a.getIndex(i);
             if (attr == R.styleable.CheckBox_carbon_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, false));
-            } else if (attr == R.styleable.CheckBox_carbon_fontPath) {
+            } else if (!isInEditMode() && attr == R.styleable.CheckBox_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
@@ -110,22 +109,22 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearanceIntenal(resid);
+        setTextAppearanceInternal(resid);
     }
 
     public void setTextAppearance(int resid) {
-        super.setTextAppearance(getContext(),resid);
-        setTextAppearanceIntenal(resid);
+        super.setTextAppearance(getContext(), resid);
+        setTextAppearanceInternal(resid);
     }
 
-    private void setTextAppearanceIntenal(int resid){
+    private void setTextAppearanceInternal(int resid) {
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
                 int attr = appearance.getIndex(i);
                 if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
                     setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);
@@ -387,7 +386,7 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 

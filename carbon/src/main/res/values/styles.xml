@@ -79,6 +79,7 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
+        <item name="android:textColorHighlight">?attr/colorAccent</item>
     </style>
 
     <style name="carbon_Theme.Dark.NoActionBar">
@@ -164,6 +165,7 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
+        <item name="android:textColorHighlight">?attr/colorAccent</item>
     </style>
 
     <style name="carbon_Theme.Light.NoActionBar">
@@ -318,27 +320,7 @@
         <item name="android:paddingBottom">16dp</item>
     </style>
 
-    <style name="carbon_EditText.FloatingLabel" parent="carbon_EditText">
-        <item name="carbon_floatingLabel">true</item>
-
-    </style>
-
-    <style name="carbon_EditText.ErrorLabel" parent="carbon_EditText">
-        <item name="carbon_floatingLabel">false</item>
-
-    </style>
-
-    <style name="carbon_EditText.Underline" parent="carbon_EditText">
-        <item name="carbon_floatingLabel">false</item>
-
-    </style>
-
-    <style name="carbon_EditText.BothLabels" parent="carbon_EditText">
-        <item name="carbon_floatingLabel">true</item>
-
-    </style>
-
-    <style name="carbon_Spinner" parent="carbon_EditText.Underline">
+    <style name="carbon_Spinner" parent="carbon_EditText">
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="android:editable">false</item>
         <item name="android:gravity">center_vertical</item>

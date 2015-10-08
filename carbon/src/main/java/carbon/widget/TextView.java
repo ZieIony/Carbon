@@ -59,20 +59,17 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     }
 
     public void init(AttributeSet attrs, int defStyleAttr) {
-        if (isInEditMode())
-            return;
-
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearanceIntenal(ap);
+            setTextAppearanceInternal(ap);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.TextView_carbon_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, false));
-            } else if (attr == R.styleable.TextView_carbon_fontPath) {
+            } else if (!isInEditMode()&&attr == R.styleable.TextView_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
@@ -99,22 +96,22 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearanceIntenal(resid);
+        setTextAppearanceInternal(resid);
     }
 
     public void setTextAppearance(int resid) {
         super.setTextAppearance(getContext(), resid);
-        setTextAppearanceIntenal(resid);
+        setTextAppearanceInternal(resid);
     }
 
-    private void setTextAppearanceIntenal(int resid) {
+    private void setTextAppearanceInternal(int resid) {
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
                 int attr = appearance.getIndex(i);
                 if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
                     setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (attr == R.styleable.TextAppearance_carbon_fontPath) {
+                } else if (!isInEditMode()&&attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);
