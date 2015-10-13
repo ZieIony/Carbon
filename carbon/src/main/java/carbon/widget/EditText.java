@@ -19,8 +19,10 @@ import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.ContextMenu;
+import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,7 +73,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private Pattern pattern;
     private String errorMessage;
     TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    boolean drawError;
+    boolean drawError, afterFirstInteraction = false;
 
     int minCharacters;
     int maxCharacters;
@@ -80,6 +82,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
     int internalPaddingTop = 0, internalPaddingBottom = 0;
+
+    private BitmapShader dashPathShader;
+    private float labelFrac = 0;
+    private boolean showFloatingLabel = true;
+    private boolean drawDivider = true;
+    private boolean counterError = false;
+
+    float PADDING_ERROR, PADDING_LABEL;
 
     TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -94,38 +104,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         @Override
         public void afterTextChanged(Editable s) {
+            afterFirstInteraction = true;
             validate();
         }
     };
-
-    private void validate() {
-        String s = getText().toString();
-        // dictionary suggestions vs s.length()>0
-        /*try {
-            Field mTextField = getText().getClass().getDeclaredField("mText");
-            mTextField.setAccessible(true);
-            s = new String((char[])mTextField.get(getText()));
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }*/
-        if (errorMessage != null && pattern != null)
-            drawError = !pattern.matcher(s).matches();
-        counterError = minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters;
-        labelPaint.setColor(drawError | counterError ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
-        counterPaint.setColor(drawError | counterError ? errorColor : disabledColor);
-        if (showFloatingLabel)
-            animateFloatingLabel(isFocused() && s.length() > 0);
-    }
-
-    private BitmapShader dashPathShader;
-    private float labelFrac = 0;
-    private boolean showFloatingLabel = true;
-    private boolean drawDivider = true;
-    private boolean counterError = false;
-
-    float PADDING_ERROR, PADDING_LABEL;
 
     public EditText(Context context) {
         this(context, null);
@@ -207,6 +189,30 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             labelFrac = 1;
 
         initSelectionHandle();
+    }
+
+
+    public void validate() {
+        String s = getText().toString();
+        // dictionary suggestions vs s.length()>0
+        /*try {
+            Field mTextField = getText().getClass().getDeclaredField("mText");
+            mTextField.setAccessible(true);
+            s = new String((char[])mTextField.get(getText()));
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }*/
+        if (errorMessage != null && pattern != null)
+            drawError = afterFirstInteraction && !pattern.matcher(s).matches();
+        counterError = afterFirstInteraction && (minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters);
+        labelPaint.setColor(drawError | counterError ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
+        counterPaint.setColor(drawError | counterError ? errorColor : disabledColor);
+        if (showFloatingLabel)
+            animateFloatingLabel(isFocused() && s.length() > 0);
+
+        postInvalidate();
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -382,6 +388,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         animateFloatingLabel(focused && getText().length() > 0);
+        if (!focused) {
+            afterFirstInteraction = true;
+            validate();
+        }
     }
 
     @Override
@@ -578,7 +588,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 }
 
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    popupMenu = new EditorMenu(getContext());
+                    TypedValue outValue = new TypedValue();
+                    getContext().getTheme().resolveAttribute(R.attr.carbon_editMenuTheme, outValue, true);
+                    int theme = outValue.resourceId;
+                    Context themedContext = new ContextThemeWrapper(getContext(), theme);
+
+                    popupMenu = new EditorMenu(themedContext);
                     popupMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
                         @Override
                         public void onDismiss() {
@@ -605,7 +620,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     @Override
     protected void onCreateContextMenu(ContextMenu menu) {
-        popupMenu = new EditorMenu(getContext());
+        TypedValue outValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(R.attr.carbon_editMenuTheme, outValue, true);
+        int theme = outValue.resourceId;
+        Context themedContext = new ContextThemeWrapper(getContext(), theme);
+
+        popupMenu = new EditorMenu(themedContext);
         popupMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {

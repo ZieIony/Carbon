@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/carbon_padding">
+                            android:padding="@dimen/carbon_paddingHalf">
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_menuContent"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        android:background="#ffffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_menuHeight"
+        android:background="?attr/carbon_colorBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/carbon_paddingHalf"
         android:paddingRight="@dimen/carbon_paddingHalf"
@@ -23,6 +23,9 @@
             style="@style/carbon_Button.Flat"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:minWidth="0dp"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
             android:text="cut"/>
 
         <carbon.widget.Button
@@ -30,6 +33,9 @@
             style="@style/carbon_Button.Flat"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:minWidth="0dp"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
             android:text="copy"/>
 
         <carbon.widget.Button
@@ -37,6 +43,9 @@
             style="@style/carbon_Button.Flat"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:minWidth="0dp"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
             android:text="paste"/>
 
         <carbon.widget.Button
@@ -44,6 +53,9 @@
             style="@style/carbon_Button.Flat"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:minWidth="0dp"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
             android:text="select all"/>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

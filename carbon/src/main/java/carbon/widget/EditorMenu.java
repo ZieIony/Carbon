@@ -14,8 +14,6 @@ import android.widget.PopupWindow;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
-import java.lang.reflect.Field;
-
 import carbon.R;
 
 /**
@@ -69,8 +67,8 @@ public class EditorMenu extends PopupWindow {
 
         final Resources res = getContentView().getContext().getResources();
 
-        int margin = (int) res.getDimension(R.dimen.carbon_padding);
-        int itemHeight = (int) res.getDimension(R.dimen.carbon_toolbarHeight);
+        int margin = (int) res.getDimension(R.dimen.carbon_paddingHalf);
+        int itemHeight = (int) res.getDimension(R.dimen.carbon_menuHeight);
 
         Rect windowRect = new Rect();
         editText.getWindowVisibleDisplayFrame(windowRect);
@@ -79,10 +77,10 @@ public class EditorMenu extends PopupWindow {
         editText.getLocationInWindow(location);
 
         LinearLayout content = (LinearLayout) getContentView().findViewById(R.id.carbon_menuContent);
-        content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec((int) content.getContext().getResources().getDimension(R.dimen.carbon_toolbarHeight), View.MeasureSpec.EXACTLY));
+        content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(itemHeight, View.MeasureSpec.EXACTLY));
 
         int popupX = location[0] - margin;
-        int popupY = location[1] - margin-content.getMeasuredHeight();
+        int popupY = location[1] - margin * 2 - content.getMeasuredHeight();
 
         update(popupX, popupY, content.getMeasuredWidth() + margin * 2, content.getMeasuredHeight() + margin * 2);
 

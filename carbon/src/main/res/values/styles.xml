@@ -18,7 +18,6 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
-        <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
@@ -30,6 +29,9 @@
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
+
+        <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
+        <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
 
         <item name="colorPrimary">#ff213C6B</item>
         <item name="colorPrimaryDark">#ff162949</item>
@@ -47,9 +49,11 @@
         <item name="carbon_colorBackgroundInverse">@color/carbon_background_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
+        <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_dark</item>
         <item name="carbon_colorDisabled">@color/carbon_white_30</item>
         <item name="colorControlNormal">@color/carbon_white_70</item>
+        <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -79,12 +83,20 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
-        <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHighlight">#669ACE00</item>
     </style>
 
     <style name="carbon_Theme.Dark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="carbon_Theme.Dark.EditMenu">
+
+    </style>
+
+    <style name="carbon_Theme.Dark.Snackbar">
+        <item name="android:buttonStyle">@style/carbon_Button.Flat</item>
     </style>
 
     <style name="carbon_Theme.Light" parent="Theme.AppCompat.Light">
@@ -105,7 +117,6 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
-        <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
@@ -117,6 +128,9 @@
         <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
+
+        <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
+        <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
 
         <item name="colorPrimary">#ff213C6B</item>
         <item name="colorPrimaryDark">#ff162949</item>
@@ -134,9 +148,11 @@
         <item name="carbon_colorBackgroundInverse">@color/carbon_background_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
+        <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_light</item>
         <item name="carbon_colorDisabled">@color/carbon_black_26</item>
         <item name="colorControlNormal">@color/carbon_black_54</item>
+        <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -165,12 +181,20 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
-        <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHighlight">#669ACE00</item>
     </style>
 
     <style name="carbon_Theme.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="carbon_Theme.Light.EditMenu">
+
+    </style>
+
+    <style name="carbon_Theme.Light.Snackbar">
+        <item name="android:buttonStyle">@style/carbon_Button.Flat</item>
     </style>
 
     <style name="carbon_Button" parent="@android:style/Widget.Button">
@@ -259,13 +283,6 @@
 
     <style name="carbon_DrawerLayout">
         <item name="carbon_rippleColor">@null</item>
-    </style>
-
-    <style name="carbon_Snackbar">
-        <item name="carbon_layoutStyle">floating</item>
-        <item name="carbon_inAnimation">fly</item>
-        <item name="carbon_outAnimation">fly</item>
-        <item name="carbon_duration">@integer/carbon_snackbarDuration</item>
     </style>
 
     <style name="carbon_Toolbar">
@@ -376,8 +393,10 @@
 
     <style name="carbon_SeekBar" parent="android:Widget.SeekBar">
         <item name="carbon_rippleColor">@null</item>
+        <item name="carbon_rippleHotspot">false</item>
         <item name="carbon_tint">@null</item>
         <item name="android:background">@null</item>
+        <item name="android:focusableInTouchMode">false</item>
     </style>
 
 </resources>

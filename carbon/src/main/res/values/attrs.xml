@@ -13,6 +13,7 @@
         <attr name="carbon_tint" format="color|reference"/>
 
         <attr name="carbon_rippleColor" format="reference|color"/>
+        <attr name="carbon_rippleColorInverse" format="reference|color"/>
         <attr name="carbon_rippleHotspot" format="boolean"/>
         <attr name="carbon_rippleStyle" format="enum">
             <enum name="over" value="0"/>
@@ -189,16 +190,6 @@
         <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
-    <attr name="carbon_snackbarStyle" format="reference"/>
-    <declare-styleable name="Snackbar">
-        <attr name="carbon_layoutStyle" format="enum">
-            <enum name="floating" value="0"/>
-            <enum name="docked" value="1"/>
-        </attr>
-        <attr name="android:background"/>
-        <attr name="carbon_duration" format="integer"/>
-    </declare-styleable>
-
     <attr name="carbon_toolbarStyle" format="reference"/>
     <declare-styleable name="Toolbar">
         <attr name="carbon_elevation"/>
@@ -307,4 +298,7 @@
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
     </declare-styleable>
+
+    <attr name="carbon_editMenuTheme" format="reference"/>
+    <attr name="carbon_snackbarTheme" format="reference"/>
 </resources>

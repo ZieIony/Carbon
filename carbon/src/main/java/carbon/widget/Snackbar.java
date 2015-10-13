@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -140,31 +142,28 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
 
     public Snackbar(Context context) {
         super(context);
-        init(null, R.attr.carbon_snackbarStyle);
+        init(null, R.attr.carbon_snackbarTheme);
     }
 
     public Snackbar(Context context, String message, String action, int duration) {
         super(context);
-        init(null, R.attr.carbon_snackbarStyle);
+        init(null, R.attr.carbon_snackbarTheme);
         setMessage(message);
         setAction(action);
         setDuration(duration);
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        content = inflate(getContext(), R.layout.carbon_snackbar, null);
+        TypedValue outValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(R.attr.carbon_snackbarTheme, outValue, true);
+        int theme = outValue.resourceId;
+        Context themedContext = new ContextThemeWrapper(getContext(), theme);
+
+        content = inflate(themedContext, R.layout.carbon_snackbar, null);
         addView(content);
 
         message = (TextView) findViewById(R.id.carbon_messageText);
         button = (Button) findViewById(R.id.carbon_actionButton);
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Snackbar, defStyleAttr, 0);
-        style = Style.values()[a.getInt(R.styleable.Snackbar_carbon_layoutStyle, 0)];
-        setStyle(style);
-
-        duration = a.getInt(R.styleable.Snackbar_carbon_duration, 0);
-
-        a.recycle();
 
         handler = new Handler();
     }
@@ -238,7 +237,6 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
                     @Override
                     public void onAnimationUpdate(ValueAnimator valueAnimator) {
                         MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                        Log.e("snackbar " + Snackbar.this.hashCode(), "" + ((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue()));
                         ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                         if (pushedView.getParent() != null)
                             ((View) pushedView.getParent()).postInvalidate();

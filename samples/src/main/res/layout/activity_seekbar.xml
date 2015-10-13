@@ -29,9 +29,4 @@
         android:layout_width="match_parent"
         android:layout_height="24dp" />
 
-    <carbon.widget.Button
-        android:layout_marginTop="@dimen/carbon_padding"
-        android:text="button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </carbon.widget.LinearLayout>
