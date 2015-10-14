@@ -69,7 +69,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     int DIVIDER_PADDING;
     int disabledColor = 0x4d000000;
-    int errorColor = 0xffff0000;
+    int errorColor;
 
     private Pattern pattern;
     private String errorMessage;
@@ -143,6 +143,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 setTypeface(typeface);
             }
         }
+
+        errorColor = Carbon.getThemeColor(getContext(),R.attr.carbon_colorError);
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
         DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);

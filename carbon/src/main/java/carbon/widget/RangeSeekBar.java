@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -135,7 +136,13 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
         int thumbX2 = (int) (value2 * (getWidth() - getPaddingLeft() - getPaddingRight() - THUMB_RADIUS * 2) + getPaddingLeft() + THUMB_RADIUS);
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            ViewParent parent = getParent();
+            if(parent!=null)
+                parent.requestDisallowInterceptTouchEvent(true);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
+            ViewParent parent = getParent();
+            if(parent!=null)
+                parent.requestDisallowInterceptTouchEvent(false);
         }
 
         if (Math.abs(event.getX() - thumbX) < Math.abs(event.getX() - thumbX2)) {

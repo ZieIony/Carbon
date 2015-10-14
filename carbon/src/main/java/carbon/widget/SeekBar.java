@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -116,7 +117,13 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            ViewParent parent = getParent();
+            if(parent!=null)
+                parent.requestDisallowInterceptTouchEvent(true);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
+            ViewParent parent = getParent();
+            if(parent!=null)
+                parent.requestDisallowInterceptTouchEvent(false);
         }
         float thumbRadius = Carbon.getDip(getContext()) * 12;
         value = (event.getX() - getPaddingLeft() - thumbRadius) / (getWidth() - getPaddingLeft() - getPaddingRight() - thumbRadius * 2);
