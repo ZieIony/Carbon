@@ -74,7 +74,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private Pattern pattern;
     private String errorMessage;
     TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    boolean drawError, afterFirstInteraction = false;
+    boolean afterFirstInteraction = false;
 
     private int matchingView;
     int minCharacters;
@@ -89,7 +89,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private float labelFrac = 0;
     private boolean showFloatingLabel = true;
     private boolean drawDivider = true;
-    private boolean counterError = false;
+    private boolean valid = true;
 
     float PADDING_ERROR, PADDING_LABEL;
 
@@ -224,11 +224,13 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                     drawMatchingViewError = true;
             }
         }
-        drawError = drawPatternError | drawMatchingViewError;
 
-        counterError = afterFirstInteraction && (minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters);
-        labelPaint.setColor(drawError | counterError ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
-        counterPaint.setColor(drawError | counterError ? errorColor : getHintTextColors().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
+        boolean counterError = afterFirstInteraction && (minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters);
+
+        valid = !counterError&&!drawMatchingViewError&&!drawPatternError;
+
+        labelPaint.setColor(!valid ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
+        counterPaint.setColor(!valid ? errorColor : getHintTextColors().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
         if (showFloatingLabel)
             animateFloatingLabel(isFocused() && s.length() > 0);
     }
@@ -245,7 +247,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     private void fireOnValidateEvent(){
         if(validateListener!=null)
-            validateListener.onValidate(isValid());
+            validateListener.onValidate(canShowError());
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -287,11 +289,11 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public void setError(CharSequence text) {
         if (text == null) {
-            drawError = false;
+            valid = true;
             errorMessage = null;
         } else {
             errorMessage = text.toString();
-            drawError = true;
+            valid = false;
         }
     }
 
@@ -316,7 +318,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         }
         if (drawDivider) {
             if (isEnabled()) {
-                paint.setColor(drawError || counterError ? errorColor : tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
+                paint.setColor(!valid ? errorColor : tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
                 paint.setShader(null);
                 canvas.drawLine(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
             } else {
@@ -332,7 +334,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (!isEnabled())
             return;
 
-        if (drawError)
+        if (!valid&&errorMessage!=null)
             canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), errorPaint);
 
         if (getHint() != null && showFloatingLabel) {
@@ -365,8 +367,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         this.showFloatingLabel = showFloatingLabel;
     }
 
-    public boolean isValid() {
-        return !((pattern != null || matchingView != 0 || drawError) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE);
+    private boolean canShowError() {
+        return (pattern != null || matchingView != 0 || !valid) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE;
+    }
+
+    public boolean isValid(){
+        return valid;
     }
 
     public String getPattern() {
@@ -452,7 +458,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             int paddingBottom = getPaddingBottom();
             if (showFloatingLabel)
                 internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
-            if (!isValid()) {
+            if (canShowError()) {
                 internalPaddingBottom = (int) (errorPaint.getTextSize());
                 if (!drawDivider)
                     internalPaddingBottom += PADDING_ERROR;
