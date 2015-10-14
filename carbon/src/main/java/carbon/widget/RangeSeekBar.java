@@ -127,7 +127,7 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
     private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
-    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
         THUMB_RADIUS = Carbon.getDip(getContext()) * 12;
 
         int thumbX = (int) (value * (getWidth() - getPaddingLeft() - getPaddingRight() - THUMB_RADIUS * 2) + getPaddingLeft() + THUMB_RADIUS);
@@ -152,7 +152,7 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
             rippleDrawable.setHotspot(event.getX(), event.getY());
 
         postInvalidate();
-        return super.dispatchTouchEvent(event);
+        return true;
     }
 
     @Override

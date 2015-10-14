@@ -46,6 +46,12 @@ public class Toolbar extends LinearLayout implements ShadowView {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyle, 0);
         setElevation(a.getDimension(R.styleable.Toolbar_carbon_elevation, 0));  // this shouldn't be necessary
         setText(a.getString(R.styleable.Toolbar_android_text));
+        int iconRes = a.getResourceId(R.styleable.Toolbar_carbon_icon, 0);
+        if (iconRes != 0) {
+            setIcon(iconRes);
+        } else {
+            setIconVisible(false);
+        }
         int color = a.getColor(R.styleable.Toolbar_android_background, 0);
         setBackgroundColor(color);
         a.recycle();
@@ -113,7 +119,7 @@ public class Toolbar extends LinearLayout implements ShadowView {
         return (String) title.getText();
     }
 
-    public View getTitleView(){
+    public View getTitleView() {
         return title;
     }
 
@@ -144,11 +150,11 @@ public class Toolbar extends LinearLayout implements ShadowView {
         }
     }
 
-    public Drawable getIcon(){
+    public Drawable getIcon() {
         return icon.getDrawable();
     }
 
-    public View getIconView(){
+    public View getIconView() {
         return icon;
     }
 

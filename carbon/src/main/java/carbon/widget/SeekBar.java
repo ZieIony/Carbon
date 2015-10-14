@@ -114,7 +114,7 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
     private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
-    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
         }
@@ -130,7 +130,7 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
         }
         if (rippleDrawable != null)
             rippleDrawable.setHotspot(event.getX(), event.getY());
-        return super.dispatchTouchEvent(event);
+        return true;
     }
 
     @Override

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_icon"
@@ -11,14 +11,12 @@
         android:layout_height="56dp"
         android:clickable="true"
         android:padding="@dimen/carbon_padding"
-        app:carbon_src="@raw/carbon_uparrow"
-        android:visibility="gone"
         app:carbon_inAnimation="none"
         app:carbon_outAnimation="none"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleHotspot="false"
         app:carbon_rippleStyle="borderless"
-        app:carbon_tint="?attr/carbon_iconColor" />
+        app:carbon_tint="?attr/carbon_iconColor"/>
 
     <carbon.widget.TextView
         android:id="@+id/carbon_toolbarTitle"
@@ -28,13 +26,13 @@
         android:paddingLeft="@dimen/carbon_padding"
         android:text=""
         android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_toolbarContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"/>
 
 </carbon.widget.LinearLayout>

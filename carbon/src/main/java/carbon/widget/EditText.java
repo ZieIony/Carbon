@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -75,6 +76,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     boolean drawError, afterFirstInteraction = false;
 
+    private int matchingView;
     int minCharacters;
     int maxCharacters;
     TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
@@ -145,6 +147,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         if (!isInEditMode())
             setError(a.getString(R.styleable.EditText_carbon_errorMessage));
+        setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
         setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
         setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
         setFloatingLabelEnabled(a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false));
@@ -204,11 +207,22 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }*/
+        boolean drawPatternError = false, drawMatchingViewError = false;
         if (errorMessage != null && pattern != null)
-            drawError = afterFirstInteraction && !pattern.matcher(s).matches();
+            drawPatternError = afterFirstInteraction && !pattern.matcher(s).matches();
+        if (matchingView != 0) {
+            View view = getRootView().findViewById(matchingView);
+            if (view instanceof TextView) {
+                TextView matchingTextView = (TextView) view;
+                if (afterFirstInteraction && !matchingTextView.getText().toString().equals(getText().toString()))
+                    drawMatchingViewError = true;
+            }
+        }
+        drawError = drawPatternError | drawMatchingViewError;
+
         counterError = afterFirstInteraction && (minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters);
         labelPaint.setColor(drawError | counterError ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
-        counterPaint.setColor(drawError | counterError ? errorColor : disabledColor);
+        counterPaint.setColor(drawError | counterError ? errorColor : getHintTextColors().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
         if (showFloatingLabel)
             animateFloatingLabel(isFocused() && s.length() > 0);
 
@@ -291,8 +305,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 matrix.postTranslate(0, getHeight() - paddingBottom + DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f);
                 dashPathShader.setLocalMatrix(matrix);
                 paint.setShader(dashPathShader);
-                canvas.drawRect(getPaddingLeft(), getHeight() - paddingBottom - DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f,
-                        getWidth() - getPaddingRight(), getHeight() - paddingBottom - DIVIDER_PADDING + paint.getStrokeWidth() / 2.0f, paint);
+                canvas.drawRect(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f,
+                        getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + paint.getStrokeWidth() / 2.0f, paint);
             }
         }
 
@@ -333,7 +347,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     }
 
     public boolean canShowError() {
-        return (pattern != null || drawError) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE;
+        return (pattern != null || matchingView != 0 || drawError) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE;
     }
 
     public String getPattern() {
@@ -346,6 +360,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             this.pattern = Pattern.compile(pattern);
         }
+    }
+
+    public void setMatchingView(int viewId) {
+        this.matchingView = viewId;
     }
 
     public int getMinCharacters() {

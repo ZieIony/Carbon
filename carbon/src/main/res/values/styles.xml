@@ -288,6 +288,7 @@
     <style name="carbon_Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="carbon_elevation">@dimen/carbon_elevationMax</item>
+        <item name="carbon_icon">@raw/carbon_uparrow</item>
     </style>
 
     <style name="carbon_ImageView">

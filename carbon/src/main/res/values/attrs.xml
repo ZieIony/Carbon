@@ -195,6 +195,7 @@
         <attr name="carbon_elevation"/>
         <attr name="android:background"/>
         <attr name="android:text"/>
+        <attr name="carbon_icon" format="reference"/>
     </declare-styleable>
 
     <attr name="carbon_imageViewStyle" format="reference"/>
@@ -246,6 +247,7 @@
         <attr name="carbon_errorMessage" format="string"/>
         <attr name="carbon_floatingLabel" format="boolean"/>
         <attr name="android:textAppearance"/>
+        <attr name="carbon_matchingView" format="reference"/>
     </declare-styleable>
 
     <attr name="carbon_spinnerStyle" format="reference"/>
