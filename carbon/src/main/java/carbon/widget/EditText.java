@@ -93,6 +93,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     float PADDING_ERROR, PADDING_LABEL;
 
+    OnValidateListener validateListener;
+
     TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -107,7 +109,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         @Override
         public void afterTextChanged(Editable s) {
             afterFirstInteraction = true;
-            validate();
+            validateInternalEvent();
         }
     };
 
@@ -186,7 +188,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         initActionModeCallback();
 
-        validate();
+        validateInternalEvent();
 
         if (isFocused() && getText().length() > 0)
             labelFrac = 1;
@@ -194,8 +196,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         initSelectionHandle();
     }
 
+    public void validate(){
+        validateInternal();
+        postInvalidate();
+    }
 
-    public void validate() {
+    private void validateInternal(){
         String s = getText().toString();
         // dictionary suggestions vs s.length()>0
         /*try {
@@ -225,8 +231,21 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         counterPaint.setColor(drawError | counterError ? errorColor : getHintTextColors().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
         if (showFloatingLabel)
             animateFloatingLabel(isFocused() && s.length() > 0);
+    }
 
+    private void validateInternalEvent() {
+        validateInternal();
+        fireOnValidateEvent();
         postInvalidate();
+    }
+
+    public void setOnValidateListener(OnValidateListener listener){
+        this.validateListener = listener;
+    }
+
+    private void fireOnValidateEvent(){
+        if(validateListener!=null)
+            validateListener.onValidate(isValid());
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -346,8 +365,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         this.showFloatingLabel = showFloatingLabel;
     }
 
-    public boolean canShowError() {
-        return (pattern != null || matchingView != 0 || drawError) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE;
+    public boolean isValid() {
+        return !((pattern != null || matchingView != 0 || drawError) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE);
     }
 
     public String getPattern() {
@@ -408,7 +427,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         animateFloatingLabel(focused && getText().length() > 0);
         if (!focused) {
             afterFirstInteraction = true;
-            validate();
+            validateInternalEvent();
         }
     }
 
@@ -433,7 +452,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             int paddingBottom = getPaddingBottom();
             if (showFloatingLabel)
                 internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
-            if (canShowError()) {
+            if (!isValid()) {
                 internalPaddingBottom = (int) (errorPaint.getTextSize());
                 if (!drawDivider)
                     internalPaddingBottom += PADDING_ERROR;
