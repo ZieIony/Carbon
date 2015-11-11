@@ -30,6 +30,9 @@ import carbon.R;
  */
 public class Spinner extends EditText {
     PopupMenu popupMenu;
+    private int selectedItem;
+    Adapter defaultAdapter;
+
     private boolean isShowingPopup = false;
 
     public Spinner(Context context) {
@@ -89,6 +92,10 @@ public class Spinner extends EditText {
         });
     }
 
+    public int getSelectedIndex() {
+        return selectedItem;
+    }
+
     public void setAdapter(final RecyclerView.Adapter adapter) {
         if (adapter == null) {
             popupMenu.setAdapter(defaultAdapter);
@@ -107,11 +114,10 @@ public class Spinner extends EditText {
         @Override
         public void onItemClicked(int position) {
             setText(popupMenu.getAdapter().getItem(position).toString());
+            selectedItem  = position;
             popupMenu.dismiss();
         }
     };
-
-    Adapter defaultAdapter;
 
     public void setItems(String[] items) {
         popupMenu.setAdapter(defaultAdapter);

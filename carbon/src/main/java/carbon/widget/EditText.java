@@ -144,7 +144,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             }
         }
 
-        errorColor = Carbon.getThemeColor(getContext(),R.attr.carbon_colorError);
+        errorColor = Carbon.getThemeColor(getContext(), R.attr.carbon_colorError);
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
         DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
@@ -198,12 +198,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         initSelectionHandle();
     }
 
-    public void validate(){
+    public void validate() {
         validateInternal();
         postInvalidate();
     }
 
-    private void validateInternal(){
+    private void validateInternal() {
         String s = getText().toString();
         // dictionary suggestions vs s.length()>0
         /*try {
@@ -229,7 +229,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         boolean counterError = afterFirstInteraction && (minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters);
 
-        valid = !counterError&&!drawMatchingViewError&&!drawPatternError;
+        valid = !counterError && !drawMatchingViewError && !drawPatternError;
 
         labelPaint.setColor(!valid ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
         counterPaint.setColor(!valid ? errorColor : getHintTextColors().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
@@ -243,12 +243,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         postInvalidate();
     }
 
-    public void setOnValidateListener(OnValidateListener listener){
+    public void setOnValidateListener(OnValidateListener listener) {
         this.validateListener = listener;
     }
 
-    private void fireOnValidateEvent(){
-        if(validateListener!=null)
+    private void fireOnValidateEvent() {
+        if (validateListener != null)
             validateListener.onValidate(canShowError());
     }
 
@@ -336,7 +336,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (!isEnabled())
             return;
 
-        if (!valid&&errorMessage!=null)
+        if (!valid && errorMessage != null)
             canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), errorPaint);
 
         if (getHint() != null && showFloatingLabel) {
@@ -373,7 +373,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         return (pattern != null || matchingView != 0 || !valid) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE;
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return valid;
     }
 
@@ -744,22 +744,42 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         this.isShowingPopup = ss.stateToSave > 0;
     }
 
-    static class SavedState extends BaseSavedState {
+    static class SavedState implements Parcelable {
+        public static final SavedState EMPTY_STATE = new SavedState() {
+        };
+
         int stateToSave;
 
+        Parcelable superState;
+
+        SavedState() {
+            superState = null;
+        }
+
         SavedState(Parcelable superState) {
-            super(superState);
+            this.superState = superState != EMPTY_STATE ? superState : null;
         }
 
         private SavedState(Parcel in) {
-            super(in);
+            Parcelable superState = in.readParcelable(EditText.class.getClassLoader());
+            this.superState = superState != null ? superState : EMPTY_STATE;
             this.stateToSave = in.readInt();
         }
 
         @Override
+        public int describeContents() {
+            return 0;
+        }
+
+
+        @Override
         public void writeToParcel(@NonNull Parcel out, int flags) {
-            super.writeToParcel(out, flags);
+            out.writeParcelable(superState, flags);
             out.writeInt(this.stateToSave);
+        }
+
+        public Parcelable getSuperState() {
+            return superState;
         }
 
         //required field that makes Parcelables from a Parcel
