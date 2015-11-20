@@ -14,9 +14,9 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.PopupWindow;
 
 import com.caverock.androidsvg.SVG;
@@ -24,14 +24,16 @@ import com.caverock.androidsvg.SVGParseException;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.drawable.ControlFocusedColorStateList;
 
 /**
  * Created by Marcin on 2015-06-11.
  */
-public class Spinner extends EditText {
+public class Spinner extends TextView implements TintedView {
     PopupMenu popupMenu;
     private int selectedItem;
     Adapter defaultAdapter;
+    AdapterView.OnItemSelectedListener onItemSelectedListener;
 
     private boolean isShowingPopup = false;
 
@@ -68,7 +70,7 @@ public class Spinner extends EditText {
             setCompoundDrawables(null, null, dropdown, null);
         } catch (SVGParseException e) {
 
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
 
         }
 
@@ -114,10 +116,16 @@ public class Spinner extends EditText {
         @Override
         public void onItemClicked(int position) {
             setText(popupMenu.getAdapter().getItem(position).toString());
-            selectedItem  = position;
+            selectedItem = position;
+            if(onItemSelectedListener!=null)
+                onItemSelectedListener.onItemSelected(null,null,selectedItem,0);
             popupMenu.dismiss();
         }
     };
+
+    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener onItemSelectedListener) {
+        this.onItemSelectedListener = onItemSelectedListener;
+    }
 
     public void setItems(String[] items) {
         popupMenu.setAdapter(defaultAdapter);
@@ -222,22 +230,42 @@ public class Spinner extends EditText {
         this.isShowingPopup = ss.stateToSave > 0;
     }
 
-    static class SavedState extends BaseSavedState {
+    static class SavedState implements Parcelable {
+        public static final SavedState EMPTY_STATE = new SavedState() {
+        };
+
         int stateToSave;
 
+        Parcelable superState;
+
+        SavedState() {
+            superState = null;
+        }
+
         SavedState(Parcelable superState) {
-            super(superState);
+            this.superState = superState != EMPTY_STATE ? superState : null;
         }
 
         private SavedState(Parcel in) {
-            super(in);
+            Parcelable superState = in.readParcelable(EditText.class.getClassLoader());
+            this.superState = superState != null ? superState : EMPTY_STATE;
             this.stateToSave = in.readInt();
         }
 
         @Override
+        public int describeContents() {
+            return 0;
+        }
+
+
+        @Override
         public void writeToParcel(@NonNull Parcel out, int flags) {
-            super.writeToParcel(out, flags);
+            out.writeParcelable(superState, flags);
             out.writeInt(this.stateToSave);
+        }
+
+        public Parcelable getSuperState() {
+            return superState;
         }
 
         //required field that makes Parcelables from a Parcel
@@ -258,10 +286,26 @@ public class Spinner extends EditText {
     // tint
     // -------------------------------
 
+    ColorStateList tint;
+
     @Override
     public void setTint(ColorStateList list) {
-        super.setTint(list);
+        this.tint = list;
         if (popupMenu != null)
             popupMenu.setTint(list);
+    }
+
+    @Override
+    public void setTint(int color) {
+        if (color == 0) {
+            setTint(new ControlFocusedColorStateList(getContext()));
+        } else {
+            setTint(ColorStateList.valueOf(color));
+        }
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
     }
 }
