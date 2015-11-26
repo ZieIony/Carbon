@@ -603,17 +603,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
                 VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
                 leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                leftHandle.setAlpha(127);
                 fSelectHandleLeft.set(this, leftHandle);
 
                 VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
                 rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                rightHandle.setAlpha(127);
                 fSelectHandleRight.set(this, rightHandle);
 
                 VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
                 middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                middleHandle.setAlpha(127);
                 fSelectHandleCenter.set(this, middleHandle);
             } catch (final Exception ignored) {
             }

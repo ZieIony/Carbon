@@ -12,7 +12,7 @@
     <carbon.widget.Spinner
         android:id="@+id/day"
         android:layout_width="0dp"
-        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_height="@dimen/carbon_listItemHeight"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:focusable="false"
@@ -23,7 +23,7 @@
     <carbon.widget.Spinner
         android:id="@+id/month"
         android:layout_width="0dp"
-        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_height="@dimen/carbon_listItemHeight"
         android:layout_weight="1"
         android:focusable="false"
         android:focusableInTouchMode="false"
@@ -33,7 +33,7 @@
     <carbon.widget.Spinner
         android:id="@+id/year"
         android:layout_width="0dp"
-        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_height="@dimen/carbon_listItemHeight"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:focusable="false"

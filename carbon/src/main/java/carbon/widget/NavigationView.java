@@ -1,8 +1,7 @@
 package carbon.widget;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.support.v7.internal.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;

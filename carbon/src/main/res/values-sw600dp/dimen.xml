@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="carbon_windowPadding">24dp</dimen>
+
+    <dimen name="carbon_contentSpace">80dp</dimen>
+
+    <dimen name="carbon_toolbarHeight">64dp</dimen>
+    <dimen name="carbon_toolbarItemPadding">12dp</dimen>
+
+    <dimen name="carbon_listItemHeight">64dp</dimen>
+</resources>

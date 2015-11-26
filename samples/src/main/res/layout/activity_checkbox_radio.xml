@@ -9,7 +9,7 @@
 
     <carbon.widget.CheckBox
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/carbon_listItemHeight"
         android:gravity="center_vertical"
         android:paddingBottom="@dimen/carbon_padding"
         android:paddingLeft="@dimen/carbon_padding"
@@ -24,7 +24,7 @@
 
     <carbon.widget.CheckBox
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/carbon_listItemHeight"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
         android:text="check me!" />
@@ -35,7 +35,7 @@
 
     <carbon.widget.CheckBox
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/carbon_listItemHeight"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
         android:text="check me!" />
@@ -50,7 +50,7 @@
 
         <carbon.widget.RadioButton
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/carbon_listItemHeight"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/carbon_padding"
             android:text="pick me!" />
@@ -61,7 +61,7 @@
 
         <carbon.widget.RadioButton
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/carbon_listItemHeight"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/carbon_padding"
             android:text="pick me!" />
@@ -72,7 +72,7 @@
 
         <carbon.widget.RadioButton
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/carbon_listItemHeight"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/carbon_padding"
             android:text="pick me!" />
@@ -84,8 +84,8 @@
 
     <carbon.widget.CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
         android:layout_gravity="end"
         android:gravity="center_vertical"
         android:padding="@dimen/carbon_padding"

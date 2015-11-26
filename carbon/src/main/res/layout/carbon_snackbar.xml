@@ -29,6 +29,5 @@
         android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
         android:textColor="?attr/colorAccent"
-        android:visibility="invisible"
-        />
+        android:visibility="invisible"/>
 </LinearLayout>

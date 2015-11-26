@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="carbon_windowPadding">16dp</dimen>
+
     <dimen name="carbon_padding">16dp</dimen>
     <dimen name="carbon_paddingHalf">8dp</dimen>
+    <dimen name="carbon_margin">16dp</dimen>
+    <dimen name="carbon_marginHalf">8dp</dimen>
+
+    <dimen name="carbon_iconSize">24dp</dimen>
+
+    <dimen name="carbon_contentSpace">72dp</dimen>
+
+    <dimen name="carbon_subtitleHeight">48dp</dimen>
 
     <dimen name="carbon_toolbarHeight">56dp</dimen>
     <dimen name="carbon_toolbarTextSize">20sp</dimen>
+    <dimen name="carbon_toolbarItemSize">48dp</dimen>
+    <dimen name="carbon_toolbarItemPadding">4dp</dimen>
+
+    <dimen name="carbon_listItemHeight">48dp</dimen>
+    <dimen name="carbon_largeListItemHeight">72dp</dimen>
 
     <dimen name="carbon_statusBarHeight">25dp</dimen>
 
@@ -22,12 +37,13 @@
 
     <dimen name="carbon_fabSize">56dp</dimen>
     <dimen name="carbon_smallFabSize">40dp</dimen>
-    <dimen name="carbon_translation">2dp</dimen>
+
     <dimen name="carbon_1dip">1dp</dimen>
 
     <dimen name="carbon_errorTextSize">12sp</dimen>
     <dimen name="carbon_labelTextSize">12sp</dimen>
     <dimen name="carbon_charCounterTextSize">12sp</dimen>
+
     <dimen name="carbon_menuHeight">44dp</dimen>
 
     <integer name="carbon_snackbarDuration">2000</integer>

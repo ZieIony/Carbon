@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content">
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_icon"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/carbon_toolbarItemSize"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_marginLeft="@dimen/carbon_toolbarItemPadding"
+        android:layout_marginRight="@dimen/carbon_toolbarItemPadding"
         android:clickable="true"
-        android:padding="@dimen/carbon_padding"
+        android:scaleType="center"
         app:carbon_inAnimation="none"
         app:carbon_outAnimation="none"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
@@ -21,9 +22,10 @@
     <carbon.widget.TextView
         android:id="@+id/carbon_toolbarTitle"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:paddingLeft="@dimen/carbon_padding"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_toRightOf="@id/carbon_icon"
         android:text=""
         android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
         android:visibility="gone"/>
@@ -32,7 +34,11 @@
         android:id="@+id/carbon_toolbarContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/carbon_toolbarItemPadding"
+        android:layout_toRightOf="@id/carbon_toolbarTitle"
         android:gravity="right"
+        android:minHeight="@dimen/carbon_toolbarHeight"
         android:orientation="horizontal"/>
 
-</carbon.widget.LinearLayout>
+</carbon.widget.RelativeLayout>

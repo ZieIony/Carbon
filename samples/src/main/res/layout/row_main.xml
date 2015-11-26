@@ -14,7 +14,7 @@
         android:text="Row"
         android:layout_weight="1"
         android:layout_width="wrap_content"
-        android:layout_height="56dp" />
+        android:layout_height="@dimen/carbon_listItemHeight" />
 
     <carbon.widget.TextView
         android:id="@+id/beta"
@@ -25,7 +25,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:text="beta"
         android:layout_width="wrap_content"
-        android:layout_height="56dp" />
+        android:layout_height="@dimen/carbon_listItemHeight" />
 
     <carbon.widget.TextView
         android:id="@+id/lollipop"
@@ -36,6 +36,6 @@
         android:paddingRight="@dimen/carbon_padding"
         android:text="Lollipop"
         android:layout_width="wrap_content"
-        android:layout_height="56dp" />
+        android:layout_height="@dimen/carbon_listItemHeight" />
 
 </carbon.widget.LinearLayout>

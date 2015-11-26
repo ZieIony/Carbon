@@ -10,6 +10,11 @@
     <color name="carbon_text_menu_dark">#deffffff</color>
     <color name="carbon_text_button_dark">#deffffff</color>
 
+    <color name="carbon_text_primary_dark">#ffffffff</color>
+    <color name="carbon_text_secondary_dark">#b3ffffff</color>
+    <color name="carbon_text_hint_dark">#4dffffff</color>
+    <color name="carbon_text_disabled_dark">#4dffffff</color>
+
 
     <color name="carbon_text_headline_light">#de000000</color>
     <color name="carbon_text_title_light">#de000000</color>
@@ -20,8 +25,13 @@
     <color name="carbon_text_menu_light">#de000000</color>
     <color name="carbon_text_button_light">#de000000</color>
 
+    <color name="carbon_text_primary_light">#de000000</color>
+    <color name="carbon_text_secondary_light">#8a000000</color>
+    <color name="carbon_text_hint_light">#61000000</color>
+    <color name="carbon_text_disabled_light">#61000000</color>
 
-    <style name="carbon_TextAppearance" parent="@android:style/TextAppearance"></style>
+
+    <style name="carbon_TextAppearance" parent="@android:style/TextAppearance"/>
 
 
     <style name="carbon_TextAppearance.Headline">

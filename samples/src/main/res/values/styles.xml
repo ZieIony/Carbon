@@ -4,6 +4,9 @@
     <style name="AppTheme" parent="carbon_Theme.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">#303F9F</item>
+        <item name="colorAccent">#FF4081</item>
     </style>
 
     <style name="RaisedButtonStyle" parent="AppTheme">

@@ -33,25 +33,25 @@
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
 
-        <item name="colorPrimary">#ff213C6B</item>
-        <item name="colorPrimaryDark">#ff162949</item>
-        <item name="colorAccent">#ff9ACE00</item>
+        <item name="colorPrimary">@color/carbon_grey_900</item>
+        <item name="colorPrimaryDark">@color/carbon_black</item>
+        <item name="colorAccent">@color/carbon_lime_a700</item>
 
-        <item name="android:textColorPrimary">@color/carbon_white</item>
-        <item name="android:textColorSecondary">@color/carbon_white_70</item>
-        <item name="android:textColorTertiary">@color/carbon_white_30</item>
+        <item name="android:textColorPrimary">@color/carbon_text_primary_dark</item>
+        <item name="android:textColorSecondary">@color/carbon_text_secondary_dark</item>
+        <item name="android:textColorTertiary">@color/carbon_text_hint_dark</item>
 
-        <item name="android:textColorPrimaryInverse">@color/carbon_black_87</item>
-        <item name="android:textColorSecondaryInverse">@color/carbon_black_54</item>
-        <item name="android:textColorTertiaryInverse">@color/carbon_black_26</item>
+        <item name="android:textColorPrimaryInverse">@color/carbon_text_primary_light</item>
+        <item name="android:textColorSecondaryInverse">@color/carbon_text_secondary_light</item>
+        <item name="android:textColorTertiaryInverse">@color/carbon_text_hint_light</item>
 
-        <item name="carbon_colorBackground">@color/carbon_background_dark</item>
-        <item name="carbon_colorBackgroundInverse">@color/carbon_background_light</item>
+        <item name="carbon_colorBackground">@color/carbon_grey_800</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_green_50</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
-        <item name="carbon_iconColor">@color/carbon_icon_dark</item>
-        <item name="carbon_colorDisabled">@color/carbon_white_30</item>
+        <item name="carbon_iconColor">@color/carbon_icon_active_dark</item>
+        <item name="carbon_colorDisabled">@color/carbon_icon_inactive_dark</item>
         <item name="colorControlNormal">@color/carbon_white_70</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
 
@@ -83,7 +83,7 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
-        <item name="android:textColorHighlight">#669ACE00</item>
+        <item name="android:textColorHighlight">@color/carbon_lime_a700</item>
     </style>
 
     <style name="carbon_Theme.Dark.NoActionBar">
@@ -132,25 +132,25 @@
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
 
-        <item name="colorPrimary">#ff213C6B</item>
-        <item name="colorPrimaryDark">#ff162949</item>
-        <item name="colorAccent">#ff9ACE00</item>
+        <item name="colorPrimary">@color/carbon_grey_300</item>
+        <item name="colorPrimaryDark">@color/carbon_grey_100</item>
+        <item name="colorAccent">@color/carbon_lime_a700</item>
 
-        <item name="android:textColorPrimary">@color/carbon_black_87</item>
-        <item name="android:textColorSecondary">@color/carbon_black_54</item>
-        <item name="android:textColorTertiary">@color/carbon_black_26</item>
+        <item name="android:textColorPrimary">@color/carbon_text_primary_light</item>
+        <item name="android:textColorSecondary">@color/carbon_text_secondary_light</item>
+        <item name="android:textColorTertiary">@color/carbon_text_hint_light</item>
 
-        <item name="android:textColorPrimaryInverse">@color/carbon_white</item>
-        <item name="android:textColorSecondaryInverse">@color/carbon_white_70</item>
-        <item name="android:textColorTertiaryInverse">@color/carbon_white_30</item>
+        <item name="android:textColorPrimaryInverse">@color/carbon_text_primary_dark</item>
+        <item name="android:textColorSecondaryInverse">@color/carbon_text_secondary_dark</item>
+        <item name="android:textColorTertiaryInverse">@color/carbon_text_hint_dark</item>
 
-        <item name="carbon_colorBackground">@color/carbon_background_light</item>
-        <item name="carbon_colorBackgroundInverse">@color/carbon_background_dark</item>
+        <item name="carbon_colorBackground">@color/carbon_white</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_grey_800</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
-        <item name="carbon_iconColor">@color/carbon_icon_light</item>
-        <item name="carbon_colorDisabled">@color/carbon_black_26</item>
+        <item name="carbon_iconColor">@color/carbon_icon_active_light</item>
+        <item name="carbon_colorDisabled">@color/carbon_icon_inactive_light</item>
         <item name="colorControlNormal">@color/carbon_black_54</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
 
@@ -181,7 +181,7 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
-        <item name="android:textColorHighlight">#669ACE00</item>
+        <item name="android:textColorHighlight">@color/carbon_lime_a700</item>
     </style>
 
     <style name="carbon_Theme.Light.NoActionBar">
@@ -338,15 +338,12 @@
         <item name="android:paddingBottom">16dp</item>
     </style>
 
-    <style name="carbon_Spinner" parent="carbon_EditText">
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
-        <item name="android:editable">false</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingTop">0dp</item>
-        <item name="android:paddingBottom">0dp</item>
+    <style name="carbon_Spinner" parent="carbon_TextView">
+        <item name="android:maxLines">1</item>
         <item name="android:paddingLeft">@dimen/carbon_padding</item>
         <item name="android:paddingRight">@dimen/carbon_padding</item>
-        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">

@@ -89,7 +89,7 @@ public class PopupMenu extends PopupWindow implements TintedView {
         final Resources res = getContentView().getContext().getResources();
 
         int margin = (int) res.getDimension(R.dimen.carbon_padding);
-        int itemHeight = (int) res.getDimension(R.dimen.carbon_toolbarHeight);
+        int itemHeight = (int) res.getDimension(R.dimen.carbon_listItemHeight);
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
         int selectedItem = 0;

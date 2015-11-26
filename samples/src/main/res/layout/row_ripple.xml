@@ -9,8 +9,8 @@
 
     <ImageView
         android:layout_margin="@dimen/carbon_padding"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
         android:src="@drawable/ic_launcher" />
 
     <FrameLayout
@@ -24,7 +24,7 @@
             android:paddingRight="@dimen/carbon_padding"
             android:text="Row"
             android:layout_width="match_parent"
-            android:layout_height="56dp" />
+            android:layout_height="@dimen/carbon_listItemHeight" />
 
         <carbon.widget.Divider
             android:layout_gravity="bottom"

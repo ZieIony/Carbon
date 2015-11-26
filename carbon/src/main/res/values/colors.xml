@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- dark theme -->
-    <color name="carbon_white">#ffffffff</color>
     <color name="carbon_divider_dark">#1fffffff</color>
     <color name="carbon_ripple_dark">#14ffffff</color>
-    <color name="carbon_icon_light">#ffffffff</color>
-
-    <color name="carbon_background_dark">#ff333333</color>
+    <color name="carbon_icon_active_dark">#8a000000</color>
+    <color name="carbon_icon_inactive_dark">#42000000</color>
+    <color name="carbon_windowbackground_dark">#ff303030</color>
 
     <!-- light theme -->
-    <color name="carbon_black">#ff000000</color>
     <color name="carbon_divider_light">#1f000000</color>
     <color name="carbon_ripple_light">#0c000000</color>
-    <color name="carbon_icon_dark">#8a000000</color>
-
-    <color name="carbon_background_light">#ffeeeeee</color>
+    <color name="carbon_icon_active_light">#ffffffff</color>
+    <color name="carbon_icon_inactive_light">#4dffffff</color>
+    <color name="carbon_windowbackground_light">#fffafafa</color>
 
     <color name="carbon_debug">#ffDE3226</color>
 
@@ -26,4 +24,5 @@
 
     <color name="carbon_tab_text_selected">#ff000000</color>
     <color name="carbon_tab_text_unselected">#8a000000</color>
+
 </resources>
