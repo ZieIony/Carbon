@@ -1,5 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.10.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.10.1/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.11-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.11/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1)
 
 [![Google+](https://img.shields.io/badge/Google+-Zielony-red.svg)](https://plus.google.com/u/2/109054799904873578131)&nbsp;&nbsp;
@@ -51,7 +51,7 @@ Material Design implementation for Android 2.2 and newer. This is not the exact 
  - fading edges
  - animated checkboxes and radiobuttons
  - DrawerLayout with real shadows
- - EditText with floating label, character counter and pattern validation
+ - EditText with floating label, character counter, pattern validation and Marshmallow-style menu
  - Lollipop's recents list layout
  - Snackbar with swipe-to-dismiss, tap-outside-to-dismiss, message queue and view pushing
  - view anchors
