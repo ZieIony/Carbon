@@ -143,6 +143,7 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -160,6 +161,7 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         ProgressBar.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

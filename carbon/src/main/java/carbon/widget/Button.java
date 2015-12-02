@@ -563,6 +563,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -580,6 +581,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         Button.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

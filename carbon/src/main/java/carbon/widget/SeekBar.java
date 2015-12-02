@@ -308,6 +308,7 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -325,6 +326,7 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         SeekBar.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

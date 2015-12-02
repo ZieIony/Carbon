@@ -530,6 +530,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -547,6 +548,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         TextView.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

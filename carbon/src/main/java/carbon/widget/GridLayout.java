@@ -587,6 +587,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -604,6 +605,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         GridLayout.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

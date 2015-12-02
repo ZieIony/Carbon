@@ -330,6 +330,7 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -347,6 +348,7 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         RangeSeekBar.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

@@ -164,11 +164,11 @@ public class PowerMenuActivity extends Activity {
                 if (vibration) {
                     vibration = false;
                     v.setBackgroundColor(0xffffffff);
-                    ((ImageView) v).setColorFilter(getResources().getColor(R.color.carbon_black_54));
+                    ((ImageView) v).setTint(getResources().getColor(R.color.carbon_black_54));
                 } else {
                     vibration = true;
                     v.setBackgroundColor(0xff00695D);
-                    ((ImageView) v).setColorFilter(0xffffffff);
+                    ((ImageView) v).setTint(0xffffffff);
                     Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(500);
                 }
@@ -182,11 +182,11 @@ public class PowerMenuActivity extends Activity {
                 if (volume) {
                     volume = false;
                     v.setBackgroundColor(0xffffffff);
-                    ((ImageView) v).setColorFilter(getResources().getColor(R.color.carbon_black_54));
+                    ((ImageView) v).setTint(getResources().getColor(R.color.carbon_black_54));
                 } else {
                     volume = true;
                     v.setBackgroundColor(0xff00695D);
-                    ((ImageView) v).setColorFilter(0xffffffff);
+                    ((ImageView) v).setTint(0xffffffff);
                     v.playSoundEffect(SoundEffectConstants.CLICK);
                 }
                 powerMenu.postInvalidate();

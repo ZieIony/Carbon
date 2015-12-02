@@ -587,6 +587,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -604,6 +605,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         RelativeLayout.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

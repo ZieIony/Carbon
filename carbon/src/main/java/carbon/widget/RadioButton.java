@@ -365,6 +365,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -382,6 +383,7 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         RadioButton.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

@@ -364,6 +364,7 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -381,6 +382,7 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         CheckBox.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

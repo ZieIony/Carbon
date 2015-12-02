@@ -1019,6 +1019,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -1036,6 +1037,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         EditText.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

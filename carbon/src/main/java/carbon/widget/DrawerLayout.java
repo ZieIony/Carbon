@@ -582,6 +582,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -599,6 +600,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         DrawerLayout.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

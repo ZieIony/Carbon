@@ -586,6 +586,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -603,6 +604,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         LinearLayout.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

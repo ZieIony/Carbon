@@ -525,6 +525,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -542,6 +543,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         ImageView.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }

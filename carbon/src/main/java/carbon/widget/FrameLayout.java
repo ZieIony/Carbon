@@ -587,6 +587,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
+                        clearAnimation();
                     }
                 });
             }
@@ -604,6 +605,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         FrameLayout.super.setVisibility(visibility);
                     animator = null;
+                    clearAnimation();
                 }
             });
         }
