@@ -4,14 +4,14 @@
     <color name="carbon_divider_dark">#1fffffff</color>
     <color name="carbon_ripple_dark">#14ffffff</color>
     <color name="carbon_icon_active_dark">#8a000000</color>
-    <color name="carbon_icon_inactive_dark">#42000000</color>
+    <color name="carbon_icon_inactive_dark">#4dffffff</color>
     <color name="carbon_windowbackground_dark">#ff303030</color>
 
     <!-- light theme -->
     <color name="carbon_divider_light">#1f000000</color>
     <color name="carbon_ripple_light">#0c000000</color>
     <color name="carbon_icon_active_light">#ffffffff</color>
-    <color name="carbon_icon_inactive_light">#4dffffff</color>
+    <color name="carbon_icon_inactive_light">#42000000</color>
     <color name="carbon_windowbackground_light">#fffafafa</color>
 
     <color name="carbon_debug">#ffDE3226</color>

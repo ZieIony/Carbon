@@ -13,9 +13,11 @@ public class ControlFocusedColorStateList extends ColorStateList {
     public ControlFocusedColorStateList(Context context) {
         super(new int[][]{
                 new int[]{android.R.attr.state_focused},
+                new int[]{-android.R.attr.state_enabled},
                 new int[]{}
         }, new int[]{
                 Carbon.getThemeColor(context, R.attr.colorAccent),
+                Carbon.getThemeColor(context, R.attr.carbon_colorDisabled),
                 Carbon.getThemeColor(context, R.attr.colorControlNormal)
         });
     }

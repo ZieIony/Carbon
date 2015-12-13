@@ -36,7 +36,8 @@
                 android:hint="email"
                 android:text="hello text"
                 app:carbon_errorMessage="it's not an email"
-                app:carbon_floatingLabel="true"
+                app:carbon_label="persistent"
+                app:carbon_minCharacters="3"
                 app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"/>
 
             <carbon.widget.EditText
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="bottom|left"
+                app:carbon_label="persistent"
                 app:carbon_floatingLabel="true"
                 app:carbon_minCharacters="3"/>
 

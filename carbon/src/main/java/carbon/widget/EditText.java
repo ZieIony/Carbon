@@ -59,6 +59,10 @@ import carbon.internal.TypefaceUtils;
  * Created by Marcin on 2015-02-14.
  */
 public class EditText extends android.widget.EditText implements RippleView, TouchMarginView, AnimatedView, TintedView {
+    public enum LabelStyle {
+        Floating, Persistent, Hint
+    }
+
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     private static final int ID_CUT = android.R.id.cut;
@@ -68,7 +72,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private static final int ID_SELECT_ALL = android.R.id.selectAll;
 
     int DIVIDER_PADDING;
-    int disabledColor = 0x4d000000;
     int errorColor;
 
     private Pattern pattern;
@@ -82,12 +85,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
     TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    LabelStyle labelStyle;
 
     int internalPaddingTop = 0, internalPaddingBottom = 0;
 
     private BitmapShader dashPathShader;
     private float labelFrac = 0;
-    private boolean showFloatingLabel = true;
     private boolean drawDivider = true;
     private boolean valid = true;
 
@@ -154,7 +157,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
         setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
         setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
-        setFloatingLabelEnabled(a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false));
+        setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.EditText_carbon_label, a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false) ? 0 : 2)]);
 
         a.recycle();
 
@@ -182,7 +185,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         Canvas c = new Canvas(dashPathBitmap);
         paint.setColor(0xffffffff);
         paint.setAlpha(255);
-        paint.setColor(disabledColor);
         c.drawCircle(dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, paint);
         dashPathShader = new BitmapShader(dashPathBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
         PADDING_ERROR = getResources().getDimension(R.dimen.carbon_paddingHalf);
@@ -231,9 +233,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         valid = !counterError && !drawMatchingViewError && !drawPatternError;
 
-        labelPaint.setColor(!valid ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
-        counterPaint.setColor(!valid ? errorColor : getHintTextColors().getColorForState(new int[]{android.R.attr.state_focused}, disabledColor));
-        if (showFloatingLabel)
+        labelPaint.setColor(!valid ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, 0xff00ff00));
+        counterPaint.setColor(!valid ? errorColor : tint.getColorForState(new int[]{-android.R.attr.state_enabled}, 0xff00ff00));
+        if (labelStyle == LabelStyle.Floating)
             animateFloatingLabel(isFocused() && s.length() > 0);
     }
 
@@ -250,6 +252,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private void fireOnValidateEvent() {
         if (validateListener != null)
             validateListener.onValidate(canShowError());
+    }
+
+    public LabelStyle getLabelStyle() {
+        return labelStyle;
+    }
+
+    public void setLabelStyle(LabelStyle labelStyle) {
+        this.labelStyle = labelStyle;
     }
 
     public void setAllCaps(boolean allCaps) {
@@ -320,8 +330,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         }
         if (drawDivider) {
             if (isEnabled()) {
-                paint.setColor(!valid ? errorColor : tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
                 paint.setShader(null);
+                paint.setColor(!valid ? errorColor : tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
                 canvas.drawLine(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
             } else {
                 Matrix matrix = new Matrix();
@@ -337,36 +347,44 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             return;
 
         if (!valid && errorMessage != null)
-            canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), errorPaint);
+            canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + errorPaint.getTextSize(), errorPaint);
 
-        if (getHint() != null && showFloatingLabel) {
-            String label = getHint().toString();
-            labelPaint.setAlpha((int) (255 * labelFrac));
-            canvas.drawText(label, getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
+        if (getHint() != null) {
+            if (labelStyle == LabelStyle.Floating) {
+                String label = getHint().toString();
+                labelPaint.setAlpha((int) (255 * labelFrac));
+                canvas.drawText(label, getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
+            } else if (labelStyle == LabelStyle.Persistent) {
+                String label = getHint().toString();
+                labelPaint.setColor(hasFocus()?tint.getColorForState(new int[]{android.R.attr.state_focused},0):tint.getColorForState(new int[]{-android.R.attr.state_enabled},0));
+                canvas.drawText(label, getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
+            }
         }
 
         int length = getText().length();
         if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
             String text = length + " / " + minCharacters + "-" + maxCharacters;
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), counterPaint);
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
         } else if (minCharacters > 0) {
             String text = length + " / " + minCharacters + "+";
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), counterPaint);
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
         } else if (maxCharacters < Integer.MAX_VALUE) {
             String text = length + " / " + maxCharacters;
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + labelPaint.getTextSize(), counterPaint);
+            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
         }
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
             rippleDrawable.draw(canvas);
     }
 
+    @Deprecated
     public boolean isFloatingLabelEnabled() {
-        return showFloatingLabel;
+        return labelStyle == LabelStyle.Floating;
     }
 
+    @Deprecated
     public void setFloatingLabelEnabled(boolean showFloatingLabel) {
-        this.showFloatingLabel = showFloatingLabel;
+        this.labelStyle = showFloatingLabel ? LabelStyle.Floating : LabelStyle.Hint;
     }
 
     private boolean canShowError() {
@@ -432,7 +450,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        animateFloatingLabel(focused && getText().length() > 0);
+        if (labelStyle == LabelStyle.Floating)
+            animateFloatingLabel(focused && getText().length() > 0);
         if (!focused) {
             afterFirstInteraction = true;
             validateInternalEvent();
@@ -458,7 +477,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.UNSPECIFIED) {
             int paddingTop = getPaddingTop();
             int paddingBottom = getPaddingBottom();
-            if (showFloatingLabel)
+            if (labelStyle != LabelStyle.Hint)
                 internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
             if (canShowError()) {
                 internalPaddingBottom = (int) (errorPaint.getTextSize());

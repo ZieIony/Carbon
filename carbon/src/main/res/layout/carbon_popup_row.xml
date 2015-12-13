@@ -13,5 +13,7 @@
         android:id="@+id/carbon_itemText"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
+        android:singleLine="true"
+        android:maxLines="1"
         android:layout_height="@dimen/carbon_listItemHeight" />
 </carbon.widget.FrameLayout>

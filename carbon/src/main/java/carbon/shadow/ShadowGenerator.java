@@ -104,7 +104,7 @@ public class ShadowGenerator {
         roundRect.set(e, e, bitmap.getWidth() - e, bitmap.getHeight() - e);
         shadowCanvas.drawRoundRect(roundRect, c, c, paint);
 
-        blur(bitmap, elevation);
+        blur(bitmap, elevation/2);
 
         return new NinePatchShadow(bitmap, elevation, c);
     }
