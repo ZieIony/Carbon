@@ -19,7 +19,12 @@
     <dimen name="carbon_toolbarItemPadding">4dp</dimen>
 
     <dimen name="carbon_listItemHeight">48dp</dimen>
+    <dimen name="carbon_mediumListItemHeight">64dp</dimen>
     <dimen name="carbon_largeListItemHeight">72dp</dimen>
+
+    <dimen name="carbon_tableRowHeight">48dp</dimen>
+    <dimen name="carbon_tableHeaderHeight">56dp</dimen>
+    <dimen name="carbon_tableFooterHeight">56dp</dimen>
 
     <dimen name="carbon_statusBarHeight">25dp</dimen>
 

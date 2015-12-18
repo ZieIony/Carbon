@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <carbon.widget.Toolbar
+        android:id="@+id/carbon_tableToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight" />
+
+    <carbon.widget.FrameLayout
+        android:id="@+id/carbon_tableHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_tableFooterHeight"
+        android:orientation="horizontal" />
+
+    <carbon.widget.TableView
+        android:id="@+id/carbon_table"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <carbon.widget.LinearLayout
+        android:id="@+id/carbon_tableFooter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_tableFooterHeight"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/carbon_margin"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/carbon_rowsPerPage" />
+
+        <carbon.widget.Spinner
+            android:layout_margin="@dimen/carbon_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:layout_gravity="center_vertical" />
+
+        <carbon.widget.TextView
+            android:layout_margin="@dimen/carbon_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="1-10 of 100" />
+
+        <carbon.widget.ImageView
+            android:padding="@dimen/carbon_padding"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize"
+            android:layout_gravity="center_vertical"/>
+
+        <carbon.widget.ImageView
+            android:padding="@dimen/carbon_padding"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize"
+            android:layout_gravity="center_vertical" />
+    </carbon.widget.LinearLayout>
+</LinearLayout>

@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/carbon_toolbarItemPadding"
+        android:paddingRight="@dimen/carbon_toolbarItemPadding"
         android:layout_toRightOf="@id/carbon_toolbarTitle"
         android:gravity="right"
         android:minHeight="@dimen/carbon_toolbarHeight"
