@@ -8,7 +8,6 @@
 
     <carbon.widget.Toolbar
         android:id="@+id/toolbar"
-        app:carbon_elevation="@dimen/carbon_elevationMax"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

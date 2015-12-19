@@ -23,7 +23,7 @@
         android:background="?attr/carbon_colorBackground"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        app:carbon_elevation="@dimen/carbon_elevationMax"
+        app:carbon_elevation="@dimen/carbon_elevationDrawer"
         app:carbon_insetTop="0dp" />
 
 </carbon.widget.DrawerLayout>

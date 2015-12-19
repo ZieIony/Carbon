@@ -13,7 +13,6 @@
         android:layout_height="match_parent">
 
         <carbon.widget.Toolbar
-            app:carbon_elevation="@dimen/carbon_elevationMax"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight" />
@@ -22,7 +21,7 @@
 
     <carbon.widget.LinearLayout
         android:id="@+id/drawerMenu"
-        app:carbon_elevation="@dimen/carbon_elevationMax"
+        app:carbon_elevation="@dimen/carbon_elevationDrawer"
         android:layout_gravity="start"
         android:orientation="vertical"
         app:carbon_insetTop="0dp"

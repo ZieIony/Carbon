@@ -35,10 +35,15 @@
     <dimen name="carbon_avatarSize">40dp</dimen>
 
     <dimen name="carbon_elevationFlat">0dp</dimen>
-    <dimen name="carbon_elevationLow">2dp</dimen>
-    <dimen name="carbon_elevationMedium">4dp</dimen>
-    <dimen name="carbon_elevationHigh">6dp</dimen>
-    <dimen name="carbon_elevationMax">8dp</dimen>
+    <dimen name="carbon_elevationLow">4dp</dimen>
+    <dimen name="carbon_elevationMedium">8dp</dimen>
+    <dimen name="carbon_elevationHigh">12dp</dimen>
+    <dimen name="carbon_elevationMax">16dp</dimen>
+
+    <dimen name="carbon_elevationToolbar">8dp</dimen>
+    <dimen name="carbon_elevationFAB">6dp</dimen>
+    <dimen name="carbon_elevationButton">2dp</dimen>
+    <dimen name="carbon_elevationDrawer">16dp</dimen>
 
     <dimen name="carbon_fabSize">56dp</dimen>
     <dimen name="carbon_smallFabSize">40dp</dimen>
@@ -52,4 +57,9 @@
     <dimen name="carbon_menuHeight">44dp</dimen>
 
     <integer name="carbon_snackbarDuration">2000</integer>
+
+    <dimen name="carbon_chipHeight">32dp</dimen>
+    <dimen name="carbon_chipPadding">12dp</dimen>
+    <dimen name="carbon_chipTextSize">13dp</dimen>
+    <dimen name="carbon_chipCloseMargin">4dp</dimen>
 </resources>

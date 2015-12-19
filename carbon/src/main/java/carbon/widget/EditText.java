@@ -91,7 +91,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     private BitmapShader dashPathShader;
     private float labelFrac = 0;
-    private boolean drawDivider = true;
+    private boolean underline = true;
     private boolean valid = true;
 
     float PADDING_ERROR, PADDING_LABEL;
@@ -157,7 +157,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
         setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
         setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
-        setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.EditText_carbon_label, a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false) ? 0 : 2)]);
+        setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.EditText_carbon_labelStyle, a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false) ? 0 : 2)]);
+        setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline,true));
 
         a.recycle();
 
@@ -198,6 +199,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             labelFrac = 1;
 
         initSelectionHandle();
+    }
+
+    public boolean hasUnderline() {
+        return underline;
+    }
+
+    public void setUnderline(boolean drawUnderline) {
+        this.underline = drawUnderline;
     }
 
     public void validate() {
@@ -328,7 +337,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
         }
-        if (drawDivider) {
+        if (underline) {
             if (isEnabled()) {
                 paint.setShader(null);
                 paint.setColor(!valid ? errorColor : tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
@@ -481,7 +490,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
             if (canShowError()) {
                 internalPaddingBottom = (int) (errorPaint.getTextSize());
-                if (!drawDivider)
+                if (!underline)
                     internalPaddingBottom += PADDING_ERROR;
             }
             setPadding(getPaddingLeft(), paddingTop, getPaddingRight(), paddingBottom);
@@ -1097,16 +1106,13 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     public void setTint(ColorStateList list) {
         if (list == null) {
             tint = null;
-            drawDivider = false;
         } else {
             this.tint = list;
-            drawDivider = true;
         }
     }
 
     @Override
     public void setTint(int color) {
-        drawDivider = true;
         if (color == 0) {
             setTint(new ControlFocusedColorStateList(getContext()));
         } else {

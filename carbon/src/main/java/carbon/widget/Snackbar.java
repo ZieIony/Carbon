@@ -2,11 +2,9 @@ package carbon.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
@@ -115,8 +113,13 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
         return false;
     }
 
+    @Deprecated
     public interface OnDismissedListener {
         void onDismissed();
+    }
+
+    public interface OnDismissListener {
+        void onDismiss();
     }
 
     private TextView message;
@@ -131,7 +134,7 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
     };
     private Handler handler;
     private View content;
-    OnDismissedListener onDismissedListener;
+    OnDismissListener onDismissListener;
     boolean swipeToDismiss = true, tapOutsideToDismiss = true;
 
     static List<Snackbar> next = new ArrayList<>();
@@ -221,8 +224,8 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
             if (getParent() == null)
                 return;
             handler.removeCallbacks(hideRunnable);
-            if (onDismissedListener != null)
-                onDismissedListener.onDismissed();
+            if (onDismissListener != null)
+                onDismissListener.onDismiss();
             AnimUtils.flyOut(content, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
@@ -389,7 +392,18 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
         this.tapOutsideToDismiss = tapOutsideToDismiss;
     }
 
-    public void setOnDismissedListener(OnDismissedListener onDismissedListener) {
-        this.onDismissedListener = onDismissedListener;
+    @Deprecated
+    public void setOnDismissedListener(final OnDismissedListener onDismissedListener) {
+        this.onDismissListener = new OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                if (onDismissedListener != null)
+                    onDismissedListener.onDismissed();
+            }
+        };
+    }
+
+    public void setOnDismissListener(OnDismissListener onDismissListener) {
+        this.onDismissListener = onDismissListener;
     }
 }

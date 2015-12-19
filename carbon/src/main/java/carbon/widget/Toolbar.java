@@ -11,30 +11,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.R;
-import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-12-13.
  */
-public class Toolbar extends LinearLayout implements ShadowView {
+public class Toolbar extends FrameLayout {
     private ViewGroup content;
     private ImageView icon;
     private TextView title;
 
     public Toolbar(Context context) {
-        this(context, null);
+        super(context);
+        initToolbar(null, R.attr.carbon_toolbarStyle);
     }
 
     public Toolbar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, R.attr.carbon_toolbarStyle);
+        initToolbar(attrs, R.attr.carbon_toolbarStyle);
     }
 
-    private void init(AttributeSet attrs, int defStyle) {
+    private void initToolbar(AttributeSet attrs, int defStyle) {
         inflate(getContext(), R.layout.carbon_toolbar, this);
         content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
         title = (TextView) findViewById(R.id.carbon_toolbarTitle);
-        icon = (ImageView) findViewById(R.id.carbon_icon);
+        icon = (ImageView) findViewById(R.id.carbon_toolbarIcon);
 
         icon.setOnClickListener(new OnClickListener() {
             @Override
@@ -124,30 +124,18 @@ public class Toolbar extends LinearLayout implements ShadowView {
     }
 
     public void setIcon(int iconRes) {
-        if (iconRes == 0) {
-            icon.setVisibility(GONE);
-        } else {
-            icon.setImageResource(iconRes);
-            icon.setVisibility(VISIBLE);
-        }
+        icon.setImageResource(iconRes);
+        setIconVisible(iconRes != 0);
     }
 
     public void setIcon(Drawable drawable) {
-        if (drawable == null) {
-            icon.setVisibility(GONE);
-        } else {
-            icon.setImageDrawable(drawable);
-            icon.setVisibility(VISIBLE);
-        }
+        icon.setImageDrawable(drawable);
+        setIconVisible(drawable != null);
     }
 
     public void setIcon(Bitmap bitmap) {
-        if (bitmap == null) {
-            icon.setVisibility(GONE);
-        } else {
-            icon.setImageBitmap(bitmap);
-            icon.setVisibility(VISIBLE);
-        }
+        icon.setImageBitmap(bitmap);
+        setIconVisible(bitmap != null);
     }
 
     public Drawable getIcon() {

@@ -5,7 +5,7 @@
                               android:layout_height="wrap_content">
 
     <carbon.widget.ImageView
-        android:id="@+id/carbon_icon"
+        android:id="@+id/carbon_toolbarIcon"
         android:layout_width="@dimen/carbon_toolbarItemSize"
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:layout_marginLeft="@dimen/carbon_toolbarItemPadding"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/carbon_windowPadding"
-        android:layout_toRightOf="@id/carbon_icon"
+        android:layout_toRightOf="@id/carbon_toolbarIcon"
         android:text=""
         android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
         android:visibility="gone"/>

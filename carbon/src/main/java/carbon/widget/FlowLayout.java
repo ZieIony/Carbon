@@ -14,10 +14,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +34,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.animation.StateAnimatorView;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -49,36 +45,38 @@ import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-20.
- *
- * A LinearLayout implementation with support for material features including shadows, ripples, rounded
+ * <p/>
+ * FlowLayout layouts its children from left to right, top to bottom.
+ * Has support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
+public class FlowLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, carbon.animation.StateAnimatorView, AnimatedView, InsetView, CornerView {
+
     private boolean debugMode;
 
-    public LinearLayout(Context context) {
+    public FlowLayout(Context context) {
         this(context, null);
     }
 
-    public LinearLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_linearLayoutStyle);
+    public FlowLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, R.attr.carbon_flowLayoutStyle);
     }
 
-    public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs);
+    public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         init(attrs, defStyleAttr);
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        setElevation(a.getDimension(R.styleable.LinearLayout_carbon_elevation, 0));
+        setElevation(a.getDimension(R.styleable.FrameLayout_carbon_elevation, 0));
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         Carbon.initInset(this, attrs, defStyleAttr);
-        setCornerRadius((int) a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
+        setCornerRadius((int) a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
 
         a.recycle();
 
@@ -101,7 +99,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
-        views = new ArrayList<View>();
+        views = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
@@ -192,6 +190,25 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         return frame.contains((int) x, (int) y);
     }
 
+    private void layoutFlowingViews() {
+        int width = getWidth();
+        int currentX = getPaddingLeft(), currentY = getPaddingTop();
+        int nextY = getPaddingTop();
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            LayoutParams params = (LayoutParams) child.getLayoutParams();
+            if (child.getVisibility() != GONE) {
+                if (currentX != 0 && currentX + params.leftMargin + child.getMeasuredWidth() + params.rightMargin > width - getPaddingLeft() - getPaddingRight()) {
+                    currentX = getPaddingLeft();
+                    currentY = nextY;
+                }
+                child.layout(currentX + params.leftMargin, currentY + params.topMargin, currentX + params.leftMargin + child.getMeasuredWidth(), currentY + params.topMargin + child.getMeasuredHeight());
+                currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
+                nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+            }
+        }
+    }
+
 
     // -------------------------------
     // corners
@@ -214,6 +231,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        layoutFlowingViews();
 
         if (!changed)
             return;
@@ -447,7 +465,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(elevation);
         this.elevation = elevation;
-        if (getParent() != null && getParent() instanceof View)
+        if (getParent() != null)
             ((View) getParent()).postInvalidate();
     }
 
@@ -462,7 +480,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
-        if (getParent() != null && getParent() instanceof View)
+        if (getParent() != null)
             ((View) getParent()).postInvalidate();
     }
 
@@ -601,7 +619,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
-                        LinearLayout.super.setVisibility(visibility);
+                        FlowLayout.super.setVisibility(visibility);
                     animator = null;
                     clearAnimation();
                 }
@@ -609,7 +627,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 

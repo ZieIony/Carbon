@@ -19,6 +19,7 @@
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
@@ -51,6 +52,7 @@
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_active_dark</item>
+        <item name="carbon_iconColorInverse">@color/carbon_icon_active_light</item>
         <item name="carbon_colorDisabled">@color/carbon_icon_inactive_dark</item>
         <item name="colorControlNormal">@color/carbon_white_70</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
@@ -118,6 +120,7 @@
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
@@ -150,6 +153,7 @@
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_active_light</item>
+        <item name="carbon_iconColorInverse">@color/carbon_icon_active_dark</item>
         <item name="carbon_colorDisabled">@color/carbon_icon_inactive_light</item>
         <item name="colorControlNormal">@color/carbon_black_54</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
@@ -206,7 +210,7 @@
         <item name="android:minHeight">36dp</item>
         <item name="android:minWidth">88dp</item>
         <item name="android:background">?attr/colorPrimary</item>
-        <item name="carbon_elevation">@dimen/carbon_elevationLow</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationButton</item>
         <item name="carbon_touchMarginTop">6dp</item>
         <item name="carbon_touchMarginBottom">6dp</item>
         <item name="carbon_cornerRadius">2dp</item>
@@ -239,7 +243,7 @@
         <item name="carbon_tint">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">pop</item>
         <item name="carbon_outAnimation">pop</item>
-        <item name="carbon_elevation">@dimen/carbon_elevationHigh</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationFAB</item>
         <item name="android:minWidth">@dimen/carbon_fabSize</item>
         <item name="android:minHeight">@dimen/carbon_fabSize</item>
         <item name="android:scaleType">center</item>
@@ -287,8 +291,17 @@
 
     <style name="carbon_Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
-        <item name="carbon_elevation">@dimen/carbon_elevationMax</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationToolbar</item>
         <item name="carbon_icon">@raw/carbon_uparrow</item>
+    </style>
+
+    <style name="carbon_Chip">
+        <item name="carbon_cornerRadius">@dimen/carbon_margin</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="android:background">#ffE0E0E0</item>    <!-- TODO: what color should be here? -->
+        <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
+        <item name="carbon_icon">@null</item>
+        <item name="android:minHeight">@dimen/carbon_chipHeight</item>
     </style>
 
     <style name="carbon_ImageView">
@@ -323,7 +336,7 @@
 
     <style name="carbon_CardView" parent="carbon_LinearLayout">
         <item name="android:background">?attr/carbon_colorBackground</item>
-        <item name="carbon_elevation">@dimen/carbon_elevationLow</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationButton</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="android:layout_margin">@dimen/carbon_paddingHalf</item>
     </style>

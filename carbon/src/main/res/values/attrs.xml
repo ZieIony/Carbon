@@ -9,6 +9,7 @@
         <attr name="carbon_dividerColor" format="reference|color"/>
         <attr name="carbon_edgeEffectColor" format="color|reference"/>
         <attr name="carbon_iconColor" format="reference|color"/>
+        <attr name="carbon_iconColorInverse" format="reference|color"/>
 
         <attr name="carbon_tint" format="color|reference"/>
 
@@ -87,6 +88,8 @@
 
     <attr name="carbon_fontPath" format="string"/>
 
+    <attr name="carbon_icon" format="reference"/>
+
     <attr name="carbon_anchor" format="reference"/>
     <attr name="carbon_anchorGravity" format="enum">
         <enum name="top" value="0x00000030"/>
@@ -116,7 +119,6 @@
 
     <declare-styleable name="Button">
         <attr name="carbon_elevation"/>
-        <attr name="android:elevation"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
@@ -158,6 +160,13 @@
         <attr name="carbon_anchorGravity"/>
     </declare-styleable>
 
+    <attr name="carbon_flowLayoutStyle" format="reference"/>
+    <declare-styleable name="FlowLayout">
+        <attr name="carbon_rippleColor"/>
+        <attr name="carbon_elevation"/>
+        <attr name="carbon_cornerRadius"/>
+    </declare-styleable>
+
     <attr name="carbon_gridLayoutStyle" format="reference"/>
     <declare-styleable name="GridLayout">
         <attr name="carbon_rippleColor"/>
@@ -196,7 +205,16 @@
         <attr name="carbon_elevation"/>
         <attr name="android:background"/>
         <attr name="android:text"/>
-        <attr name="carbon_icon" format="reference"/>
+        <attr name="carbon_icon"/>
+    </declare-styleable>
+
+    <attr name="carbon_chipStyle" format="reference"/>
+    <declare-styleable name="Chip">
+        <attr name="carbon_elevation"/>
+        <attr name="android:background"/>
+        <attr name="android:text"/>
+        <attr name="carbon_icon"/>
+        <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
     <attr name="carbon_imageViewStyle" format="reference"/>
@@ -242,16 +260,18 @@
     <declare-styleable name="EditText">
         <attr name="carbon_textAllCaps"/>
         <attr name="carbon_fontPath"/>
+        <attr name="carbon_underline" format="boolean"/>
         <attr name="carbon_minCharacters" format="integer"/>
         <attr name="carbon_maxCharacters" format="integer"/>
         <attr name="carbon_pattern" format="string"/>
         <attr name="carbon_errorMessage" format="string"/>
         <attr name="carbon_floatingLabel" format="boolean"/>
-        <attr name="carbon_label" format="enum">
+        <attr name="carbon_labelStyle" format="enum">
             <enum name="floating" value="0"/>
             <enum name="persistent" value="1"/>
             <enum name="hint" value="2"/>
         </attr>
+        <attr name="carbon_label" format="string"/>
         <attr name="android:textAppearance"/>
         <attr name="carbon_matchingView" format="reference"/>
     </declare-styleable>

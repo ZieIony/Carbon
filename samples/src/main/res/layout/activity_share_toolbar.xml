@@ -11,7 +11,7 @@
         android:id="@+id/shareToolbar"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_gravity="bottom|right"
-        app:carbon_elevation="@dimen/carbon_elevationMax"
+        app:carbon_elevation="@dimen/carbon_elevationToolbar"
         android:background="?attr/colorAccent"
         app:carbon_cornerRadius="28dp"
         android:layout_width="@dimen/carbon_fabSize"
