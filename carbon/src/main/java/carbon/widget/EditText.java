@@ -78,6 +78,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private String errorMessage;
     TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     boolean afterFirstInteraction = false;
+    String label;
 
     private int matchingView;
     int minCharacters;
@@ -158,7 +159,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
         setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
         setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.EditText_carbon_labelStyle, a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false) ? 0 : 2)]);
-        setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline,true));
+        setLabel(a.getString(R.styleable.EditText_carbon_label));
+        if (labelStyle == LabelStyle.Floating && label == null)
+            label = getHint().toString();
+        setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
 
         a.recycle();
 
@@ -207,6 +211,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     public void setUnderline(boolean drawUnderline) {
         this.underline = drawUnderline;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public void validate() {
@@ -358,14 +370,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (!valid && errorMessage != null)
             canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + errorPaint.getTextSize(), errorPaint);
 
-        if (getHint() != null) {
+        if (label != null) {
             if (labelStyle == LabelStyle.Floating) {
-                String label = getHint().toString();
                 labelPaint.setAlpha((int) (255 * labelFrac));
                 canvas.drawText(label, getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
             } else if (labelStyle == LabelStyle.Persistent) {
-                String label = getHint().toString();
-                labelPaint.setColor(hasFocus()?tint.getColorForState(new int[]{android.R.attr.state_focused},0):tint.getColorForState(new int[]{-android.R.attr.state_enabled},0));
+                labelPaint.setColor(!valid ? errorColor :hasFocus() ? tint.getColorForState(new int[]{android.R.attr.state_focused}, 0) : tint.getColorForState(new int[]{-android.R.attr.state_enabled}, 0));
                 canvas.drawText(label, getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
             }
         }
