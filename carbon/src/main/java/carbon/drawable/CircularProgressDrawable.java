@@ -27,7 +27,9 @@ public class CircularProgressDrawable extends ProgressDrawable {
 
     @Override
     public void draw(Canvas canvas) {
+        canvas.save(Canvas.CLIP_SAVE_FLAG);
         Rect bounds = getBounds();
+        canvas.clipRect(0, 0, bounds.width(), bounds.height());
         forePaint.setStrokeWidth(width);
         RectF boundsF = new RectF(bounds);
         boundsF.inset(width / 2 + barPadding, width / 2 + barPadding);
@@ -48,6 +50,7 @@ public class CircularProgressDrawable extends ProgressDrawable {
             //canvas.drawCircle(bounds.centerX(), bounds.centerY(), Math.min(boundsF.centerX(), boundsF.centerY()) - width / 2 - barPadding, backPaint);
             canvas.drawArc(boundsF, interpolator2.getInterpolation(t) * 360 - 90, progress * 360, false, forePaint);
         }
+        canvas.restore();
         invalidateSelf();
     }
 }
