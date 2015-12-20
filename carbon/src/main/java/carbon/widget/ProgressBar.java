@@ -55,6 +55,13 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
         drawable.setStyle(style);
 
         drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
+        if (getVisibility() == VISIBLE) {
+            setBarWidth(getBarWidth() + getBarPadding());
+            setBarPadding(0);
+        } else {
+            setBarPadding(getBarWidth() + getBarPadding());
+            setBarWidth(0);
+        }
 
         Carbon.initTint(this, attrs, defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
@@ -169,6 +176,13 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
 
     public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
+        if (visibility == VISIBLE) {
+            setBarWidth(getBarWidth() + getBarPadding());
+            setBarPadding(0);
+        } else {
+            setBarPadding(getBarWidth() + getBarPadding());
+            setBarWidth(0);
+        }
     }
 
     public Animator getAnimator() {
