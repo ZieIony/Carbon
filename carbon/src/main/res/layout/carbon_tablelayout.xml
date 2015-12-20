@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <carbon.widget.Toolbar
         android:id="@+id/carbon_tableToolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_toolbarHeight" />
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:background="@null"
+        app:carbon_elevation="@dimen/carbon_elevationFlat"
+        app:carbon_icon="@null"/>
 
-    <carbon.widget.FrameLayout
+    <carbon.widget.LinearLayout
         android:id="@+id/carbon_tableHeader"
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_tableFooterHeight"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"/>
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
     <carbon.widget.TableView
         android:id="@+id/carbon_table"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:divider="?attr/carbon_dividerColor"
+        android:dividerHeight="1dp"/>
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_tableFooter"
@@ -30,38 +44,48 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <carbon.widget.TextView
             android:layout_width="wrap_content"
-            android:layout_margin="@dimen/carbon_margin"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/carbon_rowsPerPage" />
+            android:layout_margin="@dimen/carbon_margin"
+            android:text="@string/carbon_rowsPerPage"/>
 
         <carbon.widget.Spinner
-            android:layout_margin="@dimen/carbon_margin"
+            android:id="@+id/carbon_tableRowNumber"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_listItemHeight"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"/>
 
         <carbon.widget.TextView
-            android:layout_margin="@dimen/carbon_margin"
+            android:id="@+id/carbon_tablePageNumbers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="1-10 of 100" />
+            android:layout_margin="@dimen/carbon_margin"/>
 
         <carbon.widget.ImageView
-            android:padding="@dimen/carbon_padding"
             android:layout_width="@dimen/carbon_toolbarItemSize"
             android:layout_height="@dimen/carbon_toolbarItemSize"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:scaleType="center"
+            android:clickable="true"
+            app:carbon_rippleColor="?attr/carbon_rippleColor"
+            app:carbon_rippleStyle="borderless"
+            app:carbon_src="@raw/carbon_prev"
+            app:carbon_tint="?attr/colorControlNormal"/>
 
         <carbon.widget.ImageView
-            android:padding="@dimen/carbon_padding"
             android:layout_width="@dimen/carbon_toolbarItemSize"
             android:layout_height="@dimen/carbon_toolbarItemSize"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:scaleType="center"
+            android:clickable="true"
+            app:carbon_rippleColor="?attr/carbon_rippleColor"
+            app:carbon_rippleStyle="borderless"
+            app:carbon_src="@raw/carbon_next"
+            app:carbon_tint="?attr/colorControlNormal"/>
     </carbon.widget.LinearLayout>
 </LinearLayout>

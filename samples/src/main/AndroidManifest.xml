@@ -72,6 +72,9 @@
         <activity
             android:name=".widget.FlowLayoutActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".widget.TableLayoutActivity"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".animation.RippleComparisonActivity"

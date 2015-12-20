@@ -20,6 +20,7 @@ import tk.zielony.carbonsamples.widget.RecyclerActivity;
 import tk.zielony.carbonsamples.widget.SVGActivity;
 import tk.zielony.carbonsamples.widget.ScrollViewActivity;
 import tk.zielony.carbonsamples.widget.SnackbarActivity;
+import tk.zielony.carbonsamples.widget.TableLayoutActivity;
 import tk.zielony.carbonsamples.widget.TabsActivity;
 import tk.zielony.carbonsamples.widget.TextFieldsActivity;
 import tk.zielony.carbonsamples.widget.ToolbarActivity;
@@ -53,7 +54,8 @@ public class WidgetsActivity extends Activity {
                 new ViewModel(NavigationViewActivity.class,"NavigationView"),
                 new ViewModel(SeekBarActivity.class,"SeekBar"),
                 new ViewModel(ToolbarActivity.class,"Toolbar"),
-                new ViewModel(FlowLayoutActivity.class,"FlowLayout")
+                new ViewModel(FlowLayoutActivity.class,"FlowLayout & Chips"),
+                new ViewModel(TableLayoutActivity.class,"TableLayout")
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

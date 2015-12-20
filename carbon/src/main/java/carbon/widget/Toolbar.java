@@ -119,7 +119,7 @@ public class Toolbar extends FrameLayout {
         return (String) title.getText();
     }
 
-    public View getTitleView() {
+    public TextView getTitleView() {
         return title;
     }
 

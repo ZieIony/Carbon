@@ -336,7 +336,7 @@
 
     <style name="carbon_CardView" parent="carbon_LinearLayout">
         <item name="android:background">?attr/carbon_colorBackground</item>
-        <item name="carbon_elevation">@dimen/carbon_elevationButton</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="android:layout_margin">@dimen/carbon_paddingHalf</item>
     </style>

@@ -7,11 +7,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -49,16 +51,21 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private boolean clipToPadding;
 
     public RecyclerView(Context context) {
-        this(context, null);
+        super(context, null);
+        initRecycler(null, 0);
     }
 
     public RecyclerView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_recyclerViewStyle);
+        super(context, attrs, R.attr.carbon_recyclerViewStyle);
+        initRecycler(attrs, 0);
     }
 
     public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initRecycler(attrs, defStyleAttr);
+    }
 
+    private void initRecycler(AttributeSet attrs, int defStyleAttr) {
         Carbon.initTint(this, attrs, defStyleAttr);
 
         Class klass = android.support.v7.widget.RecyclerView.class;
@@ -84,11 +91,17 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
             } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
                 setHeaderParallax(a.getFloat(attr, 0.0f));
+            } else if (attr == R.styleable.RecyclerView_android_divider) {
+                setDivider(a.getDrawable(attr), (int) a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0));
             }
         }
         a.recycle();
 
         setClipToPadding(false);
+    }
+
+    public void setDivider(Drawable divider, int height) {
+        addItemDecoration(new DividerItemDecoration(divider, height));
     }
 
     void ensureLeftGlow() {
@@ -384,8 +397,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     /**
-     * @deprecated Naming convention change. Use {@link #getHeaderParallax()} instead
      * @return parallax amount to the header applied when scrolling
+     * @deprecated Naming convention change. Use {@link #getHeaderParallax()} instead
      */
     @Deprecated
     public float getParallax() {
@@ -393,8 +406,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     /**
-     * @deprecated Naming convention change. Use {@link #setHeaderParallax(float)} instead
      * @param amount parallax amount to apply to the header
+     * @deprecated Naming convention change. Use {@link #setHeaderParallax(float)} instead
      */
     @Deprecated
     public void setParallax(float amount) {
@@ -402,8 +415,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     /**
-     * @deprecated Naming convention change. Use {@link #getHeaderMinHeight()} instead
      * @return min header height
+     * @deprecated Naming convention change. Use {@link #getHeaderMinHeight()} instead
      */
     @Deprecated
     public int getMinHeaderHeight() {
@@ -411,8 +424,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     /**
-     * @deprecated Naming convention change. Use {@link #setHeaderMinHeight(int)} instead
      * @param height min header height
+     * @deprecated Naming convention change. Use {@link #setHeaderMinHeight(int)} instead
      */
     @Deprecated
     public void setMinHeaderHeight(int height) {
@@ -461,5 +474,80 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     public interface OnItemClickedListener {
         void onItemClicked(int position);
+    }
+
+    public static class DividerItemDecoration extends RecyclerView.ItemDecoration {
+
+        private Drawable drawable;
+        private int height;
+
+        public DividerItemDecoration(Drawable drawable, int height) {
+            this.drawable = drawable;
+            this.height = height;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, android.support.v7.widget.RecyclerView parent, State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            if (drawable == null)
+                return;
+            if (parent.getChildPosition(view) < 1)
+                return;
+
+            if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
+                outRect.top = height;
+            } else {
+                outRect.left = height;
+            }
+        }
+
+        @Override
+        public void onDrawOver(Canvas c, android.support.v7.widget.RecyclerView parent, State state) {
+            if (drawable == null) {
+                super.onDrawOver(c, parent, state);
+                return;
+            }
+
+            // Initialization needed to avoid compiler warning
+            int left = 0, right = 0, top = 0, bottom = 0;
+            int orientation = getOrientation(parent);
+            int childCount = parent.getChildCount();
+
+            if (orientation == LinearLayoutManager.VERTICAL) {
+                left = parent.getPaddingLeft();
+                right = parent.getWidth() - parent.getPaddingRight();
+            } else { //horizontal
+                top = parent.getPaddingTop();
+                bottom = parent.getHeight() - parent.getPaddingBottom();
+            }
+
+            for (int i = 1; i < childCount; i++) {
+                View child = parent.getChildAt(i);
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+                if (orientation == LinearLayoutManager.VERTICAL) {
+                    bottom = child.getTop() - params.topMargin;
+                    top = bottom - height;
+                } else { //horizontal
+                    right = child.getLeft() - params.leftMargin;
+                    left = right - height;
+                }
+                c.save(Canvas.CLIP_SAVE_FLAG);
+                c.clipRect(left, top, right, bottom);
+                drawable.setBounds(left, top, right, bottom);
+                drawable.draw(c);
+                c.restore();
+            }
+        }
+
+        private int getOrientation(android.support.v7.widget.RecyclerView parent) {
+            if (parent.getLayoutManager() instanceof LinearLayoutManager) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
+                return layoutManager.getOrientation();
+            } else {
+                throw new IllegalStateException(
+                        "DividerItemDecoration can only be used with a LinearLayoutManager.");
+            }
+        }
     }
 }

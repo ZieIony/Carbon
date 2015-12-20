@@ -311,6 +311,8 @@
         <attr name="carbon_headerTint"/>
         <attr name="carbon_headerMinHeight"/>
         <attr name="carbon_headerParallax"/>
+        <attr name="android:divider"/>
+        <attr name="android:dividerHeight"/>
     </declare-styleable>
 
     <attr name="carbon_checkBoxStyle"/>
