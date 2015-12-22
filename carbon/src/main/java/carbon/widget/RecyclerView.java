@@ -27,9 +27,9 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.EdgeEffectCompat;
+import carbon.drawable.RectDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
-import carbon.drawable.TintPrimaryColorStateList;
 import carbon.internal.ElevationComparator;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -57,7 +57,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     public RecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_recyclerViewStyle);
-        initRecycler(attrs, 0);
+        initRecycler(attrs, R.attr.carbon_recyclerViewStyle);
     }
 
     public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -299,7 +299,11 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     @Override
     public void setTint(int color) {
-        setTint(ColorStateList.valueOf(color));
+        if (color == 0) {
+            setTint(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+        } else {
+            setTint(ColorStateList.valueOf(color));
+        }
     }
 
     @Override
@@ -309,7 +313,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     private void updateTint() {
         if (tint == null)
-            tint = new TintPrimaryColorStateList(getContext());
+            return;
         int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
         if (leftGlow != null)
             leftGlow.setColor(color);
@@ -319,6 +323,49 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
+    }
+
+
+    // -------------------------------
+    // scroll bars
+    // -------------------------------
+
+    Drawable scrollBarDrawable;
+
+    protected void onDrawHorizontalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
+        if (scrollBarDrawable == null) {
+            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
+            try {
+                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
+                mVerticalThumbField.setAccessible(true);
+                scrollBarDrawable= new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        scrollBar.setBounds(l, t, r, b);
+        scrollBar.draw(canvas);
+    }
+
+    protected void onDrawVerticalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
+        if (scrollBarDrawable == null) {
+            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
+            try {
+                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mVerticalThumb");
+                mVerticalThumbField.setAccessible(true);
+                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        scrollBar.setBounds(l, t, r, b);
+        scrollBar.draw(canvas);
     }
 
 

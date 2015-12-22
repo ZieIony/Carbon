@@ -15,7 +15,7 @@ public class ControlAccentColorStateList extends ColorStateList {
                 new int[]{-android.R.attr.state_enabled},
                 new int[]{}
         }, new int[]{
-                Carbon.getThemeColor(context, R.attr.colorControlNormal),
+                Carbon.getThemeColor(context, R.attr.carbon_colorDisabled),
                 Carbon.getThemeColor(context, R.attr.colorAccent)
         });
     }

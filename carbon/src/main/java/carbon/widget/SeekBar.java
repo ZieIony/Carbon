@@ -26,7 +26,7 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.ControlFocusedColorStateList;
+import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -365,7 +365,7 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list != null ? list : new ControlFocusedColorStateList(getContext());
+        this.tint = list != null ? list : new DefaultColorStateList(getContext());
     }
 
     @Override

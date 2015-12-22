@@ -26,7 +26,7 @@ import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.animation.StateAnimatorView;
 import carbon.drawable.CheckableDrawable;
-import carbon.drawable.ControlCheckedColorStateList;
+import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.TypefaceUtils;
@@ -423,12 +423,16 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     @Override
     public void setTint(ColorStateList list) {
         this.tint = list;
-        drawable.setColor(tint != null ? tint : new ControlCheckedColorStateList(getContext()));
+        drawable.setColor(list);
     }
 
     @Override
     public void setTint(int color) {
-        setTint(ColorStateList.valueOf(color));
+        if (color == 0) {
+            setTint(new DefaultColorStateList(getContext()));
+        } else {
+            setTint(ColorStateList.valueOf(color));
+        }
     }
 
     @Override

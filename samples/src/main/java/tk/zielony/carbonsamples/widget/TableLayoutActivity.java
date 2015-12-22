@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.beta.Window;
 import carbon.widget.TableLayout;
 import carbon.widget.TableView;
 import tk.zielony.carbonsamples.R;

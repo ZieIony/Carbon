@@ -48,7 +48,7 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.ControlFocusedColorStateList;
+import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -1124,7 +1124,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public void setTint(int color) {
         if (color == 0) {
-            setTint(new ControlFocusedColorStateList(getContext()));
+            setTint(new DefaultColorStateList(getContext()));
         } else {
             setTint(ColorStateList.valueOf(color));
         }

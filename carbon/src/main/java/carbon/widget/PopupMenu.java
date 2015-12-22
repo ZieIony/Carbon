@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
@@ -19,7 +18,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
-import carbon.drawable.ControlFocusedColorStateList;
+import carbon.drawable.DefaultColorStateList;
 
 /**
  * Created by Marcin on 2015-06-10.
@@ -227,13 +226,17 @@ public class PopupMenu extends PopupWindow implements TintedView {
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list != null ? list : new ControlFocusedColorStateList(getContentView().getContext());
+        this.tint = list;
         recycler.setTint(list);
     }
 
     @Override
     public void setTint(int color) {
-        setTint(ColorStateList.valueOf(color));
+        if (color == 0) {
+            setTint(new DefaultColorStateList(getContentView().getContext()));
+        } else {
+            setTint(ColorStateList.valueOf(color));
+        }
     }
 
     @Override

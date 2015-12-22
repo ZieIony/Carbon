@@ -308,6 +308,8 @@ public class CheckableDrawable extends Drawable {
 
     public void setColor(ColorStateList colorStateList) {
         this.color = colorStateList;
+        if (color == null)
+            return;
         setCheckedColor(color.getColorForState(new int[]{android.R.attr.state_checked}, color.getDefaultColor()));
         setUncheckedColor(color.getColorForState(new int[]{-android.R.attr.state_checked}, color.getDefaultColor()));
         setDisabledColor(color.getColorForState(new int[]{-android.R.attr.state_enabled}, color.getDefaultColor()));

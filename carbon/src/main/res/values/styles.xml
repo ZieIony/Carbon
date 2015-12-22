@@ -314,12 +314,12 @@
     <style name="carbon_ListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">?attr/carbon_dividerColor</item>
         <item name="android:dividerHeight">1px</item>
-        <item name="carbon_tint">@null</item>
+        <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
     <style name="carbon_RecyclerView" parent="@android:style/Widget.ListView">
         <item name="android:fadingEdge">none</item>
-        <item name="carbon_tint">@null</item>
+        <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
     <style name="carbon_Divider">
@@ -383,7 +383,7 @@
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
-        <item name="carbon_tint">@null</item>
+        <item name="carbon_tint">#00000000</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -393,7 +393,7 @@
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:button">@null</item>
         <item name="android:drawablePadding">@dimen/carbon_paddingHalf</item>
-        <item name="carbon_tint">@null</item>
+        <item name="carbon_tint">#00000000</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -405,7 +405,7 @@
     <style name="carbon_SeekBar" parent="android:Widget.SeekBar">
         <item name="carbon_rippleColor">@null</item>
         <item name="carbon_rippleHotspot">false</item>
-        <item name="carbon_tint">@null</item>
+        <item name="carbon_tint">#00000000</item>
         <item name="android:background">@null</item>
         <item name="android:focusableInTouchMode">false</item>
     </style>

@@ -24,7 +24,7 @@ import com.caverock.androidsvg.SVGParseException;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.drawable.ControlFocusedColorStateList;
+import carbon.drawable.DefaultColorStateList;
 
 /**
  * Created by Marcin on 2015-06-11.
@@ -298,7 +298,7 @@ public class Spinner extends TextView implements TintedView {
     @Override
     public void setTint(int color) {
         if (color == 0) {
-            setTint(new ControlFocusedColorStateList(getContext()));
+            setTint(new DefaultColorStateList(getContext()));
         } else {
             setTint(ColorStateList.valueOf(color));
         }

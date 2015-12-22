@@ -1,6 +1,7 @@
 package carbon;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -11,6 +12,8 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.lang.reflect.Field;
 
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
@@ -106,14 +109,14 @@ public class Carbon {
     public static void initTint(TintedView view, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = ((View) view).getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
 
-        if(a.hasValue(R.styleable.Carbon_carbon_tint)) {
-            try{
-                view.setTint(a.getColor(R.styleable.Carbon_carbon_tint,0));
-            }catch (Exception e) {
+        if (a.hasValue(R.styleable.Carbon_carbon_tint)) {
+            TypedValue value = new TypedValue();
+            a.getValue(R.styleable.Carbon_carbon_tint, value);
+            if (value.type >= TypedValue.TYPE_FIRST_INT&& value.type <= TypedValue.TYPE_LAST_INT) {
+                view.setTint(value.data);
+            }else{
                 view.setTint(a.getColorStateList(R.styleable.Carbon_carbon_tint));
             }
-        }else{
-            view.setTint(null);
         }
 
         a.recycle();
