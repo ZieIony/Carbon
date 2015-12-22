@@ -67,7 +67,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
 
-        setElevation(a.getDimension(R.styleable.ImageView_carbon_elevation, 0));
+        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));
         int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
         int resId2 = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
         if (resId == 0)

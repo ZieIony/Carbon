@@ -93,7 +93,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             }
         }
 
-        setElevation(a.getDimension(R.styleable.Button_carbon_elevation, 0));
+        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);

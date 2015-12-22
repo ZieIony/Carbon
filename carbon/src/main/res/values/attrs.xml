@@ -12,6 +12,7 @@
         <attr name="carbon_iconColorInverse" format="reference|color"/>
 
         <attr name="carbon_tint" format="color|reference"/>
+        <attr name="carbon_elevation" format="dimension"/>
 
         <attr name="carbon_rippleColor" format="reference|color"/>
         <attr name="carbon_rippleColorInverse" format="reference|color"/>
@@ -73,7 +74,6 @@
     </declare-styleable>
 
     <attr name="carbon_src" format="reference"/>
-    <attr name="carbon_elevation" format="dimension"/>
     <attr name="carbon_cornerRadius" format="dimension"/>
     <attr name="carbon_textAllCaps" format="boolean"/>
     <attr name="carbon_overScroll" format="enum">
@@ -118,7 +118,7 @@
     </declare-styleable>
 
     <declare-styleable name="Button">
-        <attr name="carbon_elevation"/>
+
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
@@ -151,7 +151,6 @@
     <attr name="carbon_frameLayoutStyle" format="reference"/>
     <declare-styleable name="FrameLayout">
         <attr name="carbon_rippleColor"/>
-        <attr name="carbon_elevation"/>
         <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
@@ -163,21 +162,18 @@
     <attr name="carbon_flowLayoutStyle" format="reference"/>
     <declare-styleable name="FlowLayout">
         <attr name="carbon_rippleColor"/>
-        <attr name="carbon_elevation"/>
         <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
     <attr name="carbon_gridLayoutStyle" format="reference"/>
     <declare-styleable name="GridLayout">
         <attr name="carbon_rippleColor"/>
-        <attr name="carbon_elevation"/>
         <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
     <attr name="carbon_relativeLayoutStyle" format="reference"/>
     <declare-styleable name="RelativeLayout">
         <attr name="carbon_rippleColor"/>
-        <attr name="carbon_elevation"/>
         <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
@@ -189,20 +185,17 @@
     <attr name="carbon_linearLayoutStyle" format="reference"/>
     <declare-styleable name="LinearLayout">
         <attr name="carbon_rippleColor"/>
-        <attr name="carbon_elevation"/>
         <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
     <attr name="carbon_drawerLayoutStyle" format="reference"/>
     <declare-styleable name="DrawerLayout">
         <attr name="carbon_rippleColor"/>
-        <attr name="carbon_elevation"/>
         <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
     <attr name="carbon_toolbarStyle" format="reference"/>
     <declare-styleable name="Toolbar">
-        <attr name="carbon_elevation"/>
         <attr name="android:background"/>
         <attr name="android:text"/>
         <attr name="carbon_icon"/>
@@ -210,7 +203,6 @@
 
     <attr name="carbon_chipStyle" format="reference"/>
     <declare-styleable name="Chip">
-        <attr name="carbon_elevation"/>
         <attr name="android:background"/>
         <attr name="android:text"/>
         <attr name="carbon_icon"/>
@@ -222,7 +214,6 @@
         <attr name="android:src"/>
         <attr name="carbon_src"/>
         <attr name="carbon_rippleColor"/>
-        <attr name="carbon_elevation"/>
         <attr name="carbon_touchMargin"/>
         <attr name="carbon_touchMarginLeft"/>
         <attr name="carbon_touchMarginTop"/>

@@ -52,7 +52,7 @@ public class Chip extends FrameLayout {
         });
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyle, 0);
-        setElevation(a.getDimension(R.styleable.Chip_carbon_elevation, 0));  // this shouldn't be necessary
+        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));  // this shouldn't be necessary
         setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
         setText(a.getString(R.styleable.Chip_android_text));
         int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);

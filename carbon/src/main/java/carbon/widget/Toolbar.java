@@ -44,7 +44,7 @@ public class Toolbar extends FrameLayout {
         });
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyle, 0);
-        setElevation(a.getDimension(R.styleable.Toolbar_carbon_elevation, 0));  // this shouldn't be necessary
+        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));  // this shouldn't be necessary
         setText(a.getString(R.styleable.Toolbar_android_text));
         int iconRes = a.getResourceId(R.styleable.Toolbar_carbon_icon, 0);
         if (iconRes != 0) {

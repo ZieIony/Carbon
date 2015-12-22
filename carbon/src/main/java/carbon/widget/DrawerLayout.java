@@ -70,7 +70,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        setElevation(a.getDimension(R.styleable.DrawerLayout_carbon_elevation, 0));
+        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));
 
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
