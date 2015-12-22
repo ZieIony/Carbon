@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     app:carbon_rippleColor="?attr/carbon_rippleColor"
+    android:layoutDirection="locale"
     android:layout_height="wrap_content">
 
     <carbon.widget.TextView

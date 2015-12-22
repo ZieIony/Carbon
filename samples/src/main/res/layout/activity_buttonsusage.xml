@@ -9,9 +9,9 @@
 
     <carbon.widget.Toolbar
         android:id="@+id/toolbar"
-        android:text="Settings"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_toolbarHeight" />
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:text="Settings" />
 
     <carbon.widget.ScrollView
         android:layout_width="match_parent"

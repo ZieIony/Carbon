@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_toolbarIcon"
         android:layout_width="@dimen/carbon_toolbarItemSize"
         android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginLeft="@dimen/carbon_toolbarItemPadding"
         android:layout_marginRight="@dimen/carbon_toolbarItemPadding"
         android:clickable="true"
@@ -17,7 +19,7 @@
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleHotspot="false"
         app:carbon_rippleStyle="borderless"
-        app:carbon_tint="?attr/carbon_iconColor"/>
+        app:carbon_tint="?attr/carbon_iconColor" />
 
     <carbon.widget.TextView
         android:id="@+id/carbon_toolbarTitle"
@@ -25,20 +27,25 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_toEndOf="@id/carbon_toolbarIcon"
         android:layout_toRightOf="@id/carbon_toolbarIcon"
         android:text=""
         android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_toolbarContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="locale"
         android:layout_centerVertical="true"
-        android:paddingRight="@dimen/carbon_toolbarItemPadding"
+        android:layout_toEndOf="@id/carbon_toolbarTitle"
         android:layout_toRightOf="@id/carbon_toolbarTitle"
-        android:gravity="right"
+        android:gravity="end"
         android:minHeight="@dimen/carbon_toolbarHeight"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/carbon_toolbarItemPadding"
+        android:paddingRight="@dimen/carbon_toolbarItemPadding" />
 
 </carbon.widget.RelativeLayout>

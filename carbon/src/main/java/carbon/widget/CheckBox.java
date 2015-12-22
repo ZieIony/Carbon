@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import carbon.Carbon;
 import carbon.R;
@@ -55,7 +57,11 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
         int size = (int) (Carbon.getDip(getContext()) * 24);
         drawable.setBounds(0, 0, size, size);
         if (!isInEditMode()) {
-            setCompoundDrawables(drawable, null, null, null);
+            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                setCompoundDrawables(null, null, drawable, null);
+            } else {
+                setCompoundDrawables(drawable, null, null, null);
+            }
             setButtonDrawable(null);
         }
 
