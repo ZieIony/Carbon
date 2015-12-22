@@ -71,8 +71,7 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));
-
+        Carbon.initElevation(this, attrs, defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         Carbon.initInset(this, attrs, defStyleAttr);

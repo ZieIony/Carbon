@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import carbon.Carbon;
 import carbon.R;
 
 /**
@@ -30,7 +31,7 @@ public class Toolbar extends FrameLayout {
         initToolbar(attrs, R.attr.carbon_toolbarStyle);
     }
 
-    private void initToolbar(AttributeSet attrs, int defStyle) {
+    private void initToolbar(AttributeSet attrs, int defStyleAttr) {
         inflate(getContext(), R.layout.carbon_toolbar, this);
         content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
         title = (TextView) findViewById(R.id.carbon_toolbarTitle);
@@ -43,8 +44,7 @@ public class Toolbar extends FrameLayout {
             }
         });
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyle, 0);
-        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));  // this shouldn't be necessary
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, 0);
         setText(a.getString(R.styleable.Toolbar_android_text));
         int iconRes = a.getResourceId(R.styleable.Toolbar_carbon_icon, 0);
         if (iconRes != 0) {
@@ -55,6 +55,8 @@ public class Toolbar extends FrameLayout {
         int color = a.getColor(R.styleable.Toolbar_android_background, 0);
         setBackgroundColor(color);
         a.recycle();
+
+        Carbon.initElevation(this, attrs, defStyleAttr);
     }
 
     @Override

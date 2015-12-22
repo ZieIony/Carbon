@@ -74,8 +74,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));
-
+        Carbon.initElevation(this, attrs, defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         Carbon.initInset(this, attrs, defStyleAttr);

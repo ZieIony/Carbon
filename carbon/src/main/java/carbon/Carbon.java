@@ -21,6 +21,7 @@ import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleDrawableCompat;
 import carbon.drawable.RippleDrawableLollipop;
 import carbon.drawable.RippleView;
+import carbon.shadow.ShadowView;
 import carbon.widget.InsetView;
 import carbon.widget.TintedView;
 import carbon.widget.TouchMarginView;
@@ -151,6 +152,14 @@ public class Carbon {
 
         view.setInAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Carbon_carbon_inAnimation, 0)]);
         view.setOutAnimation(AnimUtils.Style.values()[a.getInt(R.styleable.Carbon_carbon_outAnimation, 0)]);
+
+        a.recycle();
+    }
+
+    public static void initElevation(ShadowView view, AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = ((View) view).getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+
+        view.setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));
 
         a.recycle();
     }

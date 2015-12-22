@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import carbon.Carbon;
 import carbon.R;
 
 /**
@@ -37,7 +38,7 @@ public class Chip extends FrameLayout {
         initChip(attrs, R.attr.carbon_chipStyle);
     }
 
-    private void initChip(AttributeSet attrs, int defStyle) {
+    private void initChip(AttributeSet attrs, int defStyleAttr) {
         inflate(getContext(), R.layout.carbon_chip, this);
         title = (TextView) findViewById(R.id.carbon_chipTitle);
         icon = (ImageView) findViewById(R.id.carbon_chipIcon);
@@ -51,8 +52,7 @@ public class Chip extends FrameLayout {
             }
         });
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyle, 0);
-        setElevation(a.getDimension(R.styleable.Carbon_carbon_elevation, 0));  // this shouldn't be necessary
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, 0);
         setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
         setText(a.getString(R.styleable.Chip_android_text));
         int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
@@ -64,6 +64,8 @@ public class Chip extends FrameLayout {
         int color = a.getColor(R.styleable.Chip_android_background, 0);
         setBackgroundColor(color);
         a.recycle();
+
+        Carbon.initElevation(this, attrs, defStyleAttr);
     }
 
     public void setText(String text) {
