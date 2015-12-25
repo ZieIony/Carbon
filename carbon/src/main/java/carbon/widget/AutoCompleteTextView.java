@@ -1,6 +1,8 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,7 +30,8 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
     }
 
     public AutoCompleteTextView(Context context) {
-        this(context, null);
+        super(context);
+        initAutoCompleteTextView();
     }
 
     /**
@@ -37,15 +40,22 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
      * @param attrs
      */
     public AutoCompleteTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_editTextStyle);
+        super(context, attrs);
+        initAutoCompleteTextView();
     }
 
     public AutoCompleteTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        initAutoCompleteTextView();
     }
 
-    private void init() {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public AutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initAutoCompleteTextView();
+    }
+
+    private void initAutoCompleteTextView() {
         autoCompleteTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

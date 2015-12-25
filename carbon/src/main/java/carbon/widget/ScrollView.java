@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -7,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -27,7 +29,7 @@ import carbon.drawable.RectDrawable;
  * Created by Marcin on 2015-02-28.
  */
 public class ScrollView extends android.widget.ScrollView implements TintedView {
-    private final int mTouchSlop;
+    private int mTouchSlop;
     EdgeEffect topGlow;
     EdgeEffect bottomGlow;
     private boolean drag = true;
@@ -39,34 +41,48 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     public static final int OVER_SCROLL_NEVER = 2;
 
     public ScrollView(Context context) {
-        this(context, null);
+        super(context);
+        initScrollView(null, android.R.attr.scrollViewStyle);
     }
 
     public ScrollView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.scrollViewStyle);
+        super(context, attrs);
+        initScrollView(attrs, android.R.attr.scrollViewStyle);
     }
 
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initScrollView(attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public ScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initScrollView(attrs, defStyleAttr);
+    }
+
+    private void initScrollView(AttributeSet attrs, int defStyleAttr) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, 0);
-        for (int i = 0; i < a.getIndexCount(); i++) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.ScrollView_carbon_overScroll) {
-                setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
-            } else if (attr == R.styleable.ScrollView_carbon_headerTint) {
-                setHeaderTint(a.getColor(attr, 0));
-            } else if (attr == R.styleable.ScrollView_carbon_headerMinHeight) {
-                setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
-            } else if (attr == R.styleable.ScrollView_carbon_headerParallax) {
-                setHeaderParallax(a.getFloat(attr, 0.0f));
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, 0);
+            for (int i = 0; i < a.getIndexCount(); i++) {
+                int attr = a.getIndex(i);
+                if (attr == R.styleable.ScrollView_carbon_overScroll) {
+                    setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
+                } else if (attr == R.styleable.ScrollView_carbon_headerTint) {
+                    setHeaderTint(a.getColor(attr, 0));
+                } else if (attr == R.styleable.ScrollView_carbon_headerMinHeight) {
+                    setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
+                } else if (attr == R.styleable.ScrollView_carbon_headerParallax) {
+                    setHeaderParallax(a.getFloat(attr, 0.0f));
+                }
             }
-        }
-        a.recycle();
+            a.recycle();
 
-        Carbon.initTint(this, attrs, defStyleAttr);
+            Carbon.initTint(this, attrs, defStyleAttr);
+        }
 
         setClipToPadding(false);
     }
@@ -275,8 +291,6 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     }
 
 
-
-
     // -------------------------------
     // scroll bars
     // -------------------------------
@@ -289,7 +303,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             try {
                 Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
                 mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable= new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
                 mVerticalThumbField.set(scrollBar, scrollBarDrawable);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();

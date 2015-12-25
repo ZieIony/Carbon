@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -46,19 +47,27 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public TextView(Context context) {
-        this(context, null);
+        super(context, null);
+        initTextView(null, android.R.attr.textViewStyle);
     }
 
     public TextView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.textViewStyle);
+        super(context, attrs);
+        initTextView(attrs, android.R.attr.textViewStyle);
     }
 
-    public TextView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
+    public TextView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initTextView(attrs, defStyleAttr);
     }
 
-    public void init(AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initTextView(attrs, defStyleAttr);
+    }
+
+    public void initTextView(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, 0);
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
@@ -69,7 +78,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             int attr = a.getIndex(i);
             if (attr == R.styleable.TextView_carbon_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, false));
-            } else if (!isInEditMode()&&attr == R.styleable.TextView_carbon_fontPath) {
+            } else if (!isInEditMode() && attr == R.styleable.TextView_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
@@ -111,7 +120,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                 int attr = appearance.getIndex(i);
                 if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
                     setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (!isInEditMode()&&attr == R.styleable.TextAppearance_carbon_fontPath) {
+                } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);

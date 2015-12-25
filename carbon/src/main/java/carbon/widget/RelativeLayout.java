@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -49,7 +50,7 @@ import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-20.
- *
+ * <p/>
  * A RelativeLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
@@ -58,19 +59,27 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     private boolean debugMode;
 
     public RelativeLayout(Context context) {
-        this(context, null);
+        super(context);
+        initRelativeLayout(null, R.attr.carbon_relativeLayoutStyle);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_relativeLayoutStyle);
+        super(context, attrs);
+        initRelativeLayout(attrs, R.attr.carbon_relativeLayoutStyle);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        initRelativeLayout(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initRelativeLayout(attrs, defStyleAttr);
+    }
+
+    private void initRelativeLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -610,7 +619,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 

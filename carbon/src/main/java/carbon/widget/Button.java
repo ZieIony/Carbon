@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -52,7 +53,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     protected Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
-        this(context, null);
+        super(context, null);
+        init(null,android.R.attr.buttonStyle);
     }
 
     /**
@@ -62,7 +64,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
      * @param attrs
      */
     public Button(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.buttonStyle);
+        super(context, attrs);
+        init(attrs,android.R.attr.buttonStyle);
     }
 
     public Button(Context context, AttributeSet attrs, int defStyle) {
@@ -70,36 +73,45 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         init(attrs, defStyle);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(attrs,defStyleAttr);
+    }
+
     private void init(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
 
-        int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
-        if (ap != -1)
-            setTextAppearanceInternal(ap);
+            int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
+            if (ap != -1)
+                setTextAppearanceInternal(ap);
 
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        for (int i = 0; i < a.getIndexCount(); i++) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.Button_carbon_textAllCaps) {
-                setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
-            } else if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
-                String path = a.getString(attr);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                setTypeface(typeface);
+            for (int i = 0; i < a.getIndexCount(); i++) {
+                int attr = a.getIndex(i);
+                if (attr == R.styleable.Button_carbon_textAllCaps) {
+                    setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
+                } else if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
+                    String path = a.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                }
             }
+
+            Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            setCornerRadius((int) a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
+
+            a.recycle();
         }
 
-        Carbon.initElevation(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
         addStateAnimator(new ElevationStateAnimator(this));
-        setCornerRadius((int) a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
-
-        a.recycle();
     }
 
     /**

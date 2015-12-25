@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -7,7 +8,9 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,53 +41,66 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     private CheckableDrawable drawable;
 
     public RadioButton(Context context) {
-        this(context, null);
+        super(context,null, R.attr.radioButtonStyle);
+        initRadioButton(null, R.attr.radioButtonStyle);
     }
 
     public RadioButton(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_radioButtonStyle);
+        super(context, attrs, R.attr.radioButtonStyle);
+        initRadioButton(attrs, R.attr.radioButtonStyle);
     }
 
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        initRadioButton(attrs, defStyleAttr);
     }
 
-    public void init(AttributeSet attrs, int defStyleAttr) {
-        drawable = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
-        int size = (int) (Carbon.getDip(getContext()) * 24);
-        drawable.setBounds(0, 0, size, size);
-        if (!isInEditMode()) {
-            setCompoundDrawables(drawable, null, null, null);
-            setButtonDrawable(null);
-        }
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public RadioButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initRadioButton(attrs, defStyleAttr);
+    }
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);
-
-        int ap = a.getResourceId(R.styleable.RadioButton_android_textAppearance, -1);
-        if (ap != -1)
-            setTextAppearanceInternal(ap);
-
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-
-        for (int i = 0; i < a.getIndexCount(); i++) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.RadioButton_carbon_textAllCaps) {
-                setAllCaps(a.getBoolean(attr, false));
-            } else if (!isInEditMode() && attr == R.styleable.RadioButton_carbon_fontPath) {
-                String path = a.getString(attr);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                setTypeface(typeface);
+    public void initRadioButton(AttributeSet attrs, int defStyleAttr) {
+        if(attrs!=null) {
+            drawable = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
+            int size = (int) (Carbon.getDip(getContext()) * 24);
+            drawable.setBounds(0, 0, size, size);
+            if (!isInEditMode()) {
+                if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                    setCompoundDrawables(null, null, drawable, null);
+                } else {
+                    setCompoundDrawables(drawable, null, null, null);
+                }
             }
-        }
 
-        a.recycle();
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);
+
+            int ap = a.getResourceId(R.styleable.RadioButton_android_textAppearance, -1);
+            if (ap != -1)
+                setTextAppearanceInternal(ap);
+
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+
+            for (int i = 0; i < a.getIndexCount(); i++) {
+                int attr = a.getIndex(i);
+                if (attr == R.styleable.RadioButton_carbon_textAllCaps) {
+                    setAllCaps(a.getBoolean(attr, false));
+                } else if (!isInEditMode() && attr == R.styleable.RadioButton_carbon_fontPath) {
+                    String path = a.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                }
+            }
+
+            a.recycle();
+
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initTint(this, attrs, defStyleAttr);
+        }
 
         setCheckedImmediate(isChecked());
-
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initTint(this, attrs, defStyleAttr);
     }
 
     @Override

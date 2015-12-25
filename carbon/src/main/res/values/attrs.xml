@@ -228,7 +228,6 @@
         <attr name="android:background"/>
     </declare-styleable>
 
-    <attr name="carbon_progressBarStyle" format="reference"/>
     <declare-styleable name="ProgressBar">
         <attr name="carbon_progressStyle" format="enum">
             <enum name="bar_determinate" value="0"/>
@@ -247,7 +246,6 @@
 
     <attr name="carbon_cardViewStyle" format="reference"/>
 
-    <attr name="carbon_editTextStyle" format="reference"/>
     <declare-styleable name="EditText">
         <attr name="carbon_textAllCaps"/>
         <attr name="carbon_fontPath"/>
@@ -306,14 +304,12 @@
         <attr name="android:dividerHeight"/>
     </declare-styleable>
 
-    <attr name="carbon_checkBoxStyle"/>
     <declare-styleable name="CheckBox">
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
     </declare-styleable>
 
-    <attr name="carbon_radioButtonStyle"/>
     <declare-styleable name="RadioButton">
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>

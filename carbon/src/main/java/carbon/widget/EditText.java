@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -12,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -118,53 +120,63 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     };
 
     public EditText(Context context) {
-        this(context, null);
+        super(context);
+        initEditText(null, R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_editTextStyle);
+        super(context, attrs);
+        initEditText(attrs, R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(attrs, defStyle);
+        initEditText(attrs, defStyle);
     }
 
-    public void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public EditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initEditText(attrs, defStyleAttr);
+    }
 
-        int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
-        if (ap != -1)
-            setTextAppearanceInternal(ap);
+    public void initEditText(AttributeSet attrs, int defStyleAttr) {
+        if (attrs != null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
 
-        for (int i = 0; i < a.getIndexCount(); i++) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.EditText_carbon_textAllCaps) {
-                setAllCaps(a.getBoolean(attr, false));
-            } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_fontPath) {
-                String path = a.getString(attr);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                setTypeface(typeface);
+            int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
+            if (ap != -1)
+                setTextAppearanceInternal(ap);
+
+            for (int i = 0; i < a.getIndexCount(); i++) {
+                int attr = a.getIndex(i);
+                if (attr == R.styleable.EditText_carbon_textAllCaps) {
+                    setAllCaps(a.getBoolean(attr, false));
+                } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_fontPath) {
+                    String path = a.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                }
             }
+
+            errorColor = Carbon.getThemeColor(getContext(), R.attr.carbon_colorError);
+
+            setPattern(a.getString(R.styleable.EditText_carbon_pattern));
+            DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
+
+            if (!isInEditMode())
+                setError(a.getString(R.styleable.EditText_carbon_errorMessage));
+            setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
+            setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
+            setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
+            setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.EditText_carbon_labelStyle, a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false) ? 0 : 2)]);
+            setLabel(a.getString(R.styleable.EditText_carbon_label));
+            if (labelStyle == LabelStyle.Floating && label == null)
+                label = getHint().toString();
+            setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
+
+            a.recycle();
         }
-
-        errorColor = Carbon.getThemeColor(getContext(), R.attr.carbon_colorError);
-
-        setPattern(a.getString(R.styleable.EditText_carbon_pattern));
-        DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
-
-        if (!isInEditMode())
-            setError(a.getString(R.styleable.EditText_carbon_errorMessage));
-        setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
-        setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
-        setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
-        setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.EditText_carbon_labelStyle, a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false) ? 0 : 2)]);
-        setLabel(a.getString(R.styleable.EditText_carbon_label));
-        if (labelStyle == LabelStyle.Floating && label == null)
-            label = getHint().toString();
-        setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
-
-        a.recycle();
 
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
@@ -375,7 +387,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 labelPaint.setAlpha((int) (255 * labelFrac));
                 canvas.drawText(label, getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
             } else if (labelStyle == LabelStyle.Persistent) {
-                labelPaint.setColor(!valid ? errorColor :hasFocus() ? tint.getColorForState(new int[]{android.R.attr.state_focused}, 0) : tint.getColorForState(new int[]{-android.R.attr.state_enabled}, 0));
+                labelPaint.setColor(!valid ? errorColor : hasFocus() ? tint.getColorForState(new int[]{android.R.attr.state_focused}, 0) : tint.getColorForState(new int[]{-android.R.attr.state_enabled}, 0));
                 canvas.drawText(label, getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
             }
         }

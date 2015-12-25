@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -26,19 +27,27 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
     int scroll = 0;
 
     public RecentsList(Context context) {
-        this(context, null);
+        super(context);
+        initRecentsList();
     }
 
     public RecentsList(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initRecentsList();
     }
 
     public RecentsList(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        initRecentsList();
     }
 
-    private void init() {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public RecentsList(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initRecentsList();
+    }
+
+    private void initRecentsList() {
         scroller = new Scroller(getContext());
     }
 

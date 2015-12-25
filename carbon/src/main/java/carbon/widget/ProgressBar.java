@@ -1,10 +1,12 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -32,29 +34,45 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
     }
 
     public ProgressBar(Context context) {
-        this(context, null);
+        super(context);
+        initProgressBar(null, R.attr.progressBarStyle);
     }
 
     public ProgressBar(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_progressBarStyle);
+        super(context, attrs);
+        initProgressBar(attrs, R.attr.progressBarStyle);
     }
 
-    public ProgressBar(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
+    public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initProgressBar(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyleAttr, 0);
-        Style style = Style.values()[a.getInt(R.styleable.ProgressBar_carbon_progressStyle, 0)];
-        if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {
-            setDrawable(new ProgressBarDrawable());
-        } else {
-            setDrawable(new CircularProgressDrawable());
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initProgressBar(attrs, defStyleAttr);
+    }
+
+    private void initProgressBar(AttributeSet attrs, int defStyleAttr) {
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyleAttr, 0);
+            Style style = Style.values()[a.getInt(R.styleable.ProgressBar_carbon_progressStyle, 0)];
+            if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {
+                setDrawable(new ProgressBarDrawable());
+            } else {
+                setDrawable(new CircularProgressDrawable());
+            }
+            drawable.setStyle(style);
+
+            drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
+
+            Carbon.initTint(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+
+            a.recycle();
         }
-        drawable.setStyle(style);
 
-        drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
         if (getVisibility() == VISIBLE) {
             setBarWidth(getBarWidth() + getBarPadding());
             setBarPadding(0);
@@ -62,11 +80,6 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
             setBarPadding(getBarWidth() + getBarPadding());
             setBarWidth(0);
         }
-
-        Carbon.initTint(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-
-        a.recycle();
     }
 
     public void setProgress(float progress) {

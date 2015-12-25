@@ -54,34 +54,38 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     private boolean debugMode;
 
     public DrawerLayout(Context context) {
-        this(context, null);
+        super(context);
+        initDrawerLayout(null,  R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_drawerLayoutStyle);
+        super(context, attrs);
+        initDrawerLayout(attrs,  R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        initDrawerLayout(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, 0);
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+    private void initDrawerLayout(AttributeSet attrs, int defStyleAttr) {
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, 0);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        Carbon.initElevation(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initInset(this, attrs, defStyleAttr);
-        setCornerRadius((int) a.getDimension(R.styleable.DrawerLayout_carbon_cornerRadius, 0));
+            Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initInset(this, attrs, defStyleAttr);
+            setCornerRadius((int) a.getDimension(R.styleable.DrawerLayout_carbon_cornerRadius, 0));
 
-        a.recycle();
-
-        if (isInEditMode()) {
-            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
             a.recycle();
+
+            if (isInEditMode()) {
+                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+                a.recycle();
+            }
         }
 
         setChildrenDrawingOrderEnabled(true);

@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -52,38 +53,48 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public ImageView(Context context) {
-        this(context, null);
+        super(context, null);
+        initImageView(null,  R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_imageViewStyle);
+        super(context, attrs);
+        initImageView(attrs,  R.attr.carbon_imageViewStyle);
     }
 
-    public ImageView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
+    public ImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initImageView(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public ImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initImageView(attrs, defStyleAttr);
+    }
 
-        int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
-        int resId2 = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
-        if (resId == 0)
-            resId = resId2;
-        if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
-            setImageDrawable(new VectorDrawable(getResources(), resId));
-        setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled, true));
+    private void initImageView(AttributeSet attrs, int defStyleAttr) {
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
 
-        setCornerRadius((int) a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
+            int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
+            int resId2 = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
+            if (resId == 0)
+                resId = resId2;
+            if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
+                setImageDrawable(new VectorDrawable(getResources(), resId));
+            setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled, true));
 
-        Carbon.initElevation(this, attrs, defStyleAttr);
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initTint(this, attrs, defStyleAttr);
+            setCornerRadius((int) a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
 
-        a.recycle();
+            Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initTint(this, attrs, defStyleAttr);
+
+            a.recycle();
+        }
     }
 
     @Override

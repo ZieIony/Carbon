@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -7,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -36,25 +38,32 @@ import carbon.drawable.RippleView;
  */
 public class SeekBar extends View implements RippleView, carbon.animation.StateAnimatorView, AnimatedView, TintedView {
     float value = 1.0f;
-    float min, max, step;
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private int colorControl;
 
     public SeekBar(Context context) {
-        this(context, null);
+        super(context);
+        initSeekBar(null, android.R.attr.seekBarStyle);
     }
 
     public SeekBar(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.seekBarStyle);
+        super(context, attrs);
+        initSeekBar(attrs, android.R.attr.seekBarStyle);
     }
 
     public SeekBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(attrs, defStyle);
+        initSeekBar(attrs, defStyle);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public SeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initSeekBar(attrs, defStyleAttr);
+    }
+
+    private void initSeekBar(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
 

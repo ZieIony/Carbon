@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -55,19 +56,27 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
     private boolean debugMode;
 
     public FlowLayout(Context context) {
-        this(context, null);
+        super(context, null);
+        initFlowLayout(null, R.attr.carbon_flowLayoutStyle);
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_flowLayoutStyle);
+        super(context, attrs);
+        initFlowLayout(attrs, R.attr.carbon_flowLayoutStyle);
     }
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        initFlowLayout(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initFlowLayout(attrs, defStyleAttr);
+    }
+
+    private void initFlowLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 

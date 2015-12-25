@@ -26,7 +26,7 @@ import carbon.drawable.RectDrawable;
  * Created by Marcin on 2015-02-28.
  */
 public class ViewPager extends android.support.v4.view.ViewPager implements TintedView {
-    private final int mTouchSlop;
+    private int mTouchSlop;
     EdgeEffect leftGlow;
     EdgeEffect rightGlow;
     private boolean drag = true;
@@ -67,9 +67,9 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
     }
 
     /**
+     * @param listener page changed listener
      * @deprecated Use {@link #addOnPageChangeListener(OnPageChangeListener)} instead. That method
      * allows to add more than one listener.
-     * @param listener page changed listener
      */
     @Deprecated
     @Override
@@ -79,15 +79,21 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
     }
 
     public ViewPager(Context context) {
-        this(context, null);
+        super(context, null);
+        initViewPager(null, R.attr.carbon_viewPagerStyle);
     }
 
     public ViewPager(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_viewPagerStyle);
+        super(context, attrs);
+        initViewPager(attrs, R.attr.carbon_viewPagerStyle);
     }
 
     public ViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs);
+        initViewPager(attrs, defStyleAttr);
+    }
+
+    private void initViewPager(AttributeSet attrs, int defStyleAttr) {
         super.setOnPageChangeListener(internalOnPageChangeListener);
 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
@@ -267,7 +273,7 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
     }
 
     private void updateTint() {
-        if(tint==null)
+        if (tint == null)
             return;
         int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
         if (leftGlow != null)
@@ -289,7 +295,7 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
             try {
                 Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
                 mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable= new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
                 mVerticalThumbField.set(scrollBar, scrollBarDrawable);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();

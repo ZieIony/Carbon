@@ -24,10 +24,8 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.AnimUtils;
+import carbon.animation.*;
 import carbon.animation.AnimatedView;
-import carbon.animation.StateAnimator;
-import carbon.animation.StateAnimatorView;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.RippleDrawable;
@@ -35,38 +33,38 @@ import carbon.drawable.RippleView;
 import carbon.internal.TypefaceUtils;
 
 /**
- * Created by Marcin on 2015-03-06.
+ * Created by Marcin on 2015-12-23.
  */
-public class CheckBox extends android.widget.CheckBox implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
+public class CheckedTextView extends android.widget.CheckedTextView implements RippleView, TouchMarginView, carbon.animation.StateAnimatorView, AnimatedView, TintedView {
     private CheckableDrawable drawable;
 
-    public CheckBox(Context context) {
-        super(context, null, R.attr.checkboxStyle);
-        initCheckBox(null, R.attr.checkboxStyle);
+    public CheckedTextView(Context context) {
+        super(context,null, R.attr.checkboxStyle);
+        initCheckedTextView(null, R.attr.checkboxStyle);
     }
 
-    public CheckBox(Context context, AttributeSet attrs) {
+    public CheckedTextView(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.checkboxStyle);
-        initCheckBox(attrs, R.attr.checkboxStyle);
+        initCheckedTextView(attrs, R.attr.checkboxStyle);
     }
 
-    public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CheckedTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initCheckBox(attrs, defStyleAttr);
+        initCheckedTextView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CheckedTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initCheckBox(attrs, defStyleAttr);
+        initCheckedTextView(attrs, defStyleAttr);
     }
 
-    public void initCheckBox(AttributeSet attrs, int defStyleAttr) {
+    public void initCheckedTextView(AttributeSet attrs, int defStyleAttr) {
         drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
         int size = (int) (Carbon.getDip(getContext()) * 24);
         drawable.setBounds(0, 0, size, size);
         if (!isInEditMode()) {
-            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {   // does it even work?
+            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
                 setCompoundDrawables(null, null, drawable, null);
             } else {
                 setCompoundDrawables(drawable, null, null, null);
@@ -95,12 +93,12 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
 
             a.recycle();
 
+            setCheckedImmediate(isChecked());
+
             Carbon.initAnimations(this, attrs, defStyleAttr);
             Carbon.initTouchMargin(this, attrs, defStyleAttr);
             Carbon.initTint(this, attrs, defStyleAttr);
         }
-
-        setCheckedImmediate(isChecked());
     }
 
     @Override
@@ -396,7 +394,7 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
-                        CheckBox.super.setVisibility(visibility);
+                        CheckedTextView.super.setVisibility(visibility);
                     animator = null;
                     clearAnimation();
                 }
@@ -455,3 +453,4 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
         return tint;
     }
 }
+

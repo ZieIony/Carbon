@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -8,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -38,21 +40,29 @@ public class Spinner extends TextView implements TintedView {
     private boolean isShowingPopup = false;
 
     public Spinner(Context context) {
-        this(context, null);
+        super(context);
+        initSpinner(context);
     }
 
     public Spinner(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_spinnerStyle);
+        super(context, attrs, R.attr.carbon_spinnerStyle);
+        initSpinner(context);
     }
 
     public Spinner(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        initSpinner(context);
+    }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public Spinner(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initSpinner(context);
+    }
+
+    private void initSpinner(Context context) {
         try {
-            Resources.Theme theme = context.getTheme();
-            TypedValue typedvalueattr = new TypedValue();
-            theme.resolveAttribute(R.attr.colorControlNormal, typedvalueattr, true);
-            int color = typedvalueattr.resourceId != 0 ? context.getResources().getColor(typedvalueattr.resourceId) : typedvalueattr.data;
+            int color = Carbon.getThemeColor(context,R.attr.colorControlNormal);
 
             int size = (int) (Carbon.getDip(getContext()) * 24);
             Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);

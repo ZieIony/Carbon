@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -14,10 +15,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,35 +55,46 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     private boolean debugMode;
 
     public LinearLayout(Context context) {
-        this(context, null);
+        super(context);
+        initLinearLayout(null,R.attr.carbon_linearLayoutStyle);
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_linearLayoutStyle);
+        super(context, attrs);
+        initLinearLayout(attrs,R.attr.carbon_linearLayoutStyle);
     }
 
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs);
-        init(attrs, defStyleAttr);
+        initLinearLayout(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, 0);
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initLinearLayout(attrs, defStyleAttr);
+    }
+
+    private void initLinearLayout(AttributeSet attrs, int defStyleAttr) {
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, 0);
+
+            setCornerRadius((int) a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
+
+            a.recycle();
+
+            if (isInEditMode()) {
+                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+                a.recycle();
+            }
+        }
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
         Carbon.initElevation(this, attrs, defStyleAttr);
         Carbon.initAnimations(this, attrs, defStyleAttr);
         Carbon.initTouchMargin(this, attrs, defStyleAttr);
         Carbon.initInset(this, attrs, defStyleAttr);
-        setCornerRadius((int) a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
-
-        a.recycle();
-
-        if (isInEditMode()) {
-            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
-            a.recycle();
-        }
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);

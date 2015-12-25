@@ -1,7 +1,9 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -15,19 +17,27 @@ import carbon.R;
  */
 public class Divider extends View {
     public Divider(Context context) {
-        this(context, null);
+        super(context);
+        initDivider(null, R.attr.carbon_dividerStyle);
     }
 
     public Divider(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_dividerStyle);
+        super(context, attrs);
+        initDivider(attrs, R.attr.carbon_dividerStyle);
     }
 
     public Divider(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        initDivider(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public Divider(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initDivider(attrs, defStyleAttr);
+    }
+
+    private void initDivider(AttributeSet attrs, int defStyleAttr) {
         if (attrs == null)
             return;
 

@@ -1,10 +1,12 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -100,19 +102,27 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     private TabBuilder tabBuilder;
 
     public PagerTabStrip(Context context) {
-        this(context, null);
+        super(context);
+        initPagerTabStrip(null,  R.attr.carbon_pagerTabStripStyle);
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_pagerTabStripStyle);
+        super(context, attrs, R.attr.carbon_pagerTabStripStyle);
+        initPagerTabStrip(attrs,  R.attr.carbon_pagerTabStripStyle);
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        initPagerTabStrip(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public PagerTabStrip(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initPagerTabStrip(attrs, defStyleAttr);
+    }
+
+    private void initPagerTabStrip(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagerTabStrip, defStyleAttr, 0);
 
         setIndicatorHeight(a.getDimension(R.styleable.PagerTabStrip_carbon_indicatorWidth, 2));

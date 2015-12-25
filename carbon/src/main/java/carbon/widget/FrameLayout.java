@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -58,34 +59,44 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     private boolean debugMode;
 
     public FrameLayout(Context context) {
-        this(context, null);
+        super(context);
+        initFrameLayout(null, R.attr.carbon_frameLayoutStyle);
     }
 
     public FrameLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_frameLayoutStyle);
+        super(context, attrs);
+        initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle);
     }
 
     public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        initFrameLayout(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initFrameLayout(attrs, defStyleAttr);
+    }
 
-        Carbon.initElevation(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initInset(this, attrs, defStyleAttr);
-        setCornerRadius((int) a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
+    private void initFrameLayout(AttributeSet attrs, int defStyleAttr) {
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        a.recycle();
+            Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initInset(this, attrs, defStyleAttr);
+            setCornerRadius((int) a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
 
-        if (isInEditMode()) {
-            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
             a.recycle();
+
+            if (isInEditMode()) {
+                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+                a.recycle();
+            }
         }
 
         setChildrenDrawingOrderEnabled(true);

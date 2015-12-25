@@ -21,13 +21,13 @@
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
-        <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
+        <item name="progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_editTextStyle">@style/carbon_EditText</item>
+        <item name="editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
-        <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
-        <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="checkboxStyle">@style/carbon_CheckBox</item>
+        <item name="radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
 
@@ -122,13 +122,13 @@
         <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
-        <item name="carbon_progressBarStyle">@style/carbon_ProgressBar</item>
+        <item name="progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_editTextStyle">@style/carbon_EditText</item>
+        <item name="editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
-        <item name="carbon_checkBoxStyle">@style/carbon_CheckBox</item>
-        <item name="carbon_radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="checkboxStyle">@style/carbon_CheckBox</item>
+        <item name="radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
 
@@ -236,7 +236,7 @@
         <item name="android:clickable">true</item>
     </style>
 
-    <style name="carbon_FloatingActionButton">
+    <style name="carbon_FloatingActionButton" parent="carbon_ImageView">
         <item name="android:clickable">true</item>
         <item name="android:background">#00000000</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>

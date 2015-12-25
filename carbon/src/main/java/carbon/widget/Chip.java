@@ -1,9 +1,11 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -35,7 +37,13 @@ public class Chip extends FrameLayout {
 
     public Chip(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initChip(attrs, R.attr.carbon_chipStyle);
+        initChip(attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public Chip(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initChip(attrs, defStyleAttr);
     }
 
     private void initChip(AttributeSet attrs, int defStyleAttr) {
@@ -52,20 +60,22 @@ public class Chip extends FrameLayout {
             }
         });
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, 0);
-        setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
-        setText(a.getString(R.styleable.Chip_android_text));
-        int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
-        if (iconRes != 0) {
-            setIcon(iconRes);
-        } else {
-            setIconVisible(false);
-        }
-        int color = a.getColor(R.styleable.Chip_android_background, 0);
-        setBackgroundColor(color);
-        a.recycle();
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, 0);
+            setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
+            setText(a.getString(R.styleable.Chip_android_text));
+            int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
+            if (iconRes != 0) {
+                setIcon(iconRes);
+            } else {
+                setIconVisible(false);
+            }
+            int color = a.getColor(R.styleable.Chip_android_background, 0);
+            setBackgroundColor(color);
+            a.recycle();
 
-        Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initElevation(this, attrs, defStyleAttr);
+        }
     }
 
     public void setText(String text) {

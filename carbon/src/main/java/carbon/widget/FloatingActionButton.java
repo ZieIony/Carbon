@@ -1,8 +1,9 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 
 import carbon.Carbon;
@@ -10,7 +11,6 @@ import carbon.R;
 import carbon.animation.ElevationStateAnimator;
 import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.ControlAccentColorStateList;
-import carbon.drawable.RippleDrawable;
 
 /**
  * Created by Marcin on 2014-12-04.
@@ -21,19 +21,27 @@ import carbon.drawable.RippleDrawable;
 public class FloatingActionButton extends ImageView {
 
     public FloatingActionButton(Context context) {
-        this(context, null);
+        super(context, null,  R.attr.carbon_fabStyle);
+        initFloatingActionButton(null,  R.attr.carbon_fabStyle);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_fabStyle);
+        super(context, attrs,  R.attr.carbon_fabStyle);
+        initFloatingActionButton(attrs,  R.attr.carbon_fabStyle);
     }
 
-    public FloatingActionButton(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
+    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initFloatingActionButton(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initFloatingActionButton(attrs, defStyleAttr);
+    }
+
+    private void initFloatingActionButton(AttributeSet attrs, int defStyleAttr) {
         addStateAnimator(new ElevationStateAnimator(this));
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, 0);

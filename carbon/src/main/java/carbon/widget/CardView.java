@@ -1,6 +1,8 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 
 import carbon.R;
@@ -15,14 +17,19 @@ import carbon.R;
 public class CardView extends LinearLayout {
 
     public CardView(Context context) {
-        this(context, null);
+        super(context);
     }
 
     public CardView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_cardViewStyle);
+        super(context, attrs);
     }
 
     public CardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public CardView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 }

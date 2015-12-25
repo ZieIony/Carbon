@@ -58,19 +58,21 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     private boolean debugMode;
 
     public GridLayout(Context context) {
-        this(context, null);
+        super(context);
+        initGridLayout(null, R.attr.carbon_frameLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_frameLayoutStyle);
+        super(context, attrs);
+        initGridLayout(attrs, R.attr.carbon_frameLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        initGridLayout(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    private void initGridLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, 0);
         Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 

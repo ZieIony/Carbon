@@ -20,19 +20,21 @@ public class NavigationView extends RecyclerView {
     private Menu menu;
 
     public NavigationView(Context context) {
-        this(context, null);
+        super(context);
+        initNavigationView();
     }
 
     public NavigationView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.carbon_navigationViewStyle);
+        super(context, attrs);
+        initNavigationView();
     }
 
     public NavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        initNavigationView();
     }
 
-    private void init() {
+    private void initNavigationView() {
         setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 

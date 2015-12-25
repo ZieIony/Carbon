@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -7,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -43,33 +45,40 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
     private int colorControl;
 
     public RangeSeekBar(Context context) {
-        this(context, null);
+        super(context);
+        initSeekBar(null, android.R.attr.seekBarStyle);
     }
 
     public RangeSeekBar(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.seekBarStyle);
+        super(context, attrs);
+        initSeekBar(attrs, android.R.attr.seekBarStyle);
     }
 
-    public RangeSeekBar(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
+    public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initSeekBar(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initSeekBar(attrs, defStyleAttr);
+    }
+
+    private void initSeekBar(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
 
-        Resources.Theme theme = getContext().getTheme();
-        TypedValue typedvalueattr = new TypedValue();
-        theme.resolveAttribute(R.attr.colorControlNormal, typedvalueattr, true);
-        colorControl = typedvalueattr.resourceId != 0 ? getContext().getResources().getColor(typedvalueattr.resourceId) : typedvalueattr.data;
+        colorControl = Carbon.getThemeColor(getContext(),R.attr.colorControlNormal);
 
         THUMB_RADIUS = Carbon.getDip(getContext()) * 12;
         RIPPLE_RADIUS = Carbon.getDip(getContext()) * 15;
 
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTint(this, attrs, defStyleAttr);
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        if(attrs!=null) {
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTint(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        }
 
         setFocusableInTouchMode(false); // TODO: from theme
     }
@@ -137,11 +146,11 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             ViewParent parent = getParent();
-            if(parent!=null)
+            if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(true);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
             ViewParent parent = getParent();
-            if(parent!=null)
+            if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(false);
         }
 

@@ -145,18 +145,18 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
 
     public Snackbar(Context context) {
         super(context);
-        init(null, R.attr.carbon_snackbarTheme);
+        initSnackbar(null, R.attr.carbon_snackbarTheme);
     }
 
     public Snackbar(Context context, String message, String action, int duration) {
         super(context);
-        init(null, R.attr.carbon_snackbarTheme);
+        initSnackbar(null, R.attr.carbon_snackbarTheme);
         setMessage(message);
         setAction(action);
         setDuration(duration);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    private void initSnackbar(AttributeSet attrs, int defStyleAttr) {
         TypedValue outValue = new TypedValue();
         getContext().getTheme().resolveAttribute(R.attr.carbon_snackbarTheme, outValue, true);
         int theme = outValue.resourceId;

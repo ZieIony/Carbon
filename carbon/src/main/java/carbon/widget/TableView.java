@@ -24,24 +24,20 @@ public class TableView extends RecyclerView {
 
     public TableView(Context context) {
         super(context);
-        setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        putCellRenderer(String.class, new StringRenderer());
-        putCellRenderer(Integer.class, new IntegerRenderer());
-        putCellRenderer(Float.class, new FloatRenderer());
-        putCellRenderer(Boolean.class, new BooleanRenderer());
+        initTableView(context);
     }
 
     public TableView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        putCellRenderer(String.class, new StringRenderer());
-        putCellRenderer(Integer.class, new IntegerRenderer());
-        putCellRenderer(Float.class, new FloatRenderer());
-        putCellRenderer(Boolean.class, new BooleanRenderer());
+        initTableView(context);
     }
 
     public TableView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initTableView(context);
+    }
+
+    private void initTableView(Context context) {
         setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         putCellRenderer(String.class, new StringRenderer());
         putCellRenderer(Integer.class, new IntegerRenderer());

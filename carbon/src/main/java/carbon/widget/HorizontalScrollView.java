@@ -1,10 +1,12 @@
 package carbon.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -24,7 +26,7 @@ import carbon.drawable.RectDrawable;
  * Created by Marcin on 2015-02-28.
  */
 public class HorizontalScrollView extends android.widget.HorizontalScrollView implements TintedView {
-    private final int mTouchSlop;
+    private int mTouchSlop;
     EdgeEffect leftGlow;
     EdgeEffect rightGlow;
     private boolean drag = true;
@@ -36,15 +38,27 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
     public static final int OVER_SCROLL_NEVER = 2;
 
     public HorizontalScrollView(Context context) {
-        this(context, null);
+        super(context );
+        initHorizontalScrollView(null, android.R.attr.horizontalScrollViewStyle);
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.horizontalScrollViewStyle);
+        super(context, attrs);
+        initHorizontalScrollView(attrs, android.R.attr.horizontalScrollViewStyle);
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initHorizontalScrollView(attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initHorizontalScrollView(attrs, defStyleAttr);
+    }
+
+    private void initHorizontalScrollView(AttributeSet attrs, int defStyleAttr) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 

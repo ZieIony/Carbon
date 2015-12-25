@@ -66,7 +66,24 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     private void initRecycler(AttributeSet attrs, int defStyleAttr) {
-        Carbon.initTint(this, attrs, defStyleAttr);
+        if(attrs!=null) {
+            Carbon.initTint(this, attrs, defStyleAttr);
+
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, 0);
+            for (int i = 0; i < a.getIndexCount(); i++) {
+                int attr = a.getIndex(i);
+                if (attr == R.styleable.RecyclerView_carbon_headerTint) {
+                    setHeaderTint(a.getColor(attr, 0));
+                } else if (attr == R.styleable.RecyclerView_carbon_headerMinHeight) {
+                    setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
+                } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
+                    setHeaderParallax(a.getFloat(attr, 0.0f));
+                } else if (attr == R.styleable.RecyclerView_android_divider) {
+                    setDivider(a.getDrawable(attr), (int) a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0));
+                }
+            }
+            a.recycle();
+        }
 
         Class klass = android.support.v7.widget.RecyclerView.class;
         try {
@@ -81,21 +98,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, 0);
-        for (int i = 0; i < a.getIndexCount(); i++) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.RecyclerView_carbon_headerTint) {
-                setHeaderTint(a.getColor(attr, 0));
-            } else if (attr == R.styleable.RecyclerView_carbon_headerMinHeight) {
-                setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
-            } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
-                setHeaderParallax(a.getFloat(attr, 0.0f));
-            } else if (attr == R.styleable.RecyclerView_android_divider) {
-                setDivider(a.getDrawable(attr), (int) a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0));
-            }
-        }
-        a.recycle();
 
         setClipToPadding(false);
     }
