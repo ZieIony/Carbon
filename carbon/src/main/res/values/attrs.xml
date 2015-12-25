@@ -194,7 +194,6 @@
         <attr name="carbon_cornerRadius"/>
     </declare-styleable>
 
-    <attr name="carbon_toolbarStyle" format="reference"/>
     <declare-styleable name="Toolbar">
         <attr name="android:background"/>
         <attr name="android:text"/>

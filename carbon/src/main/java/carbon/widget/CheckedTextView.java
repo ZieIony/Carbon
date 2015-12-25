@@ -63,13 +63,8 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
         drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
         int size = (int) (Carbon.getDip(getContext()) * 24);
         drawable.setBounds(0, 0, size, size);
-        if (!isInEditMode()) {
-            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                setCompoundDrawables(null, null, drawable, null);
-            } else {
-                setCompoundDrawables(drawable, null, null, null);
-            }
-        }
+        if (!isInEditMode())
+            setCheckMarkDrawable(drawable);
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
@@ -99,6 +94,12 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
             Carbon.initTouchMargin(this, attrs, defStyleAttr);
             Carbon.initTint(this, attrs, defStyleAttr);
         }
+    }
+
+    @Override
+    public boolean performClick() {
+        toggle();
+        return super.performClick();
     }
 
     @Override

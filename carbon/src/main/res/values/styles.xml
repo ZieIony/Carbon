@@ -18,7 +18,7 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
-        <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="progressBarStyle">@style/carbon_ProgressBar</item>
@@ -119,7 +119,7 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
-        <item name="carbon_toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="progressBarStyle">@style/carbon_ProgressBar</item>
@@ -289,10 +289,12 @@
         <item name="carbon_rippleColor">@null</item>
     </style>
 
-    <style name="carbon_Toolbar">
+    <style name="carbon_Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="carbon_elevation">@dimen/carbon_elevationToolbar</item>
         <item name="carbon_icon">@raw/carbon_uparrow</item>
+        <item name="contentInsetLeft">0dp</item>
+        <item name="contentInsetStart">0dp</item>
     </style>
 
     <style name="carbon_Chip">

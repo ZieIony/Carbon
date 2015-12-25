@@ -51,11 +51,11 @@
     <carbon.widget.CheckedTextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_listItemHeight"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:layoutDirection="locale"
         android:paddingLeft="@dimen/carbon_padding"
         android:text="checked text view"
-        android:clickable="true"
         app:carbon_tint="@drawable/checkbox_selector"/>
 
     <carbon.widget.Divider
@@ -86,17 +86,6 @@
             android:paddingLeft="@dimen/carbon_padding"
             android:text="pick me!"/>
 
-        <carbon.widget.Divider
-            android:layout_width="match_parent"
-            android:layout_height="1px"/>
-
-        <carbon.widget.RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_listItemHeight"
-            android:gravity="center_vertical"
-            android:layoutDirection="locale"
-            android:paddingLeft="@dimen/carbon_padding"
-            android:text="pick me!"/>
     </RadioGroup>
 
     <carbon.widget.Divider
