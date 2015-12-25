@@ -8,17 +8,17 @@
 
     <carbon.widget.Toolbar
         android:id="@+id/toolbar"
-        app:carbon_icon="@null"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:carbon_icon="@null">
 
         <carbon.widget.ImageView
             android:id="@+id/icon1"
-            android:layout_width="@dimen/carbon_toolbarHeight"
-            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize"
             android:clickable="true"
             android:focusable="true"
-            android:padding="@dimen/carbon_padding"
+            android:scaleType="center"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
@@ -28,11 +28,11 @@
 
         <carbon.widget.ImageView
             android:id="@+id/icon2"
-            android:layout_width="@dimen/carbon_toolbarHeight"
-            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize"
             android:clickable="true"
             android:focusable="true"
-            android:padding="@dimen/carbon_padding"
+            android:scaleType="center"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
             app:carbon_rippleColor="?attr/carbon_rippleColor"

@@ -42,7 +42,7 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/carbon_toolbarTitle"
         android:layout_toRightOf="@id/carbon_toolbarTitle"
-        android:gravity="end"
+        android:gravity="end|center_vertical"
         android:minHeight="@dimen/carbon_toolbarHeight"
         android:orientation="horizontal"
         android:paddingEnd="@dimen/carbon_toolbarItemPadding"
