@@ -121,12 +121,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     public EditText(Context context) {
         super(context);
-        initEditText(null, R.attr.editTextStyle);
+        initEditText(null, android.R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initEditText(attrs, R.attr.editTextStyle);
+        initEditText(attrs, android.R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyle) {
@@ -176,12 +176,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
 
             a.recycle();
-        }
 
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initTint(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initTint(this, attrs, defStyleAttr);
+        }
 
         if (!isInEditMode()) {
             errorPaint.setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.Regular));

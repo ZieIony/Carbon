@@ -65,7 +65,6 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:clickable="false"
-            android:elevation="0dp"
             android:padding="@dimen/carbon_paddingHalf"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"

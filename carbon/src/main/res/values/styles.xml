@@ -8,6 +8,12 @@
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:listViewStyle">@style/carbon_ListView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
+        <item name="android:progressBarStyle">@style/carbon_ProgressBar</item>
+        <item name="android:editTextStyle">@style/carbon_EditText</item>
+        <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
+        <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
+
+        <item name="toolbarStyle">@style/carbon_Toolbar</item>
 
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
@@ -18,16 +24,11 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
-        <item name="toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
-        <item name="progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
-        <item name="checkboxStyle">@style/carbon_CheckBox</item>
-        <item name="radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
 
@@ -109,6 +110,12 @@
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:listViewStyle">@style/carbon_ListView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
+        <item name="android:progressBarStyle">@style/carbon_ProgressBar</item>
+        <item name="android:editTextStyle">@style/carbon_EditText</item>
+        <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
+        <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
+
+        <item name="toolbarStyle">@style/carbon_Toolbar</item>
 
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
@@ -119,16 +126,11 @@
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
         <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
         <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
-        <item name="toolbarStyle">@style/carbon_Toolbar</item>
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
-        <item name="progressBarStyle">@style/carbon_ProgressBar</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="editTextStyle">@style/carbon_EditText</item>
         <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
-        <item name="checkboxStyle">@style/carbon_CheckBox</item>
-        <item name="radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
 

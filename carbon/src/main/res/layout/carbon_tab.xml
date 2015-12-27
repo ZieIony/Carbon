@@ -24,6 +24,5 @@
         android:layout_alignBaseline="@+id/carbon_marker"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="tab" />
+        android:layout_height="wrap_content"/>
 </carbon.widget.RelativeLayout>
