@@ -370,15 +370,15 @@
     </style>
 
     <style name="carbon_ScrollView">
-        <item name="carbon_edgeEffectColor">?attr/colorPrimary</item>
+        <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
     <style name="carbon_HorizontalScrollView">
-        <item name="carbon_edgeEffectColor">?attr/colorPrimary</item>
+        <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
     <style name="carbon_ViewPager">
-        <item name="carbon_edgeEffectColor">?attr/colorPrimary</item>
+        <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
     <style name="carbon_CheckBox" parent="android:Widget.CompoundButton.CheckBox">

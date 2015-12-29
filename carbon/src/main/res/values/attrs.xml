@@ -7,7 +7,10 @@
         <attr name="carbon_colorDisabled" format="reference|color"/>
 
         <attr name="carbon_dividerColor" format="reference|color"/>
+
+        <!-- {@deprecated Use carbon_tint instead.} -->
         <attr name="carbon_edgeEffectColor" format="color|reference"/>
+
         <attr name="carbon_iconColor" format="reference|color"/>
         <attr name="carbon_iconColorInverse" format="reference|color"/>
 
