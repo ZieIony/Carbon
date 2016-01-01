@@ -50,7 +50,7 @@ import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-20.
- *
+ * <p/>
  * A FrameLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
@@ -59,18 +59,18 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     private boolean debugMode;
 
     public FrameLayout(Context context) {
-        super(context);
+        super(context, null, R.attr.carbon_frameLayoutStyle);
         initFrameLayout(null, R.attr.carbon_frameLayoutStyle);
     }
 
     public FrameLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs, R.attr.carbon_frameLayoutStyle);
         initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle);
     }
 
     public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initFrameLayout(attrs, defStyleAttr);
+        initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -80,7 +80,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
     private void initFrameLayout(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
             Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 

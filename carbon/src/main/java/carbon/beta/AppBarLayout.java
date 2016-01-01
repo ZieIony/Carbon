@@ -1,6 +1,5 @@
-package carbon.widget;
+package carbon.beta;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -35,10 +34,8 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.AnimUtils;
+import carbon.animation.*;
 import carbon.animation.AnimatedView;
-import carbon.animation.StateAnimator;
-import carbon.animation.StateAnimatorView;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -47,54 +44,45 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
+import carbon.widget.CornerView;
+import carbon.widget.InsetView;
+import carbon.widget.OnInsetsChangedListener;
+import carbon.widget.TouchMarginView;
 
 /**
- * Created by Marcin on 2014-11-20.
- * <p/>
- * A RelativeLayout implementation with support for material features including shadows, ripples, rounded
- * corners, insets, custom drawing order, touch margins, state animators and others.
+ * Created by Marcin on 2015-12-30.
  */
-public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
-
+public class AppBarLayout extends android.support.design.widget.AppBarLayout implements ShadowView, RippleView, TouchMarginView, carbon.animation.StateAnimatorView, AnimatedView, InsetView, CornerView {
     private boolean debugMode;
 
-    public RelativeLayout(Context context) {
-        super(context,null, R.attr.carbon_relativeLayoutStyle);
-        initRelativeLayout(null, R.attr.carbon_relativeLayoutStyle);
+    public AppBarLayout(Context context) {
+        super(context);
+        initAppBarLayout(null, R.attr.carbon_appBarLayoutStyle);
     }
 
-    public RelativeLayout(Context context, AttributeSet attrs) {
-        super(context, attrs,R.attr.carbon_relativeLayoutStyle);
-        initRelativeLayout(attrs, R.attr.carbon_relativeLayoutStyle);
+    public AppBarLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initAppBarLayout(attrs, R.attr.carbon_appBarLayoutStyle);
     }
 
-    public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initRelativeLayout(attrs, defStyleAttr);
-    }
+    private void initAppBarLayout(AttributeSet attrs, int defStyleAttr) {
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarLayout, defStyleAttr, 0);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initRelativeLayout(attrs, defStyleAttr);
-    }
+            Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initInset(this, attrs, defStyleAttr);
+            setCornerRadius((int) a.getDimension(R.styleable.AppBarLayout_carbon_cornerRadius, 0));
 
-    private void initRelativeLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, 0);
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-
-        Carbon.initElevation(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initInset(this, attrs, defStyleAttr);
-        setCornerRadius((int) a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0));
-
-        a.recycle();
-
-        if (isInEditMode()) {
-            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
             a.recycle();
+
+            if (isInEditMode()) {
+                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+                a.recycle();
+            }
         }
 
         setChildrenDrawingOrderEnabled(true);
@@ -611,7 +599,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
-                        RelativeLayout.super.setVisibility(visibility);
+                        AppBarLayout.super.setVisibility(visibility);
                     animator = null;
                     clearAnimation();
                 }
@@ -764,19 +752,18 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     // anchors
     // -------------------------------
 
-
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
         return new LayoutParams(super.generateDefaultLayoutParams());
     }
 
     @Override
-    public android.widget.RelativeLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new LayoutParams(getContext(), attrs);
     }
 
     @Override
-    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
         return new LayoutParams(p);
     }
 
@@ -815,16 +802,16 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         }
     }
 
-    public static class LayoutParams extends android.widget.RelativeLayout.LayoutParams {
-        public int anchorView = 0;
-        private int anchorGravity = 0;
+    public static class LayoutParams extends android.support.design.widget.AppBarLayout.LayoutParams {
+        public int anchorView;
+        private int anchorGravity;
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
 
-            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.RelativeLayout_Layout);
-            anchorView = a.getResourceId(R.styleable.RelativeLayout_Layout_carbon_anchor, -1);
-            anchorGravity = a.getInt(R.styleable.RelativeLayout_Layout_carbon_anchorGravity, -1);
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.AppBarLayout_Layout);
+            anchorView = a.getResourceId(R.styleable.AppBarLayout_Layout_carbon_anchor, -1);
+            anchorGravity = a.getInt(R.styleable.AppBarLayout_Layout_carbon_anchorGravity, -1);
             a.recycle();
         }
 

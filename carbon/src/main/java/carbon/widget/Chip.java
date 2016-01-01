@@ -26,12 +26,12 @@ public class Chip extends FrameLayout {
     }
 
     public Chip(Context context) {
-        super(context);
+        super(context, null, R.attr.carbon_chipStyle);
         initChip(null, R.attr.carbon_chipStyle);
     }
 
     public Chip(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs, R.attr.carbon_chipStyle);
         initChip(attrs, R.attr.carbon_chipStyle);
     }
 
@@ -60,7 +60,7 @@ public class Chip extends FrameLayout {
             }
         });
 
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, 0);
             setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
             setText(a.getString(R.styleable.Chip_android_text));

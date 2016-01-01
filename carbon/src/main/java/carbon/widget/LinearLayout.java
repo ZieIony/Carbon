@@ -47,7 +47,7 @@ import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-20.
- *
+ * <p/>
  * A LinearLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
@@ -55,17 +55,18 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     private boolean debugMode;
 
     public LinearLayout(Context context) {
-        super(context);
-        initLinearLayout(null,R.attr.carbon_linearLayoutStyle);
+        super(context,null);
+        initLinearLayout(null, R.attr.carbon_linearLayoutStyle);
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initLinearLayout(attrs,R.attr.carbon_linearLayoutStyle);
+        initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs);
+        super(context, attrs, defStyleAttr);
         initLinearLayout(attrs, defStyleAttr);
     }
 
@@ -76,7 +77,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     private void initLinearLayout(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, 0);
 
             setCornerRadius((int) a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
@@ -617,7 +618,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 

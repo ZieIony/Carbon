@@ -35,12 +35,12 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
 
     public ProgressBar(Context context) {
         super(context);
-        initProgressBar(null, R.attr.progressBarStyle);
+        initProgressBar(null, android.R.attr.progressBarStyle);
     }
 
     public ProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initProgressBar(attrs, R.attr.progressBarStyle);
+        initProgressBar(attrs, android.R.attr.progressBarStyle);
     }
 
     public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {

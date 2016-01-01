@@ -31,6 +31,9 @@
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
+        <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
+        <item name="carbon_coordinatorLayoutStyle">@style/carbon_CoordinatorLayout</item>
+        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
@@ -133,6 +136,9 @@
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
+        <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
+        <item name="carbon_coordinatorLayoutStyle">@style/carbon_CoordinatorLayout</item>
+        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
@@ -269,6 +275,18 @@
         <item name="carbon_tint">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">fade</item>
         <item name="carbon_outAnimation">fade</item>
+    </style>
+
+    <style name="carbon_CollapsingToolbarLayout">
+        <item name="carbon_rippleColor">@null</item>
+    </style>
+
+    <style name="carbon_AppBarLayout">
+        <item name="carbon_rippleColor">@null</item>
+    </style>
+
+    <style name="carbon_CoordinatorLayout">
+        <item name="carbon_rippleColor">@null</item>
     </style>
 
     <style name="carbon_FrameLayout">

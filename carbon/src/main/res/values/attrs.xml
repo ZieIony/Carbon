@@ -151,6 +151,34 @@
         <attr name="carbon_touchMarginBottom"/>
     </declare-styleable>
 
+    <attr name="carbon_collapsingToolbarLayoutStyle" format="reference"/>
+    <declare-styleable name="CollapsingToolbarLayout">
+        <attr name="carbon_rippleColor"/>
+        <attr name="carbon_cornerRadius"/>
+    </declare-styleable>
+
+    <attr name="carbon_appBarLayoutStyle" format="reference"/>
+    <declare-styleable name="AppBarLayout">
+        <attr name="carbon_rippleColor"/>
+        <attr name="carbon_cornerRadius"/>
+    </declare-styleable>
+
+    <declare-styleable name="AppBarLayout_Layout">
+        <attr name="carbon_anchor"/>
+        <attr name="carbon_anchorGravity"/>
+    </declare-styleable>
+
+    <attr name="carbon_coordinatorLayoutStyle" format="reference"/>
+    <declare-styleable name="CoordinatorLayout">
+        <attr name="carbon_rippleColor"/>
+        <attr name="carbon_cornerRadius"/>
+    </declare-styleable>
+
+    <declare-styleable name="CoordinatorLayout_Layout">
+        <attr name="carbon_anchor"/>
+        <attr name="carbon_anchorGravity"/>
+    </declare-styleable>
+
     <attr name="carbon_frameLayoutStyle" format="reference"/>
     <declare-styleable name="FrameLayout">
         <attr name="carbon_rippleColor"/>

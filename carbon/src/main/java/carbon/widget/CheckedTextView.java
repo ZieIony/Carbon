@@ -39,8 +39,8 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
     private CheckableDrawable drawable;
 
     public CheckedTextView(Context context) {
-        super(context,null, R.attr.checkboxStyle);
-        initCheckedTextView(null, R.attr.checkboxStyle);
+        super(context,null, android.R.attr.checkboxStyle);
+        initCheckedTextView(null, android.R.attr.checkboxStyle);
     }
 
     public CheckedTextView(Context context, AttributeSet attrs) {

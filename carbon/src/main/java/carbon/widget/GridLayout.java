@@ -58,13 +58,13 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     private boolean debugMode;
 
     public GridLayout(Context context) {
-        super(context);
-        initGridLayout(null, R.attr.carbon_frameLayoutStyle);
+        super(context,null,R.attr.carbon_gridLayoutStyle);
+        initGridLayout(null, R.attr.carbon_gridLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initGridLayout(attrs, R.attr.carbon_frameLayoutStyle);
+        super(context, attrs,R.attr.carbon_gridLayoutStyle);
+        initGridLayout(attrs, R.attr.carbon_gridLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {

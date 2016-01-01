@@ -40,7 +40,7 @@ public class Spinner extends TextView implements TintedView {
     private boolean isShowingPopup = false;
 
     public Spinner(Context context) {
-        super(context);
+        super(context,null, R.attr.carbon_spinnerStyle);
         initSpinner(context);
     }
 

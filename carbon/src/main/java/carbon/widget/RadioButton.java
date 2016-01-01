@@ -41,13 +41,13 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     private CheckableDrawable drawable;
 
     public RadioButton(Context context) {
-        super(context,null, R.attr.radioButtonStyle);
-        initRadioButton(null, R.attr.radioButtonStyle);
+        super(context);
+        initRadioButton(null, android.R.attr.radioButtonStyle);
     }
 
     public RadioButton(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.radioButtonStyle);
-        initRadioButton(attrs, R.attr.radioButtonStyle);
+        super(context, attrs);
+        initRadioButton(attrs, android.R.attr.radioButtonStyle);
     }
 
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr) {

@@ -53,12 +53,12 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public ImageView(Context context) {
-        super(context, null);
+        super(context, null,  R.attr.carbon_imageViewStyle);
         initImageView(null,  R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs,  R.attr.carbon_imageViewStyle);
         initImageView(attrs,  R.attr.carbon_imageViewStyle);
     }
 

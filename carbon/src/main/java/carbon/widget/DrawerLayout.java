@@ -54,12 +54,12 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     private boolean debugMode;
 
     public DrawerLayout(Context context) {
-        super(context);
+        super(context,null,  R.attr.carbon_drawerLayoutStyle);
         initDrawerLayout(null,  R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs,  R.attr.carbon_drawerLayoutStyle);
         initDrawerLayout(attrs,  R.attr.carbon_drawerLayoutStyle);
     }
 

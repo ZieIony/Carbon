@@ -51,8 +51,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private boolean clipToPadding;
 
     public RecyclerView(Context context) {
-        super(context, null);
-        initRecycler(null, 0);
+        super(context, null, R.attr.carbon_recyclerViewStyle);
+        initRecycler(null, R.attr.carbon_recyclerViewStyle);
     }
 
     public RecyclerView(Context context, AttributeSet attrs) {

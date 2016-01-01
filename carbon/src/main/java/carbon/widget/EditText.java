@@ -181,6 +181,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             Carbon.initAnimations(this, attrs, defStyleAttr);
             Carbon.initTouchMargin(this, attrs, defStyleAttr);
             Carbon.initTint(this, attrs, defStyleAttr);
+        } else {
+            setTint(0);
         }
 
         if (!isInEditMode()) {
@@ -1126,11 +1128,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     @Override
     public void setTint(ColorStateList list) {
-        if (list == null) {
-            tint = null;
-        } else {
-            this.tint = list;
-        }
+        this.tint = list;
     }
 
     @Override

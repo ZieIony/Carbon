@@ -15,6 +15,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -872,4 +874,79 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
         return result;
     }
 
+
+    // -------------------------------
+    // save state
+    // -------------------------------
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        //begin boilerplate code that allows parent classes to save state
+        Parcelable superState = super.onSaveInstanceState();
+
+        SavedState ss = new SavedState(superState);
+        //end
+
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        //begin boilerplate code so parent classes can restore state
+        if (!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        //end
+    }
+
+    static class SavedState implements Parcelable {
+        public static final SavedState EMPTY_STATE = new SavedState() {
+        };
+
+        Parcelable superState;
+
+        SavedState() {
+            superState = null;
+        }
+
+        SavedState(Parcelable superState) {
+            this.superState = superState != EMPTY_STATE ? superState : null;
+        }
+
+        private SavedState(Parcel in) {
+            Parcelable superState = in.readParcelable(EditText.class.getClassLoader());
+            this.superState = superState != null ? superState : EMPTY_STATE;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+
+        @Override
+        public void writeToParcel(@NonNull Parcel out, int flags) {
+            out.writeParcelable(superState, flags);
+        }
+
+        public Parcelable getSuperState() {
+            return superState;
+        }
+
+        //required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
+    }
 }

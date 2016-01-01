@@ -102,7 +102,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     private TabBuilder tabBuilder;
 
     public PagerTabStrip(Context context) {
-        super(context);
+        super(context,null,  R.attr.carbon_pagerTabStripStyle);
         initPagerTabStrip(null,  R.attr.carbon_pagerTabStripStyle);
     }
 
@@ -123,12 +123,14 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     }
 
     private void initPagerTabStrip(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagerTabStrip, defStyleAttr, 0);
+        if(attrs!=null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagerTabStrip, defStyleAttr, 0);
 
-        setIndicatorHeight(a.getDimension(R.styleable.PagerTabStrip_carbon_indicatorWidth, 2));
-        setFixed(a.getBoolean(R.styleable.PagerTabStrip_carbon_fixedTabs, true));
+            setIndicatorHeight(a.getDimension(R.styleable.PagerTabStrip_carbon_indicatorWidth, 2));
+            setFixed(a.getBoolean(R.styleable.PagerTabStrip_carbon_fixedTabs, true));
 
-        a.recycle();
+            a.recycle();
+        }
 
         setHorizontalFadingEdgeEnabled(false);
         setHorizontalScrollBarEnabled(false);

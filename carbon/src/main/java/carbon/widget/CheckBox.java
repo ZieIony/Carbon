@@ -41,13 +41,13 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
     private CheckableDrawable drawable;
 
     public CheckBox(Context context) {
-        super(context, null, R.attr.checkboxStyle);
-        initCheckBox(null, R.attr.checkboxStyle);
+        super(context, null, android.R.attr.checkboxStyle);
+        initCheckBox(null, android.R.attr.checkboxStyle);
     }
 
     public CheckBox(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.checkboxStyle);
-        initCheckBox(attrs, R.attr.checkboxStyle);
+        super(context, attrs, android.R.attr.checkboxStyle);
+        initCheckBox(attrs, android.R.attr.checkboxStyle);
     }
 
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {

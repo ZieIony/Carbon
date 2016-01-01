@@ -1,7 +1,6 @@
 package carbon;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -12,8 +11,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.lang.reflect.Field;
 
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
@@ -35,6 +32,8 @@ public class Carbon {
 
     public static boolean antiAlias = true;
     public static boolean dim = true;
+
+    public static final int DEFAULT_TINT_LIST = 0;
 
     public static float getDip(Context context) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, context.getResources().getDisplayMetrics());
@@ -113,9 +112,9 @@ public class Carbon {
         if (a.hasValue(R.styleable.Carbon_carbon_tint)) {
             TypedValue value = new TypedValue();
             a.getValue(R.styleable.Carbon_carbon_tint, value);
-            if (value.type >= TypedValue.TYPE_FIRST_INT&& value.type <= TypedValue.TYPE_LAST_INT) {
+            if (value.type >= TypedValue.TYPE_FIRST_INT && value.type <= TypedValue.TYPE_LAST_INT) {
                 view.setTint(value.data);
-            }else{
+            } else {
                 view.setTint(a.getColorStateList(R.styleable.Carbon_carbon_tint));
             }
         }

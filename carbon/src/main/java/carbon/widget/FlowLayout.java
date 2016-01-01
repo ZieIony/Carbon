@@ -56,12 +56,12 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
     private boolean debugMode;
 
     public FlowLayout(Context context) {
-        super(context, null);
+        super(context, null, R.attr.carbon_flowLayoutStyle);
         initFlowLayout(null, R.attr.carbon_flowLayoutStyle);
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs, R.attr.carbon_flowLayoutStyle);
         initFlowLayout(attrs, R.attr.carbon_flowLayoutStyle);
     }
 
