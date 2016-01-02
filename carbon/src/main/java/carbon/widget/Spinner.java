@@ -3,7 +3,6 @@ package carbon.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,7 +13,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -220,7 +218,7 @@ public class Spinner extends TextView implements TintedView {
         SavedState ss = new SavedState(superState);
         //end
 
-        ss.stateToSave = this.isShowingPopup ? 1 : 0;
+        ss.isShowingPopup = this.isShowingPopup ? 1 : 0;
 
         return ss;
     }
@@ -237,14 +235,14 @@ public class Spinner extends TextView implements TintedView {
         super.onRestoreInstanceState(ss.getSuperState());
         //end
 
-        this.isShowingPopup = ss.stateToSave > 0;
+        this.isShowingPopup = ss.isShowingPopup > 0;
     }
 
     static class SavedState implements Parcelable {
         public static final SavedState EMPTY_STATE = new SavedState() {
         };
 
-        int stateToSave;
+        int isShowingPopup;
 
         Parcelable superState;
 
@@ -259,7 +257,7 @@ public class Spinner extends TextView implements TintedView {
         private SavedState(Parcel in) {
             Parcelable superState = in.readParcelable(EditText.class.getClassLoader());
             this.superState = superState != null ? superState : EMPTY_STATE;
-            this.stateToSave = in.readInt();
+            this.isShowingPopup = in.readInt();
         }
 
         @Override
@@ -271,7 +269,7 @@ public class Spinner extends TextView implements TintedView {
         @Override
         public void writeToParcel(@NonNull Parcel out, int flags) {
             out.writeParcelable(superState, flags);
-            out.writeInt(this.stateToSave);
+            out.writeInt(this.isShowingPopup);
         }
 
         public Parcelable getSuperState() {
