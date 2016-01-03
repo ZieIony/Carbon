@@ -507,18 +507,16 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.UNSPECIFIED) {
-            int paddingTop = getPaddingTop();
-            int paddingBottom = getPaddingBottom();
-            if (labelStyle != LabelStyle.Hint)
-                internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
-            if (canShowError()) {
-                internalPaddingBottom = (int) (errorPaint.getTextSize());
-                if (!underline)
-                    internalPaddingBottom += PADDING_ERROR;
-            }
-            setPadding(getPaddingLeft(), paddingTop, getPaddingRight(), paddingBottom);
+        int paddingTop = getPaddingTop();
+        int paddingBottom = getPaddingBottom();
+        if (labelStyle != LabelStyle.Hint)
+            internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
+        if (canShowError()) {
+            internalPaddingBottom = (int) (errorPaint.getTextSize());
+            if (!underline)
+                internalPaddingBottom += PADDING_ERROR;
         }
+        setPadding(getPaddingLeft(), paddingTop, getPaddingRight(), paddingBottom);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
