@@ -60,6 +60,7 @@
         <item name="carbon_colorDisabled">@color/carbon_icon_inactive_dark</item>
         <item name="colorControlNormal">@color/carbon_white_70</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
+        <item name="android:textColorHighlight">?attr/colorAccent</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -89,7 +90,6 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
-        <item name="android:textColorHighlight">@color/carbon_lime_a700</item>
     </style>
 
     <style name="carbon_Theme.Dark.NoActionBar">
@@ -165,6 +165,7 @@
         <item name="carbon_colorDisabled">@color/carbon_icon_inactive_light</item>
         <item name="colorControlNormal">@color/carbon_black_54</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
+        <item name="android:textColorHighlight">?attr/colorAccent</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -193,7 +194,6 @@
         </item>
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
-        <item name="android:textColorHighlight">@color/carbon_lime_a700</item>
     </style>
 
     <style name="carbon_Theme.Light.NoActionBar">
@@ -369,8 +369,9 @@
         <item name="carbon_tint">#00000000</item>
         <item name="android:background">@null</item>
         <item name="carbon_floatingLabel">false</item>
-        <item name="android:textCursorDrawable">@null</item>
         <item name="android:paddingBottom">16dp</item>
+        <item name="carbon_errorColor">?attr/carbon_colorError</item>
+        <item name="carbon_cursorColor">?attr/colorAccent</item>
     </style>
 
     <style name="carbon_Spinner" parent="carbon_TextView">

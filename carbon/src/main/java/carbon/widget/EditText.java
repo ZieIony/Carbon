@@ -75,6 +75,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     int DIVIDER_PADDING;
     int errorColor;
+    int cursorColor;
 
     private Pattern pattern;
     private String errorMessage;
@@ -159,7 +160,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 }
             }
 
-            errorColor = Carbon.getThemeColor(getContext(), R.attr.carbon_colorError);
+            setErrorColor(a.getColor(R.styleable.EditText_carbon_errorColor, 0));
+            setCursorColor(a.getColor(R.styleable.EditText_carbon_cursorColor, 0));
 
             setPattern(a.getString(R.styleable.EditText_carbon_pattern));
             DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
@@ -197,6 +199,23 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             counterPaint.setTextSize(getResources().getDimension(R.dimen.carbon_charCounterTextSize));
         }
 
+        try {
+            Field mHighlightPaintField = android.widget.TextView.class.getDeclaredField("mHighlightPaint");
+            mHighlightPaintField.setAccessible(true);
+            mHighlightPaintField.set(this, new Paint() {
+                @Override
+                public void setColor(int color) {
+                    if (getSelectionStart() == getSelectionEnd()) {
+                        super.setColor(cursorColor);
+                    } else {
+                        super.setColor(color);
+                    }
+                }
+            });
+        } catch (Exception e) {
+
+        }
+
         addTextChangedListener(textWatcher);
 
         float dip = getResources().getDimension(R.dimen.carbon_1dip);
@@ -217,6 +236,22 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             labelFrac = 1;
 
         initSelectionHandle();
+    }
+
+    public void setErrorColor(int errorColor) {
+        this.errorColor = errorColor;
+    }
+
+    public int getErrorColor() {
+        return errorColor;
+    }
+
+    public void setCursorColor(int cursorColor) {
+        this.cursorColor = cursorColor;
+    }
+
+    public int getCursorColor() {
+        return cursorColor;
     }
 
     public boolean hasUnderline() {

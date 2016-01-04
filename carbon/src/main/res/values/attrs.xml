@@ -283,6 +283,8 @@
         <attr name="carbon_minCharacters" format="integer"/>
         <attr name="carbon_maxCharacters" format="integer"/>
         <attr name="carbon_pattern" format="string"/>
+        <attr name="carbon_cursorColor" format="integer"/>
+        <attr name="carbon_errorColor" format="integer"/>
         <attr name="carbon_errorMessage" format="string"/>
         <attr name="carbon_floatingLabel" format="boolean"/>
         <attr name="carbon_labelStyle" format="enum">
