@@ -54,17 +54,17 @@ import carbon.shadow.ShadowView;
  * A RelativeLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
+public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
 
     private boolean debugMode;
 
     public RelativeLayout(Context context) {
-        super(context,null, R.attr.carbon_relativeLayoutStyle);
+        super(context, null, R.attr.carbon_relativeLayoutStyle);
         initRelativeLayout(null, R.attr.carbon_relativeLayoutStyle);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs) {
-        super(context, attrs,R.attr.carbon_relativeLayoutStyle);
+        super(context, attrs, R.attr.carbon_relativeLayoutStyle);
         initRelativeLayout(attrs, R.attr.carbon_relativeLayoutStyle);
     }
 
@@ -80,21 +80,24 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     }
 
     private void initRelativeLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, 0);
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        if (attrs != null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, 0);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        Carbon.initElevation(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initInset(this, attrs, defStyleAttr);
-        setCornerRadius((int) a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0));
+            Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initInset(this, attrs, defStyleAttr);
+            Carbon.initMaxSize(this, attrs, defStyleAttr);
+            setCornerRadius((int) a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0));
 
-        a.recycle();
-
-        if (isInEditMode()) {
-            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
             a.recycle();
+
+            if (isInEditMode()) {
+                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+                a.recycle();
+            }
         }
 
         setChildrenDrawingOrderEnabled(true);
@@ -868,5 +871,40 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         public void setAnchorView(int anchorView) {
             this.anchorView = anchorView;
         }
+    }
+
+
+    // -------------------------------
+    // maximum width & height
+    // -------------------------------
+
+    int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
+
+    @Override
+    public int getMaximumWidth() {
+        return maxWidth;
+    }
+
+    @Override
+    public void setMaximumWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+        requestLayout();
+    }
+
+    @Override
+    public int getMaximumHeight() {
+        return maxHeight;
+    }
+
+    @Override
+    public void setMaximumHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+        requestLayout();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(Math.min(getMeasuredWidth(), maxWidth), Math.min(getMeasuredHeight(), maxHeight));
     }
 }

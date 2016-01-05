@@ -20,6 +20,7 @@ import carbon.drawable.RippleDrawableLollipop;
 import carbon.drawable.RippleView;
 import carbon.shadow.ShadowView;
 import carbon.widget.InsetView;
+import carbon.widget.MaxSizeView;
 import carbon.widget.TintedView;
 import carbon.widget.TouchMarginView;
 
@@ -102,6 +103,17 @@ public class Carbon {
         }
 
         view.setInsetColor(a.getColor(R.styleable.Carbon_carbon_insetColor, 0));
+
+        a.recycle();
+    }
+
+    public static void initMaxSize(MaxSizeView view, AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = ((View) view).getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+
+        int width = (int) a.getDimension(R.styleable.Carbon_carbon_maxWidth, Integer.MAX_VALUE);
+        int height = (int) a.getDimension(R.styleable.Carbon_carbon_maxHeight, Integer.MAX_VALUE);
+        view.setMaximumWidth(width);
+        view.setMaximumHeight(height);
 
         a.recycle();
     }

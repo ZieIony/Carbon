@@ -59,6 +59,9 @@
         <attr name="carbon_insetRight" format="dimension"/>
         <attr name="carbon_insetBottom" format="dimension"/>
 
+        <attr name="carbon_maxWidth" format="dimension"/>
+        <attr name="carbon_maxHeight" format="dimension"/>
+
         <attr name="carbon_textAppearanceHeadline" format="reference"/>
         <attr name="carbon_textAppearanceTitle" format="reference"/>
         <attr name="carbon_textAppearanceSubhead" format="reference"/>

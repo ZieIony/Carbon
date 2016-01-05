@@ -51,7 +51,7 @@ import carbon.shadow.ShadowView;
  * A LinearLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
+public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView,MaxSizeView {
     private boolean debugMode;
 
     public LinearLayout(Context context) {
@@ -79,7 +79,13 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     private void initLinearLayout(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, 0);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
+            Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initInset(this, attrs, defStyleAttr);
+            Carbon.initMaxSize(this, attrs, defStyleAttr);
             setCornerRadius((int) a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
 
             a.recycle();
@@ -90,12 +96,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
                 a.recycle();
             }
         }
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-
-        Carbon.initElevation(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initInset(this, attrs, defStyleAttr);
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
@@ -758,4 +758,38 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         return result;
     }
 
+
+    // -------------------------------
+    // maximum width & height
+    // -------------------------------
+
+    int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
+
+    @Override
+    public int getMaximumWidth() {
+        return maxWidth;
+    }
+
+    @Override
+    public void setMaximumWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+        requestLayout();
+    }
+
+    @Override
+    public int getMaximumHeight() {
+        return maxHeight;
+    }
+
+    @Override
+    public void setMaximumHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+        requestLayout();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(Math.min(getMeasuredWidth(), maxWidth), Math.min(getMeasuredHeight(), maxHeight));
+    }
 }
