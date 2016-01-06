@@ -36,7 +36,7 @@
 
     <style name="carbon_TextAppearance.Headline">
         <item name="android:textSize">24sp</item>
-        <item name="carbon_fontPath">"carbon/Roboto-Regular.ttf"</item>
+        <item name="carbon_fontFamily">"sans-serif"</item>
     </style>
 
     <style name="carbon_TextAppearance.Headline.Dark">
@@ -50,7 +50,7 @@
 
     <style name="carbon_TextAppearance.Title">
         <item name="android:textSize">20sp</item>
-        <item name="carbon_fontPath">"carbon/Roboto-Medium.ttf"</item>
+        <item name="carbon_fontFamily">"sans-serif-medium"</item>
     </style>
 
     <style name="carbon_TextAppearance.Title.Dark">
@@ -78,7 +78,7 @@
 
     <style name="carbon_TextAppearance.Body2">
         <item name="android:textSize">14sp</item>
-        <item name="carbon_fontPath">"carbon/Roboto-Medium.ttf"</item>
+        <item name="carbon_fontFamily">"sans-serif-medium"</item>
     </style>
 
     <style name="carbon_TextAppearance.Body2.Dark">
@@ -92,7 +92,7 @@
 
     <style name="carbon_TextAppearance.Body1">
         <item name="android:textSize">14sp</item>
-        <item name="carbon_fontPath">"carbon/Roboto-Regular.ttf"</item>
+        <item name="carbon_fontFamily">"sans-serif"</item>
     </style>
 
     <style name="carbon_TextAppearance.Body1.Dark">
@@ -106,7 +106,7 @@
 
     <style name="carbon_TextAppearance.Caption">
         <item name="android:textSize">12sp</item>
-        <item name="carbon_fontPath">"carbon/Roboto-Regular.ttf"</item>
+        <item name="carbon_fontFamily">"sans-serif"</item>
     </style>
 
     <style name="carbon_TextAppearance.Caption.Dark">
@@ -120,7 +120,7 @@
 
     <style name="carbon_TextAppearance.Button">
         <item name="android:textSize">14sp</item>
-        <item name="carbon_fontPath">"carbon/Roboto-Medium.ttf"</item>
+        <item name="carbon_fontFamily">"sans-serif-medium"</item>
         <item name="carbon_textAllCaps">true</item>
     </style>
 

@@ -3,6 +3,7 @@ package carbon.beta;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import carbon.internal.TypefaceUtils;
 import carbon.widget.Roboto;
 
 /**
@@ -26,7 +27,7 @@ public class ToggleButton extends android.widget.ToggleButton {
 
     public void init() {
         if (!isInEditMode())
-            setTypeface(Roboto.getTypeface(getContext(), Roboto.Style.Medium));
+            setTypeface(TypefaceUtils.getTypeface(getContext(), Roboto.Medium));
     }
 
     @Override

@@ -84,6 +84,10 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
+            } else if (attr == R.styleable.TextView_carbon_fontFamily) {
+                int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                setTypeface(typeface);
             }
         }
 
@@ -125,6 +129,10 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                 } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                } else if (attr == R.styleable.TextAppearance_carbon_fontFamily) {
+                    int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
                     setTypeface(typeface);
                 }
             }

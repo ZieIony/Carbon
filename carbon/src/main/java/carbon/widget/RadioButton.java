@@ -90,6 +90,10 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
                     String path = a.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);
+                } else if (attr == R.styleable.RadioButton_carbon_fontFamily) {
+                    int textStyle = a.getInt(R.styleable.RadioButton_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                    setTypeface(typeface);
                 }
             }
 
@@ -143,6 +147,10 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
                 } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                } else if (attr == R.styleable.TextAppearance_carbon_fontFamily) {
+                    int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
                     setTypeface(typeface);
                 }
             }

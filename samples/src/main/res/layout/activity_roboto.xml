@@ -1,69 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        app:carbon_fontFamily="sans-serif"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto regular"
-        android:gravity="center_vertical"
-        android:textSize="20sp"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_fontPath="carbon/Roboto-Regular.ttf" />
+        android:textSize="20sp"/>
 
     <carbon.widget.TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        app:carbon_fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto light"
-        android:gravity="center_vertical"
-        android:textSize="20sp"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_fontPath="carbon/Roboto-Light.ttf" />
+        android:textSize="20sp"/>
 
     <carbon.widget.TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        app:carbon_fontFamily="sans-serif"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto bold"
-        android:gravity="center_vertical"
         android:textSize="20sp"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_fontPath="carbon/Roboto-Bold.ttf" />
+        android:textStyle="bold"/>
 
     <carbon.widget.TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        app:carbon_fontFamily="sans-serif"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto italic"
-        android:gravity="center_vertical"
         android:textSize="20sp"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_fontPath="carbon/Roboto-Italic.ttf" />
+        android:textStyle="italic"/>
 
     <carbon.widget.TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        app:carbon_fontFamily="sans-serif-condensed"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto condensed regular"
-        android:gravity="center_vertical"
-        android:textSize="20sp"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_fontPath="carbon/RobotoCondensed-Regular.ttf" />
+        android:textSize="20sp"/>
 
     <carbon.widget.TextView
-        android:text="Roboto thin italic"
-        android:gravity="center_vertical"
-        android:textSize="20sp"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        app:carbon_fontPath="carbon/Roboto-ThinItalic.ttf" />
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:text="Roboto thin italic"
+        android:textStyle="italic"
+        app:carbon_fontFamily="sans-serif-thin"
+        android:textSize="20sp"/>
 </carbon.widget.LinearLayout>

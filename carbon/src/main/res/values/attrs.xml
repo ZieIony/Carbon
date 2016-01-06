@@ -93,6 +93,7 @@
     <attr name="carbon_headerParallax" format="float"/>
 
     <attr name="carbon_fontPath" format="string"/>
+    <attr name="carbon_fontFamily" format="string"/>
 
     <attr name="carbon_icon" format="reference"/>
 
@@ -124,7 +125,8 @@
     </declare-styleable>
 
     <declare-styleable name="Button">
-
+        <attr name="carbon_fontFamily"/>
+        <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
@@ -137,6 +139,8 @@
     </declare-styleable>
 
     <declare-styleable name="TextView">
+        <attr name="carbon_fontFamily"/>
+        <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
@@ -280,6 +284,8 @@
     <attr name="carbon_cardViewStyle" format="reference"/>
 
     <declare-styleable name="EditText">
+        <attr name="carbon_fontFamily"/>
+        <attr name="android:textStyle"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_underline" format="boolean"/>
@@ -309,6 +315,8 @@
     </declare-styleable>
 
     <declare-styleable name="TextAppearance">
+        <attr name="carbon_fontFamily"/>
+        <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
     </declare-styleable>
@@ -340,12 +348,16 @@
     </declare-styleable>
 
     <declare-styleable name="CheckBox">
+        <attr name="carbon_fontFamily"/>
+        <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
     </declare-styleable>
 
     <declare-styleable name="RadioButton">
+        <attr name="carbon_fontFamily"/>
+        <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>

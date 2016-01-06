@@ -54,7 +54,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     public Button(Context context) {
         super(context, null);
-        init(null,android.R.attr.buttonStyle);
+        init(null, android.R.attr.buttonStyle);
     }
 
     /**
@@ -65,7 +65,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
      */
     public Button(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs,android.R.attr.buttonStyle);
+        init(attrs, android.R.attr.buttonStyle);
     }
 
     public Button(Context context, AttributeSet attrs, int defStyle) {
@@ -76,14 +76,14 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(attrs,defStyleAttr);
+        init(attrs, defStyleAttr);
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
 
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
 
             int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
@@ -99,6 +99,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                 } else if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
                     String path = a.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                } else if (attr == R.styleable.Button_carbon_fontFamily) {
+                    int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
                 }
             }
@@ -148,6 +152,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                 } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setTypeface(typeface);
+                } else if (attr == R.styleable.TextAppearance_carbon_fontFamily) {
+                    int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
                     setTypeface(typeface);
                 }
             }
