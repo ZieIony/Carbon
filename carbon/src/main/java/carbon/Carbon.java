@@ -55,6 +55,7 @@ public class Carbon {
         if (color != 0) {
             RippleDrawable.Style style = RippleDrawable.Style.values()[a.getInt(R.styleable.Carbon_carbon_rippleStyle, RippleDrawable.Style.Background.ordinal())];
             boolean useHotspot = a.getBoolean(R.styleable.Carbon_carbon_rippleHotspot, true);
+            int radius = (int) a.getDimension(R.styleable.Carbon_carbon_rippleRadius, -1);
 
             RippleDrawable rippleDrawable;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -64,6 +65,7 @@ public class Carbon {
             }
             rippleDrawable.setCallback(view);
             rippleDrawable.setHotspotEnabled(useHotspot);
+            rippleDrawable.setRadius(radius);
             rippleView.setRippleDrawable(rippleDrawable);
         }
 

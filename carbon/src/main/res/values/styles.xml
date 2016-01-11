@@ -33,7 +33,8 @@
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
         <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
         <item name="carbon_coordinatorLayoutStyle">@style/carbon_CoordinatorLayout</item>
-        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout</item>
+        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout
+        </item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
@@ -138,7 +139,8 @@
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
         <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
         <item name="carbon_coordinatorLayoutStyle">@style/carbon_CoordinatorLayout</item>
-        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout</item>
+        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout
+        </item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
@@ -320,7 +322,8 @@
     <style name="carbon_Chip">
         <item name="carbon_cornerRadius">@dimen/carbon_margin</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
-        <item name="android:background">#ffE0E0E0</item>    <!-- TODO: what color should be here? -->
+        <item name="android:background">#ffE0E0E0
+        </item>    <!-- TODO: what color should be here? -->
         <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
         <item name="carbon_icon">@null</item>
         <item name="android:minHeight">@dimen/carbon_chipHeight</item>
@@ -331,6 +334,22 @@
         <item name="carbon_rippleStyle">over</item>
         <item name="carbon_inAnimation">brightnessSaturationFade</item>
         <item name="carbon_outAnimation">brightnessSaturationFade</item>
+    </style>
+
+    <style name="carbon_ImageView.Icon">
+        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
+        <item name="carbon_rippleStyle">borderless</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:clickable">true</item>
+        <item name="carbon_tint">?attr/carbon_iconColor</item>
+    </style>
+
+    <style name="carbon_ImageView.Icon.Inverse">
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_rippleStyle">borderless</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:clickable">true</item>
+        <item name="carbon_tint">?attr/carbon_iconColorInverse</item>
     </style>
 
     <style name="carbon_ListView" parent="@android:style/Widget.ListView">

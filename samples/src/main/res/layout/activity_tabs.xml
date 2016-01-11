@@ -8,7 +8,7 @@
     android:layout_height="match_parent">
 
     <carbon.widget.PagerTabStrip
-        android:background="#fff"
+        android:background="?attr/colorPrimary"
         android:id="@+id/pager_title_strip"
         app:carbon_overScroll="always"
         android:layout_width="match_parent"

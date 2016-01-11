@@ -48,5 +48,4 @@ public class RippleDrawableLollipop extends android.graphics.drawable.RippleDraw
     public int getColor() {
         return color;
     }
-
 }

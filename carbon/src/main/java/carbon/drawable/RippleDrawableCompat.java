@@ -51,11 +51,12 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable {
     private float from, to;
     private boolean pressed, useHotspot = true;
     private boolean bgActive;
+    private int radius;
     private RippleDrawable.Style style = RippleDrawable.Style.Background;
 
     public RippleDrawableCompat(int color, Drawable background, Context context, Style style) {
         this.color = color;
-        this.alpha = Color.alpha(color)/2;
+        this.alpha = Color.alpha(color) / 2;
         this.background = background;
         this.style = style;
         density = context.getResources().getDisplayMetrics().density;
@@ -65,7 +66,11 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable {
         if (!pressed) {
             pressed = true;
             Rect bounds = getBounds();
-            to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
+            if (radius == -1) {
+                to = (float) (Math.sqrt((float) bounds.width() * bounds.width() + bounds.height() * bounds.height()) / 2.0f);
+            } else {
+                to = radius;
+            }
             downTime = System.currentTimeMillis();
             if (!useHotspot) {
                 hotspot.x = bounds.centerX();
@@ -271,5 +276,15 @@ public class RippleDrawableCompat extends Drawable implements RippleDrawable {
     @Override
     public int getColor() {
         return color;
+    }
+
+    @Override
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public int getRadius() {
+        return radius;
     }
 }

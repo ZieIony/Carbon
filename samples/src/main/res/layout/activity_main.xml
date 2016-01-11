@@ -14,31 +14,21 @@
 
         <carbon.widget.ImageView
             android:id="@+id/icon1"
+            style="@style/carbon_ImageView.Icon"
             android:layout_width="@dimen/carbon_toolbarItemSize"
             android:layout_height="@dimen/carbon_toolbarItemSize"
-            android:clickable="true"
-            android:focusable="true"
-            android:scaleType="center"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
-            app:carbon_rippleColor="?attr/carbon_rippleColor"
-            app:carbon_rippleStyle="borderless"
-            app:carbon_src="@raw/ic_today_24px"
-            app:carbon_tint="?attr/carbon_iconColor"/>
+            app:carbon_src="@raw/ic_today_24px"/>
 
         <carbon.widget.ImageView
             android:id="@+id/icon2"
+            style="@style/carbon_ImageView.Icon"
             android:layout_width="@dimen/carbon_toolbarItemSize"
             android:layout_height="@dimen/carbon_toolbarItemSize"
-            android:clickable="true"
-            android:focusable="true"
-            android:scaleType="center"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="pop"
-            app:carbon_rippleColor="?attr/carbon_rippleColor"
-            app:carbon_rippleStyle="borderless"
-            app:carbon_src="@raw/ic_print_24px"
-            app:carbon_tint="?attr/carbon_iconColor"/>
+            app:carbon_src="@raw/ic_print_24px"/>
     </carbon.widget.Toolbar>
 
     <carbon.widget.FrameLayout

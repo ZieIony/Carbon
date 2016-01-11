@@ -25,6 +25,7 @@
             <enum name="background" value="1"/>
             <enum name="borderless" value="2"/>
         </attr>
+        <attr name="carbon_rippleRadius" format="dimension"/>
 
         <attr name="carbon_inAnimation" format="enum">
             <enum name="none" value="0"/>

@@ -12,37 +12,41 @@ public interface RippleDrawable {
 
     Drawable getBackground();
 
-    public static enum Style {
+    enum Style {
         Over, Background, Borderless
     }
 
-    public boolean setState(int[] stateSet);
+    boolean setState(int[] stateSet);
 
-    public void draw(Canvas canvas);
+    void draw(Canvas canvas);
 
-    public void setAlpha(int i);
+    void setAlpha(int i);
 
-    public void setColorFilter(ColorFilter colorFilter);
+    void setColorFilter(ColorFilter colorFilter);
 
-    public void jumpToCurrentState();
+    void jumpToCurrentState();
 
-    public int getOpacity();
+    int getOpacity();
 
-    public Style getStyle();
+    Style getStyle();
 
-    public boolean isHotspotEnabled();
+    boolean isHotspotEnabled();
 
-    public void setHotspotEnabled(boolean useHotspot);
+    void setHotspotEnabled(boolean useHotspot);
 
-    public void setBounds(int left, int top, int right, int bottom);
+    void setBounds(int left, int top, int right, int bottom);
 
-    public void setBounds(Rect bounds);
+    void setBounds(Rect bounds);
 
-    public void setHotspot(float x, float y);
+    void setHotspot(float x, float y);
 
-    public boolean isStateful();
+    boolean isStateful();
 
-    public void setCallback(Drawable.Callback cb);
+    void setCallback(Drawable.Callback cb);
 
-    public int getColor();
+    int getColor();
+
+    void setRadius(int radius);
+
+    int getRadius();
 }
