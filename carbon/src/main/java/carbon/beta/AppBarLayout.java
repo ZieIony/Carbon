@@ -270,6 +270,11 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        views = new ArrayList<>();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
+        Collections.sort(views, new ElevationComparator());
+
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
