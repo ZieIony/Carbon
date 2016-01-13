@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import carbon.widget.ImageView;
 import carbon.widget.RecentsAdapter;
@@ -23,12 +25,13 @@ public class RecentsActivity extends Activity {
         recents.setAdapter(new RecentsAdapter() {
             @Override
             public String getTitle(int position) {
-                return "Item "+position;
+                return "Item " + position;
             }
 
             @Override
             public View getView(int position) {
-                ImageView iv  =new ImageView(RecentsActivity.this);
+                ImageView iv = new ImageView(RecentsActivity.this);
+                iv.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
                 iv.setImageResource(R.drawable.mazda);
                 iv.setBackgroundColor(0xffffffff);
                 return iv;
@@ -47,6 +50,13 @@ public class RecentsActivity extends Activity {
             @Override
             public int getCount() {
                 return 5;
+            }
+        });
+
+        recents.setOnItemClickListener(new RecentsList.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                Toast.makeText(view.getContext(), "Card " + i + " clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }

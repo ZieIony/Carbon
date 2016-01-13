@@ -3,7 +3,6 @@ package carbon.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -11,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
@@ -41,8 +39,14 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
     private static float THUMB_RADIUS;
     float value = 0.3f, value2 = 0.7f;
 
+    int draggedThumb = -1;
+
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private int colorControl;
+
+    public enum Style {
+        Continuous, Discrete
+    }
 
     public RangeSeekBar(Context context) {
         super(context);
@@ -69,12 +73,12 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
         if (isInEditMode())
             return;
 
-        colorControl = Carbon.getThemeColor(getContext(),R.attr.colorControlNormal);
+        colorControl = Carbon.getThemeColor(getContext(), R.attr.colorControlNormal);
 
         THUMB_RADIUS = Carbon.getDip(getContext()) * 12;
-        RIPPLE_RADIUS = Carbon.getDip(getContext()) * 15;
+        RIPPLE_RADIUS = Carbon.getDip(getContext()) * 30;
 
-        if(attrs!=null) {
+        if (attrs != null) {
             Carbon.initAnimations(this, attrs, defStyleAttr);
             Carbon.initTint(this, attrs, defStyleAttr);
             Carbon.initRippleDrawable(this, attrs, defStyleAttr);
@@ -145,20 +149,26 @@ public class RangeSeekBar extends View implements RippleView, carbon.animation.S
         int thumbX2 = (int) (value2 * (getWidth() - getPaddingLeft() - getPaddingRight() - THUMB_RADIUS * 2) + getPaddingLeft() + THUMB_RADIUS);
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (Math.abs(event.getX() - thumbX) < Math.abs(event.getX() - thumbX2)) {
+                draggedThumb = 1;
+            } else {
+                draggedThumb = 2;
+            }
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(true);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
+            draggedThumb = -1;
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(false);
         }
 
-        if (Math.abs(event.getX() - thumbX) < Math.abs(event.getX() - thumbX2)) {
+        if (draggedThumb == 1) {
             value = (event.getX() - getPaddingLeft() - THUMB_RADIUS) / (getWidth() - getPaddingLeft() - getPaddingRight() - THUMB_RADIUS * 2);
             value = Math.max(0, Math.min(value, 1));
             rippleDrawable.setBounds((int) (thumbX - RIPPLE_RADIUS), (int) (thumbY - RIPPLE_RADIUS), (int) (thumbX + RIPPLE_RADIUS), (int) (thumbY + RIPPLE_RADIUS));
-        } else {
+        } else if (draggedThumb == 2) {
             value2 = (event.getX() - getPaddingLeft() - THUMB_RADIUS) / (getWidth() - getPaddingLeft() - getPaddingRight() - THUMB_RADIUS * 2);
             value2 = Math.max(0, Math.min(value2, 1));
             rippleDrawable.setBounds((int) (thumbX2 - RIPPLE_RADIUS), (int) (thumbY - RIPPLE_RADIUS), (int) (thumbX2 + RIPPLE_RADIUS), (int) (thumbY + RIPPLE_RADIUS));

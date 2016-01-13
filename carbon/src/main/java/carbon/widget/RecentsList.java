@@ -3,6 +3,7 @@ package carbon.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -25,6 +26,12 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
     RecentsAdapter adapter;
     GestureDetector gestureDetector = new GestureDetector(this);
     int scroll = 0;
+    OnItemClickListener onItemClickListener;
+    Rect childTouchRect[];
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
 
     public RecentsList(Context context) {
         super(context);
@@ -51,6 +58,10 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
         scroller = new Scroller(getContext());
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     public RecentsAdapter getAdapter() {
         return adapter;
     }
@@ -69,15 +80,17 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
         if (getChildCount() != adapter.getCount())
             initChildren();
 
+        childTouchRect = new Rect[getChildCount()];
         for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).layout(0, 0, getWidth() - getPaddingLeft() - getPaddingRight(), getWidth() - getPaddingLeft() - getPaddingRight());
+            childTouchRect[i] = new Rect();
         }
     }
 
     private void initChildren() {
         removeAllViews();
         for (int i = 0; i < adapter.getCount(); i++) {
-            View card = View.inflate(getContext(), R.layout.carbon_recent_card, null);
+            final View card = View.inflate(getContext(), R.layout.carbon_recent_card, null);
             TextView title = (TextView) card.findViewById(R.id.carbon_recentTitle);
             title.setText(adapter.getTitle(i));
             android.widget.ImageView icon = (android.widget.ImageView) card.findViewById(R.id.carbon_recentIcon);
@@ -93,7 +106,15 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
             cardContent.addView(adapter.getView(i));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                 card.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            addView(card);
+            addView(card, i, generateDefaultLayoutParams());
+            final int finalI = i;
+            card.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null)
+                        onItemClickListener.onItemClick(card, finalI);
+                }
+            });
         }
     }
 
@@ -104,6 +125,7 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
             float topSpace = height - width;
             int y = (int) (topSpace * Math.pow(2, (i * width - scroll) / (float) width));
             float scale = (float) (-Math.pow(2, -y / topSpace / 10.0f) + 19.0f / 10);
+            childTouchRect[i].set(getPaddingLeft(), y + getPaddingTop(), (int) (scale * (getPaddingLeft() + getWidth() - getPaddingLeft() - getPaddingRight())), (int) (scale * (y + getPaddingTop() + getWidth() - getPaddingLeft() - getPaddingRight())));
             ViewHelper.setTranslationX(getChildAt(i), getPaddingLeft());
             ViewHelper.setTranslationY(getChildAt(i), y + getPaddingTop());
             ViewHelper.setScaleX(getChildAt(i), scale);
@@ -118,17 +140,34 @@ public class RecentsList extends FrameLayout implements GestureDetector.OnGestur
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
         layoutChildren();
+        requestLayout();
         super.dispatchDraw(canvas);
         doScrolling();
     }
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event))
+        if (gestureDetector.onTouchEvent(event)) {
+            for (int i = getChildCount() - 1; i >= 0; i--) {
+                MotionEvent e = MotionEvent.obtain(event);
+                event.setAction(MotionEvent.ACTION_CANCEL);
+                e.offsetLocation(-childTouchRect[i].left, -childTouchRect[i].top);
+                getChildAt(i).dispatchTouchEvent(e);
+            }
             return true;
+        }
 
         if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
             forceFinished();
+        }
+
+        for (int i = getChildCount() - 1; i >= 0; i--) {
+            if (childTouchRect[i].contains((int) event.getX(), (int) event.getY())) {
+                MotionEvent e = MotionEvent.obtain(event);
+                e.offsetLocation(-childTouchRect[i].left, -childTouchRect[i].top);
+                if (getChildAt(i).dispatchTouchEvent(e))
+                    break;
+            }
         }
 
         return true;
