@@ -12,6 +12,7 @@
         <item name="android:editTextStyle">@style/carbon_EditText</item>
         <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
         <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="android:seekBarStyle">@style/carbon_SeekBar</item>
 
         <item name="toolbarStyle">@style/carbon_Toolbar</item>
 
@@ -33,8 +34,8 @@
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
         <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
         <item name="carbon_coordinatorLayoutStyle">@style/carbon_CoordinatorLayout</item>
-        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout
-        </item>
+        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout</item>
+        <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
@@ -118,6 +119,7 @@
         <item name="android:editTextStyle">@style/carbon_EditText</item>
         <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
         <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="android:seekBarStyle">@style/carbon_SeekBar</item>
 
         <item name="toolbarStyle">@style/carbon_Toolbar</item>
 
@@ -139,8 +141,8 @@
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
         <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
         <item name="carbon_coordinatorLayoutStyle">@style/carbon_CoordinatorLayout</item>
-        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout
-        </item>
+        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout</item>
+        <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
@@ -445,11 +447,15 @@
     </style>
 
     <style name="carbon_SeekBar" parent="android:Widget.SeekBar">
-        <item name="carbon_rippleColor">@null</item>
-        <item name="carbon_rippleHotspot">false</item>
-        <item name="carbon_tint">#00000000</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_rippleHotspot">true</item>
+        <item name="carbon_rippleRadius">25dp</item>
+        <item name="carbon_rippleStyle">borderless</item>
+        <item name="carbon_tint">?attr/colorAccent</item>
         <item name="android:background">@null</item>
-        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
 </resources>

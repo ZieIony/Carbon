@@ -3,15 +3,15 @@ package carbon.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
@@ -38,14 +38,16 @@ import carbon.drawable.RippleView;
  */
 public class SeekBar extends View implements RippleView, carbon.animation.StateAnimatorView, AnimatedView, TintedView {
     private static float RIPPLE_RADIUS;
-    private static float THUMB_RADIUS;
+    private static float THUMB_RADIUS,STROKE_WIDTH;
     float value = 0.5f;
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private int colorControl;
 
-    public enum Style{
-        Continuous,Discrete
+    private Style style;
+
+    public enum Style {
+        Continous, Discrete
     }
 
     public SeekBar(Context context) {
@@ -58,9 +60,9 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
         initSeekBar(attrs, android.R.attr.seekBarStyle);
     }
 
-    public SeekBar(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initSeekBar(attrs, defStyle);
+    public SeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initSeekBar(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -73,14 +75,23 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
         if (isInEditMode())
             return;
 
-        colorControl = Carbon.getThemeColor(getContext(),R.attr.colorControlNormal);
+        colorControl = Carbon.getThemeColor(getContext(), R.attr.colorControlNormal);
 
         THUMB_RADIUS = Carbon.getDip(getContext()) * 12;
         RIPPLE_RADIUS = Carbon.getDip(getContext()) * 30;
+        STROKE_WIDTH = Carbon.getDip(getContext()) * 2;
 
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTint(this, attrs, defStyleAttr);
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        if (attrs != null) {
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTint(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, 0);
+
+            //setStyle(Style.values()[a.getInt(R.attr.carbon_barStyle,0)]);
+
+            a.recycle();
+        }
 
         setFocusableInTouchMode(false); // TODO: from theme
     }
@@ -102,22 +113,38 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
     @Override
     public void draw(@NonNull Canvas canvas) {
         super.draw(canvas);
+
         int thumbX = (int) (value * (getWidth() - getPaddingLeft() - getPaddingRight() - THUMB_RADIUS * 2) + getPaddingLeft() + THUMB_RADIUS);
         int thumbY = getHeight() / 2;
-        paint.setStrokeWidth(Carbon.getDip(getContext()) * 2);
+
+        paint.setStrokeWidth(STROKE_WIDTH);
         if (!isInEditMode())
             paint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
         canvas.drawCircle(thumbX, thumbY, THUMB_RADIUS, paint);
         if (getPaddingLeft() + THUMB_RADIUS < thumbX - THUMB_RADIUS)
             canvas.drawLine(getPaddingLeft() + THUMB_RADIUS, thumbY, thumbX - THUMB_RADIUS, thumbY, paint);
+
         paint.setColor(colorControl);
         if (thumbX + THUMB_RADIUS < getWidth() - getPaddingLeft() - THUMB_RADIUS)
             canvas.drawLine(thumbX + THUMB_RADIUS, thumbY, getWidth() - getPaddingLeft() - THUMB_RADIUS, thumbY, paint);
+
+        paint.setColor(Color.WHITE);
+        for (int i = 0; i <= 5; i++)
+            canvas.drawCircle(i / 5.0f * (getWidth() - getPaddingLeft() - getPaddingRight()), getHeight() / 2, STROKE_WIDTH, paint);
+
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
         canvas.translate(thumbX - THUMB_RADIUS * 1.5f, thumbY - THUMB_RADIUS * 1.5f);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
             rippleDrawable.draw(canvas);
         canvas.restore();
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
     }
 
 
@@ -132,23 +159,26 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             ViewParent parent = getParent();
-            if(parent!=null)
+            if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(true);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
             ViewParent parent = getParent();
-            if(parent!=null)
+            if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(false);
         }
+
         value = (event.getX() - getPaddingLeft() - THUMB_RADIUS) / (getWidth() - getPaddingLeft() - getPaddingRight() - THUMB_RADIUS * 2);
         value = Math.max(0, Math.min(value, 1));
-        postInvalidate();
+
         if (rippleDrawable != null) {
             int thumbX = (int) (value * (getWidth() - getPaddingLeft() - getPaddingRight() - THUMB_RADIUS * 2) + getPaddingLeft() + THUMB_RADIUS);
             int thumbY = getHeight() / 2;
             rippleDrawable.setBounds((int) (thumbX - RIPPLE_RADIUS), (int) (thumbY - RIPPLE_RADIUS), (int) (thumbX + RIPPLE_RADIUS), (int) (thumbY + RIPPLE_RADIUS));
-        }
-        if (rippleDrawable != null)
             rippleDrawable.setHotspot(event.getX(), event.getY());
+        }
+
+        postInvalidate();
+        super.onTouchEvent(event);
         return true;
     }
 

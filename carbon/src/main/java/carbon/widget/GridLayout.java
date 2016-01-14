@@ -42,6 +42,7 @@ import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
+import carbon.internal.PercentLayoutHelper;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -49,21 +50,22 @@ import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2014-11-20.
- *
+ * <p/>
  * A GridLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class GridLayout extends android.support.v7.widget.GridLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView,MaxSizeView {
+public class GridLayout extends android.support.v7.widget.GridLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
 
     private boolean debugMode;
+    private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
 
     public GridLayout(Context context) {
-        super(context,null,R.attr.carbon_gridLayoutStyle);
+        super(context, null, R.attr.carbon_gridLayoutStyle);
         initGridLayout(null, R.attr.carbon_gridLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs) {
-        super(context, attrs,R.attr.carbon_gridLayoutStyle);
+        super(context, attrs, R.attr.carbon_gridLayoutStyle);
         initGridLayout(attrs, R.attr.carbon_gridLayoutStyle);
     }
 
@@ -73,22 +75,24 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     }
 
     private void initGridLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, 0);
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        if (attrs != null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, 0);
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-        Carbon.initElevation(this, attrs, defStyleAttr);
-        Carbon.initAnimations(this, attrs, defStyleAttr);
-        Carbon.initTouchMargin(this, attrs, defStyleAttr);
-        Carbon.initInset(this, attrs, defStyleAttr);
-        Carbon.initMaxSize(this, attrs, defStyleAttr);
-        setCornerRadius((int) a.getDimension(R.styleable.GridLayout_carbon_cornerRadius, 0));
+            Carbon.initElevation(this, attrs, defStyleAttr);
+            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initInset(this, attrs, defStyleAttr);
+            Carbon.initMaxSize(this, attrs, defStyleAttr);
+            setCornerRadius((int) a.getDimension(R.styleable.GridLayout_carbon_cornerRadius, 0));
 
-        a.recycle();
-
-        if (isInEditMode()) {
-            a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-            debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
             a.recycle();
+
+            if (isInEditMode()) {
+                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
+                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
+                a.recycle();
+            }
         }
 
         setChildrenDrawingOrderEnabled(true);
@@ -231,6 +235,8 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+
+        percentLayoutHelper.restoreOriginalParams();
     }
 
     private void initCorners() {
@@ -456,7 +462,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(elevation);
         this.elevation = elevation;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -471,7 +477,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -618,7 +624,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 
@@ -760,7 +766,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
 
     // -------------------------------
-    // anchors
+    // layout params
     // -------------------------------
 
     @Override
@@ -813,7 +819,8 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
         }
     }
 
-    public static class LayoutParams extends android.support.v7.widget.GridLayout.LayoutParams {
+    public static class LayoutParams extends android.support.v7.widget.GridLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
+        private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
         public int anchorView;
         private int anchorGravity;
 
@@ -824,10 +831,8 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
             anchorView = a.getResourceId(R.styleable.FrameLayout_Layout_carbon_anchor, -1);
             anchorGravity = a.getInt(R.styleable.FrameLayout_Layout_carbon_anchorGravity, -1);
             a.recycle();
-        }
 
-        public LayoutParams() {
-            super();
+            percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
         }
 
         public LayoutParams(Spec rowSpec, Spec columnSpec) {
@@ -852,11 +857,30 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
             super(source);
         }
 
+        public LayoutParams(android.widget.FrameLayout.LayoutParams source) {
+            super((MarginLayoutParams) source);
+        }
+
         public LayoutParams(LayoutParams source) {
             super((MarginLayoutParams) source);
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;
+            percentLayoutInfo = source.percentLayoutInfo;
+        }
+
+        @Override
+        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
+            if (percentLayoutInfo == null) {
+                percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();
+            }
+
+            return percentLayoutInfo;
+        }
+
+        @Override
+        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
+            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
         }
 
         public int getAnchorGravity() {
@@ -907,7 +931,10 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (percentLayoutHelper.handleMeasuredStateTooSmall())
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(Math.min(getMeasuredWidth(), maxWidth), Math.min(getMeasuredHeight(), maxHeight));
     }
 }

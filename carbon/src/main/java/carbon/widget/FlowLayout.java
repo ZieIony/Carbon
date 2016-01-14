@@ -35,10 +35,12 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.animation.StateAnimatorView;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
+import carbon.internal.PercentLayoutHelper;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -51,9 +53,10 @@ import carbon.shadow.ShadowView;
  * Has support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class FlowLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, carbon.animation.StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
+public class FlowLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
 
     private boolean debugMode;
+    private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
 
     public FlowLayout(Context context) {
         super(context, null, R.attr.carbon_flowLayoutStyle);
@@ -77,7 +80,7 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
     }
 
     private void initFlowLayout(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
             Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -256,6 +259,8 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+
+        percentLayoutHelper.restoreOriginalParams();
     }
 
     private void initCorners() {
@@ -481,7 +486,7 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(elevation);
         this.elevation = elevation;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -496,7 +501,7 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -785,6 +790,79 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
 
 
     // -------------------------------
+    // layout params
+    // -------------------------------
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(super.generateDefaultLayoutParams());
+    }
+
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new LayoutParams(getContext(), attrs);
+    }
+
+    @Override
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        return new LayoutParams(p);
+    }
+
+    public static class LayoutParams extends android.widget.FrameLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
+        private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
+
+        public LayoutParams(Context c, AttributeSet attrs) {
+            super(c, attrs);
+
+            percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
+        }
+
+        public LayoutParams(int w, int h) {
+            super(w, h);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public LayoutParams(ViewGroup.LayoutParams source) {
+            super(source);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public LayoutParams(ViewGroup.MarginLayoutParams source) {
+            super(source);
+        }
+
+        public LayoutParams(android.widget.FrameLayout.LayoutParams source) {
+            super((MarginLayoutParams) source);
+            gravity = source.gravity;
+        }
+
+        public LayoutParams(LayoutParams source) {
+            super((MarginLayoutParams) source);
+
+            percentLayoutInfo = source.percentLayoutInfo;
+        }
+
+        @Override
+        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
+            if (percentLayoutInfo == null) {
+                percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();
+            }
+
+            return percentLayoutInfo;
+        }
+
+        @Override
+        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
+            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
+        }
+    }
+
+
+    // -------------------------------
     // maximum width & height
     // -------------------------------
 
@@ -814,7 +892,10 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (percentLayoutHelper.handleMeasuredStateTooSmall())
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(Math.min(getMeasuredWidth(), maxWidth), Math.min(getMeasuredHeight(), maxHeight));
     }
 }

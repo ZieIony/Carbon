@@ -21,10 +21,11 @@
         android:layout_width="200dp"
         android:layout_height="36dp"
         android:layout_margin="@dimen/carbon_padding"
-        android:text="Radius = 200dp"
+        android:text="Radius = 50dp"
         app:carbon_rippleColor="#42ffffff"
         app:carbon_rippleRadius="50dp"
         app:carbon_rippleStyle="background"
+        app:carbon_rippleHotspot="true"
         app:carbon_touchMargin="6dp"/>
 
     <carbon.widget.Button

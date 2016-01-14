@@ -5,30 +5,62 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:padding="@dimen/carbon_padding"
     app:carbon_insetColor="?attr/colorPrimary">
+
+    <carbon.widget.TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continous" />
 
     <carbon.widget.SeekBar
         android:layout_width="match_parent"
         android:layout_height="24dp"
+        android:layout_margin="@dimen/carbon_margin"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:carbon_rippleColor="?attr/colorAccent"
-        app:carbon_rippleHotspot="false"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleHotspot="true"
+        app:carbon_rippleRadius="25dp"
         app:carbon_rippleStyle="borderless"
         app:carbon_tint="?attr/colorAccent" />
 
     <carbon.widget.RangeSeekBar
         android:layout_width="match_parent"
         android:layout_height="24dp"
+        android:layout_margin="@dimen/carbon_margin"
         android:layout_marginTop="@dimen/carbon_padding"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:carbon_rippleColor="?attr/colorAccent"
-        app:carbon_rippleHotspot="false"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleHotspot="true"
+        app:carbon_rippleRadius="25dp"
         app:carbon_rippleStyle="borderless"
         app:carbon_tint="?attr/colorAccent" />
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <carbon.widget.TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Discreete" />
+
+    <carbon.widget.SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_margin="@dimen/carbon_margin"/>
+
+    <carbon.widget.RangeSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_margin="@dimen/carbon_margin"
+        android:layout_marginTop="@dimen/carbon_padding" />
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
 </carbon.widget.LinearLayout>

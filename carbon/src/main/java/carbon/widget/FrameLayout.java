@@ -43,6 +43,7 @@ import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
+import carbon.internal.PercentLayoutHelper;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -57,6 +58,7 @@ import carbon.shadow.ShadowView;
 public class FrameLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
 
     private boolean debugMode;
+    private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
 
     public FrameLayout(Context context) {
         super(context, null, R.attr.carbon_frameLayoutStyle);
@@ -240,6 +242,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+
+        percentLayoutHelper.restoreOriginalParams();
     }
 
     private void initCorners() {
@@ -465,7 +469,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(elevation);
         this.elevation = elevation;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -480,7 +484,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -769,7 +773,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
 
     // -------------------------------
-    // anchors
+    // layout params
     // -------------------------------
 
     @Override
@@ -822,7 +826,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         }
     }
 
-    public static class LayoutParams extends android.widget.FrameLayout.LayoutParams {
+    public static class LayoutParams extends android.widget.FrameLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
+        private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
         public int anchorView;
         private int anchorGravity;
 
@@ -833,6 +838,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
             anchorView = a.getResourceId(R.styleable.FrameLayout_Layout_carbon_anchor, -1);
             anchorGravity = a.getInt(R.styleable.FrameLayout_Layout_carbon_anchorGravity, -1);
             a.recycle();
+
+            percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
         }
 
         public LayoutParams(int w, int h) {
@@ -853,11 +860,31 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
             super(source);
         }
 
+        public LayoutParams(android.widget.FrameLayout.LayoutParams source) {
+            super((MarginLayoutParams) source);
+            gravity = source.gravity;
+        }
+
         public LayoutParams(LayoutParams source) {
             super((MarginLayoutParams) source);
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;
+            percentLayoutInfo = source.percentLayoutInfo;
+        }
+
+        @Override
+        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
+            if (percentLayoutInfo == null) {
+                percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();
+            }
+
+            return percentLayoutInfo;
+        }
+
+        @Override
+        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
+            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
         }
 
         public int getAnchorGravity() {
@@ -908,7 +935,10 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (percentLayoutHelper.handleMeasuredStateTooSmall())
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(Math.min(getMeasuredWidth(), maxWidth), Math.min(getMeasuredHeight(), maxHeight));
     }
 }

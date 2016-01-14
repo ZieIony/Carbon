@@ -63,6 +63,17 @@
         <attr name="carbon_maxWidth" format="dimension"/>
         <attr name="carbon_maxHeight" format="dimension"/>
 
+        <attr name="carbon_widthPercent" format="fraction|reference"/>
+        <attr name="carbon_heightPercent" format="fraction|reference"/>
+        <attr name="carbon_marginPercent" format="fraction|reference"/>
+        <attr name="carbon_marginLeftPercent" format="fraction|reference"/>
+        <attr name="carbon_marginTopPercent" format="fraction|reference"/>
+        <attr name="carbon_marginRightPercent" format="fraction|reference"/>
+        <attr name="carbon_marginBottomPercent" format="fraction|reference"/>
+        <attr name="carbon_marginStartPercent" format="fraction|reference"/>
+        <attr name="carbon_marginEndPercent" format="fraction|reference"/>
+        <attr name="carbon_aspectRatio" format="fraction|reference"/>
+
         <attr name="carbon_textAppearanceHeadline" format="reference"/>
         <attr name="carbon_textAppearanceTitle" format="reference"/>
         <attr name="carbon_textAppearanceSubhead" format="reference"/>
@@ -362,6 +373,14 @@
         <attr name="carbon_fontPath"/>
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
+    </declare-styleable>
+
+    <attr name="carbon_rangeSeekBarStyle" format="reference"/>
+    <declare-styleable name="SeekBar">
+        <attr name="carbon_barStyle" format="enum">
+            <enum name="continous" value="0"/>
+            <enum name="discrete" value="1"/>
+        </attr>
     </declare-styleable>
 
     <attr name="carbon_editMenuTheme" format="reference"/>

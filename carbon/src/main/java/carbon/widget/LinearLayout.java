@@ -15,7 +15,10 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +43,7 @@ import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
+import carbon.internal.PercentLayoutHelper;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -51,8 +55,10 @@ import carbon.shadow.ShadowView;
  * A LinearLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView,MaxSizeView {
+public class LinearLayout extends android.widget.LinearLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
+
     private boolean debugMode;
+    private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
 
     public LinearLayout(Context context) {
         super(context,null);
@@ -110,7 +116,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
-        views = new ArrayList<View>();
+        views = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
@@ -223,6 +229,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        layoutAnchoredViews();
 
         if (!changed)
             return;
@@ -236,6 +243,8 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+
+        percentLayoutHelper.restoreOriginalParams();
     }
 
     private void initCorners() {
@@ -765,6 +774,144 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
 
     // -------------------------------
+    // anchors
+    // -------------------------------
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(super.generateDefaultLayoutParams());
+    }
+
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new LayoutParams(getContext(), attrs);
+    }
+
+    @Override
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        return new LayoutParams(p);
+    }
+
+    private void layoutAnchoredViews() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            if (child.getVisibility() != GONE) {
+                LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                if (lp.anchorView != 0) {
+                    View anchorView = findViewById(lp.anchorView);
+                    if (anchorView != null && anchorView != child) {
+                        int left = child.getLeft();
+                        int right = child.getRight();
+                        int top = child.getTop();
+                        int bottom = child.getBottom();
+                        if ((lp.anchorGravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
+                            top = anchorView.getBottom() - lp.height / 2;
+                            bottom = top + lp.height;
+                        }
+                        if ((lp.anchorGravity & Gravity.TOP) == Gravity.TOP) {
+                            top = anchorView.getTop() - lp.height / 2;
+                            bottom = top + lp.height;
+                        }
+                        if ((GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.LEFT) == Gravity.LEFT) {
+                            left = anchorView.getLeft() - lp.width / 2;
+                            right = left + lp.width;
+                        }
+                        if ((GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.RIGHT) == Gravity.RIGHT) {
+                            left = anchorView.getRight() - lp.width / 2;
+                            right = left + lp.width;
+                        }
+                        child.layout(left, top, right, bottom);
+                    }
+                }
+            }
+        }
+    }
+
+    public static class LayoutParams extends android.widget.LinearLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
+        private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
+        public int anchorView;
+        private int anchorGravity;
+
+        public LayoutParams(Context c, AttributeSet attrs) {
+            super(c, attrs);
+
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.FrameLayout_Layout);
+            anchorView = a.getResourceId(R.styleable.FrameLayout_Layout_carbon_anchor, -1);
+            anchorGravity = a.getInt(R.styleable.FrameLayout_Layout_carbon_anchorGravity, -1);
+            a.recycle();
+
+            percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
+        }
+
+        public LayoutParams(int w, int h) {
+            super(w, h);
+        }
+
+        public LayoutParams(int width, int height, float weight) {
+            super(width, height, weight);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public LayoutParams(ViewGroup.LayoutParams source) {
+            super(source);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public LayoutParams(ViewGroup.MarginLayoutParams source) {
+            super(source);
+        }
+
+
+        public LayoutParams(android.widget.LinearLayout.LayoutParams source) {
+            super((MarginLayoutParams) source);
+            gravity = source.gravity;
+        }
+
+        public LayoutParams(LayoutParams source) {
+            super((MarginLayoutParams) source);
+
+            this.anchorView = source.anchorView;
+            this.anchorGravity = source.anchorGravity;
+            percentLayoutInfo = source.percentLayoutInfo;
+        }
+
+        @Override
+        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
+            if (percentLayoutInfo == null) {
+                percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();
+            }
+
+            return percentLayoutInfo;
+        }
+
+        @Override
+        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
+            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
+        }
+
+        public int getAnchorGravity() {
+            return anchorGravity;
+        }
+
+        public void setAnchorGravity(int anchorGravity) {
+            this.anchorGravity = anchorGravity;
+        }
+
+        public int getAnchorView() {
+            return anchorView;
+        }
+
+        public void setAnchorView(int anchorView) {
+            this.anchorView = anchorView;
+        }
+    }
+
+
+    // -------------------------------
     // maximum width & height
     // -------------------------------
 
@@ -794,7 +941,10 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (percentLayoutHelper.handleMeasuredStateTooSmall())
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(Math.min(getMeasuredWidth(), maxWidth), Math.min(getMeasuredHeight(), maxHeight));
     }
 }

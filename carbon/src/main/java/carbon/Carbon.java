@@ -15,8 +15,9 @@ import android.view.ViewGroup;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.drawable.RippleDrawable;
-import carbon.drawable.RippleDrawableCompat;
+import carbon.drawable.RippleDrawableFroyo;
 import carbon.drawable.RippleDrawableLollipop;
+import carbon.drawable.RippleDrawableMarshmallow;
 import carbon.drawable.RippleView;
 import carbon.shadow.ShadowView;
 import carbon.widget.InsetView;
@@ -57,19 +58,25 @@ public class Carbon {
             boolean useHotspot = a.getBoolean(R.styleable.Carbon_carbon_rippleHotspot, true);
             int radius = (int) a.getDimension(R.styleable.Carbon_carbon_rippleRadius, -1);
 
-            RippleDrawable rippleDrawable;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
-            } else {
-                rippleDrawable = new RippleDrawableCompat(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, view.getContext(), style);
-            }
-            rippleDrawable.setCallback(view);
-            rippleDrawable.setHotspotEnabled(useHotspot);
-            rippleDrawable.setRadius(radius);
-            rippleView.setRippleDrawable(rippleDrawable);
+            rippleView.setRippleDrawable(createRippleDrawable(color, style, view, useHotspot, radius));
         }
 
         a.recycle();
+    }
+
+    public static RippleDrawable createRippleDrawable(int color, RippleDrawable.Style style, View view, boolean useHotspot, int radius){
+        RippleDrawable rippleDrawable;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            rippleDrawable = new RippleDrawableMarshmallow(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
+        } else {
+            rippleDrawable = new RippleDrawableFroyo(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, view.getContext(), style);
+        }
+        rippleDrawable.setCallback(view);
+        rippleDrawable.setHotspotEnabled(useHotspot);
+        rippleDrawable.setRadius(radius);
+        return rippleDrawable;
     }
 
     public static void initTouchMargin(TouchMarginView view, AttributeSet attrs, int defStyleAttr) {

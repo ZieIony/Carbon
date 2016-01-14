@@ -15,7 +15,7 @@ import com.squareup.picasso.Target;
 import java.util.List;
 
 import carbon.drawable.RippleDrawable;
-import carbon.drawable.RippleDrawableCompat;
+import carbon.drawable.RippleDrawableFroyo;
 import carbon.widget.CardView;
 import tk.zielony.carbonsamples.R;
 
@@ -76,7 +76,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             card.setClickable(true);
             card.setBackgroundColor(Color.WHITE);
 
-            RippleDrawable rippleDrawable = new RippleDrawableCompat(0x42ff0000, null, itemView.getContext(), RippleDrawable.Style.Over);
+            RippleDrawable rippleDrawable = new RippleDrawableFroyo(0x42ff0000, null, itemView.getContext(), RippleDrawable.Style.Over);
             rippleDrawable.setCallback(card);
             rippleDrawable.setHotspotEnabled(true);
             card.setRippleDrawable(rippleDrawable);

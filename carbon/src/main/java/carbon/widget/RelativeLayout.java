@@ -43,6 +43,7 @@ import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.internal.ElevationComparator;
+import carbon.internal.PercentLayoutHelper;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -57,6 +58,7 @@ import carbon.shadow.ShadowView;
 public class RelativeLayout extends android.widget.RelativeLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
 
     private boolean debugMode;
+    private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
 
     public RelativeLayout(Context context) {
         super(context, null, R.attr.carbon_relativeLayoutStyle);
@@ -240,6 +242,8 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+
+        percentLayoutHelper.restoreOriginalParams();
     }
 
     private void initCorners() {
@@ -465,7 +469,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(elevation);
         this.elevation = elevation;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -480,7 +484,7 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -772,19 +776,18 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     // anchors
     // -------------------------------
 
-
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
         return new LayoutParams(super.generateDefaultLayoutParams());
     }
 
     @Override
-    public android.widget.RelativeLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new LayoutParams(getContext(), attrs);
     }
 
     @Override
-    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
         return new LayoutParams(p);
     }
 
@@ -823,9 +826,10 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         }
     }
 
-    public static class LayoutParams extends android.widget.RelativeLayout.LayoutParams {
-        public int anchorView = 0;
-        private int anchorGravity = 0;
+    public static class LayoutParams extends android.widget.RelativeLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
+        private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
+        public int anchorView;
+        private int anchorGravity;
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
@@ -834,6 +838,8 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
             anchorView = a.getResourceId(R.styleable.RelativeLayout_Layout_carbon_anchor, -1);
             anchorGravity = a.getInt(R.styleable.RelativeLayout_Layout_carbon_anchorGravity, -1);
             a.recycle();
+
+            percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
         }
 
         public LayoutParams(int w, int h) {
@@ -854,11 +860,30 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
             super(source);
         }
 
+        public LayoutParams(android.widget.RelativeLayout.LayoutParams source) {
+            super((MarginLayoutParams) source);
+        }
+
         public LayoutParams(LayoutParams source) {
             super((MarginLayoutParams) source);
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;
+            percentLayoutInfo = source.percentLayoutInfo;
+        }
+
+        @Override
+        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
+            if (percentLayoutInfo == null) {
+                percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();
+            }
+
+            return percentLayoutInfo;
+        }
+
+        @Override
+        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
+            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
         }
 
         public int getAnchorGravity() {
@@ -909,7 +934,10 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (percentLayoutHelper.handleMeasuredStateTooSmall())
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(Math.min(getMeasuredWidth(), maxWidth), Math.min(getMeasuredHeight(), maxHeight));
     }
 }
