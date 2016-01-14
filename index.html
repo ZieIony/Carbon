@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Carbon by ZieIony</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Carbon</h1>
+        <h2>Material Design implementation for Android 2.2+. Shadows, ripples, vectors, fonts, animations, widgets, rounded corners and more.</h2>
+        <a href="https://github.com/ZieIony/Carbon" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p><a href="https://android-arsenal.com/details/1/1491"><img src="https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat" alt="Android Arsenal"></a>  
+<a href="https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.11.0/"><img src="https://img.shields.io/badge/Maven%20Central-0.11.0-brightgreen.svg" alt="Maven Central"></a>  
+<a href="https://www.dropbox.com/s/qp4gu6m5so1o0df/samples.apk?raw=1"><img src="https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg" alt="Dropbox"></a></p>
+
+<p><a href="https://plus.google.com/u/2/109054799904873578131"><img src="https://img.shields.io/badge/Google+-Zielony-red.svg" alt="Google+"></a>  
+<a href="https://plus.google.com/u/1/communities/111973718340428039040"><img src="https://img.shields.io/badge/Google+-Carbon-red.svg" alt="Google+"></a>  
+<a href="https://twitter.com/GreenMakesApps"><img src="https://img.shields.io/badge/Twitter-GreenMakesApps-blue.svg" alt="Twitter"></a></p>
+
+<h1>
+<a id="carbon" class="anchor" href="#carbon" aria-hidden="true"><span class="octicon octicon-link"></span></a>Carbon</h1>
+
+<p>Material Design implementation for Android 2.2 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.</p>
+
+<h3>
+<a id="samples" class="anchor" href="#samples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Samples</h3>
+
+<p><a href="https://www.youtube.com/watch?v=YcTQ8a8sTpU"><img src="http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg" alt="Sample App"></a></p>
+
+<p><img src="https://github.com/ZieIony/Carbon/blob/master/images/flowlayoutchips.png" alt="FlowLayout and Chip">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/anchors.png" alt="Anchors">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/spinner.png" alt="Spinner">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/buttonsusage.png" alt="Buttons / Usage sample">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/autocomplete.png" alt="Auto complete demo">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/powermenu.png" alt="Power menu demo">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/progress.png" alt="Circular progress indicators">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/textappearances.png" alt="Text appearances">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/calculator.png" alt="Calculator">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/scrollview.png" alt="ScrollView">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png" alt="Sample app">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/recyclercards.png" alt="RecyclerView and CardView">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png" alt="CheckBoxes">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/pagertabstrip.png" alt="PagerTabStrip">
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/drawer.png" alt="Drawer"></p>
+
+<h3>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h3>
+
+<ul>
+<li>realtime, animated shadows</li>
+<li>the touch ripple</li>
+<li>an elevation system (changing z order changes view rendering order)</li>
+<li>widget tinting</li>
+<li>rounded corners</li>
+<li>SVG rendering</li>
+<li>a floating action button view</li>
+<li>text appearances, sizes, colors and many more useful definitions</li>
+<li>custom, xml-selectable fonts for all text Views</li>
+<li>predefined animation styles and visibility change animations</li>
+<li>a saturation/brightness/alpha fade for ImageView</li>
+<li>Divider drag&amp;drop view</li>
+<li>dark and light themes</li>
+<li>a radial transition animation</li>
+<li>circular progress indicators</li>
+<li>CardView with real shadows and rounded corners</li>
+<li>state animators</li>
+<li>debug mode showing draw and hit areas when in edit mode</li>
+<li>tab strip with animated underline</li>
+<li>fading edges</li>
+<li>animated checkboxes and radiobuttons</li>
+<li>DrawerLayout with real shadows</li>
+<li>EditText with floating label, character counter, pattern validation and Marshmallow-style menu</li>
+<li>Lollipop's recents list layout</li>
+<li>Snackbar with swipe-to-dismiss, tap-outside-to-dismiss, message queue and view pushing</li>
+<li>view anchors</li>
+<li>Spinner with PopupMenu</li>
+</ul>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/ZieIony/Carbon/wiki/Installation">Installation</a>
+</h3>
+
+<h3>
+<a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/ZieIony/Carbon/wiki/FAQ">FAQ</a>
+</h3>
+
+<h3>
+<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/ZieIony/Carbon/wiki/Changelog">Changelog</a>
+</h3>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h3>
+
+<pre><code>Copyright 2015 Marcin Korniluk 'Zielony'
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/ZieIony/Carbon/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/ZieIony/Carbon/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/ZieIony/Carbon"></a> is maintained by <a href="https://github.com/ZieIony">ZieIony</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
