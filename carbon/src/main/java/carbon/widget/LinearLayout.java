@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -316,6 +317,16 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             newRipple.setCallback(this);
             if (newRipple.getStyle() == RippleDrawable.Style.Background) {
                 super.setBackgroundDrawable((Drawable) newRipple);
+            } else if (newRipple.getStyle() == RippleDrawable.Style.Borderless) {
+                if (getParent() != null) {
+                    if (getParent() instanceof RippleView) {
+                        newRipple.setBounds(0, 0, getWidth(), getHeight());
+                    } else {
+                        Log.d(VIEW_LOG_TAG, "Parent should be a Carbon Library Component for Borderless Ripple to Work dynamically!");
+                    }
+                } else {
+                    Log.d(VIEW_LOG_TAG, "Parent should be a Carbon Library Component for Borderless Ripple to Work dynamically!");
+                }
             }
         }
 
