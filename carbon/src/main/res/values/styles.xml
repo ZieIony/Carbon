@@ -456,6 +456,12 @@
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
+        <item name="carbon_min">0</item>
+        <item name="carbon_max">5</item>
+        <item name="carbon_barStyle">continuous</item>
+        <item name="carbon_stepSize">1</item>
+        <item name="carbon_value">1</item>
+        <item name="carbon_value2">4</item>
     </style>
 
 </resources>

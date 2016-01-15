@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Continous" />
+        android:layout_margin="@dimen/carbon_margin"
+        android:text="Continuous"/>
 
     <carbon.widget.SeekBar
         android:layout_width="match_parent"
@@ -19,48 +20,63 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:padding="@dimen/carbon_padding"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleHotspot="true"
         app:carbon_rippleRadius="25dp"
         app:carbon_rippleStyle="borderless"
-        app:carbon_tint="?attr/colorAccent" />
+        app:carbon_tint="?attr/colorAccent"/>
 
     <carbon.widget.RangeSeekBar
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_margin="@dimen/carbon_margin"
-        android:layout_marginTop="@dimen/carbon_padding"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:padding="@dimen/carbon_padding"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleHotspot="true"
         app:carbon_rippleRadius="25dp"
         app:carbon_rippleStyle="borderless"
-        app:carbon_tint="?attr/colorAccent" />
+        app:carbon_tint="?attr/colorAccent"/>
 
     <carbon.widget.Divider
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"/>
 
     <carbon.widget.TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Discreete" />
+        android:layout_margin="@dimen/carbon_margin"
+        android:text="Discrete"/>
 
     <carbon.widget.SeekBar
         android:layout_width="match_parent"
         android:layout_height="24dp"
-        android:layout_margin="@dimen/carbon_margin"/>
+        android:layout_margin="@dimen/carbon_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/carbon_padding"
+        app:carbon_barStyle="discrete"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleHotspot="true"
+        app:carbon_rippleRadius="25dp"
+        app:carbon_rippleStyle="borderless"/>
 
     <carbon.widget.RangeSeekBar
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_margin="@dimen/carbon_margin"
-        android:layout_marginTop="@dimen/carbon_padding" />
-
-    <carbon.widget.Divider
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/carbon_padding"
+        app:carbon_barStyle="discrete"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleHotspot="true"
+        app:carbon_rippleRadius="25dp"
+        app:carbon_rippleStyle="borderless"/>
 
 </carbon.widget.LinearLayout>

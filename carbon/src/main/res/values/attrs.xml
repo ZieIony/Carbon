@@ -378,9 +378,14 @@
     <attr name="carbon_rangeSeekBarStyle" format="reference"/>
     <declare-styleable name="SeekBar">
         <attr name="carbon_barStyle" format="enum">
-            <enum name="continous" value="0"/>
+            <enum name="continuous" value="0"/>
             <enum name="discrete" value="1"/>
         </attr>
+        <attr name="carbon_min" format="float"/>
+        <attr name="carbon_max" format="float"/>
+        <attr name="carbon_stepSize" format="float"/>
+        <attr name="carbon_value" format="float"/>
+        <attr name="carbon_value2" format="float"/>
     </declare-styleable>
 
     <attr name="carbon_editMenuTheme" format="reference"/>
