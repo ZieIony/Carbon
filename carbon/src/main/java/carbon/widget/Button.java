@@ -25,16 +25,11 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
-import carbon.animation.ElevationStateAnimator;
 import carbon.animation.StateAnimator;
-import carbon.animation.StateAnimatorView;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -115,7 +110,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             a.recycle();
         }
 
-        addStateAnimator(new ElevationStateAnimator(this));
+        if (getElevation() > 0)
+            AnimUtils.setupElevationAnimator(stateAnimator,this);
     }
 
     /**
@@ -545,14 +541,11 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     // state animators
     // -------------------------------
 
-    private List<StateAnimator> stateAnimators = new ArrayList<>();
+    private StateAnimator stateAnimator = new StateAnimator(this);
 
-    public void removeStateAnimator(StateAnimator animator) {
-        stateAnimators.remove(animator);
-    }
-
-    public void addStateAnimator(StateAnimator animator) {
-        this.stateAnimators.add(animator);
+    @Override
+    public StateAnimator getStateAnimator() {
+        return stateAnimator;
     }
 
     @Override
@@ -560,9 +553,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        if (stateAnimators != null)
-            for (StateAnimator animator : stateAnimators)
-                animator.stateChanged(getDrawableState());
+        stateAnimator.setState(getDrawableState());
     }
 
 

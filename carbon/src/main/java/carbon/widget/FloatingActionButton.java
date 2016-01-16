@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.ElevationStateAnimator;
+import carbon.animation.AnimUtils;
 import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.ControlAccentColorStateList;
 
@@ -42,7 +42,7 @@ public class FloatingActionButton extends ImageView {
     }
 
     private void initFloatingActionButton(AttributeSet attrs, int defStyleAttr) {
-        addStateAnimator(new ElevationStateAnimator(this));
+        AnimUtils.setupElevationAnimator(getStateAnimator(),this);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, 0);
         if (a != null) {

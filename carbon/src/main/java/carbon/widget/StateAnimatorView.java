@@ -7,7 +7,5 @@ import carbon.animation.StateAnimator;
  */
 public interface StateAnimatorView {
 
-    void removeStateAnimator(StateAnimator animator);
-
-    void addStateAnimator(StateAnimator animator);
+    StateAnimator getStateAnimator();
 }

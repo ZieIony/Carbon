@@ -45,12 +45,13 @@ import carbon.shadow.ShadowView;
 import carbon.widget.CornerView;
 import carbon.widget.InsetView;
 import carbon.widget.OnInsetsChangedListener;
+import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 
 /**
  * Created by Marcin on 2015-12-30.
  */
-public class CoordinatorLayout extends android.support.design.widget.CoordinatorLayout implements ShadowView, RippleView, TouchMarginView, carbon.animation.StateAnimatorView, AnimatedView, InsetView, CornerView {
+public class CoordinatorLayout extends android.support.design.widget.CoordinatorLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
     private boolean debugMode;
 
     public CoordinatorLayout(Context context) {
@@ -553,14 +554,11 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     // state animators
     // -------------------------------
 
-    private List<StateAnimator> stateAnimators = new ArrayList<>();
+    private StateAnimator stateAnimator = new StateAnimator(this);
 
-    public void removeStateAnimator(StateAnimator animator) {
-        stateAnimators.remove(animator);
-    }
-
-    public void addStateAnimator(StateAnimator animator) {
-        this.stateAnimators.add(animator);
+    @Override
+    public StateAnimator getStateAnimator() {
+        return stateAnimator;
     }
 
     @Override
@@ -568,9 +566,7 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        if (stateAnimators != null)
-            for (StateAnimator animator : stateAnimators)
-                animator.stateChanged(getDrawableState());
+        stateAnimator.setState(getDrawableState());
     }
 
 

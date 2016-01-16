@@ -15,8 +15,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -54,7 +52,7 @@ import carbon.shadow.ShadowView;
 /**
  * Created by Marcin on 2014-12-13.
  */
-public class Toolbar extends android.support.v7.widget.Toolbar implements ShadowView, RippleView, TouchMarginView, carbon.animation.StateAnimatorView, AnimatedView, InsetView, CornerView {
+public class Toolbar extends android.support.v7.widget.Toolbar implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
     private boolean debugMode;
 
     private ViewGroup content;
@@ -673,14 +671,11 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     // state animators
     // -------------------------------
 
-    private List<StateAnimator> stateAnimators = new ArrayList<>();
+    private StateAnimator stateAnimator = new StateAnimator(this);
 
-    public void removeStateAnimator(StateAnimator animator) {
-        stateAnimators.remove(animator);
-    }
-
-    public void addStateAnimator(StateAnimator animator) {
-        this.stateAnimators.add(animator);
+    @Override
+    public StateAnimator getStateAnimator() {
+        return stateAnimator;
     }
 
     @Override
@@ -688,9 +683,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        if (stateAnimators != null)
-            for (StateAnimator animator : stateAnimators)
-                animator.stateChanged(getDrawableState());
+        stateAnimator.setState(getDrawableState());
     }
 
 

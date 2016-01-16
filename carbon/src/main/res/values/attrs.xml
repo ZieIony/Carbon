@@ -128,14 +128,6 @@
         <attr name="android:background"/>
     </declare-styleable>
 
-    <declare-styleable name="SVGActionButton">
-        <attr name="carbon_cornerRadius"/>
-    </declare-styleable>
-
-    <declare-styleable name="ImageActionButton">
-        <attr name="carbon_cornerRadius"/>
-    </declare-styleable>
-
     <declare-styleable name="Button">
         <attr name="carbon_fontFamily"/>
         <attr name="android:textStyle"/>
@@ -157,17 +149,6 @@
         <attr name="carbon_textAllCaps"/>
         <attr name="android:textAppearance"/>
         <attr name="carbon_cornerRadius"/>
-    </declare-styleable>
-
-    <attr name="carbon_svgViewStyle" format="reference"/>
-    <declare-styleable name="SVGView">
-        <attr name="carbon_rippleColor"/>
-        <attr name="carbon_src"/>
-        <attr name="carbon_touchMargin"/>
-        <attr name="carbon_touchMarginLeft"/>
-        <attr name="carbon_touchMarginTop"/>
-        <attr name="carbon_touchMarginRight"/>
-        <attr name="carbon_touchMarginBottom"/>
     </declare-styleable>
 
     <attr name="carbon_collapsingToolbarLayoutStyle" format="reference"/>

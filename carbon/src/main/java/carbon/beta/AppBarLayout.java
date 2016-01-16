@@ -34,8 +34,9 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.*;
+import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
+import carbon.animation.StateAnimator;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -47,12 +48,13 @@ import carbon.shadow.ShadowView;
 import carbon.widget.CornerView;
 import carbon.widget.InsetView;
 import carbon.widget.OnInsetsChangedListener;
+import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 
 /**
  * Created by Marcin on 2015-12-30.
  */
-public class AppBarLayout extends android.support.design.widget.AppBarLayout implements ShadowView, RippleView, TouchMarginView, carbon.animation.StateAnimatorView, AnimatedView, InsetView, CornerView {
+public class AppBarLayout extends android.support.design.widget.AppBarLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
     private boolean debugMode;
 
     public AppBarLayout(Context context) {
@@ -66,7 +68,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     }
 
     private void initAppBarLayout(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarLayout, defStyleAttr, 0);
             Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -551,14 +553,11 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     // state animators
     // -------------------------------
 
-    private List<StateAnimator> stateAnimators = new ArrayList<>();
+    private StateAnimator stateAnimator = new StateAnimator(this);
 
-    public void removeStateAnimator(StateAnimator animator) {
-        stateAnimators.remove(animator);
-    }
-
-    public void addStateAnimator(StateAnimator animator) {
-        this.stateAnimators.add(animator);
+    @Override
+    public StateAnimator getStateAnimator() {
+        return stateAnimator;
     }
 
     @Override
@@ -566,9 +565,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        if (stateAnimators != null)
-            for (StateAnimator animator : stateAnimators)
-                animator.stateChanged(getDrawableState());
+        stateAnimator.setState(getDrawableState());
     }
 
 

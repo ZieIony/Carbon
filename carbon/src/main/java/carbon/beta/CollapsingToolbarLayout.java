@@ -43,12 +43,13 @@ import carbon.shadow.ShadowView;
 import carbon.widget.CornerView;
 import carbon.widget.InsetView;
 import carbon.widget.OnInsetsChangedListener;
+import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 
 /**
  * Created by Marcin on 2015-12-30.
  */
-public class CollapsingToolbarLayout extends android.support.design.widget.CollapsingToolbarLayout  implements ShadowView, RippleView, TouchMarginView, carbon.animation.StateAnimatorView, carbon.animation.AnimatedView, InsetView, CornerView {
+public class CollapsingToolbarLayout extends android.support.design.widget.CollapsingToolbarLayout  implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, carbon.animation.AnimatedView, InsetView, CornerView {
     private boolean debugMode;
     
     public CollapsingToolbarLayout(Context context) {
@@ -551,14 +552,11 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     // state animators
     // -------------------------------
 
-    private List<StateAnimator> stateAnimators = new ArrayList<>();
+    private StateAnimator stateAnimator = new StateAnimator(this);
 
-    public void removeStateAnimator(StateAnimator animator) {
-        stateAnimators.remove(animator);
-    }
-
-    public void addStateAnimator(StateAnimator animator) {
-        this.stateAnimators.add(animator);
+    @Override
+    public StateAnimator getStateAnimator() {
+        return stateAnimator;
     }
 
     @Override
@@ -566,9 +564,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        if (stateAnimators != null)
-            for (StateAnimator animator : stateAnimators)
-                animator.stateChanged(getDrawableState());
+        stateAnimator.setState(getDrawableState());
     }
 
 

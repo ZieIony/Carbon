@@ -37,7 +37,7 @@ import carbon.drawable.RippleView;
 /**
  * Created by Marcin on 2015-06-25.
  */
-public class SeekBar extends View implements RippleView, carbon.animation.StateAnimatorView, AnimatedView, TintedView {
+public class SeekBar extends View implements RippleView, StateAnimatorView, AnimatedView, TintedView {
     private static float THUMB_RADIUS, THUMB_RADIUS_DRAGGED, STROKE_WIDTH;
     float value = 0.5f;
     float min = 0, max = 1, step = 1;
@@ -438,14 +438,11 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
     // state animators
     // -------------------------------
 
-    private List<StateAnimator> stateAnimators = new ArrayList<>();
+    private StateAnimator stateAnimator = new StateAnimator(this);
 
-    public void removeStateAnimator(StateAnimator animator) {
-        stateAnimators.remove(animator);
-    }
-
-    public void addStateAnimator(StateAnimator animator) {
-        this.stateAnimators.add(animator);
+    @Override
+    public StateAnimator getStateAnimator() {
+        return stateAnimator;
     }
 
     @Override
@@ -453,9 +450,7 @@ public class SeekBar extends View implements RippleView, carbon.animation.StateA
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        if (stateAnimators != null)
-            for (StateAnimator animator : stateAnimators)
-                animator.stateChanged(getDrawableState());
+        stateAnimator.setState(getDrawableState());
     }
 
 

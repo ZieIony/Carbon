@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import carbon.widget.CheckBox;
 import carbon.widget.FloatingActionButton;
-import carbon.widget.SVGActionButton;
 import carbon.widget.Snackbar;
 import tk.zielony.carbonsamples.R;
 

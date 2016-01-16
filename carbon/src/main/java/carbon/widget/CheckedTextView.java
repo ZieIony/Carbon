@@ -10,7 +10,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +34,7 @@ import carbon.internal.TypefaceUtils;
 /**
  * Created by Marcin on 2015-12-23.
  */
-public class CheckedTextView extends android.widget.CheckedTextView implements RippleView, TouchMarginView, carbon.animation.StateAnimatorView, AnimatedView, TintedView {
+public class CheckedTextView extends android.widget.CheckedTextView implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
     private CheckableDrawable drawable;
 
     public CheckedTextView(Context context) {
@@ -350,14 +349,11 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
     // state animators
     // -------------------------------
 
-    private List<StateAnimator> stateAnimators = new ArrayList<>();
+    private StateAnimator stateAnimator = new StateAnimator(this);
 
-    public void removeStateAnimator(StateAnimator animator) {
-        stateAnimators.remove(animator);
-    }
-
-    public void addStateAnimator(StateAnimator animator) {
-        this.stateAnimators.add(animator);
+    @Override
+    public StateAnimator getStateAnimator() {
+        return stateAnimator;
     }
 
     @Override
@@ -365,9 +361,7 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        if (stateAnimators != null)
-            for (StateAnimator animator : stateAnimators)
-                animator.stateChanged(getDrawableState());
+        stateAnimator.setState(getDrawableState());
     }
 
 

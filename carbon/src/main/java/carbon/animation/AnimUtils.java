@@ -13,6 +13,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
+import carbon.shadow.ShadowView;
 import carbon.widget.ProgressBar;
 
 /**
@@ -67,7 +68,7 @@ public class AnimUtils {
             ViewHelper.setAlpha(view, 0);
         float start = ViewHelper.getAlpha(view);
         ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
-        animator.setDuration((long) (200*(1-start)));
+        animator.setDuration((long) (200 * (1 - start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -86,7 +87,7 @@ public class AnimUtils {
     public static ValueAnimator fadeOut(final View view, Animator.AnimatorListener listener) {
         float start = ViewHelper.getAlpha(view);
         ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (200*start));
+        animator.setDuration((long) (200 * start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -107,7 +108,7 @@ public class AnimUtils {
             ViewHelper.setAlpha(view, 0);
         float start = ViewHelper.getAlpha(view);
         ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
-        animator.setDuration((long) (200*(1-start)));
+        animator.setDuration((long) (200 * (1 - start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -128,7 +129,7 @@ public class AnimUtils {
     public static ValueAnimator popOut(final View view, Animator.AnimatorListener listener) {
         float start = ViewHelper.getAlpha(view);
         ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (200*start));
+        animator.setDuration((long) (200 * start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -151,7 +152,7 @@ public class AnimUtils {
             ViewHelper.setAlpha(view, 0);
         float start = ViewHelper.getAlpha(view);
         ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
-        animator.setDuration((long) (200*(1-start)));
+        animator.setDuration((long) (200 * (1 - start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -171,7 +172,7 @@ public class AnimUtils {
     public static ValueAnimator flyOut(final View view, Animator.AnimatorListener listener) {
         float start = ViewHelper.getAlpha(view);
         ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (200*start));
+        animator.setDuration((long) (200 * start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -192,7 +193,7 @@ public class AnimUtils {
         final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
         float start = circularProgress.getBarWidth();
         ValueAnimator animator = ValueAnimator.ofFloat(circularProgress.getBarWidth(), arcWidth);
-        animator.setDuration((long) (200*(arcWidth-start)));
+        animator.setDuration((long) (200 * (arcWidth - start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -212,7 +213,7 @@ public class AnimUtils {
         final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
         float start = circularProgress.getBarWidth();
         ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (200*start));
+        animator.setDuration((long) (200 * start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -299,4 +300,74 @@ public class AnimUtils {
         int b = (int) lerp(interpolation, val1 & 0xff, val2 & 0xff);
         return Color.argb(a, r, g, b);
     }
+
+    public static void setupElevationAnimator(StateAnimator stateAnimator, final ShadowView view) {
+        {
+            final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
+            animator.setDuration(300);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    animator.setFloatValues(view.getTranslationZ(), ((View) view).getResources().getDimension(R.dimen.carbon_elevationLow));
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            };
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    view.setTranslationZ((Float) animation.getAnimatedValue());
+                }
+            });
+            stateAnimator.addState(new int[]{android.R.attr.state_pressed}, animator, animatorListener);
+        }
+        {
+            final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
+            animator.setDuration(300);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    animator.setFloatValues(view.getTranslationZ(), 0);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            };
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    view.setTranslationZ((Float) animation.getAnimatedValue());
+                }
+            });
+            stateAnimator.addState(new int[]{-android.R.attr.state_pressed}, animator, animatorListener);
+        }
+    }
+
 }
