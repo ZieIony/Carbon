@@ -120,6 +120,9 @@
         <activity
             android:name=".feature.ContextWrapperActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".feature.PercentLayoutActivity"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".applibrary.DrawerActivity"

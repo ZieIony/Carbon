@@ -9,6 +9,7 @@ import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.feature.AnchorActivity;
 import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
+import tk.zielony.carbonsamples.feature.PercentLayoutActivity;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
 import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
 import tk.zielony.carbonsamples.feature.ShadowActivity;
@@ -36,7 +37,8 @@ public class FeaturesActivity extends Activity {
                 new ViewModel(ZOrderActivity.class, "Z order"),
                 new ViewModel(RoundedCornersActivity.class, "Rounded corners"),
                 new ViewModel(AnchorActivity.class, "Anchors"),
-                new ViewModel(ContextWrapperActivity.class, "Context wrapper")
+                new ViewModel(ContextWrapperActivity.class, "Context wrapper"),
+                new ViewModel(PercentLayoutActivity.class, "Percent layout")
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));
