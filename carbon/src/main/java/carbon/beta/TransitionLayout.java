@@ -38,7 +38,7 @@ public class TransitionLayout extends android.widget.FrameLayout {
     Path radialMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
-    public static enum TransitionType {
+    public enum TransitionType {
         Radial, Fade
     }
 

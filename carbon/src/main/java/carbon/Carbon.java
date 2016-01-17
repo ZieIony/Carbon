@@ -64,7 +64,7 @@ public class Carbon {
         a.recycle();
     }
 
-    public static RippleDrawable createRippleDrawable(int color, RippleDrawable.Style style, View view, boolean useHotspot, int radius){
+    public static RippleDrawable createRippleDrawable(int color, RippleDrawable.Style style, View view, boolean useHotspot, int radius) {
         RippleDrawable rippleDrawable;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rippleDrawable = new RippleDrawableMarshmallow(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);

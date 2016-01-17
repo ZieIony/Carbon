@@ -45,7 +45,7 @@ import carbon.shadow.ShadowView;
 
 /**
  * Created by Marcin on 2015-04-01.
- *
+ * <p/>
  * Carbon version of a drawer layout with support for shadows, ripples and other material features.
  * Not really useful, but added for sake of completeness.
  */
@@ -53,13 +53,13 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     private boolean debugMode;
 
     public DrawerLayout(Context context) {
-        super(context,null,  R.attr.carbon_drawerLayoutStyle);
-        initDrawerLayout(null,  R.attr.carbon_drawerLayoutStyle);
+        super(context, null, R.attr.carbon_drawerLayoutStyle);
+        initDrawerLayout(null, R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs) {
-        super(context, attrs,  R.attr.carbon_drawerLayoutStyle);
-        initDrawerLayout(attrs,  R.attr.carbon_drawerLayoutStyle);
+        super(context, attrs, R.attr.carbon_drawerLayoutStyle);
+        initDrawerLayout(attrs, R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -68,7 +68,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     }
 
     private void initDrawerLayout(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, 0);
             Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -609,7 +609,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         }
     }
 
-    public void setVisibilityImmediate(final int visibility){
+    public void setVisibilityImmediate(final int visibility) {
         super.setVisibility(visibility);
     }
 

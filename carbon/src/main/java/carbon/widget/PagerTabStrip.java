@@ -43,7 +43,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            position = (int) Math.round(position + positionOffset);
+            position = Math.round(position + positionOffset);
             if (position != selectedPage) {
                 View view = content.getChildAt(position);
 
@@ -102,13 +102,13 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     private TabBuilder tabBuilder;
 
     public PagerTabStrip(Context context) {
-        super(context,null,  R.attr.carbon_pagerTabStripStyle);
-        initPagerTabStrip(null,  R.attr.carbon_pagerTabStripStyle);
+        super(context, null, R.attr.carbon_pagerTabStripStyle);
+        initPagerTabStrip(null, R.attr.carbon_pagerTabStripStyle);
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_pagerTabStripStyle);
-        initPagerTabStrip(attrs,  R.attr.carbon_pagerTabStripStyle);
+        initPagerTabStrip(attrs, R.attr.carbon_pagerTabStripStyle);
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -123,7 +123,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     }
 
     private void initPagerTabStrip(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagerTabStrip, defStyleAttr, 0);
 
             setIndicatorHeight(a.getDimension(R.styleable.PagerTabStrip_carbon_indicatorWidth, 2));

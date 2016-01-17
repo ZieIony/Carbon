@@ -3,6 +3,7 @@ package carbon.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,29 +40,29 @@ public class Spinner extends TextView implements TintedView {
     private boolean isShowingPopup = false;
 
     public Spinner(Context context) {
-        super(context,null, R.attr.carbon_spinnerStyle);
-        initSpinner(context);
+        super(context, null, R.attr.carbon_spinnerStyle);
+        initSpinner(context, null, R.attr.carbon_spinnerStyle);
     }
 
     public Spinner(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_spinnerStyle);
-        initSpinner(context);
+        initSpinner(context, attrs, R.attr.carbon_spinnerStyle);
     }
 
-    public Spinner(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initSpinner(context);
+    public Spinner(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initSpinner(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Spinner(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initSpinner(context);
+        initSpinner(context, attrs, defStyleAttr);
     }
 
-    private void initSpinner(Context context) {
+    private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
         try {
-            int color = Carbon.getThemeColor(context,R.attr.colorControlNormal);
+            int color = Carbon.getThemeColor(context, R.attr.colorControlNormal);
 
             int size = (int) (Carbon.getDip(getContext()) * 24);
             Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
@@ -82,10 +84,18 @@ public class Spinner extends TextView implements TintedView {
 
         }
 
-        popupMenu = new PopupMenu(context);
+        int theme = 0;
+        if (attrs != null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Spinner, defStyleAttr, 0);
+
+            theme = a.getResourceId(R.styleable.Spinner_carbon_popupTheme, -1);
+
+            a.recycle();
+        }
+
+        popupMenu = new PopupMenu(new ContextThemeWrapper(context, theme));
         defaultAdapter = new Adapter();
         popupMenu.setAdapter(defaultAdapter);
-        popupMenu.setTint(getTint());
         popupMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -125,8 +135,8 @@ public class Spinner extends TextView implements TintedView {
         public void onItemClicked(int position) {
             setText(popupMenu.getAdapter().getItem(position).toString());
             selectedItem = position;
-            if(onItemSelectedListener!=null)
-                onItemSelectedListener.onItemSelected(null,null,selectedItem,0);
+            if (onItemSelectedListener != null)
+                onItemSelectedListener.onItemSelected(null, null, selectedItem, 0);
             popupMenu.dismiss();
         }
     };
@@ -299,8 +309,6 @@ public class Spinner extends TextView implements TintedView {
     @Override
     public void setTint(ColorStateList list) {
         this.tint = list;
-        if (popupMenu != null)
-            popupMenu.setTint(list);
     }
 
     @Override

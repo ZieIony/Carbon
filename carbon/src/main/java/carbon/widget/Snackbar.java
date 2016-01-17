@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
@@ -145,20 +144,20 @@ public class Snackbar extends android.widget.FrameLayout implements GestureDetec
 
     public Snackbar(Context context) {
         super(context);
-        initSnackbar(null, R.attr.carbon_snackbarTheme);
+        initSnackbar(R.attr.carbon_snackbarTheme);
     }
 
     public Snackbar(Context context, String message, String action, int duration) {
         super(context);
-        initSnackbar(null, R.attr.carbon_snackbarTheme);
+        initSnackbar(R.attr.carbon_snackbarTheme);
         setMessage(message);
         setAction(action);
         setDuration(duration);
     }
 
-    private void initSnackbar(AttributeSet attrs, int defStyleAttr) {
+    private void initSnackbar(int defStyleAttr) {
         TypedValue outValue = new TypedValue();
-        getContext().getTheme().resolveAttribute(R.attr.carbon_snackbarTheme, outValue, true);
+        getContext().getTheme().resolveAttribute(defStyleAttr, outValue, true);
         int theme = outValue.resourceId;
         Context themedContext = new ContextThemeWrapper(getContext(), theme);
 

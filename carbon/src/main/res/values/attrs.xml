@@ -301,6 +301,9 @@
     </declare-styleable>
 
     <attr name="carbon_spinnerStyle" format="reference"/>
+    <declare-styleable name="Spinner">
+        <attr name="carbon_popupTheme" format="reference"/>
+    </declare-styleable>
 
     <attr name="carbon_pagerTabStripStyle" format="reference"/>
     <declare-styleable name="PagerTabStrip">
@@ -372,4 +375,5 @@
 
     <attr name="carbon_editMenuTheme" format="reference"/>
     <attr name="carbon_snackbarTheme" format="reference"/>
+    <attr name="carbon_spinnerPopupTheme" format="reference"/>
 </resources>

@@ -5,8 +5,6 @@ import android.graphics.Typeface;
 
 import java.util.HashMap;
 
-import carbon.widget.Roboto;
-
 public class TypefaceUtils {
     public static HashMap<Roboto, Typeface> robotoCache = new HashMap<>();
     public static HashMap<String, Typeface> pathCache = new HashMap<>();

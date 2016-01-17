@@ -12,12 +12,12 @@ import carbon.R;
 
 /**
  * Created by Marcin on 2015-01-27.
- *
+ * <p/>
  * A very simple class of a divider. Just place it in your layout to get a material divider.
  */
 public class Divider extends View {
     public Divider(Context context) {
-        super(context,null, R.attr.carbon_dividerStyle);
+        super(context, null, R.attr.carbon_dividerStyle);
         initDivider(null, R.attr.carbon_dividerStyle);
     }
 

@@ -66,8 +66,8 @@ public class AnimatedLayout extends FrameLayout {
     }
 
     private List<View> getViews() {
-        List<View> views = new ArrayList<View>();
-        List<ViewGroup> viewGroups = new ArrayList<ViewGroup>();
+        List<View> views = new ArrayList<>();
+        List<ViewGroup> viewGroups = new ArrayList<>();
 
         viewGroups.add(this);
         while (!viewGroups.isEmpty()) {

@@ -9,12 +9,11 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.Filterable;
 
-import carbon.R;
 import carbon.animation.AnimatedView;
 
 /**
  * Created by Marcin on 2015-02-14.
- *
+ * <p/>
  * This implementation extends EditText directly and uses TextWatcher for tracking text changes.
  * This class can be used to create new material search fields with drop down menus separated by a seam.
  */
@@ -36,6 +35,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
 
     /**
      * XML constructor. Gets default parameters from R.attr.carbon_editTextStyle.
+     *
      * @param context
      * @param attrs
      */
@@ -77,6 +77,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
 
     /**
      * Sets an adapter with items used for auto completion. The adapter cannot be null.
+     *
      * @param adapter
      */
     public <T extends Filterable> void setAdapter(@NonNull T adapter) {
@@ -85,6 +86,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
 
     /**
      * Replaces the current text with s. Used by Adapter to set the selected item as text.
+     *
      * @param s text to replace with
      */
     public void performCompletion(String s) {

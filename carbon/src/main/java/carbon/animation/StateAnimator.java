@@ -74,7 +74,7 @@ public class StateAnimator {
 
 
     AnimatedView getTarget() {
-        return viewRef == null ? null : (AnimatedView) viewRef.get();
+        return viewRef == null ? null : viewRef.get();
     }
 
     void setTarget(AnimatedView view) {

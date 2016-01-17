@@ -111,7 +111,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         }
 
         if (getElevation() > 0)
-            AnimUtils.setupElevationAnimator(stateAnimator,this);
+            AnimUtils.setupElevationAnimator(stateAnimator, this);
     }
 
     /**

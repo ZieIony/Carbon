@@ -12,7 +12,6 @@ import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 
-import carbon.R;
 import carbon.widget.CornerView;
 
 public class ShadowGenerator {
@@ -92,10 +91,10 @@ public class ShadowGenerator {
         CornerView cornerView = (CornerView) view;
 
         int e = (int) Math.ceil(elevation);
-        int c = Math.max(e,cornerView.getCornerRadius());
+        int c = Math.max(e, cornerView.getCornerRadius());
 
         Bitmap bitmap;
-        bitmap = Bitmap.createBitmap(e * 2 + 2 * c+1, e * 2 + 2 * c+1, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(e * 2 + 2 * c + 1, e * 2 + 2 * c + 1, Bitmap.Config.ARGB_8888);
 
         Canvas shadowCanvas = new Canvas(bitmap);
         paint.setStyle(Paint.Style.FILL);
@@ -104,7 +103,7 @@ public class ShadowGenerator {
         roundRect.set(e, e, bitmap.getWidth() - e, bitmap.getHeight() - e);
         shadowCanvas.drawRoundRect(roundRect, c, c, paint);
 
-        blur(bitmap, elevation/2);
+        blur(bitmap, elevation / 2);
 
         return new NinePatchShadow(bitmap, elevation, c);
     }

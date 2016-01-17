@@ -224,7 +224,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
-        views = new ArrayList<View>();
+        views = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());

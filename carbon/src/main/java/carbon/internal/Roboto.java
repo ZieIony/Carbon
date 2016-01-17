@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.internal;
 
 import android.graphics.Typeface;
 

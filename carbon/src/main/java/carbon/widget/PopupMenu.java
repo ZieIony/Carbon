@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,13 +24,13 @@ import carbon.drawable.DefaultColorStateList;
 /**
  * Created by Marcin on 2015-06-10.
  */
-public class PopupMenu extends PopupWindow implements TintedView {
+public class PopupMenu extends PopupWindow {
 
     protected RecyclerView recycler;
     private View mAnchorView;
 
     public PopupMenu(Context context) {
-        super(LayoutInflater.from(context).inflate(R.layout.carbon_popup, null, false));
+        super(View.inflate(context,R.layout.carbon_popup, null));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);
@@ -46,7 +47,7 @@ public class PopupMenu extends PopupWindow implements TintedView {
             }
         });
 
-        setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));
+        setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
 
         setTouchable(true);
         setFocusable(true);
@@ -58,7 +59,7 @@ public class PopupMenu extends PopupWindow implements TintedView {
     public boolean show(View anchor) {
         mAnchorView = anchor;
 
-        super.showAtLocation(anchor, Gravity.LEFT | Gravity.TOP, 0, 0);
+        super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
 
         update();
 
@@ -71,7 +72,7 @@ public class PopupMenu extends PopupWindow implements TintedView {
     public boolean showImmediate(View anchor) {
         mAnchorView = anchor;
 
-        super.showAtLocation(anchor, Gravity.LEFT | Gravity.TOP, 0, 0);
+        super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
 
         update();
 
@@ -217,30 +218,4 @@ public class PopupMenu extends PopupWindow implements TintedView {
         return false;
     }*/
 
-
-    // -------------------------------
-    // tint
-    // -------------------------------
-
-    ColorStateList tint;
-
-    @Override
-    public void setTint(ColorStateList list) {
-        this.tint = list;
-        recycler.setTint(list);
-    }
-
-    @Override
-    public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultColorStateList(getContentView().getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
-    }
-
-    @Override
-    public ColorStateList getTint() {
-        return tint;
-    }
 }

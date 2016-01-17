@@ -21,13 +21,13 @@ import carbon.drawable.ControlAccentColorStateList;
 public class FloatingActionButton extends ImageView {
 
     public FloatingActionButton(Context context) {
-        super(context, null,  R.attr.carbon_fabStyle);
-        initFloatingActionButton(null,  R.attr.carbon_fabStyle);
+        super(context, null, R.attr.carbon_fabStyle);
+        initFloatingActionButton(null, R.attr.carbon_fabStyle);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs) {
-        super(context, attrs,  R.attr.carbon_fabStyle);
-        initFloatingActionButton(attrs,  R.attr.carbon_fabStyle);
+        super(context, attrs, R.attr.carbon_fabStyle);
+        initFloatingActionButton(attrs, R.attr.carbon_fabStyle);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -42,13 +42,13 @@ public class FloatingActionButton extends ImageView {
     }
 
     private void initFloatingActionButton(AttributeSet attrs, int defStyleAttr) {
-        AnimUtils.setupElevationAnimator(getStateAnimator(),this);
+        AnimUtils.setupElevationAnimator(getStateAnimator(), this);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, 0);
         if (a != null) {
             setCornerRadius((int) a.getDimension(R.styleable.FloatingActionButton_carbon_cornerRadius, -1));
 
-            if(a.hasValue(R.styleable.FloatingActionButton_android_background)) {
+            if (a.hasValue(R.styleable.FloatingActionButton_android_background)) {
                 int color = a.getColor(R.styleable.FloatingActionButton_android_background, 0);
                 if (color == 0) {
                     setBackground(new ColorStateListDrawable(new ControlAccentColorStateList(getContext())));

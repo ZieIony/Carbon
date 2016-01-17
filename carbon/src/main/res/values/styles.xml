@@ -40,6 +40,7 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
+        <item name="carbon_spinnerPopupTheme">@style/carbon_Theme.Dark.SpinnerPopup</item>
 
         <item name="colorPrimary">@color/carbon_grey_900</item>
         <item name="colorPrimaryDark">@color/carbon_black</item>
@@ -108,6 +109,10 @@
         <item name="android:buttonStyle">@style/carbon_Button.Flat</item>
     </style>
 
+    <style name="carbon_Theme.Dark.SpinnerPopup">
+
+    </style>
+
     <style name="carbon_Theme.Light" parent="Theme.AppCompat.Light">
         <item name="carbon_colorError">#ffF44336</item>
         <item name="carbon_debugMode">false</item>
@@ -148,6 +153,7 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
+        <item name="carbon_spinnerPopupTheme">@style/carbon_Theme.Light.SpinnerPopup</item>
 
         <item name="colorPrimary">@color/carbon_grey_300</item>
         <item name="colorPrimaryDark">@color/carbon_grey_100</item>
@@ -213,6 +219,10 @@
 
     <style name="carbon_Theme.Light.Snackbar">
         <item name="android:buttonStyle">@style/carbon_Button.Flat</item>
+    </style>
+
+    <style name="carbon_Theme.Light.SpinnerPopup">
+
     </style>
 
     <style name="carbon_Button" parent="@android:style/Widget.Button">
@@ -387,6 +397,7 @@
         <item name="android:paddingRight">@dimen/carbon_padding</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
+        <item name="carbon_popupTheme">?attr/carbon_spinnerPopupTheme</item>
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">

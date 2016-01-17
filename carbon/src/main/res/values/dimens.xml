@@ -45,6 +45,7 @@
     <dimen name="carbon_elevationButton">2dp</dimen>
     <dimen name="carbon_elevationDrawer">16dp</dimen>
     <dimen name="carbon_elevationCard">2dp</dimen>
+    <dimen name="carbon_elevationDialog">12dp</dimen>
 
     <dimen name="carbon_fabSize">56dp</dimen>
     <dimen name="carbon_smallFabSize">40dp</dimen>

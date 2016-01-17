@@ -55,7 +55,7 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
     }
 
     private void initProgressBar(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyleAttr, 0);
             Style style = Style.values()[a.getInt(R.styleable.ProgressBar_carbon_progressStyle, 0)];
             if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {

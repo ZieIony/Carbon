@@ -26,7 +26,7 @@ public class EditorMenu extends PopupWindow {
         super(LayoutInflater.from(context).inflate(R.layout.carbon_editormenu, null, false));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));
+        setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
 
         setTouchable(true);
         setFocusable(true);
@@ -38,7 +38,7 @@ public class EditorMenu extends PopupWindow {
     public boolean show(EditText anchor) {
         editText = anchor;
 
-        super.showAtLocation(anchor, Gravity.LEFT | Gravity.TOP, 0, 0);
+        super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
 
         update();
 
@@ -51,7 +51,7 @@ public class EditorMenu extends PopupWindow {
     public boolean showImmediate(EditText anchor) {
         editText = anchor;
 
-        super.showAtLocation(anchor, Gravity.LEFT | Gravity.TOP, 0, 0);
+        super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
 
         update();
 
@@ -67,7 +67,7 @@ public class EditorMenu extends PopupWindow {
 
         final Resources res = getContentView().getContext().getResources();
 
-        int margin = (int) res.getDimension(R.dimen.carbon_paddingHalf);
+        int margin = (int) res.getDimension(R.dimen.carbon_padding);
         int itemHeight = (int) res.getDimension(R.dimen.carbon_menuHeight);
 
         Rect windowRect = new Rect();
@@ -113,27 +113,28 @@ public class EditorMenu extends PopupWindow {
     }
 
     public void initCopy(final MenuItem item) {
-        View button = getContentView().findViewById(R.id.carbon_copy);
+        Button button = (Button) getContentView().findViewById(R.id.carbon_copy);
         initMenuItem(item, button);
     }
 
     public void initCut(final MenuItem item) {
-        View button = getContentView().findViewById(R.id.carbon_cut);
+        Button button = (Button) getContentView().findViewById(R.id.carbon_cut);
         initMenuItem(item, button);
     }
 
     public void initPaste(final MenuItem item) {
-        View button = getContentView().findViewById(R.id.carbon_paste);
+        Button button = (Button) getContentView().findViewById(R.id.carbon_paste);
         initMenuItem(item, button);
     }
 
     public void initSelectAll(final MenuItem item) {
-        View button = getContentView().findViewById(R.id.carbon_selectAll);
+        Button button = (Button) getContentView().findViewById(R.id.carbon_selectAll);
         initMenuItem(item, button);
     }
 
-    private void initMenuItem(final MenuItem item, View button) {
+    private void initMenuItem(final MenuItem item, Button button) {
         if (item != null) {
+            button.setText(item.getTitle());
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

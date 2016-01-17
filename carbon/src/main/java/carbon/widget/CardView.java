@@ -14,7 +14,7 @@ import carbon.R;
  * real CardView. To make a CardView of one of the other layouts you have to
  * set it's corner radius to 2dp, add a shadow and a margin.
  */
-public class CardView extends RelativeLayout{
+public class CardView extends RelativeLayout {
 
     public CardView(Context context) {
         super(context, null, R.attr.carbon_cardViewStyle);

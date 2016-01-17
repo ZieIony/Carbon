@@ -21,9 +21,6 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
@@ -260,6 +257,10 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
                         value = (float) animation.getAnimatedValue();
+                        int thumbX = (int) ((value - min) / (max - min) * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
+                        int thumbY = getHeight() / 2;
+                        int radius = rippleDrawable.getRadius();
+                        rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
                         postInvalidate();
                     }
                 });

@@ -28,9 +28,6 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
@@ -52,13 +49,13 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public ImageView(Context context) {
-        super(context, null,  R.attr.carbon_imageViewStyle);
-        initImageView(null,  R.attr.carbon_imageViewStyle);
+        super(context, null, R.attr.carbon_imageViewStyle);
+        initImageView(null, R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs) {
-        super(context, attrs,  R.attr.carbon_imageViewStyle);
-        initImageView(attrs,  R.attr.carbon_imageViewStyle);
+        super(context, attrs, R.attr.carbon_imageViewStyle);
+        initImageView(attrs, R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -73,7 +70,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     }
 
     private void initImageView(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
 
             int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);

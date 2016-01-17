@@ -53,6 +53,7 @@ import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
 import carbon.drawable.VectorDrawable;
+import carbon.internal.Roboto;
 import carbon.internal.TypefaceUtils;
 
 /**
@@ -740,6 +741,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     }
 
     @Override
+    public boolean showContextMenu() {
+        super.showContextMenu();
+        return true;
+    }
+
+    @Override
     protected void onCreateContextMenu(ContextMenu menu) {
         TypedValue outValue = new TypedValue();
         getContext().getTheme().resolveAttribute(R.attr.carbon_editMenuTheme, outValue, true);
@@ -1160,13 +1167,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public void setTint(ColorStateList list) {
         if (list != null) {
-            AnimatedColorStateList animatedColorStateList = AnimatedColorStateList.fromList(list, this, new ValueAnimator.AnimatorUpdateListener() {
+            tint = AnimatedColorStateList.fromList(list, this, new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     postInvalidate();
                 }
             });
-            tint = animatedColorStateList;
         } else {
             tint = null;
         }

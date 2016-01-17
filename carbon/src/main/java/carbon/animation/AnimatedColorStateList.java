@@ -23,9 +23,9 @@ public class AnimatedColorStateList extends ColorStateList {
     int animatedColor;
 
     public static AnimatedColorStateList fromList(ColorStateList list, final AnimatedView target, final ValueAnimator.AnimatorUpdateListener listener) {
-        int[][] mStateSpecs = new int[0][]; // must be parallel to mColors
-        int[] mColors = new int[0];      // must be parallel to mStateSpecs
-        int mDefaultColor = 0xffff0000;
+        int[][] mStateSpecs; // must be parallel to mColors
+        int[] mColors;      // must be parallel to mStateSpecs
+        int mDefaultColor;
 
         try {
             Field mStateSpecsField = ColorStateList.class.getDeclaredField("mStateSpecs");
@@ -83,8 +83,7 @@ public class AnimatedColorStateList extends ColorStateList {
         if (currentState != null)
             cancel();
 
-        for (int i = 0; i < states.length; i++) {
-            final int[] state = states[i];
+        for (final int[] state : states) {
             if (StateSet.stateSetMatches(state, newState)) {
 
                 if (view != null && ((View) view).getVisibility() == View.VISIBLE) {

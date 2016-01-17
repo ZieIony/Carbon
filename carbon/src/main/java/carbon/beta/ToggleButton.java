@@ -3,8 +3,8 @@ package carbon.beta;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import carbon.internal.Roboto;
 import carbon.internal.TypefaceUtils;
-import carbon.widget.Roboto;
 
 /**
  * Created by Marcin on 2014-11-07.

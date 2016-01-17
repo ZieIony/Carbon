@@ -18,13 +18,11 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.*;
+import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
+import carbon.animation.StateAnimator;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.RippleDrawable;
@@ -38,7 +36,7 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
     private CheckableDrawable drawable;
 
     public CheckedTextView(Context context) {
-        super(context,null, android.R.attr.checkboxStyle);
+        super(context, null, android.R.attr.checkboxStyle);
         initCheckedTextView(null, android.R.attr.checkboxStyle);
     }
 

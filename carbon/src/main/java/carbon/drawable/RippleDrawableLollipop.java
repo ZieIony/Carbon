@@ -58,7 +58,7 @@ public class RippleDrawableLollipop extends android.graphics.drawable.RippleDraw
         this.radius = radius;
         try {
             Method setMaxRadiusMethod = android.graphics.drawable.RippleDrawable.class.getDeclaredMethod("setMaxRadius", int.class);
-            setMaxRadiusMethod.invoke(this,radius);
+            setMaxRadiusMethod.invoke(this, radius);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {

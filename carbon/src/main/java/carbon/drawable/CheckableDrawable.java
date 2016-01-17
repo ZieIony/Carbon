@@ -17,6 +17,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
@@ -127,7 +128,8 @@ public class CheckableDrawable extends Drawable {
             maskCanvas = new Canvas(maskBitmap);
             radius = (float) (Math.sqrt(2) * bounds.width() / 2);
         } catch (SVGParseException e) {
-        } catch (NullPointerException e) {
+            Log.e(CheckableDrawable.class.getSimpleName(), "There was an error parsing SVG");
+        } catch (NullPointerException e) {  // TODO: what is this catch for?
         }
     }
 

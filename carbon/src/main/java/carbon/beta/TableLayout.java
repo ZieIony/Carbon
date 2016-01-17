@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.beta;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,6 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.R;
+import carbon.widget.FrameLayout;
+import carbon.widget.LinearLayout;
+import carbon.widget.Spinner;
+import carbon.widget.TableView;
+import carbon.widget.TextView;
+import carbon.widget.Toolbar;
 
 /**
  * Created by Marcin on 2015-12-18.
@@ -70,7 +76,7 @@ public class TableLayout extends FrameLayout {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, adapter.getColumnWeight(i));
             header.addView(headerCell, params);
         }
-        rowNumber.setText(""+adapter.getItemCount());
+        rowNumber.setText("" + adapter.getItemCount());
         pageNumbers.setText("1-" + adapter.getItemCount() + " of " + adapter.getItemCount());
     }
 }

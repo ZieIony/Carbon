@@ -66,7 +66,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     private void initRecycler(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             Carbon.initTint(this, attrs, defStyleAttr);
 
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, 0);
@@ -325,6 +325,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
+        scrollBarDrawable = null;
     }
 
 
@@ -340,7 +341,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             try {
                 Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
                 mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable= new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+                scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
                 mVerticalThumbField.set(scrollBar, scrollBarDrawable);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
@@ -358,7 +359,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             try {
                 Field mVerticalThumbField = scrollBarClass.getDeclaredField("mVerticalThumb");
                 mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+                scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
                 mVerticalThumbField.set(scrollBar, scrollBarDrawable);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();

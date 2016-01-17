@@ -6,7 +6,7 @@ import carbon.animation.AnimUtils;
 
 /**
  * Created by Marcin on 2014-11-30.
- * <p>
+ * <p/>
  * Interface of a view with animations. These animations are used for changing visibility by using setVisible(boolean) method.
  */
 public interface AnimatedView {

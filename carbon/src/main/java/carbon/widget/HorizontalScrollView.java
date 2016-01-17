@@ -38,7 +38,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
     public static final int OVER_SCROLL_NEVER = 2;
 
     public HorizontalScrollView(Context context) {
-        super(context );
+        super(context);
         initHorizontalScrollView(null, android.R.attr.horizontalScrollViewStyle);
     }
 
@@ -230,7 +230,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
     }
 
     private void updateTint() {
-        if(tint==null)
+        if (tint == null)
             return;
         int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
         if (leftGlow != null)
@@ -252,7 +252,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
             try {
                 Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
                 mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable= new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
                 mVerticalThumbField.set(scrollBar, scrollBarDrawable);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();

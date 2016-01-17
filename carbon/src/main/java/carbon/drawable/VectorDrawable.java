@@ -107,7 +107,7 @@ public class VectorDrawable extends Drawable {
 
     @Override
     public Drawable mutate() {
-        return new VectorDrawable(state.svg, state.intHeight, state.intHeight);
+        return new VectorDrawable(state.svg, state.intWidth, state.intHeight);
     }
 
     private class VectorState extends ConstantState {

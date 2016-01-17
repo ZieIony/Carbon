@@ -3,7 +3,7 @@
                             xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/carbon_paddingHalf">
+                            android:padding="@dimen/carbon_padding">
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_menuContent"
@@ -14,7 +14,7 @@
         android:paddingLeft="@dimen/carbon_paddingHalf"
         android:paddingRight="@dimen/carbon_paddingHalf"
         android:visibility="invisible"
-        app:carbon_elevation="@dimen/carbon_elevationHigh"
+        app:carbon_elevation="@dimen/carbon_elevationDialog"
         app:carbon_inAnimation="fade"
         app:carbon_outAnimation="fade">
 
@@ -25,8 +25,7 @@
             android:layout_height="match_parent"
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding"
-            android:text="cut"/>
+            android:paddingRight="@dimen/carbon_padding"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_copy"
@@ -35,8 +34,7 @@
             android:layout_height="match_parent"
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding"
-            android:text="copy"/>
+            android:paddingRight="@dimen/carbon_padding"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_paste"
@@ -45,8 +43,7 @@
             android:layout_height="match_parent"
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding"
-            android:text="paste"/>
+            android:paddingRight="@dimen/carbon_padding"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_selectAll"
@@ -55,7 +52,6 @@
             android:layout_height="match_parent"
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding"
-            android:text="select all"/>
+            android:paddingRight="@dimen/carbon_padding"/>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

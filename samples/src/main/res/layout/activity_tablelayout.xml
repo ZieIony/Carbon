@@ -8,7 +8,7 @@
     android:padding="@dimen/carbon_paddingHalf"
     app:carbon_insetColor="?attr/colorPrimary">
 
-    <carbon.widget.TableLayout
+    <carbon.beta.TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

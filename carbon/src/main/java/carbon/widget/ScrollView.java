@@ -65,7 +65,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, 0);
             for (int i = 0; i < a.getIndexCount(); i++) {
                 int attr = a.getIndex(i);
