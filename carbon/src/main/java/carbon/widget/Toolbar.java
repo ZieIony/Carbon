@@ -149,12 +149,17 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
 
     @Override
     public void setTitle(@StringRes int resId) {
-        title.setText(resId);
+        setTitle(getResources().getString(resId));
     }
 
     @Override
-    public void setTitle(CharSequence title) {
-        this.title.setText(title);
+    public void setTitle(CharSequence text) {
+        if (text != null) {
+            title.setText(text);
+            title.setVisibility(View.VISIBLE);
+        } else {
+            title.setVisibility(View.GONE);
+        }
     }
 
     @Override
