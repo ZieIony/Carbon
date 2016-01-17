@@ -522,7 +522,8 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        stateAnimator.setState(getDrawableState());
+        if (stateAnimator != null)
+            stateAnimator.setState(getDrawableState());
     }
 
 

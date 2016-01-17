@@ -31,7 +31,8 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.*;
+import carbon.animation.AnimUtils;
+import carbon.animation.StateAnimator;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.RippleDrawable;
 import carbon.drawable.RippleView;
@@ -49,12 +50,12 @@ import carbon.widget.TouchMarginView;
 /**
  * Created by Marcin on 2015-12-30.
  */
-public class CollapsingToolbarLayout extends android.support.design.widget.CollapsingToolbarLayout  implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, carbon.animation.AnimatedView, InsetView, CornerView {
+public class CollapsingToolbarLayout extends android.support.design.widget.CollapsingToolbarLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, carbon.animation.AnimatedView, InsetView, CornerView {
     private boolean debugMode;
-    
+
     public CollapsingToolbarLayout(Context context) {
         super(context);
-        initCollapsingToolbarLayout(null,  R.attr.carbon_collapsingToolbarLayoutStyle);
+        initCollapsingToolbarLayout(null, R.attr.carbon_collapsingToolbarLayoutStyle);
     }
 
     public CollapsingToolbarLayout(Context context, AttributeSet attrs) {
@@ -68,7 +69,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     }
 
     private void initCollapsingToolbarLayout(AttributeSet attrs, int defStyleAttr) {
-        if(attrs!=null) {
+        if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CollapsingToolbarLayout, defStyleAttr, 0);
             Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
@@ -564,7 +565,8 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        stateAnimator.setState(getDrawableState());
+        if (stateAnimator != null)
+            stateAnimator.setState(getDrawableState());
     }
 
 

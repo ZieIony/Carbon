@@ -17,9 +17,9 @@ public class StateAnimator {
 
     private Tuple lastMatch = null;
     private Animator runningAnimation = null;
-    private WeakReference<View> viewRef;
+    private WeakReference<AnimatedView> viewRef;
 
-    public StateAnimator(View target) {
+    public StateAnimator(AnimatedView target) {
         setTarget(target);
     }
 
@@ -77,7 +77,7 @@ public class StateAnimator {
         return viewRef == null ? null : (AnimatedView) viewRef.get();
     }
 
-    void setTarget(View view) {
+    void setTarget(AnimatedView view) {
         final AnimatedView current = getTarget();
         if (current == view) {
             return;
@@ -126,7 +126,7 @@ public class StateAnimator {
 
         lastMatch = match;
 
-        View view = viewRef.get();
+        View view = (View) viewRef.get();
         if (match != null && view != null && view.getVisibility() == View.VISIBLE) {
             start(match);
         }

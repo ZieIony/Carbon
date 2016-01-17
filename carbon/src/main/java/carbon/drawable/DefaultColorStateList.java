@@ -12,6 +12,7 @@ import carbon.R;
 public class DefaultColorStateList extends ColorStateList {
     public DefaultColorStateList(Context context) {
         super(new int[][]{
+                new int[]{R.attr.carbon_state_invalid},
                 new int[]{android.R.attr.state_checked},
                 new int[]{android.R.attr.state_activated},
                 new int[]{android.R.attr.state_selected},
@@ -19,6 +20,7 @@ public class DefaultColorStateList extends ColorStateList {
                 new int[]{-android.R.attr.state_enabled},
                 new int[]{}
         }, new int[]{
+                Carbon.getThemeColor(context, R.attr.carbon_colorError),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
@@ -27,16 +29,4 @@ public class DefaultColorStateList extends ColorStateList {
                 Carbon.getThemeColor(context, R.attr.colorControlNormal)
         });
     }
-
-    /**
-     * @param context context
-     * @param attr    attribute to get from the current theme
-     * @return color from the current theme
-     * @deprecated use {@link carbon.Carbon#getThemeColor(Context, int)} instead. This method was duplicated in all ColorStateList implementations
-     */
-    @Deprecated
-    public static int getThemeColor(Context context, int attr) {
-        return Carbon.getThemeColor(context, attr);
-    }
-
 }

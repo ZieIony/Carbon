@@ -598,7 +598,8 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        stateAnimator.setState(getDrawableState());
+        if (stateAnimator != null)
+            stateAnimator.setState(getDrawableState());
     }
 
 

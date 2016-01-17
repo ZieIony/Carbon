@@ -19,9 +19,6 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
@@ -362,7 +359,8 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        stateAnimator.setState(getDrawableState());
+        if (stateAnimator != null)
+            stateAnimator.setState(getDrawableState());
     }
 
 

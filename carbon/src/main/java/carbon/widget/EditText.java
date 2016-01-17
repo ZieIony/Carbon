@@ -7,7 +7,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
@@ -46,6 +45,7 @@ import java.util.regex.Pattern;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultColorStateList;
@@ -72,7 +72,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private static final int ID_SELECT_ALL = android.R.id.selectAll;
 
     int DIVIDER_PADDING;
-    int errorColor;
     int cursorColor;
 
     private Pattern pattern;
@@ -162,7 +161,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 }
             }
 
-            setErrorColor(a.getColor(R.styleable.EditText_carbon_errorColor, 0));
             setCursorColor(a.getColor(R.styleable.EditText_carbon_cursorColor, 0));
 
             setPattern(a.getString(R.styleable.EditText_carbon_pattern));
@@ -192,7 +190,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (!isInEditMode()) {
             errorPaint.setTypeface(TypefaceUtils.getTypeface(getContext(), Roboto.Regular));
             errorPaint.setTextSize(getResources().getDimension(R.dimen.carbon_errorTextSize));
-            errorPaint.setColor(errorColor);
+            errorPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
 
             labelPaint.setTypeface(TypefaceUtils.getTypeface(getContext(), Roboto.Regular));
             labelPaint.setTextSize(getResources().getDimension(R.dimen.carbon_labelTextSize));
@@ -232,20 +230,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         initActionModeCallback();
 
-        validateInternalEvent();
-
         if (isFocused() && getText().length() > 0)
             labelFrac = 1;
 
         initSelectionHandle();
-    }
 
-    public void setErrorColor(int errorColor) {
-        this.errorColor = errorColor;
-    }
-
-    public int getErrorColor() {
-        return errorColor;
+        validateInternalEvent();
     }
 
     public void setCursorColor(int cursorColor) {
@@ -305,8 +295,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         valid = !counterError && !drawMatchingViewError && !drawPatternError;
 
-        labelPaint.setColor(!valid ? errorColor : tint.getColorForState(new int[]{android.R.attr.state_focused}, 0xff00ff00));
-        counterPaint.setColor(!valid ? errorColor : tint.getColorForState(new int[]{-android.R.attr.state_enabled}, 0xff00ff00));
+        refreshDrawableState();
+
         if (labelStyle == LabelStyle.Floating)
             animateFloatingLabel(isFocused() && s.length() > 0);
     }
@@ -405,36 +395,34 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
         }
         if (underline) {
-            if (isEnabled()) {
-                paint.setShader(null);
-                paint.setColor(!valid ? errorColor : tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
-                canvas.drawLine(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
-            } else {
+            //if (isEnabled()) {
+            //paint.setShader(null);
+            paint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
+            canvas.drawLine(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
+         /*   } else {
                 Matrix matrix = new Matrix();
                 matrix.postTranslate(0, getHeight() - paddingBottom + DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f);
                 dashPathShader.setLocalMatrix(matrix);
-                paint.setShader(dashPathShader);
+                //paint.setShader(dashPathShader);
                 canvas.drawRect(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f,
                         getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + paint.getStrokeWidth() / 2.0f, paint);
-            }
+            }*/
         }
-
-        if (!isEnabled())
-            return;
 
         if (!valid && errorMessage != null)
             canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + errorPaint.getTextSize(), errorPaint);
 
         if (label != null) {
+            labelPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
             if (labelStyle == LabelStyle.Floating) {
                 labelPaint.setAlpha((int) (255 * labelFrac));
                 canvas.drawText(label, getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
             } else if (labelStyle == LabelStyle.Persistent) {
-                labelPaint.setColor(!valid ? errorColor : hasFocus() ? tint.getColorForState(new int[]{android.R.attr.state_focused}, 0) : tint.getColorForState(new int[]{-android.R.attr.state_enabled}, 0));
                 canvas.drawText(label, getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
             }
         }
 
+        counterPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
         int length = getText().length();
         if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
             String text = length + " / " + minCharacters + "-" + maxCharacters;
@@ -1085,9 +1073,18 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         super.drawableStateChanged();
         if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
             rippleDrawable.setState(getDrawableState());
-        stateAnimator.setState(getDrawableState());
+        if (stateAnimator != null)
+            stateAnimator.setState(getDrawableState());
+        if (tint != null)
+            tint.setState(getDrawableState());
     }
 
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        drawableState[drawableState.length - 1] = valid ? -R.attr.carbon_state_invalid : R.attr.carbon_state_invalid;
+        return drawableState;
+    }
 
     // -------------------------------
     // animations
@@ -1158,11 +1155,21 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     // tint
     // -------------------------------
 
-    ColorStateList tint;
+    AnimatedColorStateList tint;
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list;
+        if (list != null) {
+            AnimatedColorStateList animatedColorStateList = AnimatedColorStateList.fromList(list, this, new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    postInvalidate();
+                }
+            });
+            tint = animatedColorStateList;
+        } else {
+            tint = null;
+        }
     }
 
     @Override
