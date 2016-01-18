@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -188,6 +189,16 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
             newRipple.setCallback(this);
             if (newRipple.getStyle() == RippleDrawable.Style.Background) {
                 super.setBackgroundDrawable((Drawable) newRipple);
+            } else if (newRipple.getStyle() == RippleDrawable.Style.Borderless) {
+                if (getParent() != null) {
+                    if (getParent() instanceof RippleView) {
+                        newRipple.setBounds(0, 0, getWidth(), getHeight());
+                    } else {
+                        Log.d(VIEW_LOG_TAG, "Parent should be a Carbon Library Component for Borderless Ripple to Work dynamically!");
+                    }
+                } else {
+                    Log.d(VIEW_LOG_TAG, "Parent should be a Carbon Library Component for Borderless Ripple to Work dynamically!");
+                }
             }
         }
 

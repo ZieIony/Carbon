@@ -21,6 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -421,6 +422,16 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
             newRipple.setCallback(this);
             if (newRipple.getStyle() == RippleDrawable.Style.Background) {
                 super.setBackgroundDrawable((Drawable) newRipple);
+            } else if (newRipple.getStyle() == RippleDrawable.Style.Borderless) {
+                if (getParent() != null) {
+                    if (getParent() instanceof RippleView) {
+                        newRipple.setBounds(0, 0, getWidth(), getHeight());
+                    } else {
+                        Log.d(VIEW_LOG_TAG, "Parent should be a Carbon Library Component for Borderless Ripple to Work dynamically!");
+                    }
+                } else {
+                    Log.d(VIEW_LOG_TAG, "Parent should be a Carbon Library Component for Borderless Ripple to Work dynamically!");
+                }
             }
         }
 
