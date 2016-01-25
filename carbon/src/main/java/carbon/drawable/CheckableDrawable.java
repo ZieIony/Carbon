@@ -262,7 +262,7 @@ public class CheckableDrawable extends Drawable {
 
     @Override
     public int getIntrinsicWidth() {
-        return (int) (context.getResources().getDimension(R.dimen.carbon_1dip) * 24);
+        return context.getResources().getDimensionPixelSize(R.dimen.carbon_iconSize);
     }
 
     @Override

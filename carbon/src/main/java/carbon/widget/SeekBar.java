@@ -20,6 +20,7 @@ import android.view.animation.DecelerateInterpolator;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import carbon.Carbon;
 import carbon.R;
@@ -192,14 +193,22 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         this.value = Math.max(min, Math.min(value, max));
     }
 
+    private int stepValue(float v) {
+        return (int) (Math.floor((v - min + step / 2) / step) * step + min);
+    }
+
     public float getValue() {
         if (style == Style.Discrete)
-            return (float) Math.floor((value - min + step / 2) / step) * step + min;
+            return stepValue(value);
         return value;
     }
 
     public void setValue(float value) {
-        this.value = Math.max(min, Math.min(value, max));
+        if (style == Style.Discrete) {
+            this.value = stepValue(Math.max(min, Math.min(value, max)));
+        } else {
+            this.value = Math.max(min, Math.min(value, max));
+        }
     }
 
     public float getStepSize() {
@@ -286,7 +295,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
 
         float v = (event.getX() - getPaddingLeft()) / (getWidth() - getPaddingLeft() - getPaddingRight());
         v = Math.max(0, Math.min(v, 1));
-        value = v * (max - min) + min;
+        float newValue = v * (max - min) + min;
 
         if (rippleDrawable != null) {
             rippleDrawable.setHotspot(event.getX(), event.getY());
@@ -297,12 +306,15 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         }
 
         postInvalidate();
-        if (onValueChangedListener != null) {
+        if (newValue != value && onValueChangedListener != null) {
             if (style == Style.Discrete) {
-                onValueChangedListener.onValueChanged(this, (float) Math.floor((value - min + step / 2) / step) * step + min);
+                int sv = stepValue(newValue);
+                if (stepValue(value) != sv)
+                    onValueChangedListener.onValueChanged(this, sv);
             } else {
-                onValueChangedListener.onValueChanged(this, value);
+                onValueChangedListener.onValueChanged(this, newValue);
             }
+            value = newValue;
         }
         super.onTouchEvent(event);
         return true;
@@ -322,9 +334,9 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
 
         if (newRipple != null) {
             newRipple.setCallback(this);
-            if (newRipple.getStyle() == RippleDrawable.Style.Background) {
+            newRipple.setBounds(0, 0, getWidth(), getHeight());
+            if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
-            }
         }
 
         rippleDrawable = newRipple;
@@ -540,5 +552,66 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     @Override
     public ColorStateList getTint() {
         return tint;
+    }
+
+
+    // -------------------------------
+    // transformations  // TODO: NineOldAndroids could be inlined here
+    // -------------------------------
+
+    public void setAlpha(float x) {
+        ViewHelper.setAlpha(this, x);
+    }
+
+    public void setTranslationX(float x) {
+        ViewHelper.setTranslationX(this, x);
+    }
+
+    public void setTranslationY(float y) {
+        ViewHelper.setTranslationY(this, y);
+    }
+
+    public void setX(float x) {
+        ViewHelper.setX(this, x);
+    }
+
+    public void setY(float y) {
+        ViewHelper.setY(this, y);
+    }
+
+    public void setScaleX(float x) {
+        ViewHelper.setScaleX(this, x);
+    }
+
+    public void setScaleY(float y) {
+        ViewHelper.setScaleY(this, y);
+    }
+
+    public void setScrollX(int x) {
+        ViewHelper.setScrollX(this, x);
+    }
+
+    public void setScrollY(int y) {
+        ViewHelper.setScrollY(this, y);
+    }
+
+    public void setPivotX(float x) {
+        ViewHelper.setPivotX(this, x);
+    }
+
+    public void setPivotY(float y) {
+        ViewHelper.setPivotY(this, y);
+    }
+
+    public void setRotationX(float x) {
+        ViewHelper.setRotationX(this, x);
+    }
+
+    public void setRotationY(float y) {
+        ViewHelper.setRotationY(this, y);
+    }
+
+    public void setRotation(float y) {
+        ViewHelper.setRotation(this, y);
     }
 }

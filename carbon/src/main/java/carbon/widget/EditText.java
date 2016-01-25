@@ -38,6 +38,7 @@ import android.widget.TextView;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
@@ -83,7 +84,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     private int matchingView;
     int minCharacters;
-    int maxCharacters;
+    int maxCharacters = Integer.MAX_VALUE;
     TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
     TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
@@ -219,8 +220,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         addTextChangedListener(textWatcher);
 
-        float dip = getResources().getDimension(R.dimen.carbon_1dip);
-        Bitmap dashPathBitmap = Bitmap.createBitmap((int) (dip * 4), (int) dip, Bitmap.Config.ARGB_8888);
+        int underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
+        Bitmap dashPathBitmap = Bitmap.createBitmap(underlineWidth * 4, underlineWidth, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(dashPathBitmap);
         paint.setColor(0xffffffff);
         paint.setAlpha(255);
@@ -281,7 +282,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             e.printStackTrace();
         }*/
         boolean drawPatternError = false, drawMatchingViewError = false;
-        if (errorMessage != null && pattern != null)
+        if (pattern != null)
             drawPatternError = afterFirstInteraction && !pattern.matcher(s).matches();
         if (matchingView != 0) {
             View view = getRootView().findViewById(matchingView);
@@ -907,9 +908,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         if (newRipple != null) {
             newRipple.setCallback(this);
-            if (newRipple.getStyle() == RippleDrawable.Style.Background) {
+            newRipple.setBounds(0, 0, getWidth(), getHeight());
+            if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
-            }
         }
 
         rippleDrawable = newRipple;
@@ -1190,5 +1191,66 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public ColorStateList getTint() {
         return tint;
+    }
+
+
+    // -------------------------------
+    // transformations  // TODO: NineOldAndroids could be inlined here
+    // -------------------------------
+
+    public void setAlpha(float x) {
+        ViewHelper.setAlpha(this, x);
+    }
+
+    public void setTranslationX(float x) {
+        ViewHelper.setTranslationX(this, x);
+    }
+
+    public void setTranslationY(float y) {
+        ViewHelper.setTranslationY(this, y);
+    }
+
+    public void setX(float x) {
+        ViewHelper.setX(this, x);
+    }
+
+    public void setY(float y) {
+        ViewHelper.setY(this, y);
+    }
+
+    public void setScaleX(float x) {
+        ViewHelper.setScaleX(this, x);
+    }
+
+    public void setScaleY(float y) {
+        ViewHelper.setScaleY(this, y);
+    }
+
+    public void setScrollX(int x) {
+        ViewHelper.setScrollX(this, x);
+    }
+
+    public void setScrollY(int y) {
+        ViewHelper.setScrollY(this, y);
+    }
+
+    public void setPivotX(float x) {
+        ViewHelper.setPivotX(this, x);
+    }
+
+    public void setPivotY(float y) {
+        ViewHelper.setPivotY(this, y);
+    }
+
+    public void setRotationX(float x) {
+        ViewHelper.setRotationX(this, x);
+    }
+
+    public void setRotationY(float y) {
+        ViewHelper.setRotationY(this, y);
+    }
+
+    public void setRotation(float y) {
+        ViewHelper.setRotation(this, y);
     }
 }

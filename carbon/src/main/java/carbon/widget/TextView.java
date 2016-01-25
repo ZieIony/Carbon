@@ -22,6 +22,7 @@ import android.view.ViewOutlineProvider;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import carbon.Carbon;
 import carbon.R;
@@ -248,9 +249,9 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
         if (newRipple != null) {
             newRipple.setCallback(this);
-            if (newRipple.getStyle() == RippleDrawable.Style.Background) {
+            newRipple.setBounds(0, 0, getWidth(), getHeight());
+            if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
-            }
         }
 
         rippleDrawable = newRipple;
@@ -589,4 +590,91 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     }
 
 
+    // -------------------------------
+    // transformations  // TODO: NineOldAndroids could be inlined here
+    // -------------------------------
+
+    public void setAlpha(float x) {
+        ViewHelper.setAlpha(this, x);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setTranslationX(float x) {
+        ViewHelper.setTranslationX(this, x);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setTranslationY(float y) {
+        ViewHelper.setTranslationY(this, y);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setX(float x) {
+        ViewHelper.setX(this, x);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setY(float y) {
+        ViewHelper.setY(this, y);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setScaleX(float x) {
+        ViewHelper.setScaleX(this, x);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setScaleY(float y) {
+        ViewHelper.setScaleY(this, y);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setScrollX(int x) {
+        ViewHelper.setScrollX(this, x);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setScrollY(int y) {
+        ViewHelper.setScrollY(this, y);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setPivotX(float x) {
+        ViewHelper.setPivotX(this, x);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setPivotY(float y) {
+        ViewHelper.setPivotY(this, y);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setRotationX(float x) {
+        ViewHelper.setRotationX(this, x);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setRotationY(float y) {
+        ViewHelper.setRotationY(this, y);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
+
+    public void setRotation(float y) {
+        ViewHelper.setRotation(this, y);
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
+    }
 }

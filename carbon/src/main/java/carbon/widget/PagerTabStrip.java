@@ -27,7 +27,7 @@ import carbon.R;
 /**
  * Created by Marcin on 2015-02-26.
  */
-public class PagerTabStrip extends android.widget.HorizontalScrollView implements TintedView {
+public class PagerTabStrip extends android.widget.HorizontalScrollView implements TintedView {  // TODO: extend carbon.widget.HorizontalScrollView
     ViewPager viewPager;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     LinearLayout content;
@@ -46,6 +46,8 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
             position = Math.round(position + positionOffset);
             if (position != selectedPage) {
                 View view = content.getChildAt(position);
+                if (view == null)
+                    return; // TODO: what's really going on here? #130
 
                 if (animator != null)
                     animator.cancel();

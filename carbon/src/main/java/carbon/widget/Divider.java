@@ -7,6 +7,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.nineoldandroids.view.ViewHelper;
+
 import carbon.Carbon;
 import carbon.R;
 
@@ -51,5 +53,66 @@ public class Divider extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(getMeasuredWidth(), (int) Carbon.getDip(getContext()));
+    }
+
+
+    // -------------------------------
+    // transformations  // TODO: NineOldAndroids could be inlined here
+    // -------------------------------
+
+    public void setAlpha(float x) {
+        ViewHelper.setAlpha(this, x);
+    }
+
+    public void setTranslationX(float x) {
+        ViewHelper.setTranslationX(this, x);
+    }
+
+    public void setTranslationY(float y) {
+        ViewHelper.setTranslationY(this, y);
+    }
+
+    public void setX(float x) {
+        ViewHelper.setX(this, x);
+    }
+
+    public void setY(float y) {
+        ViewHelper.setY(this, y);
+    }
+
+    public void setScaleX(float x) {
+        ViewHelper.setScaleX(this, x);
+    }
+
+    public void setScaleY(float y) {
+        ViewHelper.setScaleY(this, y);
+    }
+
+    public void setScrollX(int x) {
+        ViewHelper.setScrollX(this, x);
+    }
+
+    public void setScrollY(int y) {
+        ViewHelper.setScrollY(this, y);
+    }
+
+    public void setPivotX(float x) {
+        ViewHelper.setPivotX(this, x);
+    }
+
+    public void setPivotY(float y) {
+        ViewHelper.setPivotY(this, y);
+    }
+
+    public void setRotationX(float x) {
+        ViewHelper.setRotationX(this, x);
+    }
+
+    public void setRotationY(float y) {
+        ViewHelper.setRotationY(this, y);
+    }
+
+    public void setRotation(float y) {
+        ViewHelper.setRotation(this, y);
     }
 }

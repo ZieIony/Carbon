@@ -18,6 +18,7 @@ import android.view.View;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import carbon.Carbon;
 import carbon.R;
@@ -187,9 +188,9 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
 
         if (newRipple != null) {
             newRipple.setCallback(this);
-            if (newRipple.getStyle() == RippleDrawable.Style.Background) {
+            newRipple.setBounds(0, 0, getWidth(), getHeight());
+            if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
-            }
         }
 
         rippleDrawable = newRipple;
@@ -454,5 +455,66 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     @Override
     public ColorStateList getTint() {
         return tint;
+    }
+
+
+    // -------------------------------
+    // transformations  // TODO: NineOldAndroids could be inlined here
+    // -------------------------------
+
+    public void setAlpha(float x) {
+        ViewHelper.setAlpha(this, x);
+    }
+
+    public void setTranslationX(float x) {
+        ViewHelper.setTranslationX(this, x);
+    }
+
+    public void setTranslationY(float y) {
+        ViewHelper.setTranslationY(this, y);
+    }
+
+    public void setX(float x) {
+        ViewHelper.setX(this, x);
+    }
+
+    public void setY(float y) {
+        ViewHelper.setY(this, y);
+    }
+
+    public void setScaleX(float x) {
+        ViewHelper.setScaleX(this, x);
+    }
+
+    public void setScaleY(float y) {
+        ViewHelper.setScaleY(this, y);
+    }
+
+    public void setScrollX(int x) {
+        ViewHelper.setScrollX(this, x);
+    }
+
+    public void setScrollY(int y) {
+        ViewHelper.setScrollY(this, y);
+    }
+
+    public void setPivotX(float x) {
+        ViewHelper.setPivotX(this, x);
+    }
+
+    public void setPivotY(float y) {
+        ViewHelper.setPivotY(this, y);
+    }
+
+    public void setRotationX(float x) {
+        ViewHelper.setRotationX(this, x);
+    }
+
+    public void setRotationY(float y) {
+        ViewHelper.setRotationY(this, y);
+    }
+
+    public void setRotation(float y) {
+        ViewHelper.setRotation(this, y);
     }
 }
