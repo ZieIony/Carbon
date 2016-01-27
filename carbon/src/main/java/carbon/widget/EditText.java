@@ -38,7 +38,6 @@ import android.widget.TextView;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
@@ -403,7 +402,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             //if (isEnabled()) {
             //paint.setShader(null);
             paint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
-            canvas.drawLine(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
+            canvas.drawLine(getScrollX() + getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getScrollX() + getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
          /*   } else {
                 Matrix matrix = new Matrix();
                 matrix.postTranslate(0, getHeight() - paddingBottom + DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f);
@@ -415,15 +414,15 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         }
 
         if (!valid && errorMessage != null)
-            canvas.drawText(errorMessage, getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + errorPaint.getTextSize(), errorPaint);
+            canvas.drawText(errorMessage, getScrollX() + getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + errorPaint.getTextSize(), errorPaint);
 
         if (label != null) {
             labelPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
             if (labelStyle == LabelStyle.Floating) {
                 labelPaint.setAlpha((int) (255 * labelFrac));
-                canvas.drawText(label, getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
+                canvas.drawText(label, getScrollX() + getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
             } else if (labelStyle == LabelStyle.Persistent) {
-                canvas.drawText(label, getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
+                canvas.drawText(label, getScrollX() + getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
             }
         }
 
@@ -431,13 +430,13 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         int length = getText().length();
         if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
             String text = length + " / " + minCharacters + "-" + maxCharacters;
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
+            canvas.drawText(text, getScrollX() + getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
         } else if (minCharacters > 0) {
             String text = length + " / " + minCharacters + "+";
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
+            canvas.drawText(text, getScrollX() + getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
         } else if (maxCharacters < Integer.MAX_VALUE) {
             String text = length + " / " + maxCharacters;
-            canvas.drawText(text, getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
+            canvas.drawText(text, getScrollX() + getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
         }
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
