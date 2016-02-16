@@ -76,6 +76,9 @@
         <activity
             android:name=".widget.TableLayoutActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".widget.FloatingActionMenuActivity"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".animation.RippleComparisonActivity"

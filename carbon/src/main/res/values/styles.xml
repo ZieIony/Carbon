@@ -485,4 +485,15 @@
 
     <style name="carbon_NavigationView"/>
 
+    <style name="carbon_TextView.Tooltip">
+        <item name="android:minHeight">@dimen/carbon_tooltipHeight</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:paddingLeft">@dimen/carbon_tooltipPadding</item>
+        <item name="android:paddingRight">@dimen/carbon_tooltipPadding</item>
+        <item name="android:background">@color/carbon_tooltip</item>
+        <item name="android:textColor">@color/carbon_text_primary_dark</item>
+        <item name="android:textSize">@dimen/carbon_tooltipTextSize</item>
+        <item name="carbon_cornerRadius">2dp</item>
+    </style>
+
 </resources>

@@ -161,7 +161,7 @@ public class Spinner extends EditText {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.carbon_popup_row, parent, false);
+            View view = inflater.inflate(R.layout.carbon_popupmenu_item, parent, false);
             return new ViewHolder(view);
         }
 

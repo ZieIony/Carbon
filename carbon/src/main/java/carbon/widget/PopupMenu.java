@@ -26,7 +26,7 @@ public class PopupMenu extends PopupWindow {
     private View mAnchorView;
 
     public PopupMenu(Context context) {
-        super(View.inflate(context, R.layout.carbon_popup, null));
+        super(View.inflate(context, R.layout.carbon_popupmenu, null));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);

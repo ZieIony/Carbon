@@ -6,4 +6,8 @@
 
     <dimen name="carbon_toolbarHeight">64dp</dimen>
     <dimen name="carbon_toolbarItemPadding">12dp</dimen>
+
+    <dimen name="carbon_tooltipHeight">22dp</dimen>
+    <dimen name="carbon_tooltipPadding">8dp</dimen>
+    <dimen name="carbon_tooltipTextSize">10dp</dimen>
 </resources>

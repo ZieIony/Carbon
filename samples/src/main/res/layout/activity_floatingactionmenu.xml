@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <carbon.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="@dimen/carbon_fabSize"
+        android:layout_height="@dimen/carbon_fabSize"
+        app:carbon_src="@raw/ic_print_24px"/>
+</LinearLayout>

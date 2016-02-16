@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+    <carbon.widget.TextView
+        android:id="@+id/carbon_tooltip"
+        style="@style/carbon_TextView.Tooltip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <carbon.widget.FloatingActionButton
+        android:id="@+id/carbon_fab"
+        android:layout_width="@dimen/carbon_smallFabSize"
+        android:layout_height="@dimen/carbon_smallFabSize"/>
+</carbon.widget.LinearLayout>

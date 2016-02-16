@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.View;
 
 import carbon.Carbon;
 import carbon.R;
@@ -19,6 +21,8 @@ import carbon.drawable.ControlAccentColorStateList;
  * and other material features.
  */
 public class FloatingActionButton extends ImageView {
+    FloatingActionMenu floatingActionMenu;
+    private Menu menu;
 
     public FloatingActionButton(Context context) {
         super(context, null, R.attr.carbon_fabStyle);
@@ -68,5 +72,37 @@ public class FloatingActionButton extends ImageView {
 
         if (getCornerRadius() < 0)
             setCornerRadius(Math.min(getWidth(), getHeight()) / 2);
+    }
+
+    public void setMenu(int resId) {
+        floatingActionMenu = new FloatingActionMenu(getContext());
+        floatingActionMenu.setMenu(resId);
+
+        this.menu = floatingActionMenu.getMenu();
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                floatingActionMenu.show(FloatingActionButton.this);
+            }
+        });
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+
+        floatingActionMenu = new FloatingActionMenu(getContext());
+        floatingActionMenu.setMenu(menu);
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                floatingActionMenu.show(FloatingActionButton.this);
+            }
+        });
+    }
+
+    public Menu getMenu() {
+        return menu;
     }
 }

@@ -18,6 +18,10 @@
     <dimen name="carbon_toolbarItemSize">48dp</dimen>
     <dimen name="carbon_toolbarItemPadding">4dp</dimen>
 
+    <dimen name="carbon_tooltipHeight">32dp</dimen>
+    <dimen name="carbon_tooltipPadding">16dp</dimen>
+    <dimen name="carbon_tooltipTextSize">14dp</dimen>
+
     <dimen name="carbon_listItemHeight">48dp</dimen>
     <dimen name="carbon_mediumListItemHeight">64dp</dimen>
     <dimen name="carbon_largeListItemHeight">72dp</dimen>
