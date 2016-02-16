@@ -1,15 +1,12 @@
 package carbon.widget;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
@@ -19,7 +16,6 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
-import carbon.drawable.DefaultColorStateList;
 
 /**
  * Created by Marcin on 2015-06-10.
@@ -30,7 +26,7 @@ public class PopupMenu extends PopupWindow {
     private View mAnchorView;
 
     public PopupMenu(Context context) {
-        super(View.inflate(context,R.layout.carbon_popup, null));
+        super(View.inflate(context, R.layout.carbon_popup, null));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);
@@ -63,7 +59,7 @@ public class PopupMenu extends PopupWindow {
 
         update();
 
-        View content = getContentView().findViewById(R.id.carbon_popupContent);
+        View content = getContentView().findViewById(R.id.carbon_popupContainer);
         content.setVisibility(View.VISIBLE);
 
         return true;
@@ -76,7 +72,7 @@ public class PopupMenu extends PopupWindow {
 
         update();
 
-        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContent);
+        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
         content.setVisibilityImmediate(View.VISIBLE);
 
         return true;
@@ -117,7 +113,7 @@ public class PopupMenu extends PopupWindow {
         int maxHeightAbove = location[1] - windowRect.top - marginHalf - margin;
         int maxItemsAbove = maxHeightAbove / itemHeight;
         int maxHeightBelow = hWindow - location[1] - marginHalf - margin;
-        int maxItemsBelow = maxHeightBelow / itemHeight;
+        int maxItemsBelow = maxHeightBelow / itemHeight + 1;
 
         int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
         int itemsAbove = Math.min(selectedItem, maxItemsAbove);
@@ -137,7 +133,7 @@ public class PopupMenu extends PopupWindow {
 
     @Override
     public void dismiss() {
-        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContent);
+        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
         content.setVisibility(View.INVISIBLE);
         content.getAnimator().addListener(new AnimatorListenerAdapter() {
             @Override

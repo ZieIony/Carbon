@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -20,7 +19,6 @@ import android.view.animation.DecelerateInterpolator;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.Carbon;
 import carbon.R;
@@ -43,6 +41,9 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     float value = 0.5f;
     float min = 0, max = 1, step = 1;
     float thumbRadius;
+    int tickStep = 1;
+    boolean tick = true;
+    int tickColor = 0;
 
     OnValueChangedListener onValueChangedListener;
 
@@ -105,6 +106,9 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             setMax(a.getFloat(R.styleable.SeekBar_carbon_max, 0));
             setStepSize(a.getFloat(R.styleable.SeekBar_carbon_stepSize, 0));
             setValue(a.getFloat(R.styleable.SeekBar_carbon_value, 0));
+            setTick(a.getBoolean(R.styleable.SeekBar_carbon_tick, true));
+            setTickStep(a.getInt(R.styleable.SeekBar_carbon_tickStep, 1));
+            setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
 
             a.recycle();
         }
@@ -144,10 +148,10 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         if (thumbX + thumbRadius < getWidth() - getPaddingLeft())
             canvas.drawLine(thumbX + thumbRadius, thumbY, getWidth() - getPaddingLeft(), thumbY, paint);
 
-        if (style == Style.Discrete) {
-            paint.setColor(Color.BLACK);
+        if (style == Style.Discrete && tick) {
+            paint.setColor(tickColor);
             float range = (max - min) / step;
-            for (int i = 0; i < range; i++)
+            for (int i = 0; i < range; i += tickStep)
                 canvas.drawCircle(i / range * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft(), getHeight() / 2, STROKE_WIDTH, paint);
             canvas.drawCircle(getWidth() - getPaddingRight(), getHeight() / 2, STROKE_WIDTH, paint);
         }
@@ -224,6 +228,30 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         } else {
             this.step = 1;
         }
+    }
+
+    public boolean hasTick() {
+        return tick;
+    }
+
+    public void setTick(boolean tick) {
+        this.tick = tick;
+    }
+
+    public int getTickStep() {
+        return tickStep;
+    }
+
+    public void setTickStep(int tickStep) {
+        this.tickStep = tickStep;
+    }
+
+    public int getTickColor() {
+        return tickColor;
+    }
+
+    public void setTickColor(int tickColor) {
+        this.tickColor = tickColor;
     }
 
     public void setOnValueChangedListener(OnValueChangedListener onValueChangedListener) {
@@ -317,8 +345,8 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             } else {
                 onValueChangedListener.onValueChanged(this, newValue);
             }
-            value = newValue;
         }
+        value = newValue;
         super.onTouchEvent(event);
         return true;
     }

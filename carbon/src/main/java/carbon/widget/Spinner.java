@@ -2,7 +2,6 @@ package carbon.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -26,12 +25,11 @@ import com.caverock.androidsvg.SVGParseException;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.drawable.DefaultColorStateList;
 
 /**
  * Created by Marcin on 2015-06-11.
  */
-public class Spinner extends TextView implements TintedView {
+public class Spinner extends EditText {
     PopupMenu popupMenu;
     private int selectedItem;
     Adapter defaultAdapter;
@@ -198,8 +196,11 @@ public class Spinner extends TextView implements TintedView {
     protected boolean setFrame(int l, int t, int r, int b) {
         boolean result = super.setFrame(l, t, r, b);
 
-        if (popupMenu != null)
-            popupMenu.update();
+        if (popupMenu != null) {
+            carbon.widget.FrameLayout container = (FrameLayout) popupMenu.getContentView().findViewById(R.id.carbon_popupContainer);
+            if (container.getAnimator() == null)
+                popupMenu.update();
+        }
 
         return result;
     }
@@ -297,31 +298,5 @@ public class Spinner extends TextView implements TintedView {
                         return new SavedState[size];
                     }
                 };
-    }
-
-
-    // -------------------------------
-    // tint
-    // -------------------------------
-
-    ColorStateList tint;
-
-    @Override
-    public void setTint(ColorStateList list) {
-        this.tint = list;
-    }
-
-    @Override
-    public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
-    }
-
-    @Override
-    public ColorStateList getTint() {
-        return tint;
     }
 }

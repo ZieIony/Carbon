@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.view.View;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.Carbon;
 import carbon.R;
@@ -40,13 +40,13 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
     private CheckableDrawable drawable;
 
     public CheckedTextView(Context context) {
-        super(context, null, android.R.attr.checkboxStyle);
-        initCheckedTextView(null, android.R.attr.checkboxStyle);
+        super(context, null, R.attr.checkedTextViewStyle);
+        initCheckedTextView(null, R.attr.checkedTextViewStyle);
     }
 
     public CheckedTextView(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.checkboxStyle);
-        initCheckedTextView(attrs, R.attr.checkboxStyle);
+        super(context, attrs, R.attr.checkedTextViewStyle);
+        initCheckedTextView(attrs, R.attr.checkedTextViewStyle);
     }
 
     public CheckedTextView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -64,13 +64,18 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
         drawable = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
         int size = (int) (Carbon.getDip(getContext()) * 24);
         drawable.setBounds(0, 0, size, size);
-        if (!isInEditMode())
-            setCheckMarkDrawable(drawable);
+        if (!isInEditMode()) {
+            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {   // does it even work?
+                setCompoundDrawables(drawable, null, null, null);
+            } else {
+                setCompoundDrawables(null, null, drawable, null);
+            }
+        }
 
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckedTextView, defStyleAttr, 0);
 
-            int ap = a.getResourceId(R.styleable.CheckBox_android_textAppearance, -1);
+            int ap = a.getResourceId(R.styleable.CheckedTextView_android_textAppearance, -1);
             if (ap != -1)
                 setTextAppearanceInternal(ap);
 
@@ -78,14 +83,14 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
 
             for (int i = 0; i < a.getIndexCount(); i++) {
                 int attr = a.getIndex(i);
-                if (attr == R.styleable.CheckBox_carbon_textAllCaps) {
+                if (attr == R.styleable.CheckedTextView_carbon_textAllCaps) {
                     setAllCaps(a.getBoolean(attr, false));
-                } else if (!isInEditMode() && attr == R.styleable.CheckBox_carbon_fontPath) {
+                } else if (!isInEditMode() && attr == R.styleable.CheckedTextView_carbon_fontPath) {
                     String path = a.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);
-                } else if (attr == R.styleable.CheckBox_carbon_fontFamily) {
-                    int textStyle = a.getInt(R.styleable.CheckBox_android_textStyle, 0);
+                } else if (attr == R.styleable.CheckedTextView_carbon_fontFamily) {
+                    int textStyle = a.getInt(R.styleable.CheckedTextView_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
                 }

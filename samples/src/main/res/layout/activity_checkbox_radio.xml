@@ -12,10 +12,6 @@
         android:layout_height="@dimen/carbon_listItemHeight"
         android:gravity="center_vertical"
         android:layoutDirection="rtl"
-        android:paddingBottom="@dimen/carbon_padding"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:paddingTop="@dimen/carbon_padding"
         android:text="check me!"
         app:carbon_rippleColor="?attr/carbon_rippleColor"/>
 
@@ -28,7 +24,6 @@
         android:layout_height="@dimen/carbon_listItemHeight"
         android:gravity="center_vertical"
         android:layoutDirection="locale"
-        android:paddingLeft="@dimen/carbon_padding"
         android:text="check me!"/>
 
     <carbon.widget.Divider
@@ -55,6 +50,7 @@
         android:gravity="center_vertical"
         android:layoutDirection="locale"
         android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
         android:text="checked text view"
         app:carbon_tint="@drawable/checkbox_selector"/>
 
@@ -94,11 +90,11 @@
 
     <carbon.widget.CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="end"
         android:gravity="center_vertical"
-        android:padding="@dimen/carbon_padding"
+        android:paddingLeft="12dp"
         android:text=""
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleHotspot="false"

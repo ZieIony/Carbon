@@ -76,7 +76,7 @@ public class TableLayout extends FrameLayout {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, adapter.getColumnWeight(i));
             header.addView(headerCell, params);
         }
-        rowNumber.setText("" + adapter.getItemCount());
+        rowNumber.setText("10");
         pageNumbers.setText("1-" + adapter.getItemCount() + " of " + adapter.getItemCount());
     }
 }

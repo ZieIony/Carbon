@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:id="@+id/carbon_popupContainer"
                            android:layout_width="match_parent"
                            android:layout_height="match_parent"
-                           android:padding="@dimen/carbon_padding">
+                           android:padding="@dimen/carbon_padding"
+                           android:visibility="invisible"
+                           app:carbon_inAnimation="fade"
+                           app:carbon_outAnimation="fade">
 
     <carbon.widget.FrameLayout
         android:id="@+id/carbon_popupContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/carbon_colorBackground"
-        android:visibility="invisible"
-        app:carbon_elevation="@dimen/carbon_elevationHigh"
-        app:carbon_inAnimation="fade"
-        app:carbon_outAnimation="fade">
+        app:carbon_elevation="@dimen/carbon_elevationFAB">
 
         <carbon.widget.RecyclerView
             android:id="@+id/recycler"

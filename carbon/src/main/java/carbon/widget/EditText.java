@@ -267,6 +267,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     }
 
     public void validate() {
+        afterFirstInteraction = true;
         validateInternal();
         postInvalidate();
     }

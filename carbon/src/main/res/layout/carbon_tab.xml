@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:carbon_rippleColor="?attr/carbon_rippleColor"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                              app:carbon_rippleColor="?attr/carbon_rippleColor"
+                              android:paddingLeft="12dp"
+                              android:paddingRight="12dp"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/carbon_marker"
@@ -13,7 +13,7 @@
         android:layout_marginBottom="20dp"
         android:textSize="1sp"
         android:layout_width="1dp"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"/>
 
     <carbon.widget.TextView
         android:id="@+id/carbon_tabText"

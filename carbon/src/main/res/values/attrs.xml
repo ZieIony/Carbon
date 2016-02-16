@@ -344,6 +344,14 @@
         <attr name="android:dividerHeight"/>
     </declare-styleable>
 
+    <declare-styleable name="CheckedTextView">
+        <attr name="carbon_fontFamily"/>
+        <attr name="android:textStyle"/>
+        <attr name="carbon_fontPath"/>
+        <attr name="carbon_textAllCaps"/>
+        <attr name="android:textAppearance"/>
+    </declare-styleable>
+
     <declare-styleable name="CheckBox">
         <attr name="carbon_fontFamily"/>
         <attr name="android:textStyle"/>
@@ -371,6 +379,9 @@
         <attr name="carbon_stepSize" format="float"/>
         <attr name="carbon_value" format="float"/>
         <attr name="carbon_value2" format="float"/>
+        <attr name="carbon_tick" format="boolean"/>
+        <attr name="carbon_tickStep" format="integer"/>
+        <attr name="carbon_tickColor" format="color"/>
     </declare-styleable>
 
     <attr name="carbon_editMenuTheme" format="reference"/>

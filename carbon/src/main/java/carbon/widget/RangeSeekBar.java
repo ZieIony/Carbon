@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -20,7 +19,6 @@ import android.view.animation.DecelerateInterpolator;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.Carbon;
 import carbon.R;
@@ -43,6 +41,9 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     float value = 0.3f, value2 = 0.7f;  // value < value2
     float min = 0, max = 1, step = 1;
     float thumbRadius, thumbRadius2;
+    int tickStep = 1;
+    boolean tick = true;
+    int tickColor = 0;
 
     OnValueChangedListener onValueChangedListener;
 
@@ -108,6 +109,9 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             setStepSize(a.getFloat(R.styleable.SeekBar_carbon_stepSize, 0));
             setValue(a.getFloat(R.styleable.SeekBar_carbon_value, 0));
             setValue2(a.getFloat(R.styleable.SeekBar_carbon_value2, 0));
+            setTick(a.getBoolean(R.styleable.SeekBar_carbon_tick, true));
+            setTickStep(a.getInt(R.styleable.SeekBar_carbon_tickStep, 1));
+            setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
 
             a.recycle();
         }
@@ -152,10 +156,10 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         if (thumbX + thumbRadius2 < thumbX2 - thumbRadius)
             canvas.drawLine(thumbX + thumbRadius, thumbY, thumbX2 - thumbRadius2, thumbY, paint);
 
-        if (style == Style.Discrete) {
-            paint.setColor(Color.BLACK);
+        if (style == Style.Discrete && tick) {
+            paint.setColor(tickColor);
             float range = (max - min) / step;
-            for (int i = 0; i < range; i++)
+            for (int i = 0; i < range; i += tickStep)
                 canvas.drawCircle(i / range * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft(), getHeight() / 2, STROKE_WIDTH, paint);
             canvas.drawCircle(getWidth() - getPaddingRight(), getHeight() / 2, STROKE_WIDTH, paint);
         }
@@ -247,6 +251,30 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         } else {
             this.step = 1;
         }
+    }
+
+    public boolean hasTick() {
+        return tick;
+    }
+
+    public void setTick(boolean tick) {
+        this.tick = tick;
+    }
+
+    public int getTickStep() {
+        return tickStep;
+    }
+
+    public void setTickStep(int tickStep) {
+        this.tickStep = tickStep;
+    }
+
+    public int getTickColor() {
+        return tickColor;
+    }
+
+    public void setTickColor(int tickColor) {
+        this.tickColor = tickColor;
     }
 
     public void setOnValueChangedListener(OnValueChangedListener onValueChangedListener) {
@@ -410,7 +438,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         }
 
         postInvalidate();
-        if (newValue != value && onValueChangedListener != null) {
+        if ((newValue != value || newValue2 != value2) && onValueChangedListener != null) {
             if (style == Style.Discrete) {
                 int sv = stepValue(newValue);
                 int sv2 = stepValue(newValue2);
@@ -419,8 +447,9 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             } else {
                 onValueChangedListener.onValueChanged(this, newValue, newValue2);
             }
-            value = newValue;
         }
+        value = newValue;
+        value2 = newValue2;
         super.onTouchEvent(event);
         return true;
     }

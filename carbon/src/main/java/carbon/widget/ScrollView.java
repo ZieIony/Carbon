@@ -17,8 +17,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
-import com.nineoldandroids.view.ViewHelper;
-
 import java.lang.reflect.Field;
 
 import carbon.Carbon;

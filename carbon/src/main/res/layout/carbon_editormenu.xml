@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/carbon_menuContainer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/carbon_padding">
+                            android:padding="@dimen/carbon_padding"
+                            android:visibility="invisible"
+                            app:carbon_inAnimation="fade"
+                            app:carbon_outAnimation="fade">
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_menuContent"
@@ -13,10 +17,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/carbon_paddingHalf"
         android:paddingRight="@dimen/carbon_paddingHalf"
-        android:visibility="invisible"
-        app:carbon_elevation="@dimen/carbon_elevationDialog"
-        app:carbon_inAnimation="fade"
-        app:carbon_outAnimation="fade">
+        app:carbon_elevation="@dimen/carbon_elevationFAB">
 
         <carbon.widget.Button
             android:id="@+id/carbon_cut"

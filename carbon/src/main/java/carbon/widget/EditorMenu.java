@@ -42,7 +42,7 @@ public class EditorMenu extends PopupWindow {
 
         update();
 
-        View content = getContentView().findViewById(R.id.carbon_menuContent);
+        View content = getContentView().findViewById(R.id.carbon_menuContainer);
         content.setVisibility(View.VISIBLE);
 
         return true;
@@ -55,7 +55,7 @@ public class EditorMenu extends PopupWindow {
 
         update();
 
-        LinearLayout content = (LinearLayout) getContentView().findViewById(R.id.carbon_menuContent);
+        LinearLayout content = (LinearLayout) getContentView().findViewById(R.id.carbon_menuContainer);
         content.setVisibilityImmediate(View.VISIBLE);
 
         return true;
@@ -89,7 +89,7 @@ public class EditorMenu extends PopupWindow {
 
     @Override
     public void dismiss() {
-        LinearLayout content = (LinearLayout) getContentView().findViewById(R.id.carbon_menuContent);
+        LinearLayout content = (LinearLayout) getContentView().findViewById(R.id.carbon_menuContainer);
         content.setVisibility(View.INVISIBLE);
         content.getAnimator().addListener(new AnimatorListenerAdapter() {
             @Override
