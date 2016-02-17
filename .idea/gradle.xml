@@ -13,13 +13,6 @@
             <option value="$PROJECT_DIR$/samples" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/carbon" />
-            <option value="$PROJECT_DIR$/samples" />
-          </set>
-        </option>
       </GradleProjectSettings>
     </option>
   </component>
