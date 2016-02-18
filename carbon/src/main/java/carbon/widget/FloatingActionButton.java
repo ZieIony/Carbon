@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import carbon.Carbon;
@@ -54,9 +55,13 @@ public class FloatingActionButton extends ImageView {
 
             if (a.hasValue(R.styleable.FloatingActionButton_android_background)) {
                 int color = a.getColor(R.styleable.FloatingActionButton_android_background, 0);
-                if (color == 0) {
+                if (color == 0)
                     setBackground(new ColorStateListDrawable(new ControlAccentColorStateList(getContext())));
-                }
+            }
+            if (a.hasValue(R.styleable.FloatingActionButton_carbon_menu)) {
+                int resId = a.getResourceId(R.styleable.FloatingActionButton_carbon_menu, 0);
+                if (resId != 0)
+                    setMenu(resId);
             }
 
             a.recycle();
@@ -91,18 +96,28 @@ public class FloatingActionButton extends ImageView {
     public void setMenu(Menu menu) {
         this.menu = menu;
 
-        floatingActionMenu = new FloatingActionMenu(getContext());
-        floatingActionMenu.setMenu(menu);
+        if (menu != null) {
+            floatingActionMenu = new FloatingActionMenu(getContext());
+            floatingActionMenu.setMenu(menu);
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                floatingActionMenu.show(FloatingActionButton.this);
-            }
-        });
+            setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    floatingActionMenu.show(FloatingActionButton.this);
+                }
+            });
+        } else {
+            floatingActionMenu = null;
+            setOnClickListener(null);
+        }
     }
 
     public Menu getMenu() {
         return menu;
+    }
+
+    public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener) {
+        if (floatingActionMenu != null)
+            floatingActionMenu.setOnMenuItemClickListener(listener);
     }
 }

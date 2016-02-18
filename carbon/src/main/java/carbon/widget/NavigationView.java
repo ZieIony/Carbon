@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import carbon.CarbonContextWrapper;
 import carbon.R;
 
 /**
@@ -39,7 +40,7 @@ public class NavigationView extends RecyclerView {
     }
 
     public void setMenu(int resId) {
-        Menu menu = new MenuBuilder(getContext());
+        Menu menu = new MenuBuilder(new CarbonContextWrapper(getContext()));
         MenuInflater inflater = new MenuInflater(getContext());
         inflater.inflate(resId, menu);
         setMenu(menu);

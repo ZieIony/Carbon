@@ -22,9 +22,4 @@ public class NavigationViewActivity extends Activity {
         navigationView = (NavigationView) findViewById(R.id.drawerMenu);
         navigationView.setMenu(R.menu.menu_navigation);
     }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(new CarbonContextWrapper(newBase));
-    }
 }

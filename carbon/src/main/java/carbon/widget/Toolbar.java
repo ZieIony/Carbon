@@ -270,26 +270,11 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
 
                 float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
 
-                float[] childLocation = new float[]{(child.getLeft() + child.getRight()) / 2, (child.getTop() + child.getBottom()) / 2};
-                Matrix matrix = carbon.internal.ViewHelper.getMatrix(child);
-                matrix.mapPoints(childLocation);
-
-                int[] location = new int[2];
-                getLocationOnScreen(location);
-                float x = childLocation[0] + location[0];
-                float y = childLocation[1] + location[1];
-                x -= getRootView().getWidth() / 2;
-                y += getRootView().getHeight() / 2;   // looks nice
-                float length = (float) Math.sqrt(x * x + y * y);
-
                 int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(
-                        x / length * childElevation / 2,
-                        y / length * childElevation / 2);
-                canvas.translate(
-                        child.getLeft(),
-                        child.getTop());
+                canvas.translate(0, childElevation / 2);
+                canvas.translate(child.getLeft(), child.getTop());
 
+                Matrix matrix = carbon.internal.ViewHelper.getMatrix(child);
                 canvas.concat(matrix);
                 shadow.draw(canvas, child, paint);
                 canvas.restoreToCount(saveCount);
@@ -700,7 +685,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     // animations
     // -------------------------------
 
-    private AnimUtils.Style inAnim, outAnim;
+    private AnimUtils.Style inAnim = AnimUtils.Style.None, outAnim = AnimUtils.Style.None;
     private Animator animator;
 
     public void setVisibility(final int visibility) {

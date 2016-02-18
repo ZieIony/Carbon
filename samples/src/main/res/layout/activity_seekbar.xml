@@ -79,4 +79,19 @@
         app:carbon_rippleRadius="25dp"
         app:carbon_rippleStyle="borderless"/>
 
+    <carbon.widget.RangeSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_margin="@dimen/carbon_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/carbon_padding"
+        app:carbon_barStyle="discrete"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleHotspot="true"
+        app:carbon_rippleRadius="25dp"
+        app:carbon_rippleStyle="borderless"
+        app:carbon_tick="false"/>
+
 </carbon.widget.LinearLayout>

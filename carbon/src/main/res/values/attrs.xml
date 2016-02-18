@@ -128,6 +128,7 @@
     <declare-styleable name="FloatingActionButton">
         <attr name="carbon_cornerRadius"/>
         <attr name="android:background"/>
+        <attr name="carbon_menu" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="Button">

@@ -3,18 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/carbon_fabSize"
-    android:gravity="right"
+    android:gravity="left"
     android:layoutDirection="ltr"
     android:orientation="horizontal"
     app:carbon_inAnimation="fade"
     app:carbon_outAnimation="fade">
-
-    <carbon.widget.TextView
-        android:id="@+id/carbon_tooltip"
-        style="@style/carbon_TextView.Tooltip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical" />
 
     <carbon.widget.FloatingActionButton
         android:id="@+id/carbon_fab"
@@ -25,4 +18,11 @@
         android:layout_marginRight="@dimen/carbon_paddingHalf"
         android:padding="@dimen/carbon_paddingHalf"
         android:scaleType="fitXY" />
+
+    <carbon.widget.TextView
+        android:id="@+id/carbon_tooltip"
+        style="@style/carbon_TextView.Tooltip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" />
 </carbon.widget.LinearLayout>

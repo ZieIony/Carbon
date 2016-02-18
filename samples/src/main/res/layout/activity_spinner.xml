@@ -15,8 +15,6 @@
         android:layout_height="@dimen/carbon_listItemHeight"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:text="1"
         app:carbon_tint="?attr/colorPrimary" />
 
@@ -25,8 +23,6 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/carbon_listItemHeight"
         android:layout_weight="1"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:text="Jan"
         app:carbon_tint="?attr/colorPrimary" />
 
@@ -36,8 +32,6 @@
         android:layout_height="@dimen/carbon_listItemHeight"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:text="1987"
         app:carbon_tint="?attr/colorPrimary" />
 

@@ -395,6 +395,8 @@
     </style>
 
     <style name="carbon_Spinner" parent="carbon_EditText">
+        <item name="android:cursorVisible">false</item>
+        <item name="android:focusable">false</item>
         <item name="android:editable">false</item>
         <item name="android:maxLines">1</item>
         <item name="android:paddingLeft">@dimen/carbon_padding</item>
@@ -487,7 +489,7 @@
 
     <style name="carbon_TextView.Tooltip">
         <item name="android:minHeight">@dimen/carbon_tooltipHeight</item>
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
         <item name="android:paddingLeft">@dimen/carbon_tooltipPadding</item>
         <item name="android:paddingRight">@dimen/carbon_tooltipPadding</item>
         <item name="android:background">@color/carbon_tooltip</item>
