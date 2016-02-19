@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:carbon_insetColor="?attr/colorPrimary"
         android:fitsSystemWindows="true">
 
         <carbon.beta.CollapsingToolbarLayout
@@ -138,6 +139,7 @@
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"
         app:carbon_src="@raw/ic_search_24px"
+        app:carbon_elevation="@dimen/carbon_elevationToolbar"
         android:layout_margin="@dimen/carbon_margin"
         android:clickable="true"/>
 
