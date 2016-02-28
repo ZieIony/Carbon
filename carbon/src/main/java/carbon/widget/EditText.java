@@ -50,8 +50,8 @@ import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.EmptyDrawable;
-import carbon.drawable.RippleDrawable;
-import carbon.drawable.RippleView;
+import carbon.drawable.ripple.RippleDrawable;
+import carbon.drawable.ripple.RippleView;
 import carbon.drawable.VectorDrawable;
 import carbon.internal.Roboto;
 import carbon.internal.TypefaceUtils;
@@ -707,34 +707,16 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             setCustomSelectionActionModeCallback(new ActionMode.Callback() {
 
                 public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    return false;
+                    return true;
                 }
 
                 public void onDestroyActionMode(ActionMode mode) {
                 }
 
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    TypedValue outValue = new TypedValue();
-                    getContext().getTheme().resolveAttribute(R.attr.carbon_editMenuTheme, outValue, true);
-                    int theme = outValue.resourceId;
-                    Context themedContext = new ContextThemeWrapper(getContext(), theme);
+                    createMenu(menu);
 
-                    popupMenu = new EditorMenu(themedContext);
-                    popupMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                        @Override
-                        public void onDismiss() {
-                            isShowingPopup = false;
-                        }
-                    });
-                    popupMenu.initCopy(menu.findItem(ID_COPY));
-                    popupMenu.initCut(menu.findItem(ID_CUT));
-                    popupMenu.initPaste(menu.findItem(ID_PASTE));
-                    popupMenu.initSelectAll(menu.findItem(ID_SELECT_ALL));
-                    if (popupMenu.hasVisibleItems()) {
-                        popupMenu.show(EditText.this);
-                        isShowingPopup = true;
-                    }
-                    return false;
+                    return true;
                 }
 
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
@@ -742,16 +724,60 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 }
             });
         }
+        if (Build.VERSION.SDK_INT >= 23) {
+            setCustomInsertionActionModeCallback(new ActionMode.Callback() {
+                @Override
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    createMenu(menu);
+
+                    return true;
+                }
+
+                @Override
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                @Override
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    return false;
+                }
+
+                @Override
+                public void onDestroyActionMode(ActionMode mode) {
+
+                }
+            });
+        }
     }
 
     @Override
-    public boolean showContextMenu() {
-        super.showContextMenu();
-        return true;
+    public void setSelection(int start, int stop) {
+        super.setSelection(start, stop);
+    }
+
+    @Override
+    public void setSelection(int index) {
+        super.setSelection(index);
+    }
+
+    @Override
+    protected void dispatchSetSelected(boolean selected) {
+        super.dispatchSetSelected(selected);
+    }
+
+    @Override
+    public void setCustomSelectionActionModeCallback(ActionMode.Callback actionModeCallback) {
+        super.setCustomSelectionActionModeCallback(actionModeCallback);
     }
 
     @Override
     protected void onCreateContextMenu(ContextMenu menu) {
+        super.onCreateContextMenu(menu);
+        createMenu(menu);
+    }
+
+    private void createMenu(Menu menu) {
         TypedValue outValue = new TypedValue();
         getContext().getTheme().resolveAttribute(R.attr.carbon_editMenuTheme, outValue, true);
         int theme = outValue.resourceId;
@@ -765,16 +791,15 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             }
         });
 
-        super.onCreateContextMenu(menu);
         popupMenu.initCopy(menu.findItem(ID_COPY));
         popupMenu.initCut(menu.findItem(ID_CUT));
         popupMenu.initPaste(menu.findItem(ID_PASTE));
         popupMenu.initSelectAll(menu.findItem(ID_SELECT_ALL));
+        menu.clear();
         if (popupMenu.hasVisibleItems()) {
             popupMenu.show(EditText.this);
             isShowingPopup = true;
         }
-        menu.clear();
     }
 
     @Override

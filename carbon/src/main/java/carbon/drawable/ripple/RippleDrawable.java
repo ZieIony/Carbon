@@ -1,5 +1,6 @@
-package carbon.drawable;
+package carbon.drawable.ripple;
 
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Rect;
@@ -44,7 +45,7 @@ public interface RippleDrawable {
 
     void setCallback(Drawable.Callback cb);
 
-    int getColor();
+    ColorStateList getColor();
 
     void setRadius(int radius);
 

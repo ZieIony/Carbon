@@ -388,4 +388,56 @@
     <attr name="carbon_editMenuTheme" format="reference"/>
     <attr name="carbon_snackbarTheme" format="reference"/>
     <attr name="carbon_spinnerPopupTheme" format="reference"/>
+
+    <!-- Drawable used to show animated touch feedback. -->
+    <declare-styleable name="RippleDrawable">
+        <!-- The color to use for ripple effects. This attribute is required. -->
+        <attr name="android:color"/>
+        <attr name="android:radius"/>
+    </declare-styleable>
+
+    <!-- Drawable used to render several drawables stacked on top of each other.
+         Each child drawable can be controlled individually. -->
+    <declare-styleable name="LayerDrawable">
+        <!-- Indicates whether the drawable should be initially visible. -->
+        <attr name="android:visible"/>
+        <!-- Indicates the opacity of the layer. This can be useful to allow the
+              system to enable drawing optimizations. The default value is
+              translucent. -->
+        <attr name="android:opacity"/>
+        <!-- Indicates if the drawable needs to be mirrored when its layout direction is
+             RTL (right-to-left). -->
+        <attr name="android:autoMirrored"/>
+        <!-- Indicates how layer padding should affect the bounds of subsequent layers.
+             The default padding mode value is nest. -->
+        <attr name="android:paddingMode"/>
+        <attr name="android:paddingTop"/>
+        <attr name="android:paddingBottom"/>
+        <attr name="android:paddingLeft"/>
+        <attr name="android:paddingRight"/>
+        <attr name="android:paddingStart"/>
+        <attr name="android:paddingEnd"/>
+    </declare-styleable>
+
+    <!-- Describes an item (or child) of a LayerDrawable. -->
+    <declare-styleable name="LayerDrawableItem">
+        <!-- Left coordinate of the layer. -->
+        <attr name="android:left"/>
+        <!-- Top coordinate of the layer. -->
+        <attr name="android:top"/>
+        <!-- Right coordinate of the layer. -->
+        <attr name="android:right"/>
+        <!-- Bottom coordinate of the layer. -->
+        <attr name="android:bottom"/>
+        <!-- Drawable used to render the layer. -->
+        <attr name="android:drawable"/>
+        <!-- Identifier of the layer. This can be used to retrieve the layer
+             from a drawable container. -->
+        <attr name="android:id"/>
+        <attr name="android:width"/>
+        <attr name="android:height"/>
+        <attr name="android:start"/>
+        <attr name="android:end"/>
+        <attr name="android:gravity"/>
+    </declare-styleable>
 </resources>

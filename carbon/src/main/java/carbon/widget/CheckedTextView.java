@@ -26,8 +26,8 @@ import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
-import carbon.drawable.RippleDrawable;
-import carbon.drawable.RippleView;
+import carbon.drawable.ripple.RippleDrawable;
+import carbon.drawable.ripple.RippleView;
 import carbon.internal.TypefaceUtils;
 
 import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;

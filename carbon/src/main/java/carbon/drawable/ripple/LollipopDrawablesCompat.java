@@ -1,8 +1,6 @@
-package carbon;
+package carbon.drawable.ripple;
 
 import android.annotation.TargetApi;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
@@ -10,10 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
@@ -27,35 +23,17 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import carbon.drawable.VectorDrawable;
-import carbon.drawable.ripple.LollipopDrawable;
-import carbon.drawable.ripple.LollipopDrawablesCompat;
-import carbon.drawable.ripple.RippleDrawableFroyo;
+public class LollipopDrawablesCompat {
+    private static final Object mAccessLock = new Object();
 
-/**
- * Created by Marcin on 2015-07-01.
- */
-public class CarbonResources extends Resources {
-    private final Object mAccessLock = new Object();
+    private static final Map<String, Class<? extends Drawable>> CLASS_MAP = new HashMap<>();
+    private static final LongSparseArray<WeakReference<Drawable.ConstantState>> sDrawableCache = new LongSparseArray<>();
 
-    private final Map<String, Class<? extends Drawable>> CLASS_MAP = new HashMap<>();
-    private final LongSparseArray<WeakReference<Drawable.ConstantState>> sDrawableCache = new LongSparseArray<>();
+    private static final LongSparseArray<WeakReference<Drawable.ConstantState>> sColorDrawableCache = new LongSparseArray<>();
 
-    private final LongSparseArray<WeakReference<Drawable.ConstantState>> sColorDrawableCache = new LongSparseArray<>();
+    private static final IDrawable IMPL;
 
-    private final IDrawable IMPL;
-
-    /**
-     * Create a new Resources object on top of an existing set of assets in an
-     * AssetManager.
-     *
-     * @param assets  Previously created AssetManager.
-     * @param metrics Current display metrics to consider when
-     *                selecting/computing resource values.
-     * @param config  Desired device configuration to consider when
-     */
-    public CarbonResources(AssetManager assets, DisplayMetrics metrics, Configuration config) {
-        super(assets, metrics, config);
+    static {
         registerDrawable(RippleDrawableFroyo.class, "ripple");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -65,49 +43,49 @@ public class CarbonResources extends Resources {
         }
     }
 
-    public void registerDrawable(Class<? extends Drawable> clazz, String name) {
+    public static void registerDrawable(Class<? extends Drawable> clazz, String name) {
         if (name == null || clazz == null) {
             throw new NullPointerException("Class: " + clazz + ". Name: " + name);
         }
         CLASS_MAP.put(name, clazz);
     }
 
-    public void unregisterDrawable(String name) {
+    public static void unregisterDrawable(String name) {
         CLASS_MAP.remove(name);
     }
 
     /**
      * Applies the specified theme to this Drawable and its children.
      */
-    public void applyTheme(Drawable d, Resources.Theme t) {
+    public static void applyTheme(Drawable d, Resources.Theme t) {
         IMPL.applyTheme(d, t);
     }
 
-    public boolean canApplyTheme(Drawable d) {
+    public static boolean canApplyTheme(Drawable d) {
         return IMPL.canApplyTheme(d);
     }
 
     /**
      * Create a drawable from an inputstream
      */
-    public Drawable createFromStream(InputStream is, String srcName) {
-        return createFromResourceStream(null, is, srcName);
+    public static Drawable createFromStream(InputStream is, String srcName) {
+        return createFromResourceStream(null, null, is, srcName);
     }
 
     /**
      * Create a drawable from an inputstream, using the given resources and
      * value to determine density information.
      */
-    public Drawable createFromResourceStream(TypedValue value, InputStream is, String srcName) {
-        return createFromResourceStream(value, is, srcName, null);
+    public static Drawable createFromResourceStream(Resources res, TypedValue value, InputStream is, String srcName) {
+        return createFromResourceStream(res, value, is, srcName, null);
     }
 
     /**
      * Create a drawable from an inputstream, using the given resources and
      * value to determine density information.
      */
-    public Drawable createFromResourceStream(TypedValue value, InputStream is, String srcName, BitmapFactory.Options opts) {
-        return Drawable.createFromResourceStream(this, value, is, srcName, opts);
+    public static Drawable createFromResourceStream(Resources res, TypedValue value, InputStream is, String srcName, BitmapFactory.Options opts) {
+        return Drawable.createFromResourceStream(res, value, is, srcName, opts);
     }
 
 
@@ -116,8 +94,8 @@ public class CarbonResources extends Resources {
      * create resources in XML, see
      * <a href="{@docRoot}guide/topics/resources/drawable-resource.html">Drawable Resources</a>.
      */
-    public Drawable createFromXml(XmlPullParser parser) throws XmlPullParserException, IOException {
-        return createFromXml(parser, null);
+    public static Drawable createFromXml(Resources r, XmlPullParser parser) throws XmlPullParserException, IOException {
+        return createFromXml(r, parser, null);
     }
 
     /**
@@ -125,7 +103,7 @@ public class CarbonResources extends Resources {
      * For more information on how to create resources in XML, see
      * <a href="{@docRoot}guide/topics/resources/drawable-resource.html">Drawable Resources</a>.
      */
-    public Drawable createFromXml(XmlPullParser parser, Resources.Theme theme) throws XmlPullParserException, IOException {
+    public static Drawable createFromXml(Resources r, XmlPullParser parser, Resources.Theme theme) throws XmlPullParserException, IOException {
         AttributeSet attrs = Xml.asAttributeSet(parser);
 
         int type;
@@ -137,7 +115,7 @@ public class CarbonResources extends Resources {
             throw new XmlPullParserException("No start tag found");
         }
 
-        Drawable drawable = createFromXmlInner(parser, attrs, theme);
+        Drawable drawable = createFromXmlInner(r, parser, attrs, theme);
 
         if (drawable == null) {
             throw new RuntimeException("Unknown initial tag: " + parser.getName());
@@ -153,7 +131,7 @@ public class CarbonResources extends Resources {
      * document, tries to create a Drawable from that tag. Returns {@code null}
      * if the tag is not a valid drawable.
      */
-    public Drawable createFromXmlInner(XmlPullParser parser, AttributeSet attrs, Resources.Theme theme) throws XmlPullParserException, IOException {
+    public static Drawable createFromXmlInner(Resources r, XmlPullParser parser, AttributeSet attrs, Resources.Theme theme) throws XmlPullParserException, IOException {
         Drawable drawable = null;
         final String name = parser.getName();
         try {
@@ -168,22 +146,23 @@ public class CarbonResources extends Resources {
         }
         if (drawable == null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                return Drawable.createFromXmlInner(this, parser, attrs, theme);
+                return Drawable.createFromXmlInner(r, parser, attrs, theme);
             } else {
-                return Drawable.createFromXmlInner(this, parser, attrs);
+                return Drawable.createFromXmlInner(r, parser, attrs);
             }
         }
-        IMPL.inflate(drawable, this, parser, attrs, theme);
+        IMPL.inflate(drawable, r, parser, attrs, theme);
         return drawable;
     }
 
-    private Drawable getCachedDrawable(LongSparseArray<WeakReference<Drawable.ConstantState>> cache,long key) {
+    private static Drawable getCachedDrawable(LongSparseArray<WeakReference<Drawable.ConstantState>> cache,
+                                              long key, Resources res) {
         synchronized (mAccessLock) {
             WeakReference<Drawable.ConstantState> wr = cache.get(key);
             if (wr != null) {
                 Drawable.ConstantState entry = wr.get();
                 if (entry != null) {
-                    return entry.newDrawable(this);
+                    return entry.newDrawable(res);
                 } else {
                     cache.delete(key);
                 }
@@ -192,28 +171,28 @@ public class CarbonResources extends Resources {
         return null;
     }
 
-    public Drawable getDrawable(int resid, Resources.Theme theme) {
+    public static Drawable getDrawable(Resources res, int resid, Resources.Theme theme) {
         TypedValue value = new TypedValue();
-        getValue(resid, value, true);
-        return loadDrawable(value, theme);
+        res.getValue(resid, value, true);
+        return loadDrawable(res, value, theme);
     }
 
-    public Drawable getDrawable(int resid) {
-        return getDrawable(resid, null);
+    public static Drawable getDrawable(Resources res, int resid) {
+        return getDrawable(res, resid, null);
     }
 
 
-    public Drawable getDrawable(TypedArray array, int index, Resources.Theme theme) {
+    public static Drawable getDrawable(TypedArray array, int index, Resources.Theme theme) {
         TypedValue value = new TypedValue();
         array.getValue(index, value);
-        return loadDrawable(value, theme);
+        return loadDrawable(array.getResources(), value, theme);
     }
 
-    public Drawable getDrawable(TypedArray array, int index) {
+    public static Drawable getDrawable(TypedArray array, int index) {
         return getDrawable(array, index, null);
     }
 
-    public Drawable loadDrawable(TypedValue value, Resources.Theme theme) throws Resources.NotFoundException {
+    public static Drawable loadDrawable(Resources res, TypedValue value, Resources.Theme theme) throws Resources.NotFoundException {
         if (value == null || value.resourceId == 0) {
             return null;
         }
@@ -232,7 +211,7 @@ public class CarbonResources extends Resources {
             key = (long) value.assetCookie << 32 | value.data;
         }
 
-        Drawable dr = getCachedDrawable(cache, key);
+        Drawable dr = getCachedDrawable(cache, key, res);
         if (dr != null) {
             return dr;
         }
@@ -242,7 +221,7 @@ public class CarbonResources extends Resources {
         //TODO hm do i need implement preloading of drawables?
 
         if (cs != null) {
-            final Drawable cloneDr = cs.newDrawable(this);
+            final Drawable cloneDr = cs.newDrawable(res);
             if (theme != null) {
                 dr = cloneDr.mutate();
                 applyTheme(dr, theme);
@@ -252,17 +231,17 @@ public class CarbonResources extends Resources {
         } else if (isColorDrawable) {
             dr = new ColorDrawable(value.data);
         } else {
-            dr = loadDrawableForCookie(value, value.resourceId, theme);
+            dr = loadDrawableForCookie(value, value.resourceId, res, theme);
         }
 
         if (dr != null) {
             dr.setChangingConfigurations(value.changingConfigurations);
-            cacheDrawable(value, theme, isColorDrawable, key, dr, cache);
+            cacheDrawable(value, res, theme, isColorDrawable, key, dr, cache);
         }
         return dr;
     }
 
-    private void cacheDrawable(TypedValue value, Resources.Theme theme, boolean isColorDrawable, long key, Drawable drawable, LongSparseArray<WeakReference<Drawable.ConstantState>> caches) {
+    private static void cacheDrawable(TypedValue value, Resources resources, Resources.Theme theme, boolean isColorDrawable, long key, Drawable drawable, LongSparseArray<WeakReference<Drawable.ConstantState>> caches) {
 
         Drawable.ConstantState cs = drawable.getConstantState();
         if (cs == null) {
@@ -274,9 +253,9 @@ public class CarbonResources extends Resources {
         }
     }
 
-    private Drawable loadDrawableForCookie(TypedValue value, int id, Resources.Theme theme) {
+    private static Drawable loadDrawableForCookie(TypedValue value, int id, Resources res, Resources.Theme theme) {
         if (value.string == null) {
-            throw new Resources.NotFoundException("Resource \"" + getResourceName(id) + "\" (" + Integer.toHexString(id) + ")  is not a Drawable (color or path): " + value);
+            throw new Resources.NotFoundException("Resource \"" + res.getResourceName(id) + "\" (" + Integer.toHexString(id) + ")  is not a Drawable (color or path): " + value);
         }
 
         String file = value.string.toString();
@@ -285,22 +264,22 @@ public class CarbonResources extends Resources {
 
         if (file.endsWith(".xml")) {
             try {
-                XmlResourceParser rp = getAssets().openXmlResourceParser(value.assetCookie, file);
-                dr = createFromXml(rp, theme);
+                XmlResourceParser rp = res.getAssets().openXmlResourceParser(value.assetCookie, file);
+                dr = LollipopDrawablesCompat.createFromXml(res, rp, theme);
                 rp.close();
             } catch (Exception e) {
                 Log.w(LollipopDrawablesCompat.class.getSimpleName(), "Failed to load drawable resource, " + "using a fallback...", e);
-                return getDrawable(value.resourceId);
+                return res.getDrawable(value.resourceId);
             }
 
         } else {
             try {
-                InputStream is = getAssets().openNonAssetFd(value.assetCookie, file).createInputStream();
-                dr = createFromResourceStream(value, is, file, null);
+                InputStream is = res.getAssets().openNonAssetFd(value.assetCookie, file).createInputStream();
+                dr = LollipopDrawablesCompat.createFromResourceStream(res, value, is, file, null);
                 is.close();
             } catch (Exception e) {
                 Log.w(LollipopDrawablesCompat.class.getSimpleName(), "Failed to load drawable resource, " + "using a fallback...", e);
-                return getDrawable(value.resourceId);
+                return res.getDrawable(value.resourceId);
             }
         }
 
@@ -310,7 +289,7 @@ public class CarbonResources extends Resources {
     /**
      * Create a drawable from file path name.
      */
-    public Drawable createFromPath(String pathName) {
+    public static Drawable createFromPath(String pathName) {
         return Drawable.createFromPath(pathName);
     }
 
@@ -366,45 +345,4 @@ public class CarbonResources extends Resources {
             drawable.inflate(r, parser, attrs, theme);
         }
     }
-
-
-    @Nullable
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Drawable getvDrawable(int resId, Theme theme) throws NotFoundException {
-        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
-            return new VectorDrawable(this, resId);
-        } else {
-            return super.getDrawable(resId, theme);
-        }
-    }
-
-    @Nullable
-    public Drawable getvDrawable(int resId) throws NotFoundException {
-        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
-            return new VectorDrawable(this, resId);
-        } else {
-            return super.getDrawable(resId);
-        }
-    }
-
-    @Nullable
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Drawable getvDrawableForDensity(int resId, int density, Theme theme) {
-        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
-            return new VectorDrawable(this, resId);
-        } else {
-            return super.getDrawableForDensity(resId, density, theme);
-        }
-    }
-
-    @Nullable
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Drawable getvDrawableForDensity(int resId, int density) throws NotFoundException {
-        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
-            return new VectorDrawable(this, resId);
-        } else {
-            return super.getDrawableForDensity(resId, density);
-        }
-    }
-
 }

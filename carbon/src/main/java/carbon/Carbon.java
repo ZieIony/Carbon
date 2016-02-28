@@ -1,6 +1,7 @@
 package carbon;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -14,11 +15,11 @@ import android.view.ViewGroup;
 
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
-import carbon.drawable.RippleDrawable;
-import carbon.drawable.RippleDrawableFroyo;
-import carbon.drawable.RippleDrawableLollipop;
-import carbon.drawable.RippleDrawableMarshmallow;
-import carbon.drawable.RippleView;
+import carbon.drawable.ripple.RippleDrawable;
+import carbon.drawable.ripple.RippleView;
+import carbon.drawable.ripple.RippleDrawableFroyo;
+import carbon.drawable.ripple.RippleDrawableLollipop;
+import carbon.drawable.ripple.RippleDrawableMarshmallow;
 import carbon.shadow.ShadowView;
 import carbon.widget.InsetView;
 import carbon.widget.MaxSizeView;
@@ -51,9 +52,9 @@ public class Carbon {
             return;
 
         TypedArray a = view.getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-        int color = a.getColor(R.styleable.Carbon_carbon_rippleColor, 0);
+        ColorStateList color = a.getColorStateList(R.styleable.Carbon_carbon_rippleColor);
 
-        if (color != 0) {
+        if (color != null) {
             RippleDrawable.Style style = RippleDrawable.Style.values()[a.getInt(R.styleable.Carbon_carbon_rippleStyle, RippleDrawable.Style.Background.ordinal())];
             boolean useHotspot = a.getBoolean(R.styleable.Carbon_carbon_rippleHotspot, true);
             int radius = (int) a.getDimension(R.styleable.Carbon_carbon_rippleRadius, -1);
@@ -64,14 +65,14 @@ public class Carbon {
         a.recycle();
     }
 
-    public static RippleDrawable createRippleDrawable(int color, RippleDrawable.Style style, View view, boolean useHotspot, int radius) {
+    public static RippleDrawable createRippleDrawable(ColorStateList color, RippleDrawable.Style style, View view, boolean useHotspot, int radius) {
         RippleDrawable rippleDrawable;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rippleDrawable = new RippleDrawableMarshmallow(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
         } else {
-            rippleDrawable = new RippleDrawableFroyo(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, view.getContext(), style);
+            rippleDrawable = new RippleDrawableFroyo(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
         }
         rippleDrawable.setCallback(view);
         rippleDrawable.setHotspotEnabled(useHotspot);

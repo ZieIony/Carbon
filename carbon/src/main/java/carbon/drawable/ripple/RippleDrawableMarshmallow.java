@@ -1,4 +1,4 @@
-package carbon.drawable;
+package carbon.drawable.ripple;
 
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
@@ -12,13 +12,13 @@ import android.os.Build;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class RippleDrawableMarshmallow extends android.graphics.drawable.RippleDrawable implements RippleDrawable {
 
-    private final int color;
+    private final ColorStateList color;
     private final Drawable background;
     private Style style;
     private boolean useHotspot;
 
-    public RippleDrawableMarshmallow(int color, Drawable background, Style style) {
-        super(ColorStateList.valueOf(color), background, style == Style.Borderless ? null : new ColorDrawable(0xffffffff));
+    public RippleDrawableMarshmallow(ColorStateList color, Drawable background, Style style) {
+        super(color, background, style == Style.Borderless ? null : new ColorDrawable(0xffffffff));
         this.style = style;
         this.color = color;
         this.background = background;
@@ -45,7 +45,7 @@ public class RippleDrawableMarshmallow extends android.graphics.drawable.RippleD
     }
 
     @Override
-    public int getColor() {
+    public ColorStateList getColor() {
         return color;
     }
 }
