@@ -13,7 +13,7 @@
         android:layout_height="@dimen/carbon_iconSize"
         android:layout_gravity="end|right"
         android:layout_margin="@dimen/carbon_padding"
-        app:carbon_src="@raw/carbon_dropdown"
+        app:carbon_src="@raw/carbon_arrow_down"
         app:carbon_tint="?attr/colorControlNormal"/>
 
 </carbon.widget.FrameLayout>
