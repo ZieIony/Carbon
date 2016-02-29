@@ -10,6 +10,7 @@ import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
 import tk.zielony.carbonsamples.widget.DialogActivity;
+import tk.zielony.carbonsamples.widget.ExpandableRecyclerActivity;
 import tk.zielony.carbonsamples.widget.FloatingActionMenuActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
 import tk.zielony.carbonsamples.widget.NavigationViewActivity;
@@ -51,6 +52,7 @@ public class WidgetsActivity extends Activity {
                 new ViewModel(RecentsActivity.class, "Recents"),
                 new ViewModel(ScrollViewActivity.class, "ScrollView"),
                 new ViewModel(RecyclerActivity.class, "RecyclerView"),
+                new ViewModel(ExpandableRecyclerActivity.class, "ExpandableRecyclerView"),
                 new ViewModel(SpinnerActivity.class, "Spinner"),
                 new ViewModel(NavigationViewActivity.class, "NavigationView"),
                 new ViewModel(SeekBarActivity.class, "SeekBar"),

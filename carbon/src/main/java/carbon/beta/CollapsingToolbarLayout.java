@@ -37,6 +37,7 @@ import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
+import carbon.internal.MatrixHelper;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -146,7 +147,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
                 canvas.translate(0, childElevation / 2);
                 canvas.translate(child.getLeft(), child.getTop());
 
-                Matrix matrix = carbon.internal.ViewHelper.getMatrix(child);
+                Matrix matrix = MatrixHelper.getMatrix(child);
                 canvas.concat(matrix);
                 shadow.draw(canvas, child, paint);
                 canvas.restoreToCount(saveCount);

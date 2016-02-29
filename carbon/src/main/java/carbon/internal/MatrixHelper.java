@@ -9,8 +9,8 @@ import android.view.animation.Transformation;
 /**
  * Created by Marcin on 2015-01-15.
  */
-public class ViewHelper {
-    private ViewHelper() {
+public class MatrixHelper {
+    private MatrixHelper() {
 
     }
 

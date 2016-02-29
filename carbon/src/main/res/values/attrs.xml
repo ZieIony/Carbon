@@ -338,6 +338,7 @@
 
     <attr name="carbon_recyclerViewStyle"/>
     <declare-styleable name="RecyclerView">
+        <attr name="carbon_overScroll"/>
         <attr name="carbon_headerTint"/>
         <attr name="carbon_headerMinHeight"/>
         <attr name="carbon_headerParallax"/>

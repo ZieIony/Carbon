@@ -37,7 +37,7 @@ import carbon.R;
  * anchoring position of the ripple for a given state may be specified by
  * calling {@link #setHotspot(float, float)} with the corresponding state
  * attribute identifier.
- * <p>
+ * <p/>
  * A touch feedback drawable may contain multiple child layers, including a
  * special mask layer that is not drawn to the screen. A single layer may be
  * set as the mask from XML by specifying its {@code android:id} value as
@@ -51,10 +51,10 @@ import carbon.R;
  *         android:drawable="@android:color/white" />
  * &lt/ripple></code>
  * </pre>
- * <p>
+ * <p/>
  * If a mask layer is set, the ripple effect will be masked against that layer
  * before it is drawn over the composite of the remaining child layers.
- * <p>
+ * <p/>
  * If no mask layer is set, the ripple effect is masked against the composite
  * of the child layers.
  * <pre>
@@ -68,7 +68,7 @@ import carbon.R;
  *   &ltitem android:drawable="@drawable/my_drawable" />
  * &lt/ripple></code>
  * </pre>
- * <p>
+ * <p/>
  * If no child layers or mask is specified and the ripple is set as a View
  * background, the ripple will be drawn atop the first available parent
  * background within the View's hierarchy. In this case, the drawing region
@@ -227,7 +227,8 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
 
     @Override
     public void jumpToCurrentState() {
-        super.jumpToCurrentState();
+        if (Build.VERSION.SDK_INT >= 11)
+            super.jumpToCurrentState();
 
         if (mRipple != null) {
             mRipple.end();
@@ -353,34 +354,33 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
     }
 
     /**
-     * @hide
-     * /
-    @Override
-    public boolean isProjected() {
-        // If the layer is bounded, then we don't need to project.
-        if (isBounded()) {
-            return false;
-        }
-
-        // Otherwise, if the maximum radius is contained entirely within the
-        // bounds then we don't need to project. This is sort of a hack to
-        // prevent check box ripples from being projected across the edges of
-        // scroll views. It does not impact rendering performance, and it can
-        // be removed once we have better handling of projection in scrollable
-        // views.
-        final int radius = mState.mMaxRadius;
-        final Rect drawableBounds = getBounds();
-        final Rect hotspotBounds = mHotspotBounds;
-        if (radius != RADIUS_AUTO
-                && radius <= hotspotBounds.width() / 2
-                && radius <= hotspotBounds.height() / 2
-                && (drawableBounds.equals(hotspotBounds)
-                || drawableBounds.contains(hotspotBounds))) {
-            return false;
-        }
-
-        return true;
-    }*/
+     * @hide /
+     * @Override public boolean isProjected() {
+     * // If the layer is bounded, then we don't need to project.
+     * if (isBounded()) {
+     * return false;
+     * }
+     * <p/>
+     * // Otherwise, if the maximum radius is contained entirely within the
+     * // bounds then we don't need to project. This is sort of a hack to
+     * // prevent check box ripples from being projected across the edges of
+     * // scroll views. It does not impact rendering performance, and it can
+     * // be removed once we have better handling of projection in scrollable
+     * // views.
+     * final int radius = mState.mMaxRadius;
+     * final Rect drawableBounds = getBounds();
+     * final Rect hotspotBounds = mHotspotBounds;
+     * if (radius != RADIUS_AUTO
+     * && radius <= hotspotBounds.width() / 2
+     * && radius <= hotspotBounds.height() / 2
+     * && (drawableBounds.equals(hotspotBounds)
+     * || drawableBounds.contains(hotspotBounds))) {
+     * return false;
+     * }
+     * <p/>
+     * return true;
+     * }
+     */
 
     private boolean isBounded() {
         return getNumberOfLayers() > 0;
@@ -966,8 +966,8 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
             }
 
             dirtyBounds.union(drawingBounds);
-            if(Build.VERSION.SDK_INT>=21)
-            dirtyBounds.union(super.getDirtyBounds());
+            if (Build.VERSION.SDK_INT >= 21)
+                dirtyBounds.union(super.getDirtyBounds());
             return dirtyBounds;
         } else {
             return getBounds();

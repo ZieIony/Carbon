@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:clickable="true"
+                           android:orientation="horizontal"
+                           app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_groupExpandedIndicator"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:layout_gravity="end|right"
+        android:layout_margin="@dimen/carbon_padding"
+        app:carbon_src="@raw/carbon_dropdown"
+        app:carbon_tint="?attr/colorControlNormal"/>
+
+</carbon.widget.FrameLayout>

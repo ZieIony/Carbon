@@ -10,15 +10,21 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.animation.DecelerateInterpolator;
 
+import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import java.lang.reflect.Field;
@@ -42,10 +48,7 @@ import carbon.shadow.ShadowView;
 import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
 import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 
-/**
- * Created by Marcin on 2015-04-28.
- */
-public class RecyclerView extends android.support.v7.widget.RecyclerView implements TintedView {
+public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerView implements TintedView {
 
     private EdgeEffect leftGlow;
     private EdgeEffect rightGlow;
@@ -57,17 +60,17 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private int overscrollMode;
     private boolean clipToPadding;
 
-    public RecyclerView(Context context) {
+    public ExpandableRecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
         initRecycler(null, R.attr.carbon_recyclerViewStyle);
     }
 
-    public RecyclerView(Context context, AttributeSet attrs) {
+    public ExpandableRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_recyclerViewStyle);
         initRecycler(attrs, R.attr.carbon_recyclerViewStyle);
     }
 
-    public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ExpandableRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initRecycler(attrs, defStyleAttr);
     }
@@ -128,7 +131,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 }
                 if (drag) {
                     final int oldY = computeVerticalScrollOffset();
-                    final int range = computeVerticalScrollRange();
+                    final int range = computeVerticalScrollRange() - getHeight();
                     boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
                             (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
@@ -228,7 +231,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 final int height = getHeight();
 
                 canvas.translate(-width + getPaddingLeft(),
-                        Math.max(computeVerticalScrollRange(), scrollY) + height);
+                        height);
                 canvas.rotate(180, width, 0);
                 bottomGlow.setSize(width, height);
                 if (bottomGlow.draw(canvas)) {
@@ -282,6 +285,87 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     @Override
     protected int getChildDrawingOrder(int childCount, int child) {
         return views != null ? indexOfChild(views.get(child)) : child;
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        //begin boilerplate code that allows parent classes to save state
+        Parcelable superState = super.onSaveInstanceState();
+
+        SavedState ss = new SavedState(superState);
+        //end
+
+        if (getAdapter() != null)
+            ss.stateToSave = ((ExpandableRecyclerView.Adapter) this.getAdapter()).getExpandedGroups();
+
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        //begin boilerplate code so parent classes can restore state
+        if (!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        //end
+
+        if (getAdapter() != null)
+            ((ExpandableRecyclerView.Adapter) getAdapter()).setExpandedGroups(ss.stateToSave);
+    }
+
+    static class SavedState implements Parcelable {
+        public static final SavedState EMPTY_STATE = new SavedState() {
+        };
+
+        SparseBooleanArray stateToSave;
+
+        Parcelable superState;
+
+        SavedState() {
+            superState = null;
+        }
+
+        SavedState(Parcelable superState) {
+            this.superState = superState != EMPTY_STATE ? superState : null;
+        }
+
+        private SavedState(Parcel in) {
+            Parcelable superState = in.readParcelable(EditText.class.getClassLoader());
+            this.superState = superState != null ? superState : EMPTY_STATE;
+            this.stateToSave = in.readSparseBooleanArray();
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+
+        @Override
+        public void writeToParcel(@NonNull Parcel out, int flags) {
+            out.writeParcelable(superState, flags);
+            out.writeSparseBooleanArray(this.stateToSave);
+        }
+
+        public Parcelable getSuperState() {
+            return superState;
+        }
+
+        //required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
     }
 
 
@@ -499,29 +583,245 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             header.layout(0, 0, getWidth(), header.getMeasuredHeight());
     }
 
-    public static abstract class Adapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
-        OnItemClickedListener onItemClickedListener;
+    @Override
+    public void setAdapter(android.support.v7.widget.RecyclerView.Adapter adapter) {
+        if (!(adapter instanceof ExpandableRecyclerView.Adapter))
+            throw new IllegalArgumentException("adapter has to be of type ExpandableRecyclerView.Adapter");
+        super.setAdapter(adapter);
+    }
 
-        public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
-            this.onItemClickedListener = onItemClickedListener;
+    public interface OnChildItemClickedListener {
+        void onChildItemClicked(int group, int position);
+    }
+
+    public static abstract class Adapter<VH extends ViewHolder, I> extends RecyclerView.Adapter<VH, I> {
+        private static final int TYPE_HEADER = 0;
+
+        SparseBooleanArray expanded = new SparseBooleanArray();
+        private OnChildItemClickedListener onChildItemClickedListener;
+
+        public Adapter() {
+        }
+
+        boolean isExpanded(int group) {
+            return expanded.get(group);
+        }
+
+        SparseBooleanArray getExpandedGroups() {
+            return expanded;
+        }
+
+        public void setExpandedGroups(SparseBooleanArray expanded) {
+            this.expanded = expanded;
+        }
+
+        public void expand(int group) {
+            if (isExpanded(group))
+                return;
+            int position = 0;
+            for (int i = 0; i < group; i++) {
+                position++;
+                if (isExpanded(i))
+                    position += getChildItemCount(i);
+            }
+            position++;
+            notifyItemRangeInserted(position, getChildItemCount(group));
+            expanded.put(group, true);
+        }
+
+        public void collapse(int group) {
+            if (!isExpanded(group))
+                return;
+            int position = 0;
+            for (int i = 0; i < group; i++) {
+                position++;
+                if (isExpanded(i))
+                    position += getChildItemCount(i);
+            }
+            position++;
+            notifyItemRangeRemoved(position, getChildItemCount(group));
+            expanded.put(group, false);
+        }
+
+        public abstract int getGroupItemCount();
+
+        public abstract int getChildItemCount(int group);
+
+        @Override
+        public int getItemCount() {
+            int count = 0;
+            for (int i = 0; i < getGroupItemCount(); i++) {
+                count += isExpanded(i) ? getChildItemCount(i) + 1 : 1;
+            }
+            return count;
+        }
+
+        public abstract I getGroupItem(int position);
+
+        public abstract I getChildItem(int group, int position);
+
+        @Override
+        public I getItem(int i) {
+            int group = 0;
+            while (group < getGroupItemCount()) {
+                if (i > 0 && !isExpanded(group)) {
+                    i--;
+                    group++;
+                    continue;
+                }
+                if (i > 0 && isExpanded(group)) {
+                    i--;
+                    if (i < getChildItemCount(group))
+                        return getChildItem(group, i);
+                    i -= getChildItemCount(group);
+                    group++;
+                    continue;
+                }
+                if (i == 0)
+                    return getGroupItem(group);
+            }
+            throw new IndexOutOfBoundsException();
         }
 
         @Override
-        public void onBindViewHolder(VH holder, final int position) {
+        public void onBindViewHolder(VH holder, int i) {
+            int group = 0;
+            while (group < getGroupItemCount()) {
+                if (i > 0 && !isExpanded(group)) {
+                    i--;
+                    group++;
+                    continue;
+                }
+                if (i > 0 && isExpanded(group)) {
+                    i--;
+                    if (i < getChildItemCount(group)) {
+                        onBindChildViewHolder(holder, group, i);
+                        return;
+                    }
+                    i -= getChildItemCount(group);
+                    group++;
+                    continue;
+                }
+                if (i == 0) {
+                    onBindGroupViewHolder(holder, group);
+                    return;
+                }
+            }
+            throw new IndexOutOfBoundsException();
+        }
+
+        @Override
+        public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+            return viewType == TYPE_HEADER ? onCreateGroupViewHolder(parent) : onCreateChildViewHolder(parent, viewType);
+        }
+
+        protected abstract VH onCreateGroupViewHolder(ViewGroup parent);
+
+        protected abstract VH onCreateChildViewHolder(ViewGroup parent, int viewType);
+
+        public abstract int getChildItemViewType(int group, int position);
+
+        @Override
+        public int getItemViewType(int i) {
+            int group = 0;
+            while (group < getGroupItemCount()) {
+                if (i > 0 && !isExpanded(group)) {
+                    i--;
+                    group++;
+                    continue;
+                }
+                if (i > 0 && isExpanded(group)) {
+                    i--;
+                    if (i < getChildItemCount(group))
+                        return getChildItemViewType(group, i);
+                    i -= getChildItemCount(group);
+                    group++;
+                    continue;
+                }
+                if (i == 0)
+                    return TYPE_HEADER;
+            }
+            throw new IndexOutOfBoundsException();
+        }
+
+        public void setOnChildItemClickedListener(ExpandableRecyclerView.OnChildItemClickedListener onItemClickedListener) {
+            this.onChildItemClickedListener = onItemClickedListener;
+        }
+
+        public void onBindChildViewHolder(VH holder, final int group, final int position) {
             holder.itemView.setOnClickListener(new OnClickListener() {
-                @Override
                 public void onClick(View v) {
-                    if (onItemClickedListener != null)
-                        onItemClickedListener.onItemClicked(position);
+                    if (Adapter.this.onChildItemClickedListener != null) {
+                        Adapter.this.onChildItemClickedListener.onChildItemClicked(group, position);
+                    }
+
                 }
             });
         }
 
-        public abstract I getItem(int position);
+        public void onBindGroupViewHolder(final VH holder, final int group) {
+            if (holder instanceof GroupViewHolder)
+                ((GroupViewHolder) holder).setExpanded(isExpanded(group));
+            holder.itemView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isExpanded(group)) {
+                        collapse(group);
+                        if (holder instanceof GroupViewHolder)
+                            ((GroupViewHolder) holder).collapse();
+                    } else {
+                        expand(group);
+                        if (holder instanceof GroupViewHolder)
+                            ((GroupViewHolder) holder).expand();
+                    }
+                }
+            });
+        }
     }
 
-    public interface OnItemClickedListener {
-        void onItemClicked(int position);
+    public static class GroupViewHolder extends RecyclerView.ViewHolder {
+        ImageView expandedIndicator;
+
+        public GroupViewHolder(View itemView) {
+            super(View.inflate(itemView.getContext(), R.layout.carbon_expandablerecyclerview_group, null));
+            this.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            ((FrameLayout) this.itemView).addView(itemView, 0);
+            this.itemView.setBackgroundDrawable(itemView.getBackground());
+            itemView.setBackgroundDrawable(null);
+            expandedIndicator = (ImageView) this.itemView.findViewById(R.id.carbon_groupExpandedIndicator);
+        }
+
+        public void expand() {
+            ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+            animator.setInterpolator(new DecelerateInterpolator());
+            animator.setDuration(200);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
+                    expandedIndicator.postInvalidate();
+                }
+            });
+            animator.start();
+        }
+
+        public void collapse() {
+            ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
+            animator.setInterpolator(new DecelerateInterpolator());
+            animator.setDuration(200);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
+                    expandedIndicator.postInvalidate();
+                }
+            });
+            animator.start();
+        }
+
+        public void setExpanded(boolean expanded) {
+            ViewHelper.setRotation(expandedIndicator, expanded ? 180 : 0);
+        }
     }
 
     public static class DividerItemDecoration extends RecyclerView.ItemDecoration {
