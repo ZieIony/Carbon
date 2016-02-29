@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.PopupWindow;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -44,6 +45,8 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     int tickStep = 1;
     boolean tick = true;
     int tickColor = 0;
+
+    SeekBarPopup popup;
 
     OnValueChangedListener onValueChangedListener;
 
@@ -115,6 +118,8 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
 
             a.recycle();
         }
+
+        popup = new SeekBarPopup(getContext());
 
         setFocusableInTouchMode(false); // TODO: from theme
     }
@@ -331,6 +336,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(true);
+            popup.showAsDropDown(this);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
             if (draggedThumb == 1) {
                 if (style == Style.Discrete) {
@@ -405,6 +411,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(false);
+            popup.dismiss();
         }
 
         if (draggedThumb == 1) {
@@ -431,9 +438,17 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             if (draggedThumb == 1) {
                 int thumbX = (int) (v * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
                 rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
+                int[] location = new int[2];
+                getLocationOnScreen(location);
+                popup.update(thumbX - radius + location[0], thumbY - radius + location[1], popup.getWidth(), popup.getHeight());
+                popup.setText("" + newValue);
             } else if (draggedThumb == 2) {
                 int thumbX2 = (int) (v2 * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
                 rippleDrawable.setBounds(thumbX2 - radius, thumbY - radius, thumbX2 + radius, thumbY + radius);
+                int[] location = new int[2];
+                getLocationOnScreen(location);
+                popup.update(thumbX2 - radius + location[0], thumbY - radius + location[1], popup.getWidth(), popup.getHeight());
+                popup.setText("" + newValue2);
             }
         }
 

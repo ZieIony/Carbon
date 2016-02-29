@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.PopupWindow;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -44,6 +45,8 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     int tickStep = 1;
     boolean tick = true;
     int tickColor = 0;
+
+    SeekBarPopup popup;
 
     OnValueChangedListener onValueChangedListener;
 
@@ -114,6 +117,8 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         }
 
         setFocusableInTouchMode(false); // TODO: from theme
+
+        popup = new SeekBarPopup(getContext());
     }
 
     @Override
@@ -285,6 +290,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(true);
+            popup.show(this);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
             if (style == Style.Discrete) {
                 float val = (float) Math.floor((value - min + step / 2) / step) * step + min;
@@ -322,6 +328,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(false);
+            popup.dismiss();
         }
 
         float v = (event.getX() - getPaddingLeft()) / (getWidth() - getPaddingLeft() - getPaddingRight());
@@ -334,6 +341,10 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             int thumbY = getHeight() / 2;
             int radius = rippleDrawable.getRadius();
             rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
+            int[] location = new int[2];
+            getLocationOnScreen(location);
+            popup.update(thumbX - radius + location[0], thumbY - radius + location[1], popup.getWidth(), popup.getHeight());
+            popup.setText("" + newValue);
         }
 
         postInvalidate();
