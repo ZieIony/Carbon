@@ -484,6 +484,7 @@
         <item name="carbon_tick">true</item>
         <item name="carbon_tickStep">1</item>
         <item name="carbon_tickColor">?attr/colorControlNormal</item>
+        <item name="carbon_labelFormat">%.0f</item>
     </style>
 
     <style name="carbon_NavigationView"/>

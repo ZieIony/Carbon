@@ -779,16 +779,31 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         }
     }
 
-    public static class GroupViewHolder extends RecyclerView.ViewHolder {
-        ImageView expandedIndicator;
+    public static abstract class GroupViewHolder extends RecyclerView.ViewHolder {
 
         public GroupViewHolder(View itemView) {
-            super(View.inflate(itemView.getContext(), R.layout.carbon_expandablerecyclerview_group, null));
-            this.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            ((FrameLayout) this.itemView).addView(itemView, 0);
-            this.itemView.setBackgroundDrawable(itemView.getBackground());
-            itemView.setBackgroundDrawable(null);
-            expandedIndicator = (ImageView) this.itemView.findViewById(R.id.carbon_groupExpandedIndicator);
+            super(itemView);
+        }
+
+        public abstract void expand();
+
+        public abstract void collapse();
+
+        public abstract void setExpanded(boolean expanded);
+
+        public abstract boolean isExpanded();
+    }
+
+    public static class SimpleGroupViewHolder extends GroupViewHolder {
+        ImageView expandedIndicator;
+        TextView text;
+        private boolean expanded;
+
+        public SimpleGroupViewHolder(Context context) {
+            super(View.inflate(context, R.layout.carbon_expandablerecyclerview_group, null));
+            itemView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            expandedIndicator = (ImageView) itemView.findViewById(R.id.carbon_groupExpandedIndicator);
+            text = (TextView) itemView.findViewById(R.id.carbon_groupText);
         }
 
         public void expand() {
@@ -803,6 +818,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                 }
             });
             animator.start();
+            expanded = true;
         }
 
         public void collapse() {
@@ -817,10 +833,25 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                 }
             });
             animator.start();
+            expanded = false;
         }
 
         public void setExpanded(boolean expanded) {
             ViewHelper.setRotation(expandedIndicator, expanded ? 180 : 0);
+            this.expanded = expanded;
+        }
+
+        @Override
+        public boolean isExpanded() {
+            return expanded;
+        }
+
+        public void setText(String t) {
+            text.setText(t);
+        }
+
+        public String getText() {
+            return text.getText().toString();
         }
     }
 

@@ -15,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.PopupWindow;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -45,6 +44,8 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     int tickStep = 1;
     boolean tick = true;
     int tickColor = 0;
+    boolean showLabel;
+    String labelFormat;
 
     SeekBarPopup popup;
 
@@ -115,11 +116,11 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             setTick(a.getBoolean(R.styleable.SeekBar_carbon_tick, true));
             setTickStep(a.getInt(R.styleable.SeekBar_carbon_tickStep, 1));
             setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
+            setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
+            setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
 
             a.recycle();
         }
-
-        popup = new SeekBarPopup(getContext());
 
         setFocusableInTouchMode(false); // TODO: from theme
     }
@@ -165,8 +166,8 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             paint.setColor(tickColor);
             float range = (max - min) / step;
             for (int i = 0; i < range; i += tickStep)
-                canvas.drawCircle(i / range * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft(), getHeight() / 2, STROKE_WIDTH, paint);
-            canvas.drawCircle(getWidth() - getPaddingRight(), getHeight() / 2, STROKE_WIDTH, paint);
+                canvas.drawCircle(i / range * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft(), getHeight() / 2, STROKE_WIDTH / 2, paint);
+            canvas.drawCircle(getWidth() - getPaddingRight(), getHeight() / 2, STROKE_WIDTH / 2, paint);
         }
 
         if (!isInEditMode())
@@ -176,6 +177,24 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
             rippleDrawable.draw(canvas);
+    }
+
+    public void setShowLabel(boolean showLabel) {
+        this.showLabel = showLabel;
+        if (showLabel)
+            popup = new SeekBarPopup(getContext());
+    }
+
+    public boolean getShowLabel() {
+        return showLabel;
+    }
+
+    public void setLabelFormat(String format) {
+        labelFormat = format;
+    }
+
+    public String getLabelFormat() {
+        return labelFormat;
     }
 
     public Style getStyle() {
@@ -336,7 +355,8 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(true);
-            popup.showAsDropDown(this);
+            if (showLabel)
+                popup.show(this);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
             if (draggedThumb == 1) {
                 if (style == Style.Discrete) {
@@ -411,7 +431,8 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(false);
-            popup.dismiss();
+            if (showLabel)
+                popup.dismiss();
         }
 
         if (draggedThumb == 1) {
@@ -431,25 +452,25 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         float newValue = v * (max - min) + min;
         float newValue2 = v2 * (max - min) + min;
 
+        int thumbX = 0;
+        if (draggedThumb == 1) {
+            thumbX = (int) (v * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
+        } else if (draggedThumb == 2) {
+            thumbX = (int) (v2 * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
+        }
+        int thumbY = getHeight() / 2;
+        int radius = rippleDrawable.getRadius();
+
+        if (showLabel && draggedThumb > 0) {
+            int[] location = new int[2];
+            getLocationOnScreen(location);
+            popup.setText(String.format(labelFormat, draggedThumb == 1 ? newValue : newValue2));
+            popup.update(thumbX + location[0] - popup.getBubbleWidth() / 2, thumbY - radius + location[1] - popup.getHeight());
+        }
+
         if (rippleDrawable != null) {
             rippleDrawable.setHotspot(event.getX(), event.getY());
-            int thumbY = getHeight() / 2;
-            int radius = rippleDrawable.getRadius();
-            if (draggedThumb == 1) {
-                int thumbX = (int) (v * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
-                rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
-                int[] location = new int[2];
-                getLocationOnScreen(location);
-                popup.update(thumbX - radius + location[0], thumbY - radius + location[1], popup.getWidth(), popup.getHeight());
-                popup.setText("" + newValue);
-            } else if (draggedThumb == 2) {
-                int thumbX2 = (int) (v2 * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
-                rippleDrawable.setBounds(thumbX2 - radius, thumbY - radius, thumbX2 + radius, thumbY + radius);
-                int[] location = new int[2];
-                getLocationOnScreen(location);
-                popup.update(thumbX2 - radius + location[0], thumbY - radius + location[1], popup.getWidth(), popup.getHeight());
-                popup.setText("" + newValue2);
-            }
+            rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
         }
 
         postInvalidate();

@@ -5,11 +5,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 
@@ -17,12 +18,17 @@ import carbon.R;
  * Created by Marcin on 2016-02-29.
  */
 public class SeekBarPopup extends PopupWindow {
+    private final Context context;
+    private final View contentView;
+    FrameLayout bubble;
     TextView label;
 
     public SeekBarPopup(Context context) {
-        super(LayoutInflater.from(context).inflate(R.layout.carbon_seekbar_label, null, false));
-        getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        label = (TextView) getContentView().findViewById(R.id.carbon_label);
+        super(LayoutInflater.from(context).inflate(R.layout.carbon_seekbar_bubble, null, false));
+        contentView = getContentView();
+        label = (TextView) contentView.findViewById(R.id.carbon_label);
+        bubble = (FrameLayout) contentView.findViewById(R.id.carbon_bubble);
+        this.context = context;
 
         setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
 
@@ -33,14 +39,22 @@ public class SeekBarPopup extends PopupWindow {
         setClippingEnabled(false);
     }
 
+    @Override
+    public void update(int x, int y) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        super.update( 0, y,wm.getDefaultDisplay().getWidth(), contentView.getMeasuredHeight());
+        ViewHelper.setTranslationX(bubble, x);
+    }
+
     public boolean show(View anchor) {
 
         super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
 
-        update();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        contentView.measure(View.MeasureSpec.makeMeasureSpec(wm.getDefaultDisplay().getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        super.update(wm.getDefaultDisplay().getWidth(), contentView.getMeasuredHeight());
 
-        View content = getContentView().findViewById(R.id.carbon_popupContent);
-        content.setVisibility(View.VISIBLE);
+        bubble.setVisibility(View.VISIBLE);
 
         return true;
     }
@@ -48,24 +62,27 @@ public class SeekBarPopup extends PopupWindow {
     public boolean showImmediate(View anchor) {
         super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
 
-        update();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        contentView.measure(View.MeasureSpec.makeMeasureSpec(wm.getDefaultDisplay().getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        super.update(wm.getDefaultDisplay().getWidth(), contentView.getMeasuredHeight());
 
-        LinearLayout content = (LinearLayout) getContentView().findViewById(R.id.carbon_menuContainer);
-        content.setVisibilityImmediate(View.VISIBLE);
+        bubble.setVisibilityImmediate(View.VISIBLE);
 
         return true;
     }
 
     @Override
     public void dismiss() {
-        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
-        content.setVisibility(View.INVISIBLE);
-        content.getAnimator().addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                SeekBarPopup.super.dismiss();
-            }
-        });
+        bubble.setVisibility(View.INVISIBLE);
+        Animator animator = bubble.getAnimator();
+        if (animator != null) {
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    SeekBarPopup.super.dismiss();
+                }
+            });
+        }
     }
 
     public void dismissImmediate() {
@@ -74,5 +91,9 @@ public class SeekBarPopup extends PopupWindow {
 
     public void setText(String text) {
         label.setText(text);
+    }
+
+    public int getBubbleWidth() {
+        return bubble.getMeasuredWidth();
     }
 }

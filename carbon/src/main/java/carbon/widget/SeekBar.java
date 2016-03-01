@@ -15,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.PopupWindow;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -45,6 +44,8 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     int tickStep = 1;
     boolean tick = true;
     int tickColor = 0;
+    boolean showLabel;
+    String labelFormat;
 
     SeekBarPopup popup;
 
@@ -112,13 +113,13 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             setTick(a.getBoolean(R.styleable.SeekBar_carbon_tick, true));
             setTickStep(a.getInt(R.styleable.SeekBar_carbon_tickStep, 1));
             setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
+            setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
+            setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
 
             a.recycle();
         }
 
         setFocusableInTouchMode(false); // TODO: from theme
-
-        popup = new SeekBarPopup(getContext());
     }
 
     @Override
@@ -157,8 +158,8 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             paint.setColor(tickColor);
             float range = (max - min) / step;
             for (int i = 0; i < range; i += tickStep)
-                canvas.drawCircle(i / range * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft(), getHeight() / 2, STROKE_WIDTH, paint);
-            canvas.drawCircle(getWidth() - getPaddingRight(), getHeight() / 2, STROKE_WIDTH, paint);
+                canvas.drawCircle(i / range * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft(), getHeight() / 2, STROKE_WIDTH / 2, paint);
+            canvas.drawCircle(getWidth() - getPaddingRight(), getHeight() / 2, STROKE_WIDTH / 2, paint);
         }
 
         if (!isInEditMode())
@@ -167,6 +168,24 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
             rippleDrawable.draw(canvas);
+    }
+
+    public void setShowLabel(boolean showLabel) {
+        this.showLabel = showLabel;
+        if (showLabel)
+            popup = new SeekBarPopup(getContext());
+    }
+
+    public boolean getShowLabel() {
+        return showLabel;
+    }
+
+    public void setLabelFormat(String format) {
+        labelFormat = format;
+    }
+
+    public String getLabelFormat() {
+        return labelFormat;
     }
 
     public Style getStyle() {
@@ -290,7 +309,8 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(true);
-            popup.show(this);
+            if (showLabel)
+                popup.show(this);
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
             if (style == Style.Discrete) {
                 float val = (float) Math.floor((value - min + step / 2) / step) * step + min;
@@ -328,23 +348,28 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(false);
-            popup.dismiss();
+            if (showLabel)
+                popup.dismiss();
         }
 
         float v = (event.getX() - getPaddingLeft()) / (getWidth() - getPaddingLeft() - getPaddingRight());
         v = Math.max(0, Math.min(v, 1));
         float newValue = v * (max - min) + min;
 
-        if (rippleDrawable != null) {
-            rippleDrawable.setHotspot(event.getX(), event.getY());
-            int thumbX = (int) (v * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
-            int thumbY = getHeight() / 2;
-            int radius = rippleDrawable.getRadius();
-            rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
+        int thumbX = (int) (v * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
+        int thumbY = getHeight() / 2;
+        int radius = rippleDrawable.getRadius();
+
+        if (showLabel) {
             int[] location = new int[2];
             getLocationOnScreen(location);
-            popup.update(thumbX - radius + location[0], thumbY - radius + location[1], popup.getWidth(), popup.getHeight());
-            popup.setText("" + newValue);
+            popup.setText(String.format(labelFormat, newValue));
+            popup.update(thumbX + location[0] - popup.getBubbleWidth() / 2, thumbY - radius + location[1] - popup.getHeight());
+        }
+
+        if (rippleDrawable != null) {
+            rippleDrawable.setHotspot(event.getX(), event.getY());
+            rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
         }
 
         postInvalidate();

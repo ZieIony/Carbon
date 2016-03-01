@@ -44,9 +44,7 @@ public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<Recyc
 
     @Override
     protected RecyclerView.ViewHolder onCreateGroupViewHolder(ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.row_expandablerecyclerview_group, parent, false);
-        return new GroupViewHolder(view);
+        return new ExpandableRecyclerView.SimpleGroupViewHolder(parent.getContext());
     }
 
     @Override
@@ -64,8 +62,8 @@ public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<Recyc
     @Override
     public void onBindGroupViewHolder(RecyclerView.ViewHolder holder, int group) {
         super.onBindGroupViewHolder(holder, group);
-        GroupViewHolder h = (GroupViewHolder) holder;
-        h.tv.setText(getGroupItem(group));
+        ExpandableRecyclerView.SimpleGroupViewHolder h = (ExpandableRecyclerView.SimpleGroupViewHolder) holder;
+        h.setText(getGroupItem(group));
     }
 
     @Override
@@ -84,12 +82,4 @@ public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<Recyc
         }
     }
 
-    public class GroupViewHolder extends ExpandableRecyclerView.GroupViewHolder {
-        private final TextView tv;
-
-        public GroupViewHolder(View itemView) {
-            super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.text);
-        }
-    }
 }

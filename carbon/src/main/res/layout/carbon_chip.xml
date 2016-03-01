@@ -13,7 +13,7 @@
         app:carbon_cornerRadius="@dimen/carbon_margin"/>
 
     <carbon.widget.TextView
-        android:id="@+id/carbon_chipTitle"
+        android:id="@+id/carbon_chipText"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"/>

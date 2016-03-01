@@ -384,6 +384,8 @@
         <attr name="carbon_tick" format="boolean"/>
         <attr name="carbon_tickStep" format="integer"/>
         <attr name="carbon_tickColor" format="color"/>
+        <attr name="carbon_showLabel" format="boolean"/>
+        <attr name="carbon_labelFormat" format="string"/>
     </declare-styleable>
 
     <attr name="carbon_editMenuTheme" format="reference"/>

@@ -48,7 +48,7 @@ public class Chip extends FrameLayout {
 
     private void initChip(AttributeSet attrs, int defStyleAttr) {
         inflate(getContext(), R.layout.carbon_chip, this);
-        title = (TextView) findViewById(R.id.carbon_chipTitle);
+        title = (TextView) findViewById(R.id.carbon_chipText);
         icon = (ImageView) findViewById(R.id.carbon_chipIcon);
         close = (ImageView) findViewById(R.id.carbon_chipClose);
 

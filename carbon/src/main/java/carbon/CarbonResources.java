@@ -192,14 +192,24 @@ public class CarbonResources extends Resources {
         return null;
     }
 
-    public Drawable getDrawable(int resid, Resources.Theme theme) {
-        TypedValue value = new TypedValue();
-        getValue(resid, value, true);
-        return loadDrawable(value, theme);
+    public Drawable getDrawable(int resId, Resources.Theme theme) {
+        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
+            return new VectorDrawable(this, resId);
+        } else {
+            TypedValue value = new TypedValue();
+            getValue(resId, value, true);
+            return loadDrawable(value, theme);
+        }
     }
 
-    public Drawable getDrawable(int resid) {
-        return getDrawable(resid, null);
+    public Drawable getDrawable(int resId) {
+        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
+            return new VectorDrawable(this, resId);
+        } else {
+            TypedValue value = new TypedValue();
+            getValue(resId, value, true);
+            return loadDrawable(value, null);
+        }
     }
 
 
@@ -364,26 +374,6 @@ public class CarbonResources extends Resources {
         @Override
         public void inflate(Drawable drawable, Resources r, XmlPullParser parser, AttributeSet attrs, Resources.Theme theme) throws XmlPullParserException, IOException {
             drawable.inflate(r, parser, attrs, theme);
-        }
-    }
-
-
-    @Nullable
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Drawable getvDrawable(int resId, Theme theme) throws NotFoundException {
-        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
-            return new VectorDrawable(this, resId);
-        } else {
-            return super.getDrawable(resId, theme);
-        }
-    }
-
-    @Nullable
-    public Drawable getvDrawable(int resId) throws NotFoundException {
-        if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
-            return new VectorDrawable(this, resId);
-        } else {
-            return super.getDrawable(resId);
         }
     }
 

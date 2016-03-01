@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout android:id="@+id/carbon_popupContainer"
+                           xmlns:android="http://schemas.android.com/apk/res/android"
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent">
+
+    <carbon.widget.FrameLayout
+        android:id="@+id/carbon_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:carbon_inAnimation="fade"
+        app:carbon_outAnimation="fade">
+
+        <carbon.widget.ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:carbon_src="@raw/carbon_bubble"
+            app:carbon_tint="?attr/colorAccent"/>
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_label"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textAppearance="?attr/carbon_textAppearanceBody1Inverse"
+            android:textSize="10sp"/>
+    </carbon.widget.FrameLayout>
+</carbon.widget.FrameLayout>
