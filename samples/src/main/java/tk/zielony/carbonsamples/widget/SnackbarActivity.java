@@ -2,9 +2,7 @@ package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import carbon.widget.CheckBox;
 import carbon.widget.FloatingActionButton;

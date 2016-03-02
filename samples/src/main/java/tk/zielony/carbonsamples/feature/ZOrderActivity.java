@@ -2,7 +2,6 @@ package tk.zielony.carbonsamples.feature;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.FrameLayout;
 

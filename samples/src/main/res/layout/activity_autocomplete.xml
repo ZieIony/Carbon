@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:fitsSystemWindows="true"
+                           app:carbon_insetColor="?attr/colorPrimary"
+                           android:orientation="vertical"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent">
 
     <carbon.widget.LinearLayout
         app:carbon_cornerRadius="2dp"
@@ -29,7 +29,7 @@
                 app:carbon_tint="@color/carbon_black_54"
                 android:focusableInTouchMode="true"
                 android:focusable="true"
-                android:padding="@dimen/carbon_padding" />
+                android:padding="@dimen/carbon_padding"/>
 
             <carbon.widget.AutoCompleteTextView
                 android:id="@+id/search"
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/carbon_toolbarHeight">
 
-                <requestFocus />
+                <requestFocus/>
             </carbon.widget.AutoCompleteTextView>
         </LinearLayout>
 
@@ -56,12 +56,12 @@
 
             <carbon.widget.Divider
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <carbon.widget.RecyclerView
                 android:id="@+id/results"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </carbon.widget.LinearLayout>
 </carbon.widget.FrameLayout>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    app:carbon_rippleColor="?attr/carbon_rippleColor"
-    android:clickable="true"
-    android:layout_height="@dimen/carbon_toolbarHeight">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            app:carbon_rippleColor="?attr/carbon_rippleColor"
+                            android:clickable="true"
+                            android:layout_height="@dimen/carbon_toolbarHeight">
 
     <carbon.widget.TextView
         android:paddingLeft="72dp"
@@ -13,5 +13,5 @@
         android:textAppearance="?attr/carbon_textAppearanceBody1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"/>
 </carbon.widget.LinearLayout>

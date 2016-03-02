@@ -177,7 +177,7 @@ public class CarbonResources extends Resources {
         return drawable;
     }
 
-    private Drawable getCachedDrawable(LongSparseArray<WeakReference<Drawable.ConstantState>> cache,long key) {
+    private Drawable getCachedDrawable(LongSparseArray<WeakReference<Drawable.ConstantState>> cache, long key) {
         synchronized (mAccessLock) {
             WeakReference<Drawable.ConstantState> wr = cache.get(key);
             if (wr != null) {

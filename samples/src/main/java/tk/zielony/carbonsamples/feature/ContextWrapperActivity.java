@@ -3,7 +3,6 @@ package tk.zielony.carbonsamples.feature;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import carbon.CarbonContextWrapper;
 import tk.zielony.carbonsamples.R;

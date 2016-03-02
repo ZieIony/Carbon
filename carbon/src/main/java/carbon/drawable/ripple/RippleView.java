@@ -1,7 +1,5 @@
 package carbon.drawable.ripple;
 
-import carbon.drawable.ripple.RippleDrawable;
-
 /**
  * Created by Marcin on 2015-02-16.
  */

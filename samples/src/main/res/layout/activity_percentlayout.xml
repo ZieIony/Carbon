@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:padding="@dimen/carbon_paddingHalf"
-    app:carbon_insetColor="?attr/colorPrimary">
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:fitsSystemWindows="true"
+                           android:padding="@dimen/carbon_paddingHalf"
+                           app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.Button
         android:layout_width="wrap_content"
@@ -13,7 +13,7 @@
         android:layout_margin="@dimen/carbon_marginHalf"
         android:text="Button 50%/25%"
         app:carbon_heightPercent="25.0%"
-        app:carbon_widthPercent="50.0%" />
+        app:carbon_widthPercent="50.0%"/>
 
     <carbon.widget.EditText
         android:layout_width="wrap_content"
@@ -22,5 +22,5 @@
         android:layout_margin="@dimen/carbon_marginHalf"
         android:text="EditText 50%"
         app:carbon_heightPercent="50.0%"
-        app:carbon_widthPercent="50.0%" />
+        app:carbon_widthPercent="50.0%"/>
 </carbon.widget.FrameLayout>

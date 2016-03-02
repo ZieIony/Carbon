@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import carbon.widget.ImageView;

@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"/>
 
             <carbon.widget.Toolbar
                 app:carbon_elevation="0dp"
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"/>
 
         </carbon.beta.CollapsingToolbarLayout>
 
@@ -70,12 +70,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Info"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
                     <carbon.widget.TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sample text" />
+                        android:text="Sample text"/>
 
                 </carbon.widget.LinearLayout>
 
@@ -94,12 +94,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Info"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
                     <carbon.widget.TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sample text" />
+                        android:text="Sample text"/>
 
                 </carbon.widget.LinearLayout>
 
@@ -118,12 +118,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Info"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
                     <carbon.widget.TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sample text" />
+                        android:text="Sample text"/>
 
                 </carbon.widget.LinearLayout>
 

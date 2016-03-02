@@ -1,12 +1,10 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import carbon.widget.CardView;
 import carbon.widget.PagerTabStrip;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:fitsSystemWindows="true"
+                            app:carbon_insetColor="?attr/colorPrimary"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
     <carbon.widget.Button
         android:text="Fly animation"
@@ -14,7 +14,7 @@
         app:carbon_outAnimation="fly"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"/>
 
     <carbon.widget.Button
         android:text="Animate"
@@ -22,18 +22,18 @@
         android:layout_gravity="right"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"/>
 
     <carbon.widget.Divider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <carbon.widget.FloatingActionButton
         android:id="@+id/fab"
         app:carbon_src="@raw/ic_shopping_cart_24px"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="@dimen/carbon_fabSize"
-        android:layout_height="@dimen/carbon_fabSize" />
+        android:layout_height="@dimen/carbon_fabSize"/>
 
 
     <carbon.widget.Button
@@ -42,7 +42,7 @@
         android:layout_gravity="right"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"/>
 
 
 </carbon.widget.LinearLayout>

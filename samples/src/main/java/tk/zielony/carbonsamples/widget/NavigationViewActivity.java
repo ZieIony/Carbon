@@ -1,10 +1,8 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 
-import carbon.CarbonContextWrapper;
 import carbon.widget.NavigationView;
 import tk.zielony.carbonsamples.R;
 

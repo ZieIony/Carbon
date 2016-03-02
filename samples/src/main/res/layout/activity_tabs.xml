@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:fitsSystemWindows="true"
+                            app:carbon_insetColor="?attr/colorPrimary"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
     <carbon.widget.PagerTabStrip
         android:background="?attr/colorPrimary"
@@ -13,11 +13,11 @@
         app:carbon_overScroll="always"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_gravity="top" />
+        android:layout_gravity="top"/>
 
     <carbon.widget.ViewPager
         android:id="@+id/pager"
         app:carbon_overScroll="always"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 </carbon.widget.LinearLayout>

@@ -73,7 +73,7 @@ public abstract class LollipopDrawable extends Drawable {
 
     /**
      * Specifies a tint for this drawable.
-     * <p>
+     * <p/>
      * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides
      * tint.
      *
@@ -86,7 +86,7 @@ public abstract class LollipopDrawable extends Drawable {
 
     /**
      * Specifies a tint for this drawable as a color state list.
-     * <p>
+     * <p/>
      * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides
      * tint.
      *
@@ -99,7 +99,7 @@ public abstract class LollipopDrawable extends Drawable {
 
     /**
      * Specifies a tint blending mode for this drawable.
-     * <p>
+     * <p/>
      * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides
      * tint.
      *

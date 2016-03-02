@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="#ffffffff"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:orientation="vertical"
+                            android:fitsSystemWindows="true"
+                            app:carbon_insetColor="#ffffffff"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
     <carbon.widget.FrameLayout
         app:carbon_elevation="@dimen/carbon_elevationLow"
@@ -30,13 +30,13 @@
                     android:padding="@dimen/carbon_padding"
                     android:gravity="right"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="200dp"/>
             </carbon.widget.FrameLayout>
 
             <carbon.widget.FrameLayout
                 android:background="#ff00BCD4"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
         </carbon.beta.TransitionLayout>
     </carbon.widget.FrameLayout>
 
@@ -60,7 +60,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="7" />
+                android:text="7"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -68,7 +68,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="8" />
+                android:text="8"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -76,7 +76,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="9" />
+                android:text="9"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -84,7 +84,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="4" />
+                android:text="4"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -92,7 +92,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="5" />
+                android:text="5"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -100,7 +100,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="6" />
+                android:text="6"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -108,7 +108,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="1" />
+                android:text="1"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -116,7 +116,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="2" />
+                android:text="2"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -124,7 +124,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="3" />
+                android:text="3"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -132,7 +132,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="." />
+                android:text="."/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -140,7 +140,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="0" />
+                android:text="0"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -148,7 +148,7 @@
                 style="@style/calcButtonStyle"
                 android:layout_width="@dimen/calcButtonSize"
                 android:layout_height="@dimen/calcButtonSize"
-                android:text="=" />
+                android:text="="/>
 
         </carbon.widget.GridLayout>
 
@@ -166,7 +166,7 @@
                 style="@style/calcButtonStyle2"
                 android:layout_width="@dimen/calcButtonSize2"
                 android:layout_height="@dimen/calcButtonSize2"
-                android:text="del" />
+                android:text="del"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -174,7 +174,7 @@
                 style="@style/calcButtonStyle2"
                 android:layout_width="@dimen/calcButtonSize2"
                 android:layout_height="@dimen/calcButtonSize2"
-                android:text="/" />
+                android:text="/"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -182,7 +182,7 @@
                 style="@style/calcButtonStyle2"
                 android:layout_width="@dimen/calcButtonSize2"
                 android:layout_height="@dimen/calcButtonSize2"
-                android:text="*" />
+                android:text="*"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -190,7 +190,7 @@
                 style="@style/calcButtonStyle2"
                 android:layout_width="@dimen/calcButtonSize2"
                 android:layout_height="@dimen/calcButtonSize2"
-                android:text="-" />
+                android:text="-"/>
 
             <carbon.widget.Button
                 android:onClick="onClick"
@@ -198,13 +198,13 @@
                 style="@style/calcButtonStyle2"
                 android:layout_width="@dimen/calcButtonSize2"
                 android:layout_height="@dimen/calcButtonSize2"
-                android:text="+" />
+                android:text="+"/>
         </carbon.widget.LinearLayout>
 
         <carbon.widget.FrameLayout
             app:carbon_elevation="@dimen/carbon_elevationLow"
             android:background="#ff1DE9B6"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

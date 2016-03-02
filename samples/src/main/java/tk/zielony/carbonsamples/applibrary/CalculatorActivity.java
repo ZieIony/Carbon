@@ -8,8 +8,8 @@ import android.widget.TextView;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
-import carbon.widget.Button;
 import carbon.beta.TransitionLayout;
+import carbon.widget.Button;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -51,10 +51,10 @@ public class CalculatorActivity extends Activity {
                         @Override
                         public void onAnimationEnd(Animator animator) {
                             transitionLayout.setListener(null);
-                            transitionLayout.startTransition(1,TransitionLayout.TransitionType.Radial, TransitionLayout.DEFAULT_DURATION,false);
+                            transitionLayout.startTransition(1, TransitionLayout.TransitionType.Radial, TransitionLayout.DEFAULT_DURATION, false);
                         }
                     });
-                    transitionLayout.startTransition(0,TransitionLayout.TransitionType.Fade,  TransitionLayout.DEFAULT_DURATION,true);
+                    transitionLayout.startTransition(0, TransitionLayout.TransitionType.Fade, TransitionLayout.DEFAULT_DURATION, true);
                 }
                 number = number / 10;
                 display.setText("" + number);

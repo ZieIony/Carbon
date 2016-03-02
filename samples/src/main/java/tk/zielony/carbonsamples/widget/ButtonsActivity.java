@@ -3,7 +3,6 @@ package tk.zielony.carbonsamples.widget;
 import android.app.Activity;
 import android.os.Bundle;
 
-import carbon.widget.Button;
 import tk.zielony.carbonsamples.R;
 
 /**

@@ -20,6 +20,7 @@ import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.ContextMenu;
@@ -40,6 +41,9 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import carbon.Carbon;
@@ -50,9 +54,9 @@ import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.EmptyDrawable;
+import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.drawable.VectorDrawable;
 import carbon.internal.Roboto;
 import carbon.internal.TypefaceUtils;
 
@@ -140,6 +144,28 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     public EditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initEditText(attrs, defStyleAttr);
+    }
+
+    private void findFieldOfClass(Object obj, Class objClass, Class klass, int level) {
+        Field[] declaredFields = objClass.getDeclaredFields();
+        Field[] fields = objClass.getFields();
+        List<Field> fieldList = new ArrayList<>();
+        fieldList.addAll(Arrays.asList(declaredFields));
+        fieldList.addAll(Arrays.asList(fields));
+        for (Field f : fieldList) {
+            if (klass.isAssignableFrom(f.getType())) {
+                Log.e("findFieldOfClass", f.getName());
+            } else if (level < 4 && !f.getType().isPrimitive()) {
+                f.setAccessible(true);
+                try {
+                    Object value = f.get(obj);
+                    if (value != null)
+                        findFieldOfClass(value, value.getClass(), klass, level + 1);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void initEditText(AttributeSet attrs, int defStyleAttr) {
@@ -240,6 +266,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         initSelectionHandle();
 
         validateInternalEvent();
+    }
+
+    @Override
+    public boolean onTextContextMenuItem(int id) {
+        boolean result = super.onTextContextMenuItem(id);
+        if (id == ID_SELECT_ALL)
+            showContextMenu();
+        return result;
     }
 
     public void setCursorColor(int cursorColor) {
@@ -749,26 +783,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
                 }
             });
         }
-    }
-
-    @Override
-    public void setSelection(int start, int stop) {
-        super.setSelection(start, stop);
-    }
-
-    @Override
-    public void setSelection(int index) {
-        super.setSelection(index);
-    }
-
-    @Override
-    protected void dispatchSetSelected(boolean selected) {
-        super.dispatchSetSelected(selected);
-    }
-
-    @Override
-    public void setCustomSelectionActionModeCallback(ActionMode.Callback actionModeCallback) {
-        super.setCustomSelectionActionModeCallback(actionModeCallback);
     }
 
     @Override

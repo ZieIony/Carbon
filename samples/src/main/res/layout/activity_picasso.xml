@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:fitsSystemWindows="true"
+                            app:carbon_insetColor="?attr/colorPrimary"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
     <carbon.widget.Button
         android:id="@+id/button"
         android:text="load"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <tk.zielony.carbonsamples.applibrary.PicassoView
         android:id="@+id/image"
         app:carbon_outAnimation="none"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 
 </carbon.widget.LinearLayout>

@@ -1,18 +1,18 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary"
-    tools:context=".MainActivity">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary"
+                            tools:context=".MainActivity">
 
     <carbon.widget.Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
-        android:text="Theme style" />
+        android:text="Theme style"/>
 
     <carbon.widget.Button
         style="@style/carbon_Button"
@@ -33,7 +33,7 @@
         app:carbon_touchMarginBottom="6dp"
         app:carbon_touchMarginLeft="100dp"
         app:carbon_touchMarginRight="100dp"
-        app:carbon_touchMarginTop="6dp" />
+        app:carbon_touchMarginTop="6dp"/>
 
     <carbon.widget.Button
         style="@style/carbon_Button.Flat"
@@ -41,19 +41,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_margin="@dimen/carbon_padding"
-        android:text="flat button" />
+        android:text="flat button"/>
 
     <carbon.widget.FloatingActionButton
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize"
         android:layout_margin="@dimen/carbon_padding"
-        app:carbon_src="@raw/ic_shopping_cart_24px" />
+        app:carbon_src="@raw/ic_shopping_cart_24px"/>
 
     <carbon.widget.FloatingActionButton
         android:layout_width="@dimen/carbon_smallFabSize"
         android:layout_height="@dimen/carbon_smallFabSize"
         android:layout_margin="@dimen/carbon_padding"
-        app:carbon_src="@raw/ic_data_usage_24px" />
+        app:carbon_src="@raw/ic_data_usage_24px"/>
 
     <carbon.widget.FloatingActionButton
         android:layout_width="@dimen/carbon_fabSize"
@@ -61,6 +61,6 @@
         android:layout_margin="@dimen/carbon_padding"
         android:padding="@dimen/carbon_padding"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_launcher"/>
 
 </carbon.widget.LinearLayout>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:padding="@dimen/carbon_paddingHalf"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            android:padding="@dimen/carbon_paddingHalf"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.beta.TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffffff"
-        app:carbon_elevation="@dimen/carbon_elevationCard" />
+        app:carbon_elevation="@dimen/carbon_elevationCard"/>
 </carbon.widget.LinearLayout>

@@ -3,16 +3,13 @@ package tk.zielony.carbonsamples.widget;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import carbon.widget.ExpandableRecyclerView;
-import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.applibrary.FruitAdapter;
 
 /**
  * Created by Marcin on 2015-05-16.

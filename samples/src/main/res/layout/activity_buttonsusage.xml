@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:text="Settings" />
+        android:text="Settings"/>
 
     <carbon.widget.ScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                     android:layout_height="24dp"
                     android:layout_margin="@dimen/carbon_padding"
                     app:carbon_src="@raw/ic_restaurant_menu_24px"
-                    app:carbon_tint="?attr/colorPrimary" />
+                    app:carbon_tint="?attr/colorPrimary"/>
 
                 <carbon.widget.RelativeLayout
                     android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/carbon_paddingHalf"
                         android:text="Morning Pizza"
-                        android:textSize="28sp" />
+                        android:textSize="28sp"/>
 
                     <carbon.widget.Button
                         android:id="@+id/forcestop1"
@@ -57,7 +57,7 @@
                         android:background="#ffffffff"
                         android:text="force stop"
                         android:textAppearance="?attr/carbon_textAppearanceButton"
-                        app:carbon_rippleColor="#42FF5252" />
+                        app:carbon_rippleColor="#42FF5252"/>
 
                     <carbon.widget.Button
                         android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                         android:layout_marginTop="@dimen/carbon_padding"
                         android:layout_toRightOf="@+id/forcestop1"
                         android:background="#ffFF5252"
-                        android:text="uninstall" />
+                        android:text="uninstall"/>
 
                     <carbon.widget.CheckBox
                         android:layout_width="match_parent"
@@ -75,14 +75,14 @@
                         android:layout_below="@id/forcestop1"
                         android:layout_marginTop="@dimen/carbon_padding"
                         android:paddingLeft="4dp"
-                        android:text="Show notifications" />
+                        android:text="Show notifications"/>
                 </carbon.widget.RelativeLayout>
 
             </carbon.widget.LinearLayout>
 
             <carbon.widget.Divider
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
 
             <carbon.widget.LinearLayout
@@ -95,7 +95,7 @@
                     android:layout_height="24dp"
                     android:layout_margin="@dimen/carbon_padding"
                     app:carbon_src="@raw/ic_storage_24px"
-                    app:carbon_tint="?attr/colorControlNormal" />
+                    app:carbon_tint="?attr/colorControlNormal"/>
 
                 <carbon.widget.RelativeLayout
                     android:layout_width="match_parent"
@@ -109,14 +109,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/carbon_padding"
                         android:text="Storage"
-                        android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+                        android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
 
                     <carbon.widget.TextView
                         android:id="@+id/total"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/storage"
-                        android:text="Total" />
+                        android:text="Total"/>
 
                     <carbon.widget.TextView
                         android:id="@+id/totalValue"
@@ -125,7 +125,7 @@
                         android:layout_below="@id/total"
                         android:layout_marginBottom="@dimen/carbon_paddingHalf"
                         android:text="11.64 MB"
-                        android:textSize="30sp" />
+                        android:textSize="30sp"/>
 
                     <carbon.widget.ProgressBar
                         android:id="@+id/progress"
@@ -134,14 +134,14 @@
                         android:layout_below="@id/totalValue"
                         android:background="#42FF5252"
                         app:carbon_progressStyle="bar_determinate"
-                        app:carbon_tint="?attr/colorAccent" />
+                        app:carbon_tint="?attr/colorAccent"/>
 
                     <carbon.widget.TextView
                         android:id="@+id/app"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/progress"
-                        android:text="App" />
+                        android:text="App"/>
 
                     <carbon.widget.TextView
                         android:id="@+id/appValue"
@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/app"
                         android:text="9.40 MB"
-                        android:textAppearance="?attr/carbon_textAppearanceCaption" />
+                        android:textAppearance="?attr/carbon_textAppearanceCaption"/>
 
                     <carbon.widget.TextView
                         android:id="@+id/data"
@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/dataValue"
                         android:layout_below="@id/progress"
-                        android:text="Data" />
+                        android:text="Data"/>
 
                     <carbon.widget.TextView
                         android:id="@+id/dataValue"
@@ -166,7 +166,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/app"
                         android:text="2.24 MB"
-                        android:textAppearance="?attr/carbon_textAppearanceCaption" />
+                        android:textAppearance="?attr/carbon_textAppearanceCaption"/>
 
                     <carbon.widget.Button
                         android:id="@+id/cleardata"
@@ -178,14 +178,14 @@
                         android:background="#ffffffff"
                         android:text="clear data"
                         android:textAppearance="?attr/carbon_textAppearanceButton"
-                        app:carbon_rippleColor="#42FF5252" />
+                        app:carbon_rippleColor="#42FF5252"/>
                 </carbon.widget.RelativeLayout>
 
             </carbon.widget.LinearLayout>
 
             <carbon.widget.Divider
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
 
             <carbon.widget.LinearLayout
@@ -198,7 +198,7 @@
                     android:layout_height="24dp"
                     android:layout_margin="@dimen/carbon_padding"
                     app:carbon_src="@raw/ic_data_usage_24px"
-                    app:carbon_tint="?attr/colorControlNormal" />
+                    app:carbon_tint="?attr/colorControlNormal"/>
 
                 <carbon.widget.RelativeLayout
                     android:layout_width="match_parent"
@@ -211,7 +211,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Data usage"
-                        android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+                        android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
 
                 </carbon.widget.RelativeLayout>
 

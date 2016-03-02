@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples.applibrary;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,7 +13,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-05-09.
  */
-public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder,String> {
+public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder, String> {
     private List<String> fruits;
 
     public FruitAdapter(List<String> fruits) {

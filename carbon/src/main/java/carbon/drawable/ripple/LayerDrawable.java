@@ -15,6 +15,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.GravityCompat;
 import android.util.AttributeSet;
 import android.util.LayoutDirection;
 import android.view.Gravity;
@@ -1436,8 +1437,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
                     d.getIntrinsicWidth(), d.getIntrinsicHeight());
             final int w = r.mWidth < 0 ? d.getIntrinsicWidth() : r.mWidth;
             final int h = r.mHeight < 0 ? d.getIntrinsicHeight() : r.mHeight;
-            if (Build.VERSION.SDK_INT >= 17)
-                Gravity.apply(gravity, w, h, container, outRect, layoutDirection);
+            GravityCompat.apply(gravity, w, h, container, outRect, layoutDirection);
             d.setBounds(outRect);
 
             if (nest) {

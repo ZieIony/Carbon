@@ -136,7 +136,7 @@ class TypedArrayCompat {
      * {@link TypedArray#getDimension}, except the returned value is converted to
      * integer pixels for you.  An offset conversion involves simply
      * truncating the base value to an integer.
-     * <p>
+     * <p/>
      * Retrieve from extracted first if no value than tries from {@link TypedArray}
      *
      * @param index Index of attribute to retrieve.

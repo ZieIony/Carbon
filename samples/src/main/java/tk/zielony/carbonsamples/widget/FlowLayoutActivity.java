@@ -28,14 +28,14 @@ public class FlowLayoutActivity extends Activity {
         setContentView(R.layout.activity_flowlayout);
 
         FlowLayout layout = (FlowLayout) findViewById(R.id.flowLayout);
-        for (int i = 0; i < layout.getChildCount()-1; i++) {
+        for (int i = 0; i < layout.getChildCount() - 1; i++) {
             final Chip chip = (Chip) layout.getChildAt(i);
             chip.setText(fruits.get(i % fruits.size()));
             if (i % 3 != 1) {
                 chip.setIconVisible(true);
                 String image = "http://lorempixel.com/100/100/people/#" + System.currentTimeMillis();
                 Picasso.with(this).load(image).into((ImageView) chip.getIconView());
-            }else{
+            } else {
                 chip.setIconVisible(false);
             }
             if (i % 3 != 2) {

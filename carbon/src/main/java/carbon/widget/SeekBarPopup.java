@@ -42,7 +42,7 @@ public class SeekBarPopup extends PopupWindow {
     @Override
     public void update(int x, int y) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        super.update( 0, y,wm.getDefaultDisplay().getWidth(), contentView.getMeasuredHeight());
+        super.update(0, y, wm.getDefaultDisplay().getWidth(), contentView.getMeasuredHeight());
         ViewHelper.setTranslationX(bubble, x);
     }
 

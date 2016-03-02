@@ -8,7 +8,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-06-26.
  */
-public class SeekBarActivity extends Activity{
+public class SeekBarActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

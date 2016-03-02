@@ -10,7 +10,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-06-14.
  */
-public class ButtonsUsageActivity extends Activity{
+public class ButtonsUsageActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

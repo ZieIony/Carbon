@@ -42,8 +42,8 @@ import carbon.R;
  * special mask layer that is not drawn to the screen. A single layer may be
  * set as the mask from XML by specifying its {@code android:id} value as
  * {@link android.R.id#mask}. At run time, a single layer may be set as the
- * mask using {@code setId(..., android.R.id.mask)} or an existing mask layer
- * may be replaced using {@code setDrawableByLayerId(android.R.id.mask, ...)}.
+ * mask using {@code setId(..., R.id.carbon_mask)} or an existing mask layer
+ * may be replaced using {@code setDrawableByLayerId(R.id.carbon_mask, ...)}.
  * <pre>
  * <code>&lt!-- A red ripple masked against an opaque rectangle. --/>
  * &ltripple android:color="#ffff0000">
@@ -215,7 +215,7 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
         }
 
         if (mask != null) {
-            addLayer(mask, null, android.R.id.mask, 0, 0, 0, 0);
+            addLayer(mask, null, R.id.carbon_mask, 0, 0, 0, 0);
         }
 
         background = content;
@@ -444,7 +444,7 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
     @Override
     public boolean setDrawableByLayerId(int id, Drawable drawable) {
         if (super.setDrawableByLayerId(id, drawable)) {
-            if (id == android.R.id.mask) {
+            if (id == R.id.carbon_mask) {
                 mMask = drawable;
                 mHasValidMask = false;
             }
@@ -693,7 +693,7 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
         final ChildDrawable[] children = state.mChildren;
         final int N = state.mNum;
         for (int i = 0; i < N; i++) {
-            if (children[i].mId != android.R.id.mask) {
+            if (children[i].mId != R.id.carbon_mask) {
                 children[i].mDrawable.getOutline(outline);
                 if (!outline.isEmpty()) return;
             }
@@ -855,7 +855,7 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
         final ChildDrawable[] array = mLayerState.mChildren;
         final int count = mLayerState.mNum;
         for (int i = 0; i < count; i++) {
-            if (array[i].mId != android.R.id.mask) {
+            if (array[i].mId != R.id.carbon_mask) {
                 array[i].mDrawable.draw(canvas);
             }
         }
@@ -988,7 +988,7 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
         mState = (RippleState) mLayerState;
 
         // The locally cached drawable may have changed.
-        mMask = findDrawableByLayerId(android.R.id.mask);
+        mMask = findDrawableByLayerId(R.id.carbon_mask);
 
         return this;
     }
@@ -1056,7 +1056,7 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
 
     private void updateLocalState() {
         // Initialize from constant state.
-        mMask = findDrawableByLayerId(android.R.id.mask);
+        mMask = findDrawableByLayerId(R.id.carbon_mask);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class ShareToolbarActivity extends Activity {
                         float right = AnimUtils.lerp(frac, root.getWidth() - getResources().getDimension(R.dimen.carbon_padding), root.getWidth());
                         shareToolbar.layout((int) left, shareToolbar.getTop(), (int) right, shareToolbar.getBottom());
                         shareToolbar.setElevation(frac);
-                        shareToolbar.setBackgroundColor(AnimUtils.lerpColor(frac,0xff9ACE00,0xffffffff));
+                        shareToolbar.setBackgroundColor(AnimUtils.lerpColor(frac, 0xff9ACE00, 0xffffffff));
                         if (shareToolbar.getParent() != null)
                             ((View) shareToolbar.getParent()).postInvalidate();
                     }
