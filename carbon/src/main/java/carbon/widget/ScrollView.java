@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -291,6 +292,16 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        // TODO make use of tint list
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return null;
     }
 
 

@@ -32,7 +32,7 @@ public class SnackbarActivity extends Activity {
                 snackbar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        snackbar.hide();
+                        snackbar.dismiss();
                     }
                 });
                 snackbar.setStyle(floatingCheckBox.isChecked() ? Snackbar.Style.Floating : Snackbar.Style.Docked);

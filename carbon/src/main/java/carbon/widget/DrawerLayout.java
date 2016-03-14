@@ -55,6 +55,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  */
 public class DrawerLayout extends android.support.v4.widget.DrawerLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
     private boolean debugMode;
+    private OnTouchListener onDispatchTouchListener;
 
     public DrawerLayout(Context context) {
         super(context, null, R.attr.carbon_drawerLayoutStyle);
@@ -265,6 +266,9 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
 
+        if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
+            return true;
+
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
@@ -440,7 +444,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(elevation);
         this.elevation = elevation;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -455,7 +459,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setTranslationZ(translationZ);
         this.translationZ = translationZ;
-        if (getParent() != null)
+        if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
     }
 
@@ -701,8 +705,12 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
 
     // -------------------------------
-    // ViewGroup utils
+    // View utils
     // -------------------------------
+
+    public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
+        this.onDispatchTouchListener = onDispatchTouchListener;
+    }
 
     public List<View> findViewsById(int id) {
         List<View> result = new ArrayList<>();

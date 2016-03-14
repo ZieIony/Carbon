@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.internal;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +13,8 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
+import carbon.widget.FrameLayout;
+import carbon.widget.TextView;
 
 /**
  * Created by Marcin on 2016-02-29.

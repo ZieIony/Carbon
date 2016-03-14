@@ -2,5 +2,57 @@
 <resources>
 
     <string name="app_name">Carbon Samples</string>
+    <string name="floatingActionMenuActivity_title">FloatingActionMenu</string>
+    <string name="tableLayoutActivity_title">TableLayout</string>
+    <string name="flowLayoutActivity_title"><![CDATA[FlowLayout & Chips]]></string>
+    <string name="toolbarActivity_title">Toolbar</string>
+    <string name="seekBarActivity_title">SeekBar</string>
+    <string name="navigationViewActivity_title">NavigationView</string>
+    <string name="spinnerActivityActivity_title">Spinner</string>
+    <string name="expandableRecyclerActivity_title">ExpandableRecyclerView</string>
+    <string name="recyclerViewActivity_title">RecyclerView</string>
+    <string name="scrollViewActivity_title">ScrollView</string>
+    <string name="recentsActivity_title">Recents</string>
+    <string name="tabsActivity_title">Tabs</string>
+    <string name="textFieldsActivity_title">Text fields</string>
+    <string name="svgActivity_title">SVG icons</string>
+    <string name="snackbarActivity_title">Snackbar</string>
+    <string name="progressBarsActivity_title">Progress bars</string>
+    <string name="circularProgressActivity_title">Circular progress</string>
+    <string name="buttonsActivity_title">Buttons</string>
+    <string name="checkBoxRadioActivity_title"><![CDATA[CheckBoxes & RadioButtons]]></string>
+    <string name="widgetsActivity_title">Widgets</string>
+    <string name="featuresActivity_title">Features</string>
+    <string name="animationsActivity_title">Animations</string>
+    <string name="appsLibrariesActivity_title"><![CDATA[Apps & Libraries]]></string>
+    <string name="demosActivity_title">Demos</string>
+    <string name="guidelinesActivity_title">Guidelines</string>
+    <string name="buttonsUsageActivity_title">Buttons / Usage</string>
+    <string name="toolbarsUsageActivity_title">Toolbars / Usage</string>
+    <string name="robotoActivity_title">Roboto</string>
+    <string name="shadowActivity_title">Shadow</string>
+    <string name="largeShadowActivity_title">Large shadow</string>
+    <string name="textappearanceActivity_title">Text appearance</string>
+    <string name="zOrderActivity_title">Z order</string>
+    <string name="roundedCornersActivity_title">Rounded corners</string>
+    <string name="anchorsActivity_title">Anchors</string>
+    <string name="contextWrapperActivity_title">Context wrapper</string>
+    <string name="percentLayoutActivity_title">Percent layout</string>
+    <string name="powerMenuActivity_title">Power Menu</string>
+    <string name="shareToolbarActivity_title">Share Toolbar</string>
+    <string name="autoCompleteActivity_title">Auto Complete</string>
+    <string name="quickReturenActivity_title">Quick Return</string>
+    <string name="calculatorActivity_title">Calculator</string>
+    <string name="picassoActivity_title">Picasso</string>
+    <string name="recyclerCardsActivity_title"><![CDATA[RecyclerView & cards]]></string>
+    <string name="drawerActivity_title">Nawigation drawer</string>
+    <string name="designActivity_title">Design Support Library</string>
+    <string name="widgetAnimationsActivity_title">Widget animations</string>
+    <string name="imageFadeActivity_title">Image fade</string>
+    <string name="listRippleActivity_title">List ripple</string>
+    <string name="rippleComparisonActivity_title">Ripple comparison</string>
+    <string name="radialTransitionActivity_title">Radial transition</string>
+    <string name="rippleActivity_title">Touch ripple</string>
+    <string name="textMarkerActivity_title">Text marker</string>
 
 </resources>

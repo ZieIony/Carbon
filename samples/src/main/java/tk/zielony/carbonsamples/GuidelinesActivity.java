@@ -21,12 +21,12 @@ public class GuidelinesActivity extends Activity {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setIconVisible(true);
-        toolbar.setText("Guidelines");
+        toolbar.setText(getString(R.string.guidelinesActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
-                new ViewModel(ButtonsUsageActivity.class, "Buttons / Usage"),
-                new ViewModel(ToolbarsUsageActivity.class, "Toolbars / Usage")
+                new ViewModel(ButtonsUsageActivity.class, getString(R.string.buttonsUsageActivity_title)),
+                new ViewModel(ToolbarsUsageActivity.class, getString(R.string.toolbarsUsageActivity_title))
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

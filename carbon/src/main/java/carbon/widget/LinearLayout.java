@@ -62,6 +62,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     private boolean debugMode;
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
+    private OnTouchListener onDispatchTouchListener;
 
     public LinearLayout(Context context) {
         super(context, null);
@@ -282,6 +283,9 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
+
+        if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
+            return true;
 
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
@@ -719,8 +723,12 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
 
     // -------------------------------
-    // ViewGroup utils
+    // View utils
     // -------------------------------
+
+    public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
+        this.onDispatchTouchListener = onDispatchTouchListener;
+    }
 
     public List<View> findViewsById(int id) {
         List<View> result = new ArrayList<>();
@@ -758,7 +766,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
 
     // -------------------------------
-    // anchors
+    // layout params
     // -------------------------------
 
     @Override
@@ -848,7 +856,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         public LayoutParams(ViewGroup.MarginLayoutParams source) {
             super(source);
         }
-
 
         public LayoutParams(android.widget.LinearLayout.LayoutParams source) {
             super((MarginLayoutParams) source);

@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <carbon.widget.LinearLayout
+            <carbon.widget.FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -30,7 +30,8 @@
                 <carbon.widget.ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_margin="@dimen/carbon_padding"
+                    android:layout_marginTop="@dimen/carbon_padding"
+                    android:layout_marginLeft="@dimen/carbon_windowPadding"
                     app:carbon_src="@raw/ic_restaurant_menu_24px"
                     app:carbon_tint="?attr/colorPrimary"/>
 
@@ -38,7 +39,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/carbon_padding">
+                    android:layout_marginLeft="@dimen/carbon_contentSpace"
+                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:paddingBottom="@dimen/carbon_padding"
+                    android:paddingTop="@dimen/carbon_padding">
 
                     <carbon.widget.TextView
                         android:id="@+id/title1"
@@ -78,14 +82,14 @@
                         android:text="Show notifications"/>
                 </carbon.widget.RelativeLayout>
 
-            </carbon.widget.LinearLayout>
+            </carbon.widget.FrameLayout>
 
             <carbon.widget.Divider
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
 
-            <carbon.widget.LinearLayout
+            <carbon.widget.FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -93,7 +97,8 @@
                 <carbon.widget.ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_margin="@dimen/carbon_padding"
+                    android:layout_marginTop="@dimen/carbon_padding"
+                    android:layout_marginLeft="@dimen/carbon_windowPadding"
                     app:carbon_src="@raw/ic_storage_24px"
                     app:carbon_tint="?attr/colorControlNormal"/>
 
@@ -101,7 +106,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/carbon_padding">
+                    android:layout_marginLeft="@dimen/carbon_contentSpace"
+                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:paddingBottom="@dimen/carbon_padding"
+                    android:paddingTop="@dimen/carbon_padding">
 
                     <carbon.widget.TextView
                         android:id="@+id/storage"
@@ -181,14 +189,14 @@
                         app:carbon_rippleColor="#42FF5252"/>
                 </carbon.widget.RelativeLayout>
 
-            </carbon.widget.LinearLayout>
+            </carbon.widget.FrameLayout>
 
             <carbon.widget.Divider
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
 
-            <carbon.widget.LinearLayout
+            <carbon.widget.FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -196,7 +204,8 @@
                 <carbon.widget.ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_margin="@dimen/carbon_padding"
+                    android:layout_marginTop="@dimen/carbon_padding"
+                    android:layout_marginLeft="@dimen/carbon_windowPadding"
                     app:carbon_src="@raw/ic_data_usage_24px"
                     app:carbon_tint="?attr/colorControlNormal"/>
 
@@ -204,7 +213,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/carbon_padding">
+                    android:layout_marginLeft="@dimen/carbon_contentSpace"
+                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:paddingBottom="@dimen/carbon_padding"
+                    android:paddingTop="@dimen/carbon_padding">
 
                     <carbon.widget.TextView
                         android:id="@+id/datausage"
@@ -215,7 +227,7 @@
 
                 </carbon.widget.RelativeLayout>
 
-            </carbon.widget.LinearLayout>
+            </carbon.widget.FrameLayout>
         </LinearLayout>
     </carbon.widget.ScrollView>
 </carbon.widget.LinearLayout>

@@ -1,6 +1,7 @@
 package carbon.drawable;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -21,6 +22,7 @@ public class ProgressBarDrawable extends ProgressDrawable {
 
     public ProgressBarDrawable() {
         forePaint.setStyle(Paint.Style.FILL);
+        forePaint.setColor(Color.WHITE);
     }
 
     @Override
@@ -45,6 +47,8 @@ public class ProgressBarDrawable extends ProgressDrawable {
             //canvas.drawRect(0, 0, bounds.width(), bounds.height(), backPaint);
             canvas.drawRect(0, 0, progress * bounds.width(), bounds.height(), forePaint);
         }
+
+        canvas.drawColor(tint.getColorForState(getState(), tint.getDefaultColor()), tintMode);
         invalidateSelf();
     }
 }

@@ -17,6 +17,7 @@
     <dimen name="carbon_toolbarTextSize">20sp</dimen>
     <dimen name="carbon_toolbarItemSize">48dp</dimen>
     <dimen name="carbon_toolbarItemPadding">4dp</dimen>
+    <dimen name="carbon_toolbarUpTitleMargin">4dp</dimen>
 
     <dimen name="carbon_tooltipHeight">32dp</dimen>
     <dimen name="carbon_tooltipPadding">16dp</dimen>
@@ -51,6 +52,10 @@
     <dimen name="carbon_elevationCard">2dp</dimen>
     <dimen name="carbon_elevationDialog">12dp</dimen>
 
+    <dimen name="carbon_cornerRadiusButton">2dp</dimen>
+    <dimen name="carbon_cornerRadiusCard">2dp</dimen>
+    <dimen name="carbon_cornerRadiusSnackbar">2dp</dimen>
+
     <dimen name="carbon_fabSize">56dp</dimen>
     <dimen name="carbon_smallFabSize">40dp</dimen>
 
@@ -68,4 +73,6 @@
     <dimen name="carbon_chipPadding">12dp</dimen>
     <dimen name="carbon_chipTextSize">13dp</dimen>
     <dimen name="carbon_chipCloseMargin">4dp</dimen>
+
+    <dimen name="carbon_navigationBarHeight">48dp</dimen>
 </resources>

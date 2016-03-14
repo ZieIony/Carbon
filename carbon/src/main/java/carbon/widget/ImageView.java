@@ -584,12 +584,12 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     // -------------------------------
 
     ColorStateList tint;
+    PorterDuff.Mode tintMode;
 
     @Override
     public void setTint(ColorStateList list) {
         this.tint = list;
         updateTint();
-        postInvalidate();
     }
 
     @Override
@@ -603,14 +603,25 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     }
 
     private void updateTint() {
-        if (tint != null) {
+        if (tint != null && tintMode != null) {
             int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
-            setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP));
+            setColorFilter(new PorterDuffColorFilter(color, tintMode));
             setAlpha(Color.alpha(color));
         } else {
             setColorFilter(null);
             setAlpha(255);
         }
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        this.tintMode = mode;
+        updateTint();
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return tintMode;
     }
 
 

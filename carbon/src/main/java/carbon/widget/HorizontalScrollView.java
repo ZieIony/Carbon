@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -240,6 +241,16 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
             leftGlow.setColor(color);
         if (rightGlow != null)
             rightGlow.setColor(color);
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        // TODO make use of tint list
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return null;
     }
 
 

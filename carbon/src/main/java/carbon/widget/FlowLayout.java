@@ -60,6 +60,7 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
 
     private boolean debugMode;
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
+    private OnTouchListener onDispatchTouchListener;
 
     public FlowLayout(Context context) {
         super(context, null, R.attr.carbon_flowLayoutStyle);
@@ -298,6 +299,9 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
+
+        if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
+            return true;
 
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
@@ -735,8 +739,12 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
 
 
     // -------------------------------
-    // ViewGroup utils
+    // View utils
     // -------------------------------
+
+    public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
+        this.onDispatchTouchListener = onDispatchTouchListener;
+    }
 
     public List<View> findViewsById(int id) {
         List<View> result = new ArrayList<>();

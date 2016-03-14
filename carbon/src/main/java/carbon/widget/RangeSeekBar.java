@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -29,6 +30,7 @@ import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
+import carbon.internal.SeekBarPopup;
 
 import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
 import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
@@ -427,7 +429,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
                 });
                 radiusAnimator.start();
             }
-            draggedThumb = -1;
+            //draggedThumb = -1;
             ViewParent parent = getParent();
             if (parent != null)
                 parent.requestDisallowInterceptTouchEvent(false);
@@ -722,6 +724,16 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     @Override
     public ColorStateList getTint() {
         return tint;
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        // TODO make use of tint list
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return null;
     }
 
 

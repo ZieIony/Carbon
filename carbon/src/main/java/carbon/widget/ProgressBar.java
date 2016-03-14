@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -227,6 +228,7 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
     // -------------------------------
 
     ColorStateList tint;
+    PorterDuff.Mode tintMode;
 
     @Override
     public void setTint(ColorStateList list) {
@@ -244,6 +246,16 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
         return tint;
     }
 
+    @Override
+    public void setTintMode(PorterDuff.Mode mode) {
+        this.tintMode = mode;
+        drawable.setTintMode(mode);
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return tintMode;
+    }
 
     // -------------------------------
     // transformations

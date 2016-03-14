@@ -26,7 +26,8 @@
             android:layout_height="match_parent"
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding"/>
+            android:paddingRight="@dimen/carbon_padding"
+            android:text="cut"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_copy"
@@ -35,7 +36,8 @@
             android:layout_height="match_parent"
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding"/>
+            android:paddingRight="@dimen/carbon_padding"
+            android:text="copy"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_paste"
@@ -44,7 +46,8 @@
             android:layout_height="match_parent"
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding"/>
+            android:paddingRight="@dimen/carbon_padding"
+            android:text="paste"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_selectAll"
@@ -52,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:minWidth="0dp"
+            android:text="select all"
             android:paddingLeft="@dimen/carbon_padding"
             android:paddingRight="@dimen/carbon_padding"/>
     </carbon.widget.LinearLayout>

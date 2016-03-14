@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -462,6 +463,16 @@ public class CheckedTextView extends android.widget.CheckedTextView implements R
     @Override
     public ColorStateList getTint() {
         return tint;
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        // TODO make use of tint list
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return null;
     }
 
 

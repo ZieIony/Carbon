@@ -9,7 +9,6 @@ import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
-import tk.zielony.carbonsamples.widget.DialogActivity;
 import tk.zielony.carbonsamples.widget.ExpandableRecyclerActivity;
 import tk.zielony.carbonsamples.widget.FloatingActionMenuActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
@@ -36,30 +35,29 @@ public class WidgetsActivity extends Activity {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setIconVisible(true);
-        toolbar.setText("Widgets");
+        toolbar.setText(getString(R.string.widgetsActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
-                new ViewModel(CheckBoxRadioActivity.class, "CheckBoxes & RadioButtons"),
-                new ViewModel(ButtonsActivity.class, "Buttons"),
-                new ViewModel(DialogActivity.class, "Dialog", true),
-                new ViewModel(CircularProgressActivity.class, "Circular progress"),
-                new ViewModel(ProgressBarsActivity.class, "Progress bars", true),
-                new ViewModel(SnackbarActivity.class, "Snackbar"),
-                new ViewModel(SVGActivity.class, "SVG icons"),
-                new ViewModel(TextFieldsActivity.class, "Text fields"),
-                new ViewModel(TabsActivity.class, "Tabs"),
-                new ViewModel(RecentsActivity.class, "Recents"),
-                new ViewModel(ScrollViewActivity.class, "ScrollView"),
-                new ViewModel(RecyclerActivity.class, "RecyclerView"),
-                new ViewModel(ExpandableRecyclerActivity.class, "ExpandableRecyclerView"),
-                new ViewModel(SpinnerActivity.class, "Spinner"),
-                new ViewModel(NavigationViewActivity.class, "NavigationView"),
-                new ViewModel(SeekBarActivity.class, "SeekBar"),
-                new ViewModel(ToolbarActivity.class, "Toolbar"),
-                new ViewModel(FlowLayoutActivity.class, "FlowLayout & Chips"),
-                new ViewModel(TableLayoutActivity.class, "TableLayout"),
-                new ViewModel(FloatingActionMenuActivity.class, "FloatingActionMenu")
+                new ViewModel(CheckBoxRadioActivity.class, getString(R.string.checkBoxRadioActivity_title)),
+                new ViewModel(ButtonsActivity.class, getString(R.string.buttonsActivity_title)),
+                new ViewModel(CircularProgressActivity.class, getString(R.string.circularProgressActivity_title)),
+                new ViewModel(ProgressBarsActivity.class, getString(R.string.progressBarsActivity_title)),
+                new ViewModel(SnackbarActivity.class, getString(R.string.snackbarActivity_title)),
+                new ViewModel(SVGActivity.class, getString(R.string.svgActivity_title)),
+                new ViewModel(TextFieldsActivity.class, getString(R.string.textFieldsActivity_title)),
+                new ViewModel(TabsActivity.class, getString(R.string.tabsActivity_title)),
+                new ViewModel(RecentsActivity.class, getString(R.string.recentsActivity_title)),
+                new ViewModel(ScrollViewActivity.class, getString(R.string.scrollViewActivity_title)),
+                new ViewModel(RecyclerActivity.class, getString(R.string.recyclerViewActivity_title)),
+                new ViewModel(ExpandableRecyclerActivity.class, getString(R.string.expandableRecyclerActivity_title)),
+                new ViewModel(SpinnerActivity.class, getString(R.string.spinnerActivityActivity_title)),
+                new ViewModel(NavigationViewActivity.class, getString(R.string.navigationViewActivity_title)),
+                new ViewModel(SeekBarActivity.class, getString(R.string.seekBarActivity_title)),
+                new ViewModel(ToolbarActivity.class, getString(R.string.toolbarActivity_title)),
+                new ViewModel(FlowLayoutActivity.class, getString(R.string.flowLayoutActivity_title)),
+                new ViewModel(TableLayoutActivity.class, getString(R.string.tableLayoutActivity_title)),
+                new ViewModel(FloatingActionMenuActivity.class, getString(R.string.floatingActionMenuActivity_title))
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

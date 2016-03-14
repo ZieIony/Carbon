@@ -1,6 +1,8 @@
 package carbon.widget;
 
 import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Marcin on 2015-05-08.
@@ -8,6 +10,14 @@ import android.content.res.ColorStateList;
  * Interface of a view with support for tinting.
  */
 public interface TintedView {
+    PorterDuff.Mode[] modes = {
+            PorterDuff.Mode.SRC_OVER,
+            PorterDuff.Mode.SRC_IN,
+            PorterDuff.Mode.SRC_ATOP,
+            PorterDuff.Mode.MULTIPLY,
+            PorterDuff.Mode.SCREEN
+    };
+
     /**
      * Sets the tint
      *
@@ -28,4 +38,14 @@ public interface TintedView {
      * @return the tint
      */
     ColorStateList getTint();
+
+    /**
+     * @param mode
+     */
+    void setTintMode(@NonNull PorterDuff.Mode mode);
+
+    /**
+     * @return
+     */
+    PorterDuff.Mode getTintMode();
 }

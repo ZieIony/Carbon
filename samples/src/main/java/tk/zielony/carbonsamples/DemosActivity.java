@@ -21,14 +21,14 @@ public class DemosActivity extends Activity {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setIconVisible(true);
-        toolbar.setText("Demos");
+        toolbar.setText(getString(R.string.demosActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
-                new ViewModel(PowerMenuActivity.class, "Power Menu"),
-                new ViewModel(ShareToolbarActivity.class, "Share Toolbar", true),
-                new ViewModel(AutoCompleteDemo.class, "Auto Complete", true),
-                new ViewModel(QuickReturnActivity.class, "Quick Return", false)
+                new ViewModel(PowerMenuActivity.class, getString(R.string.powerMenuActivity_title)),
+                new ViewModel(ShareToolbarActivity.class, getString(R.string.shareToolbarActivity_title), true),
+                new ViewModel(AutoCompleteDemo.class, getString(R.string.autoCompleteActivity_title), true),
+                new ViewModel(QuickReturnActivity.class, getString(R.string.quickReturenActivity_title), false)
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

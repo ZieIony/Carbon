@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -80,6 +81,21 @@ public class Carbon {
         return rippleDrawable;
     }
 
+    public static RippleDrawable createRippleDrawable(ColorStateList color, RippleDrawable.Style style, View view, Drawable background, boolean useHotspot, int radius) {
+        RippleDrawable rippleDrawable;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            rippleDrawable = new RippleDrawableMarshmallow(color, background, style);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            rippleDrawable = new RippleDrawableLollipop(color, background, style);
+        } else {
+            rippleDrawable = new RippleDrawableFroyo(color, background, style);
+        }
+        rippleDrawable.setCallback(view);
+        rippleDrawable.setHotspotEnabled(useHotspot);
+        rippleDrawable.setRadius(radius);
+        return rippleDrawable;
+    }
+
     public static void initTouchMargin(TouchMarginView view, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = ((View) view).getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
 
@@ -140,6 +156,7 @@ public class Carbon {
                 view.setTint(a.getColorStateList(R.styleable.Carbon_carbon_tint));
             }
         }
+        view.setTintMode(TintedView.modes[a.getInt(R.styleable.Carbon_carbon_tintMode, 1)]);
 
         a.recycle();
     }

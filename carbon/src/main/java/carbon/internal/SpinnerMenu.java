@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.internal;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,16 +16,18 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
+import carbon.widget.FrameLayout;
+import carbon.widget.RecyclerView;
 
 /**
  * Created by Marcin on 2015-06-10.
  */
-public class PopupMenu extends PopupWindow {
+public class SpinnerMenu extends PopupWindow {
 
     protected RecyclerView recycler;
     private View mAnchorView;
 
-    public PopupMenu(Context context) {
+    public SpinnerMenu(Context context) {
         super(View.inflate(context, R.layout.carbon_popupmenu, null));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -113,7 +115,7 @@ public class PopupMenu extends PopupWindow {
         int maxHeightAbove = location[1] - windowRect.top - marginHalf - margin;
         int maxItemsAbove = maxHeightAbove / itemHeight;
         int maxHeightBelow = hWindow - location[1] - marginHalf - margin;
-        int maxItemsBelow = maxHeightBelow / itemHeight + 1;
+        int maxItemsBelow = maxHeightBelow / itemHeight;
 
         int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
         int itemsAbove = Math.min(selectedItem, maxItemsAbove);
@@ -121,7 +123,7 @@ public class PopupMenu extends PopupWindow {
         int popupX = location[0] - margin;
         int popupY = location[1] - margin - itemsAbove * itemHeight - marginHalf;
         int popupWidth = mAnchorView.getWidth() + margin * 2;
-        int popupHeight = marginHalf * 2 + (itemsAbove + itemsBelow) * itemHeight + margin * 2;
+        int popupHeight = marginHalf * 2 + Math.max(1, itemsAbove + itemsBelow) * itemHeight + margin * 2;
 
         LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
         manager.scrollToPositionWithOffset(selectedItem - itemsAbove, 0);
@@ -138,7 +140,7 @@ public class PopupMenu extends PopupWindow {
         content.getAnimator().addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                PopupMenu.super.dismiss();
+                SpinnerMenu.super.dismiss();
             }
         });
     }

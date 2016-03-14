@@ -11,8 +11,10 @@
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/carbon_toolbarUpTitleMargin"
         android:layout_marginLeft="@dimen/carbon_toolbarItemPadding"
-        android:layout_marginRight="@dimen/carbon_toolbarItemPadding"
+        android:layout_marginRight="@dimen/carbon_toolbarUpTitleMargin"
+        android:layout_marginStart="@dimen/carbon_toolbarItemPadding"
         app:carbon_inAnimation="none"
         app:carbon_outAnimation="none"/>
 

@@ -35,12 +35,12 @@ public class MainActivity extends Activity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
-                new ViewModel(WidgetsActivity.class, "Widgets"),
-                new ViewModel(FeaturesActivity.class, "Features"),
-                new ViewModel(AnimationsActivity.class, "Animations"),
-                new ViewModel(AppsLibrariesActivity.class, "Apps & Libraries"),
-                new ViewModel(DemosActivity.class, "Demos"),
-                new ViewModel(GuidelinesActivity.class, "Guidelines")
+                new ViewModel(WidgetsActivity.class, getString(R.string.widgetsActivity_title)),
+                new ViewModel(FeaturesActivity.class, getString(R.string.featuresActivity_title)),
+                new ViewModel(AnimationsActivity.class, getString(R.string.animationsActivity_title)),
+                new ViewModel(AppsLibrariesActivity.class, getString(R.string.appsLibrariesActivity_title)),
+                new ViewModel(DemosActivity.class, getString(R.string.demosActivity_title)),
+                new ViewModel(GuidelinesActivity.class, getString(R.string.guidelinesActivity_title))
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

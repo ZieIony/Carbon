@@ -62,6 +62,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     private boolean debugMode;
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
+    private OnTouchListener onDispatchTouchListener;
 
     public FrameLayout(Context context) {
         super(context, null, R.attr.carbon_frameLayoutStyle);
@@ -281,6 +282,9 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
         Collections.sort(views, new ElevationComparator());
+
+        if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
+            return true;
 
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
@@ -720,6 +724,10 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     // -------------------------------
     // ViewGroup utils
     // -------------------------------
+
+    public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
+        this.onDispatchTouchListener = onDispatchTouchListener;
+    }
 
     public List<View> findViewsById(int id) {
         List<View> result = new ArrayList<>();

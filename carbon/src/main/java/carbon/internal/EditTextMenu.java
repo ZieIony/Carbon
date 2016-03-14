@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.internal;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,14 +15,17 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
+import carbon.widget.Button;
+import carbon.widget.EditText;
+import carbon.widget.LinearLayout;
 
 /**
  * Created by Marcin on 2015-09-29.
  */
-public class EditorMenu extends PopupWindow {
+public class EditTextMenu extends PopupWindow {
     private EditText editText;
 
-    public EditorMenu(Context context) {
+    public EditTextMenu(Context context) {
         super(LayoutInflater.from(context).inflate(R.layout.carbon_editormenu, null, false));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -94,7 +97,7 @@ public class EditorMenu extends PopupWindow {
         content.getAnimator().addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                EditorMenu.super.dismiss();
+                EditTextMenu.super.dismiss();
             }
         });
     }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import carbon.widget.CheckBox;
+import carbon.widget.EditText;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -19,7 +20,7 @@ public class TextFieldsActivity extends Activity {
 
         final View editText = findViewById(R.id.editText);
         final View editText2 = findViewById(R.id.editText2);
-        final View editText3 = findViewById(R.id.editText3);
+        final EditText editText3 = (EditText) findViewById(R.id.editText3);
 
         CheckBox checkBox = (CheckBox) findViewById(R.id.enabled);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

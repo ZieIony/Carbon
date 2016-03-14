@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/carbon_padding">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="#ffcccccc"
+        android:clickable="true"
+        android:clipToPadding="false"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <carbon.widget.TextMarker
+            android:id="@+id/marker1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#ffff0000"
+            app:carbon_text="I"
+            app:carbon_textView="@+id/textView1"/>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/marker1"
+            android:layout_marginLeft="10dp"
+            android:text="Primary text"
+            android:textSize="16sp"/>
+
+        <carbon.widget.TextMarker
+            android:id="@+id/marker2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:background="#ffff0000"
+            app:carbon_text="I"
+            app:carbon_textView="@+id/textView2"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/marker2"
+            android:layout_marginLeft="10dp"
+            android:text="Secondary text"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+</carbon.widget.FrameLayout>

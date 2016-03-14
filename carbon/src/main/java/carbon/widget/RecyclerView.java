@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -290,6 +291,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     // -------------------------------
 
     ColorStateList tint;
+    PorterDuff.Mode tintMode;
 
     @Override
     public void setTint(ColorStateList list) {
@@ -326,6 +328,19 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         scrollBarDrawable = null;
     }
 
+    /**
+     * This doesn't do anything in RecyclerView
+     * @param tintMode
+     */
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode tintMode) {
+        this.tintMode = tintMode;
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return tintMode;
+    }
 
     // -------------------------------
     // scroll bars

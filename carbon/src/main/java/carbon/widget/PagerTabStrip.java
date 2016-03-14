@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -353,5 +354,15 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     @Override
     public ColorStateList getTint() {
         return tint;
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        // TODO make use of tint list
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return null;
     }
 }

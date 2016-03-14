@@ -22,15 +22,15 @@ public class AppsLibrariesActivity extends Activity {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setIconVisible(true);
-        toolbar.setText("Apps & Libraries");
+        toolbar.setText(getString(R.string.appsLibrariesActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
-                new ViewModel(CalculatorActivity.class, "Calculator", true),
-                new ViewModel(PicassoActivity.class, "Picasso"),
-                new ViewModel(RecyclerCardsActivity.class, "RecyclerView & cards"),
-                new ViewModel(DrawerActivity.class, "Nawigation drawer"),
-                new ViewModel(DesignActivity.class, "Design Support Library")
+                new ViewModel(CalculatorActivity.class, getString(R.string.calculatorActivity_title), true),
+                new ViewModel(PicassoActivity.class, getString(R.string.picassoActivity_title)),
+                new ViewModel(RecyclerCardsActivity.class, getString(R.string.recyclerCardsActivity_title)),
+                new ViewModel(DrawerActivity.class, getString(R.string.drawerActivity_title)),
+                new ViewModel(DesignActivity.class, getString(R.string.designActivity_title))
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

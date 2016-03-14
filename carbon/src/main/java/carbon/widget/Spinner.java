@@ -25,13 +25,14 @@ import com.caverock.androidsvg.SVGParseException;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.internal.SpinnerMenu;
 
 /**
  * Created by Marcin on 2015-06-11.
  */
 public class Spinner extends EditText {
-    PopupMenu popupMenu;
-    private int selectedItem;
+    SpinnerMenu spinnerMenu;
+    private int selectedIndex;
     Adapter defaultAdapter;
     AdapterView.OnItemSelectedListener onItemSelectedListener;
 
@@ -91,10 +92,10 @@ public class Spinner extends EditText {
             a.recycle();
         }
 
-        popupMenu = new PopupMenu(new ContextThemeWrapper(context, theme));
+        spinnerMenu = new SpinnerMenu(new ContextThemeWrapper(context, theme));
         defaultAdapter = new Adapter();
-        popupMenu.setAdapter(defaultAdapter);
-        popupMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        spinnerMenu.setAdapter(defaultAdapter);
+        spinnerMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 isShowingPopup = false;
@@ -104,38 +105,45 @@ public class Spinner extends EditText {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupMenu.show(Spinner.this);
+                spinnerMenu.show(Spinner.this);
                 isShowingPopup = true;
             }
         });
     }
 
+    public void setSelectedIndex(int index) {
+        selectedIndex = index;
+        if (getAdapter() != null)
+            setText(getAdapter().getItem(index).toString());
+    }
+
     public int getSelectedIndex() {
-        return selectedItem;
+        return selectedIndex;
     }
 
     public void setAdapter(final RecyclerView.Adapter adapter) {
         if (adapter == null) {
-            popupMenu.setAdapter(defaultAdapter);
+            spinnerMenu.setAdapter(defaultAdapter);
             defaultAdapter.setOnItemClickedListener(onItemClickedListener);
         } else {
-            popupMenu.setAdapter(adapter);
+            spinnerMenu.setAdapter(adapter);
             adapter.setOnItemClickedListener(onItemClickedListener);
         }
+        setText(getAdapter().getItem(selectedIndex).toString());
     }
 
     public RecyclerView.Adapter getAdapter() {
-        return popupMenu.getAdapter();
+        return spinnerMenu.getAdapter();
     }
 
     RecyclerView.OnItemClickedListener onItemClickedListener = new RecyclerView.OnItemClickedListener() {
         @Override
         public void onItemClicked(int position) {
-            setText(popupMenu.getAdapter().getItem(position).toString());
-            selectedItem = position;
+            setText(spinnerMenu.getAdapter().getItem(position).toString());
+            selectedIndex = position;
             if (onItemSelectedListener != null)
-                onItemSelectedListener.onItemSelected(null, null, selectedItem, 0);
-            popupMenu.dismiss();
+                onItemSelectedListener.onItemSelected(null, null, selectedIndex, 0);
+            spinnerMenu.dismiss();
         }
     };
 
@@ -144,7 +152,7 @@ public class Spinner extends EditText {
     }
 
     public void setItems(String[] items) {
-        popupMenu.setAdapter(defaultAdapter);
+        spinnerMenu.setAdapter(defaultAdapter);
         defaultAdapter.setOnItemClickedListener(onItemClickedListener);
         defaultAdapter.setItems(items);
     }
@@ -196,10 +204,10 @@ public class Spinner extends EditText {
     protected boolean setFrame(int l, int t, int r, int b) {
         boolean result = super.setFrame(l, t, r, b);
 
-        if (popupMenu != null) {
-            carbon.widget.FrameLayout container = (FrameLayout) popupMenu.getContentView().findViewById(R.id.carbon_popupContainer);
+        if (spinnerMenu != null) {
+            carbon.widget.FrameLayout container = (FrameLayout) spinnerMenu.getContentView().findViewById(R.id.carbon_popupContainer);
             if (container.getAnimator() == null)
-                popupMenu.update();
+                spinnerMenu.update();
         }
 
         return result;
@@ -210,7 +218,7 @@ public class Spinner extends EditText {
         super.onAttachedToWindow();
 
         if (isShowingPopup)
-            popupMenu.showImmediate(Spinner.this);
+            spinnerMenu.showImmediate(Spinner.this);
     }
 
     @Override
@@ -218,7 +226,7 @@ public class Spinner extends EditText {
         super.onDetachedFromWindow();
 
         if (isShowingPopup)
-            popupMenu.dismissImmediate();
+            spinnerMenu.dismissImmediate();
     }
 
     @Override
