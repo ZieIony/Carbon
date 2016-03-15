@@ -330,6 +330,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     /**
      * This doesn't do anything in RecyclerView
+     *
      * @param tintMode
      */
     @Override

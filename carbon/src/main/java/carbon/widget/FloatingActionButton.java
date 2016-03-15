@@ -12,8 +12,9 @@ import android.view.View;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.ColorStateListDrawable;
-import carbon.drawable.ControlAccentColorStateList;
+import carbon.drawable.DefaultAccentColorStateList;
 
 /**
  * Created by Marcin on 2014-12-04.
@@ -56,7 +57,7 @@ public class FloatingActionButton extends ImageView {
             if (a.hasValue(R.styleable.FloatingActionButton_android_background)) {
                 int color = a.getColor(R.styleable.FloatingActionButton_android_background, 0);
                 if (color == 0)
-                    setBackground(new ColorStateListDrawable(new ControlAccentColorStateList(getContext())));
+                    setBackground(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultAccentColorStateList(getContext()), this)));
             }
             if (a.hasValue(R.styleable.FloatingActionButton_carbon_menu)) {
                 int resId = a.getResourceId(R.styleable.FloatingActionButton_carbon_menu, 0);

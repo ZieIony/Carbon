@@ -28,8 +28,11 @@ import com.nineoldandroids.animation.ValueAnimator;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.drawable.ColorStateListDrawable;
+import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
@@ -102,6 +105,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                     int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
+                } else if (attr == R.styleable.Button_android_background) {
+                    int color = a.getColor(R.styleable.Button_android_background, 0);
+                    if (color == 0)
+                        setBackground(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), this)));
                 }
             }
 
@@ -473,7 +480,6 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
     }
 
     @Override

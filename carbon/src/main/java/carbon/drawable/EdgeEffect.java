@@ -4,7 +4,6 @@ package carbon.drawable;
  * Created by Marcin on 2015-02-28.
  */
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,7 +15,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-@TargetApi(14)
 public class EdgeEffect {
     @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "EdgeEffect";

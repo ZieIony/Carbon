@@ -19,10 +19,10 @@ public class AnimatedColorStateList extends ColorStateList {
     private final int[][] states;
     private int[] currentState = null;
     private ValueAnimator runningAnimation = null;
-    private AnimatedView view;
+    private View view;
     int animatedColor;
 
-    public static AnimatedColorStateList fromList(ColorStateList list, final AnimatedView target, final ValueAnimator.AnimatorUpdateListener listener) {
+    public static AnimatedColorStateList fromList(ColorStateList list, final View target) {
         int[][] mStateSpecs; // must be parallel to mColors
         int[] mColors;      // must be parallel to mStateSpecs
         int mDefaultColor;
@@ -37,7 +37,7 @@ public class AnimatedColorStateList extends ColorStateList {
             Field mDefaultColorField = ColorStateList.class.getDeclaredField("mDefaultColor");
             mDefaultColorField.setAccessible(true);
             mDefaultColor = (int) mDefaultColorField.get(list);
-            AnimatedColorStateList animatedColorStateList = new AnimatedColorStateList(mStateSpecs, mColors, target, listener);
+            AnimatedColorStateList animatedColorStateList = new AnimatedColorStateList(mStateSpecs, mColors, target);
             mDefaultColorField.set(animatedColorStateList, mDefaultColor);
             return animatedColorStateList;
         } catch (NoSuchFieldException e) {
@@ -49,7 +49,7 @@ public class AnimatedColorStateList extends ColorStateList {
         return null;
     }
 
-    public AnimatedColorStateList(int[][] states, int[] colors, final AnimatedView target, final ValueAnimator.AnimatorUpdateListener listener) {
+    public AnimatedColorStateList(int[][] states, int[] colors, final View target) {
         super(states, colors);
         view = target;
         this.states = states;
@@ -62,7 +62,7 @@ public class AnimatedColorStateList extends ColorStateList {
             public void onAnimationUpdate(ValueAnimator animation) {
                 synchronized (AnimatedColorStateList.this) {
                     animatedColor = (int) animation.getAnimatedValue();
-                    listener.onAnimationUpdate(animation);
+                    view.postInvalidate();
                 }
             }
         });

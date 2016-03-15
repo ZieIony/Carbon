@@ -53,6 +53,7 @@
             <enum name="progressWidth" value="5"/>
         </attr>
 
+        <!-- {@deprecated Use DebugLayout instead.} -->
         <attr name="carbon_debugMode" format="boolean"/>
 
         <attr name="carbon_touchMargin" format="dimension"/>
@@ -151,6 +152,7 @@
         <attr name="carbon_touchMarginRight"/>
         <attr name="carbon_touchMarginBottom"/>
         <attr name="carbon_cornerRadius"/>
+        <attr name="android:background"/>
     </declare-styleable>
 
     <declare-styleable name="TextView">

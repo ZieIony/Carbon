@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -32,7 +33,7 @@ import carbon.animation.AnimUtils;
  */
 public class Snackbar extends PopupWindow implements GestureDetector.OnGestureListener {
     public static int INFINITE = -1;
-    private Context context;
+    private Activity activity;
     private float swipe;
     private ValueAnimator animator;
     private View pushedView;
@@ -142,15 +143,15 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
         Floating, Docked
     }
 
-    public Snackbar(Context context) {
-        super(context);
-        this.context = context;
+    public Snackbar(Activity activity) {
+        super(activity);
+        this.activity = activity;
         initSnackbar(R.attr.carbon_snackbarTheme);
     }
 
-    public Snackbar(Context context, String message, String action, int duration) {
-        super(context);
-        this.context = context;
+    public Snackbar(Activity activity, String message, String action, int duration) {
+        super(activity);
+        this.activity = activity;
         initSnackbar(R.attr.carbon_snackbarTheme);
         setMessage(message);
         setAction(action);
@@ -159,7 +160,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
     }
 
     private void initSnackbar(int defStyleAttr) {
-        setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
+        setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(android.R.color.transparent)));
 
         setTouchable(true);
         setAnimationStyle(0);
@@ -185,8 +186,8 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
             if (!next.contains(this))
                 next.add(this);
             if (next.indexOf(this) == 0) {
-                super.showAtLocation(view, Gravity.BOTTOM | Gravity.START, 0, 0);
-                WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+                super.showAtLocation(activity.getWindow().getDecorView().getRootView(), Gravity.BOTTOM | Gravity.START, 0, 0);
+                WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
                 contentView.measure(View.MeasureSpec.makeMeasureSpec(wm.getDefaultDisplay().getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
                 update(contentView.getMeasuredWidth(), contentView.getMeasuredHeight());
                 ViewHelper.setAlpha(content, 0);
@@ -213,7 +214,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
     }
 
     public void show() {
-        show(pushedView);
+        show(null);
     }
 
     public static void clearQueue() {
@@ -260,7 +261,11 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
     }
 
     public Context getContext() {
-        return context;
+        return activity;
+    }
+
+    public Activity getActivity() {
+        return activity;
     }
 
     public void setOnClickListener(View.OnClickListener l) {
@@ -271,7 +276,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
         if (action != null) {
             button.setText(action);
             button.setVisibility(View.VISIBLE);
-            content.setPadding(content.getPaddingLeft(), 0, (int) context.getResources().getDimension(R.dimen.carbon_paddingHalf), 0);
+            content.setPadding(content.getPaddingLeft(), 0, (int) activity.getResources().getDimension(R.dimen.carbon_paddingHalf), 0);
         } else {
             content.setPadding(content.getPaddingLeft(), 0, content.getPaddingLeft(), 0);
             button.setVisibility(View.GONE);
@@ -300,10 +305,10 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
         if (style == Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            int margin = (int) context.getResources().getDimension(R.dimen.carbon_padding);
+            int margin = (int) activity.getResources().getDimension(R.dimen.carbon_padding);
             layoutParams.setMargins(margin, 0, margin, margin);
             layoutParams.gravity = Gravity.START | Gravity.BOTTOM;
-            content.setCornerRadius((int) context.getResources().getDimension(R.dimen.carbon_cornerRadiusButton));
+            content.setCornerRadius((int) activity.getResources().getDimension(R.dimen.carbon_cornerRadiusButton));
         } else {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;

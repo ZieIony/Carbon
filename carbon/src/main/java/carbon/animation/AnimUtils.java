@@ -366,7 +366,73 @@ public class AnimUtils {
                     view.setTranslationZ((Float) animation.getAnimatedValue());
                 }
             });
-            stateAnimator.addState(new int[]{-android.R.attr.state_pressed}, animator, animatorListener);
+            stateAnimator.addState(new int[]{-android.R.attr.state_pressed, android.R.attr.state_enabled}, animator, animatorListener);
+        }
+        {
+            final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
+            animator.setDuration(200);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    animator.setFloatValues(view.getElevation(), 0);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            };
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    view.setTranslationZ((Float) animation.getAnimatedValue());
+                }
+            });
+            stateAnimator.addState(new int[]{android.R.attr.state_enabled}, animator, animatorListener);
+        }
+        {
+            final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
+            animator.setDuration(200);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    animator.setFloatValues(view.getTranslationZ(), -view.getElevation());
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            };
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    view.setTranslationZ((Float) animation.getAnimatedValue());
+                }
+            });
+            stateAnimator.addState(new int[]{-android.R.attr.state_enabled}, animator, animatorListener);
         }
     }
 

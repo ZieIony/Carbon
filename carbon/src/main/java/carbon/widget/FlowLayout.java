@@ -57,8 +57,6 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
 public class FlowLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
-
-    private boolean debugMode;
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
     private OnTouchListener onDispatchTouchListener;
 
@@ -96,12 +94,6 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
             setCornerRadius((int) a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
 
             a.recycle();
-
-            if (isInEditMode()) {
-                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
-                a.recycle();
-            }
         }
 
         setChildrenDrawingOrderEnabled(true);
@@ -137,9 +129,6 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
             if (insetBottom != 0)
                 canvas.drawRect(0, getHeight() - insetBottom, getWidth(), getHeight(), paint);
         }
-
-        if (debugMode)
-            Carbon.drawDebugInfo(this, canvas);
     }
 
     @Override
@@ -509,7 +498,6 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
     }
 
     @Override

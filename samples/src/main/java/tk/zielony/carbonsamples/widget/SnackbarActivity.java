@@ -23,6 +23,7 @@ public class SnackbarActivity extends Activity {
         final CheckBox swipeCheckBox = (CheckBox) findViewById(R.id.swipe);
         final CheckBox floatingCheckBox = (CheckBox) findViewById(R.id.floating);
         final CheckBox infiniteCheckBox = (CheckBox) findViewById(R.id.infinite);
+        final CheckBox pushCheckBox = (CheckBox) findViewById(R.id.push);
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
@@ -38,7 +39,7 @@ public class SnackbarActivity extends Activity {
                 snackbar.setStyle(floatingCheckBox.isChecked() ? Snackbar.Style.Floating : Snackbar.Style.Docked);
                 snackbar.setTapOutsideToDismissEnabled(tapCheckBox.isChecked());
                 snackbar.setSwipeToDismissEnabled(swipeCheckBox.isChecked());
-                snackbar.show(fab);
+                snackbar.show(pushCheckBox.isChecked() ? fab : null);
                 snackbar.setOnDismissedListener(new Snackbar.OnDismissedListener() {
                     @Override
                     public void onDismissed() {

@@ -439,7 +439,6 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
     }
 
     @Override

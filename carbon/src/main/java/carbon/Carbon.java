@@ -183,6 +183,14 @@ public class Carbon {
             canvas.drawRect(rect, paint);
         }
 
+        float step = viewGroup.getResources().getDimension(R.dimen.carbon_grid8);
+        paint.setColor(0x7f000000);
+        for (float x = 8.5f; x < viewGroup.getWidth(); x += step) {
+            canvas.drawLine(x, 0, x, viewGroup.getHeight(), paint);
+        }
+        for (float y = 8.5f; y < viewGroup.getHeight(); y += step) {
+            canvas.drawLine(0, y, viewGroup.getWidth(), y, paint);
+        }
     }
 
     public static void initAnimations(AnimatedView view, AttributeSet attrs, int defStyleAttr) {
@@ -207,5 +215,12 @@ public class Carbon {
         TypedValue typedvalueattr = new TypedValue();
         theme.resolveAttribute(attr, typedvalueattr, true);
         return typedvalueattr.resourceId != 0 ? context.getResources().getColor(typedvalueattr.resourceId) : typedvalueattr.data;
+    }
+
+    public static boolean isDebugModeEnabled(Context context) {
+        Resources.Theme theme = context.getTheme();
+        TypedValue typedvalueattr = new TypedValue();
+        theme.resolveAttribute(R.attr.carbon_debugMode, typedvalueattr, true);
+        return typedvalueattr.resourceId != 0 ? context.getResources().getBoolean(typedvalueattr.resourceId) : false;
     }
 }

@@ -1,17 +1,39 @@
-<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            xmlns:tools="http://schemas.android.com/tools"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary"
-                            tools:context=".MainActivity">
+<carbon.widget.LinearLayout
+    android:id="@+id/content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
+
+    <carbon.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight">
+
+        <carbon.widget.ImageView
+            android:id="@+id/debug"
+            style="@style/carbon_ImageView.Icon"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize"
+            app:carbon_src="@raw/ic_bug_report_24px"
+            app:carbon_tint="?attr/colorControlNormal"/>
+
+        <carbon.widget.CheckBox
+            android:id="@+id/enabled"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize"
+            android:checked="true"
+            android:padding="12dp"
+            app:carbon_tint="?attr/carbon_iconColor"/>
+    </carbon.widget.Toolbar>
 
     <carbon.widget.Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
+        android:tag="enable"
         android:text="Theme style"/>
 
     <carbon.widget.Button
@@ -25,6 +47,7 @@
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
         android:paddingTop="0dp"
+        android:tag="enable"
         android:text="Inline Style"
         android:textColor="#ff0000ff"
         app:carbon_cornerRadius="2dp"
@@ -41,18 +64,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_margin="@dimen/carbon_padding"
+        android:tag="enable"
         android:text="flat button"/>
 
     <carbon.widget.FloatingActionButton
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize"
         android:layout_margin="@dimen/carbon_padding"
+        android:tag="enable"
         app:carbon_src="@raw/ic_shopping_cart_24px"/>
 
     <carbon.widget.FloatingActionButton
         android:layout_width="@dimen/carbon_smallFabSize"
         android:layout_height="@dimen/carbon_smallFabSize"
         android:layout_margin="@dimen/carbon_padding"
+        android:tag="enable"
         app:carbon_src="@raw/ic_data_usage_24px"/>
 
     <carbon.widget.FloatingActionButton
@@ -61,6 +87,7 @@
         android:layout_margin="@dimen/carbon_padding"
         android:padding="@dimen/carbon_padding"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher"/>
+        android:src="@drawable/ic_launcher"
+        android:tag="enable"/>
 
 </carbon.widget.LinearLayout>

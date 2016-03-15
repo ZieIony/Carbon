@@ -56,8 +56,6 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * Created by Marcin on 2015-12-30.
  */
 public class CoordinatorLayout extends android.support.design.widget.CoordinatorLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
-    private boolean debugMode;
-
     public CoordinatorLayout(Context context) {
         super(context);
         initCoordinatorLayout(null, R.attr.carbon_coordinatorLayoutStyle);
@@ -85,12 +83,6 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
             setCornerRadius((int) a.getDimension(R.styleable.CoordinatorLayout_carbon_cornerRadius, 0));
 
             a.recycle();
-
-            if (isInEditMode()) {
-                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
-                a.recycle();
-            }
         }
 
         setChildrenDrawingOrderEnabled(true);
@@ -126,9 +118,6 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
             if (insetBottom != 0)
                 canvas.drawRect(0, getHeight() - insetBottom, getWidth(), getHeight(), paint);
         }
-
-        if (debugMode)
-            Carbon.drawDebugInfo(this, canvas);
     }
 
     @Override
@@ -473,7 +462,6 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
     }
 
     @Override

@@ -1,64 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                               xmlns:app="http://schemas.android.com/apk/res-auto"
-                              android:fitsSystemWindows="true"
-                              app:carbon_insetColor="?attr/colorPrimary"
-                              android:orientation="vertical"
                               android:layout_width="match_parent"
-                              android:layout_height="match_parent">
+                              android:layout_height="match_parent"
+                              android:fitsSystemWindows="true"
+                              android:orientation="vertical"
+                              app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.Button
-        android:text="Show snackbar"
         android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="left"
         android:layout_margin="@dimen/carbon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"/>
+        android:text="Show snackbar"/>
 
     <carbon.widget.CheckBox
-        android:layout_below="@id/button"
-        android:padding="@dimen/carbon_padding"
-        android:checked="false"
         android:id="@+id/swipe"
-        android:text="swipe to dismiss"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button"
+        android:checked="false"
+        android:padding="@dimen/carbon_padding"
+        android:text="swipe to dismiss"/>
 
     <carbon.widget.CheckBox
-        android:layout_below="@id/swipe"
-        android:padding="@dimen/carbon_padding"
-        android:checked="false"
         android:id="@+id/tap"
-        android:text="tap outside to dismiss"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/swipe"
+        android:checked="false"
+        android:padding="@dimen/carbon_padding"
+        android:text="tap outside to dismiss"/>
 
     <carbon.widget.CheckBox
-        android:layout_below="@id/tap"
-        android:padding="@dimen/carbon_padding"
-        android:checked="false"
         android:id="@+id/floating"
-        android:text="floating snackbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tap"
+        android:checked="false"
+        android:padding="@dimen/carbon_padding"
+        android:text="floating snackbar"/>
 
     <carbon.widget.CheckBox
-        android:layout_below="@id/floating"
-        android:padding="@dimen/carbon_padding"
-        android:checked="false"
         android:id="@+id/infinite"
-        android:text="infinite"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/floating"
+        android:checked="false"
+        android:padding="@dimen/carbon_padding"
+        android:text="infinite"/>
+
+    <carbon.widget.CheckBox
+        android:id="@+id/push"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/infinite"
+        android:checked="false"
+        android:padding="@dimen/carbon_padding"
+        android:text="push fab"/>
 
     <carbon.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_margin="@dimen/carbon_padding"
+        android:layout_width="@dimen/carbon_fabSize"
+        android:layout_height="@dimen/carbon_fabSize"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        app:carbon_src="@raw/ic_face_24px"
+        android:layout_margin="@dimen/carbon_padding"
         app:carbon_rippleColor="#7fffffff"
-        android:layout_width="@dimen/carbon_fabSize"
-        android:layout_height="@dimen/carbon_fabSize"/>
+        app:carbon_src="@raw/ic_face_24px"/>
 
 </carbon.widget.RelativeLayout>

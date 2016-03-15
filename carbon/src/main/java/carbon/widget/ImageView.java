@@ -405,7 +405,6 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
     }
 
     @Override

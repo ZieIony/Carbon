@@ -58,8 +58,6 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * Created by Marcin on 2014-12-13.
  */
 public class Toolbar extends android.support.v7.widget.Toolbar implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
-    private boolean debugMode;
-
     private ViewGroup content;
     private ImageView icon;
     private TextView title;
@@ -260,9 +258,6 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
             if (insetBottom != 0)
                 canvas.drawRect(0, getHeight() - insetBottom, getWidth(), getHeight(), paint);
         }
-
-        if (debugMode)
-            Carbon.drawDebugInfo(this, canvas);
     }
 
     @Override
@@ -602,7 +597,6 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
     }
 
     @Override

@@ -75,4 +75,6 @@
     <dimen name="carbon_chipCloseMargin">4dp</dimen>
 
     <dimen name="carbon_navigationBarHeight">48dp</dimen>
+
+    <dimen name="carbon_grid8">8dp</dimen>
 </resources>

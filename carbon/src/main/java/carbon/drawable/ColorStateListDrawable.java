@@ -1,31 +1,50 @@
 package carbon.drawable;
 
-import android.content.res.ColorStateList;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.StateListDrawable;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 
-import java.lang.reflect.Field;
+import carbon.animation.AnimatedColorStateList;
 
 /**
  * Created by Marcin on 2015-08-21.
  */
-public class ColorStateListDrawable extends StateListDrawable {
-    public ColorStateListDrawable(ColorStateList list) {
-        try {
-            Field mStateSpecsField = ColorStateList.class.getDeclaredField("mStateSpecs");
-            mStateSpecsField.setAccessible(true);
-            int[][] mStateSpecs = (int[][]) mStateSpecsField.get(list);
-            Field mColorsField = ColorStateList.class.getDeclaredField("mColors");
-            mColorsField.setAccessible(true);
-            int[] mColors = (int[]) mColorsField.get(list);
+public class ColorStateListDrawable extends Drawable {
+    private AnimatedColorStateList list;
 
-            for (int i = 0; i < mColors.length; i++) {
-                addState(mStateSpecs[i], new ColorDrawable(mColors[i]));
-            }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    public ColorStateListDrawable(AnimatedColorStateList list) {
+        this.list = list;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawColor(list.getColorForState(getState(), list.getDefaultColor()));
+    }
+
+    @Override
+    public void setAlpha(int i) {
+
+    }
+
+    @Override
+    public void setColorFilter(ColorFilter colorFilter) {
+
+    }
+
+    @Override
+    public int getOpacity() {
+        return PixelFormat.TRANSLUCENT;
+    }
+
+    @Override
+    public boolean isStateful() {
+        return true;
+    }
+
+    @Override
+    public boolean setState(int[] stateSet) {
+        list.setState(stateSet);
+        return super.setState(stateSet);
     }
 }

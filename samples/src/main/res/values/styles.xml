@@ -16,10 +16,6 @@
         <item name="carbon_rippleColor">#42ffffff</item>
     </style>
 
-    <style name="AppTheme.Debug">
-        <item name="carbon_debugMode">true</item>
-    </style>
-
     <style name="calcButtonStyle" parent="carbon_Button.Flat">
         <item name="carbon_rippleColor">#42ffffff</item>
         <item name="carbon_rippleStyle">borderless</item>

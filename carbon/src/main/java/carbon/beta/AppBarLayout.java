@@ -59,8 +59,6 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * Created by Marcin on 2015-12-30.
  */
 public class AppBarLayout extends android.support.design.widget.AppBarLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
-    private boolean debugMode;
-
     public AppBarLayout(Context context) {
         super(context);
         initAppBarLayout(null, R.attr.carbon_appBarLayoutStyle);
@@ -83,12 +81,6 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
             setCornerRadius((int) a.getDimension(R.styleable.AppBarLayout_carbon_cornerRadius, 0));
 
             a.recycle();
-
-            if (isInEditMode()) {
-                a = getContext().obtainStyledAttributes(attrs, R.styleable.Carbon, defStyleAttr, 0);
-                debugMode = a.getBoolean(R.styleable.Carbon_carbon_debugMode, false);
-                a.recycle();
-            }
         }
 
         setChildrenDrawingOrderEnabled(true);
@@ -124,9 +116,6 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
             if (insetBottom != 0)
                 canvas.drawRect(0, getHeight() - insetBottom, getWidth(), getHeight(), paint);
         }
-
-        if (debugMode)
-            Carbon.drawDebugInfo(this, canvas);
     }
 
     @Override
@@ -472,7 +461,6 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        setTranslationZ(enabled ? 0 : -elevation);
     }
 
     @Override

@@ -1336,12 +1336,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public void setTint(ColorStateList list) {
         if (list != null) {
-            tint = AnimatedColorStateList.fromList(list, this, new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    postInvalidate();
-                }
-            });
+            tint = AnimatedColorStateList.fromList(list, this);
         } else {
             tint = null;
         }
