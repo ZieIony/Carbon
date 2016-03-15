@@ -115,7 +115,7 @@ public class SpinnerMenu extends PopupWindow {
         int maxHeightAbove = location[1] - windowRect.top - marginHalf - margin;
         int maxItemsAbove = maxHeightAbove / itemHeight;
         int maxHeightBelow = hWindow - location[1] - marginHalf - margin;
-        int maxItemsBelow = maxHeightBelow / itemHeight;
+        int maxItemsBelow = maxHeightBelow / itemHeight + 1;
 
         int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
         int itemsAbove = Math.min(selectedItem, maxItemsAbove);
