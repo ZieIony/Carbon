@@ -19,5 +19,6 @@ public class NavigationViewActivity extends Activity {
 
         navigationView = (NavigationView) findViewById(R.id.drawerMenu);
         navigationView.setMenu(R.menu.menu_navigation);
+        navigationView.setHeader(R.layout.header_scrollview);
     }
 }

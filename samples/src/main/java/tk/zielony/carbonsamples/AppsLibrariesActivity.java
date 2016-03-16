@@ -47,7 +47,7 @@ public class AppsLibrariesActivity extends Activity {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setIconVisible(true);
-        toolbar.setText(getString(R.string.appsLibrariesActivity_title));
+        toolbar.setTitle(getString(R.string.appsLibrariesActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{

@@ -129,7 +129,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 }
                 if (drag) {
                     final int oldY = computeVerticalScrollOffset();
-                    final int range = computeVerticalScrollRange();
+                    final int range = computeVerticalScrollRange() - getHeight();
                     boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
                             (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
@@ -229,7 +229,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 final int height = getHeight();
 
                 canvas.translate(-width + getPaddingLeft(),
-                        Math.max(computeVerticalScrollRange(), scrollY) + height);
+                        height);
                 canvas.rotate(180, width, 0);
                 bottomGlow.setSize(width, height);
                 if (bottomGlow.draw(canvas)) {
@@ -342,6 +342,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     public PorterDuff.Mode getTintMode() {
         return tintMode;
     }
+
 
     // -------------------------------
     // scroll bars

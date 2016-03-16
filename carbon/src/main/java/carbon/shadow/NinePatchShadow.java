@@ -2,6 +2,7 @@ package carbon.shadow;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -15,7 +16,7 @@ public class NinePatchShadow extends Shadow {
     private final int e;
     private final int c;
     Rect src = new Rect();
-    RectF dst = new RectF();
+    Rect dst = new Rect();
     private int[] xDiv;
     private int[] yDiv;
     private int[] xDivDst;

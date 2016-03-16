@@ -31,7 +31,7 @@ public class TableLayoutActivity extends Activity {
         List<String> names = Arrays.asList("Manufacturer", "Model", "Percentage", "Emulator");
         List<Class> classes = Arrays.asList(new Class[]{String.class, String.class, Float.class, Boolean.class});
         tableLayout.setAdapter(new MyTableAdapter(tableLayout.getTableView(), items, names, classes));
-        tableLayout.getToolbar().setText("Devices");
+        tableLayout.getToolbar().setTitle("Devices");
         tableLayout.getToolbar().getTitleView().setTextColor(Carbon.getThemeColor(this, android.R.attr.textColorSecondary));
     }
 

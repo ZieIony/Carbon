@@ -32,7 +32,7 @@ public class DrawerActivity extends Activity {
         setContentView(R.layout.activity_drawer);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setText(R.string.app_name);
+        toolbar.setTitle(R.string.app_name);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawerMenu = (LinearLayout) findViewById(R.id.drawerMenu);

@@ -40,9 +40,9 @@ public class SnackbarActivity extends Activity {
                 snackbar.setTapOutsideToDismissEnabled(tapCheckBox.isChecked());
                 snackbar.setSwipeToDismissEnabled(swipeCheckBox.isChecked());
                 snackbar.show(pushCheckBox.isChecked() ? fab : null);
-                snackbar.setOnDismissedListener(new Snackbar.OnDismissedListener() {
+                snackbar.setOnDismissListener(new Snackbar.OnDismissListener() {
                     @Override
-                    public void onDismissed() {
+                    public void onDismiss() {
                     }
                 });
             }

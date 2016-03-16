@@ -335,7 +335,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         }
 
         private SavedState(Parcel in) {
-            Parcelable superState = in.readParcelable(EditText.class.getClassLoader());
+            Parcelable superState = in.readParcelable(ExpandableRecyclerView.class.getClassLoader());
             this.superState = superState != null ? superState : EMPTY_STATE;
             this.stateToSave = in.readSparseBooleanArray();
         }
@@ -375,6 +375,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
     // -------------------------------
 
     ColorStateList tint;
+    PorterDuff.Mode tintMode;
 
     @Override
     public void setTint(ColorStateList list) {
@@ -411,14 +412,19 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         scrollBarDrawable = null;
     }
 
+    /**
+     * This doesn't do anything in RecyclerView
+     *
+     * @param tintMode
+     */
     @Override
-    public void setTintMode(@NonNull PorterDuff.Mode mode) {
-        // TODO make use of tint list
+    public void setTintMode(@NonNull PorterDuff.Mode tintMode) {
+        this.tintMode = tintMode;
     }
 
     @Override
     public PorterDuff.Mode getTintMode() {
-        return null;
+        return tintMode;
     }
 
 
@@ -605,7 +611,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         void onChildItemClicked(int group, int position);
     }
 
-    public static abstract class Adapter<VH extends ViewHolder, I> extends RecyclerView.Adapter<VH, I> {
+    public static abstract class Adapter<CVH extends ViewHolder,GVH extends ViewHolder, C,G> extends RecyclerView.Adapter<ViewHolder, Object> {
         private static final int TYPE_HEADER = 0;
 
         SparseBooleanArray expanded = new SparseBooleanArray();
@@ -667,12 +673,12 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             return count;
         }
 
-        public abstract I getGroupItem(int position);
+        public abstract G getGroupItem(int position);
 
-        public abstract I getChildItem(int group, int position);
+        public abstract C getChildItem(int group, int position);
 
         @Override
-        public I getItem(int i) {
+        public Object getItem(int i) {
             int group = 0;
             while (group < getGroupItemCount()) {
                 if (i > 0 && !isExpanded(group)) {
@@ -695,7 +701,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         }
 
         @Override
-        public void onBindViewHolder(VH holder, int i) {
+        public void onBindViewHolder(ViewHolder holder, int i) {
             int group = 0;
             while (group < getGroupItemCount()) {
                 if (i > 0 && !isExpanded(group)) {
@@ -706,7 +712,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                 if (i > 0 && isExpanded(group)) {
                     i--;
                     if (i < getChildItemCount(group)) {
-                        onBindChildViewHolder(holder, group, i);
+                        onBindChildViewHolder((CVH) holder, group, i);
                         return;
                     }
                     i -= getChildItemCount(group);
@@ -714,7 +720,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                     continue;
                 }
                 if (i == 0) {
-                    onBindGroupViewHolder(holder, group);
+                    onBindGroupViewHolder((GVH) holder, group);
                     return;
                 }
             }
@@ -722,13 +728,13 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         }
 
         @Override
-        public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return viewType == TYPE_HEADER ? onCreateGroupViewHolder(parent) : onCreateChildViewHolder(parent, viewType);
         }
 
-        protected abstract VH onCreateGroupViewHolder(ViewGroup parent);
+        protected abstract GVH onCreateGroupViewHolder(ViewGroup parent);
 
-        protected abstract VH onCreateChildViewHolder(ViewGroup parent, int viewType);
+        protected abstract CVH onCreateChildViewHolder(ViewGroup parent, int viewType);
 
         public abstract int getChildItemViewType(int group, int position);
 
@@ -759,7 +765,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             this.onChildItemClickedListener = onItemClickedListener;
         }
 
-        public void onBindChildViewHolder(VH holder, final int group, final int position) {
+        public void onBindChildViewHolder(CVH holder, final int group, final int position) {
             holder.itemView.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     if (Adapter.this.onChildItemClickedListener != null) {
@@ -770,7 +776,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             });
         }
 
-        public void onBindGroupViewHolder(final VH holder, final int group) {
+        public void onBindGroupViewHolder(final GVH holder, final int group) {
             if (holder instanceof GroupViewHolder)
                 ((GroupViewHolder) holder).setExpanded(isExpanded(group));
             holder.itemView.setOnClickListener(new OnClickListener() {

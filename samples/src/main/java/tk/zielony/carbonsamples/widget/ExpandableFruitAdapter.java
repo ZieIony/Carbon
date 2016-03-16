@@ -14,7 +14,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-05-09.
  */
-public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<RecyclerView.ViewHolder, String> {
+public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<ExpandableFruitAdapter.ChildViewHolder, ExpandableRecyclerView.SimpleGroupViewHolder, String, String> {
     private List<String> fruits;
 
     public ExpandableFruitAdapter(List<String> fruits) {
@@ -43,12 +43,12 @@ public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<Recyc
     }
 
     @Override
-    protected RecyclerView.ViewHolder onCreateGroupViewHolder(ViewGroup parent) {
+    protected ExpandableRecyclerView.SimpleGroupViewHolder onCreateGroupViewHolder(ViewGroup parent) {
         return new ExpandableRecyclerView.SimpleGroupViewHolder(parent.getContext());
     }
 
     @Override
-    protected RecyclerView.ViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    protected ExpandableFruitAdapter.ChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.row_drawer, parent, false);
         return new ChildViewHolder(view);
@@ -60,16 +60,16 @@ public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<Recyc
     }
 
     @Override
-    public void onBindGroupViewHolder(RecyclerView.ViewHolder holder, int group) {
+    public void onBindGroupViewHolder(ExpandableRecyclerView.SimpleGroupViewHolder holder, int group) {
         super.onBindGroupViewHolder(holder, group);
-        ExpandableRecyclerView.SimpleGroupViewHolder h = (ExpandableRecyclerView.SimpleGroupViewHolder) holder;
+        ExpandableRecyclerView.SimpleGroupViewHolder h = holder;
         h.setText(getGroupItem(group));
     }
 
     @Override
-    public void onBindChildViewHolder(RecyclerView.ViewHolder holder, int group, final int position) {
+    public void onBindChildViewHolder(ExpandableFruitAdapter.ChildViewHolder holder, int group, final int position) {
         super.onBindChildViewHolder(holder, group, position);
-        ChildViewHolder h = (ChildViewHolder) holder;
+        ChildViewHolder h = holder;
         h.tv.setText(getChildItem(group, position));
     }
 
