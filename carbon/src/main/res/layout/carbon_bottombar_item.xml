@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:minWidth="@dimen/carbon_bottomBarInactiveMinWidth"
+    app:carbon_maxWidth="@dimen/carbon_bottomBarInactiveMaxWidth"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
+    app:carbon_rippleStyle="borderless">
+
+    <carbon.widget.TextMarker
+        android:id="@+id/carbon_bottomTextMarker"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        app:carbon_text="I"
+        app:carbon_textView="@+id/carbon_bottomText" />
+
+    <carbon.widget.TextView
+        android:id="@+id/carbon_bottomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/carbon_bottomTextMarker"
+        android:layout_centerHorizontal="true"
+        android:duplicateParentState="true"
+        android:textColor="?attr/carbon_iconColorInverse"
+        android:textSize="12sp"
+        app:carbon_fontFamily="RobotoRegular" />
+
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_bottomIcon"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:layout_above="@id/carbon_bottomTextMarker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="6dp"
+        android:duplicateParentState="true"
+        app:carbon_tint="?attr/carbon_iconColorInverse" />
+</carbon.widget.RelativeLayout>

@@ -2,6 +2,7 @@ package carbon.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -26,6 +27,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.EmptyDrawable;
@@ -45,6 +47,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  */
 public class TextView extends android.widget.TextView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+    private AnimatedColorStateList textColor;
 
     public TextView(Context context) {
         super(context, null);
@@ -104,6 +107,12 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         } else {
             setTransformationMethod(null);
         }
+    }
+
+    @Override
+    public void setTextColor(ColorStateList colors) {
+        textColor = AnimatedColorStateList.fromList(colors, this);
+        super.setTextColor(colors);
     }
 
     @Override
@@ -523,6 +532,8 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
+        if (textColor != null)
+            textColor.setState(getDrawableState());
     }
 
 

@@ -867,11 +867,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             return percentLayoutInfo;
         }
 
-        @Override
-        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
-            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
-        }
-
         public int getAnchorGravity() {
             return anchorGravity;
         }

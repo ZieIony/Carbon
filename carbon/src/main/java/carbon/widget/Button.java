@@ -106,9 +106,13 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
                 } else if (attr == R.styleable.Button_android_background) {
-                    int color = a.getColor(R.styleable.Button_android_background, 0);
-                    if (color == 0)
-                        setBackground(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), this)));
+                    try {
+                        int color = a.getColor(R.styleable.Button_android_background, 0);
+                        if (color == 0)
+                            setBackground(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), this)));
+                    }catch (Exception e){
+                        // check if it's transparent black
+                    }
                 }
             }
 

@@ -1,7 +1,6 @@
-<carbon.widget.LinearLayout
-    android:id="@+id/content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -18,7 +17,7 @@
             android:layout_width="@dimen/carbon_toolbarItemSize"
             android:layout_height="@dimen/carbon_toolbarItemSize"
             app:carbon_src="@raw/ic_bug_report_24px"
-            app:carbon_tint="?attr/colorControlNormal"/>
+            app:carbon_tint="?attr/colorControlNormal" />
 
         <carbon.widget.CheckBox
             android:id="@+id/enabled"
@@ -26,68 +25,86 @@
             android:layout_height="@dimen/carbon_toolbarItemSize"
             android:checked="true"
             android:padding="12dp"
-            app:carbon_tint="?attr/carbon_iconColor"/>
+            app:carbon_tint="?attr/carbon_iconColor" />
     </carbon.widget.Toolbar>
 
-    <carbon.widget.Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_padding"
-        android:tag="enable"
-        android:text="Theme style"/>
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <carbon.widget.Button
-        style="@style/carbon_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_gravity="right"
-        android:layout_margin="@dimen/carbon_padding"
-        android:background="#ffffffff"
-        android:paddingBottom="0dp"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:paddingTop="0dp"
-        android:tag="enable"
-        android:text="Inline Style"
-        android:textColor="#ff0000ff"
-        app:carbon_cornerRadius="2dp"
-        app:carbon_elevation="@dimen/carbon_elevationLow"
-        app:carbon_rippleColor="#40ff0000"
-        app:carbon_touchMarginBottom="6dp"
-        app:carbon_touchMarginLeft="100dp"
-        app:carbon_touchMarginRight="100dp"
-        app:carbon_touchMarginTop="6dp"/>
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <carbon.widget.Button
-        style="@style/carbon_Button.Flat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_margin="@dimen/carbon_padding"
-        android:tag="enable"
-        android:text="flat button"/>
+            <carbon.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:tag="enable"
+                android:text="Theme style" />
 
-    <carbon.widget.FloatingActionButton
-        android:layout_width="@dimen/carbon_fabSize"
-        android:layout_height="@dimen/carbon_fabSize"
-        android:layout_margin="@dimen/carbon_padding"
-        android:tag="enable"
-        app:carbon_src="@raw/ic_shopping_cart_24px"/>
+            <carbon.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:background="@drawable/buttonshape"
+                android:tag="enable"
+                android:text="Shape" />
 
-    <carbon.widget.FloatingActionButton
-        android:layout_width="@dimen/carbon_smallFabSize"
-        android:layout_height="@dimen/carbon_smallFabSize"
-        android:layout_margin="@dimen/carbon_padding"
-        android:tag="enable"
-        app:carbon_src="@raw/ic_data_usage_24px"/>
+            <carbon.widget.Button
+                style="@style/carbon_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_gravity="right"
+                android:layout_margin="@dimen/carbon_padding"
+                android:background="#ffffffff"
+                android:paddingBottom="0dp"
+                android:paddingLeft="@dimen/carbon_padding"
+                android:paddingRight="@dimen/carbon_padding"
+                android:paddingTop="0dp"
+                android:tag="enable"
+                android:text="Inline Style"
+                android:textColor="#ff0000ff"
+                app:carbon_cornerRadius="2dp"
+                app:carbon_elevation="@dimen/carbon_elevationLow"
+                app:carbon_rippleColor="#40ff0000"
+                app:carbon_touchMarginBottom="6dp"
+                app:carbon_touchMarginLeft="100dp"
+                app:carbon_touchMarginRight="100dp"
+                app:carbon_touchMarginTop="6dp" />
 
-    <carbon.widget.FloatingActionButton
-        android:layout_width="@dimen/carbon_fabSize"
-        android:layout_height="@dimen/carbon_fabSize"
-        android:layout_margin="@dimen/carbon_padding"
-        android:padding="@dimen/carbon_padding"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher"
-        android:tag="enable"/>
+            <carbon.widget.Button
+                style="@style/carbon_Button.Flat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="@dimen/carbon_padding"
+                android:tag="enable"
+                android:text="flat button" />
 
+            <carbon.widget.FloatingActionButton
+                android:layout_width="@dimen/carbon_fabSize"
+                android:layout_height="@dimen/carbon_fabSize"
+                android:layout_margin="@dimen/carbon_padding"
+                android:tag="enable"
+                app:carbon_src="@raw/ic_shopping_cart_24px" />
+
+            <carbon.widget.FloatingActionButton
+                android:layout_width="@dimen/carbon_smallFabSize"
+                android:layout_height="@dimen/carbon_smallFabSize"
+                android:layout_margin="@dimen/carbon_padding"
+                android:tag="enable"
+                app:carbon_src="@raw/ic_data_usage_24px" />
+
+            <carbon.widget.FloatingActionButton
+                android:layout_width="@dimen/carbon_fabSize"
+                android:layout_height="@dimen/carbon_fabSize"
+                android:layout_margin="@dimen/carbon_padding"
+                android:padding="@dimen/carbon_padding"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_launcher"
+                android:tag="enable" />
+        </carbon.widget.LinearLayout>
+    </carbon.widget.ScrollView>
 </carbon.widget.LinearLayout>

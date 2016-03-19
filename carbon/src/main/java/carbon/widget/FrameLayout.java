@@ -847,6 +847,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
         public LayoutParams(LayoutParams source) {
             super((MarginLayoutParams) source);
+            gravity = source.gravity;
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;
@@ -860,11 +861,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
             }
 
             return percentLayoutInfo;
-        }
-
-        @Override
-        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
-            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
         }
 
         public int getAnchorGravity() {

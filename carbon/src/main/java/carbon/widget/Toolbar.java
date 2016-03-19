@@ -79,6 +79,8 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
 
     private void initToolbar(AttributeSet attrs, int defStyleAttr) {
         inflate(getContext(), R.layout.carbon_toolbar, this);
+        super.setNavigationIcon(null);
+        super.setTitle(null);
         content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
         title = (TextView) findViewById(R.id.carbon_toolbarTitle);
         icon = (ImageView) findViewById(R.id.carbon_toolbarIcon);

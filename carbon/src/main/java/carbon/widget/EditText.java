@@ -65,6 +65,8 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * Created by Marcin on 2015-02-14.
  */
 public class EditText extends android.widget.EditText implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
+    String[] suggestions = new String[]{"test","suggestion"};
+
     private Field mIgnoreActionUpEventField;
     private Object editor;
 
@@ -126,6 +128,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         public void afterTextChanged(Editable s) {
             afterFirstInteraction = true;
             validateInternalEvent();
+            try {
+                int start = getSelectionStart()-1;
+                char c;
+                StringBuilder builder = new StringBuilder();
+                while (start>=0&&Character.isLetterOrDigit(c = s.charAt(start--))){
+                    builder.insert(0,c);
+                }
+            }catch (Exception e){}
         }
     };
 

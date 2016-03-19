@@ -10,6 +10,8 @@ import carbon.internal.DebugOverlay;
 import carbon.widget.ImageView;
 import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
+import tk.zielony.carbonsamples.widget.BottomBarActivity;
+import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
@@ -81,7 +83,9 @@ public class WidgetsActivity extends Activity {
                 new ViewModel(ToolbarActivity.class, getString(R.string.toolbarActivity_title)),
                 new ViewModel(FlowLayoutActivity.class, getString(R.string.flowLayoutActivity_title)),
                 new ViewModel(TableLayoutActivity.class, getString(R.string.tableLayoutActivity_title)),
-                new ViewModel(FloatingActionMenuActivity.class, getString(R.string.floatingActionMenuActivity_title))
+                new ViewModel(FloatingActionMenuActivity.class, getString(R.string.floatingActionMenuActivity_title)),
+                new ViewModel(BottomBarActivity.class, getString(R.string.bottomBarActivity_title), true),
+                new ViewModel(BottomSheetActivity.class, getString(R.string.bottomSheetActivity_title), true)
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));

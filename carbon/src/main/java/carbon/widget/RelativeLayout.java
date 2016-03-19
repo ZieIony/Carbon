@@ -861,11 +861,6 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
             return percentLayoutInfo;
         }
 
-        @Override
-        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
-            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
-        }
-
         public int getAnchorGravity() {
             return anchorGravity;
         }

@@ -858,11 +858,6 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
             return percentLayoutInfo;
         }
 
-        @Override
-        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
-            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
-        }
-
         public int getAnchorGravity() {
             return anchorGravity;
         }

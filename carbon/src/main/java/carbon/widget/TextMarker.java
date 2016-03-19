@@ -67,9 +67,10 @@ public class TextMarker extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (paint == null && id != 0)
+        if (paint == null && id != 0) {
             paint = ((android.widget.TextView) getRootView().findViewById(id)).getPaint();
-        paint.getTextBounds(text, 0, text.length(), rect);
+            paint.getTextBounds(text, 0, text.length(), rect);
+        }
         super.onMeasure(MeasureSpec.makeMeasureSpec(rect.width(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(rect.height(), MeasureSpec.EXACTLY));
     }
 
@@ -78,9 +79,4 @@ public class TextMarker extends View {
         return getHeight();
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        if (isInEditMode())
-            super.draw(canvas);
-    }
 }

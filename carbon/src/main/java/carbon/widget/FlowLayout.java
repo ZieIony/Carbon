@@ -834,11 +834,6 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
 
             return percentLayoutInfo;
         }
-
-        @Override
-        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
-            PercentLayoutHelper.fetchWidthAndHeight(this, a, widthAttr, heightAttr);
-        }
     }
 
 

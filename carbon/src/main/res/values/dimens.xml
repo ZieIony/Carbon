@@ -19,6 +19,16 @@
     <dimen name="carbon_toolbarItemPadding">4dp</dimen>
     <dimen name="carbon_toolbarUpTitleMargin">4dp</dimen>
 
+    <dimen name="carbon_bottomBarHeight">56dp</dimen>
+    <dimen name="carbon_bottomBarActiveMargin">6dp</dimen>
+    <dimen name="carbon_bottomBarInctiveMargin">10dp</dimen>
+    <dimen name="carbon_bottomBarActiveMaxWidth">168dp</dimen>
+    <dimen name="carbon_bottomBarActiveMinWidth">96dp</dimen>
+    <dimen name="carbon_bottomBarInactiveMaxWidth">96dp</dimen>
+    <dimen name="carbon_bottomBarInactiveMinWidth">64dp</dimen>
+    <dimen name="carbon_bottomBarActiveTextSize">14sp</dimen>
+    <dimen name="carbon_bottomBarInactiveTextSize">12sp</dimen>
+
     <dimen name="carbon_tooltipHeight">32dp</dimen>
     <dimen name="carbon_tooltipPadding">16dp</dimen>
     <dimen name="carbon_tooltipTextSize">14dp</dimen>
