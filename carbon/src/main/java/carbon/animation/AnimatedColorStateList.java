@@ -1,8 +1,11 @@
 package carbon.animation;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 import android.util.StateSet;
-import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.nineoldandroids.animation.ValueAnimator;
@@ -18,11 +21,10 @@ import carbon.internal.ArgbEvaluator;
 public class AnimatedColorStateList extends ColorStateList {
     private final int[][] states;
     private int[] currentState = null;
-    private ValueAnimator runningAnimation = null;
-    private View view;
+    private ValueAnimator colorAnimation = null;
     int animatedColor;
 
-    public static AnimatedColorStateList fromList(ColorStateList list, final View target) {
+    public static AnimatedColorStateList fromList(ColorStateList list, ValueAnimator.AnimatorUpdateListener listener) {
         int[][] mStateSpecs; // must be parallel to mColors
         int[] mColors;      // must be parallel to mStateSpecs
         int mDefaultColor;
@@ -37,7 +39,7 @@ public class AnimatedColorStateList extends ColorStateList {
             Field mDefaultColorField = ColorStateList.class.getDeclaredField("mDefaultColor");
             mDefaultColorField.setAccessible(true);
             mDefaultColor = (int) mDefaultColorField.get(list);
-            AnimatedColorStateList animatedColorStateList = new AnimatedColorStateList(mStateSpecs, mColors, target);
+            AnimatedColorStateList animatedColorStateList = new AnimatedColorStateList(mStateSpecs, mColors, listener);
             mDefaultColorField.set(animatedColorStateList, mDefaultColor);
             return animatedColorStateList;
         } catch (NoSuchFieldException e) {
@@ -49,20 +51,19 @@ public class AnimatedColorStateList extends ColorStateList {
         return null;
     }
 
-    public AnimatedColorStateList(int[][] states, int[] colors, final View target) {
+    public AnimatedColorStateList(int[][] states, int[] colors, final ValueAnimator.AnimatorUpdateListener listener) {
         super(states, colors);
-        view = target;
         this.states = states;
-        runningAnimation = ValueAnimator.ofInt(0, 0);
-        runningAnimation.setEvaluator(new ArgbEvaluator());
-        runningAnimation.setDuration(300);
-        runningAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        runningAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        colorAnimation = ValueAnimator.ofInt(0, 0);
+        colorAnimation.setEvaluator(new ArgbEvaluator());
+        colorAnimation.setDuration(200);
+        colorAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 synchronized (AnimatedColorStateList.this) {
                     animatedColor = (int) animation.getAnimatedValue();
-                    view.postInvalidate();
+                    listener.onAnimationUpdate(animation);
                 }
             }
         });
@@ -71,8 +72,10 @@ public class AnimatedColorStateList extends ColorStateList {
     @Override
     public int getColorForState(int[] stateSet, int defaultColor) {
         synchronized (AnimatedColorStateList.this) {
-            if (currentState != null && StateSet.stateSetMatches(stateSet, currentState))
+            if (Arrays.equals(stateSet, currentState)) {
+                Log.e("button", "" + Color.red(animatedColor) + "." + Color.green(animatedColor) + "." + Color.blue(animatedColor));
                 return animatedColor;
+            }
         }
         return super.getColorForState(stateSet, defaultColor);
     }
@@ -85,14 +88,12 @@ public class AnimatedColorStateList extends ColorStateList {
 
         for (final int[] state : states) {
             if (StateSet.stateSetMatches(state, newState)) {
-
-                if (view != null && ((View) view).getVisibility() == View.VISIBLE) {
-                    int firstColor = super.getColorForState(currentState, getDefaultColor());
-                    int secondColor = super.getColorForState(newState, getDefaultColor());
-                    runningAnimation.setIntValues(firstColor, secondColor);
-                    runningAnimation.start();
-                }
+                int firstColor = super.getColorForState(currentState, getDefaultColor());
+                int secondColor = super.getColorForState(newState, getDefaultColor());
+                colorAnimation.setIntValues(firstColor, secondColor);
                 currentState = newState;
+                animatedColor = firstColor;
+                colorAnimation.start();
                 return;
             }
         }
@@ -101,10 +102,29 @@ public class AnimatedColorStateList extends ColorStateList {
     }
 
     private void cancel() {
-        runningAnimation.cancel();
+        colorAnimation.cancel();
     }
 
     public void jumpToCurrentState() {
-        runningAnimation.cancel();
+        colorAnimation.end();
     }
+
+    public static final Parcelable.Creator<AnimatedColorStateList> CREATOR =
+            new Parcelable.Creator<AnimatedColorStateList>() {
+                @Override
+                public AnimatedColorStateList[] newArray(int size) {
+                    return new AnimatedColorStateList[size];
+                }
+
+                @Override
+                public AnimatedColorStateList createFromParcel(Parcel source) {
+                    final int N = source.readInt();
+                    final int[][] stateSpecs = new int[N][];
+                    for (int i = 0; i < N; i++) {
+                        stateSpecs[i] = source.createIntArray();
+                    }
+                    final int[] colors = source.createIntArray();
+                    return AnimatedColorStateList.fromList(new ColorStateList(stateSpecs, colors), null);
+                }
+            };
 }

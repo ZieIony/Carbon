@@ -3,7 +3,7 @@ package tk.zielony.carbonsamples.widget;
 import android.app.Activity;
 import android.os.Bundle;
 
-import carbon.beta.BottomBar;
+import carbon.widget.BottomBar;
 import tk.zielony.carbonsamples.R;
 
 /**

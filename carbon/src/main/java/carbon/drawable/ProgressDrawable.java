@@ -11,12 +11,11 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
 import carbon.widget.ProgressBar;
-import carbon.widget.TintedView;
 
 /**
  * Created by Marcin on 2015-02-28.
  */
-public abstract class ProgressDrawable extends Drawable implements TintedView {
+public abstract class ProgressDrawable extends Drawable {
     static final long DEFAULT_SWEEP_DURATION = 800;
     static final long DEFAULT_SWEEP_OFFSET = 500;
     long sweepDuration = DEFAULT_SWEEP_DURATION;
@@ -117,17 +116,6 @@ public abstract class ProgressDrawable extends Drawable implements TintedView {
         this.barPadding = barPadding;
     }
 
-    @Override
-    public ColorStateList getTint() {
-        return tint;
-    }
-
-    @Override
-    public PorterDuff.Mode getTintMode() {
-        return tintMode;
-    }
-
-    @Override
     public void setTint(ColorStateList list) {
         tint = list;
         updateTint();

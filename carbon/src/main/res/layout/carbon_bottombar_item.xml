@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/carbon_bottomTextMarker"
         android:layout_centerHorizontal="true"
-        android:duplicateParentState="true"
         android:textColor="?attr/carbon_iconColorInverse"
         android:textSize="12sp"
         app:carbon_fontFamily="RobotoRegular" />
@@ -36,6 +35,5 @@
         android:layout_above="@id/carbon_bottomTextMarker"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6dp"
-        android:duplicateParentState="true"
         app:carbon_tint="?attr/carbon_iconColorInverse" />
 </carbon.widget.RelativeLayout>

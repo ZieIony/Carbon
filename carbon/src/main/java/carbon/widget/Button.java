@@ -2,11 +2,13 @@ package carbon.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -31,7 +33,6 @@ import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
@@ -50,7 +51,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * <p/>
  * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other material features.
  */
-public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView {
+public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView {
     protected Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
@@ -91,8 +92,6 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             if (ap != -1)
                 setTextAppearanceInternal(ap);
 
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-
             for (int i = 0; i < a.getIndexCount(); i++) {
                 int attr = a.getIndex(i);
                 if (attr == R.styleable.Button_carbon_textAllCaps) {
@@ -106,16 +105,12 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
                 } else if (attr == R.styleable.Button_android_background) {
-                    try {
-                        int color = a.getColor(R.styleable.Button_android_background, 0);
-                        if (color == 0)
-                            setBackground(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), this)));
-                    }catch (Exception e){
-                        // check if it's transparent black
-                    }
+                    setBackground(a.getDrawable(attr));
                 }
             }
 
+            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+            Carbon.initTint(this, attrs, defStyleAttr);
             Carbon.initElevation(this, attrs, defStyleAttr);
             Carbon.initAnimations(this, attrs, defStyleAttr);
             Carbon.initTouchMargin(this, attrs, defStyleAttr);
@@ -280,13 +275,11 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         return super.dispatchTouchEvent(event);
     }
 
-
     @Override
     public RippleDrawable getRippleDrawable() {
         return rippleDrawable;
     }
 
-    @Override
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
@@ -430,6 +423,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             rippleDrawable = null;
         }
         super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        updateTint();
     }
 
 
@@ -568,6 +562,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
+        if (tint != null && tint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) tint).setState(getDrawableState());
     }
 
 
@@ -633,6 +629,128 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
+    }
+
+
+    // -------------------------------
+    // tint
+    // -------------------------------
+
+    ColorStateList tint;
+    PorterDuff.Mode tintMode;
+    ColorStateList backgroundTint;
+    PorterDuff.Mode backgroundTintMode;
+    boolean animateColorChanges;
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateTint();
+        }
+    };
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateBackgroundTint();
+        }
+    };
+
+    @Override
+    public void setTint(ColorStateList list) {
+        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        updateTint();
+    }
+
+    @Override
+    public void setTint(int color) {
+        if (color == 0) {
+            setTint(new DefaultPrimaryColorStateList(getContext()));
+        } else {
+            setTint(ColorStateList.valueOf(color));
+        }
+    }
+
+    @Override
+    public ColorStateList getTint() {
+        return tint;
+    }
+
+    private void updateTint() {
+        Drawable[] drawables = getCompoundDrawables();
+        if (tint != null && tintMode != null) {
+            int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
+            for (Drawable d : drawables)
+                if (d != null)
+                    d.setColorFilter(new PorterDuffColorFilter(color, tintMode));
+        } else {
+            for (Drawable d : drawables)
+                if (d != null)
+                    d.setColorFilter(null);
+        }
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        this.tintMode = mode;
+        updateTint();
+    }
+
+    @Override
+    public PorterDuff.Mode getTintMode() {
+        return tintMode;
+    }
+
+    @Override
+    public void setBackgroundTint(ColorStateList list) {
+        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public void setBackgroundTint(int color) {
+        if (color == 0) {
+            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
+        } else {
+            setBackgroundTint(ColorStateList.valueOf(color));
+        }
+    }
+
+    @Override
+    public ColorStateList getBackgroundTint() {
+        return backgroundTint;
+    }
+
+    private void updateBackgroundTint() {
+        if (getBackground() == null)
+            return;
+        if (backgroundTint != null && backgroundTintMode != null) {
+            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
+            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
+        } else {
+            getBackground().setColorFilter(null);
+        }
+    }
+
+    @Override
+    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+        this.backgroundTintMode = mode;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public PorterDuff.Mode getBackgroundTintMode() {
+        return backgroundTintMode;
+    }
+
+    public boolean isAnimateColorChangesEnabled() {
+        return animateColorChanges;
+    }
+
+    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        this.animateColorChanges = animateColorChanges;
+        if (tint != null && !(tint instanceof AnimatedColorStateList))
+            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
+        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+            setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 
 

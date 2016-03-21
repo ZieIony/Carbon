@@ -15,4 +15,6 @@ public interface AnimatedView {
     AnimUtils.Style getInAnimation();
 
     void setInAnimation(AnimUtils.Style inAnim);
+
+    void setVisibilityImmediate(int visibility);
 }

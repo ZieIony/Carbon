@@ -9,6 +9,7 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
@@ -50,6 +51,7 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultColorStateList;
+import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
@@ -65,7 +67,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * Created by Marcin on 2015-02-14.
  */
 public class EditText extends android.widget.EditText implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
-    String[] suggestions = new String[]{"test","suggestion"};
+    String[] suggestions = new String[]{"test", "suggestion"};
 
     private Field mIgnoreActionUpEventField;
     private Object editor;
@@ -129,13 +131,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             afterFirstInteraction = true;
             validateInternalEvent();
             try {
-                int start = getSelectionStart()-1;
+                int start = getSelectionStart() - 1;
                 char c;
                 StringBuilder builder = new StringBuilder();
-                while (start>=0&&Character.isLetterOrDigit(c = s.charAt(start--))){
-                    builder.insert(0,c);
+                while (start >= 0 && Character.isLetterOrDigit(c = s.charAt(start--))) {
+                    builder.insert(0, c);
                 }
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }
     };
 
@@ -975,7 +978,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         SavedState ss = new SavedState(superState);
         //end
 
-        ss.stateToSave = this.isShowingPopup ? 1 : 0;
+        ss.isShowingPopup = this.isShowingPopup ? 1 : 0;
 
         return ss;
     }
@@ -992,14 +995,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         super.onRestoreInstanceState(ss.getSuperState());
         //end
 
-        this.isShowingPopup = ss.stateToSave > 0;
+        this.isShowingPopup = ss.isShowingPopup > 0;
     }
 
     static class SavedState implements Parcelable {
         public static final SavedState EMPTY_STATE = new SavedState() {
         };
 
-        int stateToSave;
+        int isShowingPopup;
 
         Parcelable superState;
 
@@ -1014,7 +1017,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         private SavedState(Parcel in) {
             Parcelable superState = in.readParcelable(EditText.class.getClassLoader());
             this.superState = superState != null ? superState : EMPTY_STATE;
-            this.stateToSave = in.readInt();
+            this.isShowingPopup = in.readInt();
         }
 
         @Override
@@ -1022,11 +1025,10 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             return 0;
         }
 
-
         @Override
         public void writeToParcel(@NonNull Parcel out, int flags) {
             out.writeParcelable(superState, flags);
-            out.writeInt(this.stateToSave);
+            out.writeInt(this.isShowingPopup);
         }
 
         public Parcelable getSuperState() {
@@ -1261,8 +1263,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
-        if (tint != null)
-            tint.setState(getDrawableState());
+        if (tint != null && tint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) tint).setState(getDrawableState());
     }
 
     @Override
@@ -1341,21 +1343,34 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     // tint
     // -------------------------------
 
-    AnimatedColorStateList tint;
+    ColorStateList tint;
+    PorterDuff.Mode tintMode;
+    ColorStateList backgroundTint;
+    PorterDuff.Mode backgroundTintMode;
+    boolean animateColorChanges;
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateTint();
+        }
+    };
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateBackgroundTint();
+        }
+    };
 
     @Override
     public void setTint(ColorStateList list) {
-        if (list != null) {
-            tint = AnimatedColorStateList.fromList(list, this);
-        } else {
-            tint = null;
-        }
+        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        updateTint();
     }
 
     @Override
     public void setTint(int color) {
         if (color == 0) {
-            setTint(new DefaultColorStateList(getContext()));
+            setTint(new DefaultPrimaryColorStateList(getContext()));
         } else {
             setTint(ColorStateList.valueOf(color));
         }
@@ -1366,14 +1381,83 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         return tint;
     }
 
+    private void updateTint() {
+        Drawable[] drawables = getCompoundDrawables();
+        if (tint != null && tintMode != null) {
+            int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
+            for (Drawable d : drawables)
+                if (d != null)
+                    d.setColorFilter(new PorterDuffColorFilter(color, tintMode));
+        } else {
+            for (Drawable d : drawables)
+                if (d != null)
+                    d.setColorFilter(null);
+        }
+    }
+
     @Override
     public void setTintMode(@NonNull PorterDuff.Mode mode) {
-        // TODO make use of tint list
+        this.tintMode = mode;
+        updateTint();
     }
 
     @Override
     public PorterDuff.Mode getTintMode() {
-        return null;
+        return tintMode;
+    }
+
+    @Override
+    public void setBackgroundTint(ColorStateList list) {
+        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public void setBackgroundTint(int color) {
+        if (color == 0) {
+            setBackgroundTint(new DefaultColorStateList(getContext()));
+        } else {
+            setBackgroundTint(ColorStateList.valueOf(color));
+        }
+    }
+
+    @Override
+    public ColorStateList getBackgroundTint() {
+        return backgroundTint;
+    }
+
+    private void updateBackgroundTint() {
+        if (getBackground() == null)
+            return;
+        if (backgroundTint != null && backgroundTintMode != null) {
+            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
+            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
+        } else {
+            getBackground().setColorFilter(null);
+        }
+    }
+
+    @Override
+    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+        this.backgroundTintMode = mode;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public PorterDuff.Mode getBackgroundTintMode() {
+        return backgroundTintMode;
+    }
+
+    public boolean isAnimateColorChangesEnabled() {
+        return animateColorChanges;
+    }
+
+    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        this.animateColorChanges = animateColorChanges;
+        if (tint != null && !(tint instanceof AnimatedColorStateList))
+            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
+        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+            setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 
 

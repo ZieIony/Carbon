@@ -47,7 +47,6 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  */
 public class TextView extends android.widget.TextView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-    private AnimatedColorStateList textColor;
 
     public TextView(Context context) {
         super(context, null);
@@ -111,8 +110,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
     @Override
     public void setTextColor(ColorStateList colors) {
-        textColor = AnimatedColorStateList.fromList(colors, this);
-        super.setTextColor(colors);
+        super.setTextColor(animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors);
     }
 
     @Override
@@ -532,8 +530,9 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
-        if (textColor != null)
-            textColor.setState(getDrawableState());
+        ColorStateList textColors = getTextColors();
+        if (textColors instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) textColors).setState(getDrawableState());
     }
 
 
@@ -543,6 +542,13 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
     private AnimUtils.Style inAnim = AnimUtils.Style.None, outAnim = AnimUtils.Style.None;
     private Animator animator;
+    boolean animateColorChanges;
+    ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            setHintTextColor(getHintTextColors());
+        }
+    };
 
     public void setVisibility(final int visibility) {
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
@@ -599,6 +605,16 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
     public void setInAnimation(AnimUtils.Style inAnim) {
         this.inAnim = inAnim;
+    }
+
+    public boolean isAnimateColorChangesEnabled() {
+        return animateColorChanges;
+    }
+
+    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        this.animateColorChanges = animateColorChanges;
+        if (!(getTextColors() instanceof AnimatedColorStateList))
+            setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
     }
 
 

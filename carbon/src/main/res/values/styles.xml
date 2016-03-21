@@ -242,7 +242,9 @@
         <item name="android:textColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
         <item name="android:maxLines">1</item>
-        <item name="android:background">#00000000</item>
+        <item name="android:background">@drawable/carbon_buttonbackground</item>
+        <item name="carbon_animateColorChanges">true</item>
+        <item name="carbon_tint">#00000000</item>
     </style>
 
     <style name="carbon_Button.Flat">
@@ -278,6 +280,7 @@
     <style name="carbon_TextView" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="carbon_rippleColor">@null</item>
+        <item name="carbon_animateColorChanges">true</item>
     </style>
 
     <style name="carbon_CollapsingToolbarLayout">
@@ -336,6 +339,7 @@
         <item name="carbon_rippleStyle">over</item>
         <item name="carbon_inAnimation">brightnessSaturationFade</item>
         <item name="carbon_outAnimation">brightnessSaturationFade</item>
+        <item name="carbon_animateColorChanges">true</item>
     </style>
 
     <style name="carbon_ImageView.Icon">
@@ -394,6 +398,7 @@
         <item name="android:paddingBottom">16dp</item>
         <item name="carbon_underline">true</item>
         <item name="carbon_cursorColor">?attr/colorAccent</item>
+        <item name="carbon_animateColorChanges">true</item>
     </style>
 
     <style name="carbon_Spinner" parent="carbon_EditText">
@@ -488,7 +493,7 @@
         <item name="carbon_labelFormat">%.0f</item>
     </style>
 
-    <style name="carbon_NavigationView"/>
+    <style name="carbon_NavigationView" />
 
     <style name="carbon_TextView.Tooltip">
         <item name="android:minHeight">@dimen/carbon_tooltipHeight</item>
