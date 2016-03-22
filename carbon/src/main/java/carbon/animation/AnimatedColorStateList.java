@@ -1,10 +1,8 @@
 package carbon.animation;
 
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 import android.util.StateSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -73,7 +71,6 @@ public class AnimatedColorStateList extends ColorStateList {
     public int getColorForState(int[] stateSet, int defaultColor) {
         synchronized (AnimatedColorStateList.this) {
             if (Arrays.equals(stateSet, currentState)) {
-                Log.e("button", "" + Color.red(animatedColor) + "." + Color.green(animatedColor) + "." + Color.blue(animatedColor));
                 return animatedColor;
             }
         }

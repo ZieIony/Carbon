@@ -660,14 +660,15 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
                 if (orientation == LinearLayoutManager.VERTICAL) {
-                    bottom = child.getTop() - params.topMargin;
+                    bottom = (int) (child.getTop() - params.topMargin + ViewHelper.getTranslationY(child));
                     top = bottom - height;
                 } else { //horizontal
-                    right = child.getLeft() - params.leftMargin;
+                    right = (int) (child.getLeft() - params.leftMargin + ViewHelper.getTranslationX(child));
                     left = right - height;
                 }
                 c.save(Canvas.CLIP_SAVE_FLAG);
                 c.clipRect(left, top, right, bottom);
+                drawable.setAlpha((int) (ViewHelper.getAlpha(child)*255));
                 drawable.setBounds(left, top, right, bottom);
                 drawable.draw(c);
                 c.restore();

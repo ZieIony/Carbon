@@ -245,6 +245,7 @@
         <item name="android:background">@drawable/carbon_buttonbackground</item>
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">#00000000</item>
+        <item name="carbon_backgroundTint">#00000000</item>
     </style>
 
     <style name="carbon_Button.Flat">

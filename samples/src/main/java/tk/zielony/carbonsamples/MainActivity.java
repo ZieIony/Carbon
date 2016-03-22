@@ -2,6 +2,7 @@ package tk.zielony.carbonsamples;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -46,7 +47,9 @@ public class MainActivity extends Activity {
                 new ViewModel(DemosActivity.class, getString(R.string.demosActivity_title)),
                 new ViewModel(GuidelinesActivity.class, getString(R.string.guidelinesActivity_title))
         };
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
+                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));
     }
 

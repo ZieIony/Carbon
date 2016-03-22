@@ -491,7 +491,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         this.animateColorChanges = animateColorChanges;
         if (tint != null && !(tint instanceof AnimatedColorStateList))
             setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 
@@ -679,7 +679,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         void onChildItemClicked(int group, int position);
     }
 
-    public static abstract class Adapter<CVH extends ViewHolder,GVH extends ViewHolder, C,G> extends RecyclerView.Adapter<ViewHolder, Object> {
+    public static abstract class Adapter<CVH extends ViewHolder, GVH extends ViewHolder, C, G> extends RecyclerView.Adapter<ViewHolder, Object> {
         private static final int TYPE_HEADER = 0;
 
         SparseBooleanArray expanded = new SparseBooleanArray();
@@ -990,14 +990,15 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
                 if (orientation == LinearLayoutManager.VERTICAL) {
-                    bottom = child.getTop() - params.topMargin;
+                    bottom = (int) (child.getTop() - params.topMargin + ViewHelper.getTranslationY(child));
                     top = bottom - height;
                 } else { //horizontal
-                    right = child.getLeft() - params.leftMargin;
+                    right = (int) (child.getLeft() - params.leftMargin + ViewHelper.getTranslationX(child));
                     left = right - height;
                 }
                 c.save(Canvas.CLIP_SAVE_FLAG);
                 c.clipRect(left, top, right, bottom);
+                drawable.setAlpha((int) (ViewHelper.getAlpha(child)*255));
                 drawable.setBounds(left, top, right, bottom);
                 drawable.draw(c);
                 c.restore();

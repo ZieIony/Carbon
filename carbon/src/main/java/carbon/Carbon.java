@@ -162,12 +162,12 @@ public class Carbon {
             TypedValue value = new TypedValue();
             a.getValue(R.styleable.Carbon_carbon_backgroundTint, value);
             if (value.type >= TypedValue.TYPE_FIRST_INT && value.type <= TypedValue.TYPE_LAST_INT) {
-                view.setTint(value.data);
+                view.setBackgroundTint(value.data);
             } else {
-                view.setTint(a.getColorStateList(R.styleable.Carbon_carbon_backgroundTint));
+                view.setBackgroundTint(a.getColorStateList(R.styleable.Carbon_carbon_backgroundTint));
             }
         }
-        view.setTintMode(TintedView.modes[a.getInt(R.styleable.Carbon_carbon_backgroundTintMode, 1)]);
+        view.setBackgroundTintMode(TintedView.modes[a.getInt(R.styleable.Carbon_carbon_backgroundTintMode, 1)]);
 
         if (a.hasValue(R.styleable.Carbon_carbon_animateColorChanges))
             view.setAnimateColorChangesEnabled(a.getBoolean(R.styleable.Carbon_carbon_animateColorChanges, false));

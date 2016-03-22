@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -228,6 +227,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         return rippleDrawable;
     }
 
+    @Override
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
@@ -371,6 +371,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             rippleDrawable = null;
         }
         super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        updateTint();
     }
 
 
@@ -533,6 +534,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             stateAnimator.setState(getDrawableState());
         if (tint != null && tint instanceof AnimatedColorStateList)
             ((AnimatedColorStateList) tint).setState(getDrawableState());
+        if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
     }
 
 
@@ -688,7 +691,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             return;
         if (backgroundTint != null && backgroundTintMode != null) {
             int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
+            getBackground().setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
         } else {
             getBackground().setColorFilter(null);
         }
@@ -713,7 +716,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         this.animateColorChanges = animateColorChanges;
         if (tint != null && !(tint instanceof AnimatedColorStateList))
             setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 

@@ -5,7 +5,8 @@
     android:orientation="vertical">
 
     <carbon.beta.BottomSheet
+        android:background="@color/carbon_amber_700"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_gravity="bottom" />
 </carbon.widget.FrameLayout>

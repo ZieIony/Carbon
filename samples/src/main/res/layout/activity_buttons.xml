@@ -48,9 +48,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                app:carbon_tint="@null"         android:background="@drawable/buttonshape"
+                android:background="@drawable/buttonshape"
                 android:tag="enable"
-                android:text="Shape" />
+                android:text="Shape"
+                app:carbon_backgroundTint="@null" />
 
             <carbon.widget.Button
                 style="@style/carbon_Button"
@@ -81,8 +82,7 @@
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/carbon_padding"
                 android:tag="enable"
-                android:text="flat button"
-                 />
+                android:text="flat button" />
 
             <carbon.widget.FloatingActionButton
                 android:layout_width="@dimen/carbon_fabSize"

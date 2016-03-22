@@ -56,7 +56,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
     public Button(Context context) {
         super(context, null);
-        init(null, android.R.attr.buttonStyle);
+        initButton(null, android.R.attr.buttonStyle);
     }
 
     /**
@@ -67,21 +67,21 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
      */
     public Button(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, android.R.attr.buttonStyle);
+        initButton(attrs, android.R.attr.buttonStyle);
     }
 
     public Button(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(attrs, defStyle);
+        initButton(attrs, defStyle);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(attrs, defStyleAttr);
+        initButton(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    private void initButton(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
 
@@ -134,6 +134,11 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         } else {
             setTransformationMethod(null);
         }
+    }
+
+    @Override
+    public void setTextColor(ColorStateList colors) {
+        super.setTextColor(animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors);
     }
 
     @Override
@@ -280,6 +285,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         return rippleDrawable;
     }
 
+    @Override
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
@@ -562,8 +568,13 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
+        ColorStateList textColors = getTextColors();
+        if (textColors instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) textColors).setState(getDrawableState());
         if (tint != null && tint instanceof AnimatedColorStateList)
             ((AnimatedColorStateList) tint).setState(getDrawableState());
+        if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
     }
 
 
@@ -653,6 +664,12 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             updateBackgroundTint();
         }
     };
+    ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            setHintTextColor(getHintTextColors());
+        }
+    };
 
     @Override
     public void setTint(ColorStateList list) {
@@ -724,7 +741,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             return;
         if (backgroundTint != null && backgroundTintMode != null) {
             int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
+            getBackground().setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
         } else {
             getBackground().setColorFilter(null);
         }
@@ -749,8 +766,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         this.animateColorChanges = animateColorChanges;
         if (tint != null && !(tint instanceof AnimatedColorStateList))
             setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+        if (!(getTextColors() instanceof AnimatedColorStateList))
+            setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
     }
 
 

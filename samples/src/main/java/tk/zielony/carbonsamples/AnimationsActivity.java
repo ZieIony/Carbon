@@ -2,6 +2,7 @@ package tk.zielony.carbonsamples;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -58,7 +59,9 @@ public class AnimationsActivity extends Activity {
                 new ViewModel(RadialTransitionActivity.class, getString(R.string.radialTransitionActivity_title)),
                 new ViewModel(RippleActivity.class, getString(R.string.rippleActivity_title))
         };
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
+                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));
     }
 
