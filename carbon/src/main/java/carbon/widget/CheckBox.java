@@ -449,12 +449,14 @@ public class CheckBox extends android.widget.CheckBox implements RippleView, Tou
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateTint();
+            ViewCompat.postInvalidateOnAnimation(CheckBox.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(CheckBox.this);
         }
     };
 

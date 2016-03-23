@@ -13,6 +13,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
@@ -350,12 +351,14 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateTint();
+            ViewCompat.postInvalidateOnAnimation(PagerTabStrip.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(PagerTabStrip.this);
         }
     };
 

@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +25,6 @@ import java.lang.reflect.Field;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
-import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 import carbon.drawable.RectDrawable;
@@ -81,6 +82,8 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
         a.recycle();
 
         Carbon.initTint(this, attrs, defStyleAttr);
+
+        initScrollbars();
     }
 
     private int getScrollRange() {
@@ -225,12 +228,14 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateTint();
+            ViewCompat.postInvalidateOnAnimation(HorizontalScrollView.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(HorizontalScrollView.this);
         }
     };
 
@@ -326,7 +331,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
         this.animateColorChanges = animateColorChanges;
         if (tint != null && !(tint instanceof AnimatedColorStateList))
             setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 
@@ -337,40 +342,29 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
 
     Drawable scrollBarDrawable;
 
-    protected void onDrawHorizontalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
-        if (scrollBarDrawable == null) {
-            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
-            try {
-                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
-                mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
-                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        scrollBar.setBounds(l, t, r, b);
-        scrollBar.draw(canvas);
-    }
+    private void initScrollbars() {
+        try {
+            Field mScrollabilityCacheField = View.class.getDeclaredField("mScrollCache");
+            mScrollabilityCacheField.setAccessible(true);
+            Object mScrollabilityCache = mScrollabilityCacheField.get(this);
+            Field scrollBarField = mScrollabilityCache.getClass().getDeclaredField("scrollBar");
+            scrollBarField.setAccessible(true);
+            Object scrollBar = scrollBarField.get(mScrollabilityCache);
 
-    protected void onDrawVerticalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
-        if (scrollBarDrawable == null) {
-            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
-            try {
-                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mVerticalThumb");
-                mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
-                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            Field mVerticalThumbField = scrollBar.getClass().getDeclaredField("mVerticalThumb");
+            mVerticalThumbField.setAccessible(true);
+            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
+            mVerticalThumbField.set(scrollBar, scrollBarDrawable);
+
+            Field mHorizontalThumbField = scrollBar.getClass().getDeclaredField("mHorizontalThumb");
+            mHorizontalThumbField.setAccessible(true);
+            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
+            mHorizontalThumbField.set(scrollBar, scrollBarDrawable);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-        scrollBar.setBounds(l, t, r, b);
-        scrollBar.draw(canvas);
     }
 
 

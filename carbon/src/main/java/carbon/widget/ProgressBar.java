@@ -10,6 +10,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -239,12 +240,14 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             postInvalidate();
+            ViewCompat.postInvalidateOnAnimation(ProgressBar.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             postInvalidate();
+            ViewCompat.postInvalidateOnAnimation(ProgressBar.this);
         }
     };
 

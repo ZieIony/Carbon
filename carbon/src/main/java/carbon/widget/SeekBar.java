@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -618,12 +619,14 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateTint();
+            ViewCompat.postInvalidateOnAnimation(SeekBar.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(SeekBar.this);
         }
     };
 

@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.PopupWindow;
 
 import java.util.ArrayList;
@@ -24,6 +25,14 @@ public class DebugOverlay extends PopupWindow {
     private boolean drawBounds = true;
     private boolean drawGrid = true;
     private Activity context;
+
+    ViewTreeObserver.OnPreDrawListener listener = new ViewTreeObserver.OnPreDrawListener() {
+        @Override
+        public boolean onPreDraw() {
+            getContentView().postInvalidate();
+            return true;
+        }
+    };
 
     public DebugOverlay(Activity context) {
         super(context);
@@ -41,6 +50,14 @@ public class DebugOverlay extends PopupWindow {
         setAnimationStyle(0);
         super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
         update(anchor.getWidth(), anchor.getHeight());
+        anchor.getViewTreeObserver().addOnPreDrawListener(listener);
+    }
+
+    @Override
+    public void dismiss() {
+        View anchor = context.getWindow().getDecorView().getRootView();
+        anchor.getViewTreeObserver().removeOnPreDrawListener(listener);
+        super.dismiss();
     }
 
     public boolean isDrawBoundsEnabled() {

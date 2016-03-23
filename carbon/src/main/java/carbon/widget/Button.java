@@ -16,6 +16,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -656,12 +657,14 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateTint();
+            ViewCompat.postInvalidateOnAnimation(Button.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(Button.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {

@@ -13,30 +13,12 @@ import carbon.widget.RecyclerView;
 
 public class MainActivity extends Activity {
 
-    private boolean debugEnabled = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final DebugOverlay overlay = new DebugOverlay(this);
-
-        final ImageView debug = (ImageView) findViewById(R.id.debug);
-        debug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!debugEnabled) {
-                    debug.setTint(Carbon.getThemeColor(MainActivity.this, R.attr.carbon_iconColor));
-                    overlay.show();
-                    debugEnabled = true;
-                } else {
-                    debug.setTint(Carbon.getThemeColor(MainActivity.this, R.attr.colorControlNormal));
-                    overlay.dismiss();
-                    debugEnabled = false;
-                }
-            }
-        });
+        Samples.initToolbar(this,getString(R.string.app_name));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{

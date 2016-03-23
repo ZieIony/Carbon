@@ -19,35 +19,12 @@ import tk.zielony.carbonsamples.guidelines.ToolbarsUsageActivity;
  */
 public class GuidelinesActivity extends Activity {
 
-    private boolean debugEnabled = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        final DebugOverlay overlay = new DebugOverlay(this);
-
-        final ImageView debug = (ImageView) findViewById(R.id.debug);
-        debug.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (!debugEnabled) {
-                    debug.setTint(Carbon.getThemeColor(GuidelinesActivity.this, R.attr.carbon_iconColor));
-                    overlay.show();
-                    debugEnabled = true;
-                } else {
-                    debug.setTint(Carbon.getThemeColor(GuidelinesActivity.this, R.attr.colorControlNormal));
-                    overlay.dismiss();
-                    debugEnabled = false;
-                }
-            }
-        });
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setIconVisible(true);
-        toolbar.setTitle(getString(R.string.guidelinesActivity_title));
+        Samples.initToolbar(this,getString(R.string.guidelinesActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{

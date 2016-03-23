@@ -25,35 +25,12 @@ import tk.zielony.carbonsamples.feature.ZOrderActivity;
 
 public class FeaturesActivity extends Activity {
 
-    private boolean debugEnabled = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        final DebugOverlay overlay = new DebugOverlay(this);
-
-        final ImageView debug = (ImageView) findViewById(R.id.debug);
-        debug.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (!debugEnabled) {
-                    debug.setTint(Carbon.getThemeColor(FeaturesActivity.this, R.attr.carbon_iconColor));
-                    overlay.show();
-                    debugEnabled = true;
-                } else {
-                    debug.setTint(Carbon.getThemeColor(FeaturesActivity.this, R.attr.colorControlNormal));
-                    overlay.dismiss();
-                    debugEnabled = false;
-                }
-            }
-        });
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setIconVisible(true);
-        toolbar.setTitle(getString(R.string.featuresActivity_title));
+        Samples.initToolbar(this,getString(R.string.featuresActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{

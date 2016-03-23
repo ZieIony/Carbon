@@ -1,8 +1,10 @@
 package carbon.animation;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.util.StateSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
 

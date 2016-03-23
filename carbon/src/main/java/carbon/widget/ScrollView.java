@@ -12,6 +12,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -94,6 +95,8 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         }
 
         setClipToPadding(false);
+
+        initScrollbars();
     }
 
     private int getScrollRange() {
@@ -277,12 +280,14 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateTint();
+            ViewCompat.postInvalidateOnAnimation(ScrollView.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(ScrollView.this);
         }
     };
 
@@ -389,40 +394,29 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
 
     Drawable scrollBarDrawable;
 
-    protected void onDrawHorizontalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
-        if (scrollBarDrawable == null) {
-            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
-            try {
-                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
-                mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
-                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        scrollBar.setBounds(l, t, r, b);
-        scrollBar.draw(canvas);
-    }
+    private void initScrollbars() {
+        try {
+            Field mScrollabilityCacheField = View.class.getDeclaredField("mScrollCache");
+            mScrollabilityCacheField.setAccessible(true);
+            Object mScrollabilityCache = mScrollabilityCacheField.get(this);
+            Field scrollBarField = mScrollabilityCache.getClass().getDeclaredField("scrollBar");
+            scrollBarField.setAccessible(true);
+            Object scrollBar = scrollBarField.get(mScrollabilityCache);
 
-    protected void onDrawVerticalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
-        if (scrollBarDrawable == null) {
-            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
-            try {
-                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mVerticalThumb");
-                mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
-                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            Field mVerticalThumbField = scrollBar.getClass().getDeclaredField("mVerticalThumb");
+            mVerticalThumbField.setAccessible(true);
+            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
+            mVerticalThumbField.set(scrollBar, scrollBarDrawable);
+
+            Field mHorizontalThumbField = scrollBar.getClass().getDeclaredField("mHorizontalThumb");
+            mHorizontalThumbField.setAccessible(true);
+            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
+            mHorizontalThumbField.set(scrollBar, scrollBarDrawable);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-        scrollBar.setBounds(l, t, r, b);
-        scrollBar.draw(canvas);
     }
 
 

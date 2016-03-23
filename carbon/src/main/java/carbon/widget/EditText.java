@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextWatcher;
@@ -480,7 +481,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (underline) {
             //if (isEnabled()) {
             //paint.setShader(null);
-            paint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
+            paint.setColor(backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor()));
             canvas.drawLine(getScrollX() + getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getScrollX() + getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
          /*   } else {
                 Matrix matrix = new Matrix();
@@ -1357,12 +1358,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateTint();
+            ViewCompat.postInvalidateOnAnimation(EditText.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(EditText.this);
         }
     };
     ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
