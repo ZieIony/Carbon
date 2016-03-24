@@ -344,12 +344,16 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
 
     private void initScrollbars() {
         try {
-            Field mScrollabilityCacheField = View.class.getDeclaredField("mScrollCache");
-            mScrollabilityCacheField.setAccessible(true);
-            Object mScrollabilityCache = mScrollabilityCacheField.get(this);
-            Field scrollBarField = mScrollabilityCache.getClass().getDeclaredField("scrollBar");
+            Field mScrollCacheField = View.class.getDeclaredField("mScrollCache");
+            mScrollCacheField.setAccessible(true);
+            Object mScrollCache = mScrollCacheField.get(this);
+
+            if (mScrollCache == null)
+                return;
+
+            Field scrollBarField = mScrollCache.getClass().getDeclaredField("scrollBar");
             scrollBarField.setAccessible(true);
-            Object scrollBar = scrollBarField.get(mScrollabilityCache);
+            Object scrollBar = scrollBarField.get(mScrollCache);
 
             Field mVerticalThumbField = scrollBar.getClass().getDeclaredField("mVerticalThumb");
             mVerticalThumbField.setAccessible(true);

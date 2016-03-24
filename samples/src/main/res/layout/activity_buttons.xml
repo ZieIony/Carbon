@@ -48,6 +48,7 @@
                 android:tag="enable"
                 android:text="Inline Style"
                 android:textColor="#ff0000ff"
+                app:carbon_backgroundTint="@null"
                 app:carbon_cornerRadius="2dp"
                 app:carbon_elevation="@dimen/carbon_elevationLow"
                 app:carbon_rippleColor="#40ff0000"

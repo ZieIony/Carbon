@@ -105,8 +105,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                     int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
-                } else if (attr == R.styleable.Button_android_background) {
-                    setBackground(a.getDrawable(attr));
+                    //    } else if (attr == R.styleable.Button_android_background) {
+                    //           setBackground(a.getDrawable(attr));
                 }
             }
 
@@ -430,7 +430,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             rippleDrawable = null;
         }
         super.setBackgroundDrawable(background == null ? emptyBackground : background);
-        updateTint();
+        updateBackgroundTint();
     }
 
 
@@ -740,13 +740,16 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     }
 
     private void updateBackgroundTint() {
-        if (getBackground() == null)
+        Drawable background = getBackground();
+        if (background instanceof RippleDrawable)
+            background = ((RippleDrawable) background).getBackground();
+        if (background == null)
             return;
         if (backgroundTint != null && backgroundTintMode != null) {
             int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            getBackground().setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
+            background.setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
         } else {
-            getBackground().setColorFilter(null);
+            background.setColorFilter(null);
         }
     }
 
