@@ -105,8 +105,6 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                     int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
-                    //    } else if (attr == R.styleable.Button_android_background) {
-                    //           setBackground(a.getDrawable(attr));
                 }
             }
 

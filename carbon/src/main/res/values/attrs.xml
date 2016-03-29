@@ -376,27 +376,22 @@
     </declare-styleable>
 
     <declare-styleable name="CheckedTextView">
-        <attr name="carbon_fontFamily"/>
-        <attr name="android:textStyle"/>
-        <attr name="carbon_fontPath"/>
-        <attr name="carbon_textAllCaps"/>
-        <attr name="android:textAppearance"/>
+        <attr name="android:drawablePadding"/>
+        <attr name="android:checked"/>
     </declare-styleable>
 
     <declare-styleable name="CheckBox">
-        <attr name="carbon_fontFamily"/>
-        <attr name="android:textStyle"/>
-        <attr name="carbon_fontPath"/>
-        <attr name="carbon_textAllCaps"/>
-        <attr name="android:textAppearance"/>
+        <attr name="android:drawablePadding"/>
+        <attr name="android:checked"/>
     </declare-styleable>
 
     <declare-styleable name="RadioButton">
-        <attr name="carbon_fontFamily"/>
-        <attr name="android:textStyle"/>
-        <attr name="carbon_fontPath"/>
-        <attr name="carbon_textAllCaps"/>
-        <attr name="android:textAppearance"/>
+        <attr name="android:drawablePadding"/>
+        <attr name="android:checked"/>
+    </declare-styleable>
+
+    <declare-styleable name="RadioGroup">
+        <attr name="android:checkedButton"/>
     </declare-styleable>
 
     <attr name="carbon_rangeSeekBarStyle" format="reference"/>

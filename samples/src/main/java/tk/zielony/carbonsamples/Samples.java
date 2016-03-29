@@ -49,9 +49,9 @@ public class Samples {
 
         CheckBox checkBox = (CheckBox) activity.findViewById(R.id.enabled);
         if (checkBox != null)
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                public void onCheckedChanged(CheckBox compoundButton, boolean b) {
                     List<View> views = findViewsWithTag((ViewGroup) activity.getWindow().getDecorView().getRootView(), "enable");
                     for (View v : views)
                         v.setEnabled(b);
