@@ -435,7 +435,7 @@
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
-    <style name="carbon_CheckedTextView" parent="android:Widget.CompoundButton.CheckBox">
+    <style name="carbon_CheckedTextView" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:paddingLeft">12dp</item>
         <item name="android:paddingStart">12dp</item>
         <item name="carbon_rippleColor">@null</item>
@@ -445,7 +445,7 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="carbon_CheckBox" parent="android:Widget.CompoundButton.CheckBox">
+    <style name="carbon_CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:paddingLeft">12dp</item>
         <item name="android:paddingStart">12dp</item>
         <item name="carbon_rippleColor">@null</item>
@@ -455,7 +455,7 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="carbon_RadioButton" parent="android:Widget.CompoundButton.RadioButton">
+    <style name="carbon_RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:paddingLeft">12dp</item>
         <item name="android:paddingStart">12dp</item>
         <item name="carbon_rippleColor">@null</item>
