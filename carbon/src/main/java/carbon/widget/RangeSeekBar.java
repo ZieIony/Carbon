@@ -341,6 +341,12 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
                         postInvalidate();
                     }
                 });
+                radiusAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        radiusAnimator = null;
+                    }
+                });
                 radiusAnimator.start();
             } else {
                 draggedThumb = 2;
@@ -354,6 +360,12 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
                     public void onAnimationUpdate(ValueAnimator animation) {
                         thumbRadius2 = (float) animation.getAnimatedValue();
                         postInvalidate();
+                    }
+                });
+                radiusAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        radiusAnimator = null;
                     }
                 });
                 radiusAnimator.start();
@@ -454,6 +466,9 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             float t = v;
             v = v2;
             v2 = t;
+            t = thumbRadius;
+            thumbRadius = thumbRadius2;
+            thumbRadius2 = t;
         }
         float newValue = v * (max - min) + min;
         float newValue2 = v2 * (max - min) + min;
