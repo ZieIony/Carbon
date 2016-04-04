@@ -42,7 +42,6 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
     private boolean drag = true;
     private float prevX;
     private int overscrollMode;
-    long prevScroll = 0;
 
     public static final int OVER_SCROLL_ALWAYS = 0;
     public static final int OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
@@ -230,29 +229,6 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
         prevX = ev.getX();
 
         return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    protected void onScrollChanged(int x, int y, int prevX, int prevY) {
-        super.onScrollChanged(x, y, prevX, prevY);
-        if (drag)
-            return;
-        int dx = x - prevX;
-        int dy = y - prevY;
-        long t = System.currentTimeMillis();
-        int velx = (int) (dx * 1000.0f / (t - prevScroll));
-        int vely = (int) (dy * 1000.0f / (t - prevScroll));
-        if (computeHorizontalScrollOffset() == 0 && dx < 0) {
-            leftGlow.onAbsorb(-velx);
-        } else if (computeHorizontalScrollOffset() == computeHorizontalScrollRange() - getWidth() && dx > 0) {
-            rightGlow.onAbsorb(velx);
-        }
-        /*if (computeVerticalScrollOffset() == 0 && dy < 0) {
-            topGlow.onAbsorb(-vely);
-        } else if (computeVerticalScrollOffset() == computeVerticalScrollRange() - getHeight() && dy > 0) {
-            bottomGlow.onAbsorb(vely);
-        }*/
-        prevScroll = t;
     }
 
     @Override

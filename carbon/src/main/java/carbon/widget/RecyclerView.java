@@ -178,22 +178,30 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     @Override
     public void onScrolled(int dx, int dy) {
         super.onScrolled(dx, dy);
-        if (drag)
+        if (drag || topGlow == null)
             return;
-        long t = System.currentTimeMillis();
-        int velx = (int) (dx * 1000.0f / (t - prevScroll));
-        int vely = (int) (dy * 1000.0f / (t - prevScroll));
-        if (computeHorizontalScrollOffset() == 0 && dx < 0) {
-            leftGlow.onAbsorb(-velx);
-        } else if (computeHorizontalScrollOffset() == computeHorizontalScrollRange() - getWidth() && dx > 0) {
-            rightGlow.onAbsorb(velx);
+        int range = computeVerticalScrollRange() - getHeight();
+        if (header != null)
+            range += header.getHeight();
+        boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
+                (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+
+        if (canOverscroll) {
+            long t = System.currentTimeMillis();
+            /*int velx = (int) (dx * 1000.0f / (t - prevScroll));
+            if (computeHorizontalScrollOffset() == 0 && dx < 0) {
+                leftGlow.onAbsorb(-velx);
+            } else if (computeHorizontalScrollOffset() == computeHorizontalScrollRange() - getWidth() && dx > 0) {
+                rightGlow.onAbsorb(velx);
+            }*/
+            int vely = (int) (dy * 1000.0f / (t - prevScroll));
+            if (computeVerticalScrollOffset() == 0 && dy < 0) {
+                topGlow.onAbsorb(-vely);
+            } else if (computeVerticalScrollOffset() == range && dy > 0) {
+                bottomGlow.onAbsorb(vely);
+            }
+            prevScroll = t;
         }
-        if (computeVerticalScrollOffset() == 0 && dy < 0) {
-            topGlow.onAbsorb(-vely);
-        } else if (computeVerticalScrollOffset() == computeVerticalScrollRange() - getHeight() && dy > 0) {
-            bottomGlow.onAbsorb(vely);
-        }
-        prevScroll = t;
     }
 
     @Override

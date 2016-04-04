@@ -99,16 +99,6 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         initScrollbars();
     }
 
-    private int getScrollRange() {
-        int scrollRange = 0;
-        if (getChildCount() > 0) {
-            View child = getChildAt(0);
-            scrollRange = Math.max(0,
-                    child.getHeight() - (getHeight() - getPaddingBottom() - getPaddingTop()));
-        }
-        return scrollRange;
-    }
-
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
         if (header != null)
@@ -130,12 +120,10 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
                     }
                 }
                 if (drag) {
-                    final int oldY = getScrollY();
-                    int range = getScrollRange();
-                    if (header != null)
-                        range += header.getHeight();
-                    boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+                    final int oldY = computeVerticalScrollOffset();
+                    int range = computeVerticalScrollRange() - getHeight();
+                    boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
+                            (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
                     if (canOverscroll) {
                         float pulledToY = oldY + deltaY;
@@ -173,24 +161,22 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     @Override
     protected void onScrollChanged(int x, int y, int prevX, int prevY) {
         super.onScrollChanged(x, y, prevX, prevY);
-        if (drag)
+        if (drag || topGlow == null)
             return;
-        int dx = x - prevX;
-        int dy = y - prevY;
-        long t = System.currentTimeMillis();
-        int velx = (int) (dx * 1000.0f / (t - prevScroll));
-        int vely = (int) (dy * 1000.0f / (t - prevScroll));
-        /*if (computeHorizontalScrollOffset() == 0 && dx < 0) {
-            leftGlow.onAbsorb(-velx);
-        } else if (computeHorizontalScrollOffset() == computeHorizontalScrollRange() - getWidth() && dx > 0) {
-            rightGlow.onAbsorb(velx);
-        }*/
-        if (computeVerticalScrollOffset() == 0 && dy < 0) {
-            topGlow.onAbsorb(-vely);
-        } else if (computeVerticalScrollOffset() == computeVerticalScrollRange() - getHeight() && dy > 0) {
-            bottomGlow.onAbsorb(vely);
+        int range = computeVerticalScrollRange() - getHeight();
+        boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
+                (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+        if (canOverscroll) {
+            long t = System.currentTimeMillis();
+            int dy = y - prevY;
+            int vely = (int) (dy * 1000.0f / (t - prevScroll));
+            if (computeVerticalScrollOffset() == 0 && dy < 0) {
+                topGlow.onAbsorb(-vely);
+            } else if (computeVerticalScrollOffset() == range && dy > 0) {
+                bottomGlow.onAbsorb(vely);
+            }
+            prevScroll = t;
         }
-        prevScroll = t;
     }
 
     @Override
@@ -201,35 +187,6 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             return true;
         }
     }
-
-    /* @Override
-    public void computeScroll() {
-        if (mScroller.computeScrollOffset()) {
-            int oldX = getScrollX();
-            int oldY = getScrollY();
-            int x = mScroller.getCurrX();
-            int y = mScroller.getCurrY();
-
-            if (oldX != x || oldY != y) {
-                final int range = getScrollRange();
-                final boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                        (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
-
-                if (canOverscroll) {
-                    if (y < 0 && oldY >= 0) {
-                        topGlow.onAbsorb((int) mScroller.getCurrVelocity());
-                    } else if (y > range && oldY <= range) {
-                        bottomGlow.onAbsorb((int) mScroller.getCurrVelocity());
-                    }
-                }
-            }
-
-            if (!awakenScrollBars()) {
-                // Keep on drawing until the animation has finished.
-                postInvalidate();
-            }
-        }
-    }*/
 
     @Override
     public void setOverScrollMode(int mode) {
@@ -470,7 +427,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
                 final int height = getHeight();
 
                 canvas.translate(-width + getPaddingLeft(),
-                        Math.max(getScrollRange(), scrollY) + height);
+                        Math.max(computeVerticalScrollRange() - getHeight(), scrollY) + height);
                 canvas.rotate(180, width, 0);
                 bottomGlow.setSize(width, height);
                 if (bottomGlow.draw(canvas)) {
