@@ -61,6 +61,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private float prevY;
     private int overscrollMode;
     private boolean clipToPadding;
+    long prevScroll = 0;
 
     public RecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
@@ -172,6 +173,27 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         prevY = ev.getY();
 
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onScrolled(int dx, int dy) {
+        super.onScrolled(dx, dy);
+        if (drag)
+            return;
+        long t = System.currentTimeMillis();
+        int velx = (int) (dx * 1000.0f / (t - prevScroll));
+        int vely = (int) (dy * 1000.0f / (t - prevScroll));
+        if (computeHorizontalScrollOffset() == 0 && dx < 0) {
+            leftGlow.onAbsorb(-velx);
+        } else if (computeHorizontalScrollOffset() == computeHorizontalScrollRange() - getWidth() && dx > 0) {
+            rightGlow.onAbsorb(velx);
+        }
+        if (computeVerticalScrollOffset() == 0 && dy < 0) {
+            topGlow.onAbsorb(-vely);
+        } else if (computeVerticalScrollOffset() == computeVerticalScrollRange() - getHeight() && dy > 0) {
+            bottomGlow.onAbsorb(vely);
+        }
+        prevScroll = t;
     }
 
     @Override
