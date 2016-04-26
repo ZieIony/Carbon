@@ -78,12 +78,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
-    private static final int ID_CUT = android.R.id.cut;
-    private static final int ID_COPY = android.R.id.copy;
-    private static final int ID_PASTE = android.R.id.paste;
-    private static final int ID_COPY_URL = android.R.id.copyUrl;
-    private static final int ID_SELECT_ALL = android.R.id.selectAll;
-
     int DIVIDER_PADDING;
     int cursorColor;
 
@@ -256,8 +250,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         PADDING_ERROR = getResources().getDimension(R.dimen.carbon_paddingHalf);
         PADDING_LABEL = getResources().getDimension(R.dimen.carbon_paddingHalf);
 
-        //initActionModeCallback();
-
         if (isFocused() && getText().length() > 0)
             labelFrac = 1;
 
@@ -266,12 +258,62 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         validateInternalEvent();
     }
 
-    @Override
-    public boolean onTextContextMenuItem(int id) {
-        boolean result = super.onTextContextMenuItem(id);
-        if (id == ID_SELECT_ALL)
-            showContextMenu();
-        return result;
+    private void initSelectionHandle() {
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+            try {
+                final Field fEditor = android.widget.TextView.class.getDeclaredField("mEditor");
+                fEditor.setAccessible(true);
+                editor = fEditor.get(this);
+
+                mIgnoreActionUpEventField = editor.getClass().getDeclaredField("mIgnoreActionUpEvent");
+                mIgnoreActionUpEventField.setAccessible(true);
+
+                final Field fSelectHandleLeft = editor.getClass().getDeclaredField("mSelectHandleLeft");
+                final Field fSelectHandleRight = editor.getClass().getDeclaredField("mSelectHandleRight");
+                final Field fSelectHandleCenter = editor.getClass().getDeclaredField("mSelectHandleCenter");
+
+                fSelectHandleLeft.setAccessible(true);
+                fSelectHandleRight.setAccessible(true);
+                fSelectHandleCenter.setAccessible(true);
+
+                VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
+                leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleLeft.set(editor, leftHandle);
+
+                VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
+                rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleRight.set(editor, rightHandle);
+
+                VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
+                middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleCenter.set(editor, middleHandle);
+            } catch (final Exception ignored) {
+            }
+        } else {
+            try {
+                final Field fSelectHandleLeft = android.widget.TextView.class.getDeclaredField("mSelectHandleLeft");
+                final Field fSelectHandleRight = android.widget.TextView.class.getDeclaredField("mSelectHandleRight");
+                final Field fSelectHandleCenter = android.widget.TextView.class.getDeclaredField("mSelectHandleCenter");
+
+                fSelectHandleLeft.setAccessible(true);
+                fSelectHandleRight.setAccessible(true);
+                fSelectHandleCenter.setAccessible(true);
+
+                VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
+                leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleLeft.set(this, leftHandle);
+
+                VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
+                rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleRight.set(this, rightHandle);
+
+                VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
+                middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+                fSelectHandleCenter.set(this, middleHandle);
+            } catch (final Exception ignored) {
+            }
+
+        }
     }
 
     public void setCursorColor(int cursorColor) {
@@ -663,389 +705,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(left, top + internalPaddingTop, right, bottom + internalPaddingBottom);
-    }
-
-
-    // -------------------------------
-    // popup
-    // -------------------------------
-
-
-    EditTextMenu popupMenu;
-    private boolean isShowingPopup = false;
-    WindowManager brokenWindowManager = new WindowManager() {
-        @Override
-        public Display getDefaultDisplay() {
-            return null;
-        }
-
-        @Override
-        public void removeViewImmediate(View view) {
-
-        }
-
-        @Override
-        public void addView(View view, ViewGroup.LayoutParams params) {
-            final WindowManager.LayoutParams wparams
-                    = (WindowManager.LayoutParams) params;
-            view.setLayoutParams(wparams);
-        }
-
-        @Override
-        public void updateViewLayout(View view, ViewGroup.LayoutParams params) {
-            final WindowManager.LayoutParams wparams
-                    = (WindowManager.LayoutParams) params;
-            view.setLayoutParams(wparams);
-        }
-
-        @Override
-        public void removeView(View view) {
-
-        }
-    };
-
-    @Override
-    public int getSelectionStart() {
-        try {
-            if (brokenWindowManager != null) {
-                Field ccmf = android.widget.TextView.class.getDeclaredField("mCursorControllerMenu");
-                ccmf.setAccessible(true);
-                Object ccm = ccmf.get(this);
-                {
-                    Field pwf = ccm.getClass().getDeclaredField("mPopupWindow");
-                    pwf.setAccessible(true);
-                    PopupWindow pw = (PopupWindow) pwf.get(ccm);
-                    Field wmf = pw.getClass().getDeclaredField("mWindowManager");
-                    wmf.setAccessible(true);
-                    wmf.set(pw, brokenWindowManager);
-                }
-                {
-                    Field pwf = ccm.getClass().getDeclaredField("mPopupWindowArrowDown");
-                    pwf.setAccessible(true);
-                    PopupWindow pw = (PopupWindow) pwf.get(ccm);
-                    Field wmf = pw.getClass().getDeclaredField("mWindowManager");
-                    wmf.setAccessible(true);
-                    wmf.set(pw, brokenWindowManager);
-                }
-                {
-                    Field pwf = ccm.getClass().getDeclaredField("mPopupWindowArrowUp");
-                    pwf.setAccessible(true);
-                    PopupWindow pw = (PopupWindow) pwf.get(ccm);
-                    Field wmf = pw.getClass().getDeclaredField("mWindowManager");
-                    wmf.setAccessible(true);
-                    wmf.set(pw, brokenWindowManager);
-                }
-                brokenWindowManager = null;
-            }
-        } catch (Exception e) {
-
-        }
-        return super.getSelectionStart();
-    }
-
-    @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public ActionMode startActionMode(final ActionMode.Callback callback) {
-        ActionMode.Callback c = new ActionMode.Callback() {
-
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return callback.onPrepareActionMode(mode, menu);
-                //createMenu(menu);
-            }
-
-            public void onDestroyActionMode(ActionMode mode) {
-                popupMenu.dismiss();
-                callback.onDestroyActionMode(mode);
-            }
-
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                return callback.onCreateActionMode(mode, menu);
-            }
-
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                return callback.onActionItemClicked(mode, item);
-            }
-        };
-        return super.startActionMode(c);
-    }
-
-    @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public ActionMode startActionMode(final ActionMode.Callback callback, int type) {
-        ActionMode.Callback c = new ActionMode.Callback() {
-
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                prepareMenu();
-                return true;
-            }
-
-            public void onDestroyActionMode(ActionMode mode) {
-                callback.onDestroyActionMode(mode);
-            }
-
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                //              mode.setCustomView(new View(getContext()));
-//                callback.onCreateActionMode(mode, menu);
-                callback.onCreateActionMode(mode, menu);
-                createMenu(menu);
-                menu.clear();
-                return true;//
-            }
-
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                return callback.onActionItemClicked(mode, item);
-            }
-        };
-        return super.startActionMode(c, type);
-    }
-
-    private void initSelectionHandle() {
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            try {
-                final Field fEditor = android.widget.TextView.class.getDeclaredField("mEditor");
-                fEditor.setAccessible(true);
-                editor = fEditor.get(this);
-
-                mIgnoreActionUpEventField = editor.getClass().getDeclaredField("mIgnoreActionUpEvent");
-                mIgnoreActionUpEventField.setAccessible(true);
-
-                final Field fSelectHandleLeft = editor.getClass().getDeclaredField("mSelectHandleLeft");
-                final Field fSelectHandleRight = editor.getClass().getDeclaredField("mSelectHandleRight");
-                final Field fSelectHandleCenter = editor.getClass().getDeclaredField("mSelectHandleCenter");
-
-                fSelectHandleLeft.setAccessible(true);
-                fSelectHandleRight.setAccessible(true);
-                fSelectHandleCenter.setAccessible(true);
-
-                VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
-                leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleLeft.set(editor, leftHandle);
-
-                VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
-                rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleRight.set(editor, rightHandle);
-
-                VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
-                middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleCenter.set(editor, middleHandle);
-            } catch (final Exception ignored) {
-            }
-        } else {
-            try {
-                final Field fSelectHandleLeft = android.widget.TextView.class.getDeclaredField("mSelectHandleLeft");
-                final Field fSelectHandleRight = android.widget.TextView.class.getDeclaredField("mSelectHandleRight");
-                final Field fSelectHandleCenter = android.widget.TextView.class.getDeclaredField("mSelectHandleCenter");
-
-                fSelectHandleLeft.setAccessible(true);
-                fSelectHandleRight.setAccessible(true);
-                fSelectHandleCenter.setAccessible(true);
-
-                VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
-                leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleLeft.set(this, leftHandle);
-
-                VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
-                rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleRight.set(this, rightHandle);
-
-                VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
-                middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleCenter.set(this, middleHandle);
-            } catch (final Exception ignored) {
-            }
-
-        }
-    }
-
-    private void initActionModeCallback() {
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    return false;
-                }
-
-                public void onDestroyActionMode(ActionMode mode) {
-                }
-
-                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    createMenu(menu);
-                    return true;
-                }
-
-                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    return false;
-                }
-            });
-        }
-        if (Build.VERSION.SDK_INT >= 23) {
-            setCustomInsertionActionModeCallback(new ActionMode.Callback() {
-                @Override
-                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    createMenu(menu);
-
-                    return true;
-                }
-
-                @Override
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    return false;
-                }
-
-                @Override
-                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    return false;
-                }
-
-                @Override
-                public void onDestroyActionMode(ActionMode mode) {
-
-                }
-            });
-        }
-    }
-
-    @Override
-    protected void onCreateContextMenu(ContextMenu menu) {
-        super.onCreateContextMenu(menu);
-        //createMenu(menu);
-    }
-
-    private void prepareMenu() {
-        if (popupMenu.hasVisibleItems()) {
-            popupMenu.show(EditText.this);
-            isShowingPopup = true;
-        }
-    }
-
-    private void createMenu(Menu menu) {
-        TypedValue outValue = new TypedValue();
-        getContext().getTheme().resolveAttribute(R.attr.carbon_editMenuTheme, outValue, true);
-        int theme = outValue.resourceId;
-        Context themedContext = new ContextThemeWrapper(getContext(), theme);
-
-        popupMenu = new EditTextMenu(themedContext);
-        popupMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                isShowingPopup = false;
-            }
-        });
-
-        popupMenu.initCopy(menu.findItem(ID_COPY));
-        popupMenu.initCut(menu.findItem(ID_CUT));
-        popupMenu.initPaste(menu.findItem(ID_PASTE));
-        popupMenu.initSelectAll(menu.findItem(ID_SELECT_ALL));
-        //menu.clear();
-        /*try {
-            mIgnoreActionUpEventField.set(editor, true);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }*/
-    }
-
-    @Override
-    protected boolean setFrame(int l, int t, int r, int b) {
-        boolean result = super.setFrame(l, t, r, b);
-
-        if (popupMenu != null)
-            popupMenu.update();
-
-        return result;
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-
-        if (isShowingPopup)
-            popupMenu.showImmediate(EditText.this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-
-        if (isShowingPopup)
-            popupMenu.dismissImmediate();
-    }
-
-    @Override
-    public Parcelable onSaveInstanceState() {
-        //begin boilerplate code that allows parent classes to save state
-        Parcelable superState = super.onSaveInstanceState();
-
-        SavedState ss = new SavedState(superState);
-        //end
-
-        ss.isShowingPopup = this.isShowingPopup ? 1 : 0;
-
-        return ss;
-    }
-
-    @Override
-    public void onRestoreInstanceState(Parcelable state) {
-        //begin boilerplate code so parent classes can restore state
-        if (!(state instanceof SavedState)) {
-            super.onRestoreInstanceState(state);
-            return;
-        }
-
-        SavedState ss = (SavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
-        //end
-
-        this.isShowingPopup = ss.isShowingPopup > 0;
-    }
-
-    static class SavedState implements Parcelable {
-        public static final SavedState EMPTY_STATE = new SavedState() {
-        };
-
-        int isShowingPopup;
-
-        Parcelable superState;
-
-        SavedState() {
-            superState = null;
-        }
-
-        SavedState(Parcelable superState) {
-            this.superState = superState != EMPTY_STATE ? superState : null;
-        }
-
-        private SavedState(Parcel in) {
-            Parcelable superState = in.readParcelable(EditText.class.getClassLoader());
-            this.superState = superState != null ? superState : EMPTY_STATE;
-            this.isShowingPopup = in.readInt();
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel out, int flags) {
-            out.writeParcelable(superState, flags);
-            out.writeInt(this.isShowingPopup);
-        }
-
-        public Parcelable getSuperState() {
-            return superState;
-        }
-
-        //required field that makes Parcelables from a Parcel
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
-                    public SavedState createFromParcel(Parcel in) {
-                        return new SavedState(in);
-                    }
-
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
     }
 
 
