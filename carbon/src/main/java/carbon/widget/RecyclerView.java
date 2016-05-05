@@ -62,6 +62,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private int overscrollMode;
     private boolean clipToPadding;
     long prevScroll = 0;
+    private boolean childDrawingOrderCallbackSet = false;
+    OnItemClickedListener onItemClickedListener;
 
     public RecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
@@ -94,7 +96,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
                     setHeaderParallax(a.getFloat(attr, 0.0f));
                 } else if (attr == R.styleable.RecyclerView_android_divider) {
-                    setDivider(a.getDrawable(attr), (int) a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0));
+                    Drawable drawable = a.getDrawable(attr);
+                    float height = a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0);
+                    if (drawable != null && height > 0)
+                        setDivider(drawable, (int) height);
                 }
             }
             a.recycle();
@@ -104,6 +109,43 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         setItemAnimator(new DefaultItemAnimator());
 
         initScrollbars();
+    }
+
+    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
+    }
+
+    public interface OnItemClickedListener {
+        void onItemClicked(int position);
+    }
+
+    public void addView(final View child, int index) {
+        if (onItemClickedListener != null) {
+            child.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickedListener.onItemClicked(findContainingViewHolder(child).getAdapterPosition());
+                }
+            });
+        }
+        super.addView(child, index);
+    }
+
+    @Override
+    public void removeView(View view) {
+        if (onItemClickedListener != null)
+            view.setOnClickListener(null);
+        super.removeView(view);
+    }
+
+    @Override
+    public void removeViewAt(int index) {
+        final View child = getChildAt(index);
+        if (child != null) {
+            if (onItemClickedListener != null)
+                child.setOnClickListener(null);
+            super.removeView(child);
+        }
     }
 
     public void setDivider(Drawable divider, int height) {
@@ -287,9 +329,16 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     @Override
     protected int getChildDrawingOrder(int childCount, int child) {
+        if (childDrawingOrderCallbackSet)
+            return super.getChildDrawingOrder(childCount, child);
         return views != null ? indexOfChild(views.get(child)) : child;
     }
 
+    @Override
+    public void setChildDrawingOrderCallback(ChildDrawingOrderCallback childDrawingOrderCallback) {
+        super.setChildDrawingOrderCallback(childDrawingOrderCallback);
+        childDrawingOrderCallbackSet = childDrawingOrderCallback != null;
+    }
 
     // -------------------------------
     // tint
@@ -610,28 +659,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     public static abstract class Adapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
-        OnItemClickedListener onItemClickedListener;
-
-        public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
-            this.onItemClickedListener = onItemClickedListener;
-        }
-
-        @Override
-        public void onBindViewHolder(VH holder, final int position) {
-            holder.itemView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickedListener != null)
-                        onItemClickedListener.onItemClicked(position);
-                }
-            });
-        }
 
         public abstract I getItem(int position);
-    }
-
-    public interface OnItemClickedListener {
-        void onItemClicked(int position);
     }
 
     public static class DividerItemDecoration extends RecyclerView.ItemDecoration {

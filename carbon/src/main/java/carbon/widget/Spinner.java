@@ -93,6 +93,8 @@ public class Spinner extends EditText {
         }
 
         spinnerMenu = new SpinnerMenu(new ContextThemeWrapper(context, theme));
+        spinnerMenu.setOnItemClickedListener(onItemClickedListener);
+
         defaultAdapter = new Adapter();
         spinnerMenu.setAdapter(defaultAdapter);
         spinnerMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -124,10 +126,8 @@ public class Spinner extends EditText {
     public void setAdapter(final RecyclerView.Adapter adapter) {
         if (adapter == null) {
             spinnerMenu.setAdapter(defaultAdapter);
-            defaultAdapter.setOnItemClickedListener(onItemClickedListener);
         } else {
             spinnerMenu.setAdapter(adapter);
-            adapter.setOnItemClickedListener(onItemClickedListener);
         }
         setText(getAdapter().getItem(selectedIndex).toString());
     }
@@ -153,7 +153,6 @@ public class Spinner extends EditText {
 
     public void setItems(String[] items) {
         spinnerMenu.setAdapter(defaultAdapter);
-        defaultAdapter.setOnItemClickedListener(onItemClickedListener);
         defaultAdapter.setItems(items);
     }
 
@@ -175,7 +174,6 @@ public class Spinner extends EditText {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            super.onBindViewHolder(holder, position);
             holder.tv.setText(items[position]);
         }
 

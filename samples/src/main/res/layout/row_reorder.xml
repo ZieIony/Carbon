@@ -1,0 +1,25 @@
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/carbon_colorBackground"
+    android:orientation="horizontal"
+    app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+    <carbon.widget.TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:textAppearance="?attr/carbon_textAppearanceBody2" />
+
+    <carbon.widget.ImageView
+        android:id="@+id/reorder"
+        style="@style/carbon_ImageView.Icon.Inverse"
+        android:layout_width="@dimen/carbon_toolbarHeight"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        app:carbon_src="@raw/ic_reorder_24px" />
+</carbon.widget.LinearLayout>

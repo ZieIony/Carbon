@@ -76,7 +76,6 @@ public class NavigationView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            super.onBindViewHolder(holder, position);
             holder.tv.setText(items.getItem(position).getTitle());
             holder.iv.setImageDrawable(items.getItem(position).getIcon());
         }
