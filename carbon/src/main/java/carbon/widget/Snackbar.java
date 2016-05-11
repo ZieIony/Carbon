@@ -37,6 +37,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
     GestureDetector gestureDetector = new GestureDetector(this);
     private Rect rect = new Rect();
     private boolean tapOutsideToDismiss;
+    private ViewGroup container;
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -176,6 +177,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
 
     public void show(final ViewGroup container) {
         synchronized (Snackbar.class) {
+            this.container = container;
             if (!next.contains(this))
                 next.add(this);
             if (next.indexOf(this) == 0) {
@@ -204,7 +206,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
     }
 
     public void show() {
-        show(null);
+        show(container);
     }
 
     public static void clearQueue() {
