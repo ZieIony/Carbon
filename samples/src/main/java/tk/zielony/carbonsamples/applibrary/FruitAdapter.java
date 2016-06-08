@@ -15,12 +15,11 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-05-09.
  */
-public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder, String> {
-    private List<String> fruits;
+public class FruitAdapter extends RecyclerView.ListAdapter<FruitAdapter.ViewHolder, String> {
     private ItemTouchHelper helper;
 
     public FruitAdapter(List<String> fruits, ItemTouchHelper helper) {
-        this.fruits = fruits;
+        super(fruits);
         this.helper = helper;
     }
 
@@ -33,7 +32,7 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder, 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tv.setText(fruits.get(position));
+        holder.tv.setText(getItem(position));
 
         if (helper != null) {
             holder.reorder.setOnTouchListener(new View.OnTouchListener() {
@@ -45,16 +44,6 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder, 
                 }
             });
         }
-    }
-
-    @Override
-    public String getItem(int position) {
-        return fruits.get(position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return fruits.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

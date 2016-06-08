@@ -58,11 +58,10 @@ public class NavigationView extends RecyclerView {
         return menu;
     }
 
-    public static class Adapter extends RecyclerView.Adapter<ViewHolder, MenuItem> {
+    public static class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private Menu items = null;
 
-        @Override
         public MenuItem getItem(int position) {
             return items.getItem(position);
         }

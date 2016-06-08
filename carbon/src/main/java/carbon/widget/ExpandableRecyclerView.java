@@ -64,6 +64,8 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
     private int overscrollMode;
     private boolean clipToPadding;
     long prevScroll = 0;
+    private boolean childDrawingOrderCallbackSet = false;
+    OnItemClickedListener onItemClickedListener;
 
     public ExpandableRecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
@@ -96,7 +98,10 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                 } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
                     setHeaderParallax(a.getFloat(attr, 0.0f));
                 } else if (attr == R.styleable.RecyclerView_android_divider) {
-                    setDivider(a.getDrawable(attr), (int) a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0));
+                    Drawable drawable = a.getDrawable(attr);
+                    float height = a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0);
+                    if (drawable != null && height > 0)
+                        setDivider(drawable, (int) height);
                 }
             }
             a.recycle();
@@ -106,6 +111,43 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         setItemAnimator(new DefaultItemAnimator());
 
         initScrollbars();
+    }
+
+    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
+    }
+
+    public interface OnItemClickedListener {
+        void onItemClicked(int position);
+    }
+
+    public void addView(final View child, int index) {
+        if (onItemClickedListener != null) {
+            child.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickedListener.onItemClicked(findContainingViewHolder(child).getAdapterPosition());
+                }
+            });
+        }
+        super.addView(child, index);
+    }
+
+    @Override
+    public void removeView(View view) {
+        if (onItemClickedListener != null)
+            view.setOnClickListener(null);
+        super.removeView(view);
+    }
+
+    @Override
+    public void removeViewAt(int index) {
+        final View child = getChildAt(index);
+        if (child != null) {
+            if (onItemClickedListener != null)
+                child.setOnClickListener(null);
+            super.removeView(child);
+        }
     }
 
     public void setDivider(Drawable divider, int height) {
@@ -289,7 +331,15 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
 
     @Override
     protected int getChildDrawingOrder(int childCount, int child) {
+        if (childDrawingOrderCallbackSet)
+            return super.getChildDrawingOrder(childCount, child);
         return views != null ? indexOfChild(views.get(child)) : child;
+    }
+
+    @Override
+    public void setChildDrawingOrderCallback(ChildDrawingOrderCallback childDrawingOrderCallback) {
+        super.setChildDrawingOrderCallback(childDrawingOrderCallback);
+        childDrawingOrderCallbackSet = childDrawingOrderCallback != null;
     }
 
     @Override
@@ -703,7 +753,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         void onChildItemClicked(int group, int position);
     }
 
-    public static abstract class Adapter<CVH extends ViewHolder, GVH extends ViewHolder, C, G> extends RecyclerView.Adapter<ViewHolder, Object> {
+    public static abstract class Adapter<CVH extends ViewHolder, GVH extends ViewHolder, C, G> extends RecyclerView.ArrayAdapter<ViewHolder, Object> {
         private static final int TYPE_HEADER = 0;
 
         SparseBooleanArray expanded = new SparseBooleanArray();

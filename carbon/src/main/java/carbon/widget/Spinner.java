@@ -132,7 +132,7 @@ public class Spinner extends EditText {
         setText(getAdapter().getItem(selectedIndex).toString());
     }
 
-    public RecyclerView.Adapter getAdapter() {
+    public RecyclerView.ArrayAdapter getAdapter() {
         return spinnerMenu.getAdapter();
     }
 
@@ -154,16 +154,10 @@ public class Spinner extends EditText {
     public void setItems(String[] items) {
         spinnerMenu.setAdapter(defaultAdapter);
         defaultAdapter.setItems(items);
+        defaultAdapter.notifyDataSetChanged();
     }
 
-    public static class Adapter extends RecyclerView.Adapter<ViewHolder, String> {
-
-        private String[] items = new String[0];
-
-        @Override
-        public String getItem(int position) {
-            return items[position];
-        }
+    public static class Adapter extends RecyclerView.ArrayAdapter<ViewHolder, String> {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -175,17 +169,6 @@ public class Spinner extends EditText {
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.tv.setText(items[position]);
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.length;
-        }
-
-
-        public void setItems(String[] items) {
-            this.items = items;
-            notifyDataSetChanged();
         }
     }
 

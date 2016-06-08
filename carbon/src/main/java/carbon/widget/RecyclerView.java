@@ -658,9 +658,74 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             header.layout(0, 0, getWidth(), header.getMeasuredHeight());
     }
 
-    public static abstract class Adapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
+    public static abstract class ListAdapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
+        public ListAdapter() {
+            items = new ArrayList<>();
+        }
 
-        public abstract I getItem(int position);
+        public ListAdapter(List<I> items) {
+            this.items = items;
+        }
+
+        protected List<I> items;
+
+        public I getItem(int position) {
+            return items.get(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+
+        public void setItems(@NonNull List<I> items) {
+            this.items = items;
+        }
+
+        public List<I> getItems() {
+            return items;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+    }
+
+    public static abstract class ArrayAdapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
+        public ArrayAdapter() {
+            items = (I[]) new Object[0];    // doesn't really matter
+        }
+
+        public ArrayAdapter(I[] items) {
+            this.items = items;
+        }
+
+        protected I[] items;
+
+        public I getItem(int position) {
+            return items[position];
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.length;
+        }
+
+        public void setItems(@NonNull I[] items) {
+            this.items = items;
+        }
+
+        public I[] getItems() {
+            return items;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
     }
 
     public static class DividerItemDecoration extends RecyclerView.ItemDecoration {
