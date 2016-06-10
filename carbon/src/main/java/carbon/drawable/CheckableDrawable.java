@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -67,14 +66,17 @@ public class CheckableDrawable extends Drawable {
 
     @Override
     public void setBounds(Rect bounds) {
+        if (!getBounds().equals(bounds))
+            checkedBitmap = uncheckedBitmap = filledBitmap = null;
         super.setBounds(bounds);
-        checkedBitmap = uncheckedBitmap = filledBitmap = null;
     }
 
     @Override
     public void setBounds(int left, int top, int right, int bottom) {
+        Rect bounds = getBounds();
+        if (bounds.left != left || bounds.right != right || bounds.bottom != bottom || bounds.top != top)
+            checkedBitmap = uncheckedBitmap = filledBitmap = null;
         super.setBounds(left, top, right, bottom);
-        checkedBitmap = uncheckedBitmap = filledBitmap = null;
     }
 
     private void renderSVGs() {

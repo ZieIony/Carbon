@@ -61,6 +61,7 @@
     <dimen name="carbon_elevationDrawer">16dp</dimen>
     <dimen name="carbon_elevationCard">2dp</dimen>
     <dimen name="carbon_elevationDialog">12dp</dimen>
+    <dimen name="carbon_elevationSnackbar">6dp</dimen>
 
     <dimen name="carbon_cornerRadiusButton">2dp</dimen>
     <dimen name="carbon_cornerRadiusCard">2dp</dimen>

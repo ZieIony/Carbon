@@ -139,7 +139,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
     static List<Snackbar> next = new ArrayList<>();
 
     public enum Style {
-        Floating, Docked
+        Floating, Docked, Auto
     }
 
     public Snackbar(Context context) {
@@ -168,6 +168,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
 
         View.inflate(themedContext, R.layout.carbon_snackbar, this);
         content = (LinearLayout) findViewById(R.id.carbon_snackbarContent);
+        content.setElevation(getResources().getDimension(R.dimen.carbon_elevationSnackbar));
 
         message = (TextView) content.findViewById(R.id.carbon_messageText);
         button = (Button) content.findViewById(R.id.carbon_actionButton);
@@ -295,11 +296,13 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
 
     public void setStyle(Style style) {
         this.style = style;
+        if (style == Style.Auto)
+            this.style = getResources().getBoolean(R.bool.carbon_isPhone) ? Style.Docked : Style.Floating;
         FrameLayout.LayoutParams layoutParams = generateDefaultLayoutParams();
         if (style == Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            int margin = (int) context.getResources().getDimension(R.dimen.carbon_padding);
+            int margin = (int) context.getResources().getDimension(R.dimen.carbon_margin);
             layoutParams.setMargins(margin, 0, margin, margin);
             layoutParams.gravity = Gravity.START | Gravity.BOTTOM;
             content.setCornerRadius((int) context.getResources().getDimension(R.dimen.carbon_cornerRadiusButton));
