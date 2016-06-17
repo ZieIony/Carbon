@@ -3,6 +3,7 @@ package tk.zielony.carbonsamples.widget;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import carbon.widget.CheckBox;
 import carbon.widget.FloatingActionButton;
@@ -39,7 +40,9 @@ public class SnackbarActivity extends Activity {
                 snackbar.setStyle(floatingCheckBox.isChecked() ? Snackbar.Style.Floating : Snackbar.Style.Docked);
                 snackbar.setTapOutsideToDismissEnabled(tapCheckBox.isChecked());
                 snackbar.setSwipeToDismissEnabled(swipeCheckBox.isChecked());
-                snackbar.show(pushCheckBox.isChecked() ? fab : null);
+                if (pushCheckBox.isChecked())
+                    snackbar.addPushedView(fab);
+                snackbar.show((ViewGroup) getWindow().getDecorView().getRootView());
                 snackbar.setOnDismissListener(new Snackbar.OnDismissListener() {
                     @Override
                     public void onDismiss() {

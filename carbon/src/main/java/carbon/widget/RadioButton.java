@@ -4,49 +4,42 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.Gravity;
+import android.view.SoundEffectConstants;
+import android.view.ViewDebug;
+import android.view.accessibility.AccessibilityEvent;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
 
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
-
-import carbon.Carbon;
 import carbon.R;
-import carbon.animation.AnimUtils;
-import carbon.animation.AnimatedView;
-import carbon.animation.StateAnimator;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
-import carbon.drawable.ripple.RippleView;
-import carbon.internal.TypefaceUtils;
-
-import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
-import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 
 /**
  * Created by Marcin on 2015-03-06.
  */
-public class RadioButton extends android.widget.RadioButton implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
+public class RadioButton extends carbon.widget.Button implements Checkable {
     private CheckableDrawable drawable;
+    private float drawablePadding;
 
     public RadioButton(Context context) {
-        super(context);
+        super(context, null, android.R.attr.radioButtonStyle);
         initRadioButton(null, android.R.attr.radioButtonStyle);
     }
 
     public RadioButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs, android.R.attr.radioButtonStyle);
         initRadioButton(attrs, android.R.attr.radioButtonStyle);
     }
 
@@ -62,388 +55,162 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
     }
 
     public void initRadioButton(AttributeSet attrs, int defStyleAttr) {
+        CheckableDrawable d = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
+        setButtonDrawable(d);
+
         if (attrs != null) {
-            drawable = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
-            int size = (int) (Carbon.getDip(getContext()) * 24);
-            drawable.setBounds(0, 0, size, size);
-            if (!isInEditMode()) {
-                if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                    setCompoundDrawables(null, null, drawable, null);
-                } else {
-                    setCompoundDrawables(drawable, null, null, null);
-                }
-            }
-
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);
-
-            int ap = a.getResourceId(R.styleable.RadioButton_android_textAppearance, -1);
-            if (ap != -1)
-                setTextAppearanceInternal(ap);
-
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
             for (int i = 0; i < a.getIndexCount(); i++) {
                 int attr = a.getIndex(i);
-                if (attr == R.styleable.RadioButton_carbon_textAllCaps) {
-                    setAllCaps(a.getBoolean(attr, false));
-                } else if (!isInEditMode() && attr == R.styleable.RadioButton_carbon_fontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setTypeface(typeface);
-                } else if (attr == R.styleable.RadioButton_carbon_fontFamily) {
-                    int textStyle = a.getInt(R.styleable.RadioButton_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setTypeface(typeface);
+                if (attr == R.styleable.RadioButton_android_drawablePadding) {
+                    drawablePadding = a.getDimension(attr, 0);
+                } else if (attr == R.styleable.RadioButton_android_checked) {
+                    setCheckedImmediate(a.getBoolean(attr, false));
                 }
             }
 
             a.recycle();
-
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initTint(this, attrs, defStyleAttr);
-        }
-
-        setCheckedImmediate(isChecked());
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
-        if (!changed || getWidth() == 0 || getHeight() == 0)
-            return;
-
-        if (rippleDrawable != null)
-            rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
-    }
-
-    public void setAllCaps(boolean allCaps) {
-        if (allCaps) {
-            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
-        } else {
-            setTransformationMethod(null);
         }
     }
 
+    private boolean isLayoutRtl() {
+        return ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
+    }
+
+    private boolean mChecked;
+    private boolean mBroadcasting;
+
+    private OnCheckedChangeListener mOnCheckedChangeListener;
+    private OnCheckedChangeListener mOnCheckedChangeWidgetListener;
+
+    private static final int[] CHECKED_STATE_SET = {
+            android.R.attr.state_checked
+    };
+
+    public void toggle() {
+        if (!mChecked)
+            setChecked(true);
+    }
+
     @Override
-    public void setTextAppearance(@NonNull Context context, int resid) {
-        super.setTextAppearance(context, resid);
-        setTextAppearanceInternal(resid);
+    public boolean performClick() {
+        toggle();
+
+        final boolean handled = super.performClick();
+        if (!handled) {
+            // View only makes a sound effect if the onClickListener was
+            // called, so we'll need to make one here instead.
+            playSoundEffect(SoundEffectConstants.CLICK);
+        }
+
+        return handled;
     }
 
-    public void setTextAppearance(int resid) {
-        super.setTextAppearance(getContext(), resid);
-        setTextAppearanceInternal(resid);
+    @ViewDebug.ExportedProperty
+    public boolean isChecked() {
+        return mChecked;
     }
 
-    private void setTextAppearanceInternal(int resid) {
-        TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
-        if (appearance != null) {
-            for (int i = 0; i < appearance.getIndexCount(); i++) {
-                int attr = appearance.getIndex(i);
-                if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
-                    setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
-                    String path = appearance.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setTypeface(typeface);
-                } else if (attr == R.styleable.TextAppearance_carbon_fontFamily) {
-                    int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
-                    setTypeface(typeface);
-                }
+    /**
+     * <p>Changes the checked state of this button.</p>
+     *
+     * @param checked true to check the button, false to uncheck it
+     */
+    public void setChecked(boolean checked) {
+        if (mChecked != checked) {
+            mChecked = checked;
+            refreshDrawableState();
+            //notifyViewAccessibilityStateChangedIfNeeded(
+            //      AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED);
+
+            // Avoid infinite recursions if setChecked() is called from a listener
+            if (mBroadcasting) {
+                return;
             }
-            appearance.recycle();
+
+            mBroadcasting = true;
+            if (mOnCheckedChangeListener != null) {
+                mOnCheckedChangeListener.onCheckedChanged(this, mChecked);
+            }
+            if (mOnCheckedChangeWidgetListener != null) {
+                mOnCheckedChangeWidgetListener.onCheckedChanged(this, mChecked);
+            }
+
+            mBroadcasting = false;
         }
     }
 
     public void setCheckedImmediate(boolean checked) {
-        super.setChecked(checked);
+        setChecked(checked);
         drawable.setCheckedImmediate(checked);
     }
 
-
-    // -------------------------------
-    // ripple
-    // -------------------------------
-
-    private RippleDrawable rippleDrawable;
-
-    @Override
-    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
-            rippleDrawable.setHotspot(event.getX(), event.getY());
-        return super.dispatchTouchEvent(event);
+    /**
+     * Register a callback to be invoked when the checked state of this button
+     * changes.
+     *
+     * @param listener the callback to call on checked state change
+     */
+    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+        mOnCheckedChangeListener = listener;
     }
 
-    @Override
-    public RippleDrawable getRippleDrawable() {
-        return rippleDrawable;
+    /**
+     * Register a callback to be invoked when the checked state of this button
+     * changes. This callback is used for internal purpose only.
+     *
+     * @param listener the callback to call on checked state change
+     * @hide
+     */
+    void setOnCheckedChangeWidgetListener(OnCheckedChangeListener listener) {
+        mOnCheckedChangeWidgetListener = listener;
     }
 
-    public void setRippleDrawable(RippleDrawable newRipple) {
-        if (rippleDrawable != null) {
-            rippleDrawable.setCallback(null);
-            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground());
-        }
-
-        if (newRipple != null) {
-            newRipple.setCallback(this);
-            newRipple.setBounds(0, 0, getWidth(), getHeight());
-            if (newRipple.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable((Drawable) newRipple);
-        }
-
-        rippleDrawable = newRipple;
+    /**
+     * Interface definition for a callback to be invoked when the checked state
+     * of a compound button changed.
+     */
+    public interface OnCheckedChangeListener {
+        /**
+         * Called when the checked state of a compound button has changed.
+         *
+         * @param buttonView The compound button view whose state has changed.
+         * @param isChecked  The new checked state of buttonView.
+         */
+        void onCheckedChanged(RadioButton buttonView, boolean isChecked);
     }
 
-    @Override
-    protected boolean verifyDrawable(Drawable who) {
-        return super.verifyDrawable(who) || rippleDrawable == who;
-    }
-
-    @Override
-    public void invalidateDrawable(@NonNull Drawable drawable) {
-        super.invalidateDrawable(drawable);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate();
-    }
-
-    @Override
-    public void invalidate(@NonNull Rect dirty) {
-        super.invalidate(dirty);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate(dirty);
-    }
-
-    @Override
-    public void invalidate(int l, int t, int r, int b) {
-        super.invalidate(l, t, r, b);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate(l, t, r, b);
-    }
-
-    @Override
-    public void invalidate() {
-        super.invalidate();
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate();
-    }
-
-    @Override
-    public void postInvalidateDelayed(long delayMilliseconds) {
-        super.postInvalidateDelayed(delayMilliseconds);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
-    }
-
-    @Override
-    public void postInvalidateDelayed(long delayMilliseconds, int left, int top, int right, int bottom) {
-        super.postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
-    }
-
-    @Override
-    public void postInvalidate() {
-        super.postInvalidate();
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
-    public void postInvalidate(int left, int top, int right, int bottom) {
-        super.postInvalidate(left, top, right, bottom);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate(left, top, right, bottom);
-    }
-
-    @Override
-    public void setBackground(Drawable background) {
-        setBackgroundDrawable(background);
-    }
-
-    @Override
-    public void setBackgroundDrawable(Drawable background) {
-        if (background instanceof RippleDrawable) {
-            setRippleDrawable((RippleDrawable) background);
-            return;
-        }
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
-            rippleDrawable.setCallback(null);
-            rippleDrawable = null;
-        }
-        super.setBackgroundDrawable(background);
-    }
-
-
-    // -------------------------------
-    // touch margin
-    // -------------------------------
-
-    private Rect touchMargin;
-
-    @Override
-    public void setTouchMargin(int left, int top, int right, int bottom) {
-        touchMargin = new Rect(left, top, right, bottom);
-    }
-
-    @Override
-    public void setTouchMarginLeft(int margin) {
-        touchMargin.left = margin;
-    }
-
-    @Override
-    public void setTouchMarginTop(int margin) {
-        touchMargin.top = margin;
-    }
-
-    @Override
-    public void setTouchMarginRight(int margin) {
-        touchMargin.right = margin;
-    }
-
-    @Override
-    public void setTouchMarginBottom(int margin) {
-        touchMargin.bottom = margin;
-    }
-
-    @Override
-    public Rect getTouchMargin() {
-        return touchMargin;
-    }
-
-    public void getHitRect(@NonNull Rect outRect) {
-        if (touchMargin == null) {
-            super.getHitRect(outRect);
-            return;
-        }
-        outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
-    }
-
-    // -------------------------------
-    // state animators
-    // -------------------------------
-
-    private StateAnimator stateAnimator = new StateAnimator(this);
-
-    @Override
-    public StateAnimator getStateAnimator() {
-        return stateAnimator;
-    }
-
-    @Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
-        if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
-            rippleDrawable.setState(getDrawableState());
-        if (stateAnimator != null)
-            stateAnimator.setState(getDrawableState());
-    }
-
-
-    // -------------------------------
-    // animations
-    // -------------------------------
-
-    private AnimUtils.Style inAnim = AnimUtils.Style.None, outAnim = AnimUtils.Style.None;
-    private Animator animator;
-
-    public void setVisibility(final int visibility) {
-        if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
-            if (animator != null)
-                animator.cancel();
-            if (inAnim != AnimUtils.Style.None) {
-                animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator a) {
-                        animator = null;
-                        clearAnimation();
-                    }
-                });
+    /**
+     * Set the button graphic to a given Drawable
+     *
+     * @param d The Drawable to use as the button graphic
+     */
+    public void setButtonDrawable(CheckableDrawable d) {
+        if (drawable != d) {
+            if (drawable != null) {
+                drawable.setCallback(null);
+                unscheduleDrawable(drawable);
             }
-            super.setVisibility(visibility);
-        } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
-            if (animator != null)
-                animator.cancel();
-            if (outAnim == AnimUtils.Style.None) {
-                super.setVisibility(visibility);
-                return;
-            }
-            animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator a) {
-                    if (((ValueAnimator) a).getAnimatedFraction() == 1)
-                        RadioButton.super.setVisibility(visibility);
-                    animator = null;
-                    clearAnimation();
+
+            drawable = d;
+
+            if (d != null) {
+                d.setCallback(this);
+                //d.setLayoutDirection(getLayoutDirection());
+                if (d.isStateful()) {
+                    d.setState(getDrawableState());
                 }
-            });
+                d.setVisible(getVisibility() == VISIBLE, false);
+                setMinHeight(d.getIntrinsicHeight());
+                applyButtonTint();
+            }
         }
     }
 
-    public void setVisibilityImmediate(final int visibility) {
-        super.setVisibility(visibility);
-    }
-
-    public Animator getAnimator() {
-        return animator;
-    }
-
-    public AnimUtils.Style getOutAnimation() {
-        return outAnim;
-    }
-
-    public void setOutAnimation(AnimUtils.Style outAnim) {
-        this.outAnim = outAnim;
-    }
-
-    public AnimUtils.Style getInAnimation() {
-        return inAnim;
-    }
-
-    public void setInAnimation(AnimUtils.Style inAnim) {
-        this.inAnim = inAnim;
-    }
-
-
-    // -------------------------------
-    // tint
-    // -------------------------------
-
-    ColorStateList tint;
-
-    @Override
-    public void setTint(ColorStateList list) {
-        this.tint = list;
-        drawable.setColor(list);
+    public void setTint(@Nullable ColorStateList list) {
+        super.setTint(list);
+        applyButtonTint();
     }
 
     @Override
@@ -455,167 +222,206 @@ public class RadioButton extends android.widget.RadioButton implements RippleVie
         }
     }
 
+    public void setTintMode(@Nullable PorterDuff.Mode mode) {
+        super.setTintMode(mode);
+        applyButtonTint();
+    }
+
+    private void applyButtonTint() {
+        if (drawable != null && getTint() != null && getTintMode() != null) {
+            drawable = (CheckableDrawable) drawable.mutate();
+
+            drawable.setTint(getTint());
+            drawable.setTintMode(getTintMode());
+
+            // The drawable (or one of its children) may not have been
+            // stateful before applying the tint, so let's try again.
+            if (drawable.isStateful()) {
+                drawable.setState(getDrawableState());
+            }
+        }
+    }
+
     @Override
-    public ColorStateList getTint() {
-        return tint;
+    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
+        super.onInitializeAccessibilityEvent(event);
+        event.setClassName(RadioButton.class.getName());
+        event.setChecked(mChecked);
+    }
+
+    /*@Override
+    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
+        super.onInitializeAccessibilityNodeInfo(info);
+        info.setClassName(RadioButton.class.getName());
+        info.setCheckable(true);
+        info.setChecked(mChecked);
+    }*/
+
+    @Override
+    public int getCompoundPaddingLeft() {
+        int padding = super.getCompoundPaddingLeft();
+        if (!isLayoutRtl()) {
+            final Drawable buttonDrawable = drawable;
+            if (buttonDrawable != null) {
+                padding += buttonDrawable.getIntrinsicWidth() + drawablePadding;
+            }
+        }
+        return padding;
     }
 
     @Override
-    public void setTintMode(@NonNull PorterDuff.Mode mode) {
-        // TODO make use of tint list
+    public int getCompoundPaddingRight() {
+        int padding = super.getCompoundPaddingRight();
+        if (isLayoutRtl()) {
+            final Drawable buttonDrawable = drawable;
+            if (buttonDrawable != null) {
+                padding += buttonDrawable.getIntrinsicWidth() + drawablePadding;
+            }
+        }
+        return padding;
     }
 
     @Override
-    public PorterDuff.Mode getTintMode() {
-        return null;
-    }
+    protected void onDraw(Canvas canvas) {
+        final Drawable buttonDrawable = drawable;
+        if (buttonDrawable != null) {
+            final int verticalGravity = getGravity() & Gravity.VERTICAL_GRAVITY_MASK;
+            final int drawableHeight = buttonDrawable.getIntrinsicHeight();
+            final int drawableWidth = buttonDrawable.getIntrinsicWidth();
 
+            final int top;
+            switch (verticalGravity) {
+                case Gravity.BOTTOM:
+                    top = getHeight() - drawableHeight;
+                    break;
+                case Gravity.CENTER_VERTICAL:
+                    top = (getHeight() - drawableHeight) / 2;
+                    break;
+                default:
+                    top = 0;
+            }
+            final int bottom = top + drawableHeight;
+            final int left = isLayoutRtl() ? getWidth() - drawableWidth - getPaddingRight() : getPaddingLeft();
+            final int right = isLayoutRtl() ? getWidth() - getPaddingRight() : drawableWidth + getPaddingLeft();
 
-    // -------------------------------
-    // transformations
-    // -------------------------------
+            buttonDrawable.setBounds(left, top, right, bottom);
 
-    public float getAlpha() {
-        return NEEDS_PROXY ? wrap(this).getAlpha() : super.getAlpha();
-    }
+            final Drawable background = getBackground();
+            if (background != null && background instanceof RippleDrawable) {
+                //TODO: hotspotBounds
+                // ((RippleDrawable)background).setHotspotBounds(left, top, right, bottom);
+            }
+        }
 
-    public void setAlpha(float alpha) {
-        if (NEEDS_PROXY) {
-            wrap(this).setAlpha(alpha);
-        } else {
-            super.setAlpha(alpha);
+        super.onDraw(canvas);
+
+        if (buttonDrawable != null) {
+            final int scrollX = getScrollX();
+            final int scrollY = getScrollY();
+            if (scrollX == 0 && scrollY == 0) {
+                buttonDrawable.draw(canvas);
+            } else {
+                canvas.translate(scrollX, scrollY);
+                buttonDrawable.draw(canvas);
+                canvas.translate(-scrollX, -scrollY);
+            }
         }
     }
 
-    public float getPivotX() {
-        return NEEDS_PROXY ? wrap(this).getPivotX() : super.getPivotX();
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        if (isChecked()) {
+            mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+        }
+        return drawableState;
     }
 
-    public void setPivotX(float pivotX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setPivotX(pivotX);
-        } else {
-            super.setPivotX(pivotX);
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+
+        if (drawable != null) {
+            int[] myDrawableState = getDrawableState();
+
+            // Set the state of the Drawable
+            drawable.setState(myDrawableState);
+
+            invalidate();
         }
     }
 
-    public float getPivotY() {
-        return NEEDS_PROXY ? wrap(this).getPivotY() : super.getPivotY();
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return super.verifyDrawable(who) || who == drawable;
     }
 
-    public void setPivotY(float pivotY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setPivotY(pivotY);
-        } else {
-            super.setPivotY(pivotY);
+    @Override
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void jumpDrawablesToCurrentState() {
+        super.jumpDrawablesToCurrentState();
+        if (drawable != null) drawable.jumpToCurrentState();
+    }
+
+    static class SavedState extends BaseSavedState {
+        boolean checked;
+
+        /**
+         * Constructor called from {@link CompoundButton#onSaveInstanceState()}
+         */
+        SavedState(Parcelable superState) {
+            super(superState);
         }
-    }
 
-    public float getRotation() {
-        return NEEDS_PROXY ? wrap(this).getRotation() : super.getRotation();
-    }
-
-    public void setRotation(float rotation) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotation(rotation);
-        } else {
-            super.setRotation(rotation);
+        /**
+         * Constructor called from {@link #CREATOR}
+         */
+        private SavedState(Parcel in) {
+            super(in);
+            checked = (Boolean) in.readValue(getClass().getClassLoader());
         }
-    }
 
-    public float getRotationX() {
-        return NEEDS_PROXY ? wrap(this).getRotationX() : super.getRotationX();
-    }
-
-    public void setRotationX(float rotationX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotationX(rotationX);
-        } else {
-            super.setRotationX(rotationX);
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeValue(checked);
         }
-    }
 
-    public float getRotationY() {
-        return NEEDS_PROXY ? wrap(this).getRotationY() : super.getRotationY();
-    }
-
-    public void setRotationY(float rotationY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotationY(rotationY);
-        } else {
-            super.setRotationY(rotationY);
+        @Override
+        public String toString() {
+            return "RadioButton.SavedState{"
+                    + Integer.toHexString(System.identityHashCode(this))
+                    + " checked=" + checked + "}";
         }
+
+        public static final Parcelable.Creator<SavedState> CREATOR
+                = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 
-    public float getScaleX() {
-        return NEEDS_PROXY ? wrap(this).getScaleX() : super.getScaleX();
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+
+        SavedState ss = new SavedState(superState);
+
+        ss.checked = isChecked();
+        return ss;
     }
 
-    public void setScaleX(float scaleX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setScaleX(scaleX);
-        } else {
-            super.setScaleX(scaleX);
-        }
-    }
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        SavedState ss = (SavedState) state;
 
-    public float getScaleY() {
-        return NEEDS_PROXY ? wrap(this).getScaleY() : super.getScaleY();
-    }
-
-    public void setScaleY(float scaleY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setScaleY(scaleY);
-        } else {
-            super.setScaleY(scaleY);
-        }
-    }
-
-    public float getTranslationX() {
-        return NEEDS_PROXY ? wrap(this).getTranslationX() : super.getTranslationX();
-    }
-
-    public void setTranslationX(float translationX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setTranslationX(translationX);
-        } else {
-            super.setTranslationX(translationX);
-        }
-    }
-
-    public float getTranslationY() {
-        return NEEDS_PROXY ? wrap(this).getTranslationY() : super.getTranslationY();
-    }
-
-    public void setTranslationY(float translationY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setTranslationY(translationY);
-        } else {
-            super.setTranslationY(translationY);
-        }
-    }
-
-    public float getX() {
-        return NEEDS_PROXY ? wrap(this).getX() : super.getX();
-    }
-
-    public void setX(float x) {
-        if (NEEDS_PROXY) {
-            wrap(this).setX(x);
-        } else {
-            super.setX(x);
-        }
-    }
-
-    public float getY() {
-        return NEEDS_PROXY ? wrap(this).getY() : super.getY();
-    }
-
-    public void setY(float y) {
-        if (NEEDS_PROXY) {
-            wrap(this).setY(y);
-        } else {
-            super.setY(y);
-        }
+        super.onRestoreInstanceState(ss.getSuperState());
+        setChecked(ss.checked);
+        requestLayout();
     }
 }

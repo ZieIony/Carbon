@@ -6,9 +6,11 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -19,8 +21,10 @@ import com.nineoldandroids.animation.ValueAnimator;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.drawable.CircularProgressDrawable;
+import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.ProgressBarDrawable;
 import carbon.drawable.ProgressDrawable;
 
@@ -229,16 +233,37 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
 
     ColorStateList tint;
     PorterDuff.Mode tintMode;
+    ColorStateList backgroundTint;
+    PorterDuff.Mode backgroundTintMode;
+    boolean animateColorChanges;
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            postInvalidate();
+            ViewCompat.postInvalidateOnAnimation(ProgressBar.this);
+        }
+    };
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            postInvalidate();
+            ViewCompat.postInvalidateOnAnimation(ProgressBar.this);
+        }
+    };
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list;
-        drawable.setBarColor(list);
+        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        updateTint();
     }
 
     @Override
     public void setTint(int color) {
-        setTint(ColorStateList.valueOf(color));
+        if (color == 0) {
+            setTint(new DefaultPrimaryColorStateList(getContext()));
+        } else {
+            setTint(ColorStateList.valueOf(color));
+        }
     }
 
     @Override
@@ -246,16 +271,85 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
         return tint;
     }
 
+    private void updateTint() {
+        if (tint != null && tintMode != null) {
+            int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
+            if (drawable != null) {
+                drawable.setTint(color);
+                drawable.setTintMode(tintMode);
+            }
+        } else {
+            if (drawable != null) {
+                drawable.setTint(null);
+            }
+        }
+    }
+
     @Override
-    public void setTintMode(PorterDuff.Mode mode) {
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
         this.tintMode = mode;
-        drawable.setTintMode(mode);
+        updateTint();
     }
 
     @Override
     public PorterDuff.Mode getTintMode() {
         return tintMode;
     }
+
+    @Override
+    public void setBackgroundTint(ColorStateList list) {
+        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public void setBackgroundTint(int color) {
+        if (color == 0) {
+            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
+        } else {
+            setBackgroundTint(ColorStateList.valueOf(color));
+        }
+    }
+
+    @Override
+    public ColorStateList getBackgroundTint() {
+        return backgroundTint;
+    }
+
+    private void updateBackgroundTint() {
+        if (getBackground() == null)
+            return;
+        if (backgroundTint != null && backgroundTintMode != null) {
+            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
+            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
+        } else {
+            getBackground().setColorFilter(null);
+        }
+    }
+
+    @Override
+    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+        this.backgroundTintMode = mode;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public PorterDuff.Mode getBackgroundTintMode() {
+        return backgroundTintMode;
+    }
+
+    public boolean isAnimateColorChangesEnabled() {
+        return animateColorChanges;
+    }
+
+    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        this.animateColorChanges = animateColorChanges;
+        if (tint != null && !(tint instanceof AnimatedColorStateList))
+            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
+            setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+    }
+
 
     // -------------------------------
     // transformations

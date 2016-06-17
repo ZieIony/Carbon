@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 import carbon.widget.CheckBox;
 import carbon.widget.EditText;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
 
 /**
  * Created by Marcin on 2014-12-15.
@@ -18,18 +19,6 @@ public class TextFieldsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_textfields);
 
-        final View editText = findViewById(R.id.editText);
-        final View editText2 = findViewById(R.id.editText2);
-        final EditText editText3 = (EditText) findViewById(R.id.editText3);
-
-        CheckBox checkBox = (CheckBox) findViewById(R.id.enabled);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                editText.setEnabled(isChecked);
-                editText2.setEnabled(isChecked);
-                editText3.setEnabled(isChecked);
-            }
-        });
+        Samples.initToolbar(this,getString(R.string.textFieldsActivity_title));
     }
 }

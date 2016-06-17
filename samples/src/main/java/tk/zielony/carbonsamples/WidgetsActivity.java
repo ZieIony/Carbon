@@ -2,6 +2,7 @@ package tk.zielony.carbonsamples;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -33,35 +34,13 @@ import tk.zielony.carbonsamples.widget.TextFieldsActivity;
 import tk.zielony.carbonsamples.widget.ToolbarActivity;
 
 public class WidgetsActivity extends Activity {
-    public boolean debugEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        final DebugOverlay overlay = new DebugOverlay(this);
-
-        final ImageView debug = (ImageView) findViewById(R.id.debug);
-        debug.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (!debugEnabled) {
-                    debug.setTint(Carbon.getThemeColor(WidgetsActivity.this, R.attr.carbon_iconColor));
-                    overlay.show();
-                    debugEnabled = true;
-                } else {
-                    debug.setTint(Carbon.getThemeColor(WidgetsActivity.this, R.attr.colorControlNormal));
-                    overlay.dismiss();
-                    debugEnabled = false;
-                }
-            }
-        });
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setIconVisible(true);
-        toolbar.setTitle(getString(R.string.widgetsActivity_title));
+        Samples.initToolbar(this,getString(R.string.widgetsActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
@@ -87,7 +66,9 @@ public class WidgetsActivity extends Activity {
                 new ViewModel(BottomBarActivity.class, getString(R.string.bottomBarActivity_title), true),
                 new ViewModel(BottomSheetActivity.class, getString(R.string.bottomSheetActivity_title), true)
         };
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
+                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new MainListAdapter(items));
     }
 

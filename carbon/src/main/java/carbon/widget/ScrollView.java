@@ -8,9 +8,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,11 +20,14 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
+import com.nineoldandroids.animation.ValueAnimator;
+
 import java.lang.reflect.Field;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.drawable.DefaultColorStateList;
+import carbon.animation.AnimatedColorStateList;
+import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 import carbon.drawable.RectDrawable;
 
@@ -39,6 +44,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     private boolean drag = true;
     private float prevY;
     private int overscrollMode;
+    long prevScroll = 0;
 
     public static final int OVER_SCROLL_ALWAYS = 0;
     public static final int OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
@@ -89,49 +95,8 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         }
 
         setClipToPadding(false);
-    }
 
-    private int getScrollRange() {
-        int scrollRange = 0;
-        if (getChildCount() > 0) {
-            View child = getChildAt(0);
-            scrollRange = Math.max(0,
-                    child.getHeight() - (getHeight() - getPaddingBottom() - getPaddingTop()));
-        }
-        return scrollRange;
-    }
-
-    @Override
-    public void draw(@NonNull Canvas canvas) {
-        super.draw(canvas);
-        if (topGlow != null) {
-            final int scrollY = getScrollY();
-            if (!topGlow.isFinished()) {
-                final int restoreCount = canvas.save();
-                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
-
-                canvas.translate(getPaddingLeft(), Math.min(0, scrollY));
-                topGlow.setSize(width, getHeight());
-                if (topGlow.draw(canvas)) {
-                    postInvalidate();
-                }
-                canvas.restoreToCount(restoreCount);
-            }
-            if (!bottomGlow.isFinished()) {
-                final int restoreCount = canvas.save();
-                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
-                final int height = getHeight();
-
-                canvas.translate(-width + getPaddingLeft(),
-                        Math.max(getScrollRange(), scrollY) + height);
-                canvas.rotate(180, width, 0);
-                bottomGlow.setSize(width, height);
-                if (bottomGlow.draw(canvas)) {
-                    postInvalidate();
-                }
-                canvas.restoreToCount(restoreCount);
-            }
-        }
+        initScrollbars();
     }
 
     @Override
@@ -155,10 +120,10 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
                     }
                 }
                 if (drag) {
-                    final int oldY = getScrollY();
-                    final int range = getScrollRange();
-                    boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+                    final int oldY = computeVerticalScrollOffset();
+                    int range = computeVerticalScrollRange() - getHeight();
+                    boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
+                            (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
                     if (canOverscroll) {
                         float pulledToY = oldY + deltaY;
@@ -194,6 +159,27 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     }
 
     @Override
+    protected void onScrollChanged(int x, int y, int prevX, int prevY) {
+        super.onScrollChanged(x, y, prevX, prevY);
+        if (drag || topGlow == null)
+            return;
+        int range = computeVerticalScrollRange() - getHeight();
+        boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
+                (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+        if (canOverscroll) {
+            long t = System.currentTimeMillis();
+            int dy = y - prevY;
+            int vely = (int) (dy * 1000.0f / (t - prevScroll));
+            if (computeVerticalScrollOffset() == 0 && dy < 0) {
+                topGlow.onAbsorb(-vely);
+            } else if (computeVerticalScrollOffset() == range && dy > 0) {
+                bottomGlow.onAbsorb(vely);
+            }
+            prevScroll = t;
+        }
+    }
+
+    @Override
     public boolean onTouchEvent(@NonNull MotionEvent ev) {
         try {
             return super.onTouchEvent(ev);
@@ -201,35 +187,6 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             return true;
         }
     }
-
-    /* @Override
-    public void computeScroll() {
-        if (mScroller.computeScrollOffset()) {
-            int oldX = getScrollX();
-            int oldY = getScrollY();
-            int x = mScroller.getCurrX();
-            int y = mScroller.getCurrY();
-
-            if (oldX != x || oldY != y) {
-                final int range = getScrollRange();
-                final boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                        (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
-
-                if (canOverscroll) {
-                    if (y < 0 && oldY >= 0) {
-                        topGlow.onAbsorb((int) mScroller.getCurrVelocity());
-                    } else if (y > range && oldY <= range) {
-                        bottomGlow.onAbsorb((int) mScroller.getCurrVelocity());
-                    }
-                }
-            }
-
-            if (!awakenScrollBars()) {
-                // Keep on drawing until the animation has finished.
-                postInvalidate();
-            }
-        }
-    }*/
 
     @Override
     public void setOverScrollMode(int mode) {
@@ -258,22 +215,41 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         updateTint();
     }
 
+
     // -------------------------------
     // tint
     // -------------------------------
 
     ColorStateList tint;
+    PorterDuff.Mode tintMode;
+    ColorStateList backgroundTint;
+    PorterDuff.Mode backgroundTintMode;
+    boolean animateColorChanges;
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateTint();
+            ViewCompat.postInvalidateOnAnimation(ScrollView.this);
+        }
+    };
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(ScrollView.this);
+        }
+    };
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list;
+        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 
     @Override
     public void setTint(int color) {
         if (color == 0) {
-            setTint(new DefaultColorStateList(getContext()));
+            setTint(new DefaultPrimaryColorStateList(getContext()));
         } else {
             setTint(ColorStateList.valueOf(color));
         }
@@ -292,16 +268,72 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
+        scrollBarDrawable = null;
     }
 
     @Override
     public void setTintMode(@NonNull PorterDuff.Mode mode) {
-        // TODO make use of tint list
+        this.tintMode = mode;
+        updateTint();
     }
 
     @Override
     public PorterDuff.Mode getTintMode() {
-        return null;
+        return tintMode;
+    }
+
+    @Override
+    public void setBackgroundTint(ColorStateList list) {
+        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public void setBackgroundTint(int color) {
+        if (color == 0) {
+            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
+        } else {
+            setBackgroundTint(ColorStateList.valueOf(color));
+        }
+    }
+
+    @Override
+    public ColorStateList getBackgroundTint() {
+        return backgroundTint;
+    }
+
+    private void updateBackgroundTint() {
+        if (getBackground() == null)
+            return;
+        if (backgroundTint != null && backgroundTintMode != null) {
+            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
+            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
+        } else {
+            getBackground().setColorFilter(null);
+        }
+    }
+
+    @Override
+    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+        this.backgroundTintMode = mode;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public PorterDuff.Mode getBackgroundTintMode() {
+        return backgroundTintMode;
+    }
+
+    public boolean isAnimateColorChangesEnabled() {
+        return animateColorChanges;
+    }
+
+    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        this.animateColorChanges = animateColorChanges;
+        if (tint != null && !(tint instanceof AnimatedColorStateList))
+            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
+            setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 
 
@@ -311,40 +343,33 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
 
     Drawable scrollBarDrawable;
 
-    protected void onDrawHorizontalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
-        if (scrollBarDrawable == null) {
-            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
-            try {
-                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
-                mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
-                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        scrollBar.setBounds(l, t, r, b);
-        scrollBar.draw(canvas);
-    }
+    private void initScrollbars() {
+        try {
+            Field mScrollCacheField = View.class.getDeclaredField("mScrollCache");
+            mScrollCacheField.setAccessible(true);
+            Object mScrollCache = mScrollCacheField.get(this);
 
-    protected void onDrawVerticalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
-        if (scrollBarDrawable == null) {
-            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
-            try {
-                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mVerticalThumb");
-                mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
-                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            if (mScrollCache == null)
+                return;
+
+            Field scrollBarField = mScrollCache.getClass().getDeclaredField("scrollBar");
+            scrollBarField.setAccessible(true);
+            Object scrollBar = scrollBarField.get(mScrollCache);
+
+            Field mVerticalThumbField = scrollBar.getClass().getDeclaredField("mVerticalThumb");
+            mVerticalThumbField.setAccessible(true);
+            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
+            mVerticalThumbField.set(scrollBar, scrollBarDrawable);
+
+            Field mHorizontalThumbField = scrollBar.getClass().getDeclaredField("mHorizontalThumb");
+            mHorizontalThumbField.setAccessible(true);
+            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
+            mHorizontalThumbField.set(scrollBar, scrollBarDrawable);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-        scrollBar.setBounds(l, t, r, b);
-        scrollBar.draw(canvas);
     }
 
 
@@ -382,6 +407,34 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             canvas.restoreToCount(saveCount);
         } else {
             super.dispatchDraw(canvas);
+        }
+        if (topGlow != null) {
+            final int scrollY = getScrollY();
+            if (!topGlow.isFinished()) {
+                final int restoreCount = canvas.save();
+                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
+
+                canvas.translate(getPaddingLeft(), Math.min(0, scrollY));
+                topGlow.setSize(width, getHeight());
+                if (topGlow.draw(canvas)) {
+                    postInvalidate();
+                }
+                canvas.restoreToCount(restoreCount);
+            }
+            if (!bottomGlow.isFinished()) {
+                final int restoreCount = canvas.save();
+                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
+                final int height = getHeight();
+
+                canvas.translate(-width + getPaddingLeft(),
+                        Math.max(computeVerticalScrollRange() - getHeight(), scrollY) + height);
+                canvas.rotate(180, width, 0);
+                bottomGlow.setSize(width, height);
+                if (bottomGlow.draw(canvas)) {
+                    postInvalidate();
+                }
+                canvas.restoreToCount(restoreCount);
+            }
         }
     }
 

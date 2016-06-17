@@ -61,6 +61,7 @@
     <dimen name="carbon_elevationDrawer">16dp</dimen>
     <dimen name="carbon_elevationCard">2dp</dimen>
     <dimen name="carbon_elevationDialog">12dp</dimen>
+    <dimen name="carbon_elevationSnackbar">6dp</dimen>
 
     <dimen name="carbon_cornerRadiusButton">2dp</dimen>
     <dimen name="carbon_cornerRadiusCard">2dp</dimen>
@@ -87,4 +88,9 @@
     <dimen name="carbon_navigationBarHeight">48dp</dimen>
 
     <dimen name="carbon_grid8">8dp</dimen>
+
+    <dimen name="carbon_item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
+    <dimen name="carbon_item_touch_helper_swipe_escape_velocity">120dp</dimen>
+    <dimen name="carbon_item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
+
 </resources>

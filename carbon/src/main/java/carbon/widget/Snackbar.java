@@ -1,6 +1,5 @@
 package carbon.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -12,9 +11,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.PopupWindow;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -31,14 +28,16 @@ import carbon.animation.AnimUtils;
 /**
  * Created by Marcin on 2015-01-07.
  */
-public class Snackbar extends PopupWindow implements GestureDetector.OnGestureListener {
+public class Snackbar extends FrameLayout implements GestureDetector.OnGestureListener {
     public static int INFINITE = -1;
-    private Activity activity;
+    private Context context;
     private float swipe;
     private ValueAnimator animator;
-    private View pushedView;
+    private List<View> pushedViews = new ArrayList<>();
     GestureDetector gestureDetector = new GestureDetector(this);
     private Rect rect = new Rect();
+    private boolean tapOutsideToDismiss;
+    private ViewGroup container;
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -57,7 +56,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (swipeToDismiss && animator == null) {
+        if (swipeToDismiss && animator == null && getParent() != null) {
             swipe = e2.getX() - e1.getX();
             ViewHelper.setTranslationX(content, swipe);
             ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(swipe) / content.getMeasuredWidth()));
@@ -82,7 +81,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
                         animator = null;
                     }
                 });
-                if (pushedView != null) {
+                for (final View pushedView : pushedViews) {
                     ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
                     animator.setDuration(200);
                     animator.setInterpolator(new DecelerateInterpolator());
@@ -133,25 +132,25 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
         }
     };
     private Handler handler;
-    private LinearLayout contentView, content;
+    private LinearLayout content;
     OnDismissListener onDismissListener;
     boolean swipeToDismiss = true;
 
     static List<Snackbar> next = new ArrayList<>();
 
     public enum Style {
-        Floating, Docked
+        Floating, Docked, Auto
     }
 
-    public Snackbar(Activity activity) {
-        super(activity);
-        this.activity = activity;
+    public Snackbar(Context context) {
+        super(context);
+        this.context = context;
         initSnackbar(R.attr.carbon_snackbarTheme);
     }
 
-    public Snackbar(Activity activity, String message, String action, int duration) {
-        super(activity);
-        this.activity = activity;
+    public Snackbar(Context context, String message, String action, int duration) {
+        super(context);
+        this.context = context;
         initSnackbar(R.attr.carbon_snackbarTheme);
         setMessage(message);
         setAction(action);
@@ -160,19 +159,16 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
     }
 
     private void initSnackbar(int defStyleAttr) {
-        setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(android.R.color.transparent)));
-
-        setTouchable(true);
-        setAnimationStyle(0);
+        setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
 
         TypedValue outValue = new TypedValue();
         getContext().getTheme().resolveAttribute(defStyleAttr, outValue, true);
         int theme = outValue.resourceId;
         Context themedContext = new ContextThemeWrapper(getContext(), theme);
 
-        contentView = (LinearLayout) View.inflate(themedContext, R.layout.carbon_snackbar, null);
-        setContentView(contentView);
-        content = (LinearLayout) contentView.findViewById(R.id.carbon_snackbarContent);
+        View.inflate(themedContext, R.layout.carbon_snackbar, this);
+        content = (LinearLayout) findViewById(R.id.carbon_snackbarContent);
+        content.setElevation(getResources().getDimension(R.dimen.carbon_elevationSnackbar));
 
         message = (TextView) content.findViewById(R.id.carbon_messageText);
         button = (Button) content.findViewById(R.id.carbon_actionButton);
@@ -180,19 +176,16 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
         handler = new Handler();
     }
 
-    public void show(final View view) {
-        pushedView = view;
+    public void show(final ViewGroup container) {
         synchronized (Snackbar.class) {
+            this.container = container;
             if (!next.contains(this))
                 next.add(this);
             if (next.indexOf(this) == 0) {
-                super.showAtLocation(activity.getWindow().getDecorView().getRootView(), Gravity.BOTTOM | Gravity.START, 0, 0);
-                WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
-                contentView.measure(View.MeasureSpec.makeMeasureSpec(wm.getDefaultDisplay().getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-                update(contentView.getMeasuredWidth(), contentView.getMeasuredHeight());
+                container.addView(this);
                 ViewHelper.setAlpha(content, 0);
                 AnimUtils.flyIn(content, null);
-                if (view != null) {
+                for (final View pushedView : pushedViews) {
                     ValueAnimator animator = ValueAnimator.ofFloat(0, -1);
                     animator.setDuration(200);
                     animator.setInterpolator(new DecelerateInterpolator());
@@ -200,7 +193,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
                         @Override
                         public void onAnimationUpdate(ValueAnimator valueAnimator) {
                             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) content.getLayoutParams();
-                            ViewHelper.setTranslationY(view, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                            ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                             if (pushedView.getParent() != null)
                                 ((View) pushedView.getParent()).postInvalidate();
                         }
@@ -214,7 +207,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
     }
 
     public void show() {
-        show(null);
+        show(container);
     }
 
     public static void clearQueue() {
@@ -232,7 +225,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
                     hideInternal();
                 }
             });
-            if (pushedView != null) {
+            for (final View pushedView : pushedViews) {
                 ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
                 animator.setDuration(200);
                 animator.setInterpolator(new DecelerateInterpolator());
@@ -252,7 +245,9 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
 
     private void hideInternal() {
         synchronized (Snackbar.class) {
-            super.dismiss();
+            if (getParent() == null)
+                return;
+            ((ViewGroup) getParent()).removeView(this);
             if (next.contains(this))
                 next.remove(this);
             if (next.size() != 0)
@@ -260,23 +255,23 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
         }
     }
 
-    public Context getContext() {
-        return activity;
-    }
-
-    public Activity getActivity() {
-        return activity;
-    }
-
     public void setOnClickListener(View.OnClickListener l) {
         button.setOnClickListener(l);
+    }
+
+    public void addPushedView(View view) {
+        pushedViews.add(view);
+    }
+
+    public void removePushedView(View view) {
+        pushedViews.remove(view);
     }
 
     public void setAction(String action) {
         if (action != null) {
             button.setText(action);
             button.setVisibility(View.VISIBLE);
-            content.setPadding(content.getPaddingLeft(), 0, (int) activity.getResources().getDimension(R.dimen.carbon_paddingHalf), 0);
+            content.setPadding(content.getPaddingLeft(), 0, (int) context.getResources().getDimension(R.dimen.carbon_paddingHalf), 0);
         } else {
             content.setPadding(content.getPaddingLeft(), 0, content.getPaddingLeft(), 0);
             button.setVisibility(View.GONE);
@@ -301,14 +296,16 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
 
     public void setStyle(Style style) {
         this.style = style;
-        LinearLayout.LayoutParams layoutParams = content.generateDefaultLayoutParams();
+        if (style == Style.Auto)
+            this.style = getResources().getBoolean(R.bool.carbon_isPhone) ? Style.Docked : Style.Floating;
+        FrameLayout.LayoutParams layoutParams = generateDefaultLayoutParams();
         if (style == Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            int margin = (int) activity.getResources().getDimension(R.dimen.carbon_padding);
+            int margin = (int) context.getResources().getDimension(R.dimen.carbon_margin);
             layoutParams.setMargins(margin, 0, margin, margin);
             layoutParams.gravity = Gravity.START | Gravity.BOTTOM;
-            content.setCornerRadius((int) activity.getResources().getDimension(R.dimen.carbon_cornerRadiusButton));
+            content.setCornerRadius((int) context.getResources().getDimension(R.dimen.carbon_cornerRadiusButton));
         } else {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -333,7 +330,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
 
     public void setSwipeToDismissEnabled(boolean swipeToDismiss) {
         this.swipeToDismiss = swipeToDismiss;
-        contentView.setOnDispatchTouchListener(new View.OnTouchListener() {
+        setOnDispatchTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 content.getHitRect(rect);
@@ -367,7 +364,7 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
                                 float s = (Float) animation.getAnimatedValue();
                                 ViewHelper.setTranslationX(content, s);
                                 ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(s) / content.getWidth()));
-                                contentView.postInvalidate();
+                                postInvalidate();
                             }
                         });
                         animator.start();
@@ -390,12 +387,11 @@ public class Snackbar extends PopupWindow implements GestureDetector.OnGestureLi
     }
 
     public boolean isTapOutsideToDismissEnabled() {
-        return isOutsideTouchable();
+        return tapOutsideToDismiss;
     }
 
     public void setTapOutsideToDismissEnabled(boolean tapOutsideToDismiss) {
-        setFocusable(tapOutsideToDismiss);
-        setOutsideTouchable(tapOutsideToDismiss);
+        this.tapOutsideToDismiss = tapOutsideToDismiss;
     }
 
     @Deprecated

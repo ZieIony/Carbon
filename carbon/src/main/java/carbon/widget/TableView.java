@@ -45,7 +45,7 @@ public class TableView extends RecyclerView {
         putCellRenderer(Boolean.class, new BooleanRenderer());
     }
 
-    public static abstract class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder, List<?>> {
+    public static abstract class Adapter extends RecyclerView.ListAdapter<Adapter.ViewHolder, List<?>> {
         private TableView tableView;
 
         public Adapter(TableView tableView) {

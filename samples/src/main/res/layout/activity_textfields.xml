@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
+
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.ScrollView
         android:layout_width="match_parent"
@@ -24,10 +26,11 @@
                 android:gravity="bottom|left"
                 android:hint="email"
                 android:singleLine="true"
+                android:tag="enable"
                 android:text="hello text"
                 app:carbon_floatingLabel="true"
                 app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"
-                app:carbon_required="true"/>
+                app:carbon_required="true" />
 
             <carbon.widget.EditText
                 android:id="@+id/editText3"
@@ -36,58 +39,52 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="bottom|left"
                 android:hint="your email"
+                android:tag="enable"
                 android:text="hello text"
                 app:carbon_clearButton="true"
                 app:carbon_errorMessage="it's not an email"
                 app:carbon_label="email"
                 app:carbon_labelStyle="persistent"
                 app:carbon_minCharacters="3"
-                app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"/>
+                app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$" />
 
             <carbon.widget.EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="bottom|left"
+                android:tag="enable"
                 app:carbon_floatingLabel="true"
                 app:carbon_label="Label"
                 app:carbon_labelStyle="persistent"
                 app:carbon_minCharacters="3"
-                app:carbon_showPasswordButton="true"/>
+                app:carbon_showPasswordButton="true" />
 
             <carbon.widget.EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="bottom|left"
-                app:carbon_maxCharacters="10"/>
+                android:tag="enable"
+                app:carbon_maxCharacters="10" />
 
             <carbon.widget.EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="bottom|left"
+                android:tag="enable"
                 app:carbon_maxCharacters="10"
-                app:carbon_minCharacters="3"/>
+                app:carbon_minCharacters="3" />
 
             <EditText
                 android:id="@+id/editText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="hello text"/>
+                android:tag="enable"
+                android:text="hello text" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <carbon.widget.CheckBox
-                android:id="@+id/enabled"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:checked="true"
-                android:text="enabled"/>
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>
 </carbon.widget.LinearLayout>

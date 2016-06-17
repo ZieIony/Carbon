@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -16,6 +15,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,8 +31,10 @@ import com.nineoldandroids.view.ViewHelper;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
@@ -76,23 +78,30 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
 
-            int resId = a.getResourceId(R.styleable.ImageView_android_src, 0);
-            int resId2 = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
-            if (resId == 0)
-                resId = resId2;
-            if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
-                setImageDrawable(new VectorDrawable(getResources(), resId));
-            setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled, true));
+            for (int i = 0; i < a.getIndexCount(); i++) {
+                int attr = a.getIndex(i);
+                if (attr == R.styleable.ImageView_android_src) {
+                    int resId = a.getResourceId(attr, 0);
+                    if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
+                        setImageDrawable(new VectorDrawable(getResources(), resId));
+                } else if (attr == R.styleable.ImageView_carbon_src) {
+                    int resId = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
+                    if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
+                        setImageDrawable(new VectorDrawable(getResources(), resId));
+                } else if (attr == R.styleable.ImageView_android_enabled) {
+                    setEnabled(a.getBoolean(attr, true));
+                } else if (attr == R.styleable.ImageView_carbon_cornerRadius) {
+                    setCornerRadius((int) a.getDimension(attr, 0));
+                }
+            }
 
-            setCornerRadius((int) a.getDimension(R.styleable.ImageView_carbon_cornerRadius, 0));
+            a.recycle();
 
             Carbon.initElevation(this, attrs, defStyleAttr);
             Carbon.initRippleDrawable(this, attrs, defStyleAttr);
             Carbon.initAnimations(this, attrs, defStyleAttr);
             Carbon.initTouchMargin(this, attrs, defStyleAttr);
             Carbon.initTint(this, attrs, defStyleAttr);
-
-            a.recycle();
         }
     }
 
@@ -113,10 +122,20 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     private Path cornersMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
+    /**
+     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     *
+     * @return corner radius, equal to or greater than 0.
+     */
     public int getCornerRadius() {
         return cornerRadius;
     }
 
+    /**
+     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     *
+     * @param cornerRadius
+     */
     public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
@@ -209,6 +228,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         return rippleDrawable;
     }
 
+    @Override
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
@@ -352,6 +372,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             rippleDrawable = null;
         }
         super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        updateTint();
     }
 
 
@@ -368,6 +389,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         return elevation;
     }
 
+    @Override
     public synchronized void setElevation(float elevation) {
         if (elevation == this.elevation)
             return;
@@ -492,6 +514,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         }
     }
 
+
     // -------------------------------
     // state animators
     // -------------------------------
@@ -510,6 +533,10 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
+        if (tint != null && tint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) tint).setState(getDrawableState());
+        if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
     }
 
 
@@ -584,16 +611,37 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
     ColorStateList tint;
     PorterDuff.Mode tintMode;
+    ColorStateList backgroundTint;
+    PorterDuff.Mode backgroundTintMode;
+    boolean animateColorChanges;
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateTint();
+            ViewCompat.postInvalidateOnAnimation(ImageView.this);
+        }
+    };
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(ImageView.this);
+       }
+    };
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list;
+        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 
     @Override
     public void setTint(int color) {
-        setTint(ColorStateList.valueOf(color));
+        if (color == 0) {
+            setTint(new DefaultPrimaryColorStateList(getContext()));
+        } else {
+            setTint(ColorStateList.valueOf(color));
+        }
     }
 
     @Override
@@ -605,10 +653,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         if (tint != null && tintMode != null) {
             int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
             setColorFilter(new PorterDuffColorFilter(color, tintMode));
-            setAlpha(Color.alpha(color));
         } else {
             setColorFilter(null);
-            setAlpha(255);
         }
     }
 
@@ -621,6 +667,60 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     @Override
     public PorterDuff.Mode getTintMode() {
         return tintMode;
+    }
+
+    @Override
+    public void setBackgroundTint(ColorStateList list) {
+        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public void setBackgroundTint(int color) {
+        if (color == 0) {
+            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
+        } else {
+            setBackgroundTint(ColorStateList.valueOf(color));
+        }
+    }
+
+    @Override
+    public ColorStateList getBackgroundTint() {
+        return backgroundTint;
+    }
+
+    private void updateBackgroundTint() {
+        if (getBackground() == null)
+            return;
+        if (backgroundTint != null && backgroundTintMode != null) {
+            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
+            getBackground().setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
+        } else {
+            getBackground().setColorFilter(null);
+        }
+    }
+
+    @Override
+    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+        this.backgroundTintMode = mode;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public PorterDuff.Mode getBackgroundTintMode() {
+        return backgroundTintMode;
+    }
+
+    public boolean isAnimateColorChangesEnabled() {
+        return animateColorChanges;
+    }
+
+    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        this.animateColorChanges = animateColorChanges;
+        if (tint != null && !(tint instanceof AnimatedColorStateList))
+            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
+            setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 
 

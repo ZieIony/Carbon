@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="200dp"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/mazda"/>
-</LinearLayout>
+        android:src="@drawable/mazda" />
+
+    <carbon.widget.ImageView
+        style="@style/carbon_ImageView.Icon"
+        android:layout_width="@dimen/carbon_toolbarItemSize"
+        android:layout_height="@dimen/carbon_toolbarItemSize"
+        android:layout_gravity="bottom|end"
+        android:padding="@dimen/carbon_padding"
+        app:carbon_src="@raw/ic_shopping_cart_24px" />
+</FrameLayout>

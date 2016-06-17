@@ -91,7 +91,7 @@ public class SpinnerMenu extends PopupWindow {
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
         int selectedItem = 0;
-        RecyclerView.Adapter adapter = getAdapter();
+        RecyclerView.ArrayAdapter adapter = getAdapter();
 
         if (mAnchorView instanceof android.widget.TextView) {
             TextView textView = (TextView) mAnchorView;
@@ -176,18 +176,16 @@ public class SpinnerMenu extends PopupWindow {
         return width;
     }*/
 
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        recycler.setAdapter(adapter);
-        adapter.setOnItemClickedListener(new RecyclerView.OnItemClickedListener() {
-            @Override
-            public void onItemClicked(int position) {
-                dismiss();
-            }
-        });
+    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener listener) {
+        recycler.setOnItemClickedListener(listener);
     }
 
-    public RecyclerView.Adapter getAdapter() {
-        return (RecyclerView.Adapter) recycler.getAdapter();
+    public void setAdapter(RecyclerView.Adapter adapter) {
+        recycler.setAdapter(adapter);
+    }
+
+    public RecyclerView.ArrayAdapter getAdapter() {
+        return (RecyclerView.ArrayAdapter) recycler.getAdapter();
     }
 
    /* @Override

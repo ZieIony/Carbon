@@ -23,6 +23,17 @@
             <enum name="screen" value="4"/>
             <enum name="add" value="5"/>
         </attr>
+        <attr name="carbon_backgroundTint" format="color|reference"/>
+        <attr name="carbon_backgroundTintMode" format="enum">
+            <enum name="src_over" value="0"/>
+            <enum name="src_in" value="1"/>
+            <enum name="src_atop" value="2"/>
+            <enum name="multiply" value="3"/>
+            <enum name="screen" value="4"/>
+            <enum name="add" value="5"/>
+        </attr>
+        <attr name="carbon_animateColorChanges" format="boolean"/>
+
         <attr name="carbon_elevation" format="dimension"/>
 
         <attr name="carbon_rippleColor" format="reference|color"/>
@@ -365,27 +376,22 @@
     </declare-styleable>
 
     <declare-styleable name="CheckedTextView">
-        <attr name="carbon_fontFamily"/>
-        <attr name="android:textStyle"/>
-        <attr name="carbon_fontPath"/>
-        <attr name="carbon_textAllCaps"/>
-        <attr name="android:textAppearance"/>
+        <attr name="android:drawablePadding"/>
+        <attr name="android:checked"/>
     </declare-styleable>
 
     <declare-styleable name="CheckBox">
-        <attr name="carbon_fontFamily"/>
-        <attr name="android:textStyle"/>
-        <attr name="carbon_fontPath"/>
-        <attr name="carbon_textAllCaps"/>
-        <attr name="android:textAppearance"/>
+        <attr name="android:drawablePadding"/>
+        <attr name="android:checked"/>
     </declare-styleable>
 
     <declare-styleable name="RadioButton">
-        <attr name="carbon_fontFamily"/>
-        <attr name="android:textStyle"/>
-        <attr name="carbon_fontPath"/>
-        <attr name="carbon_textAllCaps"/>
-        <attr name="android:textAppearance"/>
+        <attr name="android:drawablePadding"/>
+        <attr name="android:checked"/>
+    </declare-styleable>
+
+    <declare-styleable name="RadioGroup">
+        <attr name="android:checkedButton"/>
     </declare-styleable>
 
     <attr name="carbon_rangeSeekBarStyle" format="reference"/>

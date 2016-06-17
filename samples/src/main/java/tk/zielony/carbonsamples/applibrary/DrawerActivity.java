@@ -39,9 +39,9 @@ public class DrawerActivity extends Activity {
         RecyclerView drawerList = (RecyclerView) findViewById(R.id.drawerList);
         drawerList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        FruitAdapter adapter = new FruitAdapter(fruits);
+        FruitAdapter adapter = new FruitAdapter(fruits,null);
         drawerList.setAdapter(adapter);
-        adapter.setOnItemClickedListener(new OnItemClickedListener() {
+        drawerList.setOnItemClickedListener(new OnItemClickedListener() {
             @Override
             public void onItemClicked(int position) {
                 setTitle(fruits.get(position));

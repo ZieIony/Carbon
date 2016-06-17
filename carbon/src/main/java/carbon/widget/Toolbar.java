@@ -93,8 +93,11 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
                 Context context = getContext();
                 while (!(context instanceof Activity))
                     context = ((ContextWrapper) context).getBaseContext();
-                if (context instanceof Activity)
+                if (context instanceof UpAwareActivity) {
+                    ((UpAwareActivity) context).onUpPressed();
+                } else if (context instanceof Activity) {
                     ((Activity) context).onBackPressed();
+                }
             }
         });
 

@@ -7,26 +7,7 @@
     android:orientation="vertical"
     app:carbon_insetColor="?attr/colorPrimary">
 
-    <carbon.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_toolbarHeight">
-
-        <carbon.widget.ImageView
-            android:id="@+id/debug"
-            style="@style/carbon_ImageView.Icon"
-            android:layout_width="@dimen/carbon_toolbarItemSize"
-            android:layout_height="@dimen/carbon_toolbarItemSize"
-            app:carbon_src="@raw/ic_bug_report_24px"
-            app:carbon_tint="?attr/colorControlNormal" />
-
-        <carbon.widget.CheckBox
-            android:id="@+id/enabled"
-            android:layout_width="@dimen/carbon_toolbarItemSize"
-            android:layout_height="@dimen/carbon_toolbarItemSize"
-            android:checked="true"
-            android:padding="12dp"
-            app:carbon_tint="?attr/carbon_iconColor" />
-    </carbon.widget.Toolbar>
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.ScrollView
         android:layout_width="match_parent"
@@ -50,7 +31,8 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:background="@drawable/buttonshape"
                 android:tag="enable"
-                android:text="Shape" />
+                android:text="Shape"
+                app:carbon_backgroundTint="@null" />
 
             <carbon.widget.Button
                 style="@style/carbon_Button"
@@ -66,6 +48,7 @@
                 android:tag="enable"
                 android:text="Inline Style"
                 android:textColor="#ff0000ff"
+                app:carbon_backgroundTint="@null"
                 app:carbon_cornerRadius="2dp"
                 app:carbon_elevation="@dimen/carbon_elevationLow"
                 app:carbon_rippleColor="#40ff0000"

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 
+import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import java.lang.reflect.Field;
@@ -29,6 +31,8 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.animation.AnimatedColorStateList;
+import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 import carbon.drawable.RectDrawable;
 import carbon.drawable.ripple.RippleDrawable;
@@ -57,6 +61,9 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private float prevY;
     private int overscrollMode;
     private boolean clipToPadding;
+    long prevScroll = 0;
+    private boolean childDrawingOrderCallbackSet = false;
+    OnItemClickedListener onItemClickedListener;
 
     public RecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
@@ -89,7 +96,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
                     setHeaderParallax(a.getFloat(attr, 0.0f));
                 } else if (attr == R.styleable.RecyclerView_android_divider) {
-                    setDivider(a.getDrawable(attr), (int) a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0));
+                    Drawable drawable = a.getDrawable(attr);
+                    float height = a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0);
+                    if (drawable != null && height > 0)
+                        setDivider(drawable, (int) height);
                 }
             }
             a.recycle();
@@ -97,6 +107,45 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
         setClipToPadding(false);
         setItemAnimator(new DefaultItemAnimator());
+
+        initScrollbars();
+    }
+
+    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
+    }
+
+    public interface OnItemClickedListener {
+        void onItemClicked(int position);
+    }
+
+    public void addView(final View child, int index) {
+        if (onItemClickedListener != null) {
+            child.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickedListener.onItemClicked(findContainingViewHolder(child).getAdapterPosition());
+                }
+            });
+        }
+        super.addView(child, index);
+    }
+
+    @Override
+    public void removeView(View view) {
+        if (onItemClickedListener != null)
+            view.setOnClickListener(null);
+        super.removeView(view);
+    }
+
+    @Override
+    public void removeViewAt(int index) {
+        final View child = getChildAt(index);
+        if (child != null) {
+            if (onItemClickedListener != null)
+                child.setOnClickListener(null);
+            super.removeView(child);
+        }
     }
 
     public void setDivider(Drawable divider, int height) {
@@ -129,7 +178,9 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 }
                 if (drag) {
                     final int oldY = computeVerticalScrollOffset();
-                    final int range = computeVerticalScrollRange() - getHeight();
+                    int range = computeVerticalScrollRange() - getHeight();
+                    if (header != null)
+                        range += header.getHeight();
                     boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
                             (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
@@ -164,6 +215,35 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         prevY = ev.getY();
 
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onScrolled(int dx, int dy) {
+        super.onScrolled(dx, dy);
+        if (drag || topGlow == null)
+            return;
+        int range = computeVerticalScrollRange() - getHeight();
+        if (header != null)
+            range += header.getHeight();
+        boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
+                (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+
+        if (canOverscroll) {
+            long t = System.currentTimeMillis();
+            /*int velx = (int) (dx * 1000.0f / (t - prevScroll));
+            if (computeHorizontalScrollOffset() == 0 && dx < 0) {
+                leftGlow.onAbsorb(-velx);
+            } else if (computeHorizontalScrollOffset() == computeHorizontalScrollRange() - getWidth() && dx > 0) {
+                rightGlow.onAbsorb(velx);
+            }*/
+            int vely = (int) (dy * 1000.0f / (t - prevScroll));
+            if (computeVerticalScrollOffset() == 0 && dy < 0) {
+                topGlow.onAbsorb(-vely);
+            } else if (computeVerticalScrollOffset() == range && dy > 0) {
+                bottomGlow.onAbsorb(vely);
+            }
+            prevScroll = t;
+        }
     }
 
     @Override
@@ -208,39 +288,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        if (topGlow != null) {
-            final int scrollY = computeVerticalScrollOffset();
-            if (!topGlow.isFinished()) {
-                final int restoreCount = canvas.save();
-                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
-
-                canvas.translate(getPaddingLeft(), Math.min(0, scrollY));
-                topGlow.setSize(width, getHeight());
-                if (topGlow.draw(canvas)) {
-                    postInvalidate();
-                }
-                canvas.restoreToCount(restoreCount);
-            }
-            if (!bottomGlow.isFinished()) {
-                final int restoreCount = canvas.save();
-                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
-                final int height = getHeight();
-
-                canvas.translate(-width + getPaddingLeft(),
-                        height);
-                canvas.rotate(180, width, 0);
-                bottomGlow.setSize(width, height);
-                if (bottomGlow.draw(canvas)) {
-                    postInvalidate();
-                }
-                canvas.restoreToCount(restoreCount);
-            }
-        }
-    }
-
-    @Override
     public boolean drawChild(Canvas canvas, View child, long drawingTime) {
         if (!child.isShown())
             return super.drawChild(canvas, child, drawingTime);
@@ -282,9 +329,16 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     @Override
     protected int getChildDrawingOrder(int childCount, int child) {
+        if (childDrawingOrderCallbackSet)
+            return super.getChildDrawingOrder(childCount, child);
         return views != null ? indexOfChild(views.get(child)) : child;
     }
 
+    @Override
+    public void setChildDrawingOrderCallback(ChildDrawingOrderCallback childDrawingOrderCallback) {
+        super.setChildDrawingOrderCallback(childDrawingOrderCallback);
+        childDrawingOrderCallbackSet = childDrawingOrderCallback != null;
+    }
 
     // -------------------------------
     // tint
@@ -292,17 +346,34 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     ColorStateList tint;
     PorterDuff.Mode tintMode;
+    ColorStateList backgroundTint;
+    PorterDuff.Mode backgroundTintMode;
+    boolean animateColorChanges;
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateTint();
+            ViewCompat.postInvalidateOnAnimation(RecyclerView.this);
+        }
+    };
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateBackgroundTint();
+            ViewCompat.postInvalidateOnAnimation(RecyclerView.this);
+        }
+    };
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = list;
+        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 
     @Override
     public void setTint(int color) {
         if (color == 0) {
-            setTint(Carbon.getThemeColor(getContext(), R.attr.colorPrimary));
+            setTint(new DefaultPrimaryColorStateList(getContext()));
         } else {
             setTint(ColorStateList.valueOf(color));
         }
@@ -328,19 +399,69 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         scrollBarDrawable = null;
     }
 
-    /**
-     * This doesn't do anything in RecyclerView
-     *
-     * @param tintMode
-     */
     @Override
-    public void setTintMode(@NonNull PorterDuff.Mode tintMode) {
-        this.tintMode = tintMode;
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        this.tintMode = mode;
+        updateTint();
     }
 
     @Override
     public PorterDuff.Mode getTintMode() {
         return tintMode;
+    }
+
+    @Override
+    public void setBackgroundTint(ColorStateList list) {
+        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public void setBackgroundTint(int color) {
+        if (color == 0) {
+            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
+        } else {
+            setBackgroundTint(ColorStateList.valueOf(color));
+        }
+    }
+
+    @Override
+    public ColorStateList getBackgroundTint() {
+        return backgroundTint;
+    }
+
+    private void updateBackgroundTint() {
+        if (getBackground() == null)
+            return;
+        if (backgroundTint != null && backgroundTintMode != null) {
+            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
+            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
+        } else {
+            getBackground().setColorFilter(null);
+        }
+    }
+
+    @Override
+    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+        this.backgroundTintMode = mode;
+        updateBackgroundTint();
+    }
+
+    @Override
+    public PorterDuff.Mode getBackgroundTintMode() {
+        return backgroundTintMode;
+    }
+
+    public boolean isAnimateColorChangesEnabled() {
+        return animateColorChanges;
+    }
+
+    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        this.animateColorChanges = animateColorChanges;
+        if (tint != null && !(tint instanceof AnimatedColorStateList))
+            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
+            setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 
 
@@ -350,40 +471,33 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     Drawable scrollBarDrawable;
 
-    protected void onDrawHorizontalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
-        if (scrollBarDrawable == null) {
-            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
-            try {
-                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mHorizontalThumb");
-                mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
-                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        scrollBar.setBounds(l, t, r, b);
-        scrollBar.draw(canvas);
-    }
+    private void initScrollbars() {
+        try {
+            Field mScrollCacheField = View.class.getDeclaredField("mScrollCache");
+            mScrollCacheField.setAccessible(true);
+            Object mScrollCache = mScrollCacheField.get(this);
 
-    protected void onDrawVerticalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
-        if (scrollBarDrawable == null) {
-            Class<? extends Drawable> scrollBarClass = scrollBar.getClass();
-            try {
-                Field mVerticalThumbField = scrollBarClass.getDeclaredField("mVerticalThumb");
-                mVerticalThumbField.setAccessible(true);
-                scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
-                mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            if (mScrollCache == null)
+                return;
+
+            Field scrollBarField = mScrollCache.getClass().getDeclaredField("scrollBar");
+            scrollBarField.setAccessible(true);
+            Object scrollBar = scrollBarField.get(mScrollCache);
+
+            Field mVerticalThumbField = scrollBar.getClass().getDeclaredField("mVerticalThumb");
+            mVerticalThumbField.setAccessible(true);
+            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
+            mVerticalThumbField.set(scrollBar, scrollBarDrawable);
+
+            Field mHorizontalThumbField = scrollBar.getClass().getDeclaredField("mHorizontalThumb");
+            mHorizontalThumbField.setAccessible(true);
+            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
+            mHorizontalThumbField.set(scrollBar, scrollBarDrawable);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-        scrollBar.setBounds(l, t, r, b);
-        scrollBar.draw(canvas);
     }
 
 
@@ -419,6 +533,34 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             canvas.restoreToCount(saveCount);
         } else {
             super.dispatchDraw(canvas);
+        }
+        if (topGlow != null) {
+            final int scrollY = computeVerticalScrollOffset();
+            if (!topGlow.isFinished()) {
+                final int restoreCount = canvas.save();
+                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
+
+                canvas.translate(getPaddingLeft(), Math.min(0, scrollY));
+                topGlow.setSize(width, getHeight());
+                if (topGlow.draw(canvas)) {
+                    postInvalidate();
+                }
+                canvas.restoreToCount(restoreCount);
+            }
+            if (!bottomGlow.isFinished()) {
+                final int restoreCount = canvas.save();
+                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
+                final int height = getHeight();
+
+                canvas.translate(-width + getPaddingLeft(),
+                        height);
+                canvas.rotate(180, width, 0);
+                bottomGlow.setSize(width, height);
+                if (bottomGlow.draw(canvas)) {
+                    postInvalidate();
+                }
+                canvas.restoreToCount(restoreCount);
+            }
         }
     }
 
@@ -516,29 +658,74 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             header.layout(0, 0, getWidth(), header.getMeasuredHeight());
     }
 
-    public static abstract class Adapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
-        OnItemClickedListener onItemClickedListener;
+    public static abstract class ListAdapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
+        public ListAdapter() {
+            items = new ArrayList<>();
+        }
 
-        public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
-            this.onItemClickedListener = onItemClickedListener;
+        public ListAdapter(List<I> items) {
+            this.items = items;
+        }
+
+        protected List<I> items;
+
+        public I getItem(int position) {
+            return items.get(position);
         }
 
         @Override
-        public void onBindViewHolder(VH holder, final int position) {
-            holder.itemView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickedListener != null)
-                        onItemClickedListener.onItemClicked(position);
-                }
-            });
+        public int getItemCount() {
+            return items.size();
         }
 
-        public abstract I getItem(int position);
+        public void setItems(@NonNull List<I> items) {
+            this.items = items;
+        }
+
+        public List<I> getItems() {
+            return items;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
     }
 
-    public interface OnItemClickedListener {
-        void onItemClicked(int position);
+    public static abstract class ArrayAdapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
+        public ArrayAdapter() {
+            items = (I[]) new Object[0];    // doesn't really matter
+        }
+
+        public ArrayAdapter(I[] items) {
+            this.items = items;
+        }
+
+        protected I[] items;
+
+        public I getItem(int position) {
+            return items[position];
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.length;
+        }
+
+        public void setItems(@NonNull I[] items) {
+            this.items = items;
+        }
+
+        public I[] getItems() {
+            return items;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
     }
 
     public static class DividerItemDecoration extends RecyclerView.ItemDecoration {
@@ -591,14 +778,15 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
                 if (orientation == LinearLayoutManager.VERTICAL) {
-                    bottom = child.getTop() - params.topMargin;
+                    bottom = (int) (child.getTop() - params.topMargin + ViewHelper.getTranslationY(child));
                     top = bottom - height;
                 } else { //horizontal
-                    right = child.getLeft() - params.leftMargin;
+                    right = (int) (child.getLeft() - params.leftMargin + ViewHelper.getTranslationX(child));
                     left = right - height;
                 }
                 c.save(Canvas.CLIP_SAVE_FLAG);
                 c.clipRect(left, top, right, bottom);
+                drawable.setAlpha((int) (ViewHelper.getAlpha(child) * 255));
                 drawable.setBounds(left, top, right, bottom);
                 drawable.draw(c);
                 c.restore();

@@ -1,17 +1,15 @@
 apply plugin: 'com.android.library'
-//apply from: 'maven-push.gradle'
+// apply from: 'maven-push.gradle'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 23
         versionCode 41
         versionName "0.13.0"
-        renderscriptTargetApi 20
-        renderscriptSupportModeEnabled true
     }
     buildTypes {
         release {
@@ -26,11 +24,12 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:support-v4:23.2.1'
-    compile 'com.android.support:gridlayout-v7:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:gridlayout-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'de.greenrobot:androidsvg:1.2.2-beta-1-tweaked-2'
     compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:design:23.4.0'
 }

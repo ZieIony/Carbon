@@ -105,6 +105,6 @@ public class ShadowGenerator {
 
         blur(bitmap, elevation / 2);
 
-        return new NinePatchShadow(bitmap, elevation, c);
+        return new Shadow(bitmap, elevation, c);
     }
 }

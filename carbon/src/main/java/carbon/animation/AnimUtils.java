@@ -193,7 +193,7 @@ public class AnimUtils {
         final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
         float start = circularProgress.getBarWidth();
         ValueAnimator animator = ValueAnimator.ofFloat(circularProgress.getBarWidth(), arcWidth);
-        animator.setDuration((long) (200 * (arcWidth - start)));
+        animator.setDuration((long) (100 * (arcWidth - start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
@@ -213,7 +213,7 @@ public class AnimUtils {
         final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
         float start = circularProgress.getBarWidth();
         ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (200 * start));
+        animator.setDuration((long) (100 * start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);

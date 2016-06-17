@@ -1,117 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
-    <carbon.widget.CheckBox
+    <include layout="@layout/view_debugtoolbar" />
+
+    <carbon.widget.ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:gravity="center_vertical"
-        android:layoutDirection="rtl"
-        android:text="check me!"
-        app:carbon_rippleColor="?attr/carbon_rippleColor"/>
+        android:layout_height="match_parent">
 
-    <carbon.widget.Divider
-        android:layout_width="match_parent"
-        android:layout_height="1px"/>
-
-    <carbon.widget.CheckBox
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:gravity="center_vertical"
-        android:layoutDirection="locale"
-        android:text="check me!"/>
-
-    <carbon.widget.Divider
-        android:layout_width="match_parent"
-        android:layout_height="1px"/>
-
-    <carbon.widget.CheckBox
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:gravity="center_vertical"
-        android:layoutDirection="locale"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:text="check me!"
-        app:carbon_tint="@drawable/checkbox_selector"/>
-
-    <carbon.widget.Divider
-        android:layout_width="match_parent"
-        android:layout_height="1px"/>
-
-    <carbon.widget.CheckedTextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:layoutDirection="locale"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:text="checked text view"
-        app:carbon_tint="@drawable/checkbox_selector"/>
-
-    <carbon.widget.Divider
-        android:layout_width="match_parent"
-        android:layout_height="1px"/>
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <carbon.widget.RadioButton
+        <carbon.widget.LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_listItemHeight"
-            android:gravity="center_vertical"
-            android:layoutDirection="locale"
-            android:paddingLeft="@dimen/carbon_padding"
-            android:text="pick me!"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <carbon.widget.Divider
-            android:layout_width="match_parent"
-            android:layout_height="1px"/>
+            <carbon.widget.CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/carbon_listItemHeight"
+                android:gravity="center_vertical"
+                android:layoutDirection="rtl"
+                android:text="check me!"
+                app:carbon_rippleColor="?attr/carbon_rippleColor" />
 
-        <carbon.widget.RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_listItemHeight"
-            android:gravity="center_vertical"
-            android:layoutDirection="locale"
-            android:paddingLeft="@dimen/carbon_padding"
-            android:text="pick me!"/>
+            <carbon.widget.Divider
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
 
-    </RadioGroup>
+            <carbon.widget.CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/carbon_listItemHeight"
+                android:gravity="center_vertical"
+                android:layoutDirection="locale"
+                android:text="check me!" />
 
-    <carbon.widget.Divider
-        android:layout_width="match_parent"
-        android:layout_height="1px"/>
+            <carbon.widget.Divider
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
 
-    <carbon.widget.CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="end"
-        android:gravity="center_vertical"
-        android:paddingLeft="12dp"
-        android:text=""
-        app:carbon_rippleColor="?attr/carbon_rippleColor"
-        app:carbon_rippleHotspot="false"
-        app:carbon_rippleStyle="borderless"/>
+            <carbon.widget.CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/carbon_listItemHeight"
+                android:gravity="center_vertical"
+                android:layoutDirection="locale"
+                android:paddingLeft="@dimen/carbon_padding"
+                android:text="check me!"
+                app:carbon_tint="@drawable/checkbox_selector" />
 
-    <carbon.widget.Button
-        android:id="@+id/check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_padding"
-        android:text="check"/>
+            <carbon.widget.Divider
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
 
-    <carbon.widget.Button
-        android:id="@+id/uncheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_padding"
-        android:text="uncheck"/>
+            <carbon.widget.CheckedTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/carbon_listItemHeight"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:layoutDirection="locale"
+                android:paddingLeft="@dimen/carbon_padding"
+                android:paddingRight="@dimen/carbon_padding"
+                android:text="checked text view"
+                app:carbon_tint="@drawable/checkbox_selector" />
 
+            <carbon.widget.Divider
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+
+            <carbon.widget.RadioGroup
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <carbon.widget.RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:gravity="center_vertical"
+                    android:layoutDirection="locale"
+                    android:paddingLeft="@dimen/carbon_padding"
+                    android:text="pick me!" />
+
+                <carbon.widget.Divider
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+
+                <carbon.widget.RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:gravity="center_vertical"
+                    android:layoutDirection="locale"
+                    android:paddingLeft="@dimen/carbon_padding"
+                    android:text="pick me!" />
+
+            </carbon.widget.RadioGroup>
+
+            <carbon.widget.Divider
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+
+            <carbon.widget.CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:gravity="center_vertical"
+                android:text=""
+                app:carbon_rippleColor="?attr/carbon_rippleColor"
+                app:carbon_rippleHotspot="false"
+                app:carbon_rippleStyle="borderless" />
+
+            <carbon.widget.Button
+                android:id="@+id/check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:text="check" />
+
+            <carbon.widget.Button
+                android:id="@+id/uncheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:text="uncheck" />
+        </carbon.widget.LinearLayout>
+    </carbon.widget.ScrollView>
 </carbon.widget.LinearLayout>
