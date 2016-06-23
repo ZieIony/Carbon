@@ -23,6 +23,7 @@
                 android:layout_height="@dimen/carbon_listItemHeight"
                 android:gravity="center_vertical"
                 android:layoutDirection="rtl"
+                android:tag="enable"
                 android:text="check me!"
                 app:carbon_rippleColor="?attr/carbon_rippleColor" />
 
@@ -70,9 +71,9 @@
                 android:layout_height="1px" />
 
             <carbon.widget.RadioGroup
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <carbon.widget.RadioButton
                     android:layout_width="match_parent"

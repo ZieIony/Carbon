@@ -254,7 +254,6 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private EmptyDrawable emptyBackground = new EmptyDrawable();
     private Transformation t = new Transformation();
 
     @Override
@@ -281,7 +280,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
             if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
@@ -419,7 +418,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             rippleDrawable.setCallback(null);
             rippleDrawable = null;
         }
-        super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        super.setBackgroundDrawable(background);
         updateTint();
     }
 

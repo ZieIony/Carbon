@@ -21,6 +21,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
+import com.nineoldandroids.animation.ValueAnimator;
+
 import carbon.R;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;

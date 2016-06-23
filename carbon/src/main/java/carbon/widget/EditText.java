@@ -713,7 +713,6 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -742,7 +741,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
             if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
@@ -856,7 +855,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             rippleDrawable.setCallback(null);
             rippleDrawable = null;
         }
-        super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        super.setBackgroundDrawable(background);
     }
 
 

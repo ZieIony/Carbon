@@ -262,7 +262,6 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private EmptyDrawable emptyBackground = new EmptyDrawable();
     private Transformation t = new Transformation();
 
     @Override
@@ -289,7 +288,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
             if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
@@ -427,7 +426,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             rippleDrawable.setCallback(null);
             rippleDrawable = null;
         }
-        super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        super.setBackgroundDrawable(background);
         updateBackgroundTint();
     }
 

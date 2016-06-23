@@ -101,17 +101,33 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
-
-        if (getBackground() == null)
-            super.setBackgroundDrawable(emptyBackground);
     }
 
 
     List<View> views;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+    private boolean drawCalled = false;
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
+        // draw not called, we have to handle corners here
+        if (cornerRadius > 0 && !drawCalled && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+            internalDispatchDraw(canvas);
+
+            paint.setXfermode(pdMode);
+            canvas.drawPath(cornersMask, paint);
+
+            canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
+        } else {
+            internalDispatchDraw(canvas);
+        }
+        drawCalled = false;
+    }
+
+    private void internalDispatchDraw(@NonNull Canvas canvas) {
         views = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
@@ -243,6 +259,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     public void draw(@NonNull Canvas canvas) {
+        drawCalled = true;
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
@@ -264,7 +281,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
@@ -290,7 +306,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
             if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
@@ -428,7 +444,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             rippleDrawable.setCallback(null);
             rippleDrawable = null;
         }
-        super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        super.setBackgroundDrawable(background);
     }
 
 

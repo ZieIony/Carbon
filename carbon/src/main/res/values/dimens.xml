@@ -10,6 +10,7 @@
     <dimen name="carbon_iconSize">24dp</dimen>
 
     <dimen name="carbon_contentSpace">72dp</dimen>
+    <dimen name="carbon_contentPadding">72dp</dimen>
 
     <dimen name="carbon_subtitleHeight">48dp</dimen>
 
