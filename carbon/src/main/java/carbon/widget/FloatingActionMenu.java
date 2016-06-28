@@ -26,13 +26,15 @@ import carbon.R;
  */
 public class FloatingActionMenu extends PopupWindow {
     private final Handler handler;
+    private final LinearLayout content;
     private Menu menu;
 
     MenuItem.OnMenuItemClickListener listener;
+    private View anchor;
 
     public FloatingActionMenu(Context context) {
         super(new LinearLayout(context), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final LinearLayout content = (LinearLayout) getContentView();
+        content = (LinearLayout) getContentView();
         content.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         content.setOrientation(android.widget.LinearLayout.VERTICAL);
         content.setPadding(0, content.getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf), 0, content.getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf));
@@ -48,9 +50,11 @@ public class FloatingActionMenu extends PopupWindow {
         handler = new Handler();
     }
 
-    public boolean show(View anchor) {
-        final LinearLayout content = (LinearLayout) getContentView();
+    public void setAnchor(View anchor) {
+        this.anchor = anchor;
+    }
 
+    public void build(){
         int[] location = new int[2];
         anchor.getLocationOnScreen(location);
 
@@ -58,7 +62,6 @@ public class FloatingActionMenu extends PopupWindow {
         Display display = wm.getDefaultDisplay();
 
         boolean left = location[0] < display.getWidth() + anchor.getWidth() - location[0];
-        boolean top = location[1] < display.getHeight() + anchor.getHeight() - location[1];
 
         content.removeAllViews();
 
@@ -85,6 +88,17 @@ public class FloatingActionMenu extends PopupWindow {
         }
 
         content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+    }
+
+    public boolean show() {
+        int[] location = new int[2];
+        anchor.getLocationOnScreen(location);
+
+        WindowManager wm = (WindowManager) anchor.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        boolean left = location[0] < display.getWidth() + anchor.getWidth() - location[0];
+        boolean top = location[1] < display.getHeight() + anchor.getHeight() - location[1];
 
         super.showAtLocation(anchor, Gravity.TOP | Gravity.LEFT, 0, 0);
         if (!left & top) {  // right top
