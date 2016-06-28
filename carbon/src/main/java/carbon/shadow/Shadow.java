@@ -12,7 +12,7 @@ import android.view.View;
 public class Shadow {
 
     private final int e;
-    private final int c;
+    final int c;
     private final Bitmap bitmap;
     Rect src = new Rect();
     Rect dst = new Rect();
@@ -51,5 +51,8 @@ public class Shadow {
         }
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Shadow && elevation == ((Shadow) o).elevation && c == ((Shadow) o).c;
+    }
 }

@@ -82,12 +82,6 @@ public class FloatingActionMenu extends PopupWindow {
             content.addView(view);
 
             view.setVisibilityImmediate(View.INVISIBLE);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    view.setVisibility(View.VISIBLE);
-                }
-            }, top ? i * 50 : (menu.size() - 1 - i) * 50);
         }
 
         content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
@@ -101,6 +95,16 @@ public class FloatingActionMenu extends PopupWindow {
             update(location[0], location[1] - content.getMeasuredHeight(), content.getMeasuredWidth(), content.getMeasuredHeight());
         } else {    // left top
             update(location[0], location[1] + anchor.getHeight(), content.getMeasuredWidth(), content.getMeasuredHeight());
+        }
+
+        for (int i = 0; i < menu.size(); i++) {
+            final int finalI = i;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    content.getChildAt(finalI).setVisibility(View.VISIBLE);
+                }
+            }, top ? i * 50 : (menu.size() - 1 - i) * 50);
         }
 
         return true;
