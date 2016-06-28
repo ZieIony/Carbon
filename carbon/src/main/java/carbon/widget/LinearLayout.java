@@ -74,7 +74,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
         initLinearLayout(attrs, defStyleAttr);
     }
 
