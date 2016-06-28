@@ -16,7 +16,7 @@ import carbon.widget.Toolbar;
 /**
  * Created by Marcin on 2015-12-18.
  */
-public class TableLayout extends FrameLayout {
+public class TableLayout extends LinearLayout {
     private TableView table;
     Toolbar toolbar;
     LinearLayout header;
@@ -41,6 +41,8 @@ public class TableLayout extends FrameLayout {
 
     private void initTableLayout() {
         View.inflate(getContext(), R.layout.carbon_tablelayout, this);
+        setOrientation(VERTICAL);
+
         toolbar = (Toolbar) findViewById(R.id.carbon_tableToolbar);
         header = (LinearLayout) findViewById(R.id.carbon_tableHeader);
         table = (TableView) findViewById(R.id.carbon_table);
