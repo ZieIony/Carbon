@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -11,22 +13,31 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.text.Editable;
+import android.text.TextPaint;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
+
+import java.lang.reflect.Field;
+import java.util.regex.Pattern;
 
 import carbon.Carbon;
 import carbon.R;
@@ -35,9 +46,9 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultColorStateList;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
+import carbon.internal.Roboto;
 import carbon.internal.TypefaceUtils;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -51,7 +62,27 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * Created by Marcin on 2014-11-07.
  */
 public class TextView extends android.widget.TextView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView {
-    protected Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+
+    public enum LabelStyle {
+        Floating, Persistent, Hint
+    }
+
+    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+
+    int DIVIDER_PADDING;
+    int cursorColor;
+
+    String label;
+    TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    LabelStyle labelStyle;
+
+    int internalPaddingTop = 0;
+
+    private float labelFrac = 0;
+    private boolean valid = true;
+    boolean required = false;
+
+    float PADDING_LABEL;
 
     public TextView(Context context) {
         super(context, null);
@@ -73,6 +104,31 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         super(context, attrs, defStyleAttr, defStyleRes);
         initTextView(attrs, defStyleAttr);
     }
+
+    private static int[] rippleIds = new int[]{
+            R.styleable.TextView_carbon_rippleColor,
+            R.styleable.TextView_carbon_rippleStyle,
+            R.styleable.TextView_carbon_rippleHotspot,
+            R.styleable.TextView_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.TextView_carbon_inAnimation,
+            R.styleable.TextView_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.TextView_carbon_touchMargin,
+            R.styleable.TextView_carbon_touchMarginLeft,
+            R.styleable.TextView_carbon_touchMarginTop,
+            R.styleable.TextView_carbon_touchMarginRight,
+            R.styleable.TextView_carbon_touchMarginBottom
+    };
+    private static int[] tintIds = new int[]{
+            R.styleable.TextView_carbon_tint,
+            R.styleable.TextView_carbon_tintMode,
+            R.styleable.TextView_carbon_backgroundTint,
+            R.styleable.TextView_carbon_backgroundTintMode,
+            R.styleable.TextView_carbon_animateColorChanges
+    };
 
     private void initTextView(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
@@ -100,24 +156,82 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                 }
             }
 
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-            Carbon.initTint(this, attrs, defStyleAttr);
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
+            DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
+
+            setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.TextView_carbon_labelStyle, 2)]);
+            setLabel(a.getString(R.styleable.TextView_carbon_label));
+            if (labelStyle == LabelStyle.Floating && label == null && getHint() != null)
+                label = getHint().toString();
 
             a.recycle();
+
+            Carbon.initRippleDrawable(this, a, rippleIds);
+            Carbon.initTint(this, a, tintIds);
+            Carbon.initElevation(this, a, R.styleable.TextView_carbon_elevation);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
+        } else {
+            setTint(0);
         }
+
+        if (!isInEditMode()) {
+            labelPaint.setTypeface(TypefaceUtils.getTypeface(getContext(), Roboto.Regular));
+            labelPaint.setTextSize(getResources().getDimension(R.dimen.carbon_labelTextSize));
+        }
+
+        try {
+            Field mHighlightPaintField = android.widget.TextView.class.getDeclaredField("mHighlightPaint");
+            mHighlightPaintField.setAccessible(true);
+            mHighlightPaintField.set(this, new Paint() {
+                @Override
+                public void setColor(int color) {
+                    if (getSelectionStart() == getSelectionEnd()) {
+                        super.setColor(cursorColor);
+                    } else {
+                        super.setColor(color);
+                    }
+                }
+            });
+        } catch (Exception e) {
+
+        }
+
+        int underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
+        Bitmap dashPathBitmap = Bitmap.createBitmap(underlineWidth * 4, underlineWidth, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(dashPathBitmap);
+        paint.setColor(0xffffffff);
+        paint.setAlpha(255);
+        c.drawCircle(dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, paint);
+        PADDING_LABEL = getResources().getDimension(R.dimen.carbon_paddingHalf);
+
+        if (isFocused() && getText().length() > 0)
+            labelFrac = 1;
 
         if (getElevation() > 0)
             AnimUtils.setupElevationAnimator(stateAnimator, this);
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public LabelStyle getLabelStyle() {
+        return labelStyle;
+    }
+
+    public void setLabelStyle(LabelStyle labelStyle) {
+        this.labelStyle = labelStyle;
+    }
+
     /**
      * Changes text transformation method to caps.
      *
-     * @param allCaps if true, Button will automatically capitalize all characters
+     * @param allCaps if true, TextView will automatically capitalize all characters
      */
     public void setAllCaps(boolean allCaps) {
         if (allCaps) {
@@ -162,6 +276,83 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             }
             appearance.recycle();
         }
+    }
+
+    public void draw2(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (isInEditMode())
+            return;
+
+        CharSequence hint = getHint();
+        if (required && hint.charAt(hint.length() - 1) != '*')
+            setHint(hint + " *");
+        int paddingTop = getPaddingTop() + internalPaddingTop;
+
+        if (isFocused() && isEnabled()) {
+            paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
+        } else {
+            paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
+        }
+
+        if (label != null) {
+            if (labelStyle == LabelStyle.Floating) {
+                labelPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
+                labelPaint.setAlpha((int) (255 * labelFrac));
+                canvas.drawText(label, getScrollX() + getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
+                if (required && !valid) {
+                    float off = labelPaint.measureText(label + " ");
+                    labelPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
+                    labelPaint.setAlpha((int) (255 * labelFrac));
+                    canvas.drawText("*", getScrollX() + getPaddingLeft() + off, paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
+                }
+            } else if (labelStyle == LabelStyle.Persistent) {
+                labelPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
+                canvas.drawText(label, getScrollX() + getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
+                if (required && !valid) {
+                    float off = labelPaint.measureText(label + " ");
+                    labelPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
+                    labelPaint.setAlpha((int) (255 * labelFrac));
+                    canvas.drawText("*", getScrollX() + getPaddingLeft() + off, paddingTop - PADDING_LABEL, labelPaint);
+                }
+            }
+        }
+
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
+    @Deprecated
+    public boolean isFloatingLabelEnabled() {
+        return labelStyle == LabelStyle.Floating;
+    }
+
+    @Deprecated
+    public void setFloatingLabelEnabled(boolean showFloatingLabel) {
+        this.labelStyle = showFloatingLabel ? LabelStyle.Floating : LabelStyle.Hint;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    private void animateFloatingLabel(boolean visible) {
+        ValueAnimator animator;
+        if (visible) {
+            animator = ValueAnimator.ofFloat(labelFrac, 1);
+            animator.setDuration((long) ((1 - labelFrac) * 200));
+        } else {
+            animator = ValueAnimator.ofFloat(labelFrac, 0);
+            animator.setDuration((long) (labelFrac * 200));
+        }
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                labelFrac = (float) animation.getAnimatedValue();
+                postInvalidate();
+            }
+        });
+        animator.start();
     }
 
 
@@ -232,7 +423,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
-            super.draw(canvas);
+            draw2(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
 
@@ -242,10 +433,34 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
         } else {
-            super.draw(canvas);
+            draw2(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
         }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int paddingTop = getPaddingTop();
+        int paddingBottom = getPaddingBottom();
+        if (labelStyle != LabelStyle.Hint)
+            internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
+        setPadding(getPaddingLeft(), paddingTop, getPaddingRight(), paddingBottom);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    public int getPaddingTop() {
+        return super.getPaddingTop() - internalPaddingTop;
+    }
+
+    int getInternalPaddingTop() {
+        return internalPaddingTop;
+    }
+
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding(left, top + internalPaddingTop, right, bottom);
     }
 
 
@@ -567,6 +782,12 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
     }
 
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        drawableState[drawableState.length - 1] = valid ? -R.attr.carbon_state_invalid : R.attr.carbon_state_invalid;
+        return drawableState;
+    }
 
     // -------------------------------
     // animations
@@ -740,7 +961,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     }
 
     @Override
-    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+    public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
         updateBackgroundTint();
     }

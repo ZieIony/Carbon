@@ -71,12 +71,21 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
         initScrollView(attrs, defStyleAttr);
     }
 
+    private static int[] tintIds = new int[]{
+            R.styleable.ScrollView_carbon_tint,
+            R.styleable.ScrollView_carbon_tintMode,
+            R.styleable.ScrollView_carbon_backgroundTint,
+            R.styleable.ScrollView_carbon_backgroundTintMode,
+            R.styleable.ScrollView_carbon_animateColorChanges
+    };
+    
     private void initScrollView(AttributeSet attrs, int defStyleAttr) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, 0);
+
             for (int i = 0; i < a.getIndexCount(); i++) {
                 int attr = a.getIndex(i);
                 if (attr == R.styleable.ScrollView_carbon_overScroll) {
@@ -89,9 +98,10 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
                     setHeaderParallax(a.getFloat(attr, 0.0f));
                 }
             }
-            a.recycle();
 
-            Carbon.initTint(this, attrs, defStyleAttr);
+            Carbon.initTint(this, a, tintIds);
+
+            a.recycle();
         }
 
         setClipToPadding(false);

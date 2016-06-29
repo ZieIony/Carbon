@@ -96,6 +96,24 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         initSeekBar(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.SeekBar_carbon_rippleColor,
+            R.styleable.SeekBar_carbon_rippleStyle,
+            R.styleable.SeekBar_carbon_rippleHotspot,
+            R.styleable.SeekBar_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.SeekBar_carbon_inAnimation,
+            R.styleable.SeekBar_carbon_outAnimation
+    };
+    private static int[] tintIds = new int[]{
+            R.styleable.SeekBar_carbon_tint,
+            R.styleable.SeekBar_carbon_tintMode,
+            R.styleable.SeekBar_carbon_backgroundTint,
+            R.styleable.SeekBar_carbon_backgroundTintMode,
+            R.styleable.SeekBar_carbon_animateColorChanges
+    };
+
     private void initSeekBar(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
@@ -107,10 +125,6 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         STROKE_WIDTH = Carbon.getDip(getContext()) * 2;
 
         if (attrs != null) {
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTint(this, attrs, defStyleAttr);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, 0);
 
             setStyle(Style.values()[a.getInt(R.styleable.SeekBar_carbon_barStyle, 0)]);
@@ -124,6 +138,10 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
             setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
             setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
+
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTint(this, a, tintIds);
+            Carbon.initRippleDrawable(this, a, rippleIds);
 
             a.recycle();
         }

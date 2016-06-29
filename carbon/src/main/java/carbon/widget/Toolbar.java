@@ -113,7 +113,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
         setBackgroundColor(color);
         a.recycle();
 
-        Carbon.initElevation(this, attrs, defStyleAttr);
+        Carbon.initElevation(this, a, R.styleable.Toolbar_carbon_elevation);
     }
 
     @Override

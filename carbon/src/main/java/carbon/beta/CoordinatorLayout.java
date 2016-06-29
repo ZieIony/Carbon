@@ -71,15 +71,41 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
         initCoordinatorLayout(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.CoordinatorLayout_carbon_rippleColor,
+            R.styleable.CoordinatorLayout_carbon_rippleStyle,
+            R.styleable.CoordinatorLayout_carbon_rippleHotspot,
+            R.styleable.CoordinatorLayout_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.CoordinatorLayout_carbon_inAnimation,
+            R.styleable.CoordinatorLayout_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.CoordinatorLayout_carbon_touchMargin,
+            R.styleable.CoordinatorLayout_carbon_touchMarginLeft,
+            R.styleable.CoordinatorLayout_carbon_touchMarginTop,
+            R.styleable.CoordinatorLayout_carbon_touchMarginRight,
+            R.styleable.CoordinatorLayout_carbon_touchMarginBottom
+    };
+    private static int[] insetIds = new int[]{
+            R.styleable.CoordinatorLayout_carbon_inset,
+            R.styleable.CoordinatorLayout_carbon_insetLeft,
+            R.styleable.CoordinatorLayout_carbon_insetTop,
+            R.styleable.CoordinatorLayout_carbon_insetRight,
+            R.styleable.CoordinatorLayout_carbon_insetBottom,
+            R.styleable.CoordinatorLayout_carbon_insetColor
+    };
+
     private void initCoordinatorLayout(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CoordinatorLayout, defStyleAttr, 0);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initInset(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, a, rippleIds);
+            Carbon.initElevation(this, a, R.styleable.CoordinatorLayout_carbon_elevation);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            Carbon.initInset(this, a, insetIds);
             setCornerRadius((int) a.getDimension(R.styleable.CoordinatorLayout_carbon_cornerRadius, 0));
 
             a.recycle();

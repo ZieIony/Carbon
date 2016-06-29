@@ -8,34 +8,29 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Shader;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.ContextThemeWrapper;
-import android.view.Display;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.ViewOutlineProvider;
+import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.PopupWindow;
+import android.view.animation.Transformation;
 import android.widget.TextView;
 
 import com.nineoldandroids.animation.Animator;
@@ -52,13 +47,16 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultColorStateList;
-import carbon.drawable.EmptyDrawable;
+import carbon.drawable.DefaultNormalColorStateList;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.internal.EditTextMenu;
 import carbon.internal.Roboto;
 import carbon.internal.TypefaceUtils;
+import carbon.shadow.Shadow;
+import carbon.shadow.ShadowGenerator;
+import carbon.shadow.ShadowShape;
+import carbon.shadow.ShadowView;
 
 import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
 import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
@@ -66,8 +64,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 /**
  * Created by Marcin on 2015-02-14.
  */
-public class EditText extends android.widget.EditText implements RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
-    String[] suggestions = new String[]{"test", "suggestion"};
+public class EditText extends android.widget.EditText implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
 
     private Field mIgnoreActionUpEventField;
     private Object editor;
@@ -85,13 +82,13 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     private String errorMessage;
     TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     boolean afterFirstInteraction = false;
-    String label;
 
     private int matchingView;
     int minCharacters;
     int maxCharacters = Integer.MAX_VALUE;
     TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
+    String label;
     TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     LabelStyle labelStyle;
 
@@ -137,7 +134,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     };
 
     public EditText(Context context) {
-        super(context);
+        super(context, null);
         initEditText(null, android.R.attr.editTextStyle);
     }
 
@@ -146,9 +143,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         initEditText(attrs, android.R.attr.editTextStyle);
     }
 
-    public EditText(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initEditText(attrs, defStyle);
+    public EditText(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initEditText(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -157,7 +154,35 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         initEditText(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.EditText_carbon_rippleColor,
+            R.styleable.EditText_carbon_rippleStyle,
+            R.styleable.EditText_carbon_rippleHotspot,
+            R.styleable.EditText_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.EditText_carbon_inAnimation,
+            R.styleable.EditText_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.EditText_carbon_touchMargin,
+            R.styleable.EditText_carbon_touchMarginLeft,
+            R.styleable.EditText_carbon_touchMarginTop,
+            R.styleable.EditText_carbon_touchMarginRight,
+            R.styleable.EditText_carbon_touchMarginBottom
+    };
+    private static int[] tintIds = new int[]{
+            R.styleable.EditText_carbon_tint,
+            R.styleable.EditText_carbon_tintMode,
+            R.styleable.EditText_carbon_backgroundTint,
+            R.styleable.EditText_carbon_backgroundTintMode,
+            R.styleable.EditText_carbon_animateColorChanges
+    };
+
     public void initEditText(AttributeSet attrs, int defStyleAttr) {
+        if (isInEditMode())
+            return;
+
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
 
@@ -192,7 +217,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
             setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.EditText_carbon_labelStyle, a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false) ? 0 : 2)]);
             setLabel(a.getString(R.styleable.EditText_carbon_label));
-            if (labelStyle == LabelStyle.Floating && label == null)
+            if (labelStyle == LabelStyle.Floating && label == null && getHint() != null)
                 label = getHint().toString();
             setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
             setRequired(a.getBoolean(R.styleable.EditText_carbon_required, false));
@@ -201,10 +226,12 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
             a.recycle();
 
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initTint(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, a, rippleIds);
+            Carbon.initTint(this, a, tintIds);
+            Carbon.initElevation(this, a, R.styleable.EditText_carbon_elevation);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
         } else {
             setTint(0);
         }
@@ -256,6 +283,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         initSelectionHandle();
 
         validateInternalEvent();
+
+        if (getElevation() > 0)
+            AnimUtils.setupElevationAnimator(stateAnimator, this);
     }
 
     private void initSelectionHandle() {
@@ -382,6 +412,14 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         this.label = label;
     }
 
+    public LabelStyle getLabelStyle() {
+        return labelStyle;
+    }
+
+    public void setLabelStyle(LabelStyle labelStyle) {
+        this.labelStyle = labelStyle;
+    }
+
     public void validate() {
         afterFirstInteraction = true;
         validateInternal();
@@ -439,20 +477,22 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             validateListener.onValidate(canShowError());
     }
 
-    public LabelStyle getLabelStyle() {
-        return labelStyle;
-    }
-
-    public void setLabelStyle(LabelStyle labelStyle) {
-        this.labelStyle = labelStyle;
-    }
-
+    /**
+     * Changes text transformation method to caps.
+     *
+     * @param allCaps if true, TextView will automatically capitalize all characters
+     */
     public void setAllCaps(boolean allCaps) {
         if (allCaps) {
             setTransformationMethod(new AllCapsTransformationMethod(getContext()));
         } else {
             setTransformationMethod(null);
         }
+    }
+
+    @Override
+    public void setTextColor(ColorStateList colors) {
+        super.setTextColor(animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors);
     }
 
     @Override
@@ -503,8 +543,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         this.setError(error);
     }
 
-    @Override
-    public void draw(@NonNull Canvas canvas) {
+    public void draw2(@NonNull Canvas canvas) {
         super.draw(canvas);
         if (isInEditMode())
             return;
@@ -659,6 +698,35 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         }
     }
 
+
+    // -------------------------------
+    // corners
+    // -------------------------------
+
+    private int cornerRadius;
+    private Path cornersMask;
+    private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
+
+    /**
+     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     *
+     * @return corner radius, equal to or greater than 0.
+     */
+    public int getCornerRadius() {
+        return cornerRadius;
+    }
+
+    /**
+     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     *
+     * @param cornerRadius
+     */
+    public void setCornerRadius(int cornerRadius) {
+        this.cornerRadius = cornerRadius;
+        invalidateShadow();
+        initCorners();
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -666,11 +734,52 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         if (!changed)
             return;
 
+        invalidateShadow();
+
         if (getWidth() == 0 || getHeight() == 0)
             return;
 
+        initCorners();
+
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+    }
+
+    private void initCorners() {
+        if (cornerRadius > 0) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                setClipToOutline(true);
+                setOutlineProvider(ShadowShape.viewOutlineProvider);
+            } else {
+                cornersMask = new Path();
+                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                setOutlineProvider(ViewOutlineProvider.BOUNDS);
+        }
+    }
+
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+            draw2(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
+
+            paint.setXfermode(pdMode);
+            canvas.drawPath(cornersMask, paint);
+
+            canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
+        } else {
+            draw2(canvas);
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+                rippleDrawable.draw(canvas);
+        }
     }
 
     @Override
@@ -713,6 +822,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
+    private Transformation t = new Transformation();
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -727,6 +837,13 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        Animation a = getAnimation();
+        if (a != null) {
+            a.getTransformation(event.getEventTime(), t);
+            float[] loc = new float[]{event.getX(), event.getY()};
+            t.getMatrix().mapPoints(loc);
+            event.setLocation(loc[0], loc[1]);
+        }
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
@@ -737,6 +854,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         return rippleDrawable;
     }
 
+    @Override
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
@@ -767,6 +885,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).invalidate();
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).invalidate();
     }
 
     @Override
@@ -776,6 +897,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             return;
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate(dirty);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
             ((View) getParent()).invalidate(dirty);
     }
 
@@ -787,6 +911,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).invalidate(l, t, r, b);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).invalidate(l, t, r, b);
     }
 
     @Override
@@ -796,6 +923,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             return;
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).invalidate();
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
             ((View) getParent()).invalidate();
     }
 
@@ -807,6 +937,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
     @Override
@@ -816,6 +949,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             return;
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
     }
 
@@ -827,6 +963,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidate();
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
+            ((View) getParent()).postInvalidate();
     }
 
     @Override
@@ -836,6 +975,9 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             return;
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
+            ((View) getParent()).postInvalidate(left, top, right, bottom);
+
+        if (getElevation() > 0 || getCornerRadius() > 0)
             ((View) getParent()).postInvalidate(left, top, right, bottom);
     }
 
@@ -856,6 +998,79 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             rippleDrawable = null;
         }
         super.setBackgroundDrawable(background);
+        updateTint();
+    }
+
+
+    // -------------------------------
+    // elevation
+    // -------------------------------
+
+    private float elevation = 0;
+    private float translationZ = 0;
+    private Shadow shadow;
+
+    @Override
+    public float getElevation() {
+        return elevation;
+    }
+
+    @Override
+    public synchronized void setElevation(float elevation) {
+        if (elevation == this.elevation)
+            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(elevation);
+        this.elevation = elevation;
+        if (getParent() != null)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public float getTranslationZ() {
+        return translationZ;
+    }
+
+    public synchronized void setTranslationZ(float translationZ) {
+        if (translationZ == this.translationZ)
+            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setTranslationZ(translationZ);
+        this.translationZ = translationZ;
+        if (getParent() != null)
+            ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public ShadowShape getShadowShape() {
+        if (cornerRadius == getWidth() / 2 && getWidth() == getHeight())
+            return ShadowShape.CIRCLE;
+        if (cornerRadius > 0)
+            return ShadowShape.ROUND_RECT;
+        return ShadowShape.RECT;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    @Override
+    public Shadow getShadow() {
+        float elevation = getElevation() + getTranslationZ();
+        if (elevation >= 0.01f && getWidth() > 0 && getHeight() > 0) {
+            if (shadow == null || shadow.elevation != elevation)
+                shadow = ShadowGenerator.generateShadow(this, elevation);
+            return shadow;
+        }
+        return null;
+    }
+
+    @Override
+    public void invalidateShadow() {
+        shadow = null;
+        if (getParent() != null && getParent() instanceof View)
+            ((View) getParent()).postInvalidate();
     }
 
 
@@ -927,7 +1142,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
             ((AnimatedColorStateList) textColors).setState(getDrawableState());
         if (tint != null && tint instanceof AnimatedColorStateList)
             ((AnimatedColorStateList) tint).setState(getDrawableState());
-        if (backgroundTint!= null && backgroundTint instanceof AnimatedColorStateList)
+        if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
             ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
     }
 
@@ -1042,7 +1257,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     @Override
     public void setTint(int color) {
         if (color == 0) {
-            setTint(new DefaultColorStateList(getContext()));
+            setTint(new DefaultNormalColorStateList(getContext()));
         } else {
             setTint(ColorStateList.valueOf(color));
         }
@@ -1110,7 +1325,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
     }
 
     @Override
-    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+    public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
         updateBackgroundTint();
     }
@@ -1149,6 +1364,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setAlpha(alpha);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getPivotX() {
@@ -1161,6 +1378,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setPivotX(pivotX);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getPivotY() {
@@ -1173,6 +1392,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setPivotY(pivotY);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getRotation() {
@@ -1185,6 +1406,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setRotation(rotation);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getRotationX() {
@@ -1197,6 +1420,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setRotationX(rotationX);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getRotationY() {
@@ -1209,6 +1434,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setRotationY(rotationY);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getScaleX() {
@@ -1221,6 +1448,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setScaleX(scaleX);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getScaleY() {
@@ -1233,6 +1462,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setScaleY(scaleY);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getTranslationX() {
@@ -1245,6 +1476,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setTranslationX(translationX);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getTranslationY() {
@@ -1257,6 +1490,8 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setTranslationY(translationY);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 
     public float getX() {
@@ -1281,5 +1516,7 @@ public class EditText extends android.widget.EditText implements RippleView, Tou
         } else {
             super.setY(y);
         }
+        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
+            ((View) getParent()).invalidate();
     }
 }

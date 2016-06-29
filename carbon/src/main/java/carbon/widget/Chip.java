@@ -62,6 +62,7 @@ public class Chip extends LinearLayout {
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, 0);
+
             setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
             setText(a.getString(R.styleable.Chip_android_text));
             int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
@@ -72,9 +73,10 @@ public class Chip extends LinearLayout {
             }
             int color = a.getColor(R.styleable.Chip_android_background, 0);
             setBackgroundColor(color);
+
             a.recycle();
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
+            //Carbon.initElevation(this, a, R.styleable.Chip_carbon_elevation);
         }
     }
 

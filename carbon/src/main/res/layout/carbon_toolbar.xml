@@ -40,6 +40,8 @@
         android:layoutDirection="locale"
         android:minHeight="@dimen/carbon_toolbarHeight"
         android:orientation="horizontal"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingStart="@dimen/carbon_padding"
         android:paddingEnd="@dimen/carbon_toolbarItemPadding"
         android:paddingRight="@dimen/carbon_toolbarItemPadding" />
 

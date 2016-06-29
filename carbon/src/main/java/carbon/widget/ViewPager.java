@@ -103,6 +103,14 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
         initViewPager(attrs, defStyleAttr);
     }
 
+    private static int[] tintIds = new int[]{
+            R.styleable.ViewPager_carbon_tint,
+            R.styleable.ViewPager_carbon_tintMode,
+            R.styleable.ViewPager_carbon_backgroundTint,
+            R.styleable.ViewPager_carbon_backgroundTintMode,
+            R.styleable.ViewPager_carbon_animateColorChanges
+    };
+    
     private void initViewPager(AttributeSet attrs, int defStyleAttr) {
         super.setOnPageChangeListener(internalOnPageChangeListener);
 
@@ -110,15 +118,17 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
         mTouchSlop = configuration.getScaledTouchSlop();
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ViewPager, defStyleAttr, 0);
+    
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.ViewPager_carbon_overScroll) {
                 setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
             }
         }
-        a.recycle();
 
-        Carbon.initTint(this, attrs, defStyleAttr);
+        Carbon.initTint(this, a, tintIds);
+
+        a.recycle();
 
         initScrollbars();
     }

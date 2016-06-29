@@ -82,16 +82,46 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         initFrameLayout(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.FrameLayout_carbon_rippleColor,
+            R.styleable.FrameLayout_carbon_rippleStyle,
+            R.styleable.FrameLayout_carbon_rippleHotspot,
+            R.styleable.FrameLayout_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.FrameLayout_carbon_inAnimation,
+            R.styleable.FrameLayout_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.FrameLayout_carbon_touchMargin,
+            R.styleable.FrameLayout_carbon_touchMarginLeft,
+            R.styleable.FrameLayout_carbon_touchMarginTop,
+            R.styleable.FrameLayout_carbon_touchMarginRight,
+            R.styleable.FrameLayout_carbon_touchMarginBottom
+    };
+    private static int[] insetIds = new int[]{
+            R.styleable.FrameLayout_carbon_inset,
+            R.styleable.FrameLayout_carbon_insetLeft,
+            R.styleable.FrameLayout_carbon_insetTop,
+            R.styleable.FrameLayout_carbon_insetRight,
+            R.styleable.FrameLayout_carbon_insetBottom,
+            R.styleable.FrameLayout_carbon_insetColor
+    };
+    private static int[] maxSizeIds = new int[]{
+            R.styleable.FrameLayout_carbon_maxWidth,
+            R.styleable.FrameLayout_carbon_maxHeight,
+    };
+
     private void initFrameLayout(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, a, rippleIds);
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initInset(this, attrs, defStyleAttr);
-            Carbon.initMaxSize(this, attrs, defStyleAttr);
+            Carbon.initElevation(this, a, R.styleable.FrameLayout_carbon_elevation);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            Carbon.initInset(this, a, insetIds);
+            Carbon.initMaxSize(this, a, maxSizeIds);
             setCornerRadius((int) a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
 
             a.recycle();

@@ -69,20 +69,30 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
         initHorizontalScrollView(attrs, defStyleAttr);
     }
 
+    private static int[] tintIds = new int[]{
+            R.styleable.HorizontalScrollView_carbon_tint,
+            R.styleable.HorizontalScrollView_carbon_tintMode,
+            R.styleable.HorizontalScrollView_carbon_backgroundTint,
+            R.styleable.HorizontalScrollView_carbon_backgroundTintMode,
+            R.styleable.HorizontalScrollView_carbon_animateColorChanges
+    };
+    
     private void initHorizontalScrollView(AttributeSet attrs, int defStyleAttr) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalScrollView, defStyleAttr, 0);
+
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.HorizontalScrollView_carbon_overScroll) {
                 setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
             }
         }
-        a.recycle();
 
-        Carbon.initTint(this, attrs, defStyleAttr);
+        Carbon.initTint(this, a, tintIds);
+
+        a.recycle();
 
         initScrollbars();
     }

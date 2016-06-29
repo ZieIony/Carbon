@@ -81,17 +81,47 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         initFlowLayout(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.FrameLayout_carbon_rippleColor,
+            R.styleable.FrameLayout_carbon_rippleStyle,
+            R.styleable.FrameLayout_carbon_rippleHotspot,
+            R.styleable.FrameLayout_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.FrameLayout_carbon_inAnimation,
+            R.styleable.FrameLayout_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.FlowLayout_carbon_touchMargin,
+            R.styleable.FlowLayout_carbon_touchMarginLeft,
+            R.styleable.FlowLayout_carbon_touchMarginTop,
+            R.styleable.FlowLayout_carbon_touchMarginRight,
+            R.styleable.FlowLayout_carbon_touchMarginBottom
+    };
+    private static int[] insetIds = new int[]{
+            R.styleable.FlowLayout_carbon_inset,
+            R.styleable.FlowLayout_carbon_insetLeft,
+            R.styleable.FlowLayout_carbon_insetTop,
+            R.styleable.FlowLayout_carbon_insetRight,
+            R.styleable.FlowLayout_carbon_insetBottom,
+            R.styleable.FlowLayout_carbon_insetColor
+    };
+    private static int[] maxSizeIds = new int[]{
+            R.styleable.FlowLayout_carbon_maxWidth,
+            R.styleable.FlowLayout_carbon_maxHeight,
+    };
+
     private void initFlowLayout(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, 0);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FlowLayout, defStyleAttr, 0);
+            Carbon.initRippleDrawable(this, a, rippleIds);
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initInset(this, attrs, defStyleAttr);
-            Carbon.initMaxSize(this, attrs, defStyleAttr);
-            setCornerRadius((int) a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
+            Carbon.initElevation(this, a, R.styleable.FlowLayout_carbon_elevation);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            Carbon.initInset(this, a, insetIds);
+            Carbon.initMaxSize(this, a, maxSizeIds);
+            setCornerRadius((int) a.getDimension(R.styleable.FlowLayout_carbon_cornerRadius, 0));
 
             a.recycle();
         }
@@ -322,7 +352,7 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
             if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground() );
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {

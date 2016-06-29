@@ -74,6 +74,31 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         initImageView(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.ImageView_carbon_rippleColor,
+            R.styleable.ImageView_carbon_rippleStyle,
+            R.styleable.ImageView_carbon_rippleHotspot,
+            R.styleable.ImageView_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.ImageView_carbon_inAnimation,
+            R.styleable.ImageView_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.ImageView_carbon_touchMargin,
+            R.styleable.ImageView_carbon_touchMarginLeft,
+            R.styleable.ImageView_carbon_touchMarginTop,
+            R.styleable.ImageView_carbon_touchMarginRight,
+            R.styleable.ImageView_carbon_touchMarginBottom
+    };
+    private static int[] tintIds = new int[]{
+            R.styleable.ImageView_carbon_tint,
+            R.styleable.ImageView_carbon_tintMode,
+            R.styleable.ImageView_carbon_backgroundTint,
+            R.styleable.ImageView_carbon_backgroundTintMode,
+            R.styleable.ImageView_carbon_animateColorChanges
+    };
+
     private void initImageView(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
@@ -95,13 +120,13 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
                 }
             }
 
-            a.recycle();
+            Carbon.initElevation(this, a, R.styleable.ImageView_carbon_elevation);
+            Carbon.initRippleDrawable(this, a, rippleIds);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            Carbon.initTint(this, a, tintIds);
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initTint(this, attrs, defStyleAttr);
+            a.recycle();
         }
     }
 

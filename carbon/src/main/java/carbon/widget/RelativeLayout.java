@@ -83,16 +83,47 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
         initRelativeLayout(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.LinearLayout_carbon_rippleColor,
+            R.styleable.LinearLayout_carbon_rippleStyle,
+            R.styleable.LinearLayout_carbon_rippleHotspot,
+            R.styleable.LinearLayout_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.LinearLayout_carbon_inAnimation,
+            R.styleable.LinearLayout_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.LinearLayout_carbon_touchMargin,
+            R.styleable.LinearLayout_carbon_touchMarginLeft,
+            R.styleable.LinearLayout_carbon_touchMarginTop,
+            R.styleable.LinearLayout_carbon_touchMarginRight,
+            R.styleable.LinearLayout_carbon_touchMarginBottom
+    };
+    private static int[] insetIds = new int[]{
+            R.styleable.LinearLayout_carbon_inset,
+            R.styleable.LinearLayout_carbon_insetLeft,
+            R.styleable.LinearLayout_carbon_insetTop,
+            R.styleable.LinearLayout_carbon_insetRight,
+            R.styleable.LinearLayout_carbon_insetBottom,
+            R.styleable.LinearLayout_carbon_insetColor
+    };
+    private static int[] maxSizeIds = new int[]{
+            R.styleable.LinearLayout_carbon_maxWidth,
+            R.styleable.LinearLayout_carbon_maxHeight,
+    };
+
     private void initRelativeLayout(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, 0);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initInset(this, attrs, defStyleAttr);
-            Carbon.initMaxSize(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, a, rippleIds);
+            Carbon.initElevation(this, a, R.styleable.RelativeLayout_carbon_elevation);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            Carbon.initInset(this, a, insetIds);
+            Carbon.initMaxSize(this, a, maxSizeIds);
+
             setCornerRadius((int) a.getDimension(R.styleable.RelativeLayout_carbon_cornerRadius, 0));
 
             a.recycle();

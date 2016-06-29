@@ -82,11 +82,18 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         initRecycler(attrs, defStyleAttr);
     }
 
+    private static int[] tintIds = new int[]{
+            R.styleable.RecyclerView_carbon_tint,
+            R.styleable.RecyclerView_carbon_tintMode,
+            R.styleable.RecyclerView_carbon_backgroundTint,
+            R.styleable.RecyclerView_carbon_backgroundTintMode,
+            R.styleable.RecyclerView_carbon_animateColorChanges
+    };
+
     private void initRecycler(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
-            Carbon.initTint(this, attrs, defStyleAttr);
-
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, 0);
+
             for (int i = 0; i < a.getIndexCount(); i++) {
                 int attr = a.getIndex(i);
                 if (attr == R.styleable.RecyclerView_carbon_overScroll) {
@@ -104,6 +111,9 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                         setDivider(drawable, (int) height);
                 }
             }
+
+            Carbon.initTint(this, a, tintIds);
+
             a.recycle();
         }
 

@@ -23,7 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:gravity="bottom|left"
                 android:hint="email"
                 android:singleLine="true"
                 android:tag="enable"
@@ -37,7 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:gravity="bottom|left"
                 android:hint="your email"
                 android:tag="enable"
                 android:text="hello text"
@@ -52,7 +50,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:gravity="bottom|left"
                 android:tag="enable"
                 app:carbon_floatingLabel="true"
                 app:carbon_label="Label"
@@ -64,7 +61,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:gravity="bottom|left"
                 android:tag="enable"
                 app:carbon_maxCharacters="10" />
 
@@ -72,7 +68,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:gravity="bottom|left"
                 android:tag="enable"
                 app:carbon_maxCharacters="10"
                 app:carbon_minCharacters="3" />
@@ -84,6 +79,17 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:tag="enable"
                 android:text="hello text" />
+
+            <carbon.widget.TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:hint="email"
+                android:tag="enable"
+                android:text="hello text"
+                app:carbon_label="email"
+                app:carbon_labelStyle="persistent" />
 
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>

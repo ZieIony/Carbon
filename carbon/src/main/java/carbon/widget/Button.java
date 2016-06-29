@@ -82,6 +82,31 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         initButton(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.Button_carbon_rippleColor,
+            R.styleable.Button_carbon_rippleStyle,
+            R.styleable.Button_carbon_rippleHotspot,
+            R.styleable.Button_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.Button_carbon_inAnimation,
+            R.styleable.Button_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.Button_carbon_touchMargin,
+            R.styleable.Button_carbon_touchMarginLeft,
+            R.styleable.Button_carbon_touchMarginTop,
+            R.styleable.Button_carbon_touchMarginRight,
+            R.styleable.Button_carbon_touchMarginBottom
+    };
+    private static int[] tintIds = new int[]{
+            R.styleable.Button_carbon_tint,
+            R.styleable.Button_carbon_tintMode,
+            R.styleable.Button_carbon_backgroundTint,
+            R.styleable.Button_carbon_backgroundTintMode,
+            R.styleable.Button_carbon_animateColorChanges
+    };
+
     private void initButton(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
@@ -108,18 +133,16 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
                 }
             }
 
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-            Carbon.initTint(this, attrs, defStyleAttr);
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, a, rippleIds);
+            Carbon.initTint(this, a, tintIds);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            Carbon.initElevation(this,a,R.styleable.Button_carbon_elevation);
+
             setCornerRadius((int) a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
 
             a.recycle();
         }
-
-        if (getElevation() > 0)
-            AnimUtils.setupElevationAnimator(stateAnimator, this);
     }
 
     /**

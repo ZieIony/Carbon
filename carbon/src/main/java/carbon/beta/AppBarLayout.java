@@ -69,15 +69,42 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         initAppBarLayout(attrs, R.attr.carbon_appBarLayoutStyle);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.AppBarLayout_carbon_rippleColor,
+            R.styleable.AppBarLayout_carbon_rippleStyle,
+            R.styleable.AppBarLayout_carbon_rippleHotspot,
+            R.styleable.AppBarLayout_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.AppBarLayout_carbon_inAnimation,
+            R.styleable.AppBarLayout_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.AppBarLayout_carbon_touchMargin,
+            R.styleable.AppBarLayout_carbon_touchMarginLeft,
+            R.styleable.AppBarLayout_carbon_touchMarginTop,
+            R.styleable.AppBarLayout_carbon_touchMarginRight,
+            R.styleable.AppBarLayout_carbon_touchMarginBottom
+    };
+    private static int[] insetIds = new int[]{
+            R.styleable.AppBarLayout_carbon_inset,
+            R.styleable.AppBarLayout_carbon_insetLeft,
+            R.styleable.AppBarLayout_carbon_insetTop,
+            R.styleable.AppBarLayout_carbon_insetRight,
+            R.styleable.AppBarLayout_carbon_insetBottom,
+            R.styleable.AppBarLayout_carbon_insetColor
+    };
+
     private void initAppBarLayout(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarLayout, defStyleAttr, 0);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initInset(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, a, rippleIds);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            Carbon.initInset(this, a, insetIds);
+            Carbon.initElevation(this,a,R.styleable.AppBarLayout_carbon_elevation);
+
             setCornerRadius((int) a.getDimension(R.styleable.AppBarLayout_carbon_cornerRadius, 0));
 
             a.recycle();
@@ -86,7 +113,6 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
     }
-
 
     List<View> views;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
@@ -502,11 +528,11 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     // touch margin
     // -------------------------------
 
-    private Rect touchMargin;
+    private Rect touchMargin = new Rect();
 
     @Override
     public void setTouchMargin(int left, int top, int right, int bottom) {
-        touchMargin = new Rect(left, top, right, bottom);
+        touchMargin.set(left, top, right, bottom);
     }
 
     @Override

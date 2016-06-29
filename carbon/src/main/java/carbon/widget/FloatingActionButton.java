@@ -76,7 +76,7 @@ public class FloatingActionButton extends ImageView {
         }
 
         // TODO: this part of code is duplicated, but right now I have no idea how to make it better
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        //Carbon.initRippleDrawable(this, a, rippleIds);
     }
 
     @Override
