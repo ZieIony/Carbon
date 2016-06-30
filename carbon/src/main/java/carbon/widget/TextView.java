@@ -163,14 +163,14 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             if (labelStyle == LabelStyle.Floating && label == null && getHint() != null)
                 label = getHint().toString();
 
-            a.recycle();
-
             Carbon.initRippleDrawable(this, a, rippleIds);
             Carbon.initTint(this, a, tintIds);
             Carbon.initElevation(this, a, R.styleable.TextView_carbon_elevation);
             Carbon.initAnimations(this, a, animationIds);
             Carbon.initTouchMargin(this, a, touchMarginIds);
             setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
+
+            a.recycle();
         } else {
             setTint(0);
         }
