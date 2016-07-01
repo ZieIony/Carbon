@@ -224,14 +224,14 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             setShowPasswordButtonEnabled(a.getBoolean(R.styleable.EditText_carbon_showPasswordButton, false));
             setClearButtonEnabled(a.getBoolean(R.styleable.EditText_carbon_clearButton, false));
 
-            a.recycle();
-
             Carbon.initRippleDrawable(this, a, rippleIds);
             Carbon.initTint(this, a, tintIds);
             Carbon.initElevation(this, a, R.styleable.EditText_carbon_elevation);
             Carbon.initAnimations(this, a, animationIds);
             Carbon.initTouchMargin(this, a, touchMarginIds);
             setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
+
+            a.recycle();
         } else {
             setTint(0);
         }
