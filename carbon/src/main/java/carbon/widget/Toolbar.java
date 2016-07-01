@@ -111,9 +111,9 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
         }
         int color = a.getColor(R.styleable.Toolbar_android_background, 0);
         setBackgroundColor(color);
-        a.recycle();
-
         Carbon.initElevation(this, a, R.styleable.Toolbar_carbon_elevation);
+
+        a.recycle();
     }
 
     @Override
