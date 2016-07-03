@@ -15,7 +15,7 @@ import carbon.R;
 /**
  * Created by Marcin on 2015-12-19.
  */
-public class Chip extends FrameLayout {
+public class Chip extends LinearLayout {
     private ImageView icon;
     private TextView title;
     private ImageView close;
@@ -62,6 +62,7 @@ public class Chip extends FrameLayout {
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, 0);
+
             setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
             setText(a.getString(R.styleable.Chip_android_text));
             int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
@@ -72,9 +73,10 @@ public class Chip extends FrameLayout {
             }
             int color = a.getColor(R.styleable.Chip_android_background, 0);
             setBackgroundColor(color);
+
             a.recycle();
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
+            //Carbon.initElevation(this, a, R.styleable.Chip_carbon_elevation);
         }
     }
 
@@ -123,12 +125,12 @@ public class Chip extends FrameLayout {
     }
 
     public void setIconVisible(boolean visible) {
-        icon.setVisibility(visible ? VISIBLE : GONE);
+        icon.setVisibilityImmediate(visible ? VISIBLE : GONE);
         setPadding(visible ? 0 : (int) getResources().getDimension(R.dimen.carbon_chipPadding), getPaddingTop(), getPaddingRight(), getPaddingBottom());
     }
 
     public void setRemovable(boolean removable) {
-        close.setVisibility(removable ? VISIBLE : GONE);
+        close.setVisibilityImmediate(removable ? VISIBLE : GONE);
         setPadding(getPaddingLeft(), getPaddingTop(), removable ? 0 : (int) getResources().getDimension(R.dimen.carbon_chipPadding), getPaddingBottom());
     }
 

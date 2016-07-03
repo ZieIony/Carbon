@@ -55,11 +55,16 @@
         <item name="android:textColorSecondaryInverse">@color/carbon_text_secondary_light</item>
         <item name="android:textColorTertiaryInverse">@color/carbon_text_hint_light</item>
 
+        <!-- {@deprecated Use carbon_colorRipple instead.} -->
+        <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
+        <!-- {@deprecated Use carbon_colorRippleInverse instead.} -->
+        <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
+
         <item name="carbon_colorBackground">@color/carbon_grey_800</item>
         <item name="carbon_colorBackgroundInverse">@color/carbon_green_50</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
-        <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
-        <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
+        <item name="carbon_colorRipple">@color/carbon_ripple_dark</item>
+        <item name="carbon_colorRippleInverse">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_active_dark</item>
         <item name="carbon_iconColorInverse">@color/carbon_icon_active_light</item>
         <item name="carbon_colorDisabled">@color/carbon_icon_inactive_dark</item>
@@ -169,11 +174,16 @@
         <item name="android:textColorSecondaryInverse">@color/carbon_text_secondary_dark</item>
         <item name="android:textColorTertiaryInverse">@color/carbon_text_hint_dark</item>
 
+        <!-- {@deprecated Use carbon_colorRipple instead.} -->
+        <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
+        <!-- {@deprecated Use carbon_colorRippleInverse instead.} -->
+        <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
+
         <item name="carbon_colorBackground">@color/carbon_white</item>
         <item name="carbon_colorBackgroundInverse">@color/carbon_grey_800</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
-        <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
-        <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
+        <item name="carbon_colorRipple">@color/carbon_ripple_light</item>
+        <item name="carbon_colorRippleInverse">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_active_light</item>
         <item name="carbon_iconColorInverse">@color/carbon_icon_active_dark</item>
         <item name="carbon_colorDisabled">@color/carbon_icon_inactive_light</item>
@@ -268,7 +278,7 @@
     <style name="carbon_FloatingActionButton" parent="carbon_ImageView">
         <item name="android:clickable">true</item>
         <item name="android:background">#00000000</item>
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_rippleColor">?attr/carbon_colorRipple</item>
         <item name="carbon_tint">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">pop</item>
         <item name="carbon_outAnimation">pop</item>
@@ -282,6 +292,7 @@
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="carbon_animateColorChanges">true</item>
+        <item name="carbon_tint">#00000000</item>
     </style>
 
     <style name="carbon_CollapsingToolbarLayout">
@@ -327,7 +338,7 @@
 
     <style name="carbon_Chip">
         <item name="carbon_cornerRadius">@dimen/carbon_margin</item>
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_rippleColor">?attr/carbon_colorRipple</item>
         <item name="android:background">#ffE0E0E0
         </item>    <!-- TODO: what color should be here? -->
         <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
@@ -344,7 +355,7 @@
     </style>
 
     <style name="carbon_ImageView.Icon">
-        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
+        <item name="carbon_rippleColor">?attr/carbon_colorRippleInverse</item>
         <item name="carbon_rippleStyle">borderless</item>
         <item name="android:scaleType">center</item>
         <item name="android:clickable">true</item>
@@ -352,7 +363,7 @@
     </style>
 
     <style name="carbon_ImageView.Icon.Inverse">
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_rippleColor">?attr/carbon_colorRipple</item>
         <item name="carbon_rippleStyle">borderless</item>
         <item name="android:scaleType">center</item>
         <item name="android:clickable">true</item>
@@ -471,7 +482,7 @@
     </style>
 
     <style name="carbon_SeekBar" parent="android:Widget.SeekBar">
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_rippleColor">?attr/carbon_colorRipple</item>
         <item name="carbon_rippleHotspot">true</item>
         <item name="carbon_rippleRadius">25dp</item>
         <item name="carbon_rippleStyle">borderless</item>

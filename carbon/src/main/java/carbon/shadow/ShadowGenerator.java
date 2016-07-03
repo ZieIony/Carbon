@@ -12,6 +12,10 @@ import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 
+import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
+
+import carbon.internal.WeakHashSet;
 import carbon.widget.CornerView;
 
 public class ShadowGenerator {
@@ -22,6 +26,8 @@ public class ShadowGenerator {
     private static Paint paint = new Paint();
     private static boolean software = false;
     static RectF roundRect = new RectF();
+
+    static WeakHashSet shadowSet = new WeakHashSet();
 
     private static void blur(Bitmap bitmap, float radius) {
         radius = Math.max(0, Math.min(radius, 25));
@@ -93,18 +99,27 @@ public class ShadowGenerator {
         int e = (int) Math.ceil(elevation);
         int c = Math.max(e, cornerView.getCornerRadius());
 
+        for (Object o : shadowSet) {
+            Shadow s = (Shadow) o;
+            if (s.elevation == elevation && s.c == c)
+                return s;
+        }
+
         Bitmap bitmap;
-        bitmap = Bitmap.createBitmap(e * 2 + 2 * c + 1, e * 2 + 2 * c + 1, Bitmap.Config.ARGB_8888);
+        int bitmapSize = e * 2 + 2 * c + 1;
+        bitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
 
         Canvas shadowCanvas = new Canvas(bitmap);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(0xff000000);
 
-        roundRect.set(e, e, bitmap.getWidth() - e, bitmap.getHeight() - e);
+        roundRect.set(e, e, bitmapSize - e, bitmapSize - e);
         shadowCanvas.drawRoundRect(roundRect, c, c, paint);
 
         blur(bitmap, elevation / 2);
 
-        return new Shadow(bitmap, elevation, c);
+        Shadow shadow = new Shadow(bitmap, elevation, c);
+        shadowSet.add(shadow);
+        return shadow;
     }
 }

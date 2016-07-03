@@ -21,8 +21,10 @@ import android.util.Log;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.nineoldandroids.animation.ValueAnimator;
 
 import carbon.R;
+import carbon.animation.AnimatedColorStateList;
 
 /**
  * Created by Marcin on 2015-03-06.
@@ -41,11 +43,10 @@ public class CheckableDrawable extends Drawable {
     private Bitmap checkedBitmap, uncheckedBitmap, filledBitmap, maskBitmap;
     Canvas maskCanvas;
     float radius;
-    private boolean checked;
+    private boolean checked, enabled;
 
     PorterDuffColorFilter checkedFilter;
     PorterDuffColorFilter uncheckedFilter;
-    PorterDuffColorFilter disabledFilter;
 
     long downTime;
     private BitmapShader checkedShader, filledShader;
@@ -224,21 +225,39 @@ public class CheckableDrawable extends Drawable {
 
     @Override
     protected boolean onStateChange(int[] states) {
+        boolean changed = false;
         if (states != null) {
             boolean newChecked = false;
+            boolean newEnabled = false;
             for (int state : states) {
                 if (state == android.R.attr.state_checked)
                     newChecked = true;
+                if (state == android.R.attr.state_enabled)
+                    newEnabled = true;
             }
-            if (checked != newChecked)
+            if (checked != newChecked) {
                 setChecked(newChecked);
+                changed = true;
+            }
+            if (enabled != newEnabled) {
+                setEnabled(newEnabled);
+                changed = true;
+            }
         }
-        return super.onStateChange(states);
+        boolean result = super.onStateChange(states);
+        if (changed && tint != null && tint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) tint).setState(states);
+        return result && changed;
     }
 
     public void setChecked(boolean checked) {
         this.checked = checked;
         downTime = System.currentTimeMillis();
+        invalidateSelf();
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
         invalidateSelf();
     }
 
@@ -268,8 +287,27 @@ public class CheckableDrawable extends Drawable {
         return true;
     }
 
+    boolean animateColorChanges = true;
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            updateTint();
+            invalidateSelf();
+        }
+    };
+
+    public boolean isAnimateColorChangesEnabled() {
+        return animateColorChanges;
+    }
+
+    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        this.animateColorChanges = animateColorChanges;
+        if (tint != null && !(tint instanceof AnimatedColorStateList))
+            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
+    }
+
     public void setTint(ColorStateList list) {
-        this.tint = list;
+        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 
@@ -287,11 +325,9 @@ public class CheckableDrawable extends Drawable {
         if (tint == null || tintMode == null) {
             checkedFilter = null;
             uncheckedFilter = null;
-            disabledFilter = null;
         } else {
-            checkedFilter = new PorterDuffColorFilter(tint.getColorForState(new int[]{android.R.attr.state_checked}, tint.getDefaultColor()), tintMode);
-            uncheckedFilter = new PorterDuffColorFilter(tint.getColorForState(new int[]{-android.R.attr.state_checked}, tint.getDefaultColor()), tintMode);
-            disabledFilter = new PorterDuffColorFilter(tint.getColorForState(new int[]{-android.R.attr.state_enabled}, tint.getDefaultColor()), tintMode);
+            checkedFilter = new PorterDuffColorFilter(tint.getColorForState(new int[]{android.R.attr.state_checked, enabled ? android.R.attr.state_enabled : -android.R.attr.state_enabled}, tint.getDefaultColor()), tintMode);
+            uncheckedFilter = new PorterDuffColorFilter(tint.getColorForState(new int[]{-android.R.attr.state_checked, enabled ? android.R.attr.state_enabled : -android.R.attr.state_enabled}, tint.getDefaultColor()), tintMode);
         }
         invalidateSelf();
     }

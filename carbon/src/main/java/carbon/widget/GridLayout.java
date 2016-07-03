@@ -76,16 +76,47 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
         initGridLayout(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.LinearLayout_carbon_rippleColor,
+            R.styleable.LinearLayout_carbon_rippleStyle,
+            R.styleable.LinearLayout_carbon_rippleHotspot,
+            R.styleable.LinearLayout_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.LinearLayout_carbon_inAnimation,
+            R.styleable.LinearLayout_carbon_outAnimation
+    };
+    private static int[] touchMarginIds = new int[]{
+            R.styleable.LinearLayout_carbon_touchMargin,
+            R.styleable.LinearLayout_carbon_touchMarginLeft,
+            R.styleable.LinearLayout_carbon_touchMarginTop,
+            R.styleable.LinearLayout_carbon_touchMarginRight,
+            R.styleable.LinearLayout_carbon_touchMarginBottom
+    };
+    private static int[] insetIds = new int[]{
+            R.styleable.LinearLayout_carbon_inset,
+            R.styleable.LinearLayout_carbon_insetLeft,
+            R.styleable.LinearLayout_carbon_insetTop,
+            R.styleable.LinearLayout_carbon_insetRight,
+            R.styleable.LinearLayout_carbon_insetBottom,
+            R.styleable.LinearLayout_carbon_insetColor
+    };
+    private static int[] maxSizeIds = new int[]{
+            R.styleable.LinearLayout_carbon_maxWidth,
+            R.styleable.LinearLayout_carbon_maxHeight,
+    };
+
     private void initGridLayout(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, 0);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
 
-            Carbon.initElevation(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTouchMargin(this, attrs, defStyleAttr);
-            Carbon.initInset(this, attrs, defStyleAttr);
-            Carbon.initMaxSize(this, attrs, defStyleAttr);
+            Carbon.initRippleDrawable(this, a, rippleIds);
+            Carbon.initElevation(this, a, R.styleable.GridLayout_carbon_elevation);
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTouchMargin(this, a, touchMarginIds);
+            Carbon.initInset(this, a, insetIds);
+            Carbon.initMaxSize(this, a, maxSizeIds);
+
             setCornerRadius((int) a.getDimension(R.styleable.GridLayout_carbon_cornerRadius, 0));
 
             a.recycle();
@@ -93,17 +124,33 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
-
-        if (getBackground() == null)
-            super.setBackgroundDrawable(emptyBackground);
     }
 
 
     List<View> views;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+    private boolean drawCalled = false;
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
+        // draw not called, we have to handle corners here
+        if (cornerRadius > 0 && !drawCalled && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+            internalDispatchDraw(canvas);
+
+            paint.setXfermode(pdMode);
+            canvas.drawPath(cornersMask, paint);
+
+            canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
+        } else {
+            internalDispatchDraw(canvas);
+        }
+        drawCalled = false;
+    }
+
+    private void internalDispatchDraw(@NonNull Canvas canvas) {
         views = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++)
             views.add(getChildAt(i));
@@ -235,6 +282,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
 
     @Override
     public void draw(@NonNull Canvas canvas) {
+        drawCalled = true;
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
@@ -256,7 +304,6 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
@@ -282,7 +329,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
             if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
@@ -420,7 +467,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
             rippleDrawable.setCallback(null);
             rippleDrawable = null;
         }
-        super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        super.setBackgroundDrawable(background);
     }
 
 

@@ -29,7 +29,6 @@ import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
@@ -94,6 +93,24 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         initSeekBar(attrs, defStyleAttr);
     }
 
+    private static int[] rippleIds = new int[]{
+            R.styleable.SeekBar_carbon_rippleColor,
+            R.styleable.SeekBar_carbon_rippleStyle,
+            R.styleable.SeekBar_carbon_rippleHotspot,
+            R.styleable.SeekBar_carbon_rippleRadius
+    };
+    private static int[] animationIds = new int[]{
+            R.styleable.SeekBar_carbon_inAnimation,
+            R.styleable.SeekBar_carbon_outAnimation
+    };
+    private static int[] tintIds = new int[]{
+            R.styleable.SeekBar_carbon_tint,
+            R.styleable.SeekBar_carbon_tintMode,
+            R.styleable.SeekBar_carbon_backgroundTint,
+            R.styleable.SeekBar_carbon_backgroundTintMode,
+            R.styleable.SeekBar_carbon_animateColorChanges
+    };
+
     private void initSeekBar(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
@@ -105,10 +122,6 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         STROKE_WIDTH = Carbon.getDip(getContext()) * 2;
 
         if (attrs != null) {
-            Carbon.initAnimations(this, attrs, defStyleAttr);
-            Carbon.initTint(this, attrs, defStyleAttr);
-            Carbon.initRippleDrawable(this, attrs, defStyleAttr);
-
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, 0);
 
             setStyle(Style.values()[a.getInt(R.styleable.SeekBar_carbon_barStyle, 0)]);
@@ -122,10 +135,57 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
             setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
 
+            Carbon.initAnimations(this, a, animationIds);
+            Carbon.initTint(this, a, tintIds);
+            Carbon.initRippleDrawable(this, a, rippleIds);
+
             a.recycle();
         }
 
         setFocusableInTouchMode(false); // TODO: from theme
+    }
+
+    @Override
+    protected int getSuggestedMinimumWidth() {
+        return Math.max((int) Math.ceil(THUMB_RADIUS_DRAGGED * 2), super.getSuggestedMinimumWidth());
+    }
+
+    @Override
+    protected int getSuggestedMinimumHeight() {
+        return Math.max((int) Math.ceil(THUMB_RADIUS_DRAGGED * 2), super.getSuggestedMinimumHeight());
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int desiredWidth = getSuggestedMinimumWidth();
+        int desiredHeight = getSuggestedMinimumHeight();
+
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        int width;
+        int height;
+
+        //Measure Width
+        if (widthMode == MeasureSpec.EXACTLY) {
+            width = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            width = Math.min(desiredWidth, widthSize);
+        } else {
+            width = desiredWidth;
+        }
+
+        if (heightMode == MeasureSpec.EXACTLY) {
+            height = heightSize;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            height = Math.min(desiredHeight, heightSize);
+        } else {
+            height = desiredHeight;
+        }
+
+        setMeasuredDimension(width, height);
     }
 
     @Override
@@ -294,7 +354,6 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private EmptyDrawable emptyBackground = new EmptyDrawable();
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -402,7 +461,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
             if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground() == null ? emptyBackground : rippleDrawable.getBackground());
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
@@ -516,7 +575,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             rippleDrawable.setCallback(null);
             rippleDrawable = null;
         }
-        super.setBackgroundDrawable(background == null ? emptyBackground : background);
+        super.setBackgroundDrawable(background);
     }
 
 
@@ -715,7 +774,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         this.animateColorChanges = animateColorChanges;
         if (tint != null && !(tint instanceof AnimatedColorStateList))
             setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 

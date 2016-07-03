@@ -62,6 +62,18 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
         initProgressBar(attrs, defStyleAttr);
     }
 
+    private static int[] animationIds = new int[]{
+            R.styleable.ProgressBar_carbon_inAnimation,
+            R.styleable.ProgressBar_carbon_outAnimation
+    };
+    private static int[] tintIds = new int[]{
+            R.styleable.ProgressBar_carbon_tint,
+            R.styleable.ProgressBar_carbon_tintMode,
+            R.styleable.ProgressBar_carbon_backgroundTint,
+            R.styleable.ProgressBar_carbon_backgroundTintMode,
+            R.styleable.ProgressBar_carbon_animateColorChanges
+    };
+
     private void initProgressBar(AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyleAttr, 0);
@@ -75,8 +87,8 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
 
             drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
 
-            Carbon.initTint(this, attrs, defStyleAttr);
-            Carbon.initAnimations(this, attrs, defStyleAttr);
+            Carbon.initTint(this, a, tintIds);
+            Carbon.initAnimations(this, a, animationIds);
 
             a.recycle();
         }

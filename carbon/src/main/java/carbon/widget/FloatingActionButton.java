@@ -76,7 +76,7 @@ public class FloatingActionButton extends ImageView {
         }
 
         // TODO: this part of code is duplicated, but right now I have no idea how to make it better
-        Carbon.initRippleDrawable(this, attrs, defStyleAttr);
+        //Carbon.initRippleDrawable(this, a, rippleIds);
     }
 
     @Override
@@ -85,18 +85,26 @@ public class FloatingActionButton extends ImageView {
 
         if (getCornerRadius() < 0)
             setCornerRadius(Math.min(getWidth(), getHeight()) / 2);
+
+        invalidateMenu();
+    }
+
+    public void invalidateMenu() {
+        if (floatingActionMenu != null)
+            floatingActionMenu.build();
     }
 
     public void setMenu(int resId) {
         floatingActionMenu = new FloatingActionMenu(getContext());
         floatingActionMenu.setMenu(resId);
+        floatingActionMenu.setAnchor(this);
 
         this.menu = floatingActionMenu.getMenu();
 
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                floatingActionMenu.show(FloatingActionButton.this);
+                floatingActionMenu.show();
             }
         });
     }
@@ -107,11 +115,12 @@ public class FloatingActionButton extends ImageView {
         if (menu != null) {
             floatingActionMenu = new FloatingActionMenu(getContext());
             floatingActionMenu.setMenu(menu);
+            floatingActionMenu.setAnchor(this);
 
             setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    floatingActionMenu.show(FloatingActionButton.this);
+                    floatingActionMenu.show();
                 }
             });
         } else {
