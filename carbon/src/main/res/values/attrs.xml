@@ -138,6 +138,16 @@
     </attr>
     <attr name="carbon_label" format="string" />
 
+    <attr name="carbon_errorTextSize" format="dimension" />
+    <attr name="carbon_counterTextSize" format="dimension" />
+    <attr name="carbon_labelTextSize" format="dimension" />
+    <attr name="carbon_errorFontPath" format="string" />
+    <attr name="carbon_counterFontPath" format="string" />
+    <attr name="carbon_labelFontPath" format="string" />
+    <attr name="carbon_errorFontFamily" format="string" />
+    <attr name="carbon_counterFontFamily" format="string" />
+    <attr name="carbon_labelFontFamily" format="string" />
+
     <attr name="carbon_headerTint" format="reference|color" />
     <attr name="carbon_headerMinHeight" format="dimension" />
     <attr name="carbon_headerParallax" format="float" />
@@ -240,8 +250,11 @@
         <attr name="carbon_floatingLabel" />
         <attr name="carbon_labelStyle" />
         <attr name="carbon_label" />
-    </declare-styleable>
 
+        <attr name="carbon_labelTextSize" />
+        <attr name="carbon_labelFontPath" />
+        <attr name="carbon_labelFontFamily" />
+    </declare-styleable>
 
     <!-- TextMarker -->
     <declare-styleable name="TextMarker">
@@ -625,6 +638,7 @@
         <attr name="carbon_rippleRadius" />
 
         <attr name="carbon_elevation" />
+        <attr name="carbon_cornerRadius" />
 
         <attr name="carbon_touchMargin" />
         <attr name="carbon_touchMarginLeft" />
@@ -659,6 +673,16 @@
         <attr name="carbon_required" format="boolean" />
         <attr name="carbon_showPasswordButton" format="boolean" />
         <attr name="carbon_clearButton" format="boolean" />
+
+        <attr name="carbon_errorTextSize" />
+        <attr name="carbon_labelTextSize" />
+        <attr name="carbon_counterTextSize" />
+        <attr name="carbon_errorFontPath" />
+        <attr name="carbon_labelFontPath" />
+        <attr name="carbon_counterFontPath" />
+        <attr name="carbon_errorFontFamily" />
+        <attr name="carbon_labelFontFamily" />
+        <attr name="carbon_counterFontFamily" />
     </declare-styleable>
 
     <attr name="carbon_spinnerStyle" format="reference" />

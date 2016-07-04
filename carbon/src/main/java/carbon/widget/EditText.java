@@ -75,22 +75,28 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
-    int DIVIDER_PADDING;
-    int cursorColor;
+    private int DIVIDER_PADDING;
+    private int cursorColor;
 
     private Pattern pattern;
     private String errorMessage;
-    TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    boolean afterFirstInteraction = false;
+    private TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    private boolean afterFirstInteraction = false;
+    private Typeface errorTypeface;
+    private float errorTextSize;
 
     private int matchingView;
-    int minCharacters;
-    int maxCharacters = Integer.MAX_VALUE;
-    TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    private int minCharacters;
+    private int maxCharacters = Integer.MAX_VALUE;
+    private TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    private Typeface counterTypeface;
+    private float counterTextSize;
 
-    String label;
-    TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    LabelStyle labelStyle;
+    private String label;
+    private TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    private LabelStyle labelStyle;
+    private Typeface labelTypeface;
+    private float labelTextSize;
 
     int internalPaddingTop = 0, internalPaddingBottom = 0;
 
@@ -202,6 +208,30 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
                     int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
+                } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_errorFontPath) {
+                    String path = a.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setErrorTypeface(typeface);
+                } else if (attr == R.styleable.EditText_carbon_errorFontFamily) {
+                    int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                    setErrorTypeface(typeface);
+                } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_labelFontPath) {
+                    String path = a.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setLabelTypeface(typeface);
+                } else if (attr == R.styleable.EditText_carbon_labelFontFamily) {
+                    int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                    setLabelTypeface(typeface);
+                } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_counterFontPath) {
+                    String path = a.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setCounterTypeface(typeface);
+                } else if (attr == R.styleable.EditText_carbon_counterFontFamily) {
+                    int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                    setCounterTypeface(typeface);
                 }
             }
 
@@ -212,6 +242,11 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
             if (!isInEditMode())
                 setError(a.getString(R.styleable.EditText_carbon_errorMessage));
+
+            setLabelTextSize(a.getDimension(R.styleable.EditText_carbon_labelTextSize, 0));
+            setErrorTextSize(a.getDimension(R.styleable.EditText_carbon_errorTextSize, 0));
+            setCounterTextSize(a.getDimension(R.styleable.EditText_carbon_counterTextSize, 0));
+
             setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
             setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
             setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
@@ -229,7 +264,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             Carbon.initElevation(this, a, R.styleable.EditText_carbon_elevation);
             Carbon.initAnimations(this, a, animationIds);
             Carbon.initTouchMargin(this, a, touchMarginIds);
-            setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
+            setCornerRadius((int) a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
 
             a.recycle();
         } else {
@@ -237,15 +272,12 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         }
 
         if (!isInEditMode()) {
-            errorPaint.setTypeface(TypefaceUtils.getTypeface(getContext(), Roboto.Regular));
-            errorPaint.setTextSize(getResources().getDimension(R.dimen.carbon_errorTextSize));
+            errorPaint.setTextSize(errorTextSize);
             errorPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
 
-            labelPaint.setTypeface(TypefaceUtils.getTypeface(getContext(), Roboto.Regular));
-            labelPaint.setTextSize(getResources().getDimension(R.dimen.carbon_labelTextSize));
+            labelPaint.setTextSize(labelTextSize);
 
-            counterPaint.setTypeface(TypefaceUtils.getTypeface(getContext(), Roboto.Regular));
-            counterPaint.setTextSize(getResources().getDimension(R.dimen.carbon_charCounterTextSize));
+            counterPaint.setTextSize(counterTextSize);
         }
 
         try {
@@ -344,6 +376,57 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             }
 
         }
+    }
+
+    public float getErrorTextSize() {
+        return errorTextSize;
+    }
+
+    public void setErrorTextSize(float errorTextSize) {
+        this.errorTextSize = errorTextSize;
+    }
+
+    public float getCounterTextSize() {
+        return counterTextSize;
+    }
+
+    public void setCounterTextSize(float counterTextSize) {
+        this.counterTextSize = counterTextSize;
+    }
+
+    public float getLabelTextSize() {
+        return labelTextSize;
+    }
+
+    public void setLabelTextSize(float labelTextSize) {
+        this.labelTextSize = labelTextSize;
+    }
+
+    public Typeface getErrorTypeface() {
+        return errorTypeface;
+    }
+
+    public void setErrorTypeface(Typeface errorTypeface) {
+        this.errorTypeface = errorTypeface;
+        errorPaint.setTypeface(errorTypeface);
+    }
+
+    public Typeface getCounterTypeface() {
+        return counterTypeface;
+    }
+
+    public void setCounterTypeface(Typeface counterTypeface) {
+        this.counterTypeface = counterTypeface;
+        counterPaint.setTypeface(counterTypeface);
+    }
+
+    public Typeface getLabelTypeface() {
+        return labelTypeface;
+    }
+
+    public void setLabelTypeface(Typeface labelTypeface) {
+        this.labelTypeface = labelTypeface;
+        labelPaint.setTypeface(labelTypeface);
     }
 
     public void setCursorColor(int cursorColor) {

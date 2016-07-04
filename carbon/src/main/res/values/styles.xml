@@ -293,6 +293,9 @@
         <item name="carbon_rippleColor">@null</item>
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">#00000000</item>
+
+        <item name="carbon_labelTextSize">@dimen/carbon_textSizeCaption</item>
+        <item name="carbon_labelFontFamily">"sans-serif"</item>
     </style>
 
     <style name="carbon_CollapsingToolbarLayout">
@@ -412,6 +415,13 @@
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">#00000000</item>
         <item name="carbon_backgroundTint">#00000000</item>
+
+        <item name="carbon_errorTextSize">@dimen/carbon_textSizeCaption</item>
+        <item name="carbon_counterTextSize">@dimen/carbon_textSizeCaption</item>
+        <item name="carbon_labelTextSize">@dimen/carbon_textSizeCaption</item>
+        <item name="carbon_errorFontFamily">"sans-serif"</item>
+        <item name="carbon_counterFontFamily">"sans-serif"</item>
+        <item name="carbon_labelFontFamily">"sans-serif"</item>
     </style>
 
     <style name="carbon_Spinner" parent="carbon_EditText">

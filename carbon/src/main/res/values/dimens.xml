@@ -94,4 +94,10 @@
     <dimen name="carbon_item_touch_helper_swipe_escape_velocity">120dp</dimen>
     <dimen name="carbon_item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
 
+    <dimen name="carbon_textSizeHeadline">24sp</dimen>
+    <dimen name="carbon_textSizeTitle">20sp</dimen>
+    <dimen name="carbon_textSizeSubhead">16sp</dimen>
+    <dimen name="carbon_textSizeBody">14sp</dimen>
+    <dimen name="carbon_textSizeCaption">12sp</dimen>
+    <dimen name="carbon_textSizeButton">14sp</dimen>
 </resources>

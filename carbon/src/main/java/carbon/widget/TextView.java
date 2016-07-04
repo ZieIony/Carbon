@@ -75,6 +75,8 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     String label;
     TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     LabelStyle labelStyle;
+    private Typeface labelTypeface;
+    private float labelTextSize;
 
     int internalPaddingTop = 0;
 
@@ -153,10 +155,20 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                     int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                     setTypeface(typeface);
+                } else if (!isInEditMode() && attr == R.styleable.TextView_carbon_labelFontPath) {
+                    String path = a.getString(attr);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                    setLabelTypeface(typeface);
+                } else if (attr == R.styleable.TextView_carbon_labelFontFamily) {
+                    int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
+                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                    setLabelTypeface(typeface);
                 }
             }
 
             DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
+
+            setLabelTextSize(a.getDimension(R.styleable.TextView_carbon_labelTextSize, 0));
 
             setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.TextView_carbon_labelStyle, 2)]);
             setLabel(a.getString(R.styleable.TextView_carbon_label));
@@ -176,8 +188,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         }
 
         if (!isInEditMode()) {
-            labelPaint.setTypeface(TypefaceUtils.getTypeface(getContext(), Roboto.Regular));
-            labelPaint.setTextSize(getResources().getDimension(R.dimen.carbon_labelTextSize));
+            labelPaint.setTextSize(labelTextSize);
         }
 
         try {
@@ -210,6 +221,23 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
         if (getElevation() > 0)
             AnimUtils.setupElevationAnimator(stateAnimator, this);
+    }
+
+    public float getLabelTextSize() {
+        return labelTextSize;
+    }
+
+    public void setLabelTextSize(float labelTextSize) {
+        this.labelTextSize = labelTextSize;
+    }
+
+    public Typeface getLabelTypeface() {
+        return labelTypeface;
+    }
+
+    public void setLabelTypeface(Typeface labelTypeface) {
+        this.labelTypeface = labelTypeface;
+        labelPaint.setTypeface(labelTypeface);
     }
 
     public String getLabel() {
