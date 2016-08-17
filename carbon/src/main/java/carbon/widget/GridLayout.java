@@ -37,7 +37,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
@@ -67,12 +66,12 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     }
 
     public GridLayout(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_gridLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.GridLayout, R.attr.carbon_gridLayoutStyle, R.styleable.GridLayout_carbon_theme), attrs, R.attr.carbon_gridLayoutStyle);
         initGridLayout(attrs, R.attr.carbon_gridLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.GridLayout, defStyleAttr, R.styleable.GridLayout_carbon_theme), attrs, defStyleAttr);
         initGridLayout(attrs, defStyleAttr);
     }
 
@@ -107,20 +106,18 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     };
 
     private void initGridLayout(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, R.style.carbon_GridLayout);
 
-            Carbon.initRippleDrawable(this, a, rippleIds);
-            Carbon.initElevation(this, a, R.styleable.GridLayout_carbon_elevation);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            Carbon.initInset(this, a, insetIds);
-            Carbon.initMaxSize(this, a, maxSizeIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initElevation(this, a, R.styleable.GridLayout_carbon_elevation);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initInset(this, a, insetIds);
+        Carbon.initMaxSize(this, a, maxSizeIds);
 
-            setCornerRadius((int) a.getDimension(R.styleable.GridLayout_carbon_cornerRadius, 0));
+        setCornerRadius((int) a.getDimension(R.styleable.GridLayout_carbon_cornerRadius, 0));
 
-            a.recycle();
-        }
+        a.recycle();
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);

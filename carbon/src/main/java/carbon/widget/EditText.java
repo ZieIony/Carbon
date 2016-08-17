@@ -13,23 +13,19 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.Shader;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.text.Editable;
-import android.text.TextPaint;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 import android.widget.TextView;
 
@@ -38,6 +34,8 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import carbon.Carbon;
@@ -51,7 +49,6 @@ import carbon.drawable.DefaultNormalColorStateList;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.internal.Roboto;
 import carbon.internal.TypefaceUtils;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -64,14 +61,10 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 /**
  * Created by Marcin on 2015-02-14.
  */
-public class EditText extends android.widget.EditText implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView {
+public class EditText extends android.widget.EditText implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, InputView {
 
     private Field mIgnoreActionUpEventField;
     private Object editor;
-
-    public enum LabelStyle {
-        Floating, Persistent, Hint
-    }
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -79,65 +72,20 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     private int cursorColor;
 
     private Pattern pattern;
-    private String errorMessage;
-    private TextPaint errorPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    private boolean afterFirstInteraction = false;
-    private Typeface errorTypeface;
-    private float errorTextSize;
-
     private int matchingView;
-    private int minCharacters;
-    private int maxCharacters = Integer.MAX_VALUE;
-    private TextPaint counterPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    private Typeface counterTypeface;
-    private float counterTextSize;
-
-    private String label;
-    private TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    private LabelStyle labelStyle;
-    private Typeface labelTypeface;
-    private float labelTextSize;
-
-    int internalPaddingTop = 0, internalPaddingBottom = 0;
+    private boolean afterFirstInteraction = false;
+    private String errorMessage;
 
     private BitmapShader dashPathShader;
-    private float labelFrac = 0;
     private boolean underline = true;
     private boolean valid = true;
-    boolean required = false, showPasswordButtonEnabled, clearButtonEnabled;
+    boolean showPasswordButtonEnabled, clearButtonEnabled;
 
     Drawable clearButton, showPasswordButton;
 
     float PADDING_ERROR, PADDING_LABEL;
 
-    OnValidateListener validateListener;
-
-    TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            afterFirstInteraction = true;
-            validateInternalEvent();
-            try {
-                int start = getSelectionStart() - 1;
-                char c;
-                StringBuilder builder = new StringBuilder();
-                while (start >= 0 && Character.isLetterOrDigit(c = s.charAt(start--))) {
-                    builder.insert(0, c);
-                }
-            } catch (Exception e) {
-            }
-        }
-    };
+    private List<OnValidateListener> validateListeners = new ArrayList<>();
 
     public EditText(Context context) {
         super(context, null);
@@ -145,18 +93,18 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     }
 
     public EditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, android.R.attr.editTextStyle, R.styleable.EditText_carbon_theme), attrs);
         initEditText(attrs, android.R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, defStyleAttr, R.styleable.EditText_carbon_theme), attrs, defStyleAttr);
         initEditText(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public EditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, defStyleAttr, R.styleable.EditText_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initEditText(attrs, defStyleAttr);
     }
 
@@ -185,100 +133,49 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             R.styleable.EditText_carbon_animateColorChanges
     };
 
-    public void initEditText(AttributeSet attrs, int defStyleAttr) {
+    private void initEditText(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
             return;
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, R.style.carbon_EditText);
 
-            int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
-            if (ap != -1)
-                setTextAppearanceInternal(ap);
+        int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
+        if (ap != -1)
+            setTextAppearanceInternal(ap);
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.EditText_carbon_textAllCaps) {
-                    setAllCaps(a.getBoolean(attr, false));
-                } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_fontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setTypeface(typeface);
-                } else if (attr == R.styleable.EditText_carbon_fontFamily) {
-                    int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setTypeface(typeface);
-                } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_errorFontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setErrorTypeface(typeface);
-                } else if (attr == R.styleable.EditText_carbon_errorFontFamily) {
-                    int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setErrorTypeface(typeface);
-                } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_labelFontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setLabelTypeface(typeface);
-                } else if (attr == R.styleable.EditText_carbon_labelFontFamily) {
-                    int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setLabelTypeface(typeface);
-                } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_counterFontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setCounterTypeface(typeface);
-                } else if (attr == R.styleable.EditText_carbon_counterFontFamily) {
-                    int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setCounterTypeface(typeface);
-                }
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.EditText_carbon_textAllCaps) {
+                setAllCaps(a.getBoolean(attr, false));
+            } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_fontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                setTypeface(typeface);
+            } else if (attr == R.styleable.EditText_carbon_fontFamily) {
+                int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                setTypeface(typeface);
             }
-
-            setCursorColor(a.getColor(R.styleable.EditText_carbon_cursorColor, 0));
-
-            setPattern(a.getString(R.styleable.EditText_carbon_pattern));
-            DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
-
-            if (!isInEditMode())
-                setError(a.getString(R.styleable.EditText_carbon_errorMessage));
-
-            setLabelTextSize(a.getDimension(R.styleable.EditText_carbon_labelTextSize, 0));
-            setErrorTextSize(a.getDimension(R.styleable.EditText_carbon_errorTextSize, 0));
-            setCounterTextSize(a.getDimension(R.styleable.EditText_carbon_counterTextSize, 0));
-
-            setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
-            setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
-            setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
-            setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.EditText_carbon_labelStyle, a.getBoolean(R.styleable.EditText_carbon_floatingLabel, false) ? 0 : 2)]);
-            setLabel(a.getString(R.styleable.EditText_carbon_label));
-            if (labelStyle == LabelStyle.Floating && label == null && getHint() != null)
-                label = getHint().toString();
-            setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
-            setRequired(a.getBoolean(R.styleable.EditText_carbon_required, false));
-            setShowPasswordButtonEnabled(a.getBoolean(R.styleable.EditText_carbon_showPasswordButton, false));
-            setClearButtonEnabled(a.getBoolean(R.styleable.EditText_carbon_clearButton, false));
-
-            Carbon.initRippleDrawable(this, a, rippleIds);
-            Carbon.initTint(this, a, tintIds);
-            Carbon.initElevation(this, a, R.styleable.EditText_carbon_elevation);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            setCornerRadius((int) a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
-
-            a.recycle();
-        } else {
-            setTint(0);
         }
 
-        if (!isInEditMode()) {
-            errorPaint.setTextSize(errorTextSize);
-            errorPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
+        setCursorColor(a.getColor(R.styleable.EditText_carbon_cursorColor, 0));
 
-            labelPaint.setTextSize(labelTextSize);
+        setPattern(a.getString(R.styleable.EditText_carbon_pattern));
+        DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
 
-            counterPaint.setTextSize(counterTextSize);
-        }
+        setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
+        setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
+        setShowPasswordButtonEnabled(a.getBoolean(R.styleable.EditText_carbon_showPasswordButton, false));
+        setClearButtonEnabled(a.getBoolean(R.styleable.EditText_carbon_clearButton, false));
+
+        Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initTint(this, a, tintIds);
+        Carbon.initElevation(this, a, R.styleable.EditText_carbon_elevation);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        setCornerRadius((int) a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
+
+        a.recycle();
 
         try {
             Field mHighlightPaintField = android.widget.TextView.class.getDeclaredField("mHighlightPaint");
@@ -297,8 +194,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
         }
 
-        addTextChangedListener(textWatcher);
-
         int underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
         Bitmap dashPathBitmap = Bitmap.createBitmap(underlineWidth * 4, underlineWidth, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(dashPathBitmap);
@@ -308,9 +203,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         dashPathShader = new BitmapShader(dashPathBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
         PADDING_ERROR = getResources().getDimension(R.dimen.carbon_paddingHalf);
         PADDING_LABEL = getResources().getDimension(R.dimen.carbon_paddingHalf);
-
-        if (isFocused() && getText().length() > 0)
-            labelFrac = 1;
 
         initSelectionHandle();
 
@@ -378,57 +270,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         }
     }
 
-    public float getErrorTextSize() {
-        return errorTextSize;
-    }
-
-    public void setErrorTextSize(float errorTextSize) {
-        this.errorTextSize = errorTextSize;
-    }
-
-    public float getCounterTextSize() {
-        return counterTextSize;
-    }
-
-    public void setCounterTextSize(float counterTextSize) {
-        this.counterTextSize = counterTextSize;
-    }
-
-    public float getLabelTextSize() {
-        return labelTextSize;
-    }
-
-    public void setLabelTextSize(float labelTextSize) {
-        this.labelTextSize = labelTextSize;
-    }
-
-    public Typeface getErrorTypeface() {
-        return errorTypeface;
-    }
-
-    public void setErrorTypeface(Typeface errorTypeface) {
-        this.errorTypeface = errorTypeface;
-        errorPaint.setTypeface(errorTypeface);
-    }
-
-    public Typeface getCounterTypeface() {
-        return counterTypeface;
-    }
-
-    public void setCounterTypeface(Typeface counterTypeface) {
-        this.counterTypeface = counterTypeface;
-        counterPaint.setTypeface(counterTypeface);
-    }
-
-    public Typeface getLabelTypeface() {
-        return labelTypeface;
-    }
-
-    public void setLabelTypeface(Typeface labelTypeface) {
-        this.labelTypeface = labelTypeface;
-        labelPaint.setTypeface(labelTypeface);
-    }
-
     public void setCursorColor(int cursorColor) {
         this.cursorColor = cursorColor;
     }
@@ -443,14 +284,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
     public void setUnderline(boolean drawUnderline) {
         this.underline = drawUnderline;
-    }
-
-    public boolean isRequired() {
-        return required;
-    }
-
-    public void setRequired(boolean required) {
-        this.required = required;
     }
 
     public boolean isShowPasswordButtonEnabled() {
@@ -487,22 +320,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         }
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public LabelStyle getLabelStyle() {
-        return labelStyle;
-    }
-
-    public void setLabelStyle(LabelStyle labelStyle) {
-        this.labelStyle = labelStyle;
-    }
-
     public void validate() {
         afterFirstInteraction = true;
         validateInternal();
@@ -533,16 +350,9 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             }
         }
 
-        boolean counterError = afterFirstInteraction && (minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters);
-
-        boolean requiredError = required && s.length() == 0;
-
-        valid = !counterError && !drawMatchingViewError && !drawPatternError && !requiredError;
+        valid = !drawMatchingViewError && !drawPatternError;
 
         refreshDrawableState();
-
-        if (labelStyle == LabelStyle.Floating)
-            animateFloatingLabel(isFocused() && s.length() > 0);
     }
 
     private void validateInternalEvent() {
@@ -551,12 +361,20 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         postInvalidate();
     }
 
-    public void setOnValidateListener(OnValidateListener listener) {
-        this.validateListener = listener;
+    public void addOnValidateListener(OnValidateListener listener) {
+        validateListeners.add(listener);
+    }
+
+    public void removeOnValidateListener(OnValidateListener listener) {
+        validateListeners.remove(listener);
+    }
+
+    public void clearOnValidateListeners() {
+        validateListeners.clear();
     }
 
     private void fireOnValidateEvent() {
-        if (validateListener != null)
+        for (OnValidateListener validateListener : validateListeners)
             validateListener.onValidate(canShowError());
     }
 
@@ -631,11 +449,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         if (isInEditMode())
             return;
 
-        CharSequence hint = getHint();
-        if (required && hint.charAt(hint.length() - 1) != '*')
-            setHint(hint + " *");
-        int paddingTop = getPaddingTop() + internalPaddingTop;
-        int paddingBottom = getPaddingBottom() + internalPaddingBottom;
+        int paddingBottom = getPaddingBottom();
 
         if (isFocused() && isEnabled()) {
             paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
@@ -657,61 +471,12 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             }*/
         }
 
-        if (!valid && errorMessage != null)
-            canvas.drawText(errorMessage, getScrollX() + getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + errorPaint.getTextSize(), errorPaint);
-
-        if (label != null) {
-            if (labelStyle == LabelStyle.Floating) {
-                labelPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
-                labelPaint.setAlpha((int) (255 * labelFrac));
-                canvas.drawText(label, getScrollX() + getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
-                if (required && !valid) {
-                    float off = labelPaint.measureText(label + " ");
-                    labelPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
-                    labelPaint.setAlpha((int) (255 * labelFrac));
-                    canvas.drawText("*", getScrollX() + getPaddingLeft() + off, paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
-                }
-            } else if (labelStyle == LabelStyle.Persistent) {
-                labelPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
-                canvas.drawText(label, getScrollX() + getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
-                if (required && !valid) {
-                    float off = labelPaint.measureText(label + " ");
-                    labelPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
-                    labelPaint.setAlpha((int) (255 * labelFrac));
-                    canvas.drawText("*", getScrollX() + getPaddingLeft() + off, paddingTop - PADDING_LABEL, labelPaint);
-                }
-            }
-        }
-
-        counterPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
-        int length = getText().length();
-        if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
-            String text = length + " / " + minCharacters + "-" + maxCharacters;
-            canvas.drawText(text, getScrollX() + getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
-        } else if (minCharacters > 0) {
-            String text = length + " / " + minCharacters + "+";
-            canvas.drawText(text, getScrollX() + getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
-        } else if (maxCharacters < Integer.MAX_VALUE) {
-            String text = length + " / " + maxCharacters;
-            canvas.drawText(text, getScrollX() + getWidth() - counterPaint.measureText(text) - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + PADDING_ERROR + counterPaint.getTextSize(), counterPaint);
-        }
-
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
             rippleDrawable.draw(canvas);
     }
 
-    @Deprecated
-    public boolean isFloatingLabelEnabled() {
-        return labelStyle == LabelStyle.Floating;
-    }
-
-    @Deprecated
-    public void setFloatingLabelEnabled(boolean showFloatingLabel) {
-        this.labelStyle = showFloatingLabel ? LabelStyle.Floating : LabelStyle.Hint;
-    }
-
     private boolean canShowError() {
-        return (pattern != null || matchingView != 0 || !valid) && errorMessage != null || minCharacters > 0 || maxCharacters < Integer.MAX_VALUE;
+        return (pattern != null || matchingView != 0 || !valid) && errorMessage != null;
     }
 
     public boolean isValid() {
@@ -734,47 +499,11 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         this.matchingView = viewId;
     }
 
-    public int getMinCharacters() {
-        return minCharacters;
-    }
-
-    public void setMinCharacters(int minCharacters) {
-        this.minCharacters = minCharacters;
-    }
-
-    public int getMaxCharacters() {
-        return maxCharacters;
-    }
-
-    public void setMaxCharacters(int maxCharacters) {
-        this.maxCharacters = maxCharacters;
-    }
-
-    private void animateFloatingLabel(boolean visible) {
-        ValueAnimator animator;
-        if (visible) {
-            animator = ValueAnimator.ofFloat(labelFrac, 1);
-            animator.setDuration((long) ((1 - labelFrac) * 200));
-        } else {
-            animator = ValueAnimator.ofFloat(labelFrac, 0);
-            animator.setDuration((long) (labelFrac * 200));
-        }
-        animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                labelFrac = (float) animation.getAnimatedValue();
-                postInvalidate();
-            }
-        });
-        animator.start();
-    }
-
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        if (labelStyle == LabelStyle.Floating)
-            animateFloatingLabel(focused && getText().length() > 0);
+        //if (labelStyle == InputLayout.LabelStyle.Floating)
+        //animateFloatingLabel(focused && getText().length() > 0);
         if (!focused) {
             afterFirstInteraction = true;
             validateInternalEvent();
@@ -863,40 +592,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
         }
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int paddingTop = getPaddingTop();
-        int paddingBottom = getPaddingBottom();
-        if (labelStyle != LabelStyle.Hint)
-            internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
-        if (canShowError()) {
-            internalPaddingBottom = (int) (errorPaint.getTextSize());
-            if (!underline)
-                internalPaddingBottom += PADDING_ERROR;
-        }
-        setPadding(getPaddingLeft(), paddingTop, getPaddingRight(), paddingBottom);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
-    public int getPaddingBottom() {
-        return super.getPaddingBottom() - internalPaddingBottom;
-    }
-
-    @Override
-    public int getPaddingTop() {
-        return super.getPaddingTop() - internalPaddingTop;
-    }
-
-    int getInternalPaddingTop() {
-        return internalPaddingTop;
-    }
-
-    @Override
-    public void setPadding(int left, int top, int right, int bottom) {
-        super.setPadding(left, top + internalPaddingTop, right, bottom + internalPaddingBottom);
     }
 
 

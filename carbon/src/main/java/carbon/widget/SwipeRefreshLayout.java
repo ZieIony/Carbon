@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 /**
  * Created by Marcin on 2016-06-10.
  */
-
+@Deprecated
 public class SwipeRefreshLayout extends android.support.v4.widget.SwipeRefreshLayout {
     public SwipeRefreshLayout(Context context) {
         super(context);

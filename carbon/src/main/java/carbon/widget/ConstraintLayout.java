@@ -1,6 +1,5 @@
 package carbon.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -15,10 +14,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +38,6 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
-import carbon.internal.PercentLayoutHelper;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -54,74 +49,67 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 /**
  * Created by Marcin on 2014-11-20.
  * <p/>
- * A FrameLayout implementation with support for material features including shadows, ripples, rounded
+ * A ConstraintLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class FrameLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
-    private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
+public class ConstraintLayout extends android.support.constraint.ConstraintLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
     private OnTouchListener onDispatchTouchListener;
 
-    public FrameLayout(Context context) {
-        super(context, null, R.attr.carbon_frameLayoutStyle);
-        initFrameLayout(null, R.attr.carbon_frameLayoutStyle);
+    public ConstraintLayout(Context context) {
+        super(context, null, R.attr.carbon_constraintLayoutStyle);
+        initConstraintLayout(null, R.attr.carbon_constraintLayoutStyle);
     }
 
-    public FrameLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, R.attr.carbon_frameLayoutStyle, R.styleable.FrameLayout_carbon_theme), attrs, R.attr.carbon_frameLayoutStyle);
-        initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle);
+    public ConstraintLayout(Context context, AttributeSet attrs) {
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ConstraintLayout, R.attr.carbon_constraintLayoutStyle, R.styleable.ConstraintLayout_carbon_theme), attrs, R.attr.carbon_constraintLayoutStyle);
+        initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle);
     }
 
-    public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, defStyleAttr, R.styleable.FrameLayout_carbon_theme), attrs, defStyleAttr);
-        initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, defStyleAttr, R.styleable.FrameLayout_carbon_theme), attrs, defStyleAttr, defStyleRes);
-        initFrameLayout(attrs, defStyleAttr);
+    public ConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ConstraintLayout, defStyleAttr, R.styleable.ConstraintLayout_carbon_theme), attrs, defStyleAttr);
+        initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle);
     }
 
     private static int[] rippleIds = new int[]{
-            R.styleable.FrameLayout_carbon_rippleColor,
-            R.styleable.FrameLayout_carbon_rippleStyle,
-            R.styleable.FrameLayout_carbon_rippleHotspot,
-            R.styleable.FrameLayout_carbon_rippleRadius
+            R.styleable.ConstraintLayout_carbon_rippleColor,
+            R.styleable.ConstraintLayout_carbon_rippleStyle,
+            R.styleable.ConstraintLayout_carbon_rippleHotspot,
+            R.styleable.ConstraintLayout_carbon_rippleRadius
     };
     private static int[] animationIds = new int[]{
-            R.styleable.FrameLayout_carbon_inAnimation,
-            R.styleable.FrameLayout_carbon_outAnimation
+            R.styleable.ConstraintLayout_carbon_inAnimation,
+            R.styleable.ConstraintLayout_carbon_outAnimation
     };
     private static int[] touchMarginIds = new int[]{
-            R.styleable.FrameLayout_carbon_touchMargin,
-            R.styleable.FrameLayout_carbon_touchMarginLeft,
-            R.styleable.FrameLayout_carbon_touchMarginTop,
-            R.styleable.FrameLayout_carbon_touchMarginRight,
-            R.styleable.FrameLayout_carbon_touchMarginBottom
+            R.styleable.ConstraintLayout_carbon_touchMargin,
+            R.styleable.ConstraintLayout_carbon_touchMarginLeft,
+            R.styleable.ConstraintLayout_carbon_touchMarginTop,
+            R.styleable.ConstraintLayout_carbon_touchMarginRight,
+            R.styleable.ConstraintLayout_carbon_touchMarginBottom
     };
     private static int[] insetIds = new int[]{
-            R.styleable.FrameLayout_carbon_inset,
-            R.styleable.FrameLayout_carbon_insetLeft,
-            R.styleable.FrameLayout_carbon_insetTop,
-            R.styleable.FrameLayout_carbon_insetRight,
-            R.styleable.FrameLayout_carbon_insetBottom,
-            R.styleable.FrameLayout_carbon_insetColor
+            R.styleable.ConstraintLayout_carbon_inset,
+            R.styleable.ConstraintLayout_carbon_insetLeft,
+            R.styleable.ConstraintLayout_carbon_insetTop,
+            R.styleable.ConstraintLayout_carbon_insetRight,
+            R.styleable.ConstraintLayout_carbon_insetBottom,
+            R.styleable.ConstraintLayout_carbon_insetColor
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.FrameLayout_carbon_maxWidth,
-            R.styleable.FrameLayout_carbon_maxHeight,
+            R.styleable.ConstraintLayout_carbon_maxWidth,
+            R.styleable.ConstraintLayout_carbon_maxHeight,
     };
 
-    private void initFrameLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, R.style.carbon_FrameLayout);
+    private void initConstraintLayout(AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ConstraintLayout, defStyleAttr, R.style.carbon_ConstraintLayout);
         Carbon.initRippleDrawable(this, a, rippleIds);
 
-        Carbon.initElevation(this, a, R.styleable.FrameLayout_carbon_elevation);
+        Carbon.initElevation(this, a, R.styleable.ConstraintLayout_carbon_elevation);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initInset(this, a, insetIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
-        setCornerRadius((int) a.getDimension(R.styleable.FrameLayout_carbon_cornerRadius, 0));
+        setCornerRadius((int) a.getDimension(R.styleable.ConstraintLayout_carbon_cornerRadius, 0));
 
         a.recycle();
 
@@ -249,7 +237,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        layoutAnchoredViews();
 
         if (!changed)
             return;
@@ -263,8 +250,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
-
-        percentLayoutHelper.restoreOriginalParams();
     }
 
     private void initCorners() {
@@ -642,7 +627,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
-                        FrameLayout.super.setVisibility(visibility);
+                        ConstraintLayout.super.setVisibility(visibility);
                     animator = null;
                     clearAnimation();
                 }
@@ -796,135 +781,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
 
     // -------------------------------
-    // layout params
-    // -------------------------------
-
-    @Override
-    protected LayoutParams generateDefaultLayoutParams() {
-        return new LayoutParams(super.generateDefaultLayoutParams());
-    }
-
-    @Override
-    public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return new LayoutParams(getContext(), attrs);
-    }
-
-    @Override
-    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-        return new LayoutParams(p);
-    }
-
-    private void layoutAnchoredViews() {
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            if (child.getVisibility() != GONE) {
-                LayoutParams lp = (LayoutParams) child.getLayoutParams();
-                if (lp.anchorView != 0) {
-                    View anchorView = findViewById(lp.anchorView);
-                    if (anchorView != null && anchorView != child) {
-                        int left = child.getLeft();
-                        int right = child.getRight();
-                        int top = child.getTop();
-                        int bottom = child.getBottom();
-                        if ((lp.anchorGravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
-                            top = anchorView.getBottom() - lp.height / 2;
-                            bottom = top + lp.height;
-                        }
-                        if ((lp.anchorGravity & Gravity.TOP) == Gravity.TOP) {
-                            top = anchorView.getTop() - lp.height / 2;
-                            bottom = top + lp.height;
-                        }
-                        if ((GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.LEFT) == Gravity.LEFT) {
-                            left = anchorView.getLeft() - lp.width / 2;
-                            right = left + lp.width;
-                        }
-                        if ((GravityCompat.getAbsoluteGravity(lp.anchorGravity, ViewCompat.getLayoutDirection(child)) & Gravity.RIGHT) == Gravity.RIGHT) {
-                            left = anchorView.getRight() - lp.width / 2;
-                            right = left + lp.width;
-                        }
-                        child.layout(left, top, right, bottom);
-                    }
-                }
-            }
-        }
-    }
-
-    public static class LayoutParams extends android.widget.FrameLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
-        private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
-        public int anchorView;
-        private int anchorGravity;
-
-        public LayoutParams(Context c, AttributeSet attrs) {
-            super(c, attrs);
-
-            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.FrameLayout_Layout);
-            anchorView = a.getResourceId(R.styleable.FrameLayout_Layout_carbon_anchor, -1);
-            anchorGravity = a.getInt(R.styleable.FrameLayout_Layout_carbon_anchorGravity, -1);
-            a.recycle();
-
-            percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
-        }
-
-        public LayoutParams(int w, int h) {
-            super(w, h);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public LayoutParams(ViewGroup.LayoutParams source) {
-            super(source);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public LayoutParams(ViewGroup.MarginLayoutParams source) {
-            super(source);
-        }
-
-        public LayoutParams(android.widget.FrameLayout.LayoutParams source) {
-            super((MarginLayoutParams) source);
-            gravity = source.gravity;
-        }
-
-        public LayoutParams(LayoutParams source) {
-            super((MarginLayoutParams) source);
-            gravity = source.gravity;
-
-            this.anchorView = source.anchorView;
-            this.anchorGravity = source.anchorGravity;
-            percentLayoutInfo = source.percentLayoutInfo;
-        }
-
-        @Override
-        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
-            if (percentLayoutInfo == null) {
-                percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();
-            }
-
-            return percentLayoutInfo;
-        }
-
-        public int getAnchorGravity() {
-            return anchorGravity;
-        }
-
-        public void setAnchorGravity(int anchorGravity) {
-            this.anchorGravity = anchorGravity;
-        }
-
-        public int getAnchorView() {
-            return anchorView;
-        }
-
-        public void setAnchorView(int anchorView) {
-            this.anchorView = anchorView;
-        }
-    }
-
-
-    // -------------------------------
     // maximum width & height
     // -------------------------------
 
@@ -954,10 +810,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (percentLayoutHelper.handleMeasuredStateTooSmall())
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
             if (getMeasuredWidth() > maxWidth)
                 widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);

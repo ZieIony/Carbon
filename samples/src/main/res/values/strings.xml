@@ -47,6 +47,7 @@
     <string name="recyclerCardsActivity_title"><![CDATA[RecyclerView & cards]]></string>
     <string name="drawerActivity_title">Nawigation drawer</string>
     <string name="designActivity_title">Design Support Library</string>
+    <string name="constraintLayoutActivity_title">Constraint Layout</string>
     <string name="widgetAnimationsActivity_title">Widget animations</string>
     <string name="imageFadeActivity_title">Image fade</string>
     <string name="listRippleActivity_title">List ripple</string>
@@ -56,5 +57,6 @@
     <string name="textMarkerActivity_title">Text marker</string>
     <string name="bottomBarActivity_title">BottomBar</string>
     <string name="bottomSheetActivity_title">BottomSheet</string>
+    <string name="themeActivity_title">Theme</string>
 
 </resources>

@@ -41,7 +41,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
@@ -68,12 +67,12 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     }
 
     public Toolbar(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.toolbarStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Toolbar, R.attr.toolbarStyle, R.styleable.Toolbar_carbon_theme), attrs, R.attr.toolbarStyle);
         initToolbar(attrs, R.attr.toolbarStyle);
     }
 
     public Toolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Toolbar, defStyleAttr, R.styleable.Toolbar_carbon_theme), attrs, defStyleAttr);
         initToolbar(attrs, defStyleAttr);
     }
 
@@ -101,7 +100,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
             }
         });
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, R.style.carbon_Toolbar);
         setText(a.getString(R.styleable.Toolbar_android_text));
         int iconRes = a.getResourceId(R.styleable.Toolbar_carbon_icon, 0);
         if (iconRes != 0) {

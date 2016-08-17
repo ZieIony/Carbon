@@ -10,6 +10,16 @@
         <item name="carbon_colorError">@color/carbon_amber_400</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="AppTheme2" parent="carbon_Theme.Dark.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#ff3F51B5</item>
+        <item name="colorPrimaryDark">#ff303F9F</item>
+        <item name="colorAccent">#ffFF4081</item>
+        <item name="carbon_colorError">@color/carbon_amber_400</item>
+    </style>
+
     <style name="RaisedButtonStyle" parent="AppTheme">
         <item name="colorPrimary">#ff9C27B0</item>
         <item name="colorAccent">#ffFF5252</item>

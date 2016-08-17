@@ -21,8 +21,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
-import com.nineoldandroids.animation.ValueAnimator;
-
+import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
@@ -41,18 +40,18 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
     }
 
     public CheckBox(Context context, AttributeSet attrs) {
-        super(context, attrs, android.R.attr.checkboxStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, android.R.attr.checkboxStyle, R.styleable.CheckBox_carbon_theme), attrs, android.R.attr.checkboxStyle);
         initCheckBox(attrs, android.R.attr.checkboxStyle);
     }
 
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_carbon_theme), attrs, defStyleAttr);
         initCheckBox(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initCheckBox(attrs, defStyleAttr);
     }
 
@@ -60,20 +59,18 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
         CheckableDrawable d = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
         setButtonDrawable(d);
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, R.style.carbon_CheckBox);
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.CheckBox_android_drawablePadding) {
-                    drawablePadding = a.getDimension(attr, 0);
-                } else if (attr == R.styleable.RadioButton_android_checked) {
-                    setCheckedImmediate(a.getBoolean(attr, false));
-                }
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.CheckBox_android_drawablePadding) {
+                drawablePadding = a.getDimension(attr, 0);
+            } else if (attr == R.styleable.RadioButton_android_checked) {
+                setCheckedImmediate(a.getBoolean(attr, false));
             }
-
-            a.recycle();
         }
+
+        a.recycle();
     }
 
     private boolean isLayoutRtl() {

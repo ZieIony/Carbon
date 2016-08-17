@@ -18,18 +18,22 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <carbon.widget.EditText
-                android:id="@+id/editText"
+            <carbon.beta.InputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:hint="email"
-                android:singleLine="true"
-                android:tag="enable"
-                android:text="hello text"
-                app:carbon_floatingLabel="true"
-                app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"
-                app:carbon_required="true" />
+                app:carbon_label="email"
+                app:carbon_labelStyle="floating">
+
+                <carbon.widget.EditText
+                    android:id="@+id/editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="enable"
+                    android:text="hello text"
+                    app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"
+                    app:carbon_required="true" />
+            </carbon.beta.InputLayout>
 
             <carbon.widget.EditText
                 android:id="@+id/editText3"
@@ -51,7 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:tag="enable"
-                app:carbon_floatingLabel="true"
                 app:carbon_label="Label"
                 app:carbon_labelStyle="persistent"
                 app:carbon_minCharacters="3"

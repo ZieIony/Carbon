@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
-import carbon.Carbon;
-import carbon.internal.DebugOverlay;
-import carbon.widget.ImageView;
 import carbon.widget.RecyclerView;
-import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.feature.AnchorActivity;
 import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
@@ -20,6 +15,7 @@ import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
 import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.feature.TextAppearanceActivity;
 import tk.zielony.carbonsamples.feature.TextMarkerActivity;
+import tk.zielony.carbonsamples.feature.ThemeActivity;
 import tk.zielony.carbonsamples.feature.ZOrderActivity;
 
 
@@ -43,7 +39,8 @@ public class FeaturesActivity extends Activity {
                 new ViewModel(AnchorActivity.class, getString(R.string.anchorsActivity_title)),
                 new ViewModel(ContextWrapperActivity.class, getString(R.string.contextWrapperActivity_title)),
                 new ViewModel(PercentLayoutActivity.class, getString(R.string.percentLayoutActivity_title)),
-                new ViewModel(TextMarkerActivity.class, getString(R.string.textMarkerActivity_title))
+                new ViewModel(TextMarkerActivity.class, getString(R.string.textMarkerActivity_title)),
+                new ViewModel(ThemeActivity.class, getString(R.string.themeActivity_title))
         };
         recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
                 new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :

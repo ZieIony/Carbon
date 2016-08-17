@@ -71,12 +71,12 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     public RecyclerView(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_recyclerViewStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.RecyclerView, R.attr.carbon_recyclerViewStyle, R.styleable.RecyclerView_carbon_theme), attrs, R.attr.carbon_recyclerViewStyle);
         initRecycler(attrs, R.attr.carbon_recyclerViewStyle);
     }
 
     public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.RecyclerView, defStyleAttr, R.styleable.RecyclerView_carbon_theme), attrs, defStyleAttr);
         initRecycler(attrs, defStyleAttr);
     }
 
@@ -89,30 +89,28 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     };
 
     private void initRecycler(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, 0);
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.RecyclerView_carbon_overScroll) {
-                    setOverScrollMode(a.getInt(attr, ViewCompat.OVER_SCROLL_ALWAYS));
-                } else if (attr == R.styleable.RecyclerView_carbon_headerTint) {
-                    setHeaderTint(a.getColor(attr, 0));
-                } else if (attr == R.styleable.RecyclerView_carbon_headerMinHeight) {
-                    setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
-                } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
-                    setHeaderParallax(a.getFloat(attr, 0.0f));
-                } else if (attr == R.styleable.RecyclerView_android_divider) {
-                    Drawable drawable = a.getDrawable(attr);
-                    float height = a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0);
-                    if (drawable != null && height > 0)
-                        setDivider(drawable, (int) height);
-                }
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, R.style.carbon_RecyclerView);
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.RecyclerView_carbon_overScroll) {
+                setOverScrollMode(a.getInt(attr, ViewCompat.OVER_SCROLL_ALWAYS));
+            } else if (attr == R.styleable.RecyclerView_carbon_headerTint) {
+                setHeaderTint(a.getColor(attr, 0));
+            } else if (attr == R.styleable.RecyclerView_carbon_headerMinHeight) {
+                setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
+            } else if (attr == R.styleable.RecyclerView_carbon_headerParallax) {
+                setHeaderParallax(a.getFloat(attr, 0.0f));
+            } else if (attr == R.styleable.RecyclerView_android_divider) {
+                Drawable drawable = a.getDrawable(attr);
+                float height = a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0);
+                if (drawable != null && height > 0)
+                    setDivider(drawable, (int) height);
             }
-
-            Carbon.initTint(this, a, tintIds);
-
-            a.recycle();
         }
+
+        Carbon.initTint(this, a, tintIds);
+
+        a.recycle();
 
         setClipToPadding(false);
         setItemAnimator(new DefaultItemAnimator());

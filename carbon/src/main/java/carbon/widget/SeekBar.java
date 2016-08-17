@@ -30,7 +30,6 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultPrimaryColorStateList;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.SeekBarPopup;
@@ -78,18 +77,18 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     }
 
     public SeekBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, android.R.attr.seekBarStyle, R.styleable.SeekBar_carbon_theme), attrs);
         initSeekBar(attrs, android.R.attr.seekBarStyle);
     }
 
     public SeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, defStyleAttr, R.styleable.SeekBar_carbon_theme), attrs, defStyleAttr);
         initSeekBar(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public SeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, defStyleAttr, R.styleable.SeekBar_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initSeekBar(attrs, defStyleAttr);
     }
 
@@ -121,26 +120,24 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         THUMB_RADIUS_DRAGGED = Carbon.getDip(getContext()) * 10;
         STROKE_WIDTH = Carbon.getDip(getContext()) * 2;
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, R.style.carbon_SeekBar);
 
-            setStyle(Style.values()[a.getInt(R.styleable.SeekBar_carbon_barStyle, 0)]);
-            setMin(a.getFloat(R.styleable.SeekBar_carbon_min, 0));
-            setMax(a.getFloat(R.styleable.SeekBar_carbon_max, 0));
-            setStepSize(a.getFloat(R.styleable.SeekBar_carbon_stepSize, 0));
-            setValue(a.getFloat(R.styleable.SeekBar_carbon_value, 0));
-            setTick(a.getBoolean(R.styleable.SeekBar_carbon_tick, true));
-            setTickStep(a.getInt(R.styleable.SeekBar_carbon_tickStep, 1));
-            setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
-            setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
-            setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
+        setStyle(Style.values()[a.getInt(R.styleable.SeekBar_carbon_barStyle, 0)]);
+        setMin(a.getFloat(R.styleable.SeekBar_carbon_min, 0));
+        setMax(a.getFloat(R.styleable.SeekBar_carbon_max, 0));
+        setStepSize(a.getFloat(R.styleable.SeekBar_carbon_stepSize, 0));
+        setValue(a.getFloat(R.styleable.SeekBar_carbon_value, 0));
+        setTick(a.getBoolean(R.styleable.SeekBar_carbon_tick, true));
+        setTickStep(a.getInt(R.styleable.SeekBar_carbon_tickStep, 1));
+        setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
+        setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
+        setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
 
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTint(this, a, tintIds);
-            Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTint(this, a, tintIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
 
-            a.recycle();
-        }
+        a.recycle();
 
         setFocusableInTouchMode(false); // TODO: from theme
     }

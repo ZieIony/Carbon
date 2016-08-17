@@ -103,14 +103,9 @@
 
             <carbon.widget.CheckBox
                 android:id="@+id/checkBox"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/carbon_CheckBox.IconButton.Inverse"
                 android:layout_gravity="end"
-                android:gravity="center_vertical"
-                android:text=""
-                app:carbon_rippleColor="?attr/carbon_rippleColor"
-                app:carbon_rippleHotspot="false"
-                app:carbon_rippleStyle="borderless" />
+                android:gravity="center_vertical" />
 
             <carbon.widget.Button
                 android:id="@+id/check"

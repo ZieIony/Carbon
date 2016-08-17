@@ -33,7 +33,6 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.StateAnimator;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
@@ -61,12 +60,12 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     }
 
     public CollapsingToolbarLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CollapsingToolbarLayout, R.attr.carbon_collapsingToolbarLayoutStyle, R.styleable.CollapsingToolbarLayout_carbon_theme), attrs);
         initCollapsingToolbarLayout(attrs, R.attr.carbon_collapsingToolbarLayoutStyle);
     }
 
     public CollapsingToolbarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CollapsingToolbarLayout, defStyleAttr, R.styleable.CollapsingToolbarLayout_carbon_theme), attrs, defStyleAttr);
         initCollapsingToolbarLayout(attrs, defStyleAttr);
     }
 

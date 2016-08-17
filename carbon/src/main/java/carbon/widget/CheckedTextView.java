@@ -58,20 +58,18 @@ public class CheckedTextView extends TextView implements Checkable {
         CheckableDrawable d = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
         setButtonDrawable(d);
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckedTextView, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckedTextView, defStyleAttr, R.style.carbon_CheckedTextView);
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.CheckedTextView_android_drawablePadding) {
-                    drawablePadding = a.getDimension(attr, 0);
-                } else if (attr == R.styleable.RadioButton_android_checked) {
-                    setCheckedImmediate(a.getBoolean(attr, false));
-                }
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.CheckedTextView_android_drawablePadding) {
+                drawablePadding = a.getDimension(attr, 0);
+            } else if (attr == R.styleable.RadioButton_android_checked) {
+                setCheckedImmediate(a.getBoolean(attr, false));
             }
-
-            a.recycle();
         }
+
+        a.recycle();
     }
 
     private boolean isLayoutRtl() {

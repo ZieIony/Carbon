@@ -114,18 +114,18 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_pagerTabStripStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.PagerTabStrip, R.attr.carbon_pagerTabStripStyle, R.styleable.PagerTabStrip_carbon_theme), attrs, R.attr.carbon_pagerTabStripStyle);
         initPagerTabStrip(attrs, R.attr.carbon_pagerTabStripStyle);
     }
 
     public PagerTabStrip(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.PagerTabStrip, defStyleAttr, R.styleable.PagerTabStrip_carbon_theme), attrs, defStyleAttr);
         initPagerTabStrip(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public PagerTabStrip(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.PagerTabStrip, defStyleAttr, R.styleable.PagerTabStrip_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initPagerTabStrip(attrs, defStyleAttr);
     }
 
@@ -136,18 +136,16 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
             R.styleable.PagerTabStrip_carbon_backgroundTintMode,
             R.styleable.PagerTabStrip_carbon_animateColorChanges
     };
-    
+
     private void initPagerTabStrip(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagerTabStrip, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagerTabStrip, defStyleAttr, R.style.carbon_PagerTabStrip);
 
-            setIndicatorHeight(a.getDimension(R.styleable.PagerTabStrip_carbon_indicatorWidth, 2));
-            setFixed(a.getBoolean(R.styleable.PagerTabStrip_carbon_fixedTabs, true));
+        setIndicatorHeight(a.getDimension(R.styleable.PagerTabStrip_carbon_indicatorWidth, 2));
+        setFixed(a.getBoolean(R.styleable.PagerTabStrip_carbon_fixedTabs, true));
 
-            Carbon.initTint(this, a, tintIds);
+        Carbon.initTint(this, a, tintIds);
 
-            a.recycle();
-        }
+        a.recycle();
 
         setHorizontalFadingEdgeEnabled(false);
         setHorizontalScrollBarEnabled(false);
@@ -466,7 +464,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
         this.animateColorChanges = animateColorChanges;
         if (tint != null && !(tint instanceof AnimatedColorStateList))
             setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 

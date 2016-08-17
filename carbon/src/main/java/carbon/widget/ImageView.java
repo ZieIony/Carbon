@@ -35,7 +35,6 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultPrimaryColorStateList;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
@@ -59,18 +58,18 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     }
 
     public ImageView(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_imageViewStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ImageView, R.attr.carbon_imageViewStyle, R.styleable.ImageView_carbon_theme), attrs, R.attr.carbon_imageViewStyle);
         initImageView(attrs, R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ImageView, defStyleAttr, R.styleable.ImageView_carbon_theme), attrs, defStyleAttr);
         initImageView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ImageView, defStyleAttr, R.styleable.ImageView_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initImageView(attrs, defStyleAttr);
     }
 
@@ -100,34 +99,32 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     };
 
     private void initImageView(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, R.style.carbon_ImageView);
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.ImageView_android_src) {
-                    int resId = a.getResourceId(attr, 0);
-                    if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
-                        setImageDrawable(new VectorDrawable(getResources(), resId));
-                } else if (attr == R.styleable.ImageView_carbon_src) {
-                    int resId = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
-                    if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
-                        setImageDrawable(new VectorDrawable(getResources(), resId));
-                } else if (attr == R.styleable.ImageView_android_enabled) {
-                    setEnabled(a.getBoolean(attr, true));
-                } else if (attr == R.styleable.ImageView_carbon_cornerRadius) {
-                    setCornerRadius((int) a.getDimension(attr, 0));
-                }
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.ImageView_android_src) {
+                int resId = a.getResourceId(attr, 0);
+                if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
+                    setImageDrawable(new VectorDrawable(getResources(), resId));
+            } else if (attr == R.styleable.ImageView_carbon_src) {
+                int resId = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
+                if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
+                    setImageDrawable(new VectorDrawable(getResources(), resId));
+            } else if (attr == R.styleable.ImageView_android_enabled) {
+                setEnabled(a.getBoolean(attr, true));
+            } else if (attr == R.styleable.ImageView_carbon_cornerRadius) {
+                setCornerRadius((int) a.getDimension(attr, 0));
             }
-
-            Carbon.initElevation(this, a, R.styleable.ImageView_carbon_elevation);
-            Carbon.initRippleDrawable(this, a, rippleIds);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            Carbon.initTint(this, a, tintIds);
-
-            a.recycle();
         }
+
+        Carbon.initElevation(this, a, R.styleable.ImageView_carbon_elevation);
+        Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initTint(this, a, tintIds);
+
+        a.recycle();
     }
 
     @Override
@@ -650,7 +647,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         public void onAnimationUpdate(ValueAnimator animation) {
             updateBackgroundTint();
             ViewCompat.postInvalidateOnAnimation(ImageView.this);
-       }
+        }
     };
 
     @Override

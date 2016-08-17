@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import tk.zielony.carbonsamples.applibrary.CalculatorActivity;
+import tk.zielony.carbonsamples.applibrary.ConstraintLayoutActivity;
 import tk.zielony.carbonsamples.applibrary.DesignActivity;
 import tk.zielony.carbonsamples.applibrary.DrawerActivity;
 import tk.zielony.carbonsamples.applibrary.PicassoActivity;
@@ -28,7 +29,8 @@ public class AppsLibrariesActivity extends Activity {
                 new ViewModel(PicassoActivity.class, getString(R.string.picassoActivity_title)),
                 new ViewModel(RecyclerCardsActivity.class, getString(R.string.recyclerCardsActivity_title)),
                 new ViewModel(DrawerActivity.class, getString(R.string.drawerActivity_title)),
-                new ViewModel(DesignActivity.class, getString(R.string.designActivity_title))
+                new ViewModel(DesignActivity.class, getString(R.string.designActivity_title)),
+                new ViewModel(ConstraintLayoutActivity.class, getString(R.string.constraintLayoutActivity_title))
         };
         recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
                 new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :

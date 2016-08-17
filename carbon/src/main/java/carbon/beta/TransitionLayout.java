@@ -19,11 +19,12 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import carbon.animation.AnimUtils;
+import carbon.widget.FrameLayout;
 
 /**
  * Created by Marcin on 2014-12-04.
  */
-public class TransitionLayout extends android.widget.FrameLayout {
+public class TransitionLayout extends FrameLayout {
     public static final int DEFAULT_DURATION = 500;
     float radius = 0;
     float x, y;

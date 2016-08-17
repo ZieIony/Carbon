@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -13,7 +12,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.Shader;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -21,9 +19,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.text.Editable;
 import android.text.TextPaint;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,7 +33,6 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import java.lang.reflect.Field;
-import java.util.regex.Pattern;
 
 import carbon.Carbon;
 import carbon.R;
@@ -48,7 +43,6 @@ import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.internal.Roboto;
 import carbon.internal.TypefaceUtils;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -92,18 +86,18 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     }
 
     public TextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, android.R.attr.textViewStyle, R.styleable.TextView_carbon_theme), attrs);
         initTextView(attrs, android.R.attr.textViewStyle);
     }
 
     public TextView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, defStyleAttr, R.styleable.TextView_carbon_theme), attrs, defStyleAttr);
         initTextView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, defStyleAttr, R.styleable.TextView_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initTextView(attrs, defStyleAttr);
     }
 
@@ -136,56 +130,52 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         if (isInEditMode())
             return;
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, R.style.carbon_TextView);
 
-            int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
-            if (ap != -1)
-                setTextAppearanceInternal(ap);
+        int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
+        if (ap != -1)
+            setTextAppearanceInternal(ap);
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.TextView_carbon_textAllCaps) {
-                    setAllCaps(a.getBoolean(attr, false));
-                } else if (!isInEditMode() && attr == R.styleable.TextView_carbon_fontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setTypeface(typeface);
-                } else if (attr == R.styleable.TextView_carbon_fontFamily) {
-                    int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setTypeface(typeface);
-                } else if (!isInEditMode() && attr == R.styleable.TextView_carbon_labelFontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setLabelTypeface(typeface);
-                } else if (attr == R.styleable.TextView_carbon_labelFontFamily) {
-                    int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setLabelTypeface(typeface);
-                }
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.TextView_carbon_textAllCaps) {
+                setAllCaps(a.getBoolean(attr, false));
+            } else if (!isInEditMode() && attr == R.styleable.TextView_carbon_fontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                setTypeface(typeface);
+            } else if (attr == R.styleable.TextView_carbon_fontFamily) {
+                int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                setTypeface(typeface);
+            } else if (!isInEditMode() && attr == R.styleable.TextView_carbon_labelFontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                setLabelTypeface(typeface);
+            } else if (attr == R.styleable.TextView_carbon_labelFontFamily) {
+                int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                setLabelTypeface(typeface);
             }
-
-            DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
-
-            setLabelTextSize(a.getDimension(R.styleable.TextView_carbon_labelTextSize, 0));
-
-            setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.TextView_carbon_labelStyle, 2)]);
-            setLabel(a.getString(R.styleable.TextView_carbon_label));
-            if (labelStyle == LabelStyle.Floating && label == null && getHint() != null)
-                label = getHint().toString();
-
-            Carbon.initRippleDrawable(this, a, rippleIds);
-            Carbon.initTint(this, a, tintIds);
-            Carbon.initElevation(this, a, R.styleable.TextView_carbon_elevation);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
-
-            a.recycle();
-        } else {
-            setTint(0);
         }
+
+        DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
+
+        setLabelTextSize(a.getDimension(R.styleable.TextView_carbon_labelTextSize, 0));
+
+        setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.TextView_carbon_labelStyle, 2)]);
+        setLabel(a.getString(R.styleable.TextView_carbon_label));
+        if (labelStyle == LabelStyle.Floating && label == null && getHint() != null)
+            label = getHint().toString();
+
+        Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initTint(this, a, tintIds);
+        Carbon.initElevation(this, a, R.styleable.TextView_carbon_elevation);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
+
+        a.recycle();
 
         if (!isInEditMode()) {
             labelPaint.setTextSize(labelTextSize);

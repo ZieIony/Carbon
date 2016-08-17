@@ -56,18 +56,18 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
     }
 
     public ScrollView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, android.R.attr.scrollViewStyle, R.styleable.ScrollView_carbon_theme), attrs);
         initScrollView(attrs, android.R.attr.scrollViewStyle);
     }
 
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, defStyleAttr, R.styleable.ScrollView_carbon_theme), attrs, defStyleAttr);
         initScrollView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, defStyleAttr, R.styleable.ScrollView_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initScrollView(attrs, defStyleAttr);
     }
 
@@ -78,31 +78,29 @@ public class ScrollView extends android.widget.ScrollView implements TintedView 
             R.styleable.ScrollView_carbon_backgroundTintMode,
             R.styleable.ScrollView_carbon_animateColorChanges
     };
-    
+
     private void initScrollView(AttributeSet attrs, int defStyleAttr) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, R.style.carbon_ScrollView);
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.ScrollView_carbon_overScroll) {
-                    setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
-                } else if (attr == R.styleable.ScrollView_carbon_headerTint) {
-                    setHeaderTint(a.getColor(attr, 0));
-                } else if (attr == R.styleable.ScrollView_carbon_headerMinHeight) {
-                    setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
-                } else if (attr == R.styleable.ScrollView_carbon_headerParallax) {
-                    setHeaderParallax(a.getFloat(attr, 0.0f));
-                }
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.ScrollView_carbon_overScroll) {
+                setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
+            } else if (attr == R.styleable.ScrollView_carbon_headerTint) {
+                setHeaderTint(a.getColor(attr, 0));
+            } else if (attr == R.styleable.ScrollView_carbon_headerMinHeight) {
+                setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
+            } else if (attr == R.styleable.ScrollView_carbon_headerParallax) {
+                setHeaderParallax(a.getFloat(attr, 0.0f));
             }
-
-            Carbon.initTint(this, a, tintIds);
-
-            a.recycle();
         }
+
+        Carbon.initTint(this, a, tintIds);
+
+        a.recycle();
 
         setClipToPadding(false);
 

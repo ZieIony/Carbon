@@ -6,7 +6,7 @@ android {
     buildToolsVersion "24.0.0"
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 24
         versionCode 41
         versionName "0.13.0"
@@ -27,11 +27,12 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.android.support:gridlayout-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:gridlayout-v7:24.2.0'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
     compile 'de.greenrobot:androidsvg:1.2.2-beta-1-tweaked-2'
     compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha5'
 }

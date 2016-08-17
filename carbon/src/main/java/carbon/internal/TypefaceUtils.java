@@ -6,9 +6,9 @@ import android.graphics.Typeface;
 import java.util.HashMap;
 
 public class TypefaceUtils {
-    public static HashMap<Roboto, Typeface> robotoCache = new HashMap<>();
-    public static HashMap<String, Typeface> pathCache = new HashMap<>();
-    public static HashMap[] familyStyleCache = new HashMap[4];
+    private static HashMap<Roboto, Typeface> robotoCache = new HashMap<>();
+    private static HashMap<String, Typeface> pathCache = new HashMap<>();
+    private static HashMap[] familyStyleCache = new HashMap[4];
 
     static {
         familyStyleCache[Typeface.NORMAL] = new HashMap();

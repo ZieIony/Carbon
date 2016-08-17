@@ -35,7 +35,6 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultPrimaryColorStateList;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.TypefaceUtils;
@@ -67,18 +66,18 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
      * @param attrs
      */
     public Button(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Button, android.R.attr.buttonStyle, R.styleable.Button_carbon_theme), attrs);
         initButton(attrs, android.R.attr.buttonStyle);
     }
 
-    public Button(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initButton(attrs, defStyle);
+    public Button(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Button, defStyleAttr, R.styleable.Button_carbon_theme), attrs, defStyleAttr);
+        initButton(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Button, defStyleAttr, R.styleable.Button_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initButton(attrs, defStyleAttr);
     }
 
@@ -111,38 +110,36 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         if (isInEditMode())
             return;
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, R.style.carbon_Button);
 
-            int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
-            if (ap != -1)
-                setTextAppearanceInternal(ap);
+        int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
+        if (ap != -1)
+            setTextAppearanceInternal(ap);
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.Button_carbon_textAllCaps) {
-                    setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
-                } else if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setTypeface(typeface);
-                } else if (attr == R.styleable.Button_carbon_fontFamily) {
-                    int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setTypeface(typeface);
-                }
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.Button_carbon_textAllCaps) {
+                setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
+            } else if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                setTypeface(typeface);
+            } else if (attr == R.styleable.Button_carbon_fontFamily) {
+                int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                setTypeface(typeface);
             }
-
-            Carbon.initRippleDrawable(this, a, rippleIds);
-            Carbon.initTint(this, a, tintIds);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            Carbon.initElevation(this,a,R.styleable.Button_carbon_elevation);
-
-            setCornerRadius((int) a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
-
-            a.recycle();
         }
+
+        Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initTint(this, a, tintIds);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initElevation(this, a, R.styleable.Button_carbon_elevation);
+
+        setCornerRadius((int) a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
+
+        a.recycle();
     }
 
     /**

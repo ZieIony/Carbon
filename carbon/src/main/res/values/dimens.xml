@@ -17,7 +17,8 @@
     <dimen name="carbon_toolbarHeight">56dp</dimen>
     <dimen name="carbon_toolbarTextSize">20sp</dimen>
     <dimen name="carbon_toolbarItemSize">48dp</dimen>
-    <dimen name="carbon_toolbarItemPadding">4dp</dimen>
+    <dimen name="carbon_toolbarItemPadding">12dp</dimen>
+    <dimen name="carbon_toolbarItemMargin">4dp</dimen>
     <dimen name="carbon_toolbarUpTitleMargin">4dp</dimen>
 
     <dimen name="carbon_bottomBarHeight">56dp</dimen>

@@ -9,7 +9,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
-import carbon.Carbon;
 import carbon.R;
 
 /**
@@ -60,24 +59,20 @@ public class Chip extends LinearLayout {
             }
         });
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, R.style.carbon_Chip);
 
-            setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
-            setText(a.getString(R.styleable.Chip_android_text));
-            int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
-            if (iconRes != 0) {
-                setIcon(iconRes);
-            } else {
-                setIconVisible(false);
-            }
-            int color = a.getColor(R.styleable.Chip_android_background, 0);
-            setBackgroundColor(color);
-
-            a.recycle();
-
-            //Carbon.initElevation(this, a, R.styleable.Chip_carbon_elevation);
+        setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
+        setText(a.getString(R.styleable.Chip_android_text));
+        int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
+        if (iconRes != 0) {
+            setIcon(iconRes);
+        } else {
+            setIconVisible(false);
         }
+        int color = a.getColor(R.styleable.Chip_android_background, 0);
+        setBackgroundColor(color);
+
+        a.recycle();
     }
 
     public void setText(String text) {

@@ -21,6 +21,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
@@ -39,18 +40,18 @@ public class RadioButton extends carbon.widget.Button implements Checkable {
     }
 
     public RadioButton(Context context, AttributeSet attrs) {
-        super(context, attrs, android.R.attr.radioButtonStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, android.R.attr.radioButtonStyle, R.styleable.RadioButton_carbon_theme), attrs, android.R.attr.radioButtonStyle);
         initRadioButton(attrs, android.R.attr.radioButtonStyle);
     }
 
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, defStyleAttr, R.styleable.RadioButton_carbon_theme), attrs, defStyleAttr);
         initRadioButton(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, defStyleAttr, R.styleable.RadioButton_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initRadioButton(attrs, defStyleAttr);
     }
 
@@ -58,20 +59,18 @@ public class RadioButton extends carbon.widget.Button implements Checkable {
         CheckableDrawable d = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
         setButtonDrawable(d);
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, R.style.carbon_RadioButton);
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (attr == R.styleable.RadioButton_android_drawablePadding) {
-                    drawablePadding = a.getDimension(attr, 0);
-                } else if (attr == R.styleable.RadioButton_android_checked) {
-                    setCheckedImmediate(a.getBoolean(attr, false));
-                }
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.RadioButton_android_drawablePadding) {
+                drawablePadding = a.getDimension(attr, 0);
+            } else if (attr == R.styleable.RadioButton_android_checked) {
+                setCheckedImmediate(a.getBoolean(attr, false));
             }
-
-            a.recycle();
         }
+
+        a.recycle();
     }
 
     private boolean isLayoutRtl() {

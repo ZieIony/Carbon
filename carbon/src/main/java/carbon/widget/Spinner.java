@@ -84,13 +84,11 @@ public class Spinner extends EditText {
         }
 
         int theme = 0;
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Spinner, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Spinner, defStyleAttr, R.style.carbon_Spinner);
 
-            theme = a.getResourceId(R.styleable.Spinner_carbon_popupTheme, -1);
+        theme = a.getResourceId(R.styleable.Spinner_carbon_popupTheme, -1);
 
-            a.recycle();
-        }
+        a.recycle();
 
         spinnerMenu = new SpinnerMenu(new ContextThemeWrapper(context, theme));
         spinnerMenu.setOnItemClickedListener(onItemClickedListener);

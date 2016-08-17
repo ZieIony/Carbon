@@ -35,7 +35,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
@@ -66,18 +65,18 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_flowLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FlowLayout, R.attr.carbon_flowLayoutStyle, R.styleable.FlowLayout_carbon_theme), attrs, R.attr.carbon_flowLayoutStyle);
         initFlowLayout(attrs, R.attr.carbon_flowLayoutStyle);
     }
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FlowLayout, defStyleAttr, R.styleable.FlowLayout_carbon_theme), attrs, defStyleAttr);
         initFlowLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FlowLayout, defStyleAttr, R.styleable.FlowLayout_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initFlowLayout(attrs, defStyleAttr);
     }
 
@@ -112,19 +111,17 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
     };
 
     private void initFlowLayout(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FlowLayout, defStyleAttr, 0);
-            Carbon.initRippleDrawable(this, a, rippleIds);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FlowLayout, defStyleAttr, R.style.carbon_FlowLayout);
+        Carbon.initRippleDrawable(this, a, rippleIds);
 
-            Carbon.initElevation(this, a, R.styleable.FlowLayout_carbon_elevation);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            Carbon.initInset(this, a, insetIds);
-            Carbon.initMaxSize(this, a, maxSizeIds);
-            setCornerRadius((int) a.getDimension(R.styleable.FlowLayout_carbon_cornerRadius, 0));
+        Carbon.initElevation(this, a, R.styleable.FlowLayout_carbon_elevation);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initInset(this, a, insetIds);
+        Carbon.initMaxSize(this, a, maxSizeIds);
+        setCornerRadius((int) a.getDimension(R.styleable.FlowLayout_carbon_cornerRadius, 0));
 
-            a.recycle();
-        }
+        a.recycle();
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);

@@ -37,7 +37,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
@@ -65,7 +64,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     }
 
     public AppBarLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.AppBarLayout, R.attr.carbon_appBarLayoutStyle, R.styleable.CollapsingToolbarLayout_carbon_theme), attrs);
         initAppBarLayout(attrs, R.attr.carbon_appBarLayoutStyle);
     }
 
@@ -103,7 +102,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
             Carbon.initAnimations(this, a, animationIds);
             Carbon.initTouchMargin(this, a, touchMarginIds);
             Carbon.initInset(this, a, insetIds);
-            Carbon.initElevation(this,a,R.styleable.AppBarLayout_carbon_elevation);
+            Carbon.initElevation(this, a, R.styleable.AppBarLayout_carbon_elevation);
 
             setCornerRadius((int) a.getDimension(R.styleable.AppBarLayout_carbon_cornerRadius, 0));
 

@@ -29,9 +29,7 @@ import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.SeekBarPopup;
@@ -81,18 +79,18 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     }
 
     public RangeSeekBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, android.R.attr.seekBarStyle, R.styleable.SeekBar_carbon_theme), attrs);
         initSeekBar(attrs, android.R.attr.seekBarStyle);
     }
 
     public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, defStyleAttr, R.styleable.SeekBar_carbon_theme), attrs, defStyleAttr);
         initSeekBar(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, defStyleAttr, R.styleable.SeekBar_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initSeekBar(attrs, defStyleAttr);
     }
 
@@ -124,27 +122,25 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         THUMB_RADIUS_DRAGGED = Carbon.getDip(getContext()) * 10;
         STROKE_WIDTH = Carbon.getDip(getContext()) * 2;
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, R.style.carbon_SeekBar);
 
-            setStyle(Style.values()[a.getInt(R.styleable.SeekBar_carbon_barStyle, 0)]);
-            setMin(a.getFloat(R.styleable.SeekBar_carbon_min, 0));
-            setMax(a.getFloat(R.styleable.SeekBar_carbon_max, 0));
-            setStepSize(a.getFloat(R.styleable.SeekBar_carbon_stepSize, 0));
-            setValue(a.getFloat(R.styleable.SeekBar_carbon_value, 0));
-            setValue2(a.getFloat(R.styleable.SeekBar_carbon_value2, 0));
-            setTick(a.getBoolean(R.styleable.SeekBar_carbon_tick, true));
-            setTickStep(a.getInt(R.styleable.SeekBar_carbon_tickStep, 1));
-            setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
-            setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
-            setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
+        setStyle(Style.values()[a.getInt(R.styleable.SeekBar_carbon_barStyle, 0)]);
+        setMin(a.getFloat(R.styleable.SeekBar_carbon_min, 0));
+        setMax(a.getFloat(R.styleable.SeekBar_carbon_max, 0));
+        setStepSize(a.getFloat(R.styleable.SeekBar_carbon_stepSize, 0));
+        setValue(a.getFloat(R.styleable.SeekBar_carbon_value, 0));
+        setValue2(a.getFloat(R.styleable.SeekBar_carbon_value2, 0));
+        setTick(a.getBoolean(R.styleable.SeekBar_carbon_tick, true));
+        setTickStep(a.getInt(R.styleable.SeekBar_carbon_tickStep, 1));
+        setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
+        setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
+        setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
 
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTint(this, a, tintIds);
-            Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTint(this, a, tintIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
 
-            a.recycle();
-        }
+        a.recycle();
 
         setFocusableInTouchMode(false); // TODO: from theme
     }
@@ -893,7 +889,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         this.animateColorChanges = animateColorChanges;
         if (tint != null && !(tint instanceof AnimatedColorStateList))
             setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint!= null && !(backgroundTint instanceof AnimatedColorStateList))
+        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 

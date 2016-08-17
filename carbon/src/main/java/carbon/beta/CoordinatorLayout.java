@@ -34,7 +34,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
@@ -62,12 +61,12 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     }
 
     public CoordinatorLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CoordinatorLayout, R.attr.carbon_coordinatorLayoutStyle, R.styleable.CoordinatorLayout_carbon_theme), attrs);
         initCoordinatorLayout(attrs, R.attr.carbon_coordinatorLayoutStyle);
     }
 
     public CoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CoordinatorLayout, defStyleAttr, R.styleable.CoordinatorLayout_carbon_theme), attrs, defStyleAttr);
         initCoordinatorLayout(attrs, defStyleAttr);
     }
 

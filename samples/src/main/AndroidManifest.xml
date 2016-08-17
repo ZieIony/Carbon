@@ -135,6 +135,9 @@
         <activity
             android:name=".feature.TextMarkerActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".feature.ThemeActivity"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".applibrary.DrawerActivity"
@@ -150,6 +153,9 @@
             android:label="@string/app_name" />
         <activity
             android:name=".applibrary.DesignActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".applibrary.ConstraintLayoutActivity"
             android:label="@string/app_name" />
 
         <activity

@@ -7,17 +7,12 @@
 
     <carbon.widget.ImageView
         android:id="@+id/debug"
-        style="@style/carbon_ImageView.Icon"
-        android:layout_width="@dimen/carbon_toolbarItemSize"
-        android:layout_height="@dimen/carbon_toolbarItemSize"
-        app:carbon_src="@raw/ic_bug_report_24px"
-        app:carbon_tint="?attr/colorControlNormal" />
+        style="@style/carbon_ImageView.IconButton"
+        app:carbon_src="@raw/ic_bug_report_24px" />
 
     <carbon.widget.CheckBox
         android:id="@+id/enabled"
-        android:layout_width="@dimen/carbon_toolbarItemSize"
-        android:layout_height="@dimen/carbon_toolbarItemSize"
+        style="@style/carbon_CheckBox.IconButton"
         android:checked="true"
-        android:padding="12dp"
         app:carbon_tint="?attr/carbon_iconColor" />
 </carbon.widget.Toolbar>

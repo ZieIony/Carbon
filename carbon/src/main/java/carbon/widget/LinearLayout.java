@@ -38,7 +38,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
@@ -68,19 +67,19 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.LinearLayout, R.attr.carbon_linearLayoutStyle, R.styleable.LinearLayout_carbon_theme), attrs);
         initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.LinearLayout, defStyleAttr, R.styleable.LinearLayout_carbon_theme), attrs);
         initLinearLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.LinearLayout, defStyleAttr, R.styleable.LinearLayout_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initLinearLayout(attrs, defStyleAttr);
     }
 
@@ -115,19 +114,17 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     };
 
     private void initLinearLayout(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, 0);
-            Carbon.initRippleDrawable(this, a, rippleIds);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, R.style.carbon_LinearLayout);
+        Carbon.initRippleDrawable(this, a, rippleIds);
 
-            Carbon.initElevation(this, a, R.styleable.LinearLayout_carbon_elevation);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            Carbon.initInset(this, a, insetIds);
-            Carbon.initMaxSize(this, a, maxSizeIds);
-            setCornerRadius((int) a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
+        Carbon.initElevation(this, a, R.styleable.LinearLayout_carbon_elevation);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initInset(this, a, insetIds);
+        Carbon.initMaxSize(this, a, maxSizeIds);
+        setCornerRadius((int) a.getDimension(R.styleable.LinearLayout_carbon_cornerRadius, 0));
 
-            a.recycle();
-        }
+        a.recycle();
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);

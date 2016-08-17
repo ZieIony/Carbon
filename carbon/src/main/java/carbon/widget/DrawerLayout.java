@@ -34,7 +34,6 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.EmptyDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
@@ -62,12 +61,12 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     }
 
     public DrawerLayout(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_drawerLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.DrawerLayout, R.attr.carbon_drawerLayoutStyle, R.styleable.DrawerLayout_carbon_theme), attrs, R.attr.carbon_drawerLayoutStyle);
         initDrawerLayout(attrs, R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.DrawerLayout, defStyleAttr, R.styleable.DrawerLayout_carbon_theme), attrs, defStyleAttr);
         initDrawerLayout(attrs, defStyleAttr);
     }
 
@@ -98,19 +97,17 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
     };
 
     private void initDrawerLayout(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, R.style.carbon_DrawerLayout);
 
-            Carbon.initRippleDrawable(this, a, rippleIds);
-            Carbon.initElevation(this, a, R.styleable.DrawerLayout_carbon_elevation);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            Carbon.initInset(this, a, insetIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initElevation(this, a, R.styleable.DrawerLayout_carbon_elevation);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initInset(this, a, insetIds);
 
-            setCornerRadius((int) a.getDimension(R.styleable.DrawerLayout_carbon_cornerRadius, 0));
+        setCornerRadius((int) a.getDimension(R.styleable.DrawerLayout_carbon_cornerRadius, 0));
 
-            a.recycle();
-        }
+        a.recycle();
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);

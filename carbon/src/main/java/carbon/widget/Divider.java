@@ -25,26 +25,23 @@ public class Divider extends View {
     }
 
     public Divider(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_dividerStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Divider, R.attr.carbon_dividerStyle, R.styleable.Divider_carbon_theme), attrs, R.attr.carbon_dividerStyle);
         initDivider(attrs, R.attr.carbon_dividerStyle);
     }
 
     public Divider(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Divider, defStyleAttr, R.styleable.Divider_carbon_theme), attrs, defStyleAttr);
         initDivider(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Divider(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Divider, defStyleAttr, R.styleable.Divider_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initDivider(attrs, defStyleAttr);
     }
 
     private void initDivider(AttributeSet attrs, int defStyleAttr) {
-        if (attrs == null)
-            return;
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Divider, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Divider, defStyleAttr, R.style.carbon_Divider);
         int color = a.getColor(R.styleable.Divider_android_background, 0);
         setBackgroundColor(color);
         a.recycle();

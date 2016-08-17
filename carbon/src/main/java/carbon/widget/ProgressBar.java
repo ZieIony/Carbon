@@ -47,18 +47,18 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
     }
 
     public ProgressBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ProgressBar, android.R.attr.progressBarStyle, R.styleable.ProgressBar_carbon_theme), attrs);
         initProgressBar(attrs, android.R.attr.progressBarStyle);
     }
 
     public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ProgressBar, defStyleAttr, R.styleable.ProgressBar_carbon_theme), attrs, defStyleAttr);
         initProgressBar(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ProgressBar, defStyleAttr, R.styleable.ProgressBar_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initProgressBar(attrs, defStyleAttr);
     }
 
@@ -75,23 +75,21 @@ public class ProgressBar extends View implements AnimatedView, TintedView {
     };
 
     private void initProgressBar(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyleAttr, 0);
-            Style style = Style.values()[a.getInt(R.styleable.ProgressBar_carbon_progressStyle, 0)];
-            if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {
-                setDrawable(new ProgressBarDrawable());
-            } else {
-                setDrawable(new CircularProgressDrawable());
-            }
-            drawable.setStyle(style);
-
-            drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
-
-            Carbon.initTint(this, a, tintIds);
-            Carbon.initAnimations(this, a, animationIds);
-
-            a.recycle();
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressBar, defStyleAttr, R.style.carbon_ProgressBar);
+        Style style = Style.values()[a.getInt(R.styleable.ProgressBar_carbon_progressStyle, 0)];
+        if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {
+            setDrawable(new ProgressBarDrawable());
+        } else {
+            setDrawable(new CircularProgressDrawable());
         }
+        drawable.setStyle(style);
+
+        drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
+
+        Carbon.initTint(this, a, tintIds);
+        Carbon.initAnimations(this, a, animationIds);
+
+        a.recycle();
 
         if (getVisibility() == VISIBLE) {
             setBarWidth(getBarWidth() + getBarPadding());

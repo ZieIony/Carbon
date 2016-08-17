@@ -7,13 +7,13 @@
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_toolbarIcon"
-        style="@style/carbon_ImageView.Icon"
+        style="@style/carbon_ImageView.IconButton"
         android:layout_width="@dimen/carbon_toolbarItemSize"
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:layout_marginEnd="@dimen/carbon_toolbarUpTitleMargin"
-        android:layout_marginLeft="@dimen/carbon_toolbarItemPadding"
+        android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
         android:layout_marginRight="@dimen/carbon_toolbarUpTitleMargin"
-        android:layout_marginStart="@dimen/carbon_toolbarItemPadding"
+        android:layout_marginStart="@dimen/carbon_toolbarItemMargin"
         app:carbon_inAnimation="none"
         app:carbon_outAnimation="none" />
 
@@ -42,7 +42,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingStart="@dimen/carbon_padding"
-        android:paddingEnd="@dimen/carbon_toolbarItemPadding"
-        android:paddingRight="@dimen/carbon_toolbarItemPadding" />
+        android:paddingEnd="@dimen/carbon_toolbarItemMargin"
+        android:paddingRight="@dimen/carbon_toolbarItemMargin" />
 
 </carbon.widget.LinearLayout>

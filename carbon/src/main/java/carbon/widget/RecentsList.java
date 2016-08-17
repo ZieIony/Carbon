@@ -24,6 +24,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 /**
  * Created by Marcin on 2015-04-13.
  */
+@Deprecated
 public class RecentsList extends FrameLayout implements GestureDetector.OnGestureListener {
     Scroller scroller;
     RecentsAdapter adapter;

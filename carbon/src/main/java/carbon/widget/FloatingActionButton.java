@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.nineoldandroids.animation.ValueAnimator;
 
-import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
@@ -52,31 +51,26 @@ public class FloatingActionButton extends ImageView {
     private void initFloatingActionButton(AttributeSet attrs, int defStyleAttr) {
         AnimUtils.setupElevationAnimator(getStateAnimator(), this);
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, 0);
-        if (a != null) {
-            setCornerRadius((int) a.getDimension(R.styleable.FloatingActionButton_carbon_cornerRadius, -1));
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, R.style.carbon_FloatingActionButton);
+        setCornerRadius((int) a.getDimension(R.styleable.FloatingActionButton_carbon_cornerRadius, -1));
 
-            if (a.hasValue(R.styleable.FloatingActionButton_android_background)) {
-                int color = a.getColor(R.styleable.FloatingActionButton_android_background, 0);
-                if (color == 0)
-                    setBackground(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultAccentColorStateList(getContext()), new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            postInvalidate();
-                        }
-                    })));
-            }
-            if (a.hasValue(R.styleable.FloatingActionButton_carbon_menu)) {
-                int resId = a.getResourceId(R.styleable.FloatingActionButton_carbon_menu, 0);
-                if (resId != 0)
-                    setMenu(resId);
-            }
-
-            a.recycle();
+        if (a.hasValue(R.styleable.FloatingActionButton_android_background)) {
+            int color = a.getColor(R.styleable.FloatingActionButton_android_background, 0);
+            if (color == 0)
+                setBackground(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultAccentColorStateList(getContext()), new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        postInvalidate();
+                    }
+                })));
+        }
+        if (a.hasValue(R.styleable.FloatingActionButton_carbon_menu)) {
+            int resId = a.getResourceId(R.styleable.FloatingActionButton_carbon_menu, 0);
+            if (resId != 0)
+                setMenu(resId);
         }
 
-        // TODO: this part of code is duplicated, but right now I have no idea how to make it better
-        //Carbon.initRippleDrawable(this, a, rippleIds);
+        a.recycle();
     }
 
     @Override

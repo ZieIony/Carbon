@@ -4,15 +4,11 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
@@ -34,11 +30,6 @@ import carbon.widget.TouchMarginView;
 public class Carbon {
     private Carbon() {
     }
-
-    public static boolean antiAlias = true;
-    public static boolean dim = true;
-
-    public static final int DEFAULT_TINT_LIST = 0;
 
     public static float getDip(Context context) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, context.getResources().getDisplayMetrics());
@@ -175,39 +166,6 @@ public class Carbon {
             view.setAnimateColorChangesEnabled(a.getBoolean(carbon_animateColorChanges, false));
     }
 
-    static Paint paint = new Paint();
-
-    @Deprecated
-    public static void drawDebugInfo(ViewGroup viewGroup, Canvas canvas) {
-        paint.setAlpha(255);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(1);
-        Rect rect = new Rect();
-        float vertLine = Math.min(10, viewGroup.getWidth() / 3);
-        float horzLine = Math.min(10, viewGroup.getHeight() / 3);
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            viewGroup.getChildAt(i).getHitRect(rect);
-            paint.setColor(0x7fff0000);
-            canvas.drawRect(rect, paint);
-            //paint.setStrokeWidth(2);
-            //canvas.drawLine(rect.left,rect.top,rect.left+vertLine,rect.top,paint);
-
-            viewGroup.getChildAt(i).getDrawingRect(rect);
-            rect.offset(viewGroup.getChildAt(i).getLeft(), viewGroup.getChildAt(i).getTop());
-            paint.setColor(0x7f00ff00);
-            canvas.drawRect(rect, paint);
-        }
-
-        float step = viewGroup.getResources().getDimension(R.dimen.carbon_grid8);
-        paint.setColor(0x7f000000);
-        for (float x = 8.5f; x < viewGroup.getWidth(); x += step) {
-            canvas.drawLine(x, 0, x, viewGroup.getHeight(), paint);
-        }
-        for (float y = 8.5f; y < viewGroup.getHeight(); y += step) {
-            canvas.drawLine(0, y, viewGroup.getWidth(), y, paint);
-        }
-    }
-
     public static void initAnimations(AnimatedView view, TypedArray a, int[] ids) {
         int carbon_inAnimation = ids[0];
         int carbon_outAnimation = ids[1];
@@ -230,11 +188,13 @@ public class Carbon {
         return typedvalueattr.resourceId != 0 ? context.getResources().getColor(typedvalueattr.resourceId) : typedvalueattr.data;
     }
 
-    @Deprecated
-    public static boolean isDebugModeEnabled(Context context) {
-        Resources.Theme theme = context.getTheme();
-        TypedValue typedvalueattr = new TypedValue();
-        theme.resolveAttribute(R.attr.carbon_debugMode, typedvalueattr, true);
-        return typedvalueattr.resourceId != 0 ? context.getResources().getBoolean(typedvalueattr.resourceId) : false;
+    public static Context getThemedContext(Context context, AttributeSet attributeSet, int[] attrs, int defStyleAttr, int attr) {
+        TypedArray a = context.obtainStyledAttributes(attributeSet, attrs, defStyleAttr, 0);
+        if (a.hasValue(attr)) {
+            int themeId = a.getResourceId(attr, 0);
+            context.getTheme().applyStyle(themeId,true);
+        }
+        a.recycle();
+        return context;
     }
 }
