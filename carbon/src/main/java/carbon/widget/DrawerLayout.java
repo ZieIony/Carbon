@@ -162,9 +162,6 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout impleme
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!child.isShown())
-            return super.drawChild(canvas, child, drawingTime);
-
         if (!isInEditMode() && child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             ShadowView shadowView = (ShadowView) child;
             Shadow shadow = shadowView.getShadow();

@@ -163,9 +163,6 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (!child.isShown())
-            return super.drawChild(canvas, child, drawingTime);
-
         if (!isInEditMode() && child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             ShadowView shadowView = (ShadowView) child;
             Shadow shadow = shadowView.getShadow();

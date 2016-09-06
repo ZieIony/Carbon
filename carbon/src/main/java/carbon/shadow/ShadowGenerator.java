@@ -12,9 +12,6 @@ import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 
-import java.lang.ref.WeakReference;
-import java.util.WeakHashMap;
-
 import carbon.internal.WeakHashSet;
 import carbon.widget.CornerView;
 
@@ -101,7 +98,7 @@ public class ShadowGenerator {
 
         for (Object o : shadowSet) {
             Shadow s = (Shadow) o;
-            if (s.elevation == elevation && s.c == c)
+            if (s != null && s.elevation == elevation && s.c == c)
                 return s;
         }
 

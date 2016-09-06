@@ -540,7 +540,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
 
         if (showLabel && draggedThumb > 0) {
             int[] location = new int[2];
-            getLocationOnScreen(location);
+            getLocationInWindow(location);
             popup.setText(String.format(labelFormat, draggedThumb == 1 ? newValue : newValue2));
             popup.update(thumbX + location[0] - popup.getBubbleWidth() / 2, thumbY - radius + location[1] - popup.getHeight());
         }

@@ -424,7 +424,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
 
         if (showLabel) {
             int[] location = new int[2];
-            getLocationOnScreen(location);
+            getLocationInWindow(location);
             popup.setText(String.format(labelFormat, newValue));
             popup.update(thumbX + location[0] - popup.getBubbleWidth() / 2, thumbY - radius + location[1] - popup.getHeight());
         }

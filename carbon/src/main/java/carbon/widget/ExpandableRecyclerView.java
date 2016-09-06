@@ -299,9 +299,6 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
 
     @Override
     public boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!child.isShown())
-            return super.drawChild(canvas, child, drawingTime);
-
         if (!isInEditMode() && child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             ShadowView shadowView = (ShadowView) child;
             Shadow shadow = shadowView.getShadow();
