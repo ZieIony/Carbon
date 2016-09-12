@@ -9,6 +9,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
@@ -18,7 +19,7 @@ import com.caverock.androidsvg.SVGParseException;
  */
 public class VectorDrawable extends Drawable {
     private VectorState state;
-    Bitmap bitmap;
+    private Bitmap bitmap;
     private ColorStateList tint = ColorStateList.valueOf(0x00ffffff);   // TODO: maybe tint should be a part of VectorState?
 
     public VectorDrawable(SVG svg, int intWidth, int intHeight) {
@@ -62,7 +63,7 @@ public class VectorDrawable extends Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         int width = getBounds().width();
         int height = getBounds().height();
         if (width <= 0 || height <= 0)
@@ -105,6 +106,7 @@ public class VectorDrawable extends Drawable {
         return state;
     }
 
+    @NonNull
     @Override
     public Drawable mutate() {
         return new VectorDrawable(state.svg, state.intWidth, state.intHeight);
@@ -128,6 +130,7 @@ public class VectorDrawable extends Drawable {
             paint = state.paint;
         }
 
+        @NonNull
         @Override
         public Drawable newDrawable() {
             return new VectorDrawable(svg, intWidth, intHeight);
@@ -152,7 +155,7 @@ public class VectorDrawable extends Drawable {
     }
 
     @Override
-    public boolean setState(int[] stateSet) {
+    public boolean setState(@NonNull int[] stateSet) {
         boolean changed = super.setState(stateSet);
         if (changed)
             state.paint.setColorFilter(new LightingColorFilter(0, tint.getColorForState(getState(), tint.getDefaultColor())));

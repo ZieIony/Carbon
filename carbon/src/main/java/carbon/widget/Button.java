@@ -107,9 +107,6 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     };
 
     private void initButton(AttributeSet attrs, int defStyleAttr) {
-        if (isInEditMode())
-            return;
-
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, R.style.carbon_Button);
 
         int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);

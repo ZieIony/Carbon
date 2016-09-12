@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples.demo;
+package carbon.widget;
 
 /**
  * Created by Marcin on 2015-04-30.
