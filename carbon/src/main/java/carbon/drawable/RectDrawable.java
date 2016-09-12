@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Marcin on 2015-12-22.
@@ -18,7 +19,7 @@ public class RectDrawable extends Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         Rect bounds = getBounds();
         canvas.drawRect(bounds.left, bounds.top, bounds.right, bounds.bottom, paint);
     }

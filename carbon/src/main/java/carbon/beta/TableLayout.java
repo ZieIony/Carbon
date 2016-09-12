@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.R;
-import carbon.widget.FrameLayout;
 import carbon.widget.LinearLayout;
 import carbon.widget.Spinner;
 import carbon.widget.TableView;

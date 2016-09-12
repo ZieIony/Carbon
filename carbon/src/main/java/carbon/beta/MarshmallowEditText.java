@@ -21,9 +21,6 @@ import android.widget.PopupWindow;
 
 import java.lang.reflect.Field;
 
-import carbon.Carbon;
-import carbon.R;
-import carbon.drawable.VectorDrawable;
 import carbon.internal.EditTextMenu;
 import carbon.widget.EditText;
 

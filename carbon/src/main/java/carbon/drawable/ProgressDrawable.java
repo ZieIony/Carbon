@@ -16,15 +16,15 @@ import carbon.widget.ProgressBar;
  * Created by Marcin on 2015-02-28.
  */
 public abstract class ProgressDrawable extends Drawable {
-    static final long DEFAULT_SWEEP_DURATION = 800;
-    static final long DEFAULT_SWEEP_OFFSET = 500;
-    long sweepDuration = DEFAULT_SWEEP_DURATION;
-    long sweepDelay = DEFAULT_SWEEP_OFFSET;
+    private static final long DEFAULT_SWEEP_DURATION = 800;
+    private static final long DEFAULT_SWEEP_OFFSET = 500;
+    private long sweepDuration = DEFAULT_SWEEP_DURATION;
+    private long sweepDelay = DEFAULT_SWEEP_OFFSET;
     final long startTime = System.currentTimeMillis();
 
     Paint forePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    ColorStateList tint = ColorStateList.valueOf(Color.RED);
-    PorterDuff.Mode tintMode;
+    private ColorStateList tint = ColorStateList.valueOf(Color.RED);
+    private PorterDuff.Mode tintMode;
 
     float width = 5;
     float progress;
@@ -48,7 +48,7 @@ public abstract class ProgressDrawable extends Drawable {
     }
 
     @Override
-    public boolean setState(int[] stateSet) {
+    public boolean setState(@NonNull int[] stateSet) {
         boolean result = super.setState(stateSet);
         return result;
     }

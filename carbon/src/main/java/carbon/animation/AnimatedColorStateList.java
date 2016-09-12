@@ -1,10 +1,8 @@
 package carbon.animation;
 
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 import android.util.StateSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -22,7 +20,7 @@ public class AnimatedColorStateList extends ColorStateList {
     private final int[][] states;
     private int[] currentState = null;
     private ValueAnimator colorAnimation = null;
-    int animatedColor;
+    private int animatedColor;
 
     public static AnimatedColorStateList fromList(ColorStateList list, ValueAnimator.AnimatorUpdateListener listener) {
         int[][] mStateSpecs; // must be parallel to mColors

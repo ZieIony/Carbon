@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
-import carbon.Carbon;
-import carbon.internal.DebugOverlay;
-import carbon.widget.ImageView;
 import carbon.widget.RecyclerView;
-import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.widget.BottomBarActivity;
 import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
@@ -21,7 +16,6 @@ import tk.zielony.carbonsamples.widget.FloatingActionMenuActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
 import tk.zielony.carbonsamples.widget.NavigationViewActivity;
 import tk.zielony.carbonsamples.widget.ProgressBarsActivity;
-import tk.zielony.carbonsamples.widget.RecentsActivity;
 import tk.zielony.carbonsamples.widget.RecyclerActivity;
 import tk.zielony.carbonsamples.widget.SVGActivity;
 import tk.zielony.carbonsamples.widget.ScrollViewActivity;
@@ -52,7 +46,6 @@ public class WidgetsActivity extends Activity {
                 new ViewModel(SVGActivity.class, getString(R.string.svgActivity_title)),
                 new ViewModel(TextFieldsActivity.class, getString(R.string.textFieldsActivity_title)),
                 new ViewModel(TabsActivity.class, getString(R.string.tabsActivity_title)),
-                new ViewModel(RecentsActivity.class, getString(R.string.recentsActivity_title)),
                 new ViewModel(ScrollViewActivity.class, getString(R.string.scrollViewActivity_title)),
                 new ViewModel(RecyclerActivity.class, getString(R.string.recyclerViewActivity_title)),
                 new ViewModel(ExpandableRecyclerActivity.class, getString(R.string.expandableRecyclerActivity_title)),

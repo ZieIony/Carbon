@@ -6,8 +6,8 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-import carbon.widget.CardView;
 import carbon.widget.PagerTabStrip;
+import carbon.widget.RelativeLayout;
 import carbon.widget.ViewPager;
 import tk.zielony.carbonsamples.R;
 
@@ -28,7 +28,7 @@ public class TabsActivity extends Activity {
             }
 
             public View getView(int position, ViewPager pager) {
-                return new CardView(pager.getContext());
+                return new RelativeLayout(pager.getContext(),null,R.attr.carbon_cardViewStyle);
             }
 
             @Override

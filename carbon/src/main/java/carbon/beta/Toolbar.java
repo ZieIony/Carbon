@@ -20,7 +20,6 @@ import android.support.v7.view.menu.MenuPresenter;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.view.menu.SubMenuBuilder;
 import android.support.v7.widget.ActionMenuView;
-import android.support.v7.widget.DecorToolbar;
 import android.support.v7.widget.TintTypedArray;
 import android.support.v7.widget.ToolbarWidgetWrapper;
 import android.support.v7.widget.ViewUtils;

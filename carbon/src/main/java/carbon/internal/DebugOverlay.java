@@ -26,7 +26,7 @@ public class DebugOverlay extends PopupWindow {
     private boolean drawGrid = true;
     private Activity context;
 
-    ViewTreeObserver.OnPreDrawListener listener = new ViewTreeObserver.OnPreDrawListener() {
+    private ViewTreeObserver.OnPreDrawListener listener = new ViewTreeObserver.OnPreDrawListener() {
         @Override
         public boolean onPreDraw() {
             getContentView().postInvalidate();
@@ -76,7 +76,7 @@ public class DebugOverlay extends PopupWindow {
         this.drawGrid = drawGrid;
     }
 
-    class DebugLayout extends View {
+    private class DebugLayout extends View {
         private final View view;
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Rect rect = new Rect();

@@ -17,7 +17,7 @@ import java.util.List;
 
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleDrawableFroyo;
-import carbon.widget.CardView;
+import carbon.widget.RelativeLayout;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -67,13 +67,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
         public TextView text;
-        public CardView card;
+        public RelativeLayout card;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);
             text = (TextView) itemView.findViewById(R.id.text);
-            card = (CardView) itemView;
+            card = (RelativeLayout) itemView;
             card.setClickable(true);
             card.setBackgroundColor(Color.WHITE);
 

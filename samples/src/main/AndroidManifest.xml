@@ -47,9 +47,6 @@
             android:name=".widget.CheckBoxRadioActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".widget.RecentsActivity"
-            android:label="@string/app_name" />
-        <activity
             android:name=".widget.ScrollViewActivity"
             android:label="@string/app_name" />
         <activity

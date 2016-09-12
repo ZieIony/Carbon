@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 
 import carbon.animation.AnimatedColorStateList;
 
@@ -18,7 +19,7 @@ public class ColorStateListDrawable extends Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         canvas.drawColor(list.getColorForState(getState(), list.getDefaultColor()));
     }
 
@@ -43,7 +44,7 @@ public class ColorStateListDrawable extends Drawable {
     }
 
     @Override
-    public boolean setState(int[] stateSet) {
+    public boolean setState(@NonNull int[] stateSet) {
         list.setState(stateSet);
         return super.setState(stateSet);
     }

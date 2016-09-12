@@ -37,22 +37,22 @@ public class CheckableDrawable extends Drawable {
     private final int checkedRes;
     private final int uncheckedRes;
     private final int filledRes;
-    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG), maskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    PorterDuffXfermode porterDuffClear = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
-    PorterDuffXfermode porterDuffSrcIn = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG), maskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private PorterDuffXfermode porterDuffClear = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
+    private PorterDuffXfermode porterDuffSrcIn = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     private Bitmap checkedBitmap, uncheckedBitmap, filledBitmap, maskBitmap;
-    Canvas maskCanvas;
-    float radius;
+    private Canvas maskCanvas;
+    private float radius;
     private boolean checked, enabled;
 
-    PorterDuffColorFilter checkedFilter;
-    PorterDuffColorFilter uncheckedFilter;
+    private PorterDuffColorFilter checkedFilter;
+    private PorterDuffColorFilter uncheckedFilter;
 
-    long downTime;
+    private long downTime;
     private BitmapShader checkedShader, filledShader;
     private PointF offset;
     private ColorStateList tint;
-    PorterDuff.Mode tintMode;
+    private PorterDuff.Mode tintMode;
 
     public CheckableDrawable(Context context, int checkedRes, int uncheckedRes, int filledRes, PointF offset) {
         this.context = context;
@@ -66,7 +66,7 @@ public class CheckableDrawable extends Drawable {
     }
 
     @Override
-    public void setBounds(Rect bounds) {
+    public void setBounds(@NonNull Rect bounds) {
         if (!getBounds().equals(bounds))
             checkedBitmap = uncheckedBitmap = filledBitmap = null;
         super.setBounds(bounds);
@@ -131,7 +131,7 @@ public class CheckableDrawable extends Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         if (checkedBitmap == null)
             renderSVGs();
 
@@ -277,6 +277,7 @@ public class CheckableDrawable extends Drawable {
         return getIntrinsicWidth();
     }
 
+    @NonNull
     @Override
     public Rect getDirtyBounds() {
         return super.getDirtyBounds();
@@ -287,8 +288,8 @@ public class CheckableDrawable extends Drawable {
         return true;
     }
 
-    boolean animateColorChanges = true;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+    private boolean animateColorChanges = true;
+    private ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             updateTint();

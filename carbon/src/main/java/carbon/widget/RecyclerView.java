@@ -286,11 +286,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             topGlow = null;
             bottomGlow = null;
         }
-        try {
-            super.setOverScrollMode(ViewCompat.OVER_SCROLL_NEVER);
-        } catch (Exception e) {
-            // Froyo
-        }
+        super.setOverScrollMode(ViewCompat.OVER_SCROLL_NEVER);
         this.overscrollMode = mode;
     }
 
