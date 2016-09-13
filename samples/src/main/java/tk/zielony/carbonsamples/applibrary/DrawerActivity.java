@@ -15,7 +15,6 @@ import java.util.List;
 
 import carbon.widget.LinearLayout;
 import carbon.widget.RecyclerView;
-import carbon.widget.RecyclerView.OnItemClickedListener;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
 
@@ -41,18 +40,15 @@ public class DrawerActivity extends Activity {
 
         FruitAdapter adapter = new FruitAdapter(fruits,null);
         drawerList.setAdapter(adapter);
-        drawerList.setOnItemClickedListener(new OnItemClickedListener() {
-            @Override
-            public void onItemClicked(int position) {
-                setTitle(fruits.get(position));
-                drawerLayout.closeDrawer(drawerMenu);
-            }
+        drawerList.setOnItemClickedListener(position -> {
+            setTitle(fruits.get(position));
+            drawerLayout.closeDrawer(drawerMenu);
         });
     }
 
     @Override
     public void setTitle(CharSequence title) {
-        toolbar.setText(title.toString());
+        toolbar.setTitle(title.toString());
     }
 
 }

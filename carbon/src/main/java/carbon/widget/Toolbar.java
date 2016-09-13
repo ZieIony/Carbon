@@ -84,19 +84,16 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
         title = (TextView) findViewById(R.id.carbon_toolbarTitle);
         icon = (ImageView) findViewById(R.id.carbon_toolbarIcon);
 
-        icon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getContext() == null)
-                    return;
-                Context context = getContext();
-                while (!(context instanceof Activity))
-                    context = ((ContextWrapper) context).getBaseContext();
-                if (context instanceof UpAwareActivity) {
-                    ((UpAwareActivity) context).onUpPressed();
-                } else if (context instanceof Activity) {
-                    ((Activity) context).onBackPressed();
-                }
+        icon.setOnClickListener(view -> {
+            if (getContext() == null)
+                return;
+            Context context = getContext();
+            while (!(context instanceof Activity))
+                context = ((ContextWrapper) context).getBaseContext();
+            if (context instanceof UpAwareActivity) {
+                ((UpAwareActivity) context).onUpPressed();
+            } else if (context instanceof Activity) {
+                ((Activity) context).onBackPressed();
             }
         });
 
@@ -439,7 +436,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 

@@ -74,13 +74,10 @@ public class FloatingActionMenu extends PopupWindow {
 
             tooltip.setText(item.getTitle());
             fab.setImageDrawable(item.getIcon());
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null)
-                        listener.onMenuItemClick(item);
-                    dismiss();
-                }
+            fab.setOnClickListener(v -> {
+                if (listener != null)
+                    listener.onMenuItemClick(item);
+                dismiss();
             });
             content.addView(view);
 

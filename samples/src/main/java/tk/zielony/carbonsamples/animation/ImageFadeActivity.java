@@ -16,11 +16,6 @@ public class ImageFadeActivity extends Activity {
         setContentView(R.layout.activity_imagefade);
 
         final View cow = findViewById(R.id.mazda);
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cow.setVisibility(cow.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-            }
-        });
+        findViewById(R.id.button).setOnClickListener(view -> cow.setVisibility(cow.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE));
     }
 }

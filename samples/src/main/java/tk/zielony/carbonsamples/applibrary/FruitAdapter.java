@@ -35,13 +35,10 @@ public class FruitAdapter extends RecyclerView.ListAdapter<FruitAdapter.ViewHold
         holder.tv.setText(getItem(position));
 
         if (helper != null) {
-            holder.reorder.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                        helper.startDrag(holder);
-                    return true;
-                }
+            holder.reorder.setOnTouchListener((view, motionEvent) -> {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    helper.startDrag(holder);
+                return true;
             });
         }
     }

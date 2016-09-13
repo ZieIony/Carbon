@@ -19,12 +19,9 @@ public class PicassoActivity extends Activity {
         setContentView(R.layout.activity_picasso);
 
         final PicassoView image = (PicassoView) findViewById(R.id.image);
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                image.setVisibility(View.INVISIBLE);
-                Picasso.with(PicassoActivity.this).load("http://lorempixel.com/400/500/people/#" + System.currentTimeMillis()).into((Target) image);
-            }
+        findViewById(R.id.button).setOnClickListener(view -> {
+            image.setVisibility(View.INVISIBLE);
+            Picasso.with(PicassoActivity.this).load("http://lorempixel.com/400/500/people/#" + System.currentTimeMillis()).into((Target) image);
         });
     }
 }

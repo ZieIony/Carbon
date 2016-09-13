@@ -19,7 +19,7 @@ public class RecyclerCardsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_cards);
 
-        List<ViewModel> items = Arrays.asList(new ViewModel[]{new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel()});
+        List<ViewModel> items = Arrays.asList(new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel());
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

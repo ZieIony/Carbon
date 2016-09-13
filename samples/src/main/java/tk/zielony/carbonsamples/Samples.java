@@ -3,7 +3,6 @@ package tk.zielony.carbonsamples;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import carbon.Carbon;
 import carbon.internal.DebugOverlay;
 import carbon.widget.CheckBox;
 import carbon.widget.ImageView;
-import carbon.widget.TextView;
 import carbon.widget.Toolbar;
 
 /**
@@ -49,13 +47,10 @@ public class Samples {
 
         CheckBox checkBox = (CheckBox) activity.findViewById(R.id.enabled);
         if (checkBox != null)
-            checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CheckBox compoundButton, boolean b) {
-                    List<View> views = findViewsWithTag((ViewGroup) activity.getWindow().getDecorView().getRootView(), "enable");
-                    for (View v : views)
-                        v.setEnabled(b);
-                }
+            checkBox.setOnCheckedChangeListener((compoundButton, checked) -> {
+                List<View> views = findViewsWithTag((ViewGroup) activity.getWindow().getDecorView().getRootView(), "enable");
+                for (View v : views)
+                    v.setEnabled(checked);
             });
     }
 

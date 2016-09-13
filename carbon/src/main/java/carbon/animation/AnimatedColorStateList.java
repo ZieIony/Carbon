@@ -56,13 +56,10 @@ public class AnimatedColorStateList extends ColorStateList {
         colorAnimation.setEvaluator(new ArgbEvaluator());
         colorAnimation.setDuration(200);
         colorAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                synchronized (AnimatedColorStateList.this) {
-                    animatedColor = (int) animation.getAnimatedValue();
-                    listener.onAnimationUpdate(animation);
-                }
+        colorAnimation.addUpdateListener(animation -> {
+            synchronized (AnimatedColorStateList.this) {
+                animatedColor = (int) animation.getAnimatedValue();
+                listener.onAnimationUpdate(animation);
             }
         });
     }

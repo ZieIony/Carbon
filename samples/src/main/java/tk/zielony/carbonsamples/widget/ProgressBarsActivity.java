@@ -18,12 +18,7 @@ public class ProgressBarsActivity extends Activity {
         setContentView(R.layout.activity_progress_bars);
 
         final View progress1 = findViewById(R.id.progress5);
-        findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progress1.setVisibility(progress1.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
-            }
-        });
+        findViewById(R.id.button1).setOnClickListener(view -> progress1.setVisibility(progress1.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE));
 
         final ProgressBar progress2 = (ProgressBar) findViewById(R.id.progress6);
         final Handler handler = new Handler();
@@ -38,20 +33,10 @@ public class ProgressBarsActivity extends Activity {
                 }
             }
         };
-        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progress2.setVisibility(progress2.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
-            }
-        });
+        findViewById(R.id.button2).setOnClickListener(view -> progress2.setVisibility(progress2.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE));
 
         final View progress3 = findViewById(R.id.progress7);
-        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progress3.setVisibility(progress3.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
-            }
-        });
+        findViewById(R.id.button3).setOnClickListener(view -> progress3.setVisibility(progress3.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE));
 
         handler.postDelayed(runnable, 10);
     }

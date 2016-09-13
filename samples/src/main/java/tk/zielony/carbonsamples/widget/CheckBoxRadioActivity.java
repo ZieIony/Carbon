@@ -2,7 +2,6 @@ package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 
 import carbon.widget.CheckBox;
 import tk.zielony.carbonsamples.R;
@@ -21,18 +20,8 @@ public class CheckBoxRadioActivity extends Activity {
 
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
 
-        findViewById(R.id.check).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkBox.setChecked(true);
-            }
-        });
+        findViewById(R.id.check).setOnClickListener(view -> checkBox.setChecked(true));
 
-        findViewById(R.id.uncheck).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkBox.setChecked(false);
-            }
-        });
+        findViewById(R.id.uncheck).setOnClickListener(view -> checkBox.setChecked(false));
     }
 }

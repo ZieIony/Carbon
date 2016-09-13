@@ -22,9 +22,9 @@ public class ShadowGenerator {
     private static ScriptIntrinsicBlur blurShader;
     private static Paint paint = new Paint();
     private static boolean software = false;
-    static RectF roundRect = new RectF();
+    private static RectF roundRect = new RectF();
 
-    static WeakHashSet shadowSet = new WeakHashSet();
+    private static WeakHashSet shadowSet = new WeakHashSet();
 
     private static void blur(Bitmap bitmap, float radius) {
         radius = Math.max(0, Math.min(radius, 25));

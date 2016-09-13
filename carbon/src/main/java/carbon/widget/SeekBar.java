@@ -381,16 +381,13 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
                 valueAnimator = ValueAnimator.ofFloat(value, val);
                 valueAnimator.setDuration(200);
                 valueAnimator.setInterpolator(interpolator);
-                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        value = (float) animation.getAnimatedValue();
-                        int thumbX = (int) ((value - min) / (max - min) * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
-                        int thumbY = getHeight() / 2;
-                        int radius = rippleDrawable.getRadius();
-                        rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
-                        postInvalidate();
-                    }
+                valueAnimator.addUpdateListener(animation -> {
+                    value = (float) animation.getAnimatedValue();
+                    int thumbX = (int) ((value - min) / (max - min) * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
+                    int thumbY = getHeight() / 2;
+                    int radius = rippleDrawable.getRadius();
+                    rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
+                    postInvalidate();
                 });
                 valueAnimator.start();
             }
@@ -399,12 +396,9 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             radiusAnimator = ValueAnimator.ofFloat(thumbRadius, THUMB_RADIUS);
             radiusAnimator.setDuration(200);
             radiusAnimator.setInterpolator(interpolator);
-            radiusAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    thumbRadius = (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            radiusAnimator.addUpdateListener(animation -> {
+                thumbRadius = (float) animation.getAnimatedValue();
+                postInvalidate();
             });
             radiusAnimator.start();
             ViewParent parent = getParent();
@@ -472,7 +466,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 
@@ -671,19 +665,13 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     ColorStateList backgroundTint;
     PorterDuff.Mode backgroundTintMode;
     boolean animateColorChanges;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateTint();
-            ViewCompat.postInvalidateOnAnimation(SeekBar.this);
-        }
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
+        updateTint();
+        ViewCompat.postInvalidateOnAnimation(SeekBar.this);
     };
-    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateBackgroundTint();
-            ViewCompat.postInvalidateOnAnimation(SeekBar.this);
-        }
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
+        updateBackgroundTint();
+        ViewCompat.postInvalidateOnAnimation(SeekBar.this);
     };
 
     @Override
@@ -753,7 +741,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     }
 
     @Override
-    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+    public void setBackgroundTintMode(PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
         updateBackgroundTint();
     }

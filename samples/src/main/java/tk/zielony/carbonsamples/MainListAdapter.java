@@ -28,12 +28,7 @@ class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
         holder.beta.setVisibility(items[position].beta ? View.VISIBLE : View.GONE);
         holder.lollipop.setVisibility(items[position].lollipop ? View.VISIBLE : View.GONE);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.getContext().startActivity(new Intent(v.getContext(), items[position].klass));
-            }
-        });
+        holder.itemView.setOnClickListener(view -> view.getContext().startActivity(new Intent(view.getContext(), items[holder.getAdapterPosition()].klass)));
     }
 
     @Override

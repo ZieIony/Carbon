@@ -1,5 +1,6 @@
 package carbon.shadow;
 
+import android.annotation.SuppressLint;
 import android.graphics.Outline;
 import android.os.Build;
 import android.view.View;
@@ -18,6 +19,7 @@ public enum ShadowShape {
     static {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             viewOutlineProvider = new ViewOutlineProvider() {
+                @SuppressLint("NewApi")
                 @Override
                 public void getOutline(View view, Outline outline) {
                     ShadowShape shadowShape = ((ShadowView) view).getShadowShape();

@@ -29,15 +29,12 @@ public class LargeShadowActivity extends Activity {
         animator.setRepeatCount(Animation.INFINITE);
         animator.setRepeatMode(Animation.REVERSE);
         animator.setDuration(2000);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-                layoutParams.width = (int) ((float) valueAnimator.getAnimatedValue() * (getWindow().getDecorView().getWidth() - 100));
-                layoutParams.height = (int) ((float) valueAnimator.getAnimatedValue() * (getWindow().getDecorView().getHeight() - 100));
-                view.setLayoutParams(layoutParams);
-                ((View) view.getParent()).postInvalidate();
-            }
+        animator.addUpdateListener(valueAnimator -> {
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            layoutParams.width = (int) ((float) valueAnimator.getAnimatedValue() * (getWindow().getDecorView().getWidth() - 100));
+            layoutParams.height = (int) ((float) valueAnimator.getAnimatedValue() * (getWindow().getDecorView().getHeight() - 100));
+            view.setLayoutParams(layoutParams);
+            ((View) view.getParent()).postInvalidate();
         });
         animator.start();
     }

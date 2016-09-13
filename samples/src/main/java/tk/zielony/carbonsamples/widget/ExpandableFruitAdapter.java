@@ -69,8 +69,7 @@ public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<Expan
     @Override
     public void onBindChildViewHolder(ExpandableFruitAdapter.ChildViewHolder holder, int group, final int position) {
         super.onBindChildViewHolder(holder, group, position);
-        ChildViewHolder h = holder;
-        h.tv.setText(getChildItem(group, position));
+        holder.tv.setText(getChildItem(group, position));
     }
 
     public class ChildViewHolder extends RecyclerView.ViewHolder {

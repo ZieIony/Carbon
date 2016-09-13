@@ -14,8 +14,8 @@ public class Shadow {
     private final int e;
     final int c;
     private final Bitmap bitmap;
-    Rect src = new Rect();
-    Rect dst = new Rect();
+    private Rect src = new Rect();
+    private Rect dst = new Rect();
     private int[] xDiv;
     private int[] yDiv;
     private int[] xDivDst;

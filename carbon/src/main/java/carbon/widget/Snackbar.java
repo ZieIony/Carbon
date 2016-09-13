@@ -64,14 +64,11 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                 handler.removeCallbacks(hideRunnable);
                 animator = ObjectAnimator.ofFloat(swipe, content.getMeasuredWidth() / 2.0f * Math.signum(swipe));
                 animator.setDuration(200);
-                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        float s = (Float) valueAnimator.getAnimatedValue();
-                        ViewHelper.setTranslationX(content, s);
-                        float alpha = Math.max(0, 1 - 2 * Math.abs((Float) valueAnimator.getAnimatedValue()) / content.getMeasuredWidth());
-                        ViewHelper.setAlpha(content, alpha);
-                    }
+                animator.addUpdateListener(valueAnimator -> {
+                    float s = (Float) valueAnimator.getAnimatedValue();
+                    ViewHelper.setTranslationX(content, s);
+                    float alpha = Math.max(0, 1 - 2 * Math.abs((Float) valueAnimator.getAnimatedValue()) / content.getMeasuredWidth());
+                    ViewHelper.setAlpha(content, alpha);
                 });
                 animator.start();
                 animator.addListener(new AnimatorListenerAdapter() {
@@ -85,14 +82,11 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
                     animator.setDuration(200);
                     animator.setInterpolator(new DecelerateInterpolator());
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) content.getLayoutParams();
-                            ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
-                            if (pushedView.getParent() != null)
-                                ((View) pushedView.getParent()).postInvalidate();
-                        }
+                    animator.addUpdateListener(valueAnimator -> {
+                        MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                        ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                        if (pushedView.getParent() != null)
+                            ((View) pushedView.getParent()).postInvalidate();
                     });
                     animator.start();
                 }
@@ -125,12 +119,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
     private Button button;
     private Style style;
     private long duration;
-    private Runnable hideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            dismiss();
-        }
-    };
+    private Runnable hideRunnable = () -> dismiss();
     private Handler handler;
     private LinearLayout content;
     OnDismissListener onDismissListener;
@@ -189,14 +178,11 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     ValueAnimator animator = ValueAnimator.ofFloat(0, -1);
                     animator.setDuration(200);
                     animator.setInterpolator(new DecelerateInterpolator());
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) content.getLayoutParams();
-                            ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
-                            if (pushedView.getParent() != null)
-                                ((View) pushedView.getParent()).postInvalidate();
-                        }
+                    animator.addUpdateListener(valueAnimator -> {
+                        MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                        ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                        if (pushedView.getParent() != null)
+                            ((View) pushedView.getParent()).postInvalidate();
                     });
                     animator.start();
                 }
@@ -229,14 +215,11 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                 ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
                 animator.setDuration(200);
                 animator.setInterpolator(new DecelerateInterpolator());
-                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) content.getLayoutParams();
-                        ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
-                        if (pushedView.getParent() != null)
-                            ((View) pushedView.getParent()).postInvalidate();
-                    }
+                animator.addUpdateListener(valueAnimator -> {
+                    MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
+                    ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                    if (pushedView.getParent() != null)
+                        ((View) pushedView.getParent()).postInvalidate();
                 });
                 animator.start();
             }
@@ -330,59 +313,50 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
 
     public void setSwipeToDismissEnabled(boolean swipeToDismiss) {
         this.swipeToDismiss = swipeToDismiss;
-        setOnDispatchTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                content.getHitRect(rect);
-                if (rect.contains((int) event.getX(), (int) event.getY())) {
-                    return gestureDetector.onTouchEvent(event);
-                } else if (isTapOutsideToDismissEnabled()) {
-                    dismiss();
-                }
-                return false;
+        setOnDispatchTouchListener((v, event) -> {
+            content.getHitRect(rect);
+            if (rect.contains((int) event.getX(), (int) event.getY())) {
+                return gestureDetector.onTouchEvent(event);
+            } else if (isTapOutsideToDismissEnabled()) {
+                dismiss();
             }
+            return false;
         });
-        content.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (isSwipeToDismissEnabled()) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        swipe = 0;
-                        handler.removeCallbacks(hideRunnable);
-                        if (animator != null) {
+        content.setOnTouchListener((v, event) -> {
+            if (isSwipeToDismissEnabled()) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    swipe = 0;
+                    handler.removeCallbacks(hideRunnable);
+                    if (animator != null) {
+                        animator.cancel();
+                        animator = null;
+                        swipe = ViewHelper.getTranslationX(content);
+                    }
+                    return true;
+                } else if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && animator == null) {
+                    animator = ObjectAnimator.ofFloat(swipe, 0);
+                    animator.setDuration(200);
+                    animator.addUpdateListener(animation -> {
+                        float s = (Float) animation.getAnimatedValue();
+                        ViewHelper.setTranslationX(content, s);
+                        ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(s) / content.getWidth()));
+                        postInvalidate();
+                    });
+                    animator.start();
+                    animator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
                             animator.cancel();
                             animator = null;
-                            swipe = ViewHelper.getTranslationX(content);
+                            if (duration != INFINITE)
+                                handler.postDelayed(hideRunnable, duration);
                         }
-                        return true;
-                    } else if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && animator == null) {
-                        animator = ObjectAnimator.ofFloat(swipe, 0);
-                        animator.setDuration(200);
-                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                float s = (Float) animation.getAnimatedValue();
-                                ViewHelper.setTranslationX(content, s);
-                                ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(s) / content.getWidth()));
-                                postInvalidate();
-                            }
-                        });
-                        animator.start();
-                        animator.addListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                animator.cancel();
-                                animator = null;
-                                if (duration != INFINITE)
-                                    handler.postDelayed(hideRunnable, duration);
-                            }
-                        });
-                        return true;
-                    }
+                    });
+                    return true;
                 }
-
-                return false;
             }
+
+            return false;
         });
     }
 

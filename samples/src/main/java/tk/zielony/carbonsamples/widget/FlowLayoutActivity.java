@@ -40,12 +40,9 @@ public class FlowLayoutActivity extends Activity {
             }
             if (i % 3 != 2) {
                 chip.setRemovable(true);
-                chip.setOnRemoveListener(new Chip.OnRemoveListener() {
-                    @Override
-                    public void onDismiss() {
-                        chip.setOutAnimation(AnimUtils.Style.Fade);
-                        chip.setVisibility(View.GONE);
-                    }
+                chip.setOnRemoveListener(() -> {
+                    chip.setOutAnimation(AnimUtils.Style.Fade);
+                    chip.setVisibility(View.GONE);
                 });
             } else {
                 chip.setRemovable(false);

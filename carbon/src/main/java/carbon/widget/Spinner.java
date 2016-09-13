@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.PopupWindow;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
@@ -95,19 +94,11 @@ public class Spinner extends EditText {
 
         defaultAdapter = new Adapter();
         spinnerMenu.setAdapter(defaultAdapter);
-        spinnerMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                isShowingPopup = false;
-            }
-        });
+        spinnerMenu.setOnDismissListener(() -> isShowingPopup = false);
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerMenu.show(Spinner.this);
-                isShowingPopup = true;
-            }
+        setOnClickListener(view -> {
+            spinnerMenu.show(Spinner.this);
+            isShowingPopup = true;
         });
     }
 

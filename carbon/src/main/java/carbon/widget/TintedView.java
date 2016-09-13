@@ -3,6 +3,7 @@ package carbon.widget;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Created by Marcin on 2015-05-08.
@@ -79,7 +80,7 @@ public interface TintedView {
      *
      * @param mode
      */
-    void setBackgroundTintMode(@NonNull PorterDuff.Mode mode);
+    void setBackgroundTintMode(@Nullable PorterDuff.Mode mode);
 
     /**
      * Gets the tint mode of background Drawable
