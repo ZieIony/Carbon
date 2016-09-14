@@ -607,12 +607,19 @@
     </style>
 
     <style name="carbon_ListView" parent="@android:style/Widget.ListView">
+        <item name="android:scrollbarSize">8dp</item>
+        <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
         <item name="android:divider">?attr/carbon_dividerColor</item>
         <item name="android:dividerHeight">1px</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
-    <style name="carbon_RecyclerView" parent="@android:style/Widget.ListView">
+    <style name="carbon_RecyclerView">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbarSize">8dp</item>
+        <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
         <item name="android:fadingEdge">none</item>
         <item name="carbon_overScroll">ifContentScrolls</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
@@ -681,14 +688,26 @@
     </style>
 
     <style name="carbon_ScrollView">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbarSize">8dp</item>
+        <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
     <style name="carbon_HorizontalScrollView">
+        <item name="android:scrollbars">horizontal</item>
+        <item name="android:scrollbarSize">8dp</item>
+        <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
     <style name="carbon_ViewPager">
+        <item name="android:scrollbars">horizontal</item>
+        <item name="android:scrollbarSize">8dp</item>
+        <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 

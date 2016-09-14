@@ -117,8 +117,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
 
         setClipToPadding(false);
         setItemAnimator(new DefaultItemAnimator());
-
-        initScrollbars();
+        setWillNotDraw(false);
     }
 
     public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
@@ -289,11 +288,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             topGlow = null;
             bottomGlow = null;
         }
-        try {
-            super.setOverScrollMode(ViewCompat.OVER_SCROLL_NEVER);
-        } catch (Exception e) {
-            // Froyo
-        }
+        super.setOverScrollMode(OVER_SCROLL_NEVER);
         this.overscrollMode = mode;
     }
 
@@ -485,7 +480,6 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
-        scrollBarDrawable = null;
     }
 
     @Override
@@ -558,35 +552,16 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
     // scroll bars
     // -------------------------------
 
-    Drawable scrollBarDrawable;
+    protected void onDrawHorizontalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
+        scrollBar.setColorFilter(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE, tintMode);
+        scrollBar.setBounds(l, t, r, b);
+        scrollBar.draw(canvas);
+    }
 
-    private void initScrollbars() {
-        try {
-            Field mScrollCacheField = View.class.getDeclaredField("mScrollCache");
-            mScrollCacheField.setAccessible(true);
-            Object mScrollCache = mScrollCacheField.get(this);
-
-            if (mScrollCache == null)
-                return;
-
-            Field scrollBarField = mScrollCache.getClass().getDeclaredField("scrollBar");
-            scrollBarField.setAccessible(true);
-            Object scrollBar = scrollBarField.get(mScrollCache);
-
-            Field mVerticalThumbField = scrollBar.getClass().getDeclaredField("mVerticalThumb");
-            mVerticalThumbField.setAccessible(true);
-            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
-            mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-
-            Field mHorizontalThumbField = scrollBar.getClass().getDeclaredField("mHorizontalThumb");
-            mHorizontalThumbField.setAccessible(true);
-            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
-            mHorizontalThumbField.set(scrollBar, scrollBarDrawable);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    protected void onDrawVerticalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
+        scrollBar.setColorFilter(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE, tintMode);
+        scrollBar.setBounds(l, t, r, b);
+        scrollBar.draw(canvas);
     }
 
 

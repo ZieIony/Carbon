@@ -114,8 +114,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
         setClipToPadding(false);
         setItemAnimator(new DefaultItemAnimator());
-
-        initScrollbars();
+        setWillNotDraw(false);
     }
 
     public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
@@ -128,12 +127,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     public void addView(final View child, int index) {
         if (onItemClickedListener != null) {
-            child.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickedListener.onItemClicked(findContainingViewHolder(child).getAdapterPosition());
-                }
-            });
+            child.setOnClickListener(v -> onItemClickedListener.onItemClicked(findContainingViewHolder(child).getAdapterPosition()));
         }
         super.addView(child, index);
     }
@@ -286,7 +280,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             topGlow = null;
             bottomGlow = null;
         }
-        super.setOverScrollMode(ViewCompat.OVER_SCROLL_NEVER);
+        super.setOverScrollMode(OVER_SCROLL_NEVER);
         this.overscrollMode = mode;
     }
 
@@ -349,19 +343,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     ColorStateList backgroundTint;
     PorterDuff.Mode backgroundTintMode;
     boolean animateColorChanges;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateTint();
-            ViewCompat.postInvalidateOnAnimation(RecyclerView.this);
-        }
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
+        updateTint();
+        ViewCompat.postInvalidateOnAnimation(RecyclerView.this);
     };
-    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateBackgroundTint();
-            ViewCompat.postInvalidateOnAnimation(RecyclerView.this);
-        }
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
+        updateBackgroundTint();
+        ViewCompat.postInvalidateOnAnimation(RecyclerView.this);
     };
 
     @Override
@@ -396,7 +384,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             topGlow.setColor(color);
         if (bottomGlow != null)
             bottomGlow.setColor(color);
-        scrollBarDrawable = null;
     }
 
     @Override
@@ -469,35 +456,16 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     // scroll bars
     // -------------------------------
 
-    Drawable scrollBarDrawable;
+    protected void onDrawHorizontalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
+        scrollBar.setColorFilter(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE, tintMode);
+        scrollBar.setBounds(l, t, r, b);
+        scrollBar.draw(canvas);
+    }
 
-    private void initScrollbars() {
-        try {
-            Field mScrollCacheField = View.class.getDeclaredField("mScrollCache");
-            mScrollCacheField.setAccessible(true);
-            Object mScrollCache = mScrollCacheField.get(this);
-
-            if (mScrollCache == null)
-                return;
-
-            Field scrollBarField = mScrollCache.getClass().getDeclaredField("scrollBar");
-            scrollBarField.setAccessible(true);
-            Object scrollBar = scrollBarField.get(mScrollCache);
-
-            Field mVerticalThumbField = scrollBar.getClass().getDeclaredField("mVerticalThumb");
-            mVerticalThumbField.setAccessible(true);
-            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
-            mVerticalThumbField.set(scrollBar, scrollBarDrawable);
-
-            Field mHorizontalThumbField = scrollBar.getClass().getDeclaredField("mHorizontalThumb");
-            mHorizontalThumbField.setAccessible(true);
-            scrollBarDrawable = new RectDrawable(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
-            mHorizontalThumbField.set(scrollBar, scrollBarDrawable);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    protected void onDrawVerticalScrollBar(Canvas canvas, Drawable scrollBar, int l, int t, int r, int b) {
+        scrollBar.setColorFilter(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE, tintMode);
+        scrollBar.setBounds(l, t, r, b);
+        scrollBar.draw(canvas);
     }
 
 

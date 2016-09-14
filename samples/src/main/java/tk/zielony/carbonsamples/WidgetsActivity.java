@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.widget.BottomBarActivity;
 import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
