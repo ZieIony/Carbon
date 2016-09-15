@@ -179,15 +179,19 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
                 paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
 
                 float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
-
-                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(0, childElevation / 2);
-                canvas.translate(child.getLeft(), child.getTop());
-
                 Matrix matrix = MatrixHelper.getMatrix(child);
+
+                canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.translate(child.getLeft(), child.getTop() + childElevation / 2);
                 canvas.concat(matrix);
                 shadow.draw(canvas, child, paint);
-                canvas.restoreToCount(saveCount);
+                canvas.restore();
+
+                canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.translate(child.getLeft(), child.getTop());
+                canvas.concat(matrix);
+                shadow.draw(canvas, child, paint);
+                canvas.restore();
             }
         }
 
