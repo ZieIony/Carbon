@@ -119,7 +119,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
     private Button button;
     private Style style;
     private long duration;
-    private Runnable hideRunnable = () -> dismiss();
+    private Runnable hideRunnable = this::dismiss;
     private Handler handler;
     private LinearLayout content;
     OnDismissListener onDismissListener;
@@ -171,6 +171,11 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
             if (!next.contains(this))
                 next.add(this);
             if (next.indexOf(this) == 0) {
+                Rect windowFrame = new Rect();
+                container.getWindowVisibleDisplayFrame(windowFrame);
+                Rect drawingRect = new Rect();
+                container.getDrawingRect(drawingRect);
+                setPadding(0, 0, 0, drawingRect.bottom - windowFrame.bottom);
                 container.addView(this);
                 ViewHelper.setAlpha(content, 0);
                 AnimUtils.flyIn(content, null);
