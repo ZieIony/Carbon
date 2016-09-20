@@ -40,7 +40,7 @@ public class DrawerActivity extends Activity {
 
         FruitAdapter adapter = new FruitAdapter(fruits,null);
         drawerList.setAdapter(adapter);
-        drawerList.setOnItemClickedListener(position -> {
+        adapter.setOnItemClickedListener(position -> {
             setTitle(fruits.get(position));
             drawerLayout.closeDrawer(drawerMenu);
         });

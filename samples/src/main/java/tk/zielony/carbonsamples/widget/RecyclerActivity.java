@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import carbon.widget.ItemTouchHelper;
+import carbon.recycler.ItemTouchHelper;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.applibrary.FruitAdapter;

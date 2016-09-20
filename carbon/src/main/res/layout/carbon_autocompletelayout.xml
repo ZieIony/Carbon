@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <carbon.widget.ImageView
+            android:layout_width="@dimen/carbon_toolbarHeight"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:padding="@dimen/carbon_padding"
+            app:carbon_src="@raw/carbon_search"
+            app:carbon_tint="@color/carbon_black_54" />
+
+        <carbon.widget.AutoCompleteTextView
+            android:id="@+id/carbon_autoCompleteSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:layout_marginLeft="@dimen/carbon_padding"
+            android:layout_marginStart="@dimen/carbon_padding"
+            android:gravity="center_vertical|start"
+            android:paddingBottom="0dp"
+            android:paddingTop="0dp"
+            android:singleLine="true"
+            android:textAppearance="?attr/carbon_textAppearanceBody2"
+            app:carbon_tint="#00000000">
+
+            <requestFocus />
+        </carbon.widget.AutoCompleteTextView>
+    </LinearLayout>
+
+    <carbon.widget.RecyclerView
+        android:id="@+id/carbon_autoCompleteResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</merge>

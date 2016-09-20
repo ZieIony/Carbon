@@ -658,7 +658,7 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
      * When this is the case:
      * <ul>
      * <li>If you override {@link #animateChange(RecyclerView.ViewHolder, RecyclerView.ViewHolder, int, int, int, int)}, both
-     * ViewHolder arguments will be the same instance.
+     * RowViewHolder arguments will be the same instance.
      * </li>
      * <li>
      * If you are not overriding {@link #animateChange(RecyclerView.ViewHolder, RecyclerView.ViewHolder, int, int, int, int)},

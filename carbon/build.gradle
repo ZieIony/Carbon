@@ -35,5 +35,5 @@ dependencies {
     compile 'de.greenrobot:androidsvg:1.2.2-beta-1-tweaked-2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha5'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
 }

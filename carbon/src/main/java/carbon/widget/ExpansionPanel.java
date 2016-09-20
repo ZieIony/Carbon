@@ -21,18 +21,22 @@ public class ExpansionPanel extends RelativeLayout {
 
     public ExpansionPanel(Context context) {
         super(context);
+        initExpansionPanel();
     }
 
     public ExpansionPanel(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initExpansionPanel();
     }
 
     public ExpansionPanel(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initExpansionPanel();
     }
 
     public ExpansionPanel(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        initExpansionPanel();
     }
 
     private void initExpansionPanel() {

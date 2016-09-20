@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package carbon.widget;
+package carbon.recycler;
 
 import android.graphics.Canvas;
 import android.support.v4.view.ViewCompat;

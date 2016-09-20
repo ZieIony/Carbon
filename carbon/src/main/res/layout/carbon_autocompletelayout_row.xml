@@ -9,7 +9,7 @@
 
     <carbon.widget.TextView
         android:paddingLeft="72dp"
-        android:id="@+id/text"
+        android:id="@+id/carbon_autoCompleteLayoutRowText"
         android:textAppearance="?attr/carbon_textAppearanceBody1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

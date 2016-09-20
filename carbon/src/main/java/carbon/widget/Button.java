@@ -55,7 +55,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     protected Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
-        super(context, null);
+        super(context);
         initButton(null, android.R.attr.buttonStyle);
     }
 
@@ -66,7 +66,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
      * @param attrs
      */
     public Button(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.Button, android.R.attr.buttonStyle, R.styleable.Button_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Button, android.R.attr.buttonStyle, R.styleable.Button_carbon_theme), attrs, android.R.attr.buttonStyle);
         initButton(attrs, android.R.attr.buttonStyle);
     }
 

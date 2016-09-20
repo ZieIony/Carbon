@@ -41,6 +41,7 @@
         <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
         <item name="carbon_navigationViewStyle">@style/carbon_NavigationView</item>
         <item name="carbon_inputLayoutStyle">@style/carbon_InputLayout</item>
+        <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
@@ -163,6 +164,7 @@
         <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
         <item name="carbon_navigationViewStyle">@style/carbon_NavigationView</item>
         <item name="carbon_inputLayoutStyle">@style/carbon_InputLayout</item>
+        <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
@@ -268,6 +270,7 @@
         <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
         <item name="carbon_navigationViewStyle">@style/carbon_NavigationView</item>
         <item name="carbon_inputLayoutStyle">@style/carbon_InputLayout</item>
+        <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
@@ -389,6 +392,7 @@
         <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
         <item name="carbon_navigationViewStyle">@style/carbon_NavigationView</item>
         <item name="carbon_inputLayoutStyle">@style/carbon_InputLayout</item>
+        <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
@@ -832,4 +836,10 @@
         <item name="carbon_cornerRadius">2dp</item>
     </style>
 
+    <style name="carbon_AutoCompleteLayout" parent="carbon_LinearLayout">
+        <item name="android:background">#ffffffff</item>
+        <item name="android:orientation">vertical</item>
+        <item name="carbon_cornerRadius">2dp</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
+    </style>
 </resources>

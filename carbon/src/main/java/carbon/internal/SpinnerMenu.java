@@ -177,7 +177,7 @@ public class SpinnerMenu extends PopupWindow {
     }*/
 
     public void setOnItemClickedListener(RecyclerView.OnItemClickedListener listener) {
-        recycler.setOnItemClickedListener(listener);
+        getAdapter().setOnItemClickedListener(listener);
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {

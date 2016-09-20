@@ -915,6 +915,11 @@
     <attr name="carbon_snackbarTheme" format="reference" />
     <attr name="carbon_spinnerPopupTheme" format="reference" />
 
+    <attr name="carbon_autoCompleteLayoutStyle" format="reference" />
+    <declare-styleable name="AutoCompleteLayout">
+        <attr name="carbon_theme" />
+    </declare-styleable>
+
     <!-- Drawable used to show animated touch feedback. -->
     <declare-styleable name="RippleDrawable">
         <!-- The color to use for ripple effects. This attribute is required. -->

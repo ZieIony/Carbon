@@ -52,6 +52,10 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  */
 public class RecyclerView extends android.support.v7.widget.RecyclerView implements TintedView {
 
+    public interface OnItemClickedListener {
+        void onItemClicked(int position);
+    }
+
     private EdgeEffect leftGlow;
     private EdgeEffect rightGlow;
     private int mTouchSlop;
@@ -63,7 +67,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private boolean clipToPadding;
     long prevScroll = 0;
     private boolean childDrawingOrderCallbackSet = false;
-    OnItemClickedListener onItemClickedListener;
 
     public RecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
@@ -115,38 +118,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         setClipToPadding(false);
         setItemAnimator(new DefaultItemAnimator());
         setWillNotDraw(false);
-    }
-
-    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
-        this.onItemClickedListener = onItemClickedListener;
-    }
-
-    public interface OnItemClickedListener {
-        void onItemClicked(int position);
-    }
-
-    public void addView(final View child, int index) {
-        if (onItemClickedListener != null) {
-            child.setOnClickListener(v -> onItemClickedListener.onItemClicked(findContainingViewHolder(child).getAdapterPosition()));
-        }
-        super.addView(child, index);
-    }
-
-    @Override
-    public void removeView(View view) {
-        if (onItemClickedListener != null)
-            view.setOnClickListener(null);
-        super.removeView(view);
-    }
-
-    @Override
-    public void removeViewAt(int index) {
-        final View child = getChildAt(index);
-        if (child != null) {
-            if (onItemClickedListener != null)
-                child.setOnClickListener(null);
-            super.removeView(child);
-        }
     }
 
     public void setDivider(Drawable divider, int height) {
@@ -631,6 +602,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     public static abstract class ListAdapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
+        private OnItemClickedListener onItemClickedListener;
+
         public ListAdapter() {
             items = new ArrayList<>();
         }
@@ -663,9 +636,19 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             return position;
         }
 
+        public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+            this.onItemClickedListener = onItemClickedListener;
+        }
+
+        protected void fireOnItemClickedEvent(int position) {
+            if (onItemClickedListener != null)
+                onItemClickedListener.onItemClicked(position);
+        }
     }
 
     public static abstract class ArrayAdapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
+        private OnItemClickedListener onItemClickedListener;
+
         public ArrayAdapter() {
             items = (I[]) new Object[0];    // doesn't really matter
         }
@@ -698,6 +681,14 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             return position;
         }
 
+        public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+            this.onItemClickedListener = onItemClickedListener;
+        }
+
+        protected void fireOnItemClickedEvent(int position) {
+            if (onItemClickedListener != null)
+                onItemClickedListener.onItemClicked(position);
+        }
     }
 
     public static class DividerItemDecoration extends RecyclerView.ItemDecoration {

@@ -7,48 +7,11 @@
     android:orientation="vertical"
     app:carbon_insetColor="?attr/colorPrimary">
 
-    <carbon.widget.LinearLayout
+    <carbon.widget.AutoCompleteLayout
+        android:id="@+id/autoComplete"
+        android:layout_gravity="top|start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start|top"
-        android:layout_margin="@dimen/carbon_paddingHalf"
-        android:background="#ffffffff"
-        android:orientation="vertical"
-        app:carbon_cornerRadius="2dp"
-        app:carbon_elevation="@dimen/carbon_elevationCard">
+        android:layout_margin="@dimen/carbon_paddingHalf" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <carbon.widget.ImageView
-                android:layout_width="@dimen/carbon_toolbarHeight"
-                android:layout_height="@dimen/carbon_toolbarHeight"
-                android:padding="@dimen/carbon_padding"
-                app:carbon_src="@raw/ic_search_24px"
-                app:carbon_tint="@color/carbon_black_54" />
-
-            <carbon.widget.AutoCompleteTextView
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/carbon_toolbarHeight"
-                android:layout_marginLeft="@dimen/carbon_padding"
-                android:layout_marginStart="@dimen/carbon_padding"
-                android:gravity="center_vertical|start"
-                android:paddingBottom="0dp"
-                android:paddingTop="0dp"
-                android:singleLine="true"
-                android:textAppearance="?attr/carbon_textAppearanceBody2"
-                app:carbon_tint="#00000000">
-
-                <requestFocus />
-            </carbon.widget.AutoCompleteTextView>
-        </LinearLayout>
-
-        <carbon.widget.RecyclerView
-            android:id="@+id/results"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </carbon.widget.LinearLayout>
 </carbon.widget.FrameLayout>

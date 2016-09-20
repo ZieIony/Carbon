@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import carbon.widget.ItemTouchHelper;
+import carbon.recycler.ItemTouchHelper;
 import carbon.widget.RecyclerView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
