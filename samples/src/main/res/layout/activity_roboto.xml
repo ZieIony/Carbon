@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.TextView
         android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto regular"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <carbon.widget.TextView
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto light"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <carbon.widget.TextView
         android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto bold"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <carbon.widget.TextView
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto italic"
         android:textSize="20sp"
-        android:textStyle="italic"/>
+        android:textStyle="italic" />
 
     <carbon.widget.TextView
         android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
         android:text="Roboto condensed regular"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <carbon.widget.TextView
         android:layout_width="wrap_content"
@@ -68,5 +68,5 @@
         android:text="Roboto thin italic"
         android:textStyle="italic"
         app:carbon_fontFamily="sans-serif-thin"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 </carbon.widget.LinearLayout>

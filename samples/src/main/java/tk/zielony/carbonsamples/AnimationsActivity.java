@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.animation.ImageFadeActivity;
 import tk.zielony.carbonsamples.animation.ListRippleActivity;
 import tk.zielony.carbonsamples.animation.RadialTransitionActivity;

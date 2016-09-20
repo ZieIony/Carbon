@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:fitsSystemWindows="true"
-                            app:carbon_insetColor="?attr/colorPrimary"
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    app:carbon_insetColor="?attr/colorPrimary"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <carbon.widget.ProgressBar
         app:carbon_progressStyle="circular_determinate"
         android:id="@+id/progress1"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="40dp"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp" />
 
     <carbon.widget.Button
         android:layout_gravity="right"
@@ -20,14 +20,14 @@
         android:text="animate"
         android:layout_marginRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress2"
         app:carbon_progressStyle="circular_indeterminate"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="40dp"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp" />
 
     <carbon.widget.Button
         android:layout_gravity="right"
@@ -35,7 +35,7 @@
         android:text="animate"
         android:layout_marginRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress3"
@@ -44,7 +44,7 @@
         app:carbon_barWidth="5dp"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="40dp"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp" />
 
     <carbon.widget.Button
         android:layout_gravity="right"
@@ -52,7 +52,7 @@
         android:text="animate"
         android:layout_marginRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <carbon.widget.RelativeLayout
         android:padding="@dimen/carbon_padding"
@@ -63,14 +63,14 @@
             android:layout_centerInParent="true"
             app:carbon_src="@raw/ic_settings_input_svideo_24px"
             android:layout_width="@dimen/carbon_fabSize"
-            android:layout_height="@dimen/carbon_fabSize"/>
+            android:layout_height="@dimen/carbon_fabSize" />
 
         <carbon.widget.ProgressBar
             android:layout_centerInParent="true"
             android:id="@+id/progress4"
             app:carbon_progressStyle="circular_indeterminate"
             android:layout_width="62dp"
-            android:layout_height="62dp"/>
+            android:layout_height="62dp" />
 
     </carbon.widget.RelativeLayout>
 
@@ -80,6 +80,6 @@
         android:layout_marginRight="@dimen/carbon_padding"
         android:text="animate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </carbon.widget.LinearLayout>

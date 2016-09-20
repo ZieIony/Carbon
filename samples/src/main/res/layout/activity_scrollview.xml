@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.ScrollView
         android:id="@+id/scrollView"
@@ -25,55 +25,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="button"/>
+                android:text="button" />
 
             <carbon.widget.TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="text"/>
+                android:text="text" />
 
             <carbon.widget.TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="text"/>
+                android:text="text" />
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="button"/>
+                android:text="button" />
 
             <carbon.widget.TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="text"/>
+                android:text="text" />
 
             <carbon.widget.TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="text"/>
+                android:text="text" />
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="button"/>
+                android:text="button" />
 
             <carbon.widget.TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="text"/>
+                android:text="text" />
 
             <carbon.widget.TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:text="text"/>
+                android:text="text" />
         </carbon.widget.LinearLayout>
 
     </carbon.widget.ScrollView>

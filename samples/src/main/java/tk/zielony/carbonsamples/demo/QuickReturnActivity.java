@@ -28,7 +28,7 @@ public class QuickReturnActivity extends Activity {
         setContentView(R.layout.activity_quickreturn);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new FruitAdapter(fruits,null));
+        recyclerView.setAdapter(new FruitAdapter(fruits, null));
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView.addOnScrollListener(new android.support.v7.widget.RecyclerView.OnScrollListener() {

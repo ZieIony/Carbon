@@ -61,6 +61,7 @@
             android:name=".widget.SpinnerActivity"
             android:label="@string/app_name" />
         <activity
+            android:theme="@style/AppTheme.Translucent"
             android:name=".widget.NavigationViewActivity"
             android:label="@string/app_name" />
         <activity

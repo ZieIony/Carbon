@@ -70,14 +70,14 @@ public class ToolbarWidgetWrapper implements DecorToolbar {
     }
 
     public ToolbarWidgetWrapper(Toolbar toolbar, boolean style,
-            int defaultNavigationContentDescription, int defaultNavigationIcon) {
+                                int defaultNavigationContentDescription, int defaultNavigationIcon) {
         mToolbar = toolbar;
         mTitle = toolbar.getTitle();
         mSubtitle = toolbar.getSubtitle();
         mTitleSet = mTitle != null;
         mNavIcon = toolbar.getNavigationIcon();
         final TintTypedArray a = TintTypedArray.obtainStyledAttributes(toolbar.getContext(),
-                    null, R.styleable.ActionBar, R.attr.actionBarStyle, 0);
+                null, R.styleable.ActionBar, R.attr.actionBarStyle, 0);
         mDefaultNavigationIcon = a.getDrawable(R.styleable.ActionBar_homeAsUpIndicator);
         if (style) {
             final CharSequence title = a.getText(R.styleable.ActionBar_title);
@@ -156,6 +156,7 @@ public class ToolbarWidgetWrapper implements DecorToolbar {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             final ActionMenuItem mNavItem = new ActionMenuItem(mToolbar.getContext(),
                     0, android.R.id.home, 0, 0, mTitle);
+
             @Override
             public void onClick(View v) {
                 if (mWindowCallback != null && mMenuPrepared) {
@@ -484,7 +485,7 @@ public class ToolbarWidgetWrapper implements DecorToolbar {
 
     @Override
     public void setDropdownParams(SpinnerAdapter adapter,
-            AdapterView.OnItemSelectedListener listener) {
+                                  AdapterView.OnItemSelectedListener listener) {
         ensureSpinner();
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(listener);
@@ -536,7 +537,7 @@ public class ToolbarWidgetWrapper implements DecorToolbar {
 
     @Override
     public ViewPropertyAnimatorCompat setupAnimatorToVisibility(final int visibility,
-            final long duration) {
+                                                                final long duration) {
         return ViewCompat.animate(mToolbar)
                 .alpha(visibility == View.VISIBLE ? 1f : 0f)
                 .setDuration(duration)
@@ -643,7 +644,7 @@ public class ToolbarWidgetWrapper implements DecorToolbar {
 
     @Override
     public void setMenuCallbacks(MenuPresenter.Callback actionMenuPresenterCallback,
-            MenuBuilder.Callback menuBuilderCallback) {
+                                 MenuBuilder.Callback menuBuilderCallback) {
         mToolbar.setMenuCallbacks(actionMenuPresenterCallback, menuBuilderCallback);
     }
 

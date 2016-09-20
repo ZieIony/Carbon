@@ -1,11 +1,11 @@
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           xmlns:tools="http://schemas.android.com/tools"
-                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                           android:fitsSystemWindows="true"
-                           app:carbon_insetColor="?attr/colorPrimary"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    app:carbon_insetColor="?attr/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
     <carbon.internal.FastLayout
         android:id="@+id/button"
@@ -27,14 +27,14 @@
                 android:minWidth="100dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
             <TextView
                 android:padding="@dimen/carbon_padding"
                 android:singleLine="true"
                 android:text="Launcher icon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </carbon.internal.FastLayout>
 </carbon.widget.FrameLayout>

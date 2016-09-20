@@ -108,7 +108,7 @@ public class InputLayout extends RelativeLayout {
             }
 
             if (!isInEditMode())
-              setError(a.getString(R.styleable.InputLayout_carbon_errorMessage));
+                setError(a.getString(R.styleable.InputLayout_carbon_errorMessage));
 
             setMinCharacters(a.getInt(R.styleable.InputLayout_carbon_minCharacters, 0));
             setMaxCharacters(a.getInt(R.styleable.InputLayout_carbon_maxCharacters, Integer.MAX_VALUE));

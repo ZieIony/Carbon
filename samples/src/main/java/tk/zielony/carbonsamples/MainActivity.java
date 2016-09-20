@@ -4,11 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
-import carbon.Carbon;
-import carbon.internal.DebugOverlay;
-import carbon.widget.ImageView;
 import carbon.widget.RecyclerView;
 
 public class MainActivity extends Activity {
@@ -18,7 +14,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Samples.initToolbar(this,getString(R.string.app_name));
+        Samples.initToolbar(this, getString(R.string.app_name));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{

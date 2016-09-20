@@ -31,7 +31,7 @@
     <color name="carbon_text_disabled_light">#61000000</color>
 
 
-    <style name="carbon_TextAppearance" parent="@android:style/TextAppearance"/>
+    <style name="carbon_TextAppearance" parent="@android:style/TextAppearance" />
 
 
     <style name="carbon_TextAppearance.Headline">

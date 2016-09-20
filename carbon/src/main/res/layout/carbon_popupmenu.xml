@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                           android:id="@+id/carbon_popupContainer"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:padding="@dimen/carbon_padding"
-                           android:visibility="invisible"
-                           app:carbon_inAnimation="fade"
-                           app:carbon_outAnimation="fade">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/carbon_popupContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/carbon_padding"
+    android:visibility="invisible"
+    app:carbon_inAnimation="fade"
+    app:carbon_outAnimation="fade">
 
     <carbon.widget.FrameLayout
         android:id="@+id/carbon_popupContent"
@@ -22,6 +22,6 @@
             android:layout_height="match_parent"
             android:fadeScrollbars="false"
             android:paddingBottom="@dimen/carbon_paddingHalf"
-            android:paddingTop="@dimen/carbon_paddingHalf"/>
+            android:paddingTop="@dimen/carbon_paddingHalf" />
     </carbon.widget.FrameLayout>
 </carbon.widget.FrameLayout>

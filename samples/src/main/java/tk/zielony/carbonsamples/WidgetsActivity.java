@@ -34,7 +34,7 @@ public class WidgetsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        Samples.initToolbar(this,getString(R.string.widgetsActivity_title));
+        Samples.initToolbar(this, getString(R.string.widgetsActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{

@@ -18,6 +18,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <carbon.widget.TextView
+                android:textAppearance="?attr/carbon_textAppearanceCaption"
+                android:text="Plain buttons with different styles"
+                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginRight="@dimen/carbon_margin"
+                android:layout_marginTop="@dimen/carbon_marginHalf"
+                android:layout_marginBottom="@dimen/carbon_marginHalf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <carbon.widget.Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +48,6 @@
                 style="@style/carbon_Button"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:layout_gravity="right"
                 android:layout_margin="@dimen/carbon_padding"
                 android:background="#ffffffff"
                 android:paddingBottom="0dp"
@@ -61,10 +70,23 @@
                 style="@style/carbon_Button.Flat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
                 android:layout_margin="@dimen/carbon_padding"
                 android:tag="enable"
                 android:text="flat button" />
+
+            <carbon.widget.Divider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <carbon.widget.TextView
+                android:textAppearance="?attr/carbon_textAppearanceCaption"
+                android:text="Floating action buttons with vector graphics and proper sizes"
+                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginRight="@dimen/carbon_margin"
+                android:layout_marginTop="@dimen/carbon_marginHalf"
+                android:layout_marginBottom="@dimen/carbon_marginHalf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <carbon.widget.FloatingActionButton
                 android:layout_width="@dimen/carbon_fabSize"
@@ -86,6 +108,7 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:padding="@dimen/carbon_padding"
                 android:scaleType="fitXY"
+                app:carbon_backgroundTint="?attr/colorPrimary"
                 android:src="@drawable/ic_launcher"
                 android:tag="enable" />
         </carbon.widget.LinearLayout>

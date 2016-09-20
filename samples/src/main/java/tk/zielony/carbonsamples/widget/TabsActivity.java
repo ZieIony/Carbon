@@ -28,7 +28,7 @@ public class TabsActivity extends Activity {
             }
 
             public View getView(int position, ViewPager pager) {
-                return new RelativeLayout(pager.getContext(),null,R.attr.carbon_cardViewStyle);
+                return new RelativeLayout(pager.getContext(), null, R.attr.carbon_cardViewStyle);
             }
 
             @Override

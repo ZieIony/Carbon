@@ -18,6 +18,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         app:carbon_src="@raw/carbon_arrow_down"
-        app:carbon_tint="?attr/colorControlNormal"/>
+        app:carbon_tint="?attr/colorControlNormal" />
 
 </carbon.widget.RelativeLayout>

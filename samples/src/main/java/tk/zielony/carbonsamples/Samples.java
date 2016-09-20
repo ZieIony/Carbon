@@ -23,7 +23,7 @@ public class Samples {
     public static void initToolbar(final Activity activity, String title) {
         final DebugOverlay overlay = new DebugOverlay(activity);
 
-        Toolbar toolbar= (Toolbar) activity.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
         toolbar.setTitle(title);
 
         final ImageView debug = (ImageView) activity.findViewById(R.id.debug);

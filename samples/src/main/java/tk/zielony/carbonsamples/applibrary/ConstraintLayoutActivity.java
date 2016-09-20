@@ -1,9 +1,7 @@
 package tk.zielony.carbonsamples.applibrary;
 
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 
 import tk.zielony.carbonsamples.R;
 

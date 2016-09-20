@@ -30,9 +30,13 @@ import carbon.internal.SpinnerMenu;
  * Created by Marcin on 2015-06-11.
  */
 public class Spinner extends EditText {
+
     SpinnerMenu spinnerMenu;
+
     private int selectedIndex;
+
     Adapter defaultAdapter;
+
     AdapterView.OnItemSelectedListener onItemSelectedListener;
 
     private boolean isShowingPopup = false;
@@ -89,11 +93,10 @@ public class Spinner extends EditText {
 
         a.recycle();
 
-        spinnerMenu = new SpinnerMenu(new ContextThemeWrapper(context, theme));
-        spinnerMenu.setOnItemClickedListener(onItemClickedListener);
-
         defaultAdapter = new Adapter();
         spinnerMenu.setAdapter(defaultAdapter);
+        spinnerMenu = new SpinnerMenu(new ContextThemeWrapper(context, theme));
+        spinnerMenu.setOnItemClickedListener(onItemClickedListener);
         spinnerMenu.setOnDismissListener(() -> isShowingPopup = false);
 
         setOnClickListener(view -> {
@@ -104,8 +107,9 @@ public class Spinner extends EditText {
 
     public void setSelectedIndex(int index) {
         selectedIndex = index;
-        if (getAdapter() != null)
+        if (getAdapter() != null) {
             setText(getAdapter().getItem(index).toString());
+        }
     }
 
     public int getSelectedIndex() {
@@ -130,8 +134,9 @@ public class Spinner extends EditText {
         public void onItemClicked(int position) {
             setText(spinnerMenu.getAdapter().getItem(position).toString());
             selectedIndex = position;
-            if (onItemSelectedListener != null)
+            if (onItemSelectedListener != null) {
                 onItemSelectedListener.onItemSelected(null, null, selectedIndex, 0);
+            }
             spinnerMenu.dismiss();
         }
     };
@@ -162,6 +167,7 @@ public class Spinner extends EditText {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView tv;
 
         public ViewHolder(View itemView) {
@@ -176,8 +182,9 @@ public class Spinner extends EditText {
 
         if (spinnerMenu != null) {
             carbon.widget.FrameLayout container = (FrameLayout) spinnerMenu.getContentView().findViewById(R.id.carbon_popupContainer);
-            if (container.getAnimator() == null)
+            if (container.getAnimator() == null) {
                 spinnerMenu.update();
+            }
         }
 
         return result;
@@ -187,16 +194,18 @@ public class Spinner extends EditText {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if (isShowingPopup)
+        if (isShowingPopup) {
             spinnerMenu.showImmediate(Spinner.this);
+        }
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (isShowingPopup)
+        if (isShowingPopup) {
             spinnerMenu.dismissImmediate();
+        }
     }
 
     @Override
@@ -228,6 +237,7 @@ public class Spinner extends EditText {
     }
 
     static class SavedState implements Parcelable {
+
         public static final SavedState EMPTY_STATE = new SavedState() {
         };
 
@@ -253,7 +263,6 @@ public class Spinner extends EditText {
         public int describeContents() {
             return 0;
         }
-
 
         @Override
         public void writeToParcel(@NonNull Parcel out, int flags) {

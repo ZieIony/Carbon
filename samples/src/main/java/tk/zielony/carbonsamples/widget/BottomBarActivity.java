@@ -9,7 +9,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2016-03-17.
  */
-public class BottomBarActivity extends Activity{
+public class BottomBarActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

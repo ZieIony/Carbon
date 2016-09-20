@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                           android:fitsSystemWindows="true"
-                           app:carbon_insetColor="?attr/colorPrimary"
-                           android:orientation="vertical"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    app:carbon_insetColor="?attr/colorPrimary"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <carbon.widget.LinearLayout
         android:id="@+id/shareToolbar"
@@ -25,7 +25,7 @@
             android:id="@+id/shareIcon"
             app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
-            android:layout_height="@dimen/carbon_fabSize"/>
+            android:layout_height="@dimen/carbon_fabSize" />
 
         <carbon.widget.ImageView
             android:tag="animate"
@@ -36,7 +36,7 @@
             android:padding="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
-            android:layout_height="@dimen/carbon_fabSize"/>
+            android:layout_height="@dimen/carbon_fabSize" />
 
         <carbon.widget.ImageView
             android:tag="animate"
@@ -47,7 +47,7 @@
             android:padding="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
-            android:layout_height="@dimen/carbon_fabSize"/>
+            android:layout_height="@dimen/carbon_fabSize" />
 
         <carbon.widget.ImageView
             android:tag="animate"
@@ -58,7 +58,7 @@
             android:padding="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
-            android:layout_height="@dimen/carbon_fabSize"/>
+            android:layout_height="@dimen/carbon_fabSize" />
 
         <carbon.widget.ImageView
             android:tag="animate"
@@ -69,6 +69,6 @@
             android:padding="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_airplanemode_on_24px"
             android:layout_width="@dimen/carbon_fabSize"
-            android:layout_height="@dimen/carbon_fabSize"/>
+            android:layout_height="@dimen/carbon_fabSize" />
     </carbon.widget.LinearLayout>
 </carbon.widget.FrameLayout>

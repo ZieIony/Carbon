@@ -1,10 +1,14 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:fitsSystemWindows="true"
-                            app:carbon_insetColor="?attr/colorPrimary"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    app:carbon_insetColor="?attr/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <carbon.widget.TextView
+        android:text="Carbon correctly handles z-order of views placed inside Carbon layouts. Elevation is added to the static z value and affects z-order as well"
+        style="@style/sectionDescription" />
 
     <carbon.widget.FrameLayout
         android:id="@+id/layout"
@@ -14,21 +18,21 @@
         <carbon.widget.Button
             android:text="Button1"
             app:carbon_elevation="2dp"
-            android:background="#ffafafff"
+            app:backgroundTint="#ffafafff"
             android:layout_gravity="left"
             android:layout_margin="@dimen/carbon_padding"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <carbon.widget.Button
             android:text="Button2"
             app:carbon_elevation="3dp"
-            android:background="#ffffafaf"
+            app:backgroundTint="#ffffafaf"
             android:layout_gravity="left"
             android:layout_marginTop="@dimen/carbon_padding"
             android:layout_marginLeft="70dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </carbon.widget.FrameLayout>
 
     <carbon.widget.Button
@@ -36,5 +40,5 @@
         android:text="Change Order"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 </carbon.widget.LinearLayout>

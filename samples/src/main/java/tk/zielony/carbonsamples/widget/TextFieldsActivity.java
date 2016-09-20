@@ -2,11 +2,7 @@ package tk.zielony.carbonsamples.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.CompoundButton;
 
-import carbon.widget.CheckBox;
-import carbon.widget.EditText;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 
@@ -19,6 +15,6 @@ public class TextFieldsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_textfields);
 
-        Samples.initToolbar(this,getString(R.string.textFieldsActivity_title));
+        Samples.initToolbar(this, getString(R.string.textFieldsActivity_title));
     }
 }

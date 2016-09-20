@@ -16,7 +16,7 @@ public class CheckBoxRadioActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkbox_radio);
 
-        Samples.initToolbar(this,getString(R.string.checkBoxRadioActivity_title));
+        Samples.initToolbar(this, getString(R.string.checkBoxRadioActivity_title));
 
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
 

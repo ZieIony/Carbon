@@ -54,7 +54,7 @@ public class FloatingActionMenu extends PopupWindow {
         this.anchor = anchor;
     }
 
-    public void build(){
+    public void build() {
         int[] location = new int[2];
         anchor.getLocationOnScreen(location);
 

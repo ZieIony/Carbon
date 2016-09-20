@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:orientation="horizontal">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_chipIcon"
         android:layout_width="@dimen/carbon_chipHeight"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/carbon_marginHalf"
-        app:carbon_cornerRadius="@dimen/carbon_margin"/>
+        app:carbon_cornerRadius="@dimen/carbon_margin" />
 
     <carbon.widget.TextView
         android:id="@+id/carbon_chipText"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical" />
 
     <carbon.widget.ImageView
         android:scaleType="center"
@@ -27,6 +27,6 @@
         app:carbon_cornerRadius="@dimen/carbon_margin"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless"
-        app:carbon_src="@raw/carbon_remove"/>
+        app:carbon_src="@raw/carbon_remove" />
 
 </merge>

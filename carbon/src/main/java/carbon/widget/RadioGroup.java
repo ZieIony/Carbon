@@ -31,25 +31,24 @@ import carbon.R;
  * <p>This class is used to create a multiple-exclusion scope for a set of radio
  * buttons. Checking one radio button that belongs to a radio group unchecks
  * any previously checked radio button within the same group.</p>
- *
+ * <p>
  * <p>Intially, all of the radio buttons are unchecked. While it is not possible
  * to uncheck a particular radio button, the radio group can be cleared to
  * remove the checked state.</p>
- *
+ * <p>
  * <p>The selection is identified by the unique id of the radio button as defined
  * in the XML layout file.</p>
- *
+ * <p>
  * <p><strong>XML Attributes</strong></p>
- * <p>See {@link android.R.styleable#RadioGroup RadioGroup Attributes}, 
+ * <p>See {@link android.R.styleable#RadioGroup RadioGroup Attributes},
  * {@link android.R.styleable#LinearLayout LinearLayout Attributes},
  * {@link android.R.styleable#ViewGroup ViewGroup Attributes},
  * {@link android.R.styleable#View View Attributes}</p>
  * <p>Also see
  * {@link android.widget.LinearLayout.LayoutParams LinearLayout.LayoutParams}
  * for layout attributes.</p>
- * 
- * @see RadioButton
  *
+ * @see RadioButton
  */
 public class RadioGroup extends LinearLayout {
     // holds the checked id; the selection is empty by default
@@ -143,7 +142,6 @@ public class RadioGroup extends LinearLayout {
      * such an operation is equivalent to invoking {@link #clearCheck()}.</p>
      *
      * @param id the unique id of the radio button to select in this group
-     *
      * @see #getCheckedRadioButtonId()
      * @see #clearCheck()
      */
@@ -183,11 +181,9 @@ public class RadioGroup extends LinearLayout {
      * Upon empty selection, the returned value is -1.</p>
      *
      * @return the unique id of the selected radio button in this group
-     *
+     * @attr ref android.R.styleable#RadioGroup_checkedButton
      * @see #check(int)
      * @see #clearCheck()
-     *
-     * @attr ref android.R.styleable#RadioGroup_checkedButton
      */
     public int getCheckedRadioButtonId() {
         return mCheckedId;
@@ -245,18 +241,17 @@ public class RadioGroup extends LinearLayout {
     @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
-       // info.setClassName(RadioGroup.class.getName());
+        // info.setClassName(RadioGroup.class.getName());
     }
 
     /**
      * <p>This set of layout parameters defaults the width and the height of
      * the children to {@link #WRAP_CONTENT} when they are not specified in the
      * XML file. Otherwise, this class ussed the value read from the XML file.</p>
-     *
+     * <p>
      * <p>See
      * {@link android.R.styleable#LinearLayout_Layout LinearLayout Attributes}
      * for a list of all child view attributes that this class supports.</p>
-     *
      */
     public static class LayoutParams extends LinearLayout.LayoutParams {
         /**
@@ -300,20 +295,20 @@ public class RadioGroup extends LinearLayout {
          * height to  {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT}
          * when not specified in the XML file.</p>
          *
-         * @param a the styled attributes set
-         * @param widthAttr the width attribute to fetch
+         * @param a          the styled attributes set
+         * @param widthAttr  the width attribute to fetch
          * @param heightAttr the height attribute to fetch
          */
         @Override
         protected void setBaseAttributes(TypedArray a,
-                int widthAttr, int heightAttr) {
+                                         int widthAttr, int heightAttr) {
 
             if (a.hasValue(widthAttr)) {
                 width = a.getLayoutDimension(widthAttr, "layout_width");
             } else {
                 width = WRAP_CONTENT;
             }
-            
+
             if (a.hasValue(heightAttr)) {
                 height = a.getLayoutDimension(heightAttr, "layout_height");
             } else {
@@ -331,7 +326,7 @@ public class RadioGroup extends LinearLayout {
          * <p>Called when the checked radio button has changed. When the
          * selection is cleared, checkedId is -1.</p>
          *
-         * @param group the group in which the checked radio button has changed
+         * @param group     the group in which the checked radio button has changed
          * @param checkedId the unique identifier of the newly checked radio button
          */
         public void onCheckedChanged(RadioGroup group, int checkedId);

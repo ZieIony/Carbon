@@ -60,10 +60,14 @@ public class Toolbar extends ViewGroup {
     private ImageButton mCollapseButtonView;
     View mExpandedActionView;
 
-    /** Context against which to inflate popup menus. */
+    /**
+     * Context against which to inflate popup menus.
+     */
     private Context mPopupContext;
 
-    /** Theme resource against which to inflate popup menus. */
+    /**
+     * Theme resource against which to inflate popup menus.
+     */
     private int mPopupTheme;
 
     private int mTitleTextAppearance;
@@ -119,7 +123,8 @@ public class Toolbar extends ViewGroup {
     private int mMinHeight;
 
     private final Runnable mShowOverflowMenuRunnable = new Runnable() {
-        @Override public void run() {
+        @Override
+        public void run() {
             showOverflowMenu();
         }
     };
@@ -238,7 +243,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * @return resource identifier of the theme used to inflate popup menus, or
-     *         0 if menus are inflated against the toolbar theme
+     * 0 if menus are inflated against the toolbar theme
      * @see #setPopupTheme(int)
      */
     public int getPopupTheme() {
@@ -254,7 +259,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set a logo drawable from a resource id.
-     *
+     * <p>
      * <p>This drawable should generally take the place of title text. The logo cannot be
      * clicked. Apps using a logo should also supply a description using
      * {@link #setLogoDescription(int)}.</p>
@@ -265,7 +270,9 @@ public class Toolbar extends ViewGroup {
         setLogo(getContext().getResources().getDrawable(resId));
     }
 
-    /** @hide */
+    /**
+     * @hide
+     */
     public boolean canShowOverflowMenu() {
         return getVisibility() == VISIBLE && mMenuView != null && mMenuView.isOverflowReserved();
     }
@@ -280,7 +287,9 @@ public class Toolbar extends ViewGroup {
         return mMenuView != null && mMenuView.isOverflowMenuShowing();
     }
 
-    /** @hide */
+    /**
+     * @hide
+     */
     public boolean isOverflowMenuShowPending() {
         return mMenuView != null && mMenuView.isOverflowMenuShowPending();
     }
@@ -304,40 +313,40 @@ public class Toolbar extends ViewGroup {
     }
 
     /** @ hide * /
-    public void setMenu(MenuBuilder menu, ActionMenuPresenter outerPresenter) {
-        if (menu == null && mMenuView == null) {
-            return;
-        }
+     public void setMenu(MenuBuilder menu, ActionMenuPresenter outerPresenter) {
+     if (menu == null && mMenuView == null) {
+     return;
+     }
 
-        ensureMenuView();
-        final MenuBuilder oldMenu = mMenuView.peekMenu();
-        if (oldMenu == menu) {
-            return;
-        }
+     ensureMenuView();
+     final MenuBuilder oldMenu = mMenuView.peekMenu();
+     if (oldMenu == menu) {
+     return;
+     }
 
-        if (oldMenu != null) {
-            oldMenu.removeMenuPresenter(mOuterActionMenuPresenter);
-            oldMenu.removeMenuPresenter(mExpandedMenuPresenter);
-        }
+     if (oldMenu != null) {
+     oldMenu.removeMenuPresenter(mOuterActionMenuPresenter);
+     oldMenu.removeMenuPresenter(mExpandedMenuPresenter);
+     }
 
-        if (mExpandedMenuPresenter == null) {
-            mExpandedMenuPresenter = new ExpandedActionViewMenuPresenter();
-        }
+     if (mExpandedMenuPresenter == null) {
+     mExpandedMenuPresenter = new ExpandedActionViewMenuPresenter();
+     }
 
-        outerPresenter.setExpandedActionViewsExclusive(true);
-        if (menu != null) {
-            menu.addMenuPresenter(outerPresenter, mPopupContext);
-            menu.addMenuPresenter(mExpandedMenuPresenter, mPopupContext);
-        } else {
-            outerPresenter.initForMenu(mPopupContext, null);
-            mExpandedMenuPresenter.initForMenu(mPopupContext, null);
-            outerPresenter.updateMenuView(true);
-            mExpandedMenuPresenter.updateMenuView(true);
-        }
-        mMenuView.setPopupTheme(mPopupTheme);
-        mMenuView.setPresenter(outerPresenter);
-        mOuterActionMenuPresenter = outerPresenter;
-    }*/
+     outerPresenter.setExpandedActionViewsExclusive(true);
+     if (menu != null) {
+     menu.addMenuPresenter(outerPresenter, mPopupContext);
+     menu.addMenuPresenter(mExpandedMenuPresenter, mPopupContext);
+     } else {
+     outerPresenter.initForMenu(mPopupContext, null);
+     mExpandedMenuPresenter.initForMenu(mPopupContext, null);
+     outerPresenter.updateMenuView(true);
+     mExpandedMenuPresenter.updateMenuView(true);
+     }
+     mMenuView.setPopupTheme(mPopupTheme);
+     mMenuView.setPresenter(outerPresenter);
+     mOuterActionMenuPresenter = outerPresenter;
+     }*/
 
     /**
      * Dismiss all currently showing popup menus, including overflow or submenus.
@@ -348,7 +357,9 @@ public class Toolbar extends ViewGroup {
         }
     }
 
-    /** @hide */
+    /**
+     * @hide
+     */
     public boolean isTitleTruncated() {
         if (mTitleTextView == null) {
             return false;
@@ -370,7 +381,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set a logo drawable.
-     *
+     * <p>
      * <p>This drawable should generally take the place of title text. The logo cannot be
      * clicked. Apps using a logo should also supply a description using
      * {@link #setLogoDescription(int)}.</p>
@@ -405,7 +416,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set a description of the toolbar's logo.
-     *
+     * <p>
      * <p>This description will be used for accessibility or other similar descriptions
      * of the UI.</p>
      *
@@ -417,7 +428,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set a description of the toolbar's logo.
-     *
+     * <p>
      * <p>This description will be used for accessibility or other similar descriptions
      * of the UI.</p>
      *
@@ -449,7 +460,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Check whether this Toolbar is currently hosting an expanded action view.
-     *
+     * <p>
      * <p>An action view may be expanded either directly from the
      * {@link android.view.MenuItem MenuItem} it belongs to or by user action. If the Toolbar
      * has an expanded action view it can be collapsed using the {@link #collapseActionView()}
@@ -465,7 +476,7 @@ public class Toolbar extends ViewGroup {
     /**
      * Collapse a currently expanded action view. If this Toolbar does not have an
      * expanded action view this method has no effect.
-     *
+     * <p>
      * <p>An action view may be expanded either directly from the
      * {@link android.view.MenuItem MenuItem} it belongs to or by user action.</p>
      *
@@ -490,7 +501,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set the title of this toolbar.
-     *
+     * <p>
      * <p>A title should be used as the anchor for a section of content. It should
      * describe or name the content being viewed.</p>
      *
@@ -502,7 +513,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set the title of this toolbar.
-     *
+     * <p>
      * <p>A title should be used as the anchor for a section of content. It should
      * describe or name the content being viewed.</p>
      *
@@ -546,7 +557,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set the subtitle of this toolbar.
-     *
+     * <p>
      * <p>Subtitles should express extended information about the current content.</p>
      *
      * @param resId String resource ID
@@ -557,7 +568,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set the subtitle of this toolbar.
-     *
+     * <p>
      * <p>Subtitles should express extended information about the current content.</p>
      *
      * @param subtitle Subtitle to set
@@ -678,10 +689,10 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set the icon to use for the toolbar's navigation button.
-     *
+     * <p>
      * <p>The navigation button appears at the start of the toolbar if present. Setting an icon
      * will make the navigation button visible.</p>
-     *
+     * <p>
      * <p>If you use a navigation icon you should also set a description for its action using
      * {@link #setNavigationContentDescription(int)}. This is used for accessibility and
      * tooltips.</p>
@@ -694,10 +705,10 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set the icon to use for the toolbar's navigation button.
-     *
+     * <p>
      * <p>The navigation button appears at the start of the toolbar if present. Setting an icon
      * will make the navigation button visible.</p>
-     *
+     * <p>
      * <p>If you use a navigation icon you should also set a description for its action using
      * {@link #setNavigationContentDescription(int)}. This is used for accessibility and
      * tooltips.</p>
@@ -731,7 +742,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set a listener to respond to navigation events.
-     *
+     * <p>
      * <p>This listener will be called whenever the user clicks the navigation button
      * at the start of the toolbar. An icon must be set for the navigation button to appear.</p>
      *
@@ -745,7 +756,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Return the Menu shown in the toolbar.
-     *
+     * <p>
      * <p>Applications that wish to populate the toolbar's menu can do so from here. To use
      * an XML menu resource, use {@link #inflateMenu(int)}.</p>
      *
@@ -788,7 +799,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Inflate a menu resource into this toolbar.
-     *
+     * <p>
      * <p>Inflate an XML menu resource into this toolbar. Existing items in the menu will not
      * be modified or removed.</p>
      *
@@ -800,7 +811,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set a listener to respond to menu item click events.
-     *
+     * <p>
      * <p>This listener will be invoked whenever a user selects a menu item from
      * the action buttons presented at the end of the toolbar or the associated overflow.</p>
      *
@@ -812,14 +823,13 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set the content insets for this toolbar relative to layout direction.
-     *
+     * <p>
      * <p>The content inset affects the valid area for Toolbar content other than
      * the navigation button and menu. Insets define the minimum margin for these components
      * and can be used to effectively align Toolbar content along well-known gridlines.</p>
      *
      * @param contentInsetStart Content inset for the toolbar starting edge
-     * @param contentInsetEnd Content inset for the toolbar ending edge
-     *
+     * @param contentInsetEnd   Content inset for the toolbar ending edge
      * @see #setContentInsetsAbsolute(int, int)
      * @see #getContentInsetStart()
      * @see #getContentInsetEnd()
@@ -832,13 +842,12 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Get the starting content inset for this toolbar.
-     *
+     * <p>
      * <p>The content inset affects the valid area for Toolbar content other than
      * the navigation button and menu. Insets define the minimum margin for these components
      * and can be used to effectively align Toolbar content along well-known gridlines.</p>
      *
      * @return The starting content inset for this toolbar
-     *
      * @see #setContentInsetsRelative(int, int)
      * @see #setContentInsetsAbsolute(int, int)
      * @see #getContentInsetEnd()
@@ -851,13 +860,12 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Get the ending content inset for this toolbar.
-     *
+     * <p>
      * <p>The content inset affects the valid area for Toolbar content other than
      * the navigation button and menu. Insets define the minimum margin for these components
      * and can be used to effectively align Toolbar content along well-known gridlines.</p>
      *
      * @return The ending content inset for this toolbar
-     *
      * @see #setContentInsetsRelative(int, int)
      * @see #setContentInsetsAbsolute(int, int)
      * @see #getContentInsetStart()
@@ -870,14 +878,13 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Set the content insets for this toolbar.
-     *
+     * <p>
      * <p>The content inset affects the valid area for Toolbar content other than
      * the navigation button and menu. Insets define the minimum margin for these components
      * and can be used to effectively align Toolbar content along well-known gridlines.</p>
      *
-     * @param contentInsetLeft Content inset for the toolbar's left edge
+     * @param contentInsetLeft  Content inset for the toolbar's left edge
      * @param contentInsetRight Content inset for the toolbar's right edge
-     *
      * @see #setContentInsetsAbsolute(int, int)
      * @see #getContentInsetStart()
      * @see #getContentInsetEnd()
@@ -890,13 +897,12 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Get the left content inset for this toolbar.
-     *
+     * <p>
      * <p>The content inset affects the valid area for Toolbar content other than
      * the navigation button and menu. Insets define the minimum margin for these components
      * and can be used to effectively align Toolbar content along well-known gridlines.</p>
      *
      * @return The left content inset for this toolbar
-     *
      * @see #setContentInsetsRelative(int, int)
      * @see #setContentInsetsAbsolute(int, int)
      * @see #getContentInsetStart()
@@ -909,13 +915,12 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Get the right content inset for this toolbar.
-     *
+     * <p>
      * <p>The content inset affects the valid area for Toolbar content other than
      * the navigation button and menu. Insets define the minimum margin for these components
      * and can be used to effectively align Toolbar content along well-known gridlines.</p>
      *
      * @return The right content inset for this toolbar
-     *
      * @see #setContentInsetsRelative(int, int)
      * @see #setContentInsetsAbsolute(int, int)
      * @see #getContentInsetStart()
@@ -1262,7 +1267,7 @@ public class Toolbar extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        final boolean isRtl =  ViewCompat.getLayoutDirection(this) ==  ViewCompat.LAYOUT_DIRECTION_RTL;
+        final boolean isRtl = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
         final int width = getWidth();
         final int height = getHeight();
         final int paddingLeft = getPaddingLeft();
@@ -1569,11 +1574,11 @@ public class Toolbar extends ViewGroup {
      * Prepare a list of non-SYSTEM child views. If the layout direction is RTL
      * this will be in reverse child order.
      *
-     * @param views List to populate. It will be cleared before use.
+     * @param views   List to populate. It will be cleared before use.
      * @param gravity Horizontal gravity to match against
      */
     private void addCustomViewsWithGravity(List<View> views, int gravity) {
-        final boolean isRtl =  ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
+        final boolean isRtl = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
         final int childCount = getChildCount();
         final int absGrav = GravityCompat.getAbsoluteGravity(gravity,
                 ViewCompat.getLayoutDirection(this));
@@ -1602,7 +1607,7 @@ public class Toolbar extends ViewGroup {
     }
 
     private int getChildHorizontalGravity(int gravity) {
-        final int ld =  ViewCompat.getLayoutDirection(this);
+        final int ld = ViewCompat.getLayoutDirection(this);
         final int absGrav = GravityCompat.getAbsoluteGravity(gravity, ld);
         final int hGrav = absGrav & Gravity.HORIZONTAL_GRAVITY_MASK;
         switch (hGrav) {
@@ -1662,14 +1667,15 @@ public class Toolbar extends ViewGroup {
         return ((LayoutParams) child.getLayoutParams()).mViewType == LayoutParams.CUSTOM;
     }
 
-    /** @ hide */
+    /**
+     * @ hide
+     */
     /*public DecorToolbar getWrapper() {
         if (mWrapper == null) {
             mWrapper = new ToolbarWidgetWrapper(this, true);
         }
         return mWrapper;
     }*/
-
     private void setChildVisibilityForExpandedActionView(boolean expand) {
         final int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -1691,6 +1697,7 @@ public class Toolbar extends ViewGroup {
     /**
      * Force the toolbar to collapse to zero-height during measurement if
      * it could be considered "empty" (no visible elements with nonzero measured size)
+     *
      * @hide
      */
     public void setCollapsible(boolean collapsible) {
@@ -1700,6 +1707,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Must be called before the menu is accessed
+     *
      * @hide
      */
     public void setMenuCallbacks(MenuPresenter.Callback pcb, MenuBuilder.Callback mcb) {
@@ -1742,7 +1750,7 @@ public class Toolbar extends ViewGroup {
 
     /**
      * Layout information for child views of Toolbars.
-     *
+     * <p>
      * <p>Toolbar.LayoutParams extends ActionBar.LayoutParams for compatibility with existing
      * ActionBar API. See
      * {@link android.support.v7.app.ActionBarActivity#setSupportActionBar(Toolbar)
@@ -1963,14 +1971,14 @@ public class Toolbar extends ViewGroup {
     /**
      * Allows us to emulate the {@code android:theme} attribute for devices before L.
      * /
-    private static Context themifyContext(Context context, AttributeSet attrs, int defStyleAttr) {
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Toolbar,
-                defStyleAttr, 0);
-        final int themeId = a.getResourceId(R.styleable.Toolbar_theme, 0);
-        if (themeId != 0) {
-            context = new ContextThemeWrapper(context, themeId);
-        }
-        a.recycle();
-        return context;
-    }*/
+     private static Context themifyContext(Context context, AttributeSet attrs, int defStyleAttr) {
+     final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Toolbar,
+     defStyleAttr, 0);
+     final int themeId = a.getResourceId(R.styleable.Toolbar_theme, 0);
+     if (themeId != 0) {
+     context = new ContextThemeWrapper(context, themeId);
+     }
+     a.recycle();
+     return context;
+     }*/
 }

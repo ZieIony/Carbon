@@ -2,6 +2,15 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="carbon_Theme.Light.NoActionBar">
+        <item name="android:statusBarColor">#ff303F9F</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#ff3F51B5</item>
+        <item name="colorPrimaryDark">#ff303F9F</item>
+        <item name="colorAccent">#ffFF4081</item>
+        <item name="carbon_colorError">@color/carbon_amber_400</item>
+    </style>
+
+    <style name="AppTheme.Translucent">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <!-- Customize your theme here. -->
@@ -41,4 +50,13 @@
         <item name="carbon_fontPath">"carbon/Roboto-Regular.ttf"</item>
     </style>
 
+    <style name="sectionDescription">
+        <item name="android:textAppearance">?attr/carbon_textAppearanceCaption</item>
+        <item name="android:layout_marginLeft">@dimen/carbon_margin</item>
+        <item name="android:layout_marginRight">@dimen/carbon_margin</item>
+        <item name="android:layout_marginTop">@dimen/carbon_marginHalf</item>
+        <item name="android:layout_marginBottom">@dimen/carbon_marginHalf</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

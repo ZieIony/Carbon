@@ -7,5 +7,6 @@ import android.view.View;
  */
 public interface Row<Type> {
     View getView();
+
     void bind(Type data);
 }

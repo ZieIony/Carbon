@@ -86,7 +86,7 @@ public class BottomBar extends FrameLayout {
                         deselectItem(activeView);
                     }
                     selectItem(view);
-                    if(listener!=null)
+                    if (listener != null)
                         listener.onMenuItemClick(item);
                 }
             });
@@ -161,19 +161,19 @@ public class BottomBar extends FrameLayout {
         animator2.start();
     }
 
-    public int getSelectedIndex(){
-        if(activeView==null)
+    public int getSelectedIndex() {
+        if (activeView == null)
             return -1;
         return content.indexOfChild(activeView);
     }
 
-    public void setSelectedIndex(int index){
-        if(activeView!=null)
+    public void setSelectedIndex(int index) {
+        if (activeView != null)
             deselectItem(activeView);
         selectItem(content.getChildAt(index));
     }
 
-    public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener){
+    public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener) {
         this.listener = listener;
     }
 

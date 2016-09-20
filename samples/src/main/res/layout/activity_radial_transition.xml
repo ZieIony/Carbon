@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                           android:fitsSystemWindows="true"
-                           app:carbon_insetColor="?attr/colorPrimary"
-                           android:orientation="vertical"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    app:carbon_insetColor="?attr/colorPrimary"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <carbon.beta.TransitionLayout
         android:id="@+id/transition"
@@ -34,7 +34,7 @@
                     android:hint="login"
                     android:textAppearance="?attr/carbon_textAppearanceBody2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <carbon.widget.EditText
                     android:textSize="20sp"
@@ -44,14 +44,14 @@
                     android:hint="password"
                     android:textAppearance="?attr/carbon_textAppearanceBody2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <carbon.widget.Button
                     android:text="login"
                     android:layout_gravity="right"
                     android:layout_margin="@dimen/carbon_padding"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </carbon.widget.LinearLayout>
 
         </carbon.widget.LinearLayout>
@@ -68,7 +68,7 @@
         <LinearLayout
             android:background="?attr/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </carbon.beta.TransitionLayout>
 
@@ -78,5 +78,5 @@
         android:layout_gravity="end|bottom"
         app:carbon_src="@raw/ic_print_24px"
         android:layout_width="@dimen/carbon_fabSize"
-        android:layout_height="@dimen/carbon_fabSize"/>
+        android:layout_height="@dimen/carbon_fabSize" />
 </carbon.widget.FrameLayout>
