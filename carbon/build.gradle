@@ -3,12 +3,12 @@ apply plugin: 'me.tatarka.retrolambda'
 // apply from: 'maven-push.gradle'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 25
     buildToolsVersion "24.0.2"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 41
         versionName "0.13.0"
         renderscriptTargetApi 20
@@ -28,12 +28,12 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:gridlayout-v7:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:gridlayout-v7:25.0.0'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
     compile 'de.greenrobot:androidsvg:1.2.2-beta-1-tweaked-2'
     compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
 }

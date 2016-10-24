@@ -86,16 +86,15 @@ public class Spinner extends EditText {
 
         }
 
-        int theme = 0;
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Spinner, defStyleAttr, R.style.carbon_Spinner);
 
-        theme = a.getResourceId(R.styleable.Spinner_carbon_popupTheme, -1);
+        int theme = a.getResourceId(R.styleable.Spinner_carbon_popupTheme, -1);
 
         a.recycle();
 
         defaultAdapter = new Adapter();
-        spinnerMenu.setAdapter(defaultAdapter);
         spinnerMenu = new SpinnerMenu(new ContextThemeWrapper(context, theme));
+        spinnerMenu.setAdapter(defaultAdapter);
         spinnerMenu.setOnItemClickedListener(onItemClickedListener);
         spinnerMenu.setOnDismissListener(() -> isShowingPopup = false);
 
@@ -107,9 +106,8 @@ public class Spinner extends EditText {
 
     public void setSelectedIndex(int index) {
         selectedIndex = index;
-        if (getAdapter() != null) {
+        if (getAdapter() != null)
             setText(getAdapter().getItem(index).toString());
-        }
     }
 
     public int getSelectedIndex() {
@@ -134,9 +132,8 @@ public class Spinner extends EditText {
         public void onItemClicked(int position) {
             setText(spinnerMenu.getAdapter().getItem(position).toString());
             selectedIndex = position;
-            if (onItemSelectedListener != null) {
+            if (onItemSelectedListener != null)
                 onItemSelectedListener.onItemSelected(null, null, selectedIndex, 0);
-            }
             spinnerMenu.dismiss();
         }
     };
@@ -163,6 +160,7 @@ public class Spinner extends EditText {
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.tv.setText(items[position]);
+            holder.itemView.setOnClickListener(view -> fireOnItemClickedEvent(holder.getAdapterPosition()));
         }
     }
 
@@ -182,9 +180,8 @@ public class Spinner extends EditText {
 
         if (spinnerMenu != null) {
             carbon.widget.FrameLayout container = (FrameLayout) spinnerMenu.getContentView().findViewById(R.id.carbon_popupContainer);
-            if (container.getAnimator() == null) {
+            if (container.getAnimator() == null)
                 spinnerMenu.update();
-            }
         }
 
         return result;
@@ -194,18 +191,16 @@ public class Spinner extends EditText {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if (isShowingPopup) {
+        if (isShowingPopup)
             spinnerMenu.showImmediate(Spinner.this);
-        }
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (isShowingPopup) {
+        if (isShowingPopup)
             spinnerMenu.dismissImmediate();
-        }
     }
 
     @Override
