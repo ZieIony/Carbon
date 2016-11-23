@@ -15,7 +15,6 @@ import carbon.R;
 import carbon.internal.SimpleTextWatcher;
 import carbon.internal.TypefaceUtils;
 import carbon.widget.InputView;
-import carbon.widget.OnValidateListener;
 import carbon.widget.RelativeLayout;
 
 /**
@@ -112,7 +111,7 @@ public class InputLayout extends RelativeLayout {
 
             setMinCharacters(a.getInt(R.styleable.InputLayout_carbon_minCharacters, 0));
             setMaxCharacters(a.getInt(R.styleable.InputLayout_carbon_maxCharacters, Integer.MAX_VALUE));
-            setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.InputLayout_carbon_labelStyle, 2)]);
+            setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.InputLayout_carbon_labelStyle, LabelStyle.Floating.ordinal())]);
             setLabel(a.getString(R.styleable.InputLayout_carbon_label));
             setRequired(a.getBoolean(R.styleable.EditText_carbon_required, false));
 
@@ -122,7 +121,7 @@ public class InputLayout extends RelativeLayout {
 
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (child instanceof TextView
+        if (child instanceof android.widget.TextView
                 && child.getId() != R.id.carbon_label
                 && child.getId() != R.id.carbon_error
                 && child.getId() != R.id.carbon_counter) {
@@ -142,24 +141,16 @@ public class InputLayout extends RelativeLayout {
         errorTextViewLayoutParams.addRule(BELOW, child.getId());
         android.widget.RelativeLayout.LayoutParams counterTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
         counterTextViewLayoutParams.addRule(BELOW, child.getId());
-        child.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (labelStyle == LabelStyle.Persistent || b) {
-                    labelTextView.setVisibility(VISIBLE);
-                } else {
-                    labelTextView.setVisibility(INVISIBLE);
-                }
+        child.setOnFocusChangeListener((view, b) -> {
+            if (labelStyle == LabelStyle.Persistent || b) {
+                labelTextView.setVisibility(VISIBLE);
+            } else {
+                labelTextView.setVisibility(INVISIBLE);
             }
         });
         if (child instanceof InputView) {
             InputView inputView = (InputView) child;
-            inputView.addOnValidateListener(new OnValidateListener() {
-                @Override
-                public void onValidate(boolean valid) {
-                    setErrorVisible(valid);
-                }
-            });
+            inputView.addOnValidateListener(this::setErrorVisible);
         }
         if (child instanceof TextView) {
             final TextView textView = (TextView) child;

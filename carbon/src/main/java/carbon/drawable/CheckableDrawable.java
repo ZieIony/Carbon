@@ -21,6 +21,8 @@ import android.util.Log;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import carbon.R;
@@ -30,8 +32,20 @@ import carbon.animation.AnimatedColorStateList;
  * Created by Marcin on 2015-03-06.
  */
 public class CheckableDrawable extends Drawable {
+
+    private float currRadius;
+    private int currAnim;
+    private ValueAnimator animator;
+
+    public enum CheckedState {
+        UNCHECKED, CHECKED, INDETERMINATE
+    }
+
     private static final long CHECK_DURATION = 100;
     private static final long FILL_DURATION = 100;
+
+    private static final int ANIMATION_FILL = 0;
+    private static final int ANIMATION_CHECK = 1;
 
     private final Context context;
     private final int checkedRes;
@@ -43,13 +57,13 @@ public class CheckableDrawable extends Drawable {
     private Bitmap checkedBitmap, uncheckedBitmap, filledBitmap, maskBitmap;
     private Canvas maskCanvas;
     private float radius;
-    private boolean checked, enabled;
+    private boolean enabled;
+    private CheckedState checkedState = CheckedState.UNCHECKED;
 
     private PorterDuffColorFilter checkedFilter;
     private PorterDuffColorFilter uncheckedFilter;
 
-    private long downTime;
-    private BitmapShader checkedShader, filledShader;
+    private BitmapShader checkedShader;
     private PointF offset;
     private ColorStateList tint;
     private PorterDuff.Mode tintMode;
@@ -114,11 +128,6 @@ public class CheckableDrawable extends Drawable {
                 svg3.setDocumentWidth(filledBitmap.getWidth());
                 svg3.setDocumentHeight(filledBitmap.getHeight());
                 svg3.renderToCanvas(canvas);
-
-                filledShader = new BitmapShader(filledBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-                Matrix matrix = new Matrix();
-                matrix.postTranslate(bounds.left, bounds.top);
-                filledShader.setLocalMatrix(matrix);
             }
 
             maskBitmap = Bitmap.createBitmap(bounds.width(), bounds.height(), Bitmap.Config.ARGB_8888);
@@ -135,77 +144,87 @@ public class CheckableDrawable extends Drawable {
         if (checkedBitmap == null)
             renderSVGs();
 
-        long time = System.currentTimeMillis();
-        float delta = time - downTime;
-        boolean animating = delta < CHECK_DURATION + FILL_DURATION;
         Rect bounds = getBounds();
 
-        if (animating) {
-            if (checked && checkedBitmap != null) {
-                if (delta < CHECK_DURATION) {
-                    paint.setColorFilter(uncheckedFilter);
-                    canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
-
-                    maskCanvas.drawColor(0xffffffff);
-                    maskPaint.setXfermode(porterDuffClear);
-                    maskCanvas.drawCircle(maskBitmap.getWidth() / 2, maskBitmap.getHeight() / 2, (1 - delta / FILL_DURATION) * radius, maskPaint);
-                    maskPaint.setXfermode(porterDuffSrcIn);
-                    maskCanvas.drawBitmap(filledBitmap, 0, 0, maskPaint);
-                    canvas.drawBitmap(maskBitmap, bounds.left, bounds.top, paint);
-                } else {
-                    paint.setShader(null);
-                    paint.setColorFilter(uncheckedFilter);
-                    canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
-
-                    maskCanvas.drawColor(0xffffffff);
-                    maskPaint.setXfermode(porterDuffClear);
-                    maskCanvas.drawCircle(maskBitmap.getWidth() / 2 + bounds.width() * offset.x, maskBitmap.getHeight() / 2 + bounds.height() * offset.y, (delta - CHECK_DURATION) / FILL_DURATION * radius, maskPaint);
-                    maskPaint.setXfermode(porterDuffSrcIn);
-                    maskCanvas.drawBitmap(filledBitmap, 0, 0, maskPaint);
-                    canvas.drawBitmap(maskBitmap, bounds.left, bounds.top, paint);
-
-                    paint.setShader(checkedShader);
-                    paint.setColorFilter(checkedFilter);
-                    canvas.drawCircle(bounds.centerX() + bounds.width() * offset.x, bounds.centerY() + bounds.height() * offset.y, (delta - CHECK_DURATION) / FILL_DURATION * radius, paint);
-                }
-            } else if (!checked && uncheckedBitmap != null) {
-                if (delta < CHECK_DURATION) {
-                    paint.setShader(null);
-                    paint.setColorFilter(uncheckedFilter);
-                    canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
-
-                    maskCanvas.drawColor(0xffffffff);
-                    maskPaint.setXfermode(porterDuffClear);
-                    maskCanvas.drawCircle(maskBitmap.getWidth() / 2 + bounds.width() * offset.x, maskBitmap.getHeight() / 2 + bounds.height() * offset.y, (1 - delta / FILL_DURATION) * radius, maskPaint);
-                    maskPaint.setXfermode(porterDuffSrcIn);
-                    maskCanvas.drawBitmap(filledBitmap, 0, 0, maskPaint);
-                    canvas.drawBitmap(maskBitmap, bounds.left, bounds.top, paint);
-
-                    paint.setShader(checkedShader);
-                    paint.setColorFilter(checkedFilter);
-                    canvas.drawCircle(bounds.centerX() + bounds.width() * offset.x, bounds.centerY() + bounds.height() * offset.y, (1 - delta / FILL_DURATION) * radius, paint);
-                } else {
-                    paint.setColorFilter(uncheckedFilter);
-                    canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
-
-                    maskCanvas.drawColor(0xffffffff);
-                    maskPaint.setXfermode(porterDuffClear);
-                    maskCanvas.drawCircle(maskBitmap.getWidth() / 2, maskBitmap.getHeight() / 2, (delta - CHECK_DURATION) / FILL_DURATION * radius, maskPaint);
-                    maskPaint.setXfermode(porterDuffSrcIn);
-                    maskCanvas.drawBitmap(filledBitmap, 0, 0, maskPaint);
-                    canvas.drawBitmap(maskBitmap, bounds.left, bounds.top, paint);
-                }
+        if (animator != null && animator.isRunning()) {
+            if (currAnim == ANIMATION_FILL) {
+                drawUnchecked(canvas, currRadius);
+            } else {
+                drawChecked(canvas, currRadius);
             }
-            invalidateSelf();
         } else {
-            if (checked && checkedBitmap != null) {
+            if (checkedState == CheckedState.CHECKED) {
                 paint.setColorFilter(checkedFilter);
                 canvas.drawBitmap(checkedBitmap, bounds.left, bounds.top, paint);
-            } else if (!checked && uncheckedBitmap != null) {
+            } else if (checkedState == CheckedState.UNCHECKED) {
                 paint.setColorFilter(uncheckedFilter);
                 canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
+            } else {
+                paint.setColorFilter(uncheckedFilter);
+                canvas.drawBitmap(filledBitmap, bounds.left, bounds.top, paint);
             }
         }
+    }
+
+    private ValueAnimator animateFill() {
+        if (animator != null && animator.isRunning())
+            animator.cancel();
+        animator = ValueAnimator.ofFloat(1, 0);
+        animator.setDuration(FILL_DURATION);
+        animator.addUpdateListener(animation -> {
+            currAnim = ANIMATION_FILL;
+            float value = (float) animation.getAnimatedValue();
+            currRadius = value * radius;
+            invalidateSelf();
+        });
+        return animator;
+    }
+
+    private ValueAnimator animateCheck() {
+        if (animator != null && animator.isRunning())
+            animator.cancel();
+        animator = ValueAnimator.ofFloat(0, 1);
+        animator.setDuration(CHECK_DURATION);
+        animator.addUpdateListener(animation -> {
+            currAnim = ANIMATION_CHECK;
+            float value = (float) animation.getAnimatedValue();
+            currRadius = value * radius;
+            invalidateSelf();
+        });
+        return animator;
+    }
+
+    private void drawUnchecked(@NonNull Canvas canvas, float radius) {
+        Rect bounds = getBounds();
+
+        paint.setColorFilter(uncheckedFilter);
+        canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
+
+        maskCanvas.drawColor(0xffffffff);
+        maskPaint.setXfermode(porterDuffClear);
+        maskCanvas.drawCircle(maskBitmap.getWidth() / 2, maskBitmap.getHeight() / 2, radius, maskPaint);
+        maskPaint.setXfermode(porterDuffSrcIn);
+        maskCanvas.drawBitmap(filledBitmap, 0, 0, maskPaint);
+        canvas.drawBitmap(maskBitmap, bounds.left, bounds.top, paint);
+    }
+
+    private void drawChecked(@NonNull Canvas canvas, float radius) {
+        Rect bounds = getBounds();
+
+        paint.setShader(null);
+        paint.setColorFilter(uncheckedFilter);
+        canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
+
+        maskCanvas.drawColor(0xffffffff);
+        maskPaint.setXfermode(porterDuffClear);
+        maskCanvas.drawCircle(maskBitmap.getWidth() / 2 + bounds.width() * offset.x, maskBitmap.getHeight() / 2 + bounds.height() * offset.y, radius, maskPaint);
+        maskPaint.setXfermode(porterDuffSrcIn);
+        maskCanvas.drawBitmap(filledBitmap, 0, 0, maskPaint);
+        canvas.drawBitmap(maskBitmap, bounds.left, bounds.top, paint);
+
+        paint.setShader(checkedShader);
+        paint.setColorFilter(checkedFilter);
+        canvas.drawCircle(bounds.centerX() + bounds.width() * offset.x, bounds.centerY() + bounds.height() * offset.y, radius, paint);
     }
 
     @Override
@@ -228,15 +247,19 @@ public class CheckableDrawable extends Drawable {
         boolean changed = false;
         if (states != null) {
             boolean newChecked = false;
+            boolean newIndeterminate = false;
             boolean newEnabled = false;
             for (int state : states) {
                 if (state == android.R.attr.state_checked)
                     newChecked = true;
+                if (state == R.attr.carbon_state_indeterminate)
+                    newIndeterminate = true;
                 if (state == android.R.attr.state_enabled)
                     newEnabled = true;
             }
-            if (checked != newChecked) {
-                setChecked(newChecked);
+            CheckedState newCheckedState = newIndeterminate ? CheckedState.INDETERMINATE : newChecked ? CheckedState.CHECKED : CheckedState.UNCHECKED;
+            if (checkedState != newCheckedState) {
+                setChecked(newCheckedState);
                 changed = true;
             }
             if (enabled != newEnabled) {
@@ -250,9 +273,53 @@ public class CheckableDrawable extends Drawable {
         return result && changed;
     }
 
+    public boolean isChecked() {
+        return checkedState == CheckedState.CHECKED;
+    }
+
     public void setChecked(boolean checked) {
-        this.checked = checked;
-        downTime = System.currentTimeMillis();
+        setChecked(checked ? CheckedState.CHECKED : CheckedState.UNCHECKED);
+    }
+
+    public void setChecked(CheckedState state) {
+        if (checkedState == state)
+            return;
+        if (checkedState == CheckedState.UNCHECKED) {
+            if (state == CheckedState.CHECKED) {
+                Animator fill = animateFill();
+                fill.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        animateCheck().start();
+                    }
+                });
+                fill.start();
+            } else {
+                animateFill().start();
+            }
+        }
+        if (checkedState == CheckedState.CHECKED) {
+            if (state == CheckedState.UNCHECKED) {
+                ValueAnimator check = animateCheck();
+                check.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        animateFill().reverse();
+                    }
+                });
+                check.reverse();
+            } else {
+                animateCheck().reverse();
+            }
+        }
+        if (checkedState == CheckedState.INDETERMINATE) {
+            if (state == CheckedState.CHECKED) {
+                animateCheck().start();
+            } else {
+                animateFill().reverse();
+            }
+        }
+        checkedState = state;
         invalidateSelf();
     }
 
@@ -262,8 +329,13 @@ public class CheckableDrawable extends Drawable {
     }
 
     public void setCheckedImmediate(boolean checked) {
-        this.checked = checked;
-        downTime = System.currentTimeMillis() - CHECK_DURATION - FILL_DURATION;
+        setCheckedImmediate(checked ? CheckedState.CHECKED : CheckedState.UNCHECKED);
+    }
+
+    public void setCheckedImmediate(CheckedState state) {
+        if (checkedState == state)
+            return;
+        checkedState = state;
         invalidateSelf();
     }
 
@@ -289,12 +361,9 @@ public class CheckableDrawable extends Drawable {
     }
 
     private boolean animateColorChanges = true;
-    private ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateTint();
-            invalidateSelf();
-        }
+    private ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
+        updateTint();
+        invalidateSelf();
     };
 
     public boolean isAnimateColorChangesEnabled() {

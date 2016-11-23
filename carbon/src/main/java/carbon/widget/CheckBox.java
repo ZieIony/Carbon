@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -33,6 +34,8 @@ import carbon.drawable.ripple.RippleDrawable;
 public class CheckBox extends carbon.widget.Button implements Checkable {
     private CheckableDrawable drawable;
     private float drawablePadding;
+
+    CheckableDrawable.CheckedState checkedState;
 
     public CheckBox(Context context) {
         super(context, null, android.R.attr.checkboxStyle);
@@ -77,23 +80,25 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
         return ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
     }
 
-    private boolean mChecked;
-    private boolean mBroadcasting;
-
-    private OnCheckedChangeListener mOnCheckedChangeListener;
-    private OnCheckedChangeListener mOnCheckedChangeWidgetListener;
+    private OnCheckedChangeListener onCheckedChangeListener;
 
     private static final int[] CHECKED_STATE_SET = {
             android.R.attr.state_checked
     };
+    private static final int[] INDETERMINATE_STATE_SET = {
+            R.attr.carbon_state_indeterminate
+    };
 
     public void toggle() {
-        setChecked(!mChecked);
+        setChecked(!isChecked());
     }
 
     @Override
     public boolean performClick() {
         toggle();
+
+        if (onCheckedChangeListener != null)
+            onCheckedChangeListener.onCheckedChanged(this, isChecked());
 
         final boolean handled = super.performClick();
         if (!handled) {
@@ -107,7 +112,11 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
 
     @ViewDebug.ExportedProperty
     public boolean isChecked() {
-        return mChecked;
+        return checkedState == CheckableDrawable.CheckedState.CHECKED;
+    }
+
+    public boolean isIndeterminate() {
+        return checkedState == CheckableDrawable.CheckedState.INDETERMINATE;
     }
 
     /**
@@ -116,32 +125,29 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
      * @param checked true to check the button, false to uncheck it
      */
     public void setChecked(boolean checked) {
-        if (mChecked != checked) {
-            mChecked = checked;
+        setChecked(checked ? CheckableDrawable.CheckedState.CHECKED : CheckableDrawable.CheckedState.UNCHECKED);
+    }
+
+    /**
+     * <p>Changes the checked state of this button.</p>
+     *
+     * @param state
+     */
+    public void setChecked(CheckableDrawable.CheckedState state) {
+        if (this.checkedState != state) {
+            checkedState = state;
             refreshDrawableState();
-            //notifyViewAccessibilityStateChangedIfNeeded(
-            //      AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED);
-
-            // Avoid infinite recursions if setChecked() is called from a listener
-            if (mBroadcasting) {
-                return;
-            }
-
-            mBroadcasting = true;
-            if (mOnCheckedChangeListener != null) {
-                mOnCheckedChangeListener.onCheckedChanged(this, mChecked);
-            }
-            if (mOnCheckedChangeWidgetListener != null) {
-                mOnCheckedChangeWidgetListener.onCheckedChanged(this, mChecked);
-            }
-
-            mBroadcasting = false;
         }
     }
 
     public void setCheckedImmediate(boolean checked) {
         setChecked(checked);
         drawable.setCheckedImmediate(checked);
+    }
+
+    public void setCheckedImmediate(CheckableDrawable.CheckedState state) {
+        setChecked(state);
+        drawable.setCheckedImmediate(state);
     }
 
     /**
@@ -151,18 +157,7 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
      * @param listener the callback to call on checked state change
      */
     public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
-        mOnCheckedChangeListener = listener;
-    }
-
-    /**
-     * Register a callback to be invoked when the checked state of this button
-     * changes. This callback is used for internal purpose only.
-     *
-     * @param listener the callback to call on checked state change
-     * @hide
-     */
-    void setOnCheckedChangeWidgetListener(OnCheckedChangeListener listener) {
-        mOnCheckedChangeWidgetListener = listener;
+        onCheckedChangeListener = listener;
     }
 
     /**
@@ -220,7 +215,7 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
         }
     }
 
-    public void setTintMode(@Nullable PorterDuff.Mode mode) {
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
         super.setTintMode(mode);
         applyButtonTint();
     }
@@ -244,7 +239,7 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
         event.setClassName(CheckBox.class.getName());
-        event.setChecked(mChecked);
+        event.setChecked(isChecked());
     }
 
     /*@Override
@@ -328,9 +323,12 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
-        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        final int[] drawableState = super.onCreateDrawableState(extraSpace + 2);
         if (isChecked()) {
             mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+        }
+        if (isIndeterminate()) {
+            mergeDrawableStates(drawableState, INDETERMINATE_STATE_SET);
         }
         return drawableState;
     }
@@ -362,7 +360,7 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
     }
 
     static class SavedState extends BaseSavedState {
-        boolean checked;
+        CheckableDrawable.CheckedState checked;
 
         /**
          * Constructor called from {@link CompoundButton#onSaveInstanceState()}
@@ -376,7 +374,7 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
          */
         private SavedState(Parcel in) {
             super(in);
-            checked = (Boolean) in.readValue(getClass().getClassLoader());
+            checked = CheckableDrawable.CheckedState.values()[in.readInt()];
         }
 
         @Override
@@ -410,7 +408,7 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
 
         SavedState ss = new SavedState(superState);
 
-        ss.checked = isChecked();
+        ss.checked = checkedState;
         return ss;
     }
 

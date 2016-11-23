@@ -122,6 +122,7 @@
     <attr name="carbon_elevation" format="dimension" />
 
     <attr name="carbon_state_invalid" format="boolean" />
+    <attr name="carbon_state_indeterminate" format="boolean" />
 
     <attr name="carbon_src" format="reference" />
     <attr name="carbon_cornerRadius" format="dimension" />
@@ -135,7 +136,6 @@
     <attr name="carbon_labelStyle" format="enum">
         <enum name="floating" value="0" />
         <enum name="persistent" value="1" />
-        <enum name="hint" value="2" />
     </attr>
     <attr name="carbon_label" format="string" />
 

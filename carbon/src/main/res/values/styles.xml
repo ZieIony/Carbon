@@ -649,7 +649,7 @@
     </style>
 
     <style name="carbon_InputLayout">
-        <item name="carbon_labelStyle">hint</item>
+        <item name="carbon_labelStyle">persistent</item>
 
         <item name="carbon_errorTextSize">@dimen/carbon_textSizeCaption</item>
         <item name="carbon_counterTextSize">@dimen/carbon_textSizeCaption</item>

@@ -2,6 +2,7 @@ package carbon.internal;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -11,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import carbon.R;
 public class DebugOverlay extends PopupWindow {
     private boolean drawBounds = true;
     private boolean drawGrid = true;
+    private boolean drawRulers = true;
     private Activity context;
 
     private ViewTreeObserver.OnPreDrawListener listener = new ViewTreeObserver.OnPreDrawListener() {
@@ -76,6 +79,14 @@ public class DebugOverlay extends PopupWindow {
         this.drawGrid = drawGrid;
     }
 
+    public boolean isDrawRulersEnabled() {
+        return drawRulers;
+    }
+
+    public void setDrawRulersEnabled(boolean drawRulers) {
+        this.drawRulers = drawRulers;
+    }
+
     private class DebugLayout extends View {
         private final View view;
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -83,11 +94,19 @@ public class DebugOverlay extends PopupWindow {
         Rect rect2 = new Rect();
         float step;
         private int[] location;
+        float[] rulers = new float[4];
 
         public DebugLayout(Context context, View view) {
             super(context);
             this.view = view;
-            step = context.getResources().getDimension(R.dimen.carbon_grid8);
+
+            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            Resources res = context.getResources();
+            step = res.getDimension(R.dimen.carbon_grid8);
+            rulers[0] = res.getDimension(R.dimen.carbon_windowPadding);
+            rulers[1] = res.getDimension(R.dimen.carbon_windowPadding) + res.getDimension(R.dimen.carbon_iconSize);
+            rulers[2] = res.getDimension(R.dimen.carbon_contentSpace);
+            rulers[3] = wm.getDefaultDisplay().getWidth() - res.getDimension(R.dimen.carbon_windowPadding);
         }
 
         @Override
@@ -114,6 +133,12 @@ public class DebugOverlay extends PopupWindow {
                 for (View v : views)
                     drawView(canvas, v);
             }
+
+            if (drawRulers) {
+                paint.setColor(0x7fff0000);
+                for (float ruler : rulers)
+                    canvas.drawLine(ruler, 0, ruler, getHeight(), paint);
+            }
         }
 
         private void drawView(Canvas canvas, View v) {
@@ -130,11 +155,10 @@ public class DebugOverlay extends PopupWindow {
             rect2.offset(l[0] - location[0] - v.getLeft(), l[1] - location[1] - v.getTop());
 
             paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(1);
-            paint.setColor(0x7f00ff00);
+            paint.setColor(0x3f00ff00);
             canvas.drawRect(rect, paint);
 
-            paint.setStrokeWidth(2);
+            paint.setColor(0x7f00ff00);
             canvas.drawLine(rect.left, rect.top, rect.left + vertLine, rect.top, paint);
             canvas.drawLine(rect.left, rect.top, rect.left, rect.top + horzLine, paint);
 

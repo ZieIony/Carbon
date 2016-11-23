@@ -19,8 +19,8 @@
             android:orientation="vertical">
 
             <carbon.widget.TextView
-                android:text="CheckBox class is written from scratch. It behaves consistently across all platforms and offers animated vector icons"
-                style="@style/sectionDescription" />
+                style="@style/sectionDescription"
+                android:text="CheckBox class is written from scratch. It behaves consistently across all platforms and offers animated vector icons" />
 
             <carbon.widget.CheckBox
                 android:layout_width="match_parent"
@@ -48,13 +48,13 @@
                 app:carbon_tint="@drawable/checkbox_selector" />
 
             <carbon.widget.Divider
-                android:layout_marginTop="@dimen/carbon_margin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/carbon_margin" />
 
             <carbon.widget.TextView
-                android:text="CheckedTextView"
-                style="@style/sectionDescription" />
+                style="@style/sectionDescription"
+                android:text="CheckedTextView" />
 
             <carbon.widget.CheckedTextView
                 android:layout_width="match_parent"
@@ -68,13 +68,13 @@
                 app:carbon_tint="@drawable/checkbox_selector" />
 
             <carbon.widget.Divider
-                android:layout_marginTop="@dimen/carbon_margin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/carbon_margin" />
 
             <carbon.widget.TextView
-                android:text="RadioGroup with RadioButtons"
-                style="@style/sectionDescription" />
+                style="@style/sectionDescription"
+                android:text="RadioGroup with RadioButtons" />
 
             <carbon.widget.RadioGroup
                 android:layout_width="match_parent"
@@ -99,13 +99,40 @@
             </carbon.widget.RadioGroup>
 
             <carbon.widget.Divider
-                android:layout_marginTop="@dimen/carbon_margin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/carbon_margin" />
 
             <carbon.widget.TextView
-                android:text="It's easy to create square textless CheckBox with a predefined style"
-                style="@style/sectionDescription" />
+                style="@style/sectionDescription"
+                android:text="CheckBox supports indeterminate state as well" />
+
+            <carbon.widget.CheckBox
+                android:id="@+id/checkBoxGroup"
+                style="@style/carbon_CheckBox.IconButton.Inverse"
+                android:gravity="center_vertical" />
+
+            <carbon.widget.CheckBox
+                android:id="@+id/checkBoxChild1"
+                style="@style/carbon_CheckBox.IconButton.Inverse"
+                android:layout_marginLeft="@dimen/carbon_margin"
+                android:gravity="center_vertical" />
+
+            <carbon.widget.CheckBox
+                android:id="@+id/checkBoxChild2"
+                style="@style/carbon_CheckBox.IconButton.Inverse"
+                android:layout_marginLeft="@dimen/carbon_margin"
+                android:gravity="center_vertical" />
+
+
+            <carbon.widget.Divider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/carbon_margin" />
+
+            <carbon.widget.TextView
+                style="@style/sectionDescription"
+                android:text="It's easy to create square textless CheckBox with a predefined style" />
 
             <carbon.widget.CheckBox
                 android:id="@+id/checkBox"
@@ -113,9 +140,9 @@
                 android:gravity="center_vertical" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <carbon.widget.Button
                     android:id="@+id/check"
