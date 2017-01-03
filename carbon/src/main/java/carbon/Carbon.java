@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -12,6 +13,7 @@ import android.view.View;
 
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
+import carbon.drawable.AlphaDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleDrawableFroyo;
 import carbon.drawable.ripple.RippleDrawableLollipop;
@@ -196,5 +198,26 @@ public class Carbon {
         }
         a.recycle();
         return context;
+    }
+
+    public static int getDrawableAlpha(Drawable background) {
+        if (background == null)
+            return 255;
+        background = background.getCurrent();
+        if (background instanceof ColorDrawable)
+            return ((ColorDrawable) background).getAlpha();
+        if (background instanceof AlphaDrawable)
+            return ((AlphaDrawable) background).getAlpha();
+        return 255;
+    }
+
+    public static float getBackgroundTintAlpha(View child) {
+        if (!(child instanceof TintedView))
+            return 255;
+        ColorStateList tint = ((TintedView) child).getBackgroundTint();
+        if (tint == null)
+            return 255;
+        int color = tint.getColorForState(child.getDrawableState(), tint.getDefaultColor());
+        return (color >> 24) & 0xff;
     }
 }

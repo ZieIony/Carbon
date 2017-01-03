@@ -74,16 +74,10 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     private Pattern pattern;
     private int matchingView;
     private boolean afterFirstInteraction = false;
-    private String errorMessage;
 
     private BitmapShader dashPathShader;
     private boolean underline = true;
     private boolean valid = true;
-    boolean showPasswordButtonEnabled, clearButtonEnabled;
-
-    Drawable clearButton, showPasswordButton;
-
-    float PADDING_ERROR, PADDING_LABEL;
 
     private List<OnValidateListener> validateListeners = new ArrayList<>();
 
@@ -165,8 +159,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
         setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
         setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
-        setShowPasswordButtonEnabled(a.getBoolean(R.styleable.EditText_carbon_showPasswordButton, false));
-        setClearButtonEnabled(a.getBoolean(R.styleable.EditText_carbon_clearButton, false));
 
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
@@ -201,8 +193,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         paint.setAlpha(255);
         c.drawCircle(dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, paint);
         dashPathShader = new BitmapShader(dashPathBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
-        PADDING_ERROR = getResources().getDimension(R.dimen.carbon_paddingHalf);
-        PADDING_LABEL = getResources().getDimension(R.dimen.carbon_paddingHalf);
 
         initSelectionHandle();
 
@@ -286,40 +276,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         this.underline = drawUnderline;
     }
 
-    public boolean isShowPasswordButtonEnabled() {
-        return showPasswordButtonEnabled;
-    }
-
-    public void setShowPasswordButtonEnabled(boolean b) {
-        this.showPasswordButtonEnabled = b;
-        if (b) {
-            setClearButtonEnabled(false);
-            VectorDrawable vectorDrawable = new VectorDrawable(getResources(), R.raw.carbon_clear);
-            this.showPasswordButton = (Drawable) Carbon.createRippleDrawable(ColorStateList.valueOf(Carbon.getThemeColor(getContext(), R.attr.carbon_rippleColor)), RippleDrawable.Style.Borderless, this, vectorDrawable, false, 0);
-            setCompoundDrawablesWithIntrinsicBounds(null, null, showPasswordButton, null);
-        } else {
-            this.showPasswordButton = null;
-            setCompoundDrawables(null, null, null, null);
-        }
-    }
-
-    public boolean isClearButtonEnabled() {
-        return clearButtonEnabled;
-    }
-
-    public void setClearButtonEnabled(boolean b) {
-        this.clearButtonEnabled = b;
-        if (b) {
-            setShowPasswordButtonEnabled(false);
-            VectorDrawable vectorDrawable = new VectorDrawable(getResources(), R.raw.carbon_visibility_off);
-            clearButton = (Drawable) Carbon.createRippleDrawable(ColorStateList.valueOf(Carbon.getThemeColor(getContext(), R.attr.carbon_rippleColor)), RippleDrawable.Style.Borderless, this, vectorDrawable, false, 0);
-            setCompoundDrawablesWithIntrinsicBounds(null, null, clearButton, null);
-        } else {
-            clearButton = null;
-            setCompoundDrawables(null, null, null, null);
-        }
-    }
-
     public void validate() {
         afterFirstInteraction = true;
         validateInternal();
@@ -375,7 +331,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
     private void fireOnValidateEvent() {
         for (OnValidateListener validateListener : validateListeners)
-            validateListener.onValidate(canShowError());
+            validateListener.onValidate(valid);
     }
 
     /**
@@ -428,22 +384,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         }
     }
 
-    @Override
-    public void setError(CharSequence text) {
-        if (text == null) {
-            valid = true;
-            errorMessage = null;
-        } else {
-            errorMessage = text.toString();
-            valid = false;
-        }
-    }
-
-    @Override
-    public void setError(CharSequence error, Drawable icon) {
-        this.setError(error);
-    }
-
     public void draw2(@NonNull Canvas canvas) {
         super.draw(canvas);
         if (isInEditMode())
@@ -475,10 +415,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             rippleDrawable.draw(canvas);
     }
 
-    private boolean canShowError() {
-        return (pattern != null || matchingView != 0 || !valid) && errorMessage != null;
-    }
-
     public boolean isValid() {
         return valid;
     }
@@ -502,8 +438,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        //if (labelStyle == InputLayout.LabelStyle.Floating)
-        //animateFloatingLabel(focused && getText().length() > 0);
         if (!focused) {
             afterFirstInteraction = true;
             validateInternalEvent();
@@ -601,17 +535,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
     private RippleDrawable rippleDrawable;
     private Transformation t = new Transformation();
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (clearButton != null && event.getX() > getWidth() - clearButton.getBounds().width()) {
-            clearButton.setState(getDrawableState());
-        }
-        if (showPasswordButton != null && event.getX() > getWidth() - showPasswordButton.getBounds().width()) {
-            showPasswordButton.setState(getDrawableState());
-        }
-        return super.onTouchEvent(event);
-    }
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {

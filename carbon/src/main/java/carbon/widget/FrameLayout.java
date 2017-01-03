@@ -176,15 +176,26 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
         }
     }
 
+
+    RectF childRect = new RectF();
+
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        // TODO: why isShown() returns false after being reattached?
+        float alpha = ViewHelper.getAlpha(child) * Carbon.getDrawableAlpha(child.getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(child) / 255.0f;
+        if (alpha == 0)
+            return false;
 
-        if (!isInEditMode() && child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        // TODO: why isShown() returns false after being reattached?
+        if (child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             ShadowView shadowView = (ShadowView) child;
             Shadow shadow = shadowView.getShadow();
             if (shadow != null) {
-                paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
+                int saveCount = 0;
+                boolean maskShadow = child.getBackground() != null && alpha != 1;
+                if (maskShadow)
+                    saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+                paint.setAlpha((int) (ShadowGenerator.ALPHA * alpha));
 
                 float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
                 Matrix matrix = MatrixHelper.getMatrix(child);
@@ -200,6 +211,19 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                 canvas.concat(matrix);
                 shadow.draw(canvas, child, paint);
                 canvas.restore();
+
+                if (maskShadow) {
+                    canvas.translate(child.getLeft(), child.getTop());
+                    canvas.concat(matrix);
+                    paint.setXfermode(pdMode);
+                    float cr = 0;
+                    if (child instanceof CornerView)
+                        cr = ((CornerView) child).getCornerRadius();
+                    childRect.set(0, 0, child.getWidth(), child.getHeight());
+                    canvas.drawRoundRect(childRect, cr, cr, paint);
+                    paint.setXfermode(null);
+                    canvas.restoreToCount(saveCount);
+                }
             }
         }
 
@@ -208,9 +232,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
                 int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(
-                        child.getLeft(),
-                        child.getTop());
+                canvas.translate(child.getLeft(), child.getTop());
+                canvas.concat(MatrixHelper.getMatrix(child));
                 rippleDrawable.draw(canvas);
                 canvas.restoreToCount(saveCount);
             }
@@ -859,6 +882,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
+            if (gravity <= 0)
+                gravity = GravityCompat.START | Gravity.TOP;
 
             TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.FrameLayout_Layout);
             anchorView = a.getResourceId(R.styleable.FrameLayout_Layout_carbon_anchor, -1);
@@ -870,6 +895,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
         public LayoutParams(int w, int h) {
             super(w, h);
+            if (gravity <= 0)
+                gravity = GravityCompat.START | Gravity.TOP;
         }
 
         /**
@@ -877,6 +904,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
          */
         public LayoutParams(ViewGroup.LayoutParams source) {
             super(source);
+            if (gravity == 0)
+                gravity = GravityCompat.START | Gravity.TOP;
         }
 
         /**
@@ -884,16 +913,22 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
          */
         public LayoutParams(ViewGroup.MarginLayoutParams source) {
             super(source);
+            if (gravity == 0)
+                gravity = GravityCompat.START | Gravity.TOP;
         }
 
         public LayoutParams(android.widget.FrameLayout.LayoutParams source) {
             super((MarginLayoutParams) source);
             gravity = source.gravity;
+            if (gravity == 0)
+                gravity = GravityCompat.START | Gravity.TOP;
         }
 
         public LayoutParams(LayoutParams source) {
             super((MarginLayoutParams) source);
             gravity = source.gravity;
+            if (gravity == 0)
+                gravity = GravityCompat.START | Gravity.TOP;
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;

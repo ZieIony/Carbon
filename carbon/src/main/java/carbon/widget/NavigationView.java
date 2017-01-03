@@ -18,6 +18,7 @@ import carbon.R;
  * Created by Marcin on 2015-06-25.
  */
 public class NavigationView extends RecyclerView {
+    private OnItemClickedListener onItemClickedListener;
     private Menu menu;
 
     public NavigationView(Context context) {
@@ -39,6 +40,11 @@ public class NavigationView extends RecyclerView {
         setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
+    protected void fireOnItemClickedEvent(int position) {
+        if (onItemClickedListener != null)
+            onItemClickedListener.onItemClicked(position);
+    }
+
     public void setMenu(int resId) {
         Menu menu = new MenuBuilder(new CarbonContextWrapper(getContext()));
         MenuInflater inflater = new MenuInflater(getContext());
@@ -58,7 +64,7 @@ public class NavigationView extends RecyclerView {
         return menu;
     }
 
-    public static class Adapter extends RecyclerView.Adapter<ViewHolder> {
+    public class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private Menu items = null;
 
@@ -77,6 +83,7 @@ public class NavigationView extends RecyclerView {
         public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.tv.setText(items.getItem(position).getTitle());
             holder.iv.setImageDrawable(items.getItem(position).getIcon());
+            holder.itemView.setOnClickListener(v -> fireOnItemClickedEvent(holder.getAdapterPosition()));
         }
 
         @Override

@@ -178,7 +178,6 @@
         <attr name="carbon_theme" />
 
         <attr name="carbon_cornerRadius" />
-        <attr name="android:background" />
         <attr name="carbon_menu" format="reference" />
     </declare-styleable>
 
@@ -710,6 +709,9 @@
         <attr name="carbon_errorMessage" format="string" />
         <attr name="carbon_labelStyle" />
         <attr name="carbon_label" />
+        <attr name="carbon_required" format="boolean" />
+        <attr name="carbon_showPassword" format="boolean" />
+        <attr name="carbon_showClear" format="boolean" />
 
         <attr name="carbon_errorTextSize" />
         <attr name="carbon_labelTextSize" />
@@ -758,9 +760,6 @@
         <attr name="carbon_cursorColor" format="color" />
         <attr name="android:textAppearance" />
         <attr name="carbon_matchingView" format="reference" />
-        <attr name="carbon_required" format="boolean" />
-        <attr name="carbon_showPasswordButton" format="boolean" />
-        <attr name="carbon_clearButton" format="boolean" />
     </declare-styleable>
 
     <attr name="carbon_spinnerStyle" format="reference" />

@@ -3,9 +3,12 @@ package carbon.beta;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.text.Editable;
+import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.internal.SimpleTextWatcher;
 import carbon.internal.TypefaceUtils;
+import carbon.widget.ImageView;
 import carbon.widget.InputView;
 import carbon.widget.RelativeLayout;
 
@@ -38,6 +42,9 @@ public class InputLayout extends RelativeLayout {
 
     private LabelStyle labelStyle;
     private TextView labelTextView;
+
+    private ImageView clearImageView;
+    private ImageView showPasswordImageView;
 
     public InputLayout(Context context) {
         super(context);
@@ -64,6 +71,8 @@ public class InputLayout extends RelativeLayout {
         errorTextView = (TextView) findViewById(R.id.carbon_error);
         counterTextView = (TextView) findViewById(R.id.carbon_counter);
         labelTextView = (TextView) findViewById(R.id.carbon_label);
+        clearImageView = (ImageView) findViewById(R.id.carbon_clear);
+        showPasswordImageView = (ImageView) findViewById(R.id.carbon_showPassword);
 
         if (isInEditMode())
             return;
@@ -113,7 +122,9 @@ public class InputLayout extends RelativeLayout {
             setMaxCharacters(a.getInt(R.styleable.InputLayout_carbon_maxCharacters, Integer.MAX_VALUE));
             setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.InputLayout_carbon_labelStyle, LabelStyle.Floating.ordinal())]);
             setLabel(a.getString(R.styleable.InputLayout_carbon_label));
-            setRequired(a.getBoolean(R.styleable.EditText_carbon_required, false));
+            setRequired(a.getBoolean(R.styleable.InputLayout_carbon_required, false));
+            setShowPasswordButtonEnabled(a.getBoolean(R.styleable.InputLayout_carbon_showPassword, false));
+            setClearButtonEnabled(a.getBoolean(R.styleable.InputLayout_carbon_showClear, false));
 
             a.recycle();
         }
@@ -121,10 +132,7 @@ public class InputLayout extends RelativeLayout {
 
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (child instanceof android.widget.TextView
-                && child.getId() != R.id.carbon_label
-                && child.getId() != R.id.carbon_error
-                && child.getId() != R.id.carbon_counter) {
+        if (!"inputLayout".equals(child.getTag())) {
             params = setTextView(child, (android.widget.RelativeLayout.LayoutParams) params);
             super.addView(child, 1, params);
         } else {
@@ -141,12 +149,15 @@ public class InputLayout extends RelativeLayout {
         errorTextViewLayoutParams.addRule(BELOW, child.getId());
         android.widget.RelativeLayout.LayoutParams counterTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
         counterTextViewLayoutParams.addRule(BELOW, child.getId());
+        android.widget.RelativeLayout.LayoutParams clearImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
+        clearImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? END_OF : RIGHT_OF, child.getId());
+        clearImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
+        android.widget.RelativeLayout.LayoutParams showPasswordImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
+        showPasswordImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? END_OF : RIGHT_OF, child.getId());
+        showPasswordImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
+
         child.setOnFocusChangeListener((view, b) -> {
-            if (labelStyle == LabelStyle.Persistent || b) {
-                labelTextView.setVisibility(VISIBLE);
-            } else {
-                labelTextView.setVisibility(INVISIBLE);
-            }
+            updateHint(child);
         });
         if (child instanceof InputView) {
             InputView inputView = (InputView) child;
@@ -156,6 +167,7 @@ public class InputLayout extends RelativeLayout {
             final TextView textView = (TextView) child;
             if (labelTextView.getText().length() == 0)
                 labelTextView.setText(textView.getHint());
+            updateHint(textView);
             textView.addTextChangedListener(new SimpleTextWatcher() {
 
                 @Override
@@ -176,8 +188,29 @@ public class InputLayout extends RelativeLayout {
                     boolean requiredError = required && s.length() == 0;
                 }
             });
+            showPasswordImageView.setOnTouchListener((view, motionEvent) -> {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    textView.setTransformationMethod(null);
+                } else {
+                    textView.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                return true;
+            });
+            clearImageView.setOnClickListener(view -> textView.setText(""));
         }
         return params;
+    }
+
+    private void updateHint(View child) {
+        if (labelStyle == LabelStyle.Persistent || child.isFocused()) {
+            labelTextView.setVisibility(VISIBLE);
+            if (child instanceof TextView)
+                ((TextView) child).setHint(null);
+        } else {
+            labelTextView.setVisibility(INVISIBLE);
+            if (child instanceof TextView)
+                ((TextView) child).setHint(labelTextView.getText());
+        }
     }
 
     public boolean isRequired() {
@@ -274,6 +307,26 @@ public class InputLayout extends RelativeLayout {
 
     public void setMaxCharacters(int maxCharacters) {
         this.maxCharacters = maxCharacters;
+    }
+
+    public boolean isShowPasswordButtonEnabled() {
+        return showPasswordImageView.getVisibility() == VISIBLE;
+    }
+
+    public void setShowPasswordButtonEnabled(boolean b) {
+        showPasswordImageView.setVisibility(b ? VISIBLE : GONE);
+        if (b)
+            setClearButtonEnabled(false);
+    }
+
+    public boolean isClearButtonEnabled() {
+        return clearImageView.getVisibility() == VISIBLE;
+    }
+
+    public void setClearButtonEnabled(boolean b) {
+        clearImageView.setVisibility(b ? VISIBLE : GONE);
+        if (b)
+            setShowPasswordButtonEnabled(false);
     }
 
 }

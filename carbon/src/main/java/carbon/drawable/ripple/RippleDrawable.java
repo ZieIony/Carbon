@@ -6,10 +6,12 @@ import android.graphics.ColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
+import carbon.drawable.AlphaDrawable;
+
 /**
  * Created by Marcin on 2014-11-19.
  */
-public interface RippleDrawable {
+public interface RippleDrawable extends AlphaDrawable{
 
     Drawable getBackground();
 
@@ -22,6 +24,8 @@ public interface RippleDrawable {
     void draw(Canvas canvas);
 
     void setAlpha(int i);
+
+    int getAlpha();
 
     void setColorFilter(ColorFilter colorFilter);
 

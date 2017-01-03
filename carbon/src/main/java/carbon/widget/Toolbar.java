@@ -280,13 +280,24 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
         }
     }
 
+    RectF childRect = new RectF();
+
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (!isInEditMode() && child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        float alpha = ViewHelper.getAlpha(child) * Carbon.getDrawableAlpha(child.getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(child) / 255.0f;
+        if (alpha == 0)
+            return false;
+
+        if (child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             ShadowView shadowView = (ShadowView) child;
             Shadow shadow = shadowView.getShadow();
             if (shadow != null) {
-                paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
+                int saveCount = 0;
+                boolean maskShadow = child.getBackground() != null && alpha != 1;
+                if (maskShadow)
+                    saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+                paint.setAlpha((int) (ShadowGenerator.ALPHA * alpha));
 
                 float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
                 Matrix matrix = MatrixHelper.getMatrix(child);
@@ -302,6 +313,19 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
                 canvas.concat(matrix);
                 shadow.draw(canvas, child, paint);
                 canvas.restore();
+
+                if (maskShadow) {
+                    canvas.translate(child.getLeft(), child.getTop());
+                    canvas.concat(matrix);
+                    paint.setXfermode(pdMode);
+                    float cr = 0;
+                    if (child instanceof CornerView)
+                        cr = ((CornerView) child).getCornerRadius();
+                    childRect.set(0, 0, child.getWidth(), child.getHeight());
+                    canvas.drawRoundRect(childRect, cr, cr, paint);
+                    paint.setXfermode(null);
+                    canvas.restoreToCount(saveCount);
+                }
             }
         }
 
@@ -310,9 +334,8 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
                 int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(
-                        child.getLeft(),
-                        child.getTop());
+                canvas.translate(child.getLeft(), child.getTop());
+                canvas.concat(MatrixHelper.getMatrix(child));
                 rippleDrawable.draw(canvas);
                 canvas.restoreToCount(saveCount);
             }

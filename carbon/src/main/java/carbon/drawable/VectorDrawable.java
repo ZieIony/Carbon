@@ -17,7 +17,7 @@ import com.caverock.androidsvg.SVGParseException;
 /**
  * Created by Marcin on 2015-06-25.
  */
-public class VectorDrawable extends Drawable {
+public class VectorDrawable extends Drawable implements AlphaDrawable{
     private VectorState state;
     private Bitmap bitmap;
     private ColorStateList tint = ColorStateList.valueOf(0x00ffffff);   // TODO: maybe tint should be a part of VectorState?
@@ -79,6 +79,11 @@ public class VectorDrawable extends Drawable {
     @Override
     public void setAlpha(int alpha) {
         state.paint.setAlpha(alpha);
+    }
+
+    @Override
+    public int getAlpha() {
+        return state.paint.getAlpha();
     }
 
     @Override

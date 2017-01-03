@@ -2,19 +2,15 @@ package carbon.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import com.nineoldandroids.animation.ValueAnimator;
 
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.AnimatedColorStateList;
-import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.DefaultAccentColorStateList;
 
 /**
@@ -54,16 +50,6 @@ public class FloatingActionButton extends ImageView {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, R.style.carbon_FloatingActionButton);
         setCornerRadius((int) a.getDimension(R.styleable.FloatingActionButton_carbon_cornerRadius, -1));
 
-        if (a.hasValue(R.styleable.FloatingActionButton_android_background)) {
-            int color = a.getColor(R.styleable.FloatingActionButton_android_background, 0);
-            if (color == 0)
-                setBackground(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultAccentColorStateList(getContext()), new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        postInvalidate();
-                    }
-                })));
-        }
         if (a.hasValue(R.styleable.FloatingActionButton_carbon_menu)) {
             int resId = a.getResourceId(R.styleable.FloatingActionButton_carbon_menu, 0);
             if (resId != 0)
@@ -95,12 +81,7 @@ public class FloatingActionButton extends ImageView {
 
         this.menu = floatingActionMenu.getMenu();
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                floatingActionMenu.show();
-            }
-        });
+        setOnClickListener(__ -> floatingActionMenu.show());
     }
 
     public void setMenu(Menu menu) {
@@ -111,12 +92,7 @@ public class FloatingActionButton extends ImageView {
             floatingActionMenu.setMenu(menu);
             floatingActionMenu.setAnchor(this);
 
-            setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    floatingActionMenu.show();
-                }
-            });
+            setOnClickListener(__ -> floatingActionMenu.show());
         } else {
             floatingActionMenu = null;
             setOnClickListener(null);
@@ -131,4 +107,14 @@ public class FloatingActionButton extends ImageView {
         if (floatingActionMenu != null)
             floatingActionMenu.setOnMenuItemClickListener(listener);
     }
+
+    @Override
+    public void setBackgroundTint(int color) {
+        if (color == 0) {
+            setBackgroundTint(new DefaultAccentColorStateList(getContext()));
+        } else {
+            setBackgroundTint(ColorStateList.valueOf(color));
+        }
+    }
+
 }

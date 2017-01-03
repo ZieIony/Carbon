@@ -11,19 +11,17 @@ import android.view.animation.Transformation;
  */
 public class MatrixHelper {
     private MatrixHelper() {
-
     }
 
-    static Animation animation;
-    static Transformation transformation;
+    final static Matrix matrix = new Matrix();
 
     public static Matrix getMatrix(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             return view.getMatrix();
-        animation = view.getAnimation();
+        Animation animation = view.getAnimation();
         if (animation == null)
-            return new Matrix();
-        transformation = new Transformation();
+            return matrix;
+        Transformation transformation = new Transformation();
         animation.getTransformation(view.getDrawingTime(), transformation);
         return transformation.getMatrix();
     }

@@ -30,6 +30,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.Arrays;
 
+import carbon.Carbon;
 import carbon.R;
 
 /**
@@ -1082,5 +1083,10 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
     @Override
     public ColorStateList getColor() {
         return mState.mColor;
+    }
+
+    @Override
+    public int getAlpha() {
+        return Carbon.getDrawableAlpha(background);
     }
 }

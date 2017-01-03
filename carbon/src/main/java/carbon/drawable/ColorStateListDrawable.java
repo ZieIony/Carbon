@@ -11,7 +11,7 @@ import carbon.animation.AnimatedColorStateList;
 /**
  * Created by Marcin on 2015-08-21.
  */
-public class ColorStateListDrawable extends Drawable {
+public class ColorStateListDrawable extends Drawable implements AlphaDrawable {
     private AnimatedColorStateList list;
 
     public ColorStateListDrawable(AnimatedColorStateList list) {
@@ -47,5 +47,10 @@ public class ColorStateListDrawable extends Drawable {
     public boolean setState(@NonNull int[] stateSet) {
         list.setState(stateSet);
         return super.setState(stateSet);
+    }
+
+    @Override
+    public int getAlpha() {
+        return (list.getColorForState(getState(), list.getDefaultColor()) >> 24) & 0xff;
     }
 }

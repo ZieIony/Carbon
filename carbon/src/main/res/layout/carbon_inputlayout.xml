@@ -8,6 +8,7 @@
         android:id="@+id/carbon_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:tag="inputLayout"
         android:textAppearance="?attr/carbon_textAppearanceCaption"
         app:carbon_inAnimation="fly"
         app:carbon_outAnimation="fly" />
@@ -20,6 +21,7 @@
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/carbon_counter"
         android:layout_toStartOf="@+id/carbon_counter"
+        android:tag="inputLayout"
         android:textAppearance="?attr/carbon_textAppearanceCaption"
         app:carbon_inAnimation="fade"
         app:carbon_outAnimation="fade" />
@@ -30,5 +32,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:tag="inputLayout"
         android:textAppearance="?attr/carbon_textAppearanceCaption" />
+
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_clear"
+        style="@style/carbon_ImageView.IconButton"
+        android:tag="inputLayout"
+        app:carbon_src="@raw/carbon_clear" />
+
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_showPassword"
+        style="@style/carbon_ImageView.IconButton"
+        android:tag="inputLayout"
+        app:carbon_src="@raw/carbon_visibility" />
 </merge>

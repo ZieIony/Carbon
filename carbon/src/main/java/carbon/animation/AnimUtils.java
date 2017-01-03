@@ -281,7 +281,7 @@ public class AnimUtils {
     public static void setupElevationAnimator(StateAnimator stateAnimator, final ShadowView view) {
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
-            animator.setDuration(300);
+            animator.setDuration(200);
             animator.setInterpolator(new AccelerateDecelerateInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
@@ -294,7 +294,7 @@ public class AnimUtils {
         }
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
-            animator.setDuration(300);
+            animator.setDuration(200);
             animator.setInterpolator(new AccelerateDecelerateInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
