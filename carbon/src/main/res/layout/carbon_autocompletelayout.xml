@@ -16,7 +16,7 @@
             app:carbon_src="@raw/carbon_search"
             app:carbon_tint="@color/carbon_black_54" />
 
-        <carbon.widget.AutoCompleteTextView
+        <carbon.widget.AutoCompleteEditText
             android:id="@+id/carbon_autoCompleteSearch"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
@@ -30,7 +30,7 @@
             app:carbon_tint="#00000000">
 
             <requestFocus />
-        </carbon.widget.AutoCompleteTextView>
+        </carbon.widget.AutoCompleteEditText>
     </LinearLayout>
 
     <carbon.widget.RecyclerView

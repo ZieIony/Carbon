@@ -327,11 +327,12 @@ public class CheckedTextView extends TextView implements Checkable {
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
-        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
         if (isChecked()) {
+            final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
             mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+            return drawableState;
         }
-        return drawableState;
+        return super.onCreateDrawableState(extraSpace);
     }
 
     @Override

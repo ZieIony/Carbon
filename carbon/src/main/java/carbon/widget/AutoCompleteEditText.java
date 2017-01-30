@@ -12,20 +12,14 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.internal.SimpleTextWatcher;
-import carbon.recycler.Row;
-import carbon.recycler.RowListAdapter;
 
 /**
  * Created by Marcin on 2015-02-14.
@@ -33,12 +27,14 @@ import carbon.recycler.RowListAdapter;
  * This implementation extends EditText directly and uses TextWatcher for tracking text changes.
  * This class can be used to create new material search fields with drop down menus separated by a seam.
  */
-public class AutoCompleteTextView extends EditText implements TouchMarginView, AnimatedView {
+public class AutoCompleteEditText extends EditText implements TouchMarginView, AnimatedView {
 
     public static final int FILTERING_START = 0, FILTERING_PARTIAL = 1;
 
     private boolean autoCompleting = false;
     private int prevOptions;
+    private OnFilterListener onFilterListener;
+    private String prevText = "";
 
     public void setDataProvider(AutoCompleteDataProvider dataProvider) {
         this.dataProvider = dataProvider;
@@ -52,13 +48,15 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
         }
     }
 
-    public static class FilteringResult implements Comparable<FilteringResult> {
+    public static class FilterResult implements Comparable<FilterResult> {
         int type;
         Spannable text;
+        private Object item;
 
-        public FilteringResult(int type, Spannable text) {
+        public FilterResult(int type, Spannable text, Object item) {
             this.type = type;
             this.text = text;
+            this.item = item;
         }
 
         public int getType() {
@@ -69,8 +67,12 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
             return text;
         }
 
+        public Object getItem() {
+            return item;
+        }
+
         @Override
-        public int compareTo(@NonNull FilteringResult o) {
+        public int compareTo(@NonNull FilterResult o) {
             if (type != o.type)
                 return type - o.type;
             if (type == FILTERING_PARTIAL) {
@@ -79,22 +81,28 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
             }
             return text.toString().compareTo(o.text.toString());
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return text.equals(((FilterResult) obj).text);
+        }
     }
 
-    public static abstract class AutoCompleteDataProvider {
+    public interface AutoCompleteDataProvider<Type> {
 
-        public abstract int getItemCount();
+        int getItemCount();
 
-        public abstract String getItem(int i);
+        Type getItem(int i);
+
+        String[] getItemWords(int i);
     }
 
-    protected RowListAdapter<FilteringResult> adapter = new RowListAdapter<>(AutoCompleteRow::new);
     protected TextWatcher autoCompleteTextWatcher;
     AutoCompleteDataProvider dataProvider;
 
-    public AutoCompleteTextView(Context context) {
+    public AutoCompleteEditText(Context context) {
         super(context);
-        initAutoCompleteTextView();
+        initAutoCompleteEditText();
     }
 
     /**
@@ -103,28 +111,30 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
      * @param context
      * @param attrs
      */
-    public AutoCompleteTextView(Context context, AttributeSet attrs) {
+    public AutoCompleteEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initAutoCompleteTextView();
+        initAutoCompleteEditText();
     }
 
-    public AutoCompleteTextView(Context context, AttributeSet attrs, int defStyle) {
+    public AutoCompleteEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initAutoCompleteTextView();
+        initAutoCompleteEditText();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public AutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AutoCompleteEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initAutoCompleteTextView();
+        initAutoCompleteEditText();
     }
 
-    private void initAutoCompleteTextView() {
+    private void initAutoCompleteEditText() {
         autoCompleteTextWatcher = new SimpleTextWatcher() {
 
             @Override
             public void afterTextChanged(Editable text) {
-                autoComplete();
+                if (!prevText.equals(text.toString()))
+                    autoComplete();
+                prevText = text.toString();
             }
         };
         addTextChangedListener(autoCompleteTextWatcher);
@@ -144,7 +154,7 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
                     }
                 }
                 setSelection(cursorPosition);
-                AutoCompleteTextView.super.setImeOptions(prevOptions);
+                AutoCompleteEditText.super.setImeOptions(prevOptions);
                 autoCompleting = false;
             }
             return false;
@@ -168,38 +178,41 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
             return;
         }
 
-        Word currentWord = getCurrentWord();
-        if (currentWord == null) {
-            adapter.items.clear();
-            adapter.notifyDataSetChanged();
-            return;
-        }
-
-        autoCompleting = true;
         for (HintSpan span : spans) {
             text.delete(text.getSpanStart(span), text.getSpanEnd(span));
         }
 
-        List<FilteringResult> filter = filter(currentWord);
-        adapter.setItems(filter);
-        adapter.notifyDataSetChanged();
+        Word currentWord = getCurrentWord();
+        if (currentWord == null || currentWord.length() == 0) {
+            fireOnFilterEvent(null);
+            return;
+        }
 
-        if (filter.size() != 0 && filter.get(0).type == FILTERING_START) {
-            String word = filter.get(0).text.toString();
+        autoCompleting = true;
+        filter(currentWord);
+        fireOnFilterEvent(filteredItems);
+
+        if (filteredItems.size() != 0 && filteredItems.get(0).type == FILTERING_START) {
+            String word = filteredItems.get(0).text.toString();
             String remainingPart = word.substring(currentWord.preCursor.length());
             text.insert(selStart, remainingPart);
             HintSpan span = new HintSpan(getCurrentHintTextColor());
             setSelection(selStart);
             text.setSpan(span, selStart, selStart + remainingPart.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            AutoCompleteTextView.super.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            AutoCompleteEditText.super.setImeOptions(EditorInfo.IME_ACTION_DONE);
         }
 
         autoCompleting = false;
     }
 
-    public static class Word {
-        public String preCursor;
-        public String postCursor;
+    private void fireOnFilterEvent(List<FilterResult> filteredItems) {
+        if (onFilterListener != null)
+            onFilterListener.onFilter(filteredItems);
+    }
+
+    static class Word {
+        String preCursor;
+        String postCursor;
 
         @Override
         public String toString() {
@@ -232,10 +245,29 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
         }
         HintSpan[] spans = text.getSpans(0, length(), HintSpan.class);
         if (spans.length > 0)
-            position = text.getSpanEnd(spans[0]);
+            position = text.getSpanStart(spans[0]);
         word.postCursor = text.subSequence(position, i).toString();
+        if (word.length() == 0) {
+            text.delete(getSelectionStart(), i);
+            return null;
+        }
 
         return word;
+    }
+
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        prevText = getText().toString();
+        super.setText(text, type);
+    }
+
+    @Override
+    public Editable getText() {
+        try {
+            return super.getText();
+        } catch (ClassCastException e) {
+            return new SpannableStringBuilder("");
+        }
     }
 
     @Override
@@ -263,37 +295,44 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
         super.onSelectionChanged(selStart, selEnd);
     }
 
-    List<AutoCompleteTextView.FilteringResult> filteredItems = new ArrayList<>();
+    List<FilterResult> filteredItems = new ArrayList<>();
 
-    public List<AutoCompleteTextView.FilteringResult> filter(AutoCompleteTextView.Word word) {
+    public void filter(AutoCompleteEditText.Word word) {
         filteredItems.clear();
-        if (word.length() == 0) {
-            return filteredItems;
-        }
-        String text = word.preCursor.toLowerCase();
+        if (word.length() == 0)
+            return;
+
+        String preCursor = word.preCursor.toLowerCase();
         for (int i = 0; i < dataProvider.getItemCount(); i++) {
-            String item = dataProvider.getItem(i);
-            if (item.length() == word.length()) {
+            String[] itemWords = dataProvider.getItemWords(i);
+            matchItem(word, preCursor, i, itemWords);
+        }
+        Collections.sort(filteredItems);
+    }
+
+    private void matchItem(Word word, String preCursor, int i, String[] itemWords) {
+        for (int j = 0; j < itemWords.length; j++) {
+            String itemText = itemWords[j];
+            if (itemText.length() == word.length())
                 continue;
-            }
-            item = item.toLowerCase();
-            if (item.indexOf(text) == 0 && word.postCursor.length() == 0) {
-                Spannable spannable = new SpannableStringBuilder(item);
-                spannable.setSpan(new AutoCompleteTextView.HintSpan(getCurrentHintTextColor()), text.length(), item.length(),
+            itemText = itemText.toLowerCase();
+            if (itemText.indexOf(preCursor) == 0 && word.postCursor.length() == 0) {
+                Spannable spannable = new SpannableStringBuilder(itemText);
+                spannable.setSpan(new HintSpan(getCurrentHintTextColor()), preCursor.length(), itemText.length(),
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                filteredItems.add(new AutoCompleteTextView.FilteringResult(AutoCompleteTextView.FILTERING_START, spannable));
+                filteredItems.add(new FilterResult(AutoCompleteEditText.FILTERING_START, spannable, dataProvider.getItem(i)));
+                return;
             } else {
-                Spannable spannable = partialMatch(item, word);
+                Spannable spannable = partialMatch(itemText, word);
                 if (spannable != null) {
-                    filteredItems.add(new AutoCompleteTextView.FilteringResult(AutoCompleteTextView.FILTERING_PARTIAL, spannable));
+                    filteredItems.add(new FilterResult(AutoCompleteEditText.FILTERING_PARTIAL, spannable, dataProvider.getItem(i)));
+                    return;
                 }
             }
         }
-        Collections.sort(filteredItems);
-        return filteredItems;
     }
 
-    private Spannable partialMatch(String item, AutoCompleteTextView.Word word) {  // item: 'lemon', text: 'le'
+    private Spannable partialMatch(String item, AutoCompleteEditText.Word word) {  // item: 'lemon', text: 'le'
         Spannable spannable = new SpannableStringBuilder(item);
         int i = 0, j = 0;
         String text = word.toString().toLowerCase();
@@ -301,13 +340,12 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
             if (item.charAt(i) == text.charAt(j)) {
                 j++;
             } else {
-                spannable.setSpan(new AutoCompleteTextView.HintSpan(getCurrentHintTextColor()), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannable.setSpan(new AutoCompleteEditText.HintSpan(getCurrentHintTextColor()), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
-        spannable.setSpan(new AutoCompleteTextView.HintSpan(getCurrentHintTextColor()), i, item.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        if (j == text.length()) {
+        spannable.setSpan(new AutoCompleteEditText.HintSpan(getCurrentHintTextColor()), i, item.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (j == text.length())
             return spannable;
-        }
         return null;
     }
 
@@ -329,53 +367,32 @@ public class AutoCompleteTextView extends EditText implements TouchMarginView, A
             return;
         Editable text = getText();
         HintSpan[] spans = text.getSpans(0, length(), HintSpan.class);
-        if (spans.length > 1) {
+        if (spans.length > 1)
             throw new IllegalStateException("more than one HintSpan");
-        }
         Word word = getCurrentWord();
-        if (word == null) {
+        if (word == null)
             throw new IllegalStateException("no word to complete");
-        }
         autoCompleting = true;
-        for (HintSpan span : spans) {
-            text.delete(text.getSpanStart(span), text.getSpanEnd(span));
-        }
+        //for (HintSpan span : spans)
+        //    text.delete(text.getSpanStart(span), text.getSpanEnd(span));
         text.delete(selStart, selStart + word.postCursor.length());
         text.delete(selStart - word.preCursor.length(), selStart);
         text.insert(selStart - word.preCursor.length(), s);
         setSelection(selStart - word.preCursor.length() + s.length());
-        adapter.items.clear();
-        adapter.notifyDataSetChanged();
+        fireOnFilterEvent(null);
         super.setImeOptions(prevOptions);
         autoCompleting = false;
     }
 
-    public RowListAdapter<FilteringResult> getAdapter() {
-        return adapter;
+    public interface OnFilterListener {
+        void onFilter(List<FilterResult> filterResults);
     }
 
-    public void setAdapter(RowListAdapter<FilteringResult> adapter) {
-        this.adapter = adapter;
+    public void setOnFilterListener(OnFilterListener onFilterListener) {
+        this.onFilterListener = onFilterListener;
     }
 
-    static class AutoCompleteRow implements Row<FilteringResult> {
-
-        private final carbon.widget.TextView text;
-        private final View view;
-
-        public AutoCompleteRow(ViewGroup parent) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carbon_autocompletelayout_row, parent, false);
-            text = (carbon.widget.TextView) view.findViewById(R.id.carbon_autoCompleteLayoutRowText);
-        }
-
-        @Override
-        public View getView() {
-            return view;
-        }
-
-        @Override
-        public void bind(FilteringResult data) {
-            text.setText(data.text);
-        }
+    public List<FilterResult> getFilteredItems() {
+        return filteredItems;
     }
 }

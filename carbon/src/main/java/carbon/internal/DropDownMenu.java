@@ -16,33 +16,31 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
+import carbon.recycler.ArrayAdapter;
 import carbon.widget.FrameLayout;
 import carbon.widget.RecyclerView;
 
 /**
  * Created by Marcin on 2015-06-10.
  */
-public class SpinnerMenu extends PopupWindow {
+public class DropDownMenu extends PopupWindow {
 
     protected RecyclerView recycler;
     private View mAnchorView;
 
-    public SpinnerMenu(Context context) {
+    public DropDownMenu(Context context) {
         super(View.inflate(context, R.layout.carbon_popupmenu, null));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        recycler.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP &&
-                        (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK)) {
-                    dismiss();
-                    return true;
-                }
-                return false;
+        recycler.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_UP &&
+                    (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK)) {
+                dismiss();
+                return true;
             }
+            return false;
         });
 
         setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
@@ -91,13 +89,13 @@ public class SpinnerMenu extends PopupWindow {
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
         int selectedItem = 0;
-        RecyclerView.ArrayAdapter adapter = getAdapter();
+        ArrayAdapter adapter = getAdapter();
 
         if (mAnchorView instanceof android.widget.TextView) {
             TextView textView = (TextView) mAnchorView;
             String text = textView.getText().toString();
             for (int i = 0; i < adapter.getItemCount(); i++) {
-                if (adapter.getItem(i).equals(text)) {
+                if (adapter.getItem(i).toString().equals(text)) {
                     selectedItem = i;
                     break;
                 }
@@ -120,9 +118,9 @@ public class SpinnerMenu extends PopupWindow {
         int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
         int itemsAbove = Math.min(selectedItem, maxItemsAbove);
 
-        int popupX = location[0] - margin;
-        int popupY = location[1] - margin - itemsAbove * itemHeight - marginHalf;
-        int popupWidth = mAnchorView.getWidth() + margin * 2;
+        int popupX = location[0] - margin * 2;
+        int popupY = location[1] - margin - itemsAbove * itemHeight - marginHalf - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() - mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
+        int popupWidth = mAnchorView.getWidth() + margin * 4 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
         int popupHeight = marginHalf * 2 + Math.max(1, itemsAbove + itemsBelow) * itemHeight + margin * 2;
 
         LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
@@ -140,7 +138,7 @@ public class SpinnerMenu extends PopupWindow {
         content.getAnimator().addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                SpinnerMenu.super.dismiss();
+                DropDownMenu.super.dismiss();
             }
         });
     }
@@ -184,8 +182,8 @@ public class SpinnerMenu extends PopupWindow {
         recycler.setAdapter(adapter);
     }
 
-    public RecyclerView.ArrayAdapter getAdapter() {
-        return (RecyclerView.ArrayAdapter) recycler.getAdapter();
+    public ArrayAdapter getAdapter() {
+        return (ArrayAdapter) recycler.getAdapter();
     }
 
    /* @Override

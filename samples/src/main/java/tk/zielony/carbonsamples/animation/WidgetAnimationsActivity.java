@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import carbon.widget.FrameLayout;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -42,5 +43,9 @@ public class WidgetAnimationsActivity extends Activity {
                 buttonVisibility = View.INVISIBLE;
             }
         });
+
+        FrameLayout frame = (FrameLayout) findViewById(R.id.frame);
+        carbon.widget.Button reveal = (carbon.widget.Button) findViewById(R.id.reveal);
+        reveal.setOnClickListener(v -> frame.startReveal(20, 20, 0, (float) Math.sqrt((frame.getWidth() - 20) * (frame.getWidth() - 20) + (frame.getHeight() - 20) * (frame.getHeight() - 20))));
     }
 }

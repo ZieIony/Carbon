@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import carbon.R;
 import carbon.widget.LinearLayout;
-import carbon.widget.Spinner;
+import carbon.widget.DropDown;
 import carbon.widget.TableView;
 import carbon.widget.TextView;
 import carbon.widget.Toolbar;
@@ -20,7 +20,7 @@ public class TableLayout extends LinearLayout {
     Toolbar toolbar;
     LinearLayout header;
     View footer;
-    Spinner rowNumber;
+    DropDown rowNumber;
     private TextView pageNumbers;
 
     public TableLayout(Context context) {
@@ -46,7 +46,7 @@ public class TableLayout extends LinearLayout {
         header = (LinearLayout) findViewById(R.id.carbon_tableHeader);
         table = (TableView) findViewById(R.id.carbon_table);
         footer = findViewById(R.id.carbon_tableFooter);
-        rowNumber = (Spinner) findViewById(R.id.carbon_tableRowNumber);
+        rowNumber = (DropDown) findViewById(R.id.carbon_tableRowNumber);
         rowNumber.setItems(new String[]{"10", "20", "50"});
         pageNumbers = (TextView) findViewById(R.id.carbon_tablePageNumbers);
     }

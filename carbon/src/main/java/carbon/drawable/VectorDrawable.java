@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.util.SparseArray;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
@@ -17,10 +18,16 @@ import com.caverock.androidsvg.SVGParseException;
 /**
  * Created by Marcin on 2015-06-25.
  */
-public class VectorDrawable extends Drawable implements AlphaDrawable{
+public class VectorDrawable extends Drawable implements AlphaDrawable {
     private VectorState state;
     private Bitmap bitmap;
     private ColorStateList tint = ColorStateList.valueOf(0x00ffffff);   // TODO: maybe tint should be a part of VectorState?
+
+    static SparseArray<SVG> cache = new SparseArray<>();
+
+    public static void clearCache() {
+        cache.clear();
+    }
 
     public VectorDrawable(SVG svg, int intWidth, int intHeight) {
         state = new VectorState(svg, intWidth, intHeight);
@@ -31,15 +38,15 @@ public class VectorDrawable extends Drawable implements AlphaDrawable{
         if (resId == 0)
             return;
         try {
-            SVG svg = SVG.getFromResource(res, resId);
+            SVG svg = cache.get(resId);
+            if (svg == null) {
+                svg = SVG.getFromResource(res, resId);
+                cache.put(resId, svg);
+            }
             float density = res.getDisplayMetrics().density;
 
-            float width = svg.getDocumentWidth();
-            if (width <= 0)
-                width = svg.getDocumentViewBox().width();
-            float height = svg.getDocumentHeight();
-            if (height <= 0)
-                height = svg.getDocumentViewBox().height();
+            float width = svg.getDocumentViewBox().width();
+            float height = svg.getDocumentViewBox().height();
 
             int intWidth = (int) (width * density);
             int intHeight = (int) (height * density);

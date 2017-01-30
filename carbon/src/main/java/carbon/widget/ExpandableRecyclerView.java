@@ -43,6 +43,7 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.DefaultItemAnimator;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
+import carbon.recycler.ArrayAdapter;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowView;
@@ -735,7 +736,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         void onChildItemClicked(int group, int position);
     }
 
-    public static abstract class Adapter<CVH extends ViewHolder, GVH extends ViewHolder, C, G> extends RecyclerView.ArrayAdapter<ViewHolder, Object> {
+    public static abstract class Adapter<CVH extends ViewHolder, GVH extends ViewHolder, C, G> extends ArrayAdapter<ViewHolder, Object> {
         private static final int TYPE_HEADER = 0;
 
         SparseBooleanArray expanded = new SparseBooleanArray();
@@ -890,31 +891,25 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         }
 
         public void onBindChildViewHolder(CVH holder, final int group, final int position) {
-            holder.itemView.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    if (Adapter.this.onChildItemClickedListener != null) {
-                        Adapter.this.onChildItemClickedListener.onChildItemClicked(group, position);
-                    }
-
-                }
+            ViewHelper.setAlpha(holder.itemView, 1);
+            holder.itemView.setOnClickListener(__ -> {
+                if (Adapter.this.onChildItemClickedListener != null)
+                    Adapter.this.onChildItemClickedListener.onChildItemClicked(group, position);
             });
         }
 
         public void onBindGroupViewHolder(final GVH holder, final int group) {
             if (holder instanceof GroupViewHolder)
                 ((GroupViewHolder) holder).setExpanded(isExpanded(group));
-            holder.itemView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isExpanded(group)) {
-                        collapse(group);
-                        if (holder instanceof GroupViewHolder)
-                            ((GroupViewHolder) holder).collapse();
-                    } else {
-                        expand(group);
-                        if (holder instanceof GroupViewHolder)
-                            ((GroupViewHolder) holder).expand();
-                    }
+            holder.itemView.setOnClickListener(__ -> {
+                if (isExpanded(group)) {
+                    collapse(group);
+                    if (holder instanceof GroupViewHolder)
+                        ((GroupViewHolder) holder).collapse();
+                } else {
+                    expand(group);
+                    if (holder instanceof GroupViewHolder)
+                        ((GroupViewHolder) holder).expand();
                 }
             });
         }
@@ -951,12 +946,9 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
             animator.setInterpolator(new DecelerateInterpolator());
             animator.setDuration(200);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
-                    expandedIndicator.postInvalidate();
-                }
+            animator.addUpdateListener(animation -> {
+                ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
+                expandedIndicator.postInvalidate();
             });
             animator.start();
             expanded = true;
@@ -966,12 +958,9 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
             animator.setInterpolator(new DecelerateInterpolator());
             animator.setDuration(200);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
-                    expandedIndicator.postInvalidate();
-                }
+            animator.addUpdateListener(animation -> {
+                ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
+                expandedIndicator.postInvalidate();
             });
             animator.start();
             expanded = false;

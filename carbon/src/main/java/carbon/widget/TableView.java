@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import carbon.R;
+import carbon.recycler.ListAdapter;
 
 /**
  * Created by Marcin on 2015-12-18.
@@ -45,7 +46,7 @@ public class TableView extends RecyclerView {
         putCellRenderer(Boolean.class, new BooleanRenderer());
     }
 
-    public static abstract class Adapter extends RecyclerView.ListAdapter<Adapter.ViewHolder, List<?>> {
+    public static abstract class Adapter extends ListAdapter<Adapter.ViewHolder, List<?>> {
         private TableView tableView;
 
         public Adapter(TableView tableView) {

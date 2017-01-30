@@ -21,7 +21,7 @@ import tk.zielony.carbonsamples.widget.SVGActivity;
 import tk.zielony.carbonsamples.widget.ScrollViewActivity;
 import tk.zielony.carbonsamples.widget.SeekBarActivity;
 import tk.zielony.carbonsamples.widget.SnackbarActivity;
-import tk.zielony.carbonsamples.widget.SpinnerActivity;
+import tk.zielony.carbonsamples.widget.DropDownActivity;
 import tk.zielony.carbonsamples.widget.TableLayoutActivity;
 import tk.zielony.carbonsamples.widget.TabsActivity;
 import tk.zielony.carbonsamples.widget.TextFieldsActivity;
@@ -49,7 +49,7 @@ public class WidgetsActivity extends Activity {
                 new ViewModel(ScrollViewActivity.class, getString(R.string.scrollViewActivity_title)),
                 new ViewModel(RecyclerActivity.class, getString(R.string.recyclerViewActivity_title)),
                 new ViewModel(ExpandableRecyclerActivity.class, getString(R.string.expandableRecyclerActivity_title)),
-                new ViewModel(SpinnerActivity.class, getString(R.string.spinnerActivityActivity_title)),
+                new ViewModel(DropDownActivity.class, getString(R.string.dropDownActivityActivity_title)),
                 new ViewModel(NavigationViewActivity.class, getString(R.string.navigationViewActivity_title)),
                 new ViewModel(SeekBarActivity.class, getString(R.string.seekBarActivity_title)),
                 new ViewModel(ToolbarActivity.class, getString(R.string.toolbarActivity_title)),

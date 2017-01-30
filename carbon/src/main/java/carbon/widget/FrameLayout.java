@@ -15,14 +15,17 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.view.animation.Interpolator;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -43,6 +46,7 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
 import carbon.internal.PercentLayoutHelper;
+import carbon.internal.Reveal;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -57,7 +61,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * A FrameLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class FrameLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
+public class FrameLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView {
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
     private OnTouchListener onDispatchTouchListener;
 
@@ -133,17 +137,90 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     List<View> views;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private boolean drawCalled = false;
+    Reveal reveal;
+
+    @Override
+    public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            android.animation.Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
+            circularReveal.start();
+            return new Animator() {
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public long getStartDelay() {
+                    return circularReveal.getStartDelay();
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public void setStartDelay(long startDelay) {
+                    circularReveal.setStartDelay(startDelay);
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public Animator setDuration(long duration) {
+                    circularReveal.setDuration(duration);
+                    return this;
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public long getDuration() {
+                    return circularReveal.getDuration();
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public void setInterpolator(Interpolator value) {
+                    circularReveal.setInterpolator(value);
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public boolean isRunning() {
+                    return circularReveal.isRunning();
+                }
+            };
+        } else {
+            reveal = new Reveal(x, y, startRadius);
+            ValueAnimator animator = ValueAnimator.ofFloat(startRadius, finishRadius);
+            animator.setDuration(Carbon.getDefaultRevealDuration());
+            animator.addUpdateListener(animation -> {
+                reveal.radius = (float) animation.getAnimatedValue();
+                reveal.mask.reset();
+                reveal.mask.addCircle(reveal.x, reveal.y, Math.max(reveal.radius, 1), Path.Direction.CW);
+                postInvalidate();
+            });
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    reveal = null;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    reveal = null;
+                }
+            });
+            animator.start();
+            return animator;
+        }
+    }
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
         // draw not called, we have to handle corners here
-        if (cornerRadius > 0 && !drawCalled && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if ((reveal != null || cornerRadius > 0) && !drawCalled && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             internalDispatchDraw(canvas);
 
             paint.setXfermode(pdMode);
-            canvas.drawPath(cornersMask, paint);
+            if (cornerRadius > 0)
+                canvas.drawPath(cornersMask, paint);
+            if (reveal != null)
+                canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -175,7 +252,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                 canvas.drawRect(0, getHeight() - insetBottom, getWidth(), getHeight(), paint);
         }
     }
-
 
     RectF childRect = new RectF();
 
@@ -312,13 +388,16 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if ((reveal != null || cornerRadius > 0) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
 
             paint.setXfermode(pdMode);
-            canvas.drawPath(cornersMask, paint);
+            if (cornerRadius > 0)
+                canvas.drawPath(cornersMask, paint);
+            if (reveal != null)
+                canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);

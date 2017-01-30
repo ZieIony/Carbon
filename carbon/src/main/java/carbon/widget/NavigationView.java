@@ -40,6 +40,10 @@ public class NavigationView extends RecyclerView {
         setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
+    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
+    }
+
     protected void fireOnItemClickedEvent(int position) {
         if (onItemClickedListener != null)
             onItemClickedListener.onItemClicked(position);

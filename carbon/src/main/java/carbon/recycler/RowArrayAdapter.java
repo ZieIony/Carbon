@@ -2,23 +2,32 @@ package carbon.recycler;
 
 import android.view.ViewGroup;
 
-import carbon.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class RowArrayAdapter<Type> extends RecyclerView.ArrayAdapter<RowViewHolder, Type> {
-    private RowFactory factory;
+public class RowArrayAdapter<Type> extends ArrayAdapter<RowViewHolder, Type> {
+    private Map<Class, Integer> types = new HashMap<>();
+    private List<RowFactory> factories = new ArrayList<>();
 
-    public RowArrayAdapter(RowFactory factory) {
-        this.factory = factory;
+    public RowArrayAdapter(Class type, RowFactory factory) {
+        addFactory(type, factory);
     }
 
     public RowArrayAdapter(Type[] items, RowFactory factory) {
         super(items);
-        this.factory = factory;
+        addFactory(items[0].getClass(), factory);
+    }
+
+    public void addFactory(Class type, RowFactory factory) {
+        types.put(type, types.size());
+        factories.add(factory);
     }
 
     @Override
-    public RowViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
-        Row row = factory.create(viewGroup);
+    public RowViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        Row row = factories.get(viewType).create(viewGroup);
         RowViewHolder viewHolder = new RowViewHolder(row.getView());
         viewHolder.setRow(row);
         return viewHolder;
@@ -33,7 +42,7 @@ public class RowArrayAdapter<Type> extends RecyclerView.ArrayAdapter<RowViewHold
     }
 
     @Override
-    public int getItemViewType(int arg0) {
-        return 0;
+    public int getItemViewType(int position) {
+        return types.get(getItem(position).getClass());
     }
 }

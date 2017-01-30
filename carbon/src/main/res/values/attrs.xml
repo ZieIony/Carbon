@@ -763,7 +763,7 @@
     </declare-styleable>
 
     <attr name="carbon_spinnerStyle" format="reference" />
-    <declare-styleable name="Spinner">
+    <declare-styleable name="DropDown">
         <attr name="carbon_theme" />
 
         <attr name="carbon_popupTheme" format="reference" />
@@ -912,7 +912,7 @@
 
     <attr name="carbon_editMenuTheme" format="reference" />
     <attr name="carbon_snackbarTheme" format="reference" />
-    <attr name="carbon_spinnerPopupTheme" format="reference" />
+    <attr name="carbon_dropDownPopupTheme" format="reference" />
 
     <attr name="carbon_autoCompleteLayoutStyle" format="reference" />
     <declare-styleable name="AutoCompleteLayout">

@@ -22,16 +22,19 @@ import android.widget.AdapterView;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
+import java.util.Arrays;
+
 import carbon.Carbon;
 import carbon.R;
-import carbon.internal.SpinnerMenu;
+import carbon.internal.DropDownMenu;
+import carbon.recycler.ArrayAdapter;
 
 /**
  * Created by Marcin on 2015-06-11.
  */
-public class Spinner extends EditText {
+public class DropDown extends EditText {
 
-    SpinnerMenu spinnerMenu;
+    DropDownMenu dropDownMenu;
 
     private int selectedIndex;
 
@@ -41,23 +44,23 @@ public class Spinner extends EditText {
 
     private boolean isShowingPopup = false;
 
-    public Spinner(Context context) {
+    public DropDown(Context context) {
         super(context, null, R.attr.carbon_spinnerStyle);
         initSpinner(context, null, R.attr.carbon_spinnerStyle);
     }
 
-    public Spinner(Context context, AttributeSet attrs) {
+    public DropDown(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_spinnerStyle);
         initSpinner(context, attrs, R.attr.carbon_spinnerStyle);
     }
 
-    public Spinner(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DropDown(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initSpinner(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Spinner(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DropDown(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initSpinner(context, attrs, defStyleAttr);
     }
@@ -86,20 +89,20 @@ public class Spinner extends EditText {
 
         }
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Spinner, defStyleAttr, R.style.carbon_Spinner);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DropDown, defStyleAttr, R.style.carbon_DropDown);
 
-        int theme = a.getResourceId(R.styleable.Spinner_carbon_popupTheme, -1);
+        int theme = a.getResourceId(R.styleable.DropDown_carbon_popupTheme, -1);
 
         a.recycle();
 
         defaultAdapter = new Adapter();
-        spinnerMenu = new SpinnerMenu(new ContextThemeWrapper(context, theme));
-        spinnerMenu.setAdapter(defaultAdapter);
-        spinnerMenu.setOnItemClickedListener(onItemClickedListener);
-        spinnerMenu.setOnDismissListener(() -> isShowingPopup = false);
+        dropDownMenu = new DropDownMenu(new ContextThemeWrapper(context, theme));
+        dropDownMenu.setAdapter(defaultAdapter);
+        dropDownMenu.setOnItemClickedListener(onItemClickedListener);
+        dropDownMenu.setOnDismissListener(() -> isShowingPopup = false);
 
         setOnClickListener(view -> {
-            spinnerMenu.show(Spinner.this);
+            dropDownMenu.show(DropDown.this);
             isShowingPopup = true;
         });
     }
@@ -114,27 +117,35 @@ public class Spinner extends EditText {
         return selectedIndex;
     }
 
+    public void setSelectedItem(Object item) {
+        setSelectedIndex(Arrays.binarySearch(getAdapter().getItems(), item));
+    }
+
+    public Object getSelectedItem() {
+        return getAdapter().getItem(selectedIndex);
+    }
+
     public void setAdapter(final RecyclerView.Adapter adapter) {
         if (adapter == null) {
-            spinnerMenu.setAdapter(defaultAdapter);
+            dropDownMenu.setAdapter(defaultAdapter);
         } else {
-            spinnerMenu.setAdapter(adapter);
+            dropDownMenu.setAdapter(adapter);
         }
         setText(getAdapter().getItem(selectedIndex).toString());
     }
 
-    public RecyclerView.ArrayAdapter getAdapter() {
-        return spinnerMenu.getAdapter();
+    public ArrayAdapter getAdapter() {
+        return dropDownMenu.getAdapter();
     }
 
     RecyclerView.OnItemClickedListener onItemClickedListener = new RecyclerView.OnItemClickedListener() {
         @Override
         public void onItemClicked(int position) {
-            setText(spinnerMenu.getAdapter().getItem(position).toString());
+            setText(dropDownMenu.getAdapter().getItem(position).toString());
             selectedIndex = position;
             if (onItemSelectedListener != null)
                 onItemSelectedListener.onItemSelected(null, null, selectedIndex, 0);
-            spinnerMenu.dismiss();
+            dropDownMenu.dismiss();
         }
     };
 
@@ -142,13 +153,14 @@ public class Spinner extends EditText {
         this.onItemSelectedListener = onItemSelectedListener;
     }
 
-    public void setItems(String[] items) {
-        spinnerMenu.setAdapter(defaultAdapter);
+    public void setItems(Object[] items) {
+        dropDownMenu.setAdapter(defaultAdapter);
         defaultAdapter.setItems(items);
         defaultAdapter.notifyDataSetChanged();
+        setSelectedIndex(0);
     }
 
-    public static class Adapter extends RecyclerView.ArrayAdapter<ViewHolder, String> {
+    public static class Adapter extends ArrayAdapter<ViewHolder, Object> {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -159,7 +171,7 @@ public class Spinner extends EditText {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            holder.tv.setText(items[position]);
+            holder.tv.setText(items[position].toString());
             holder.itemView.setOnClickListener(view -> fireOnItemClickedEvent(holder.getAdapterPosition()));
         }
     }
@@ -178,10 +190,10 @@ public class Spinner extends EditText {
     protected boolean setFrame(int l, int t, int r, int b) {
         boolean result = super.setFrame(l, t, r, b);
 
-        if (spinnerMenu != null) {
-            carbon.widget.FrameLayout container = (FrameLayout) spinnerMenu.getContentView().findViewById(R.id.carbon_popupContainer);
+        if (dropDownMenu != null) {
+            carbon.widget.FrameLayout container = (FrameLayout) dropDownMenu.getContentView().findViewById(R.id.carbon_popupContainer);
             if (container.getAnimator() == null)
-                spinnerMenu.update();
+                dropDownMenu.update();
         }
 
         return result;
@@ -192,7 +204,7 @@ public class Spinner extends EditText {
         super.onAttachedToWindow();
 
         if (isShowingPopup)
-            spinnerMenu.showImmediate(Spinner.this);
+            dropDownMenu.showImmediate(DropDown.this);
     }
 
     @Override
@@ -200,7 +212,7 @@ public class Spinner extends EditText {
         super.onDetachedFromWindow();
 
         if (isShowingPopup)
-            spinnerMenu.dismissImmediate();
+            dropDownMenu.dismissImmediate();
     }
 
     @Override

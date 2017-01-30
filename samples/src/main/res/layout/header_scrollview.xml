@@ -12,10 +12,15 @@
         android:src="@drawable/mazda" />
 
     <carbon.widget.ImageView
-        style="@style/carbon_ImageView.Icon"
+        style="@style/carbon_ImageView.IconButton"
         android:layout_width="@dimen/carbon_toolbarItemSize"
         android:layout_height="@dimen/carbon_toolbarItemSize"
         android:layout_gravity="bottom|end"
         android:padding="@dimen/carbon_padding"
         app:carbon_src="@raw/ic_shopping_cart_24px" />
+
+    <carbon.widget.EditText
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </FrameLayout>

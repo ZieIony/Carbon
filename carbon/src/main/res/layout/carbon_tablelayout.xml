@@ -53,7 +53,7 @@
             android:layout_margin="@dimen/carbon_margin"
             android:text="@string/carbon_rowsPerPage" />
 
-        <carbon.widget.Spinner
+        <carbon.widget.DropDown
             android:id="@+id/carbon_tableRowNumber"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_listItemHeight"

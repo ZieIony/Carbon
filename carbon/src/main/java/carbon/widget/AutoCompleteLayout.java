@@ -7,12 +7,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.nineoldandroids.view.ViewHelper;
 
+import java.util.ArrayList;
+
 import carbon.Carbon;
 import carbon.R;
+import carbon.recycler.Row;
 import carbon.recycler.RowListAdapter;
 
 /**
@@ -20,8 +25,9 @@ import carbon.recycler.RowListAdapter;
  */
 
 public class AutoCompleteLayout extends LinearLayout {
-    AutoCompleteTextView search;
+    AutoCompleteEditText search;
     RecyclerView results;
+    protected RowListAdapter<AutoCompleteEditText.FilterResult> adapter = new RowListAdapter<>(AutoCompleteEditText.FilterResult.class, AutoCompleteRow::new);
 
     public AutoCompleteLayout(Context context) {
         super(context);
@@ -46,18 +52,25 @@ public class AutoCompleteLayout extends LinearLayout {
     private void initAutoCompleteLayout() {
         View.inflate(getContext(), R.layout.carbon_autocompletelayout, this);
         setOrientation(VERTICAL);
-        search = (AutoCompleteTextView) findViewById(R.id.carbon_autoCompleteSearch);
+        search = (AutoCompleteEditText) findViewById(R.id.carbon_autoCompleteSearch);
         results = (RecyclerView) findViewById(R.id.carbon_autoCompleteResults);
         results.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         ColorDrawable colorDrawable = new ColorDrawable(Carbon.getThemeColor(getContext(), R.attr.carbon_dividerColor));
         int dividerWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
-        results.addItemDecoration(new AutoCompleteLayout.DividerItemDecoration(colorDrawable, dividerWidth));
-        RowListAdapter<AutoCompleteTextView.FilteringResult> adapter = search.getAdapter();
+        results.addItemDecoration(new DividerItemDecoration(colorDrawable, dividerWidth));
         results.setAdapter(adapter);
+        search.setOnFilterListener(filteringResults -> {
+            if (filteringResults == null) {
+                adapter.setItems(new ArrayList<>());
+                return;
+            }
+
+            adapter.setItems(new ArrayList<>(filteringResults));
+        });
         adapter.setOnItemClickedListener(position -> search.performCompletion(adapter.getItems().get(position).text.toString()));
     }
 
-    public void setDataProvider(AutoCompleteTextView.AutoCompleteDataProvider dataProvider) {
+    public void setDataProvider(AutoCompleteEditText.AutoCompleteDataProvider dataProvider) {
         search.setDataProvider(dataProvider);
     }
 
@@ -131,6 +144,27 @@ public class AutoCompleteLayout extends LinearLayout {
                 throw new IllegalStateException(
                         "DividerItemDecoration can only be used with a LinearLayoutManager.");
             }
+        }
+    }
+
+    public static class AutoCompleteRow implements Row<AutoCompleteEditText.FilterResult> {
+
+        private final carbon.widget.TextView text;
+        private final View view;
+
+        public AutoCompleteRow(ViewGroup parent) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carbon_autocompletelayout_row, parent, false);
+            text = (carbon.widget.TextView) view.findViewById(R.id.carbon_autoCompleteLayoutRowText);
+        }
+
+        @Override
+        public View getView() {
+            return view;
+        }
+
+        @Override
+        public void bind(AutoCompleteEditText.FilterResult data) {
+            text.setText(data.getItem().toString());
         }
     }
 }

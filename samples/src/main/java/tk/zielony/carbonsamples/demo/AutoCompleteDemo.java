@@ -3,8 +3,8 @@ package tk.zielony.carbonsamples.demo;
 import android.app.Activity;
 import android.os.Bundle;
 
+import carbon.widget.AutoCompleteEditText;
 import carbon.widget.AutoCompleteLayout;
-import carbon.widget.AutoCompleteTextView;
 import tk.zielony.carbonsamples.R;
 
 /**
@@ -12,7 +12,7 @@ import tk.zielony.carbonsamples.R;
  */
 public class AutoCompleteDemo extends Activity {
 
-    String[] fruits = {"Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"};
+    String[] fruits = {"Strawberry\npie", "Apple\npie", "Orange\njuice", "Lemon\njuice", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class AutoCompleteDemo extends Activity {
         setContentView(R.layout.activity_autocomplete);
 
         AutoCompleteLayout autoCompleteLayout = (AutoCompleteLayout) findViewById(R.id.autoComplete);
-        autoCompleteLayout.setDataProvider(new AutoCompleteTextView.AutoCompleteDataProvider() {
+        autoCompleteLayout.setDataProvider(new AutoCompleteEditText.AutoCompleteDataProvider() {
 
             @Override
             public int getItemCount() {
@@ -30,6 +30,11 @@ public class AutoCompleteDemo extends Activity {
             @Override
             public String getItem(int i) {
                 return fruits[i];
+            }
+
+            @Override
+            public String[] getItemWords(int i) {
+                return fruits[i].split("\n");
             }
         });
     }

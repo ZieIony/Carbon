@@ -30,6 +30,9 @@ import carbon.widget.TouchMarginView;
  * Created by Marcin on 2014-12-18.
  */
 public class Carbon {
+    private static final long DEFAULT_REVEAL_DURATION = 200;
+    private static long defaultRevealDuration = DEFAULT_REVEAL_DURATION;
+
     private Carbon() {
     }
 
@@ -219,5 +222,13 @@ public class Carbon {
             return 255;
         int color = tint.getColorForState(child.getDrawableState(), tint.getDefaultColor());
         return (color >> 24) & 0xff;
+    }
+
+    public static long getDefaultRevealDuration() {
+        return defaultRevealDuration;
+    }
+
+    public static void setDefaultRevealDuration(long defaultRevealDuration) {
+        Carbon.defaultRevealDuration = defaultRevealDuration;
     }
 }

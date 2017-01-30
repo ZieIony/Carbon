@@ -8,7 +8,7 @@
     <string name="toolbarActivity_title">Toolbar</string>
     <string name="seekBarActivity_title">SeekBar</string>
     <string name="navigationViewActivity_title">NavigationView</string>
-    <string name="spinnerActivityActivity_title">Spinner</string>
+    <string name="dropDownActivityActivity_title">DropDown</string>
     <string name="expandableRecyclerActivity_title">ExpandableRecyclerView</string>
     <string name="recyclerViewActivity_title">RecyclerView</string>
     <string name="scrollViewActivity_title">ScrollView</string>

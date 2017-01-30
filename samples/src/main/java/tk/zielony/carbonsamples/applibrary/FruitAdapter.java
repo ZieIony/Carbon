@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import carbon.recycler.ItemTouchHelper;
+import carbon.recycler.ListAdapter;
 import carbon.widget.RecyclerView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
@@ -15,7 +16,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-05-09.
  */
-public class FruitAdapter extends RecyclerView.ListAdapter<FruitAdapter.ViewHolder, String> {
+public class FruitAdapter extends ListAdapter<FruitAdapter.ViewHolder, String> {
     private ItemTouchHelper helper;
 
     public FruitAdapter(List<String> fruits, ItemTouchHelper helper) {

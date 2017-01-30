@@ -314,7 +314,7 @@ public class InputLayout extends RelativeLayout {
     }
 
     public void setShowPasswordButtonEnabled(boolean b) {
-        showPasswordImageView.setVisibility(b ? VISIBLE : GONE);
+        showPasswordImageView.setVisibilityImmediate(b ? VISIBLE : GONE);
         if (b)
             setClearButtonEnabled(false);
     }
@@ -324,7 +324,7 @@ public class InputLayout extends RelativeLayout {
     }
 
     public void setClearButtonEnabled(boolean b) {
-        clearImageView.setVisibility(b ? VISIBLE : GONE);
+        clearImageView.setVisibilityImmediate(b ? VISIBLE : GONE);
         if (b)
             setShowPasswordButtonEnabled(false);
     }

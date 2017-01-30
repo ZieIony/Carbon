@@ -797,11 +797,18 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
     }
 
+    private static final int[] INVALID_STATE_SET = {
+            R.attr.carbon_state_invalid
+    };
+
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
-        int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
-        drawableState[drawableState.length - 1] = valid ? -R.attr.carbon_state_invalid : R.attr.carbon_state_invalid;
-        return drawableState;
+        if (!isValid()) {
+            final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+            mergeDrawableStates(drawableState, INVALID_STATE_SET);
+            return drawableState;
+        }
+        return super.onCreateDrawableState(extraSpace);
     }
 
     // -------------------------------

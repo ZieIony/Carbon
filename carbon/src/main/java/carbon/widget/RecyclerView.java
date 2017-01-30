@@ -9,12 +9,10 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -38,6 +36,7 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.DefaultItemAnimator;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
+import carbon.recycler.DividerItemDecoration;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowView;
@@ -130,6 +129,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
+        if (header != null && (getChildCount() == 0 || getChildAt(0).getTop() + getScrollY() > ev.getY()))
+            if (header.dispatchTouchEvent(ev))
+                return true;
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 float deltaY = prevY - ev.getY();
@@ -597,172 +600,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         super.onLayout(changed, l, t, r, b);
         if (header != null)
             header.layout(0, 0, getWidth(), header.getMeasuredHeight());
-    }
-
-    public static abstract class ListAdapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
-        private OnItemClickedListener onItemClickedListener;
-
-        public ListAdapter() {
-            items = new ArrayList<>();
-        }
-
-        public ListAdapter(List<I> items) {
-            this.items = items;
-        }
-
-        protected List<I> items;
-
-        public I getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
-
-        public void setItems(@NonNull List<I> items) {
-            this.items = items;
-        }
-
-        public List<I> getItems() {
-            return items;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
-            this.onItemClickedListener = onItemClickedListener;
-        }
-
-        protected void fireOnItemClickedEvent(int position) {
-            if (onItemClickedListener != null)
-                onItemClickedListener.onItemClicked(position);
-        }
-    }
-
-    public static abstract class ArrayAdapter<VH extends ViewHolder, I> extends android.support.v7.widget.RecyclerView.Adapter<VH> {
-        private OnItemClickedListener onItemClickedListener;
-
-        public ArrayAdapter() {
-            items = (I[]) new Object[0];    // doesn't really matter
-        }
-
-        public ArrayAdapter(I[] items) {
-            this.items = items;
-        }
-
-        protected I[] items;
-
-        public I getItem(int position) {
-            return items[position];
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.length;
-        }
-
-        public void setItems(@NonNull I[] items) {
-            this.items = items;
-        }
-
-        public I[] getItems() {
-            return items;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
-            this.onItemClickedListener = onItemClickedListener;
-        }
-
-        protected void fireOnItemClickedEvent(int position) {
-            if (onItemClickedListener != null)
-                onItemClickedListener.onItemClicked(position);
-        }
-    }
-
-    public static class DividerItemDecoration extends RecyclerView.ItemDecoration {
-
-        private Drawable drawable;
-        private int height;
-
-        public DividerItemDecoration(Drawable drawable, int height) {
-            this.drawable = drawable;
-            this.height = height;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, android.support.v7.widget.RecyclerView parent, State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            if (drawable == null)
-                return;
-            if (parent.getChildPosition(view) < 1)
-                return;
-
-            if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
-                outRect.top = height;
-            } else {
-                outRect.left = height;
-            }
-        }
-
-        @Override
-        public void onDrawOver(Canvas c, android.support.v7.widget.RecyclerView parent, State state) {
-            if (drawable == null) {
-                super.onDrawOver(c, parent, state);
-                return;
-            }
-
-            // Initialization needed to avoid compiler warning
-            int left = 0, right = 0, top = 0, bottom = 0;
-            int orientation = getOrientation(parent);
-            int childCount = parent.getChildCount();
-
-            if (orientation == LinearLayoutManager.VERTICAL) {
-                left = parent.getPaddingLeft();
-                right = parent.getWidth() - parent.getPaddingRight();
-            } else { //horizontal
-                top = parent.getPaddingTop();
-                bottom = parent.getHeight() - parent.getPaddingBottom();
-            }
-
-            for (int i = 1; i < childCount; i++) {
-                View child = parent.getChildAt(i);
-                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-
-                if (orientation == LinearLayoutManager.VERTICAL) {
-                    bottom = (int) (child.getTop() - params.topMargin + ViewHelper.getTranslationY(child));
-                    top = bottom - height;
-                } else { //horizontal
-                    right = (int) (child.getLeft() - params.leftMargin + ViewHelper.getTranslationX(child));
-                    left = right - height;
-                }
-                c.save(Canvas.CLIP_SAVE_FLAG);
-                c.clipRect(left, top, right, bottom);
-                drawable.setAlpha((int) (ViewHelper.getAlpha(child) * 255));
-                drawable.setBounds(left, top, right, bottom);
-                drawable.draw(c);
-                c.restore();
-            }
-        }
-
-        private int getOrientation(android.support.v7.widget.RecyclerView parent) {
-            if (parent.getLayoutManager() instanceof LinearLayoutManager) {
-                LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
-                return layoutManager.getOrientation();
-            } else {
-                throw new IllegalStateException(
-                        "DividerItemDecoration can only be used with a LinearLayoutManager.");
-            }
-        }
     }
 
 

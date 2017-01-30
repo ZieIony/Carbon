@@ -30,7 +30,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
+        <item name="carbon_spinnerStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -45,7 +45,7 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
-        <item name="carbon_spinnerPopupTheme">@style/carbon_Theme.Dark.SpinnerPopup</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Dark.SpinnerPopup</item>
 
         <item name="colorPrimary">@color/carbon_grey_900</item>
         <item name="colorPrimaryDark">@color/carbon_black</item>
@@ -75,6 +75,7 @@
         <item name="colorControlNormal">@color/carbon_white_70</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHint">@color/carbon_text_hint_dark</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -153,7 +154,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
+        <item name="carbon_spinnerStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -168,7 +169,7 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
-        <item name="carbon_spinnerPopupTheme">@style/carbon_Theme.Dark.SpinnerPopup</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Dark.SpinnerPopup</item>
 
         <item name="colorPrimary">@color/carbon_grey_900</item>
         <item name="colorPrimaryDark">@color/carbon_black</item>
@@ -198,6 +199,7 @@
         <item name="colorControlNormal">@color/carbon_white_70</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHint">@color/carbon_text_hint_dark</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -259,7 +261,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
+        <item name="carbon_spinnerStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -274,7 +276,7 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
-        <item name="carbon_spinnerPopupTheme">@style/carbon_Theme.Light.SpinnerPopup</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Light.SpinnerPopup</item>
 
         <item name="colorPrimary">@color/carbon_grey_300</item>
         <item name="colorPrimaryDark">@color/carbon_grey_100</item>
@@ -304,6 +306,7 @@
         <item name="colorControlNormal">@color/carbon_black_54</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHint">@color/carbon_text_hint_light</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -381,7 +384,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_spinnerStyle">@style/carbon_Spinner</item>
+        <item name="carbon_spinnerStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -396,7 +399,7 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
-        <item name="carbon_spinnerPopupTheme">@style/carbon_Theme.Light.SpinnerPopup</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Light.SpinnerPopup</item>
 
         <item name="colorPrimary">@color/carbon_grey_300</item>
         <item name="colorPrimaryDark">@color/carbon_grey_100</item>
@@ -426,6 +429,7 @@
         <item name="colorControlNormal">@color/carbon_black_54</item>
         <item name="android:colorControlHighlight">@color/carbon_ripple_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHint">@color/carbon_text_hint_light</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline.Light
         </item>
@@ -672,18 +676,16 @@
         <item name="carbon_backgroundTint">#00000000</item>
     </style>
 
-    <style name="carbon_Spinner" parent="carbon_EditText">
+    <style name="carbon_DropDown" parent="carbon_EditText">
         <item name="android:cursorVisible">false</item>
         <item name="android:focusable">false</item>
         <item name="android:editable">false</item>
         <item name="android:maxLines">1</item>
-        <item name="android:paddingLeft">@dimen/carbon_padding</item>
-        <item name="android:paddingRight">@dimen/carbon_padding</item>
         <item name="android:paddingBottom">0dp</item>
         <item name="carbon_underline">false</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
-        <item name="carbon_popupTheme">?attr/carbon_spinnerPopupTheme</item>
+        <item name="carbon_popupTheme">?attr/carbon_dropDownPopupTheme</item>
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">

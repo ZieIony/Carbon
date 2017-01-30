@@ -29,4 +29,5 @@ android {
 dependencies {
     compile project(':carbon')
     compile 'com.squareup.picasso:picasso:2.4.0'
+    compile 'com.annimon:stream:1.1.4'
 }

@@ -58,7 +58,7 @@
             android:name=".widget.ExpandableRecyclerActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".widget.SpinnerActivity"
+            android:name=".widget.DropDownActivity"
             android:label="@string/app_name" />
         <activity
             android:theme="@style/AppTheme.Translucent"

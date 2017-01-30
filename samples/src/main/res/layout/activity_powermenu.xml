@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <carbon.beta.TransitionLayout
+        <carbon.widget.FrameLayout
             android:id="@+id/transition"
             android:layout_width="250dp"
             android:layout_height="280dp">
@@ -62,6 +62,6 @@
                 layout="@layout/screen_airplanemode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </carbon.beta.TransitionLayout>
+        </carbon.widget.FrameLayout>
     </carbon.widget.LinearLayout>
 </carbon.widget.FrameLayout>
