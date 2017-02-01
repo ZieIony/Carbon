@@ -118,6 +118,9 @@
             android:name=".feature.LargeShadowActivity"
             android:label="@string/app_name" />
         <activity
+            android:name=".feature.HtmlActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".feature.RobotoActivity"
             android:label="@string/app_name" />
         <activity

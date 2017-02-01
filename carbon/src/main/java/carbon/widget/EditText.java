@@ -166,6 +166,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         setCornerRadius((int) a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
+        Carbon.initHtmlText(this,a,R.styleable.EditText_carbon_htmlText);
 
         a.recycle();
 

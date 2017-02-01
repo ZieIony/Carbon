@@ -70,6 +70,8 @@ public class RadioButton extends carbon.widget.Button implements Checkable {
             }
         }
 
+        Carbon.initHtmlText(this, a, R.styleable.RadioButton_carbon_htmlText);
+
         a.recycle();
     }
 

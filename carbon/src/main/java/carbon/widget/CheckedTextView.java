@@ -21,6 +21,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
@@ -68,6 +69,8 @@ public class CheckedTextView extends TextView implements Checkable {
                 setCheckedImmediate(a.getBoolean(attr, false));
             }
         }
+
+        Carbon.initHtmlText(this, a, R.styleable.CheckedTextView_carbon_htmlText);
 
         a.recycle();
     }

@@ -73,6 +73,8 @@ public class CheckBox extends carbon.widget.Button implements Checkable {
             }
         }
 
+        Carbon.initHtmlText(this, a, R.styleable.CheckBox_carbon_htmlText);
+
         a.recycle();
     }
 

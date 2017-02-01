@@ -53,7 +53,6 @@
         <attr name="carbon_textAppearanceButtonInverse" format="reference" />
     </declare-styleable>
 
-
     <attr name="carbon_theme" format="reference" />
 
     <attr name="carbon_maxWidth" format="dimension" />
@@ -132,6 +131,7 @@
         <enum name="ifContentScrolls" value="1" />
         <enum name="never" value="2" />
     </attr>
+    <attr name="carbon_htmlText" format="string" />
 
     <attr name="carbon_labelStyle" format="enum">
         <enum name="floating" value="0" />
@@ -217,7 +217,7 @@
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
         <attr name="carbon_cornerRadius" />
-        <attr name="android:background" />
+        <attr name="carbon_htmlText" />
     </declare-styleable>
 
 
@@ -253,12 +253,7 @@
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
         <attr name="carbon_cornerRadius" />
-        <attr name="carbon_labelStyle" />
-        <attr name="carbon_label" />
-
-        <attr name="carbon_labelTextSize" />
-        <attr name="carbon_labelFontPath" />
-        <attr name="carbon_labelFontFamily" />
+        <attr name="carbon_htmlText" />
     </declare-styleable>
 
     <!-- TextMarker -->
@@ -760,6 +755,7 @@
         <attr name="carbon_cursorColor" format="color" />
         <attr name="android:textAppearance" />
         <attr name="carbon_matchingView" format="reference" />
+        <attr name="carbon_htmlText" />
     </declare-styleable>
 
     <attr name="carbon_spinnerStyle" format="reference" />
@@ -854,6 +850,8 @@
 
         <attr name="android:drawablePadding" />
         <attr name="android:checked" />
+
+        <attr name="carbon_htmlText" />
     </declare-styleable>
 
     <declare-styleable name="CheckBox">
@@ -861,6 +859,8 @@
 
         <attr name="android:drawablePadding" />
         <attr name="android:checked" />
+
+        <attr name="carbon_htmlText" />
     </declare-styleable>
 
     <declare-styleable name="RadioButton">
@@ -868,6 +868,8 @@
 
         <attr name="android:drawablePadding" />
         <attr name="android:checked" />
+
+        <attr name="carbon_htmlText" />
     </declare-styleable>
 
     <declare-styleable name="RadioGroup">

@@ -1,7 +1,10 @@
-package carbon.widget;
+package carbon.internal;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.TransformationMethod;
 import android.view.View;
 
@@ -16,7 +19,7 @@ import java.util.Locale;
  * @see(android.widget.TextView)
  */
 public class AllCapsTransformationMethod implements TransformationMethod {
-    private Locale mLocale;
+    private Locale locale;
 
     /**
      * Uses current locale.
@@ -24,12 +27,19 @@ public class AllCapsTransformationMethod implements TransformationMethod {
      * @param context Context to get locale from
      */
     public AllCapsTransformationMethod(Context context) {
-        mLocale = context.getResources().getConfiguration().locale;
+        locale = context.getResources().getConfiguration().locale;
     }
 
     @Override
     public CharSequence getTransformation(CharSequence source, View view) {
-        return source != null ? source.toString().toUpperCase(mLocale) : null;
+        if (source == null)
+            return null;
+        if (source instanceof Spanned) {
+            SpannableString string = new SpannableString(source.toString().toUpperCase(locale));
+            TextUtils.copySpansFrom((Spanned) source, 0, source.length(), null, string, 0);
+            return string;
+        }
+        return source.toString().toUpperCase(locale);
     }
 
     @Override

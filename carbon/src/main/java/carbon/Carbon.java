@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -184,6 +185,12 @@ public class Carbon {
         view.setElevation(elevation);
         if (elevation > 0)
             AnimUtils.setupElevationAnimator(((StateAnimatorView) view).getStateAnimator(), view);
+    }
+
+    public static void initHtmlText(android.widget.TextView textView, TypedArray a, int id) {
+        String string = a.getString(id);
+        if (string != null)
+            textView.setText(Html.fromHtml(string));
     }
 
     public static int getThemeColor(Context context, int attr) {

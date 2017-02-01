@@ -148,25 +148,10 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                 int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                 setTypeface(typeface);
-            } else if (!isInEditMode() && attr == R.styleable.TextView_carbon_labelFontPath) {
-                String path = a.getString(attr);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                setLabelTypeface(typeface);
-            } else if (attr == R.styleable.TextView_carbon_labelFontFamily) {
-                int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                setLabelTypeface(typeface);
             }
         }
 
         DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
-
-        setLabelTextSize(a.getDimension(R.styleable.TextView_carbon_labelTextSize, 0));
-
-        setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.TextView_carbon_labelStyle, 2)]);
-        setLabel(a.getString(R.styleable.TextView_carbon_label));
-        if (labelStyle == LabelStyle.Floating && label == null && getHint() != null)
-            label = getHint().toString();
 
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
@@ -174,6 +159,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
+        Carbon.initHtmlText(this, a, R.styleable.TextView_carbon_htmlText);
 
         a.recycle();
 
@@ -211,39 +197,6 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
         if (getElevation() > 0)
             AnimUtils.setupElevationAnimator(stateAnimator, this);
-    }
-
-    public float getLabelTextSize() {
-        return labelTextSize;
-    }
-
-    public void setLabelTextSize(float labelTextSize) {
-        this.labelTextSize = labelTextSize;
-    }
-
-    public Typeface getLabelTypeface() {
-        return labelTypeface;
-    }
-
-    public void setLabelTypeface(Typeface labelTypeface) {
-        this.labelTypeface = labelTypeface;
-        labelPaint.setTypeface(labelTypeface);
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public LabelStyle getLabelStyle() {
-        return labelStyle;
-    }
-
-    public void setLabelStyle(LabelStyle labelStyle) {
-        this.labelStyle = labelStyle;
     }
 
     /**

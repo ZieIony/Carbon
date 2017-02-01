@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.feature.AnchorActivity;
 import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
+import tk.zielony.carbonsamples.feature.HtmlActivity;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
 import tk.zielony.carbonsamples.feature.PercentLayoutActivity;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
@@ -30,6 +31,7 @@ public class FeaturesActivity extends Activity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
+                new ViewModel(HtmlActivity.class, getString(R.string.htmlActivity_title)),
                 new ViewModel(RobotoActivity.class, getString(R.string.robotoActivity_title)),
                 new ViewModel(ShadowActivity.class, getString(R.string.shadowActivity_title)),
                 new ViewModel(LargeShadowActivity.class, getString(R.string.largeShadowActivity_title)),
