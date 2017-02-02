@@ -49,6 +49,7 @@ import carbon.drawable.DefaultNormalColorStateList;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
+import carbon.internal.AllCapsTransformationMethod;
 import carbon.internal.TypefaceUtils;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
