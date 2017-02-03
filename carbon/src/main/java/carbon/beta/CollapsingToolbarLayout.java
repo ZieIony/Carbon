@@ -105,7 +105,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
             Carbon.initTouchMargin(this, a, touchMarginIds);
             Carbon.initInset(this, a, insetIds);
 
-            setCornerRadius((int) a.getDimension(R.styleable.CollapsingToolbarLayout_carbon_cornerRadius, 0));
+            setCornerRadius(a.getDimension(R.styleable.CollapsingToolbarLayout_carbon_cornerRadius, 0));
 
             a.recycle();
         }
@@ -241,15 +241,15 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     // corners
     // -------------------------------
 
-    private int cornerRadius;
+    private float cornerRadius;
     private Path cornersMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
-    public int getCornerRadius() {
+    public float getCornerRadius() {
         return cornerRadius;
     }
 
-    public void setCornerRadius(int cornerRadius) {
+    public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
         initCorners();
@@ -280,6 +280,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
+                cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }

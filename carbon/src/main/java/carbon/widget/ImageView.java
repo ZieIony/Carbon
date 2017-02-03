@@ -114,7 +114,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             } else if (attr == R.styleable.ImageView_android_enabled) {
                 setEnabled(a.getBoolean(attr, true));
             } else if (attr == R.styleable.ImageView_carbon_cornerRadius) {
-                setCornerRadius((int) a.getDimension(attr, 0));
+                setCornerRadius(a.getDimension(attr, 0));
             }
         }
 
@@ -140,7 +140,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     // corners
     // -------------------------------
 
-    private int cornerRadius;
+    private float cornerRadius;
     private Path cornersMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
@@ -149,7 +149,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
      *
      * @return corner radius, equal to or greater than 0.
      */
-    public int getCornerRadius() {
+    public float getCornerRadius() {
         return cornerRadius;
     }
 
@@ -158,7 +158,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
      *
      * @param cornerRadius
      */
-    public void setCornerRadius(int cornerRadius) {
+    public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
         initCorners();
@@ -189,6 +189,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
+                cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
@@ -635,19 +636,13 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     ColorStateList backgroundTint;
     PorterDuff.Mode backgroundTintMode;
     boolean animateColorChanges;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateTint();
-            ViewCompat.postInvalidateOnAnimation(ImageView.this);
-        }
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
+        updateTint();
+        ViewCompat.postInvalidateOnAnimation(ImageView.this);
     };
-    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateBackgroundTint();
-            ViewCompat.postInvalidateOnAnimation(ImageView.this);
-        }
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
+        updateBackgroundTint();
+        ViewCompat.postInvalidateOnAnimation(ImageView.this);
     };
 
     @Override

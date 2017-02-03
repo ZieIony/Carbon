@@ -5,6 +5,9 @@ android {
     compileSdkVersion 25
     buildToolsVersion "24.0.2"
 
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "tk.zielony.carbonsamples"
         minSdkVersion 9

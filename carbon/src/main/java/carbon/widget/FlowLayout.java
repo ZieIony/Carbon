@@ -119,7 +119,7 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initInset(this, a, insetIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
-        setCornerRadius((int) a.getDimension(R.styleable.FlowLayout_carbon_cornerRadius, 0));
+        setCornerRadius(a.getDimension(R.styleable.FlowLayout_carbon_cornerRadius, 0));
 
         a.recycle();
 
@@ -273,15 +273,15 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
     // corners
     // -------------------------------
 
-    private int cornerRadius;
+    private float cornerRadius;
     private Path cornersMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
-    public int getCornerRadius() {
+    public float getCornerRadius() {
         return cornerRadius;
     }
 
-    public void setCornerRadius(int cornerRadius) {
+    public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
         initCorners();
@@ -315,6 +315,7 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
+                cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }

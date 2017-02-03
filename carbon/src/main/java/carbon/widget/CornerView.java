@@ -11,7 +11,7 @@ public interface CornerView {
      *
      * @return the corner radius
      */
-    int getCornerRadius();
+    float getCornerRadius();
 
     /**
      * Sets the corner radius. The corner radius cannot be larger than 25px
@@ -21,5 +21,5 @@ public interface CornerView {
      *
      * @param cornerRadius the corner radius
      */
-    void setCornerRadius(int cornerRadius);
+    void setCornerRadius(float cornerRadius);
 }

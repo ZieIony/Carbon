@@ -23,6 +23,7 @@
     <string name="checkBoxRadioActivity_title"><![CDATA[CheckBoxes & RadioButtons]]></string>
     <string name="widgetsActivity_title">Widgets</string>
     <string name="featuresActivity_title">Features</string>
+    <string name="componentsActivity_title">Components</string>
     <string name="animationsActivity_title">Animations</string>
     <string name="appsLibrariesActivity_title"><![CDATA[Apps & Libraries]]></string>
     <string name="demosActivity_title">Demos</string>
@@ -49,6 +50,7 @@
     <string name="drawerActivity_title">Nawigation drawer</string>
     <string name="designActivity_title">Design Support Library</string>
     <string name="constraintLayoutActivity_title">Constraint Layout</string>
+    <string name="iconTextListItemActivity_title">Icon and text list item</string>
     <string name="widgetAnimationsActivity_title">Widget animations</string>
     <string name="imageFadeActivity_title">Image fade</string>
     <string name="listRippleActivity_title">List ripple</string>

@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -19,13 +18,11 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
@@ -58,28 +55,11 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  */
 public class TextView extends android.widget.TextView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView {
 
-    public enum LabelStyle {
-        Floating, Persistent, Hint
-    }
-
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
-    int DIVIDER_PADDING;
     int cursorColor;
 
-    String label;
-    TextPaint labelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    LabelStyle labelStyle;
-    private Typeface labelTypeface;
-    private float labelTextSize;
-
-    int internalPaddingTop = 0;
-
-    private float labelFrac = 0;
     private boolean valid = true;
-    boolean required = false;
-
-    float PADDING_LABEL;
 
     public TextView(Context context) {
         super(context, null);
@@ -152,21 +132,15 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             }
         }
 
-        DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
-
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
         Carbon.initElevation(this, a, R.styleable.TextView_carbon_elevation);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
-        setCornerRadius((int) a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
+        setCornerRadius(a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
         Carbon.initHtmlText(this, a, R.styleable.TextView_carbon_htmlText);
 
         a.recycle();
-
-        if (!isInEditMode()) {
-            labelPaint.setTextSize(labelTextSize);
-        }
 
         try {
             Field mHighlightPaintField = android.widget.TextView.class.getDeclaredField("mHighlightPaint");
@@ -184,17 +158,6 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         } catch (Exception e) {
 
         }
-
-        int underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
-        Bitmap dashPathBitmap = Bitmap.createBitmap(underlineWidth * 4, underlineWidth, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(dashPathBitmap);
-        paint.setColor(0xffffffff);
-        paint.setAlpha(255);
-        c.drawCircle(dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, paint);
-        PADDING_LABEL = getResources().getDimension(R.dimen.carbon_paddingHalf);
-
-        if (isFocused() && getText().length() > 0)
-            labelFrac = 1;
 
         if (getElevation() > 0)
             AnimUtils.setupElevationAnimator(stateAnimator, this);
@@ -250,78 +213,8 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         }
     }
 
-    public void draw2(@NonNull Canvas canvas) {
-        super.draw(canvas);
-        if (isInEditMode())
-            return;
-
-        CharSequence hint = getHint();
-        if (required && hint.charAt(hint.length() - 1) != '*')
-            setHint(hint + " *");
-        int paddingTop = getPaddingTop() + internalPaddingTop;
-
-        if (isFocused() && isEnabled()) {
-            paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
-        } else {
-            paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
-        }
-
-        if (label != null) {
-            if (labelStyle == LabelStyle.Floating) {
-                labelPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
-                labelPaint.setAlpha((int) (255 * labelFrac));
-                canvas.drawText(label, getScrollX() + getPaddingLeft(), paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
-                if (required && !valid) {
-                    float off = labelPaint.measureText(label + " ");
-                    labelPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
-                    labelPaint.setAlpha((int) (255 * labelFrac));
-                    canvas.drawText("*", getScrollX() + getPaddingLeft() + off, paddingTop + labelPaint.getTextSize() * (1 - labelFrac) - PADDING_LABEL, labelPaint);
-                }
-            } else if (labelStyle == LabelStyle.Persistent) {
-                labelPaint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
-                canvas.drawText(label, getScrollX() + getPaddingLeft(), paddingTop - PADDING_LABEL, labelPaint);
-                if (required && !valid) {
-                    float off = labelPaint.measureText(label + " ");
-                    labelPaint.setColor(tint.getColorForState(new int[]{R.attr.carbon_state_invalid}, tint.getDefaultColor()));
-                    labelPaint.setAlpha((int) (255 * labelFrac));
-                    canvas.drawText("*", getScrollX() + getPaddingLeft() + off, paddingTop - PADDING_LABEL, labelPaint);
-                }
-            }
-        }
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-            rippleDrawable.draw(canvas);
-    }
-
-    @Deprecated
-    public boolean isFloatingLabelEnabled() {
-        return labelStyle == LabelStyle.Floating;
-    }
-
-    @Deprecated
-    public void setFloatingLabelEnabled(boolean showFloatingLabel) {
-        this.labelStyle = showFloatingLabel ? LabelStyle.Floating : LabelStyle.Hint;
-    }
-
     public boolean isValid() {
         return valid;
-    }
-
-    private void animateFloatingLabel(boolean visible) {
-        ValueAnimator animator;
-        if (visible) {
-            animator = ValueAnimator.ofFloat(labelFrac, 1);
-            animator.setDuration((long) ((1 - labelFrac) * 200));
-        } else {
-            animator = ValueAnimator.ofFloat(labelFrac, 0);
-            animator.setDuration((long) (labelFrac * 200));
-        }
-        animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(animation -> {
-            labelFrac = (float) animation.getAnimatedValue();
-            postInvalidate();
-        });
-        animator.start();
     }
 
 
@@ -329,7 +222,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     // corners
     // -------------------------------
 
-    private int cornerRadius;
+    private float cornerRadius;
     private Path cornersMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
@@ -338,7 +231,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
      *
      * @return corner radius, equal to or greater than 0.
      */
-    public int getCornerRadius() {
+    public float getCornerRadius() {
         return cornerRadius;
     }
 
@@ -347,7 +240,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
      *
      * @param cornerRadius
      */
-    public void setCornerRadius(int cornerRadius) {
+    public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
         initCorners();
@@ -378,6 +271,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
+                cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
@@ -392,7 +286,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
-            draw2(canvas);
+            super.draw(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
 
@@ -402,34 +296,10 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
         } else {
-            draw2(canvas);
+            super.draw(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
         }
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int paddingTop = getPaddingTop();
-        int paddingBottom = getPaddingBottom();
-        if (labelStyle != LabelStyle.Hint)
-            internalPaddingTop = (int) (PADDING_LABEL + labelPaint.getTextSize());
-        setPadding(getPaddingLeft(), paddingTop, getPaddingRight(), paddingBottom);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
-    public int getPaddingTop() {
-        return super.getPaddingTop() - internalPaddingTop;
-    }
-
-    int getInternalPaddingTop() {
-        return internalPaddingTop;
-    }
-
-    @Override
-    public void setPadding(int left, int top, int right, int bottom) {
-        super.setPadding(left, top + internalPaddingTop, right, bottom);
     }
 
 

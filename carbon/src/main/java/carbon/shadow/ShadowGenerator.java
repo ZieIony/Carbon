@@ -94,7 +94,7 @@ public class ShadowGenerator {
         CornerView cornerView = (CornerView) view;
 
         int e = (int) Math.ceil(elevation);
-        int c = Math.max(e, cornerView.getCornerRadius());
+        int c = (int) Math.max(e, cornerView.getCornerRadius());
 
         for (Object o : shadowSet) {
             Shadow s = (Shadow) o;

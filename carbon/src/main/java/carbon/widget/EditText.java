@@ -166,7 +166,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         Carbon.initElevation(this, a, R.styleable.EditText_carbon_elevation);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
-        setCornerRadius((int) a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
+        setCornerRadius(a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
         Carbon.initHtmlText(this,a,R.styleable.EditText_carbon_htmlText);
 
         a.recycle();
@@ -451,7 +451,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     // corners
     // -------------------------------
 
-    private int cornerRadius;
+    private float cornerRadius;
     private Path cornersMask;
     private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
@@ -460,7 +460,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
      *
      * @return corner radius, equal to or greater than 0.
      */
-    public int getCornerRadius() {
+    public float getCornerRadius() {
         return cornerRadius;
     }
 
@@ -469,7 +469,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
      *
      * @param cornerRadius
      */
-    public void setCornerRadius(int cornerRadius) {
+    public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
         initCorners();
@@ -500,6 +500,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
+                cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }

@@ -61,7 +61,7 @@ public class Chip extends LinearLayout {
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, R.style.carbon_Chip);
 
-        setCornerRadius((int) a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
+        setCornerRadius(a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
         setText(a.getString(R.styleable.Chip_android_text));
         int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
         if (iconRes != 0) {

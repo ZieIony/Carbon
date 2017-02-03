@@ -183,10 +183,20 @@
             android:label="@string/app_name" />
 
         <activity
+            android:name=".component.IconTextListItemActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".component.AvatarTextListItemActivity"
+            android:label="@string/app_name" />
+
+        <activity
             android:name=".AnimationsActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".AppsLibrariesActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".ComponentsActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".FeaturesActivity"

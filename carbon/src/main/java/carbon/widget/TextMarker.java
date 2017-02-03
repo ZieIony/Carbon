@@ -14,6 +14,7 @@ public class TextMarker extends View {
     Rect rect = new Rect();
     String text = "I";
     private int id;
+    private int baseline;
 
     public TextMarker(Context context) {
         super(context);
@@ -69,13 +70,14 @@ public class TextMarker extends View {
         if (paint == null && id != 0) {
             paint = ((android.widget.TextView) getRootView().findViewById(id)).getPaint();
             paint.getTextBounds(text, 0, text.length(), rect);
+            baseline = Math.abs(rect.top);
         }
         super.onMeasure(MeasureSpec.makeMeasureSpec(rect.width(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(rect.height(), MeasureSpec.EXACTLY));
     }
 
     @Override
     public int getBaseline() {
-        return getHeight();
+        return baseline;
     }
 
 }

@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
         ViewModel[] items = new ViewModel[]{
                 new ViewModel(WidgetsActivity.class, getString(R.string.widgetsActivity_title)),
                 new ViewModel(FeaturesActivity.class, getString(R.string.featuresActivity_title)),
+                new ViewModel(ComponentsActivity.class, getString(R.string.componentsActivity_title)),
                 new ViewModel(AnimationsActivity.class, getString(R.string.animationsActivity_title)),
                 new ViewModel(AppsLibrariesActivity.class, getString(R.string.appsLibrariesActivity_title)),
                 new ViewModel(DemosActivity.class, getString(R.string.demosActivity_title)),

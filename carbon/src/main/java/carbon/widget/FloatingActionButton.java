@@ -48,7 +48,7 @@ public class FloatingActionButton extends ImageView {
         AnimUtils.setupElevationAnimator(getStateAnimator(), this);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, R.style.carbon_FloatingActionButton);
-        setCornerRadius((int) a.getDimension(R.styleable.FloatingActionButton_carbon_cornerRadius, -1));
+        setCornerRadius(a.getDimension(R.styleable.FloatingActionButton_carbon_cornerRadius, -1));
 
         if (a.hasValue(R.styleable.FloatingActionButton_carbon_menu)) {
             int resId = a.getResourceId(R.styleable.FloatingActionButton_carbon_menu, 0);
