@@ -370,12 +370,12 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     private void initCorners() {
         if (cornerRadius > 0) {
+            cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
-                cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
