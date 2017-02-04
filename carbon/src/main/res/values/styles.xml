@@ -509,6 +509,7 @@
         <item name="carbon_elevation">@dimen/carbon_elevationFAB</item>
         <item name="android:minWidth">@dimen/carbon_fabSize</item>
         <item name="android:minHeight">@dimen/carbon_fabSize</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_fabSize</item>
         <item name="android:scaleType">center</item>
     </style>
 

@@ -53,7 +53,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 /**
  * Created by Marcin on 2014-11-07.
  */
-public class TextView extends android.widget.TextView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView {
+public class TextView extends android.widget.TextView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, ValidStateView {
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -213,6 +213,14 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         }
     }
 
+    @Override
+    public void setValid(boolean valid) {
+        if (this.valid == valid)
+            return;
+        this.valid = valid;
+        refreshDrawableState();
+    }
+
     public boolean isValid() {
         return valid;
     }
@@ -243,7 +251,6 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

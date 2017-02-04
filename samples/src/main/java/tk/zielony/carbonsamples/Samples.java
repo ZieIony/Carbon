@@ -38,7 +38,7 @@ public class Samples {
                         overlay.show();
                         debugEnabled = true;
                     } else {
-                        debug.setTint(Carbon.getThemeColor(activity, R.attr.colorControlNormal));
+                        debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_colorDisabled));
                         overlay.dismiss();
                         debugEnabled = false;
                     }

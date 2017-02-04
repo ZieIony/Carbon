@@ -261,7 +261,6 @@ public class GridLayout extends android.support.v7.widget.GridLayout implements 
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

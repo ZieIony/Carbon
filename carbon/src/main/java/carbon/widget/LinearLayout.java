@@ -305,7 +305,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

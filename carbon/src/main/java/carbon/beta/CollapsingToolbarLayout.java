@@ -252,7 +252,6 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

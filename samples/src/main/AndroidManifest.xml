@@ -93,9 +93,6 @@
             android:name=".animation.ImageFadeActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".animation.RadialTransitionActivity"
-            android:label="@string/app_name" />
-        <activity
             android:name=".animation.RippleActivity"
             android:label="@string/app_name" />
         <activity

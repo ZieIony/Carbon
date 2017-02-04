@@ -17,8 +17,6 @@
         android:id="@+id/carbon_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/carbon_counter"
         android:layout_toStartOf="@+id/carbon_counter"
         android:tag="inputLayout"
@@ -30,20 +28,24 @@
         android:id="@+id/carbon_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:tag="inputLayout"
         android:textAppearance="?attr/carbon_textAppearanceCaption" />
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_clear"
-        style="@style/carbon_ImageView.IconButton"
+        style="@style/carbon_ImageView.IconButton.Inverse"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:baselineAlignBottom="true"
         android:tag="inputLayout"
         app:carbon_src="@raw/carbon_clear" />
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_showPassword"
-        style="@style/carbon_ImageView.IconButton"
+        style="@style/carbon_ImageView.IconButton.Inverse"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:baselineAlignBottom="true"
         android:tag="inputLayout"
         app:carbon_src="@raw/carbon_visibility" />
 </merge>

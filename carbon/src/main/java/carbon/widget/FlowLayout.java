@@ -284,7 +284,6 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

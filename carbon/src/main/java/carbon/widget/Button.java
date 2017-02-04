@@ -217,7 +217,6 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

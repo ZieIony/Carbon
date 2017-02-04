@@ -252,7 +252,6 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

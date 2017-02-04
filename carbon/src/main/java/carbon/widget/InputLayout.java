@@ -1,25 +1,20 @@
-package carbon.beta;
+package carbon.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.text.Editable;
-import android.text.method.PasswordTransformationMethod;
+import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.internal.SimpleTextWatcher;
+import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.internal.TypefaceUtils;
-import carbon.widget.ImageView;
-import carbon.widget.InputView;
-import carbon.widget.RelativeLayout;
 
 /**
  * Created by Marcin on 2016-07-25.
@@ -33,8 +28,6 @@ public class InputLayout extends RelativeLayout {
 
     private TextView errorTextView;
 
-    private boolean afterFirstInteraction = false;
-
     boolean required = false;
     private int minCharacters;
     private int maxCharacters = Integer.MAX_VALUE;
@@ -45,6 +38,8 @@ public class InputLayout extends RelativeLayout {
 
     private ImageView clearImageView;
     private ImageView showPasswordImageView;
+
+    TransformationMethod transformationMethod;
 
     public InputLayout(Context context) {
         super(context);
@@ -69,7 +64,10 @@ public class InputLayout extends RelativeLayout {
     private void initInputLayout(AttributeSet attrs, int defStyleAttr) {
         View.inflate(getContext(), R.layout.carbon_inputlayout, this);
         errorTextView = (TextView) findViewById(R.id.carbon_error);
+        errorTextView.setTextColor(new DefaultTextSecondaryColorStateList(getContext()));
+        errorTextView.setValid(false);
         counterTextView = (TextView) findViewById(R.id.carbon_counter);
+        counterTextView.setTextColor(new DefaultTextSecondaryColorStateList(getContext()));
         labelTextView = (TextView) findViewById(R.id.carbon_label);
         clearImageView = (ImageView) findViewById(R.id.carbon_clear);
         showPasswordImageView = (ImageView) findViewById(R.id.carbon_showPassword);
@@ -145,71 +143,81 @@ public class InputLayout extends RelativeLayout {
         if (child.getId() == NO_ID)
             child.setId(R.id.carbon_input);
         params.addRule(BELOW, R.id.carbon_label);
+
+        android.widget.RelativeLayout.LayoutParams labelTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) labelTextView.getLayoutParams();
+        labelTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_START : ALIGN_LEFT, child.getId());
+
         android.widget.RelativeLayout.LayoutParams errorTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) errorTextView.getLayoutParams();
+        errorTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_START : ALIGN_LEFT, child.getId());
         errorTextViewLayoutParams.addRule(BELOW, child.getId());
+
         android.widget.RelativeLayout.LayoutParams counterTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
+        counterTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_END : ALIGN_RIGHT, child.getId());
         counterTextViewLayoutParams.addRule(BELOW, child.getId());
-        android.widget.RelativeLayout.LayoutParams clearImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
-        clearImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? END_OF : RIGHT_OF, child.getId());
+
+        android.widget.RelativeLayout.LayoutParams clearImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) clearImageView.getLayoutParams();
+        clearImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_END : ALIGN_RIGHT, child.getId());
         clearImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
-        android.widget.RelativeLayout.LayoutParams showPasswordImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
-        showPasswordImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? END_OF : RIGHT_OF, child.getId());
+
+        android.widget.RelativeLayout.LayoutParams showPasswordImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) showPasswordImageView.getLayoutParams();
+        showPasswordImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_END : ALIGN_RIGHT, child.getId());
         showPasswordImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
 
         child.setOnFocusChangeListener((view, b) -> {
             updateHint(child);
         });
-        if (child instanceof InputView) {
-            InputView inputView = (InputView) child;
-            inputView.addOnValidateListener(this::setErrorVisible);
-        }
-        if (child instanceof TextView) {
-            final TextView textView = (TextView) child;
+        if (child instanceof EditText) {
+            final EditText editText = (EditText) child;
             if (labelTextView.getText().length() == 0)
-                labelTextView.setText(textView.getHint());
-            updateHint(textView);
-            textView.addTextChangedListener(new SimpleTextWatcher() {
+                labelTextView.setText(editText.getHint());
+            editText.addOnValidateListener(valid -> {
+                boolean counterError = (minCharacters > 0 && editText.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && editText.length() > maxCharacters);
+                boolean requiredError = required && editText.length() == 0;
 
-                @Override
-                public void afterTextChanged(Editable s) {
-                    afterFirstInteraction = true;
-                    //validateInternalEvent();
-                    /*try {
-                        int start = textView.getSelectionStart() - 1;
-                        char c;
-                        StringBuilder builder = new StringBuilder();
-                        while (start >= 0 && Character.isLetterOrDigit(c = s.charAt(start--))) {
-                            builder.insert(0, c);
-                        }
-                    } catch (Exception e) {
-                    }*/
-
-                    boolean counterError = afterFirstInteraction && (minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters);
-                    boolean requiredError = required && s.length() == 0;
-                }
+                counterTextView.setValid(!counterError);
+                updateCounter(editText);
+                if (errorTextView.getVisibility() != GONE)
+                    errorTextView.setVisibility(valid ? INVISIBLE : VISIBLE);
             });
             showPasswordImageView.setOnTouchListener((view, motionEvent) -> {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    textView.setTransformationMethod(null);
-                } else {
-                    textView.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    transformationMethod = editText.getTransformationMethod();
+                    editText.setTransformationMethod(null);
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_CANCEL) {
+                    editText.setTransformationMethod(transformationMethod);
                 }
                 return true;
             });
-            clearImageView.setOnClickListener(view -> textView.setText(""));
+            clearImageView.setOnClickListener(view -> editText.setText(""));
+
+            updateHint(editText);
+            updateCounter(editText);
+        } else if (child instanceof InputView) {
+            InputView inputView = (InputView) child;
+            inputView.addOnValidateListener(this::setErrorEnabled);
         }
         return params;
+    }
+
+    private void updateCounter(EditText editText) {
+        if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
+            counterTextView.setText(editText.length() + " / " + minCharacters + "-" + maxCharacters);
+        } else if (minCharacters > 0) {
+            counterTextView.setText(editText.length() + " / " + minCharacters + "+");
+        } else if (maxCharacters < Integer.MAX_VALUE) {
+            counterTextView.setText(editText.length() + " / " + maxCharacters);
+        }
     }
 
     private void updateHint(View child) {
         if (labelStyle == LabelStyle.Persistent || child.isFocused()) {
             labelTextView.setVisibility(VISIBLE);
-            if (child instanceof TextView)
-                ((TextView) child).setHint(null);
+            if (child instanceof EditText)
+                ((EditText) child).setHint(null);
         } else {
             labelTextView.setVisibility(INVISIBLE);
-            if (child instanceof TextView)
-                ((TextView) child).setHint(labelTextView.getText());
+            if (child instanceof EditText)
+                ((EditText) child).setHint(labelTextView.getText());
         }
     }
 
@@ -223,10 +231,11 @@ public class InputLayout extends RelativeLayout {
 
     public void setError(String text) {
         errorTextView.setText(text);
+        setErrorEnabled(text != null);
     }
 
-    public void setErrorVisible(boolean errorVisible) {
-        errorTextView.setVisibility(errorVisible ? VISIBLE : GONE);
+    public void setErrorEnabled(boolean errorVisible) {
+        errorTextView.setVisibility(errorVisible ? INVISIBLE : GONE);
     }
 
     public float getErrorTextSize() {

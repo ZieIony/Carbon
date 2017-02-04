@@ -255,7 +255,6 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

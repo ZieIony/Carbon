@@ -268,7 +268,6 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

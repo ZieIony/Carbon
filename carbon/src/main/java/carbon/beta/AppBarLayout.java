@@ -250,7 +250,6 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

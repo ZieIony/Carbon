@@ -1,11 +1,10 @@
 package carbon.widget;
 
 /**
- * Created by Marcin on 2016-07-28.
+ * Created by Marcin on 2017-02-04.
  */
-public interface InputView {
-    boolean isValid();
 
+public interface InputView extends ValidStateView {
     void validate();
 
     void addOnValidateListener(OnValidateListener listener);

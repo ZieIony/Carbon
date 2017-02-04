@@ -21,6 +21,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.text.Editable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,6 +51,7 @@ import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.AllCapsTransformationMethod;
+import carbon.internal.SimpleTextWatcher;
 import carbon.internal.TypefaceUtils;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -62,7 +64,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 /**
  * Created by Marcin on 2015-02-14.
  */
-public class EditText extends android.widget.EditText implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, InputView {
+public class EditText extends android.widget.EditText implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, ValidStateView {
 
     private Field mIgnoreActionUpEventField;
     private Object editor;
@@ -74,7 +76,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
     private Pattern pattern;
     private int matchingView;
-    private boolean afterFirstInteraction = false;
 
     private BitmapShader dashPathShader;
     private boolean underline = true;
@@ -167,7 +168,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         setCornerRadius(a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
-        Carbon.initHtmlText(this,a,R.styleable.EditText_carbon_htmlText);
+        Carbon.initHtmlText(this, a, R.styleable.EditText_carbon_htmlText);
 
         a.recycle();
 
@@ -198,6 +199,12 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
         initSelectionHandle();
 
+        addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                validateInternalEvent();
+            }
+        });
         validateInternalEvent();
 
         if (getElevation() > 0)
@@ -279,7 +286,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     }
 
     public void validate() {
-        afterFirstInteraction = true;
         validateInternal();
         postInvalidate();
     }
@@ -298,12 +304,12 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         }*/
         boolean drawPatternError = false, drawMatchingViewError = false;
         if (pattern != null)
-            drawPatternError = afterFirstInteraction && !pattern.matcher(s).matches();
+            drawPatternError = !pattern.matcher(s).matches();
         if (matchingView != 0) {
             View view = getRootView().findViewById(matchingView);
             if (view instanceof TextView) {
                 TextView matchingTextView = (TextView) view;
-                if (afterFirstInteraction && !matchingTextView.getText().toString().equals(getText().toString()))
+                if (!matchingTextView.getText().toString().equals(getText().toString()))
                     drawMatchingViewError = true;
             }
         }
@@ -417,6 +423,11 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
             rippleDrawable.draw(canvas);
     }
 
+    @Override
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
     public boolean isValid() {
         return valid;
     }
@@ -440,10 +451,8 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        if (!focused) {
-            afterFirstInteraction = true;
+        if (!focused)
             validateInternalEvent();
-        }
     }
 
 
@@ -472,7 +481,6 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

@@ -371,7 +371,6 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

@@ -345,7 +345,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         invalidateShadow();
-        initCorners();
     }
 
     @Override

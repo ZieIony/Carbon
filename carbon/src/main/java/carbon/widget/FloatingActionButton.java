@@ -63,9 +63,6 @@ public class FloatingActionButton extends ImageView {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if (getCornerRadius() < 0)
-            setCornerRadius(Math.min(getWidth(), getHeight()) / 2);
-
         invalidateMenu();
     }
 
