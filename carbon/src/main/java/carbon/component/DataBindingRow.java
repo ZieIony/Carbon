@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples.component;
+package carbon.component;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import carbon.BR;
 import carbon.recycler.Row;
-import tk.zielony.carbonsamples.BR;
 
 /**
  * Created by Marcin on 2017-02-02.

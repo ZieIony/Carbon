@@ -1,8 +1,8 @@
-package tk.zielony.carbonsamples.component;
+package carbon.component;
 
 import android.view.ViewGroup;
 
-import tk.zielony.carbonsamples.R;
+import carbon.R;
 
 /**
  * Created by Marcin on 2017-02-03.

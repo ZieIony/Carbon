@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
-import android.support.v8.renderscript.RSRuntimeException;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
@@ -18,8 +17,8 @@ import carbon.widget.CornerView;
 public class ShadowGenerator {
     public static final int ALPHA = 51;
 
-    private static RenderScript renderScript;
-    private static ScriptIntrinsicBlur blurShader;
+    private static Object renderScript;
+    private static Object blurShader;
     private static Paint paint = new Paint();
     private static boolean software = false;
     private static RectF roundRect = new RectF();
@@ -70,13 +69,13 @@ public class ShadowGenerator {
     }
 
     private static void blurRenderScript(Bitmap bitmap, float radius) {
-        Allocation inAllocation = Allocation.createFromBitmap(renderScript, bitmap,
+        Allocation inAllocation = Allocation.createFromBitmap((RenderScript) renderScript, bitmap,
                 Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
-        Allocation outAllocation = Allocation.createTyped(renderScript, inAllocation.getType());
+        Allocation outAllocation = Allocation.createTyped((RenderScript) renderScript, inAllocation.getType());
 
-        blurShader.setRadius(radius);
-        blurShader.setInput(inAllocation);
-        blurShader.forEach(outAllocation);
+        ((ScriptIntrinsicBlur)blurShader).setRadius(radius);
+        ((ScriptIntrinsicBlur)blurShader).setInput(inAllocation);
+        ((ScriptIntrinsicBlur)blurShader).forEach(outAllocation);
 
         outAllocation.copyTo(bitmap);
     }
@@ -85,8 +84,8 @@ public class ShadowGenerator {
         if (!software && renderScript == null) {
             try {
                 renderScript = RenderScript.create(view.getContext());
-                blurShader = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
-            } catch (RSRuntimeException ignore) {
+                blurShader = ScriptIntrinsicBlur.create((RenderScript) renderScript, Element.U8_4((RenderScript) renderScript));
+            } catch (Error ignore) {
                 software = true;
             }
         }

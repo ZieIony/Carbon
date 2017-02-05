@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.Arrays;
 
+import carbon.component.AvatarTextItem;
+import carbon.component.AvatarTextRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;

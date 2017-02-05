@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.Arrays;
 
+import carbon.component.IconTextItem;
+import carbon.component.IconTextRow;
 import carbon.drawable.VectorDrawable;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;

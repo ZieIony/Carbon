@@ -6,27 +6,24 @@
 
         <variable
             name="data"
-            type="tk.zielony.carbonsamples.component.AvatarTextItem" />
+            type="carbon.component.IconTextItem" />
 
     </data>
 
     <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/carbon_listItemHeight"
         android:clickable="true"
         app:carbon_rippleColor="?attr/carbon_colorRipple">
 
         <carbon.widget.ImageView
-            style="@style/carbon_ImageView.Icon.Inverse"
-            android:layout_width="@dimen/carbon_avatarSize"
-            android:layout_height="@dimen/carbon_avatarSize"
+            style="@style/carbon_ImageView.Icon"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:scaleType="fitCenter"
-            android:src="@{data.getAvatar(context)}"
-            app:carbon_cornerRadius="@dimen/carbon_avatarSize"
-            app:carbon_tint="@null" />
+            android:src="@{data.getIcon(context)}" />
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"

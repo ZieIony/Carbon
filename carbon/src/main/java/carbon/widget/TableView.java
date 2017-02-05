@@ -143,7 +143,7 @@ public class TableView extends RecyclerView {
         public TextView getView(Context context) {
             TextView textView = new TextView(context);
             textView.setPadding((int) context.getResources().getDimension(R.dimen.carbon_padding), 0, (int) context.getResources().getDimension(R.dimen.carbon_padding), 0);
-            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT | Gravity.END);
+            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
             textView.setTextColor(Carbon.getThemeColor(context, android.R.attr.textColorPrimary));
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
             textView.setMaxLines(1);
@@ -167,7 +167,7 @@ public class TableView extends RecyclerView {
         public TextView getView(Context context) {
             TextView textView = new TextView(context);
             textView.setPadding((int) context.getResources().getDimension(R.dimen.carbon_padding), 0, (int) context.getResources().getDimension(R.dimen.carbon_padding), 0);
-            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT | Gravity.END);
+            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
             textView.setTextColor(Carbon.getThemeColor(context, android.R.attr.textColorPrimary));
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
             textView.setMaxLines(1);
@@ -180,7 +180,7 @@ public class TableView extends RecyclerView {
             if (format != null) {
                 view.setText(format.format(value));
             } else {
-                view.setText(value.toString());
+                view.setText(String.valueOf(value));
             }
         }
     }

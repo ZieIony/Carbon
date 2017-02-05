@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples.component;
+package carbon.component;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
