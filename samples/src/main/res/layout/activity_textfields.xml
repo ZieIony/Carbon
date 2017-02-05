@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                app:carbon_label="email"
+                app:carbon_label="password"
                 app:carbon_labelStyle="floating"
                 app:carbon_showPassword="true">
 

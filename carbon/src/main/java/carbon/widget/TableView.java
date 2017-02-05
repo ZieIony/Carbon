@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.recycler.ListAdapter;
 
@@ -123,7 +124,7 @@ public class TableView extends RecyclerView {
             TextView textView = new TextView(context);
             textView.setPadding((int) context.getResources().getDimension(R.dimen.carbon_padding), 0, (int) context.getResources().getDimension(R.dimen.carbon_padding), 0);
             textView.setGravity(Gravity.CENTER_VERTICAL);
-            textView.setTextColor(context.getResources().getColor(R.color.carbon_black_87));
+            textView.setTextColor(Carbon.getThemeColor(context, android.R.attr.textColorPrimary));
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
             textView.setMaxLines(1);
             textView.setEllipsize(TextUtils.TruncateAt.END);
@@ -142,8 +143,8 @@ public class TableView extends RecyclerView {
         public TextView getView(Context context) {
             TextView textView = new TextView(context);
             textView.setPadding((int) context.getResources().getDimension(R.dimen.carbon_padding), 0, (int) context.getResources().getDimension(R.dimen.carbon_padding), 0);
-            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-            textView.setTextColor(context.getResources().getColor(R.color.carbon_black_87));
+            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT | Gravity.END);
+            textView.setTextColor(Carbon.getThemeColor(context, android.R.attr.textColorPrimary));
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
             textView.setMaxLines(1);
             textView.setEllipsize(TextUtils.TruncateAt.END);
@@ -166,8 +167,8 @@ public class TableView extends RecyclerView {
         public TextView getView(Context context) {
             TextView textView = new TextView(context);
             textView.setPadding((int) context.getResources().getDimension(R.dimen.carbon_padding), 0, (int) context.getResources().getDimension(R.dimen.carbon_padding), 0);
-            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-            textView.setTextColor(context.getResources().getColor(R.color.carbon_black_87));
+            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT | Gravity.END);
+            textView.setTextColor(Carbon.getThemeColor(context, android.R.attr.textColorPrimary));
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
             textView.setMaxLines(1);
             textView.setEllipsize(TextUtils.TruncateAt.END);

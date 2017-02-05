@@ -12,6 +12,5 @@
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffffff"
         app:carbon_elevation="@dimen/carbon_elevationCard" />
 </carbon.widget.LinearLayout>

@@ -3,11 +3,6 @@ package carbon.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LightingColorFilter;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -19,13 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
-
 import java.util.Arrays;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.drawable.VectorDrawable;
 import carbon.internal.DropDownMenu;
 import carbon.recycler.ArrayAdapter;
 
@@ -45,13 +38,13 @@ public class DropDown extends EditText {
     private boolean isShowingPopup = false;
 
     public DropDown(Context context) {
-        super(context, null, R.attr.carbon_spinnerStyle);
-        initSpinner(context, null, R.attr.carbon_spinnerStyle);
+        super(context, null, R.attr.carbon_dropDownStyle);
+        initSpinner(context, null, R.attr.carbon_dropDownStyle);
     }
 
     public DropDown(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_spinnerStyle);
-        initSpinner(context, attrs, R.attr.carbon_spinnerStyle);
+        super(context, attrs, R.attr.carbon_dropDownStyle);
+        initSpinner(context, attrs, R.attr.carbon_dropDownStyle);
     }
 
     public DropDown(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -66,28 +59,10 @@ public class DropDown extends EditText {
     }
 
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
-        try {
-            int color = Carbon.getThemeColor(context, R.attr.colorControlNormal);
-
-            int size = (int) (Carbon.getDip(getContext()) * 24);
-            Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-
-            SVG svg3 = SVG.getFromResource(context, R.raw.carbon_dropdown);
-            Canvas canvas = new Canvas(bitmap);
-            svg3.setDocumentWidth(bitmap.getWidth());
-            svg3.setDocumentHeight(bitmap.getHeight());
-            svg3.renderToCanvas(canvas);
-
-            BitmapDrawable dropdown = new BitmapDrawable(bitmap);
-            dropdown.setBounds(0, 0, size, size);
-            dropdown.setAlpha(Color.alpha(color));
-            dropdown.setColorFilter(new LightingColorFilter(0, color));
-            setCompoundDrawables(null, null, dropdown, null);
-        } catch (SVGParseException e) {
-
-        } catch (IllegalArgumentException e) {
-
-        }
+        VectorDrawable drawable = new VectorDrawable(getResources(), R.raw.carbon_dropdown);
+        int size = (int) (Carbon.getDip(getContext()) * 24);
+        drawable.setBounds(0, 0, size, size);
+        setCompoundDrawables(null, null, drawable, null);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DropDown, defStyleAttr, R.style.carbon_DropDown);
 

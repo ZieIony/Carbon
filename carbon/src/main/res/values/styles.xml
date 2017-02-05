@@ -30,7 +30,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_spinnerStyle">@style/carbon_DropDown</item>
+        <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -45,11 +45,11 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
-        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Dark.SpinnerPopup</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Dark.DropDownPopup</item>
 
-        <item name="colorPrimary">@color/carbon_grey_900</item>
-        <item name="colorPrimaryDark">@color/carbon_black</item>
-        <item name="colorAccent">@color/carbon_lime_a700</item>
+        <item name="colorPrimary">@color/carbon_colorPrimary_dark</item>
+        <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_dark</item>
+        <item name="colorAccent">@color/carbon_cyan_a700</item>
 
         <item name="android:textColorPrimary">@color/carbon_text_primary_dark</item>
         <item name="android:textColorSecondary">@color/carbon_text_secondary_dark</item>
@@ -64,8 +64,9 @@
         <!-- {@deprecated Use carbon_colorRippleInverse instead.} -->
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
 
-        <item name="carbon_colorBackground">@color/carbon_grey_800</item>
-        <item name="carbon_colorBackgroundInverse">@color/carbon_green_50</item>
+        <item name="carbon_colorBackground">@color/carbon_colorBackground_dark</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_light</item>
+        <item name="carbon_colorForeground">@color/carbon_colorForeground_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_colorRipple">@color/carbon_ripple_dark</item>
         <item name="carbon_colorRippleInverse">@color/carbon_ripple_light</item>
@@ -120,7 +121,7 @@
         <item name="android:buttonStyle">@style/carbon_Button.Flat</item>
     </style>
 
-    <style name="carbon_Theme.Dark.SpinnerPopup">
+    <style name="carbon_Theme.Dark.DropDownPopup">
 
     </style>
 
@@ -154,7 +155,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_spinnerStyle">@style/carbon_DropDown</item>
+        <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -169,11 +170,11 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Dark.Snackbar</item>
-        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Dark.SpinnerPopup</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Dark.DropDownPopup</item>
 
-        <item name="colorPrimary">@color/carbon_grey_900</item>
-        <item name="colorPrimaryDark">@color/carbon_black</item>
-        <item name="colorAccent">@color/carbon_lime_a700</item>
+        <item name="colorPrimary">@color/carbon_colorPrimary_dark</item>
+        <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_dark</item>
+        <item name="colorAccent">@color/carbon_cyan_a700</item>
 
         <item name="android:textColorPrimary">@color/carbon_text_primary_dark</item>
         <item name="android:textColorSecondary">@color/carbon_text_secondary_dark</item>
@@ -188,8 +189,9 @@
         <!-- {@deprecated Use carbon_colorRippleInverse instead.} -->
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
 
-        <item name="carbon_colorBackground">@color/carbon_grey_800</item>
-        <item name="carbon_colorBackgroundInverse">@color/carbon_green_50</item>
+        <item name="carbon_colorBackground">@color/carbon_colorBackground_dark</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_light</item>
+        <item name="carbon_colorForeground">@color/carbon_colorForeground_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
         <item name="carbon_colorRipple">@color/carbon_ripple_dark</item>
         <item name="carbon_colorRippleInverse">@color/carbon_ripple_light</item>
@@ -261,7 +263,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_spinnerStyle">@style/carbon_DropDown</item>
+        <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -276,11 +278,11 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
-        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Light.SpinnerPopup</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Light.DropDownPopup</item>
 
-        <item name="colorPrimary">@color/carbon_grey_300</item>
-        <item name="colorPrimaryDark">@color/carbon_grey_100</item>
-        <item name="colorAccent">@color/carbon_lime_a700</item>
+        <item name="colorPrimary">@color/carbon_colorPrimary_light</item>
+        <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_light</item>
+        <item name="colorAccent">@color/carbon_cyan_a700</item>
 
         <item name="android:textColorPrimary">@color/carbon_text_primary_light</item>
         <item name="android:textColorSecondary">@color/carbon_text_secondary_light</item>
@@ -295,8 +297,9 @@
         <!-- {@deprecated Use carbon_colorRippleInverse instead.} -->
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
 
-        <item name="carbon_colorBackground">@color/carbon_white</item>
-        <item name="carbon_colorBackgroundInverse">@color/carbon_grey_800</item>
+        <item name="carbon_colorBackground">@color/carbon_colorBackground_light</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
+        <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_colorRipple">@color/carbon_ripple_light</item>
         <item name="carbon_colorRippleInverse">@color/carbon_ripple_dark</item>
@@ -350,7 +353,7 @@
         <item name="android:buttonStyle">@style/carbon_Button.Flat</item>
     </style>
 
-    <style name="carbon_Theme.Light.SpinnerPopup">
+    <style name="carbon_Theme.Light.DropDownPopup">
 
     </style>
 
@@ -384,7 +387,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
-        <item name="carbon_spinnerStyle">@style/carbon_DropDown</item>
+        <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -399,11 +402,11 @@
 
         <item name="carbon_editMenuTheme">@style/carbon_Theme.Light.EditMenu</item>
         <item name="carbon_snackbarTheme">@style/carbon_Theme.Light.Snackbar</item>
-        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Light.SpinnerPopup</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_Theme.Light.DropDownPopup</item>
 
-        <item name="colorPrimary">@color/carbon_grey_300</item>
-        <item name="colorPrimaryDark">@color/carbon_grey_100</item>
-        <item name="colorAccent">@color/carbon_lime_a700</item>
+        <item name="colorPrimary">@color/carbon_colorPrimary_light</item>
+        <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_light</item>
+        <item name="colorAccent">@color/carbon_cyan_a700</item>
 
         <item name="android:textColorPrimary">@color/carbon_text_primary_light</item>
         <item name="android:textColorSecondary">@color/carbon_text_secondary_light</item>
@@ -418,8 +421,9 @@
         <!-- {@deprecated Use carbon_colorRippleInverse instead.} -->
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
 
-        <item name="carbon_colorBackground">@color/carbon_white</item>
-        <item name="carbon_colorBackgroundInverse">@color/carbon_grey_800</item>
+        <item name="carbon_colorBackground">@color/carbon_colorBackground_light</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
+        <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
         <item name="carbon_colorRipple">@color/carbon_ripple_light</item>
         <item name="carbon_colorRippleInverse">@color/carbon_ripple_dark</item>

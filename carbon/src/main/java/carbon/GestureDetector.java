@@ -15,8 +15,8 @@ public class GestureDetector {
     private int tapTimeout = DEFAULT_TAP_TIMEOUT;
     private int moveEpsilon = DEFAULT_MOVE_EPSILON;
     private Handler handler;
-    Runnable tapHandler;
-    Runnable pressHandler;
+    private Runnable tapHandler;
+    private Runnable pressHandler;
     private final OnGestureListener listener;
     private long prevTouchTime;
     private float prevTouchY;
@@ -31,9 +31,8 @@ public class GestureDetector {
     private boolean pressed;
 
     public GestureDetector(OnGestureListener listener) {
-        if (listener == null) {
+        if (listener == null)
             throw new NullPointerException("Listener cannot be null");
-        }
         this.listener = listener;
         handler = new Handler();
     }
@@ -59,25 +58,14 @@ public class GestureDetector {
                 }
 
                 handler.removeCallbacks(pressHandler);
-                pressHandler = new Runnable() {
-
-                    @Override
-                    public void run() {
-                        // handler.removeCallbacks(tapHandler);
-                        // tapHandler = null;
-                        onPress(event);
-                    }
-
+                pressHandler = () -> {
+                    // handler.removeCallbacks(tapHandler);
+                    // tapHandler = null;
+                    onPress(event);
                 };
                 handler.postDelayed(pressHandler, pressTimeout);
 
-                longPressHandler = new Runnable() {
-
-                    @Override
-                    public void run() {
-                        onLongPress(event);
-                    }
-                };
+                longPressHandler = () -> onLongPress(event);
                 handler.removeCallbacks(longPressHandler);
                 handler.postDelayed(longPressHandler, longPressTimeout);
 

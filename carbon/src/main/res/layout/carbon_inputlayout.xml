@@ -33,7 +33,7 @@
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_clear"
-        style="@style/carbon_ImageView.IconButton.Inverse"
+        style="@style/carbon_ImageView.IconButton"
         android:layout_width="@dimen/carbon_iconSize"
         android:layout_height="@dimen/carbon_iconSize"
         android:baselineAlignBottom="true"
@@ -42,7 +42,7 @@
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_showPassword"
-        style="@style/carbon_ImageView.IconButton.Inverse"
+        style="@style/carbon_ImageView.IconButton"
         android:layout_width="@dimen/carbon_iconSize"
         android:layout_height="@dimen/carbon_iconSize"
         android:baselineAlignBottom="true"

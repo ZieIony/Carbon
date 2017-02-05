@@ -3,6 +3,7 @@
     <declare-styleable name="Carbon">
         <attr name="carbon_colorBackground" format="reference|color" />
         <attr name="carbon_colorBackgroundInverse" format="reference|color" />
+        <attr name="carbon_colorForeground" format="reference|color" />
         <attr name="carbon_colorError" format="reference|color" />
         <attr name="carbon_colorDisabled" format="reference|color" />
 
@@ -758,7 +759,7 @@
         <attr name="carbon_htmlText" />
     </declare-styleable>
 
-    <attr name="carbon_spinnerStyle" format="reference" />
+    <attr name="carbon_dropDownStyle" format="reference" />
     <declare-styleable name="DropDown">
         <attr name="carbon_theme" />
 

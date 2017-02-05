@@ -27,7 +27,8 @@ public class Samples {
         toolbar.setTitle(title);
 
         final ImageView debug = (ImageView) activity.findViewById(R.id.debug);
-        if (debug != null)
+        if (debug != null) {
+            debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_colorDisabled));
             debug.setOnClickListener(new View.OnClickListener() {
                 boolean debugEnabled = false;
 
@@ -44,6 +45,7 @@ public class Samples {
                     }
                 }
             });
+        }
 
         CheckBox checkBox = (CheckBox) activity.findViewById(R.id.enabled);
         if (checkBox != null)

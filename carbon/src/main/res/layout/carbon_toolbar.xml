@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text=""
-        android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
+        android:textAppearance="?attr/carbon_textAppearanceTitle"
         android:visibility="gone" />
 
     <carbon.widget.LinearLayout

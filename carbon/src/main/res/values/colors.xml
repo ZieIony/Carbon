@@ -1,27 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="carbon_white_12">#1fffffff</color>
+    <color name="carbon_white_50">#7fffffff</color>
+    <color name="carbon_white_70">#b3ffffff</color>
+
+    <color name="carbon_black_12">#1f000000</color>
+    <color name="carbon_black_38">#61000000</color>
+    <color name="carbon_black_54">#8a000000</color>
+    <color name="carbon_black_87">#de000000</color>
+
     <!-- dark theme -->
-    <color name="carbon_divider_dark">#1fffffff</color>
+    <color name="carbon_divider_dark">@color/carbon_white_12</color>
     <color name="carbon_ripple_dark">#14ffffff</color>
-    <color name="carbon_icon_active_dark">#8a000000</color>
-    <color name="carbon_icon_inactive_dark">#4dffffff</color>
-    <color name="carbon_windowbackground_dark">#ff303030</color>
+    <color name="carbon_icon_active_dark">@color/carbon_white</color>
+    <color name="carbon_icon_inactive_dark">@color/carbon_white_50</color>
+
+    <color name="carbon_colorPrimaryDark_dark">@color/carbon_black</color>
+    <color name="carbon_colorPrimary_dark">@color/carbon_grey_900</color>
+    <color name="carbon_colorBackground_dark">#ff303030</color>
+    <color name="carbon_colorForeground_dark">@color/carbon_grey_800</color>
+
+    <color name="carbon_text_primary_dark">@color/carbon_white</color>
+    <color name="carbon_text_secondary_dark">@color/carbon_white_70</color>
+    <color name="carbon_text_hint_dark">@color/carbon_white_50</color>
+    <color name="carbon_text_disabled_dark">@color/carbon_white_50</color>
 
     <!-- light theme -->
-    <color name="carbon_divider_light">#1f000000</color>
+    <color name="carbon_divider_light">@color/carbon_black_12</color>
     <color name="carbon_ripple_light">#0c000000</color>
-    <color name="carbon_icon_active_light">#ffffffff</color>
-    <color name="carbon_icon_inactive_light">#42000000</color>
-    <color name="carbon_windowbackground_light">#fffafafa</color>
+    <color name="carbon_icon_active_light">@color/carbon_black_54</color>
+    <color name="carbon_icon_inactive_light">@color/carbon_black_38</color>
+
+    <color name="carbon_colorPrimaryDark_light">@color/carbon_grey_300</color>
+    <color name="carbon_colorPrimary_light">@color/carbon_grey_100</color>
+    <color name="carbon_colorBackground_light">@color/carbon_grey_50</color>
+    <color name="carbon_colorForeground_light">@color/carbon_white</color>
+
+    <color name="carbon_text_primary_light">@color/carbon_black_87</color>
+    <color name="carbon_text_secondary_light">@color/carbon_black_54</color>
+    <color name="carbon_text_hint_light">@color/carbon_black_38</color>
+    <color name="carbon_text_disabled_light">@color/carbon_black_38</color>
+
 
     <color name="carbon_debug">#ffDE3226</color>
     <color name="carbon_tooltip">#e5616161</color>
-
-    <color name="carbon_white_30">#4dffffff</color>
-    <color name="carbon_white_70">#b3ffffff</color>
-    <color name="carbon_black_26">#42000000</color>
-    <color name="carbon_black_54">#8a000000</color>
-    <color name="carbon_black_87">#de000000</color>
 
     <color name="carbon_tab_text_selected">#ff000000</color>
     <color name="carbon_tab_text_unselected">#8a000000</color>

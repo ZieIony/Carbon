@@ -17,7 +17,7 @@
         app:carbon_rippleColor="?attr/carbon_colorRipple">
 
         <carbon.widget.ImageView
-            style="@style/carbon_ImageView.Icon.Inverse"
+            style="@style/carbon_ImageView.Icon"
             android:layout_width="@dimen/carbon_iconSize"
             android:layout_height="@dimen/carbon_iconSize"
             android:layout_centerVertical="true"
