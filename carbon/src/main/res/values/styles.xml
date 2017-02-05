@@ -620,6 +620,13 @@
         <item name="carbon_tint">?attr/carbon_iconColorInverse</item>
     </style>
 
+    <style name="carbon_ImageView.Avatar">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_width">@dimen/carbon_avatarSize</item>
+        <item name="android:layout_height">@dimen/carbon_avatarSize</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_avatarSize</item>
+    </style>
+
     <style name="carbon_ListView" parent="@android:style/Widget.ListView">
         <item name="android:scrollbarSize">8dp</item>
         <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>

@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
-import carbon.component.AvatarTextItem;
-import carbon.component.AvatarTextRow;
+import carbon.component.ImageTextSubtextDateItem;
+import carbon.component.ImageTextSubtextDateRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
@@ -19,17 +21,29 @@ import tk.zielony.carbonsamples.R;
  * Created by Marcin on 2017-02-02.
  */
 
-public class AvatarTextListItemActivity extends AppCompatActivity {
-    class SampleItem implements AvatarTextItem {
+public class ImageTextSubtextDateListItemActivity extends AppCompatActivity {
+    static SimpleDateFormat format = new SimpleDateFormat("HH:mm, dd MMM");
+
+    class SampleItem implements ImageTextSubtextDateItem {
 
         @Override
-        public Drawable getAvatar(Context context) {
-            return context.getResources().getDrawable(R.drawable.iceland);
+        public Drawable getImage(Context context) {
+            return context.getResources().getDrawable(R.drawable.watermelon);
         }
 
         @Override
         public String getText() {
             return "Sample text";
+        }
+
+        @Override
+        public String getSubtext() {
+            return "Sample description";
+        }
+
+        @Override
+        public String getDate() {
+            return format.format(new Date().getTime());
         }
     }
 
@@ -39,7 +53,7 @@ public class AvatarTextListItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listcomponent);
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        RowListAdapter<SampleItem> adapter = new RowListAdapter<>(SampleItem.class, AvatarTextRow::new);
+        RowListAdapter<SampleItem> adapter = new RowListAdapter<>(SampleItem.class, ImageTextSubtextDateRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(Arrays.asList(new SampleItem(), new SampleItem(), new SampleItem(), new SampleItem()));
     }

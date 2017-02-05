@@ -34,7 +34,7 @@
 
     <style name="carbon_TextAppearance.Subhead">
         <item name="android:textSize">@dimen/carbon_textSizeSubhead</item>
-        <item name="carbon_fontPath">"carbon/Roboto-Regular.ttf"</item>
+        <item name="carbon_fontFamily">"sans-serif"</item>
     </style>
 
     <style name="carbon_TextAppearance.Subhead.Dark">

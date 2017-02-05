@@ -185,6 +185,9 @@
         <activity
             android:name=".component.AvatarTextListItemActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".component.ImageTextSubtextDateListItemActivity"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".AnimationsActivity"

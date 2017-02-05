@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import tk.zielony.carbonsamples.component.AvatarTextListItemActivity;
 import tk.zielony.carbonsamples.component.IconTextListItemActivity;
+import tk.zielony.carbonsamples.component.ImageTextSubtextDateListItemActivity;
 
 
 public class ComponentsActivity extends Activity {
@@ -22,7 +23,8 @@ public class ComponentsActivity extends Activity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
                 new ViewModel(IconTextListItemActivity.class, getString(R.string.iconTextListItemActivity_title)),
-                new ViewModel(AvatarTextListItemActivity.class, getString(R.string.iconTextListItemActivity_title))
+                new ViewModel(AvatarTextListItemActivity.class, getString(R.string.avatarTextListItemActivity_title)),
+                new ViewModel(ImageTextSubtextDateListItemActivity.class, getString(R.string.imageTextSubtextDateListItemActivity_title))
         };
         recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
                 new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
