@@ -12,7 +12,6 @@ import com.annimon.stream.function.Consumer;
 
 import java.util.List;
 
-import carbon.beta.TransitionLayout;
 import carbon.widget.FrameLayout;
 import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;

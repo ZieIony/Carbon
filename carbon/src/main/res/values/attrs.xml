@@ -604,6 +604,9 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
+
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
     </declare-styleable>

@@ -268,7 +268,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 

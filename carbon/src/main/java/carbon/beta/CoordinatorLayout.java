@@ -349,7 +349,7 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 

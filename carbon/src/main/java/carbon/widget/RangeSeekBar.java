@@ -590,7 +590,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 

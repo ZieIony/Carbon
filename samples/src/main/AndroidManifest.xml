@@ -103,6 +103,12 @@
             android:label="@string/app_name" />
 
         <activity
+            android:name=".feature.ScrollFlagsActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".feature.HtmlActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".feature.RoundedCornersActivity"
             android:label="@string/app_name" />
         <activity
@@ -113,9 +119,6 @@
             android:label="@string/app_name" />
         <activity
             android:name=".feature.LargeShadowActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".feature.HtmlActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".feature.RobotoActivity"

@@ -14,11 +14,14 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.view.animation.Interpolator;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -38,6 +41,7 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
+import carbon.internal.Reveal;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -52,7 +56,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * A ConstraintLayout implementation with support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class ConstraintLayout extends android.support.constraint.ConstraintLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView {
+public class ConstraintLayout extends android.support.constraint.ConstraintLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView {
     private OnTouchListener onDispatchTouchListener;
 
     public ConstraintLayout(Context context) {
@@ -102,8 +106,8 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
 
     private void initConstraintLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ConstraintLayout, defStyleAttr, R.style.carbon_ConstraintLayout);
-        Carbon.initRippleDrawable(this, a, rippleIds);
 
+        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, R.styleable.ConstraintLayout_carbon_elevation);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
@@ -118,20 +122,101 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     }
 
 
-    List<View> views;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private boolean drawCalled = false;
+    Reveal reveal;
+
+    @Override
+    public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            android.animation.Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
+            circularReveal.start();
+            return new Animator() {
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public long getStartDelay() {
+                    return circularReveal.getStartDelay();
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public void setStartDelay(long startDelay) {
+                    circularReveal.setStartDelay(startDelay);
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public Animator setDuration(long duration) {
+                    circularReveal.setDuration(duration);
+                    return this;
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public long getDuration() {
+                    return circularReveal.getDuration();
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public void setInterpolator(Interpolator value) {
+                    circularReveal.setInterpolator(value);
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public boolean isRunning() {
+                    return circularReveal.isRunning();
+                }
+            };
+        } else {
+            reveal = new Reveal(x, y, startRadius);
+            ValueAnimator animator = ValueAnimator.ofFloat(startRadius, finishRadius);
+            animator.setDuration(Carbon.getDefaultRevealDuration());
+            animator.addUpdateListener(animation -> {
+                reveal.radius = (float) animation.getAnimatedValue();
+                reveal.mask.reset();
+                reveal.mask.addCircle(reveal.x, reveal.y, Math.max(reveal.radius, 1), Path.Direction.CW);
+                postInvalidate();
+            });
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    reveal = null;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    reveal = null;
+                }
+            });
+            animator.start();
+            return animator;
+        }
+    }
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
+        boolean r = reveal != null;
+        boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
-        if (cornerRadius > 0 && !drawCalled && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
 
-            internalDispatchDraw(canvas);
+            if (r) {
+                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                internalDispatchDraw(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                internalDispatchDraw(canvas);
+            }
 
             paint.setXfermode(pdMode);
-            canvas.drawPath(cornersMask, paint);
+            if (c)
+                canvas.drawPath(cornersMask, paint);
+            if (r)
+                canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -142,10 +227,7 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     }
 
     private void internalDispatchDraw(@NonNull Canvas canvas) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
+        Collections.sort(getViews(), new ElevationComparator());
 
         super.dispatchDraw(canvas);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -295,13 +377,25 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        boolean r = reveal != null;
+        boolean c = cornerRadius > 0;
+        if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
 
-            super.draw(canvas);
+            if (r) {
+                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                super.draw(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                super.draw(canvas);
+            }
 
             paint.setXfermode(pdMode);
-            canvas.drawPath(cornersMask, paint);
+            if (c)
+                canvas.drawPath(cornersMask, paint);
+            if (r)
+                canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -319,11 +413,6 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
-
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 
@@ -355,7 +444,7 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 
@@ -764,6 +853,15 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     // -------------------------------
     // ViewGroup utils
     // -------------------------------
+
+    List<View> views = new ArrayList<>();
+
+    public List<View> getViews() {
+        views.clear();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
+        return views;
+    }
 
     public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
         this.onDispatchTouchListener = onDispatchTouchListener;

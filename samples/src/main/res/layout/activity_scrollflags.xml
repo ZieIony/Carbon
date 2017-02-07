@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tk.zielony.carbonsamples.feature.FlagsScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="button" />
+
+    <carbon.widget.Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="button2" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff7f7fff" />
+</tk.zielony.carbonsamples.feature.FlagsScrollView>

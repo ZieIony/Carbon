@@ -355,7 +355,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 

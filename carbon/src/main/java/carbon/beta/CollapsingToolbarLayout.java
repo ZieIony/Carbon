@@ -349,7 +349,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 

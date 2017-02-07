@@ -5,10 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-
-import carbon.beta.TransitionLayout;
 import carbon.widget.Button;
 import tk.zielony.carbonsamples.R;
 
@@ -44,7 +40,7 @@ public class CalculatorActivity extends Activity {
                 display.setText("" + number);
                 break;
             case R.id.del:
-                if (number == 0) {
+                /*if (number == 0) {
                     final TransitionLayout transitionLayout = (TransitionLayout) findViewById(R.id.transition);
                     transitionLayout.setHotspot(transitionLayout.getWidth(), transitionLayout.getHeight());
                     transitionLayout.setListener(new AnimatorListenerAdapter() {
@@ -57,7 +53,7 @@ public class CalculatorActivity extends Activity {
                     transitionLayout.startTransition(0, TransitionLayout.TransitionType.Fade, TransitionLayout.DEFAULT_DURATION, true);
                 }
                 number = number / 10;
-                display.setText("" + number);
+                display.setText("" + number);*/
                 break;
         }
     }

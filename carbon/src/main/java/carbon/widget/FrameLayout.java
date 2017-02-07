@@ -118,8 +118,8 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     private void initFrameLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, R.style.carbon_FrameLayout);
-        Carbon.initRippleDrawable(this, a, rippleIds);
 
+        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, R.styleable.FrameLayout_carbon_elevation);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
@@ -134,7 +134,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
 
-    List<View> views;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private boolean drawCalled = false;
     Reveal reveal;
@@ -210,16 +209,25 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
+        boolean r = reveal != null;
+        boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
-        if ((reveal != null || cornerRadius > 0) && !drawCalled && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
 
-            internalDispatchDraw(canvas);
+            if (r) {
+                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                internalDispatchDraw(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                internalDispatchDraw(canvas);
+            }
 
             paint.setXfermode(pdMode);
-            if (cornerRadius > 0)
+            if (c)
                 canvas.drawPath(cornersMask, paint);
-            if (reveal != null)
+            if (r)
                 canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
@@ -231,10 +239,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
     private void internalDispatchDraw(@NonNull Canvas canvas) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
+        Collections.sort(getViews(), new ElevationComparator());
 
         super.dispatchDraw(canvas);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -388,15 +393,24 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
-        if ((reveal != null || cornerRadius > 0) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        boolean r = reveal != null;
+        boolean c = cornerRadius > 0;
+        if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
 
-            super.draw(canvas);
+            if (r) {
+                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                super.draw(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                super.draw(canvas);
+            }
 
             paint.setXfermode(pdMode);
-            if (cornerRadius > 0)
+            if (c)
                 canvas.drawPath(cornersMask, paint);
-            if (reveal != null)
+            if (r)
                 canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
@@ -415,11 +429,6 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
-
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 
@@ -451,7 +460,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 
@@ -860,6 +869,15 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     // -------------------------------
     // ViewGroup utils
     // -------------------------------
+
+    List<View> views = new ArrayList<>();
+
+    public List<View> getViews() {
+        views.clear();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
+        return views;
+    }
 
     public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
         this.onDispatchTouchListener = onDispatchTouchListener;

@@ -15,6 +15,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.view.animation.Interpolator;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -117,8 +119,8 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     private void initLinearLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, R.style.carbon_LinearLayout);
-        Carbon.initRippleDrawable(this, a, rippleIds);
 
+        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, R.styleable.LinearLayout_carbon_elevation);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
@@ -133,7 +135,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
 
-    List<View> views;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private boolean drawCalled = false;
     Reveal reveal;
@@ -141,8 +142,46 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-            ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
-            return null;
+            android.animation.Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
+            circularReveal.start();
+            return new Animator() {
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public long getStartDelay() {
+                    return circularReveal.getStartDelay();
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public void setStartDelay(long startDelay) {
+                    circularReveal.setStartDelay(startDelay);
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public Animator setDuration(long duration) {
+                    circularReveal.setDuration(duration);
+                    return this;
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public long getDuration() {
+                    return circularReveal.getDuration();
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public void setInterpolator(Interpolator value) {
+                    circularReveal.setInterpolator(value);
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public boolean isRunning() {
+                    return circularReveal.isRunning();
+                }
+            };
         } else {
             reveal = new Reveal(x, y, startRadius);
             ValueAnimator animator = ValueAnimator.ofFloat(startRadius, finishRadius);
@@ -171,16 +210,25 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
+        boolean r = reveal != null;
+        boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
-        if ((reveal != null || cornerRadius > 0) && !drawCalled && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
 
-            internalDispatchDraw(canvas);
+            if (r) {
+                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                internalDispatchDraw(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                internalDispatchDraw(canvas);
+            }
 
             paint.setXfermode(pdMode);
-            if (cornerRadius > 0)
+            if (c)
                 canvas.drawPath(cornersMask, paint);
-            if (reveal != null)
+            if (r)
                 canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
@@ -192,10 +240,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     private void internalDispatchDraw(@NonNull Canvas canvas) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
+        Collections.sort(getViews(), new ElevationComparator());
 
         super.dispatchDraw(canvas);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -222,6 +267,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         if (alpha == 0)
             return false;
 
+        // TODO: why isShown() returns false after being reattached?
         if (child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             ShadowView shadowView = (ShadowView) child;
             Shadow shadow = shadowView.getShadow();
@@ -348,15 +394,24 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
-        if ((reveal != null || cornerRadius > 0) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        boolean r = reveal != null;
+        boolean c = cornerRadius > 0;
+        if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
 
-            super.draw(canvas);
+            if (r) {
+                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                super.draw(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                super.draw(canvas);
+            }
 
             paint.setXfermode(pdMode);
-            if (cornerRadius > 0)
+            if (c)
                 canvas.drawPath(cornersMask, paint);
-            if (reveal != null)
+            if (r)
                 canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
@@ -375,11 +430,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
-
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 
@@ -411,7 +461,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 
@@ -820,6 +870,15 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     // -------------------------------
     // ViewGroup utils
     // -------------------------------
+
+    List<View> views = new ArrayList<>();
+
+    public List<View> getViews() {
+        views.clear();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
+        return views;
+    }
 
     public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
         this.onDispatchTouchListener = onDispatchTouchListener;

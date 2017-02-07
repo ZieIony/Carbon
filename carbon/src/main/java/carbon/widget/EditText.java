@@ -585,7 +585,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return super.verifyDrawable(who) || rippleDrawable == who;
     }
 

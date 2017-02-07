@@ -13,6 +13,7 @@ import tk.zielony.carbonsamples.feature.LargeShadowActivity;
 import tk.zielony.carbonsamples.feature.PercentLayoutActivity;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
 import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
+import tk.zielony.carbonsamples.feature.ScrollFlagsActivity;
 import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.feature.TextAppearanceActivity;
 import tk.zielony.carbonsamples.feature.TextMarkerActivity;
@@ -31,6 +32,7 @@ public class FeaturesActivity extends Activity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
+                new ViewModel(ScrollFlagsActivity.class, getString(R.string.htmlActivity_title)),
                 new ViewModel(HtmlActivity.class, getString(R.string.htmlActivity_title)),
                 new ViewModel(RobotoActivity.class, getString(R.string.robotoActivity_title)),
                 new ViewModel(ShadowActivity.class, getString(R.string.shadowActivity_title)),
