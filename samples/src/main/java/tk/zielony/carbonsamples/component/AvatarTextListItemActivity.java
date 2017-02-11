@@ -11,6 +11,8 @@ import java.util.Arrays;
 
 import carbon.component.AvatarTextItem;
 import carbon.component.AvatarTextRow;
+import carbon.component.DividerItem;
+import carbon.component.DividerRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
@@ -20,7 +22,7 @@ import tk.zielony.carbonsamples.R;
  */
 
 public class AvatarTextListItemActivity extends AppCompatActivity {
-    class SampleItem implements AvatarTextItem {
+    public static class SampleItem implements AvatarTextItem {
 
         @Override
         public Drawable getAvatar(Context context) {
@@ -39,8 +41,9 @@ public class AvatarTextListItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listcomponent);
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        RowListAdapter<SampleItem> adapter = new RowListAdapter<>(SampleItem.class, AvatarTextRow::new);
+        RowListAdapter adapter = new RowListAdapter<>(SampleItem.class, AvatarTextRow.FACTORY);
+        adapter.addFactory(DividerItem.class, DividerRow.FACTORY);
         recycler.setAdapter(adapter);
-        adapter.setItems(Arrays.asList(new SampleItem(), new SampleItem(), new SampleItem(), new SampleItem()));
+        adapter.setItems(Arrays.asList(new SampleItem(), new SampleItem(), new DividerItem(), new SampleItem(), new SampleItem()));
     }
 }

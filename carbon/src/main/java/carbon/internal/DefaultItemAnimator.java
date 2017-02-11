@@ -97,16 +97,13 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
             moves.addAll(mPendingMoves);
             mMovesList.add(moves);
             mPendingMoves.clear();
-            Runnable mover = new Runnable() {
-                @Override
-                public void run() {
-                    for (MoveInfo moveInfo : moves) {
-                        animateMoveImpl(moveInfo.holder, moveInfo.fromX, moveInfo.fromY,
-                                moveInfo.toX, moveInfo.toY);
-                    }
-                    moves.clear();
-                    mMovesList.remove(moves);
+            Runnable mover = () -> {
+                for (MoveInfo moveInfo : moves) {
+                    animateMoveImpl(moveInfo.holder, moveInfo.fromX, moveInfo.fromY,
+                            moveInfo.toX, moveInfo.toY);
                 }
+                moves.clear();
+                mMovesList.remove(moves);
             };
             if (removalsPending) {
                 View view = moves.get(0).holder.itemView;
@@ -121,15 +118,12 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
             changes.addAll(mPendingChanges);
             mChangesList.add(changes);
             mPendingChanges.clear();
-            Runnable changer = new Runnable() {
-                @Override
-                public void run() {
-                    for (ChangeInfo change : changes) {
-                        animateChangeImpl(change);
-                    }
-                    changes.clear();
-                    mChangesList.remove(changes);
+            Runnable changer = () -> {
+                for (ChangeInfo change : changes) {
+                    animateChangeImpl(change);
                 }
+                changes.clear();
+                mChangesList.remove(changes);
             };
             if (removalsPending) {
                 RecyclerView.ViewHolder holder = changes.get(0).oldHolder;
@@ -144,14 +138,12 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
             additions.addAll(mPendingAdditions);
             mAdditionsList.add(additions);
             mPendingAdditions.clear();
-            Runnable adder = new Runnable() {
-                public void run() {
-                    for (RecyclerView.ViewHolder holder : additions) {
-                        animateAddImpl(holder);
-                    }
-                    additions.clear();
-                    mAdditionsList.remove(additions);
+            Runnable adder = () -> {
+                for (RecyclerView.ViewHolder holder : additions) {
+                    animateAddImpl(holder);
                 }
+                additions.clear();
+                mAdditionsList.remove(additions);
             };
             if (removalsPending || movesPending || changesPending) {
                 long removeDuration = removalsPending ? getRemoveDuration() : 0;
@@ -178,12 +170,7 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
         final ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 0);
         mRemoveAnimations.add(holder);
         animator.setDuration(getRemoveDuration());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ViewHelper.setAlpha(view, (Float) animation.getAnimatedValue());
-            }
-        });
+        animator.addUpdateListener(animation -> ViewHelper.setAlpha(view, (Float) animation.getAnimatedValue()));
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -213,12 +200,7 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
         final ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getAlpha(view), 1);
         mAddAnimations.add(holder);
         animator.setDuration(getAddDuration());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ViewHelper.setAlpha(view, (Float) animation.getAnimatedValue());
-            }
-        });
+        animator.addUpdateListener(animation -> ViewHelper.setAlpha(view, (Float) animation.getAnimatedValue()));
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -275,12 +257,9 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
         animation.setDuration(getMoveDuration());
         final float startX = ViewHelper.getTranslationX(view);
         final float startY = ViewHelper.getTranslationY(view);
-        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ViewHelper.setTranslationX(view, MathUtils.lerp(startX, 0, (Float) animation.getAnimatedValue()));
-                ViewHelper.setTranslationY(view, MathUtils.lerp(startY, 0, (Float) animation.getAnimatedValue()));
-            }
+        animation.addUpdateListener(__ -> {
+            ViewHelper.setTranslationX(view, MathUtils.lerp(startX, 0, (Float) animation.getAnimatedValue()));
+            ViewHelper.setTranslationY(view, MathUtils.lerp(startY, 0, (Float) animation.getAnimatedValue()));
         });
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -349,13 +328,10 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
             final float startAlpha = ViewHelper.getAlpha(view);
             final float startX = ViewHelper.getTranslationX(view);
             final float startY = ViewHelper.getTranslationY(view);
-            oldViewAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    ViewHelper.setAlpha(view, MathUtils.lerp(startAlpha, 0, (Float) animation.getAnimatedValue()));
-                    ViewHelper.setTranslationX(view, MathUtils.lerp(startX, changeInfo.toX - changeInfo.fromX, (Float) animation.getAnimatedValue()));
-                    ViewHelper.setTranslationY(view, MathUtils.lerp(startY, changeInfo.toY - changeInfo.fromY, (Float) animation.getAnimatedValue()));
-                }
+            oldViewAnim.addUpdateListener(animation -> {
+                ViewHelper.setAlpha(view, MathUtils.lerp(startAlpha, 0, (Float) animation.getAnimatedValue()));
+                ViewHelper.setTranslationX(view, MathUtils.lerp(startX, changeInfo.toX - changeInfo.fromX, (Float) animation.getAnimatedValue()));
+                ViewHelper.setTranslationY(view, MathUtils.lerp(startY, changeInfo.toY - changeInfo.fromY, (Float) animation.getAnimatedValue()));
             });
             oldViewAnim.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -379,13 +355,10 @@ public class DefaultItemAnimator extends SimpleItemAnimator {
             final float startAlpha = ViewHelper.getAlpha(newView);
             final float startX = ViewHelper.getTranslationX(newView);
             final float startY = ViewHelper.getTranslationY(newView);
-            newViewAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    ViewHelper.setAlpha(newView, MathUtils.lerp(startAlpha, 1, (Float) animation.getAnimatedValue()));
-                    ViewHelper.setTranslationX(newView, MathUtils.lerp(startX, 0, (Float) animation.getAnimatedValue()));
-                    ViewHelper.setTranslationY(newView, MathUtils.lerp(startY, 0, (Float) animation.getAnimatedValue()));
-                }
+            newViewAnimation.addUpdateListener(animation -> {
+                ViewHelper.setAlpha(newView, MathUtils.lerp(startAlpha, 1, (Float) animation.getAnimatedValue()));
+                ViewHelper.setTranslationX(newView, MathUtils.lerp(startX, 0, (Float) animation.getAnimatedValue()));
+                ViewHelper.setTranslationY(newView, MathUtils.lerp(startY, 0, (Float) animation.getAnimatedValue()));
             });
             newViewAnimation.addListener(new AnimatorListenerAdapter() {
                 @Override

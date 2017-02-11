@@ -7,7 +7,7 @@
 
     <carbon.widget.TextView
         style="@style/sectionDescription"
-        android:text="Carbon adds 'carbon_htmlText' attribute to all text components. With it you can set html text right from xml" />
+        android:text="Carbon adds 'carbon_htmlText' attribute to all text widgets. With it you can set html text right from xml" />
 
     <carbon.widget.Button
         android:layout_width="wrap_content"

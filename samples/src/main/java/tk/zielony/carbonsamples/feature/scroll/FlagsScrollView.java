@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples.feature;
+package tk.zielony.carbonsamples.feature.scroll;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -135,7 +135,7 @@ public class FlagsScrollView extends FrameLayout {
 
         final int length = getVerticalFadingEdgeLength();
         final int bottomEdge = getHeight() - getPaddingBottom();
-        final int span = getChildAt(0).getBottom() - getScrollY() - bottomEdge;
+        final int span = getChildAt(getChildCount() - 1).getBottom() - getScrollY() - bottomEdge;
         if (span < length) {
             return span / (float) length;
         }
@@ -581,7 +581,7 @@ public class FlagsScrollView extends FrameLayout {
                                 newScrollY = range;
                             }
                             if (newScrollY != oldScrollY) {
-                                super.scrollTo(getScrollX(), newScrollY);
+                                scrollTo(getScrollX(), newScrollY);
                                 return true;
                             }
                         }
@@ -599,7 +599,7 @@ public class FlagsScrollView extends FrameLayout {
         if (!mScroller.isFinished()) {
             final int oldX = getScrollX();
             final int oldY = getScrollY();
-            scrollTo(scrollX, scrollY);
+            clampScrollTo(scrollX, scrollY);
             postInvalidate();
             // TODO: invalidateParentIfNeeded();
             onScrollChanged(getScrollX(), getScrollY(), oldX, oldY);
@@ -607,7 +607,7 @@ public class FlagsScrollView extends FrameLayout {
                 mScroller.springBack(getScrollX(), getScrollY(), 0, 0, 0, getScrollRange());
             }
         } else {
-            super.scrollTo(scrollX, scrollY);
+            scrollTo(scrollX, scrollY);
         }
 
         awakenScrollBars();
@@ -838,7 +838,7 @@ public class FlagsScrollView extends FrameLayout {
                 scrollDelta = getScrollY();
             } else if (direction == View.FOCUS_DOWN) {
                 if (getChildCount() > 0) {
-                    int daBottom = getChildAt(0).getBottom();
+                    int daBottom = getChildAt(getChildCount() - 1).getBottom();
                     int screenBottom = getScrollY() + getHeight() - getPaddingBottom();
                     if (daBottom - screenBottom < maxJump) {
                         scrollDelta = daBottom - screenBottom;
@@ -915,7 +915,7 @@ public class FlagsScrollView extends FrameLayout {
         long duration = AnimationUtils.currentAnimationTimeMillis() - mLastScroll;
         if (duration > ANIMATED_SCROLL_GAP) {
             final int height = getHeight() - getPaddingBottom() - getPaddingTop();
-            final int bottom = getChildAt(0).getHeight();
+            final int bottom = getChildAt(getChildCount() - 1).getBottom();
             final int maxY = Math.max(0, bottom - height);
             final int scrollY = getScrollY();
             dy = Math.max(0, Math.min(scrollY + dy, maxY)) - scrollY;
@@ -953,7 +953,7 @@ public class FlagsScrollView extends FrameLayout {
             return contentHeight;
         }
 
-        int scrollRange = getChildAt(0).getBottom();
+        int scrollRange = getChildAt(getChildCount() - 1).getBottom();
         final int scrollY = getScrollY();
         final int overscrollBottom = Math.max(0, scrollRange - contentHeight);
         if (scrollY < 0) {
@@ -1083,7 +1083,7 @@ public class FlagsScrollView extends FrameLayout {
         }
 
         // leave room for bottom fading edge as long as rect isn't at very bottom
-        if (rect.bottom < getChildAt(0).getHeight()) {
+        if (rect.bottom < getChildAt(getChildCount() - 1).getBottom()) {
             screenBottom -= fadingEdge;
         }
 
@@ -1103,7 +1103,7 @@ public class FlagsScrollView extends FrameLayout {
             }
 
             // make sure we aren't scrolling beyond the end of our content
-            int bottom = getChildAt(0).getBottom();
+            int bottom = getChildAt(getChildCount() - 1).getBottom();
             int distanceToBottom = bottom - screenBottom;
             scrollYDelta = Math.min(scrollYDelta, distanceToBottom);
 
@@ -1208,7 +1208,7 @@ public class FlagsScrollView extends FrameLayout {
         mChildToScrollTo = null;
 
         // Calling this with the present values causes it to re-claim them
-        scrollTo(getScrollX(), getScrollY());
+        clampScrollTo(getScrollX(), getScrollY());
     }
 
     @Override
@@ -1252,7 +1252,7 @@ public class FlagsScrollView extends FrameLayout {
     public void fling(int velocityY) {
         if (getChildCount() > 0) {
             int height = getHeight() - getPaddingBottom() - getPaddingTop();
-            int bottom = getChildAt(0).getHeight();
+            int bottom = getChildAt(getChildCount() - 1).getBottom();
 
             mScroller.fling(getScrollX(), getScrollY(), 0, velocityY, 0, 0, 0,
                     Math.max(0, bottom - height), 0, height / 2);
@@ -1277,17 +1277,30 @@ public class FlagsScrollView extends FrameLayout {
      * <p>
      * <p>This version also clamps the scrolling to the bounds of our child.
      */
-    @Override
-    public void scrollTo(int x, int y) {
+    public void clampScrollTo(int x, int y) {
         // we rely on the fact the View.scrollBy calls scrollTo.
         if (getChildCount() > 0) {
-            View child = getChildAt(0);
+            View child = getChildAt(getChildCount() - 1);
             x = clamp(x, getWidth() - getPaddingRight() - getPaddingLeft(), child.getWidth());
-            y = clamp(y, getHeight() - getPaddingBottom() - getPaddingTop(), child.getHeight());
+            y = clamp(y, getHeight() - getPaddingBottom() - getPaddingTop(), child.getBottom());
             if (x != getScrollX() || y != getScrollY()) {
-                super.scrollTo(x, y);
+                scrollTo(x, y);
             }
         }
+    }
+
+    @Override
+    public void scrollTo(int x, int y) {
+        int currY = getScrollY();
+        int dy = y - currY;
+        for (int i = 0; i < getChildCount(); i++) {
+            if (getChildAt(i) instanceof ScrollChild) {
+                ScrollChild scrollChild = (ScrollChild) getChildAt(i);
+                int nestedScrollY = scrollChild.getNestedScrollY();
+                dy-=scrollChild.onNestedScrollByY(dy);
+            }
+        }
+        super.scrollTo(x, currY + dy);
     }
 
     @Override

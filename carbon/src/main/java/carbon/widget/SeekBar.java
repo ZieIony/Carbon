@@ -32,6 +32,7 @@ import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
+import carbon.internal.MathUtils;
 import carbon.internal.SeekBarPopup;
 
 import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
@@ -269,7 +270,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         } else {
             this.max = min + step;
         }
-        this.value = Math.max(min, Math.min(value, max));
+        this.value = MathUtils.constrain(value, min, max);
     }
 
     public float getMin() {
@@ -284,7 +285,7 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         } else {
             this.min = 0;
         }
-        this.value = Math.max(min, Math.min(value, max));
+        this.value = MathUtils.constrain(value, min, max);
     }
 
     private int stepValue(float v) {
@@ -299,9 +300,9 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
 
     public void setValue(float value) {
         if (style == Style.Discrete) {
-            this.value = stepValue(Math.max(min, Math.min(value, max)));
+            this.value = stepValue(MathUtils.constrain(value, min, max));
         } else {
-            this.value = Math.max(min, Math.min(value, max));
+            this.value = MathUtils.constrain(value, min, max);
         }
     }
 
@@ -360,12 +361,9 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
             radiusAnimator = ValueAnimator.ofFloat(thumbRadius, THUMB_RADIUS_DRAGGED);
             radiusAnimator.setDuration(200);
             radiusAnimator.setInterpolator(interpolator);
-            radiusAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    thumbRadius = (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            radiusAnimator.addUpdateListener(animation -> {
+                thumbRadius = (float) animation.getAnimatedValue();
+                postInvalidate();
             });
             radiusAnimator.start();
             ViewParent parent = getParent();

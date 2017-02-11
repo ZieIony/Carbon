@@ -144,8 +144,9 @@ public final class MathUtils {
         return (value - start) / (stop - start);
     }
 
+    // TODO: maxStart and maxStop were switched
     public static float map(float minStart, float minStop, float maxStart, float maxStop, float value) {
-        return maxStart + (maxStart - maxStop) * ((value - minStart) / (minStop - minStart));
+        return maxStart + (maxStop - maxStart) * ((value - minStart) / (minStop - minStart));
     }
 
     public static int random(int howbig) {

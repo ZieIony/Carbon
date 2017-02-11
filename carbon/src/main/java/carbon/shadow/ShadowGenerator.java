@@ -11,6 +11,7 @@ import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 
+import carbon.internal.MathUtils;
 import carbon.internal.WeakHashSet;
 import carbon.widget.CornerView;
 
@@ -26,7 +27,7 @@ public class ShadowGenerator {
     private static WeakHashSet shadowSet = new WeakHashSet();
 
     private static void blur(Bitmap bitmap, float radius) {
-        radius = Math.max(0, Math.min(radius, 25));
+        radius = MathUtils.constrain(radius, 0, 25);
         if (software) {
             blurSoftware(bitmap, radius);
         } else {
@@ -35,37 +36,40 @@ public class ShadowGenerator {
     }
 
     private static void blurSoftware(Bitmap bitmap, float radius) {
-        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
-        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
-        int[] halfResult = new int[bitmap.getWidth() * bitmap.getHeight()];
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int[] pixels = new int[width * height];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+        int[] halfResult = new int[width * height];
         int rad = (int) Math.ceil(radius);
-        for (int y = 0; y < bitmap.getHeight(); y++) {
-            for (int x = 0; x < bitmap.getWidth(); x++) {
+        int rad2plus1 = rad * 2 + 1;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 int sumBlack = 0, sumAlpha = 0;
                 for (int i = -rad; i <= rad; i++) {
-                    int pixel = pixels[y * bitmap.getWidth() + Math.max(0, Math.min(x + i, bitmap.getWidth() - 1))];
+                    int pixel = pixels[y * width + MathUtils.constrain(x + i, 0, width - 1)];
                     sumBlack += pixel & 0xff;
                     sumAlpha += (pixel >> 24) & 0xff;
                 }
-                int blurredBlack = sumBlack / (rad * 2 + 1);
-                int blurredAlpha = sumAlpha / (rad * 2 + 1);
-                halfResult[y * bitmap.getWidth() + x] = Color.argb(blurredAlpha, blurredBlack, blurredBlack, blurredBlack);
+                int blurredBlack = sumBlack / rad2plus1;
+                int blurredAlpha = sumAlpha / rad2plus1;
+                halfResult[y * width + x] = Color.argb(blurredAlpha, blurredBlack, blurredBlack, blurredBlack);
             }
         }
-        for (int x = 0; x < bitmap.getWidth(); x++) {
-            for (int y = 0; y < bitmap.getHeight(); y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 int sumBlack = 0, sumAlpha = 0;
                 for (int i = -rad; i <= rad; i++) {
-                    int pixel = halfResult[Math.max(0, Math.min(y + i, bitmap.getHeight() - 1)) * bitmap.getHeight() + x];
+                    int pixel = halfResult[MathUtils.constrain(y + i, 0, height - 1) * height + x];
                     sumBlack += pixel & 0xff;
                     sumAlpha += (pixel >> 24) & 0xff;
                 }
-                int blurredBlack = sumBlack / (rad * 2 + 1);
-                int blurredAlpha = sumAlpha / (rad * 2 + 1);
-                pixels[y * bitmap.getWidth() + x] = Color.argb(blurredAlpha, blurredBlack, blurredBlack, blurredBlack);
+                int blurredBlack = sumBlack / rad2plus1;
+                int blurredAlpha = sumAlpha / rad2plus1;
+                pixels[y * width + x] = Color.argb(blurredAlpha, blurredBlack, blurredBlack, blurredBlack);
             }
         }
-        bitmap.setPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
     }
 
     private static void blurRenderScript(Bitmap bitmap, float radius) {
@@ -73,9 +77,9 @@ public class ShadowGenerator {
                 Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
         Allocation outAllocation = Allocation.createTyped((RenderScript) renderScript, inAllocation.getType());
 
-        ((ScriptIntrinsicBlur)blurShader).setRadius(radius);
-        ((ScriptIntrinsicBlur)blurShader).setInput(inAllocation);
-        ((ScriptIntrinsicBlur)blurShader).forEach(outAllocation);
+        ((ScriptIntrinsicBlur) blurShader).setRadius(radius);
+        ((ScriptIntrinsicBlur) blurShader).setInput(inAllocation);
+        ((ScriptIntrinsicBlur) blurShader).forEach(outAllocation);
 
         outAllocation.copyTo(bitmap);
     }

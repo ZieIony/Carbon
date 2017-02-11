@@ -30,6 +30,7 @@
     <string name="guidelinesActivity_title">Guidelines</string>
     <string name="buttonsUsageActivity_title">Buttons / Usage</string>
     <string name="toolbarsUsageActivity_title">Toolbars / Usage</string>
+    <string name="dependencyLayoutActivity_title">Dependency layout</string>
     <string name="htmlActivity_title">HTML</string>
     <string name="robotoActivity_title">Roboto</string>
     <string name="shadowActivity_title">Shadow</string>

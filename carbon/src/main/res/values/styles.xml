@@ -84,8 +84,10 @@
         <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Dark</item>
         <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Dark</item>
         <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Dark</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Dark</item>
         <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Dark</item>
         <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Dark</item>
+
         <item name="carbon_textAppearanceHeadlineInverse">
             @style/carbon_TextAppearance.Headline.Light
         </item>
@@ -98,6 +100,7 @@
         </item>
         <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Light
         </item>
+        <item name="carbon_textAppearanceListHeaderInverse">@style/carbon_TextAppearance.ListHeader.Light</item>
         <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Light
         </item>
@@ -209,8 +212,10 @@
         <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Dark</item>
         <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Dark</item>
         <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Dark</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Dark</item>
         <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Dark</item>
         <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Dark</item>
+
         <item name="carbon_textAppearanceHeadlineInverse">
             @style/carbon_TextAppearance.Headline.Light
         </item>
@@ -223,6 +228,7 @@
         </item>
         <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Light
         </item>
+        <item name="carbon_textAppearanceListHeaderInverse">@style/carbon_TextAppearance.ListHeader.Light</item>
         <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Light
         </item>
@@ -317,8 +323,10 @@
         <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Light</item>
         <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Light</item>
         <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Light</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Light</item>
         <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Light</item>
         <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Light</item>
+
         <item name="carbon_textAppearanceHeadlineInverse">
             @style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -331,6 +339,7 @@
         </item>
         <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Dark
         </item>
+        <item name="carbon_textAppearanceListHeaderInverse">@style/carbon_TextAppearance.ListHeader.Dark</item>
         <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Dark
         </item>
@@ -441,8 +450,10 @@
         <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Light</item>
         <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Light</item>
         <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Light</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Light</item>
         <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Light</item>
         <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Light</item>
+
         <item name="carbon_textAppearanceHeadlineInverse">
             @style/carbon_TextAppearance.Headline.Dark
         </item>
@@ -455,6 +466,7 @@
         </item>
         <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Dark
         </item>
+        <item name="carbon_textAppearanceListHeaderInverse">@style/carbon_TextAppearance.ListHeader.Dark</item>
         <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Dark
         </item>

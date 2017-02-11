@@ -14,6 +14,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
+import carbon.internal.MathUtils;
 import carbon.shadow.ShadowView;
 import carbon.widget.ProgressBar;
 
@@ -266,15 +267,11 @@ public class AnimUtils {
         return animator;
     }
 
-    public static float lerp(float interpolation, float val1, float val2) {
-        return val1 * (1 - interpolation) + val2 * interpolation;
-    }
-
     public static int lerpColor(float interpolation, int val1, int val2) {
-        int a = (int) lerp(interpolation, val1 >> 24, val2 >> 24);
-        int r = (int) lerp(interpolation, (val1 >> 16) & 0xff, (val2 >> 16) & 0xff);
-        int g = (int) lerp(interpolation, (val1 >> 8) & 0xff, (val2 >> 8) & 0xff);
-        int b = (int) lerp(interpolation, val1 & 0xff, val2 & 0xff);
+        int a = (int) MathUtils.lerp(val1 >> 24, val2 >> 24, interpolation);
+        int r = (int) MathUtils.lerp((val1 >> 16) & 0xff, (val2 >> 16) & 0xff, interpolation);
+        int g = (int) MathUtils.lerp((val1 >> 8) & 0xff, (val2 >> 8) & 0xff, interpolation);
+        int b = (int) MathUtils.lerp(val1 & 0xff, val2 & 0xff, interpolation);
         return Color.argb(a, r, g, b);
     }
 

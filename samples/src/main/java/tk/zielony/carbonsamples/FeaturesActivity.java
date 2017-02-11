@@ -32,7 +32,7 @@ public class FeaturesActivity extends Activity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
-                new ViewModel(ScrollFlagsActivity.class, getString(R.string.htmlActivity_title)),
+                new ViewModel(ScrollFlagsActivity.class, getString(R.string.dependencyLayoutActivity_title)),
                 new ViewModel(HtmlActivity.class, getString(R.string.htmlActivity_title)),
                 new ViewModel(RobotoActivity.class, getString(R.string.robotoActivity_title)),
                 new ViewModel(ShadowActivity.class, getString(R.string.shadowActivity_title)),

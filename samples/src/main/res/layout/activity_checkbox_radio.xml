@@ -1,163 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/view_debugtoolbar" />
-
-    <carbon.widget.ScrollView
+    <carbon.widget.LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        app:carbon_insetColor="?attr/colorPrimary">
 
-        <carbon.widget.LinearLayout
+        <include layout="@layout/view_debugtoolbar" />
+
+        <carbon.widget.ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <carbon.widget.TextView
-                style="@style/sectionDescription"
-                android:text="CheckBox class is written from scratch. It behaves consistently across all platforms and offers animated vector icons" />
-
-            <carbon.widget.CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/carbon_listItemHeight"
-                android:gravity="center_vertical"
-                android:layoutDirection="rtl"
-                android:tag="enable"
-                android:text="RTL CheckBox"
-                app:carbon_rippleColor="?attr/carbon_rippleColor" />
-
-            <carbon.widget.CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/carbon_listItemHeight"
-                android:gravity="center_vertical"
-                android:layoutDirection="locale"
-                android:text="check me!" />
-
-            <carbon.widget.CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/carbon_listItemHeight"
-                android:gravity="center_vertical"
-                android:layoutDirection="locale"
-                android:paddingLeft="@dimen/carbon_padding"
-                android:text="check me!"
-                app:carbon_tint="@drawable/checkbox_selector" />
-
-            <carbon.widget.Divider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/carbon_margin" />
-
-            <carbon.widget.TextView
-                style="@style/sectionDescription"
-                android:text="CheckedTextView" />
-
-            <carbon.widget.CheckedTextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/carbon_listItemHeight"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:layoutDirection="locale"
-                android:paddingLeft="@dimen/carbon_padding"
-                android:paddingRight="@dimen/carbon_padding"
-                android:text="checked text view"
-                app:carbon_tint="@drawable/checkbox_selector" />
-
-            <carbon.widget.Divider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/carbon_margin" />
-
-            <carbon.widget.TextView
-                style="@style/sectionDescription"
-                android:text="RadioGroup with RadioButtons" />
-
-            <carbon.widget.RadioGroup
+            <carbon.widget.LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <carbon.widget.RadioButton
+                <carbon.widget.TextView
+                    style="@style/sectionDescription"
+                    android:text="CheckBox class is written from scratch. It behaves consistently across all platforms and offers animated vector icons" />
+
+                <carbon.widget.CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:gravity="center_vertical"
+                    android:layoutDirection="rtl"
+                    android:tag="enable"
+                    android:text="RTL CheckBox"
+                    app:carbon_rippleColor="?attr/carbon_rippleColor" />
+
+                <carbon.widget.CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:gravity="center_vertical"
+                    android:layoutDirection="locale"
+                    android:text="check me!" />
+
+                <carbon.widget.CheckBox
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/carbon_listItemHeight"
                     android:gravity="center_vertical"
                     android:layoutDirection="locale"
                     android:paddingLeft="@dimen/carbon_padding"
-                    android:text="pick me!" />
+                    android:text="check me!"
+                    app:carbon_tint="@drawable/checkbox_selector" />
 
-                <carbon.widget.RadioButton
+                <carbon.widget.Divider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/carbon_margin" />
+
+                <carbon.widget.TextView
+                    style="@style/sectionDescription"
+                    android:text="CheckedTextView" />
+
+                <carbon.widget.CheckedTextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/carbon_listItemHeight"
+                    android:clickable="true"
                     android:gravity="center_vertical"
                     android:layoutDirection="locale"
                     android:paddingLeft="@dimen/carbon_padding"
-                    android:text="pick me!" />
-            </carbon.widget.RadioGroup>
+                    android:paddingRight="@dimen/carbon_padding"
+                    android:text="checked text view"
+                    app:carbon_tint="@drawable/checkbox_selector" />
 
-            <carbon.widget.Divider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/carbon_margin" />
-
-            <carbon.widget.TextView
-                style="@style/sectionDescription"
-                android:text="CheckBox supports indeterminate state as well" />
-
-            <carbon.widget.CheckBox
-                android:id="@+id/checkBoxGroup"
-                style="@style/carbon_CheckBox.IconButton.Inverse"
-                android:gravity="center_vertical" />
-
-            <carbon.widget.CheckBox
-                android:id="@+id/checkBoxChild1"
-                style="@style/carbon_CheckBox.IconButton.Inverse"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:gravity="center_vertical" />
-
-            <carbon.widget.CheckBox
-                android:id="@+id/checkBoxChild2"
-                style="@style/carbon_CheckBox.IconButton.Inverse"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:gravity="center_vertical" />
-
-
-            <carbon.widget.Divider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/carbon_margin" />
-
-            <carbon.widget.TextView
-                style="@style/sectionDescription"
-                android:text="It's easy to create square textless CheckBox with a predefined style" />
-
-            <carbon.widget.CheckBox
-                android:id="@+id/checkBox"
-                style="@style/carbon_CheckBox.IconButton.Inverse"
-                android:gravity="center_vertical" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <carbon.widget.Button
-                    android:id="@+id/check"
-                    android:layout_width="wrap_content"
+                <carbon.widget.Divider
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/carbon_padding"
-                    android:text="check" />
+                    android:layout_marginTop="@dimen/carbon_margin" />
 
-                <carbon.widget.Button
-                    android:id="@+id/uncheck"
-                    android:layout_width="wrap_content"
+                <carbon.widget.TextView
+                    style="@style/sectionDescription"
+                    android:text="RadioGroup with RadioButtons" />
+
+                <carbon.widget.RadioGroup
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/carbon_padding"
-                    android:text="uncheck" />
-            </LinearLayout>
-        </carbon.widget.LinearLayout>
-    </carbon.widget.ScrollView>
-</carbon.widget.LinearLayout>
+                    android:orientation="vertical">
+
+                    <carbon.widget.RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/carbon_listItemHeight"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="locale"
+                        android:paddingLeft="@dimen/carbon_padding"
+                        android:text="pick me!" />
+
+                    <carbon.widget.RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/carbon_listItemHeight"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="locale"
+                        android:paddingLeft="@dimen/carbon_padding"
+                        android:text="pick me!" />
+                </carbon.widget.RadioGroup>
+
+                <carbon.widget.Divider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/carbon_margin" />
+
+                <carbon.widget.TextView
+                    style="@style/sectionDescription"
+                    android:text="CheckBox supports indeterminate state as well" />
+
+                <carbon.widget.CheckBox
+                    android:id="@+id/checkBoxGroup"
+                    style="@style/carbon_CheckBox.IconButton.Inverse"
+                    android:gravity="center_vertical" />
+
+                <carbon.widget.CheckBox
+                    android:id="@+id/checkBoxChild1"
+                    style="@style/carbon_CheckBox.IconButton.Inverse"
+                    android:layout_marginLeft="@dimen/carbon_margin"
+                    android:gravity="center_vertical" />
+
+                <carbon.widget.CheckBox
+                    android:id="@+id/checkBoxChild2"
+                    style="@style/carbon_CheckBox.IconButton.Inverse"
+                    android:layout_marginLeft="@dimen/carbon_margin"
+                    android:gravity="center_vertical" />
+
+
+                <carbon.widget.Divider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/carbon_margin" />
+
+                <carbon.widget.TextView
+                    style="@style/sectionDescription"
+                    android:text="It's easy to create square textless CheckBox with a predefined style" />
+
+                <carbon.widget.CheckBox
+                    android:id="@+id/checkBox"
+                    style="@style/carbon_CheckBox.IconButton.Inverse"
+                    android:gravity="center_vertical" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <carbon.widget.Button
+                        android:id="@+id/check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/carbon_padding"
+                        android:text="check" />
+
+                    <carbon.widget.Button
+                        android:id="@+id/uncheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/carbon_padding"
+                        android:text="uncheck" />
+                </LinearLayout>
+            </carbon.widget.LinearLayout>
+        </carbon.widget.ScrollView>
+    </carbon.widget.LinearLayout>
+</layout>

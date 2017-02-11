@@ -992,6 +992,22 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         }
 
         @Override
+        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
+            try {
+                width = a.getLayoutDimension(widthAttr, "layout_width");
+            } catch (RuntimeException e) {
+                if (!a.hasValue(R.styleable.Carbon_carbon_widthPercent))
+                    throw e;
+            }
+            try {
+                height = a.getLayoutDimension(heightAttr, "layout_height");
+            } catch (RuntimeException e) {
+                if (!a.hasValue(R.styleable.Carbon_carbon_widthPercent))
+                    throw e;
+            }
+        }
+
+        @Override
         public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
             if (percentLayoutInfo == null) {
                 percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();

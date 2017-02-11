@@ -74,6 +74,20 @@
     </style>
 
 
+    <style name="carbon_TextAppearance.ListHeader">
+        <item name="android:textSize">@dimen/carbon_textSizeListHeader</item>
+        <item name="carbon_fontFamily">"sans-serif-medium"</item>
+    </style>
+
+    <style name="carbon_TextAppearance.ListHeader.Dark">
+        <item name="android:textColor">@color/carbon_text_secondary_dark</item>
+    </style>
+
+    <style name="carbon_TextAppearance.ListHeader.Light">
+        <item name="android:textColor">@color/carbon_text_secondary_light</item>
+    </style>
+
+
     <style name="carbon_TextAppearance.Caption">
         <item name="android:textSize">@dimen/carbon_textSizeCaption</item>
         <item name="carbon_fontFamily">"sans-serif"</item>

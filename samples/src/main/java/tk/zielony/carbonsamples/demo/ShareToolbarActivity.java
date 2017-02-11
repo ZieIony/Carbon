@@ -10,6 +10,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 import java.util.List;
 
 import carbon.animation.AnimUtils;
+import carbon.internal.MathUtils;
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.R;
 
@@ -31,10 +32,10 @@ public class ShareToolbarActivity extends Activity {
             animator.setInterpolator(new AccelerateInterpolator());
             animator.addUpdateListener(animation -> {
                 float frac = animator.getAnimatedFraction();
-                float cornerRadius = AnimUtils.lerp(frac, shareToolbar.getHeight() / 2.0f, 0);
+                float cornerRadius = MathUtils.lerp(shareToolbar.getHeight() / 2.0f, 0, frac);
                 shareToolbar.setCornerRadius((int) cornerRadius);
-                float left = AnimUtils.lerp(frac, root.getWidth() - shareToolbar.getHeight() - getResources().getDimension(R.dimen.carbon_padding), 0);
-                float right = AnimUtils.lerp(frac, root.getWidth() - getResources().getDimension(R.dimen.carbon_padding), root.getWidth());
+                float left = MathUtils.lerp(root.getWidth() - shareToolbar.getHeight() - getResources().getDimension(R.dimen.carbon_padding), 0, frac);
+                float right = MathUtils.lerp(root.getWidth() - getResources().getDimension(R.dimen.carbon_padding), root.getWidth(), frac);
                 shareToolbar.layout((int) left, shareToolbar.getTop(), (int) right, shareToolbar.getBottom());
                 shareToolbar.setElevation(frac);
                 shareToolbar.setBackgroundColor(AnimUtils.lerpColor(frac, 0xff9ACE00, 0xffffffff));
