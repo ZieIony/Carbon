@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.Arrays;
 
@@ -40,7 +39,6 @@ public class AvatarTextListItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listcomponent);
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter adapter = new RowListAdapter<>(SampleItem.class, AvatarTextRow.FACTORY);
         adapter.addFactory(DividerItem.class, DividerRow.FACTORY);
         recycler.setAdapter(adapter);

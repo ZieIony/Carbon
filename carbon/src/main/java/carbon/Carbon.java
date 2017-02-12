@@ -24,6 +24,7 @@ import carbon.shadow.ShadowView;
 import carbon.widget.InsetView;
 import carbon.widget.MaxSizeView;
 import carbon.widget.StateAnimatorView;
+import carbon.widget.StrokeView;
 import carbon.widget.TintedView;
 import carbon.widget.TouchMarginView;
 
@@ -237,5 +238,13 @@ public class Carbon {
 
     public static void setDefaultRevealDuration(long defaultRevealDuration) {
         Carbon.defaultRevealDuration = defaultRevealDuration;
+    }
+
+    public static void initStroke(StrokeView view, TypedArray a, int[] ids) {
+        int carbon_stroke = ids[0];
+        int carbon_strokeWidth = ids[1];
+
+        view.setStroke(a.getColorStateList(carbon_stroke));
+        view.setStrokeWidth(a.getDimension(carbon_strokeWidth, 0));
     }
 }

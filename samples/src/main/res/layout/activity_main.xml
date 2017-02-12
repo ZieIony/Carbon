@@ -23,6 +23,8 @@
 
     <carbon.widget.RecyclerView
         android:id="@+id/list"
+        android:paddingTop="@dimen/carbon_paddingHalf"
+        android:paddingBottom="@dimen/carbon_paddingHalf"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="carbon.component.SubheaderItem" />
+            type="carbon.component.HeaderItem" />
 
     </data>
 
@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/carbon_marker"
             android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
             android:text="@{data.text}"
             android:textAppearance="?attr/carbon_textAppearanceListHeader" />
 

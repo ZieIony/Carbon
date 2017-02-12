@@ -11,10 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import carbon.component.DefaultSubheaderItem;
+import carbon.component.DefaultHeaderItem;
 import carbon.component.ImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
-import carbon.component.PaddedSubheaderRow;
+import carbon.component.PaddedHeaderRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
@@ -56,8 +56,8 @@ public class ImageTextSubtextDateListItemActivity extends AppCompatActivity {
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter adapter = new RowListAdapter<>(SampleItem.class, ImageTextSubtextDateRow::new);
-        adapter.addFactory(DefaultSubheaderItem.class, PaddedSubheaderRow.FACTORY);
+        adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow.FACTORY);
         recycler.setAdapter(adapter);
-        adapter.setItems(Arrays.asList(new DefaultSubheaderItem("Header"), new SampleItem(), new SampleItem(), new DefaultSubheaderItem("Header"), new SampleItem(), new SampleItem()));
+        adapter.setItems(Arrays.asList(new DefaultHeaderItem("Header"), new SampleItem(), new SampleItem(), new DefaultHeaderItem("Header"), new SampleItem(), new SampleItem()));
     }
 }

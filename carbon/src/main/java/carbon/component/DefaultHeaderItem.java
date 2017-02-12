@@ -4,11 +4,11 @@ package carbon.component;
  * Created by Marcin on 2017-02-11.
  */
 
-public class DefaultSubheaderItem implements SubheaderItem {
+public class DefaultHeaderItem implements HeaderItem {
 
     private String text;
 
-    public DefaultSubheaderItem(String text) {
+    public DefaultHeaderItem(String text) {
         this.text = text;
     }
 

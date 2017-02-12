@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -597,6 +598,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        if (getLayoutManager() == null)
+            setLayoutManager(new LinearLayoutManager(getContext()));
         super.onLayout(changed, l, t, r, b);
         if (header != null)
             header.layout(0, 0, getWidth(), header.getMeasuredHeight());

@@ -123,6 +123,9 @@
 
     <attr name="carbon_elevation" format="dimension" />
 
+    <attr name="carbon_stroke" format="reference|color" />
+    <attr name="carbon_strokeWidth" format="dimension" />
+
     <attr name="carbon_state_invalid" format="boolean" />
     <attr name="carbon_state_indeterminate" format="boolean" />
 
@@ -181,6 +184,9 @@
         <attr name="carbon_theme" />
 
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
+
         <attr name="carbon_menu" format="reference" />
     </declare-styleable>
 
@@ -219,7 +225,11 @@
         <attr name="carbon_fontPath" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
+
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
+
         <attr name="carbon_htmlText" />
     </declare-styleable>
 
@@ -255,7 +265,11 @@
         <attr name="carbon_fontPath" />
         <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
+
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
+
         <attr name="carbon_htmlText" />
     </declare-styleable>
 
@@ -328,6 +342,8 @@
         <attr name="carbon_maxHeight" />
 
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <declare-styleable name="AppBarLayout_Layout">
@@ -365,6 +381,8 @@
         <attr name="carbon_insetColor" />
 
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <declare-styleable name="CoordinatorLayout_Layout">
@@ -404,6 +422,8 @@
 
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <declare-styleable name="FrameLayout_Layout">
@@ -445,6 +465,8 @@
 
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <attr name="carbon_flowLayoutStyle" format="reference" />
@@ -477,6 +499,8 @@
 
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <attr name="carbon_gridLayoutStyle" format="reference" />
@@ -509,6 +533,8 @@
 
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <attr name="carbon_relativeLayoutStyle" format="reference" />
@@ -541,6 +567,8 @@
 
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <declare-styleable name="RelativeLayout_Layout">
@@ -578,6 +606,8 @@
 
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <declare-styleable name="LinearLayout_Layout">
@@ -615,6 +645,8 @@
 
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <declare-styleable name="Toolbar">
@@ -635,6 +667,8 @@
         <attr name="android:text" />
         <attr name="carbon_icon" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
     </declare-styleable>
 
     <attr name="carbon_imageViewStyle" format="reference" />
@@ -666,6 +700,9 @@
         <attr name="android:src" />
         <attr name="carbon_src" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
+
         <attr name="android:enabled" />
     </declare-styleable>
 
@@ -740,6 +777,8 @@
 
         <attr name="carbon_elevation" />
         <attr name="carbon_cornerRadius" />
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
 
         <attr name="carbon_touchMargin" />
         <attr name="carbon_touchMarginLeft" />

@@ -49,7 +49,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 /**
  * Created by Marcin on 2015-01-22.
  */
-public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView {
+public class ImageView extends android.widget.ImageView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, StrokeView {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public ImageView(Context context) {
@@ -97,6 +97,10 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             R.styleable.ImageView_carbon_backgroundTintMode,
             R.styleable.ImageView_carbon_animateColorChanges
     };
+    private static int[] strokeIds = new int[]{
+            R.styleable.ImageView_carbon_stroke,
+            R.styleable.ImageView_carbon_strokeWidth
+    };
 
     private void initImageView(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, R.style.carbon_ImageView);
@@ -123,6 +127,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initTint(this, a, tintIds);
+        Carbon.initStroke(this, a, strokeIds);
 
         a.recycle();
     }
@@ -204,6 +209,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
+            if (stroke != null)
+                drawStroke(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
 
@@ -214,6 +221,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             paint.setXfermode(null);
         } else {
             super.draw(canvas);
+            if (stroke != null)
+                drawStroke(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
         }
@@ -907,5 +916,52 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
         }
         if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
             ((View) getParent()).invalidate();
+    }
+
+
+    // -------------------------------
+    // stroke
+    // -------------------------------
+
+    private ColorStateList stroke;
+    private float strokeWidth;
+    private Paint strokePaint;
+    private RectF strokeRect;
+
+    private void drawStroke(Canvas canvas) {
+        if (strokePaint == null) {
+            strokePaint = new Paint();
+            strokeRect = new RectF();
+        }
+        strokePaint.setStyle(Paint.Style.STROKE);
+        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
+        float sDiv2 = strokeWidth / 2;
+        strokeRect.set(sDiv2, sDiv2, getWidth() - sDiv2, getHeight() - sDiv2);
+        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+    }
+
+    @Override
+    public void setStroke(ColorStateList colorStateList) {
+        stroke = colorStateList;
+    }
+
+    @Override
+    public void setStroke(int color) {
+        stroke = ColorStateList.valueOf(color);
+    }
+
+    @Override
+    public ColorStateList getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public float getStrokeWidth() {
+        return strokeWidth;
     }
 }
