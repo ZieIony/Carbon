@@ -50,7 +50,7 @@ public class Divider extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(getMeasuredWidth(), (int) Carbon.getDip(getContext()));
+        setMeasuredDimension(getMeasuredWidth(), getContext().getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
     }
 
 

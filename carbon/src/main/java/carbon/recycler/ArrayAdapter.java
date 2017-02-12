@@ -9,7 +9,7 @@ import carbon.widget.AutoCompleteEditText;
 /**
  * Created by Marcin on 2017-01-07.
  */
-public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extends RecyclerView.Adapter<VH> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
+public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
     private carbon.widget.RecyclerView.OnItemClickedListener onItemClickedListener;
     private boolean diff = true;
     private DiffArrayCallback<I> diffCallback;

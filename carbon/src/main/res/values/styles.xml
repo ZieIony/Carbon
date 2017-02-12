@@ -646,7 +646,7 @@
         <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
         <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
         <item name="android:divider">?attr/carbon_dividerColor</item>
-        <item name="android:dividerHeight">1px</item>
+        <item name="android:dividerHeight">@dimen/carbon_dividerHeight</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
@@ -863,6 +863,7 @@
         <item name="android:textColor">@color/carbon_text_primary_dark</item>
         <item name="android:textSize">@dimen/carbon_tooltipTextSize</item>
         <item name="carbon_cornerRadius">2dp</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationTooltip</item>
     </style>
 
     <style name="carbon_AutoCompleteLayout" parent="carbon_LinearLayout">

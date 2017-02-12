@@ -36,4 +36,8 @@ public class DataBindingRow<DataType> implements Row<DataType> {
     public DataType getData() {
         return data;
     }
+
+    protected ViewDataBinding getBinding() {
+        return binding;
+    }
 }

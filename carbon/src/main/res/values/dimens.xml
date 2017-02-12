@@ -64,6 +64,7 @@
     <dimen name="carbon_elevationCard">2dp</dimen>
     <dimen name="carbon_elevationDialog">12dp</dimen>
     <dimen name="carbon_elevationSnackbar">6dp</dimen>
+    <dimen name="carbon_elevationTooltip">2dp</dimen>
 
     <dimen name="carbon_cornerRadiusButton">2dp</dimen>
     <dimen name="carbon_cornerRadiusCard">2dp</dimen>
@@ -102,4 +103,6 @@
     <dimen name="carbon_textSizeListHeader">14sp</dimen>
     <dimen name="carbon_textSizeCaption">12sp</dimen>
     <dimen name="carbon_textSizeButton">14sp</dimen>
+
+    <dimen name="carbon_dividerHeight">1dp</dimen>
 </resources>

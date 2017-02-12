@@ -12,8 +12,13 @@ import carbon.widget.RecyclerView;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
+    public interface DrawRules {
+        boolean drawAfter(int position);
+    }
+
     private Drawable drawable;
     private int height;
+    private DrawRules drawRules;
 
     public DividerItemDecoration(Drawable drawable, int height) {
         this.drawable = drawable;
@@ -25,9 +30,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
         if (drawable == null)
             return;
-        if (parent.getChildPosition(view) < 1)
+        if (parent.getChildAdapterPosition(view) == parent.getAdapter().getItemCount() - 1)
             return;
 
+        if (drawRules == null || !drawRules.drawAfter(parent.getChildAdapterPosition(view)))
+            return;
         if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
             outRect.top = height;
         } else {
@@ -55,15 +62,17 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             bottom = parent.getHeight() - parent.getPaddingBottom();
         }
 
-        for (int i = 1; i < childCount; i++) {
+        for (int i = 0; i < childCount - 1; i++) {
+            if (drawRules == null || !drawRules.drawAfter(i))
+                continue;
+
             View child = parent.getChildAt(i);
-            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
             if (orientation == LinearLayoutManager.VERTICAL) {
-                bottom = (int) (child.getTop() - params.topMargin + ViewHelper.getTranslationY(child));
+                bottom = (int) (child.getBottom() + ViewHelper.getTranslationY(child));
                 top = bottom - height;
             } else { //horizontal
-                right = (int) (child.getLeft() - params.leftMargin + ViewHelper.getTranslationX(child));
+                right = (int) (child.getRight() + ViewHelper.getTranslationX(child));
                 left = right - height;
             }
             c.save(Canvas.CLIP_SAVE_FLAG);
@@ -84,4 +93,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                     "DividerItemDecoration can only be used with a LinearLayoutManager.");
         }
     }
+
+    public void setDrawRules(DrawRules drawRules) {
+        this.drawRules = drawRules;
+    }
+
 }
