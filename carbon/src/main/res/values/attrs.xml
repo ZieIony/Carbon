@@ -812,6 +812,11 @@
         <attr name="carbon_theme" />
 
         <attr name="carbon_popupTheme" format="reference" />
+
+        <attr name="carbon_mode" format="enum">
+            <enum name="over" value="0" />
+            <enum name="fit" value="1" />
+        </attr>
     </declare-styleable>
 
     <attr name="carbon_pagerTabStripStyle" format="reference" />

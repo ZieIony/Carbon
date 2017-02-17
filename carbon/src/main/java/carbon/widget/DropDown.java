@@ -27,6 +27,10 @@ import carbon.recycler.ArrayAdapter;
  */
 public class DropDown extends EditText {
 
+    public enum Mode {
+        Over, Fit
+    }
+
     DropDownMenu dropDownMenu;
 
     private int selectedIndex;
@@ -68,18 +72,27 @@ public class DropDown extends EditText {
 
         int theme = a.getResourceId(R.styleable.DropDown_carbon_popupTheme, -1);
 
-        a.recycle();
-
         defaultAdapter = new Adapter();
         dropDownMenu = new DropDownMenu(new ContextThemeWrapper(context, theme));
         dropDownMenu.setAdapter(defaultAdapter);
         dropDownMenu.setOnItemClickedListener(onItemClickedListener);
         dropDownMenu.setOnDismissListener(() -> isShowingPopup = false);
+        dropDownMenu.setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.Over.ordinal())]);
 
         setOnClickListener(view -> {
             dropDownMenu.show(DropDown.this);
             isShowingPopup = true;
         });
+
+        a.recycle();
+    }
+
+    public Mode getMode() {
+        return dropDownMenu.getMode();
+    }
+
+    public void setMode(Mode mode) {
+        dropDownMenu.setMode(mode);
     }
 
     public void setSelectedIndex(int index) {

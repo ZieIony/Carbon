@@ -4,7 +4,7 @@
     android:id="@+id/carbon_popupContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/carbon_padding"
+    android:padding="@dimen/carbon_paddingHalf"
     android:visibility="invisible"
     app:carbon_inAnimation="fade"
     app:carbon_outAnimation="fade">

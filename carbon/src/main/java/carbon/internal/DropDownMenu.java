@@ -17,6 +17,7 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.R;
 import carbon.recycler.ArrayAdapter;
+import carbon.widget.DropDown;
 import carbon.widget.FrameLayout;
 import carbon.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ public class DropDownMenu extends PopupWindow {
 
     protected RecyclerView recycler;
     private View mAnchorView;
+    private DropDown.Mode mode;
 
     public DropDownMenu(Context context) {
         super(View.inflate(context, R.layout.carbon_popupmenu, null));
@@ -49,7 +51,6 @@ public class DropDownMenu extends PopupWindow {
         setFocusable(true);
         setOutsideTouchable(true);
         setAnimationStyle(0);
-        setClippingEnabled(false);
     }
 
     public boolean show(View anchor) {
@@ -82,6 +83,8 @@ public class DropDownMenu extends PopupWindow {
         if (mAnchorView == null)
             return;
 
+        setClippingEnabled(mode == DropDown.Mode.Fit);
+
         final Resources res = getContentView().getContext().getResources();
 
         int margin = (int) res.getDimension(R.dimen.carbon_padding);
@@ -110,23 +113,37 @@ public class DropDownMenu extends PopupWindow {
         int[] location = new int[2];
         mAnchorView.getLocationInWindow(location);
 
-        int maxHeightAbove = location[1] - windowRect.top - marginHalf - margin;
-        int maxItemsAbove = maxHeightAbove / itemHeight;
-        int maxHeightBelow = hWindow - location[1] - marginHalf - margin;
-        int maxItemsBelow = maxHeightBelow / itemHeight + 1;
+        if (mode == DropDown.Mode.Over) {
+            int maxHeightAbove = location[1] - windowRect.top - marginHalf * 2;
+            int maxItemsAbove = maxHeightAbove / itemHeight;
+            int maxHeightBelow = hWindow - location[1] - marginHalf * 2;
+            int maxItemsBelow = maxHeightBelow / itemHeight + 1;
 
-        int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
-        int itemsAbove = Math.min(selectedItem, maxItemsAbove);
+            int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
+            int itemsAbove = Math.min(selectedItem, maxItemsAbove);
 
-        int popupX = location[0] - margin * 2;
-        int popupY = location[1] - margin - itemsAbove * itemHeight - marginHalf - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() - mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
-        int popupWidth = mAnchorView.getWidth() + margin * 4 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
-        int popupHeight = marginHalf * 2 + Math.max(1, itemsAbove + itemsBelow) * itemHeight + margin * 2;
+            int popupX = location[0] - margin - marginHalf;
+            int popupY = location[1] - marginHalf * 2 - itemsAbove * itemHeight - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() - mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
+            int popupWidth = mAnchorView.getWidth() + margin * 2 + marginHalf * 2 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
+            int popupHeight = marginHalf * 4 + Math.max(1, itemsAbove + itemsBelow) * itemHeight;
 
-        LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
-        manager.scrollToPositionWithOffset(selectedItem - itemsAbove, 0);
+            LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
+            manager.scrollToPositionWithOffset(selectedItem - itemsAbove, 0);
 
-        update(popupX, popupY, popupWidth, popupHeight);
+            update(popupX, popupY, popupWidth, popupHeight);
+        } else {
+            int maxItems = (hWindow - marginHalf * 2 - margin * 2) / itemHeight;
+
+            int popupX = location[0] - margin - marginHalf;
+            int popupY = location[1] - marginHalf * 2 - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() - mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
+            int popupWidth = mAnchorView.getWidth() + margin * 2 + marginHalf * 2 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
+            int popupHeight = marginHalf * 4 + Math.min(recycler.getAdapter().getItemCount(), maxItems) * itemHeight;
+
+            LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
+            manager.scrollToPosition(selectedItem);
+
+            update(popupX, popupY, popupWidth, popupHeight);
+        }
 
         super.update();
     }
@@ -186,7 +203,15 @@ public class DropDownMenu extends PopupWindow {
         return (ArrayAdapter) recycler.getAdapter();
     }
 
-   /* @Override
+    public DropDown.Mode getMode() {
+        return mode;
+    }
+
+    public void setMode(DropDown.Mode mode) {
+        this.mode = mode;
+    }
+
+    /* @Override
     public boolean onSubMenuSelected(SubMenuBuilder subMenu) {
         if (subMenu.hasVisibleItems()) {
             PopupMenu subPopup = new PopupMenu(mContext, subMenu, false);
