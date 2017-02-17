@@ -26,6 +26,7 @@
     <string name="componentsActivity_title">Components</string>
     <string name="animationsActivity_title">Animations</string>
     <string name="appsLibrariesActivity_title"><![CDATA[Apps & Libraries]]></string>
+    <string name="colorsActivity_title">Colors</string>
     <string name="demosActivity_title">Demos</string>
     <string name="guidelinesActivity_title">Guidelines</string>
     <string name="buttonsUsageActivity_title">Buttons / Usage</string>
@@ -64,6 +65,8 @@
     <string name="bottomBarActivity_title">BottomBar</string>
     <string name="bottomSheetActivity_title">BottomSheet</string>
     <string name="themeActivity_title">Theme</string>
+
+    <string name="swatchTestActivity_title">Swatch test</string>
 
     <string name="samplehtml"><![CDATA[cdata tag makes it <i>very</i> easy to add <b>formatting</b>]]></string>
 

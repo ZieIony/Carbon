@@ -98,7 +98,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
         });
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, R.style.carbon_Toolbar);
-        setText(a.getString(R.styleable.Toolbar_android_text));
+        setTitle(a.getString(R.styleable.Toolbar_android_text));
         int iconRes = a.getResourceId(R.styleable.Toolbar_carbon_icon, 0);
         if (iconRes != 0) {
             setIcon(iconRes);
@@ -180,26 +180,6 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     @Override
     public void setTitleTextColor(@ColorInt int color) {
         title.setTextColor(color);
-    }
-
-    @Deprecated
-    public void setText(String text) {
-        if (text != null) {
-            title.setText(text);
-            title.setVisibility(View.VISIBLE);
-        } else {
-            title.setVisibility(View.GONE);
-        }
-    }
-
-    @Deprecated
-    public void setText(int resId) {
-        setText(getResources().getString(resId));
-    }
-
-    @Deprecated
-    public String getText() {
-        return (String) title.getText();
     }
 
     public TextView getTitleView() {

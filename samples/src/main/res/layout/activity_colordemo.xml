@@ -1,0 +1,114 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        app:carbon_insetColor="?attr/colorPrimary">
+
+        <carbon.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <carbon.widget.ImageView
+                android:id="@+id/debug"
+                style="@style/carbon_ImageView.Icon"
+                android:layout_width="@dimen/carbon_toolbarItemSize"
+                android:layout_height="@dimen/carbon_toolbarItemSize"
+                app:carbon_src="@raw/ic_bug_report_24px"
+                app:carbon_tint="?attr/colorControlNormal" />
+        </carbon.widget.Toolbar>
+
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/carbon_white"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/carbon_paddingHalf"
+            android:paddingTop="@dimen/carbon_paddingHalf">
+
+            <carbon.widget.RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <carbon.widget.ImageView
+                    android:id="@+id/themebg"
+                    android:layout_width="@dimen/carbon_iconSize"
+                    android:layout_height="@dimen/carbon_iconSize"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/carbon_windowPadding"
+                    app:carbon_stroke="?attr/carbon_dividerColor" />
+
+                <carbon.widget.DropDown
+                    android:id="@+id/theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:layout_marginLeft="@dimen/carbon_contentPadding"
+                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:text="Theme" />
+            </carbon.widget.RelativeLayout>
+
+
+            <carbon.widget.RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <carbon.widget.ImageView
+                    android:id="@+id/primarybg"
+                    android:layout_width="@dimen/carbon_iconSize"
+                    android:layout_height="@dimen/carbon_iconSize"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/carbon_windowPadding"
+                    app:carbon_stroke="?attr/carbon_dividerColor" />
+
+                <carbon.widget.DropDown
+                    android:id="@+id/primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:layout_marginLeft="@dimen/carbon_contentPadding"
+                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:text="Primary color" />
+            </carbon.widget.RelativeLayout>
+
+            <carbon.widget.RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <carbon.widget.ImageView
+                    android:id="@+id/accentbg"
+                    android:layout_width="@dimen/carbon_iconSize"
+                    android:layout_height="@dimen/carbon_iconSize"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/carbon_windowPadding"
+                    app:carbon_stroke="?attr/carbon_dividerColor" />
+
+                <carbon.widget.DropDown
+                    android:id="@+id/accent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:layout_marginLeft="@dimen/carbon_contentPadding"
+                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:text="Accent color" />
+            </carbon.widget.RelativeLayout>
+        </carbon.widget.LinearLayout>
+
+        <carbon.widget.Divider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <carbon.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/carbon_paddingHalf"
+            android:paddingTop="@dimen/carbon_paddingHalf" />
+
+    </carbon.widget.LinearLayout>
+</layout>

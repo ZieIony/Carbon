@@ -57,4 +57,179 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <style name="ThemeLight" parent="carbon_Theme.Light.NoActionBar">
+        <item name="colorAccent">@color/carbon_black</item>
+    </style>
+
+    <style name="ThemeDark" parent="carbon_Theme.Dark.NoActionBar">
+        <item name="colorAccent">@color/carbon_white</item>
+    </style>
+
+    <style name="PrimaryRed">
+        <item name="colorPrimary">@color/carbon_red_400</item>
+        <item name="colorPrimaryDark">@color/carbon_red_700</item>
+    </style>
+
+    <style name="AccentRed">
+        <item name="colorAccent">@color/carbon_red_a200</item>
+    </style>
+
+    <style name="PrimaryPink">
+        <item name="colorPrimary">@color/carbon_pink_400</item>
+        <item name="colorPrimaryDark">@color/carbon_pink_700</item>
+    </style>
+
+    <style name="AccentPink">
+        <item name="colorAccent">@color/carbon_pink_a200</item>
+    </style>
+
+    <style name="PrimaryPurple">
+        <item name="colorPrimary">@color/carbon_purple_400</item>
+        <item name="colorPrimaryDark">@color/carbon_purple_700</item>
+    </style>
+
+    <style name="AccentPurple">
+        <item name="colorAccent">@color/carbon_purple_a200</item>
+    </style>
+
+    <style name="PrimaryDeepPurple">
+        <item name="colorPrimary">@color/carbon_deepPurple_400</item>
+        <item name="colorPrimaryDark">@color/carbon_deepPurple_700</item>
+    </style>
+
+    <style name="AccentDeepPurple">
+        <item name="colorAccent">@color/carbon_deepPurple_a200</item>
+    </style>
+
+    <style name="PrimaryIndigo">
+        <item name="colorPrimary">@color/carbon_indigo_400</item>
+        <item name="colorPrimaryDark">@color/carbon_indigo_700</item>
+    </style>
+
+    <style name="AccentIndigo">
+        <item name="colorAccent">@color/carbon_indigo_a200</item>
+    </style>
+
+    <style name="PrimaryBlue">
+        <item name="colorPrimary">@color/carbon_blue_400</item>
+        <item name="colorPrimaryDark">@color/carbon_blue_700</item>
+    </style>
+
+    <style name="AccentBlue">
+        <item name="colorAccent">@color/carbon_blue_a200</item>
+    </style>
+
+    <style name="PrimaryLightBlue">
+        <item name="colorPrimary">@color/carbon_lightBlue_400</item>
+        <item name="colorPrimaryDark">@color/carbon_lightBlue_700</item>
+    </style>
+
+    <style name="AccentLightBlue">
+        <item name="colorAccent">@color/carbon_lightBlue_a200</item>
+    </style>
+
+    <style name="PrimaryCyan">
+        <item name="colorPrimary">@color/carbon_cyan_400</item>
+        <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
+    </style>
+
+    <style name="AccentCyan">
+        <item name="colorAccent">@color/carbon_cyan_a200</item>
+    </style>
+
+    <style name="PrimaryTeal">
+        <item name="colorPrimary">@color/carbon_teal_400</item>
+        <item name="colorPrimaryDark">@color/carbon_teal_700</item>
+    </style>
+
+    <style name="AccentTeal">
+        <item name="colorAccent">@color/carbon_teal_a200</item>
+    </style>
+
+    <style name="PrimaryGreen">
+        <item name="colorPrimary">@color/carbon_green_400</item>
+        <item name="colorPrimaryDark">@color/carbon_green_700</item>
+    </style>
+
+    <style name="AccentGreen">
+        <item name="colorAccent">@color/carbon_green_a200</item>
+    </style>
+
+    <style name="PrimaryLightGreen">
+        <item name="colorPrimary">@color/carbon_lightGreen_400</item>
+        <item name="colorPrimaryDark">@color/carbon_lightGreen_700</item>
+    </style>
+
+    <style name="AccentLightGreen">
+        <item name="colorAccent">@color/carbon_lightGreen_a200</item>
+    </style>
+
+    <style name="PrimaryLime">
+        <item name="colorPrimary">@color/carbon_lime_400</item>
+        <item name="colorPrimaryDark">@color/carbon_lime_700</item>
+    </style>
+
+    <style name="AccentLime">
+        <item name="colorAccent">@color/carbon_lime_a200</item>
+    </style>
+
+    <style name="PrimaryYellow">
+        <item name="colorPrimary">@color/carbon_yellow_400</item>
+        <item name="colorPrimaryDark">@color/carbon_yellow_700</item>
+    </style>
+
+    <style name="AccentYellow">
+        <item name="colorAccent">@color/carbon_yellow_a200</item>
+    </style>
+
+    <style name="PrimaryAmber">
+        <item name="colorPrimary">@color/carbon_amber_400</item>
+        <item name="colorPrimaryDark">@color/carbon_amber_700</item>
+    </style>
+
+    <style name="AccentAmber">
+        <item name="colorAccent">@color/carbon_amber_a200</item>
+    </style>
+
+    <style name="PrimaryOrange">
+        <item name="colorPrimary">@color/carbon_orange_400</item>
+        <item name="colorPrimaryDark">@color/carbon_orange_700</item>
+    </style>
+
+    <style name="AccentOrange">
+        <item name="colorAccent">@color/carbon_orange_a200</item>
+    </style>
+
+    <style name="PrimaryDeepOrange">
+        <item name="colorPrimary">@color/carbon_deepOrange_400</item>
+        <item name="colorPrimaryDark">@color/carbon_deepOrange_700</item>
+    </style>
+
+    <style name="AccentDeepOrange">
+        <item name="colorAccent">@color/carbon_deepOrange_a200</item>
+    </style>
+
+    <style name="PrimaryBrown">
+        <item name="colorPrimary">@color/carbon_brown_400</item>
+        <item name="colorPrimaryDark">@color/carbon_brown_700</item>
+    </style>
+
+    <style name="PrimaryGrey">
+        <item name="colorPrimary">@color/carbon_grey_400</item>
+        <item name="colorPrimaryDark">@color/carbon_grey_700</item>
+    </style>
+
+    <style name="PrimaryBlueGrey">
+        <item name="colorPrimary">@color/carbon_blueGrey_400</item>
+        <item name="colorPrimaryDark">@color/carbon_blueGrey_700</item>
+    </style>
+
+    <style name="AccentWhite">
+        <item name="colorAccent">@color/carbon_white</item>
+    </style>
+
+    <style name="AccentBlack">
+        <item name="colorAccent">@color/carbon_black</item>
+    </style>
 </resources>

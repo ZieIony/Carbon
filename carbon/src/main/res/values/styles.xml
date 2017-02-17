@@ -84,7 +84,8 @@
         <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Dark</item>
         <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Dark</item>
         <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Dark</item>
-        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Dark</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Dark
+        </item>
         <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Dark</item>
         <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Dark</item>
 
@@ -100,7 +101,9 @@
         </item>
         <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Light
         </item>
-        <item name="carbon_textAppearanceListHeaderInverse">@style/carbon_TextAppearance.ListHeader.Light</item>
+        <item name="carbon_textAppearanceListHeaderInverse">
+            @style/carbon_TextAppearance.ListHeader.Light
+        </item>
         <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Light
         </item>
@@ -212,7 +215,8 @@
         <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Dark</item>
         <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Dark</item>
         <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Dark</item>
-        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Dark</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Dark
+        </item>
         <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Dark</item>
         <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Dark</item>
 
@@ -228,7 +232,9 @@
         </item>
         <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Light
         </item>
-        <item name="carbon_textAppearanceListHeaderInverse">@style/carbon_TextAppearance.ListHeader.Light</item>
+        <item name="carbon_textAppearanceListHeaderInverse">
+            @style/carbon_TextAppearance.ListHeader.Light
+        </item>
         <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Light
         </item>
@@ -323,7 +329,8 @@
         <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Light</item>
         <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Light</item>
         <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Light</item>
-        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Light</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Light
+        </item>
         <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Light</item>
         <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Light</item>
 
@@ -339,7 +346,9 @@
         </item>
         <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Dark
         </item>
-        <item name="carbon_textAppearanceListHeaderInverse">@style/carbon_TextAppearance.ListHeader.Dark</item>
+        <item name="carbon_textAppearanceListHeaderInverse">
+            @style/carbon_TextAppearance.ListHeader.Dark
+        </item>
         <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Dark
         </item>
@@ -450,7 +459,8 @@
         <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead.Light</item>
         <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2.Light</item>
         <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1.Light</item>
-        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Light</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader.Light
+        </item>
         <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption.Light</item>
         <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button.Light</item>
 
@@ -466,7 +476,9 @@
         </item>
         <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Dark
         </item>
-        <item name="carbon_textAppearanceListHeaderInverse">@style/carbon_TextAppearance.ListHeader.Dark</item>
+        <item name="carbon_textAppearanceListHeaderInverse">
+            @style/carbon_TextAppearance.ListHeader.Dark
+        </item>
         <item name="carbon_textAppearanceCaptionInverse">
             @style/carbon_TextAppearance.Caption.Dark
         </item>
@@ -489,7 +501,7 @@
         <item name="carbon_touchMarginBottom">6dp</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="android:textColor">@null</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
         <item name="android:maxLines">1</item>
         <item name="android:background">@drawable/carbon_buttonbackground</item>
         <item name="carbon_animateColorChanges">true</item>
@@ -691,6 +703,7 @@
     </style>
 
     <style name="carbon_EditText" parent="@android:style/Widget.EditText">
+        <item name="android:textColor">@null</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
         <item name="android:background">@null</item>
@@ -703,6 +716,7 @@
     </style>
 
     <style name="carbon_DropDown" parent="carbon_EditText">
+        <item name="android:longClickable">false</item>
         <item name="android:cursorVisible">false</item>
         <item name="android:focusable">false</item>
         <item name="android:editable">false</item>

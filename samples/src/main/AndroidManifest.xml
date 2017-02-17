@@ -61,9 +61,9 @@
             android:name=".widget.DropDownActivity"
             android:label="@string/app_name" />
         <activity
-            android:theme="@style/AppTheme.Translucent"
             android:name=".widget.NavigationViewActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Translucent" />
         <activity
             android:name=".widget.SeekBarActivity"
             android:label="@string/app_name" />
@@ -100,6 +100,10 @@
             android:label="@string/app_name" />
         <activity
             android:name=".animation.ListRippleActivity"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name=".color.SwatchTestActivity"
             android:label="@string/app_name" />
 
         <activity
@@ -199,19 +203,22 @@
             android:name=".AppsLibrariesActivity"
             android:label="@string/app_name" />
         <activity
+            android:name=".ColorsActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".ComponentsActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".FeaturesActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".WidgetsActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".DemosActivity"
             android:label="@string/app_name" />
         <activity
+            android:name=".FeaturesActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".GuidelinesActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".WidgetsActivity"
             android:label="@string/app_name" />
     </application>
 
