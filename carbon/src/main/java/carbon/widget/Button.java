@@ -52,7 +52,7 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
  * <p/>
  * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other material features.
  */
-public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView {
+public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, StrokeView {
     protected Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
@@ -106,6 +106,10 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             R.styleable.Button_carbon_backgroundTintMode,
             R.styleable.Button_carbon_animateColorChanges
     };
+    private static int[] strokeIds = new int[]{
+            R.styleable.Button_carbon_stroke,
+            R.styleable.Button_carbon_strokeWidth
+    };
 
     private void initButton(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, R.style.carbon_Button);
@@ -135,6 +139,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initElevation(this, a, R.styleable.Button_carbon_elevation);
         Carbon.initHtmlText(this, a, R.styleable.Button_carbon_htmlText);
+        Carbon.initStroke(this, a, strokeIds);
 
         setCornerRadius(a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
 
@@ -260,6 +265,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
+            if (stroke != null)
+                drawStroke(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
 
@@ -270,6 +277,8 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             paint.setXfermode(null);
         } else {
             super.draw(canvas);
+            if (stroke != null)
+                drawStroke(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
         }
@@ -952,5 +961,56 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         }
         if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
             ((View) getParent()).invalidate();
+    }
+
+
+    // -------------------------------
+    // stroke
+    // -------------------------------
+
+    private ColorStateList stroke;
+    private float strokeWidth;
+    private Paint strokePaint;
+    private RectF strokeRect;
+
+    private void drawStroke(Canvas canvas) {
+        strokePaint.setStrokeWidth(strokeWidth * 2);
+        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
+        strokeRect.set(0, 0, getWidth(), getHeight());
+        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+    }
+
+    @Override
+    public void setStroke(ColorStateList colorStateList) {
+        stroke = colorStateList;
+
+        if (stroke == null)
+            return;
+
+        if (strokePaint == null) {
+            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            strokePaint.setStyle(Paint.Style.STROKE);
+            strokeRect = new RectF();
+        }
+    }
+
+    @Override
+    public void setStroke(int color) {
+        setStroke(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public float getStrokeWidth() {
+        return strokeWidth;
     }
 }

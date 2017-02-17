@@ -929,25 +929,29 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
     private RectF strokeRect;
 
     private void drawStroke(Canvas canvas) {
-        if (strokePaint == null) {
-            strokePaint = new Paint();
-            strokeRect = new RectF();
-        }
-        strokePaint.setStyle(Paint.Style.STROKE);
+        strokePaint.setStrokeWidth(strokeWidth * 2);
         strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
-        float sDiv2 = strokeWidth / 2;
-        strokeRect.set(sDiv2, sDiv2, getWidth() - sDiv2, getHeight() - sDiv2);
+        strokeRect.set(0, 0, getWidth(), getHeight());
         canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
     }
 
     @Override
     public void setStroke(ColorStateList colorStateList) {
         stroke = colorStateList;
+
+        if (stroke == null)
+            return;
+
+        if (strokePaint == null) {
+            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            strokePaint.setStyle(Paint.Style.STROKE);
+            strokeRect = new RectF();
+        }
     }
 
     @Override
     public void setStroke(int color) {
-        stroke = ColorStateList.valueOf(color);
+        setStroke(ColorStateList.valueOf(color));
     }
 
     @Override

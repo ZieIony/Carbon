@@ -48,7 +48,6 @@
                     android:id="@+id/theme"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/carbon_listItemHeight"
-                    app:carbon_mode="fit"
                     android:layout_marginEnd="@dimen/carbon_windowPadding"
                     android:layout_marginLeft="@dimen/carbon_contentPadding"
                     android:layout_marginRight="@dimen/carbon_windowPadding"
