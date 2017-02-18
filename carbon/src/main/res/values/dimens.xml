@@ -57,14 +57,20 @@
     <dimen name="carbon_elevationHigh">12dp</dimen>
     <dimen name="carbon_elevationMax">16dp</dimen>
 
-    <dimen name="carbon_elevationToolbar">8dp</dimen>
-    <dimen name="carbon_elevationFAB">6dp</dimen>
+    <dimen name="carbon_elevationSwitch">1dp</dimen>
     <dimen name="carbon_elevationButton">2dp</dimen>
-    <dimen name="carbon_elevationDrawer">16dp</dimen>
     <dimen name="carbon_elevationCard">2dp</dimen>
-    <dimen name="carbon_elevationDialog">12dp</dimen>
-    <dimen name="carbon_elevationSnackbar">6dp</dimen>
     <dimen name="carbon_elevationTooltip">2dp</dimen>
+    <dimen name="carbon_elevationRefreshIndicator">3dp</dimen>
+    <dimen name="carbon_elevationToolbar">4dp</dimen>
+    <dimen name="carbon_elevationSnackbar">6dp</dimen>
+    <dimen name="carbon_elevationFAB">6dp</dimen>
+    <dimen name="carbon_elevationMenu">8dp</dimen>
+    <dimen name="carbon_elevationBottomNavigationBar">8dp</dimen>
+    <dimen name="carbon_elevationDrawer">16dp</dimen>
+    <dimen name="carbon_elevationBottomSheet">16dp</dimen>
+    <dimen name="carbon_elevationDialog">24dp</dimen>
+    <dimen name="carbon_elevationPicker">24dp</dimen>
 
     <dimen name="carbon_cornerRadiusButton">2dp</dimen>
     <dimen name="carbon_cornerRadiusCard">2dp</dimen>

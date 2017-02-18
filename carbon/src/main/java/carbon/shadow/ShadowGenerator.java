@@ -116,7 +116,7 @@ public class ShadowGenerator {
         roundRect.set(e, e, bitmapSize - e, bitmapSize - e);
         shadowCanvas.drawRoundRect(roundRect, c, c, paint);
 
-        blur(bitmap, elevation / 2);
+        blur(bitmap, elevation);
 
         Shadow shadow = new Shadow(bitmap, elevation, c);
         shadowSet.add(shadow);
