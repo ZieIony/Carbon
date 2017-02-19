@@ -3,13 +3,15 @@ package carbon.component;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
+
 import carbon.R;
 import carbon.drawable.VectorDrawable;
 
 /**
  * Created by Marcin on 2017-02-12.
  */
-public class IconSearchData {
+public class IconSearchData implements Serializable {
 
     private String query = "", hint = "";
 

@@ -178,6 +178,14 @@
     </attr>
 
 
+    <!-- Component -->
+    <declare-styleable name="Component">
+        <attr name="carbon_id" format="reference" />
+        <attr name="carbon_type" format="string" />
+        <attr name="carbon_layout" format="reference" />
+    </declare-styleable>
+
+
     <!-- FloatingActionButton -->
     <attr name="carbon_fabStyle" format="reference" />
     <declare-styleable name="FloatingActionButton">
