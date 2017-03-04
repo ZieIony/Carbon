@@ -13,6 +13,7 @@ Material Design implementation for Android 2.3 and newer. This is not the exact 
 ### Samples
 [![Sample App](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](https://www.youtube.com/watch?v=YcTQ8a8sTpU)
 
+![Colored shadows](https://github.com/ZieIony/Carbon/blob/master/images/coloredshadows.png)
 ![SeekBar and RangeSeekBar](https://github.com/ZieIony/Carbon/blob/master/images/seekbar.png)
 ![FlowLayout and Chip](https://github.com/ZieIony/Carbon/blob/master/images/flowlayoutchips.png)
 ![Anchors](https://github.com/ZieIony/Carbon/blob/master/images/anchors.png)
