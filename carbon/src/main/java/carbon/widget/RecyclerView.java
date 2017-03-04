@@ -5,10 +5,10 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewParent;
 
 import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,8 +37,6 @@ import carbon.internal.DefaultItemAnimator;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
 import carbon.recycler.DividerItemDecoration;
-import carbon.shadow.Shadow;
-import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowView;
 
 import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
@@ -91,6 +88,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
 
     private void initRecycler(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, R.style.carbon_RecyclerView);
+
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.RecyclerView_carbon_overScroll) {
@@ -257,29 +255,14 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         this.overscrollMode = mode;
     }
 
+    RectF childRect = new RectF();
+
     @Override
-    public boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!isInEditMode() && child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+    public boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
+        // TODO: why isShown() returns false after being reattached?
+        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
-            Shadow shadow = shadowView.getShadow();
-            if (shadow != null) {
-                paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
-
-                float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
-                Matrix matrix = MatrixHelper.getMatrix(child);
-
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(child.getLeft(), child.getTop() + childElevation / 2);
-                canvas.concat(matrix);
-                shadow.draw(canvas, child, paint);
-                canvas.restore();
-
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(child.getLeft(), child.getTop());
-                canvas.concat(matrix);
-                shadow.draw(canvas, child, paint);
-                canvas.restore();
-            }
+            shadowView.drawShadow(canvas);
         }
 
         if (child instanceof RippleView) {
@@ -287,9 +270,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
                 int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(
-                        child.getLeft(),
-                        child.getTop());
+                canvas.translate(child.getLeft(), child.getTop());
+                canvas.concat(MatrixHelper.getMatrix(child));
                 rippleDrawable.draw(canvas);
                 canvas.restoreToCount(saveCount);
             }
@@ -310,6 +292,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         super.setChildDrawingOrderCallback(childDrawingOrderCallback);
         childDrawingOrderCallbackSet = childDrawingOrderCallback != null;
     }
+
 
     // -------------------------------
     // tint

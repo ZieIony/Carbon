@@ -57,6 +57,8 @@
     <dimen name="carbon_elevationHigh">12dp</dimen>
     <dimen name="carbon_elevationMax">16dp</dimen>
 
+    <dimen name="carbon_translationButton">6dp</dimen>
+
     <dimen name="carbon_elevationSwitch">1dp</dimen>
     <dimen name="carbon_elevationButton">2dp</dimen>
     <dimen name="carbon_elevationCard">2dp</dimen>

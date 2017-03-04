@@ -5,11 +5,11 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
@@ -44,8 +44,6 @@ import carbon.internal.DefaultItemAnimator;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
 import carbon.recycler.ArrayAdapter;
-import carbon.shadow.Shadow;
-import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowView;
 
 import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
@@ -129,12 +127,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
 
     public void addView(final View child, int index) {
         if (onItemClickedListener != null) {
-            child.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickedListener.onItemClicked(findContainingViewHolder(child).getAdapterPosition());
-                }
-            });
+            child.setOnClickListener(v -> onItemClickedListener.onItemClicked(findContainingViewHolder(child).getAdapterPosition()));
         }
         super.addView(child, index);
     }
@@ -168,6 +161,10 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
+        if (header != null && (getChildCount() == 0 || getChildAt(0).getTop() + getScrollY() > ev.getY()))
+            if (header.dispatchTouchEvent(ev))
+                return true;
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 float deltaY = prevY - ev.getY();
@@ -291,29 +288,14 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         this.overscrollMode = mode;
     }
 
+    RectF childRect = new RectF();
+
     @Override
-    public boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!isInEditMode() && child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+    public boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
+        // TODO: why isShown() returns false after being reattached?
+        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
-            Shadow shadow = shadowView.getShadow();
-            if (shadow != null) {
-                paint.setAlpha((int) (ShadowGenerator.ALPHA * ViewHelper.getAlpha(child)));
-
-                float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
-                Matrix matrix = MatrixHelper.getMatrix(child);
-
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(child.getLeft(), child.getTop() + childElevation / 2);
-                canvas.concat(matrix);
-                shadow.draw(canvas, child, paint);
-                canvas.restore();
-
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(child.getLeft(), child.getTop());
-                canvas.concat(matrix);
-                shadow.draw(canvas, child, paint);
-                canvas.restore();
-            }
+            shadowView.drawShadow(canvas);
         }
 
         if (child instanceof RippleView) {
@@ -321,9 +303,8 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
                 int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(
-                        child.getLeft(),
-                        child.getTop());
+                canvas.translate(child.getLeft(), child.getTop());
+                canvas.concat(MatrixHelper.getMatrix(child));
                 rippleDrawable.draw(canvas);
                 canvas.restoreToCount(saveCount);
             }
@@ -436,19 +417,13 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
     ColorStateList backgroundTint;
     PorterDuff.Mode backgroundTintMode;
     boolean animateColorChanges;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateTint();
-            ViewCompat.postInvalidateOnAnimation(ExpandableRecyclerView.this);
-        }
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
+        updateTint();
+        ViewCompat.postInvalidateOnAnimation(ExpandableRecyclerView.this);
     };
-    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateBackgroundTint();
-            ViewCompat.postInvalidateOnAnimation(ExpandableRecyclerView.this);
-        }
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
+        updateBackgroundTint();
+        ViewCompat.postInvalidateOnAnimation(ExpandableRecyclerView.this);
     };
 
     @Override
@@ -720,6 +695,8 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        if (getLayoutManager() == null)
+            setLayoutManager(new LinearLayoutManager(getContext()));
         super.onLayout(changed, l, t, r, b);
         if (header != null)
             header.layout(0, 0, getWidth(), header.getMeasuredHeight());

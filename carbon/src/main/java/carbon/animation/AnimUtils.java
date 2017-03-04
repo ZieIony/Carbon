@@ -283,7 +283,7 @@ public class AnimUtils {
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    animator.setFloatValues(view.getTranslationZ(), ((View) view).getResources().getDimension(R.dimen.carbon_elevationLow));
+                    animator.setFloatValues(view.getTranslationZ(), ((View) view).getResources().getDimension(R.dimen.carbon_translationButton));
                 }
             };
             animator.addUpdateListener(animation -> view.setTranslationZ((Float) animation.getAnimatedValue()));

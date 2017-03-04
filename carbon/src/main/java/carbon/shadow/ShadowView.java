@@ -1,5 +1,8 @@
 package carbon.shadow;
 
+import android.content.res.ColorStateList;
+import android.graphics.Canvas;
+
 /**
  * Created by Marcin on 2014-11-19.
  */
@@ -24,7 +27,15 @@ public interface ShadowView {
 
     ShadowShape getShadowShape();
 
-    Shadow getShadow();
+    boolean hasShadow();
+
+    void drawShadow(Canvas canvas);
 
     void invalidateShadow();
+
+    void setElevationShadowColor(ColorStateList shadowColor);
+
+    void setElevationShadowColor(int color);
+
+    ColorStateList getElevationShadowColor();
 }

@@ -16,8 +16,6 @@ import carbon.internal.WeakHashSet;
 import carbon.widget.CornerView;
 
 public class ShadowGenerator {
-    public static final int ALPHA = 51;
-
     private static Object renderScript;
     private static Object blurShader;
     private static Paint paint = new Paint();
@@ -111,7 +109,7 @@ public class ShadowGenerator {
 
         Canvas shadowCanvas = new Canvas(bitmap);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(0xff000000);
+        paint.setColor(0xffffffff);
 
         roundRect.set(e, e, bitmapSize - e, bitmapSize - e);
         shadowCanvas.drawRoundRect(roundRect, c, c, paint);

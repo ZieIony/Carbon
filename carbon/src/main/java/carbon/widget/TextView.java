@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -41,6 +43,7 @@ import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.AllCapsTransformationMethod;
+import carbon.internal.MatrixHelper;
 import carbon.internal.TypefaceUtils;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -106,6 +109,10 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             R.styleable.TextView_carbon_backgroundTintMode,
             R.styleable.TextView_carbon_animateColorChanges
     };
+    private static int[] elevationIds = new int[]{
+            R.styleable.TextView_carbon_elevation,
+            R.styleable.TextView_carbon_elevationShadowColor
+    };
 
     private void initTextView(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
@@ -134,7 +141,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
-        Carbon.initElevation(this, a, R.styleable.TextView_carbon_elevation);
+        Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         setCornerRadius(a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
@@ -232,7 +239,6 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
     private float cornerRadius;
     private Path cornersMask;
-    private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
     /**
      * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
@@ -297,7 +303,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
 
-            paint.setXfermode(pdMode);
+            paint.setXfermode(Carbon.CLEAR_MODE);
             canvas.drawPath(cornersMask, paint);
 
             canvas.restoreToCount(saveCount);
@@ -491,6 +497,9 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     private float elevation = 0;
     private float translationZ = 0;
     private Shadow shadow;
+    private ColorStateList shadowColor;
+    private PorterDuffColorFilter shadowColorFilter;
+    private RectF shadowMaskRect = new RectF();
 
     @Override
     public float getElevation() {
@@ -502,7 +511,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         if (elevation == this.elevation)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(elevation);
+            super.setElevation(shadowColor == null ? elevation : 0);
         this.elevation = elevation;
         if (getParent() != null)
             ((View) getParent()).postInvalidate();
@@ -517,7 +526,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         if (translationZ == this.translationZ)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setTranslationZ(translationZ);
+            super.setTranslationZ(shadowColor == null ? translationZ : 0);
         this.translationZ = translationZ;
         if (getParent() != null)
             ((View) getParent()).postInvalidate();
@@ -538,14 +547,53 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
     }
 
     @Override
-    public Shadow getShadow() {
-        float elevation = getElevation() + getTranslationZ();
-        if (elevation >= 0.01f && getWidth() > 0 && getHeight() > 0) {
-            if (shadow == null || shadow.elevation != elevation)
-                shadow = ShadowGenerator.generateShadow(this, elevation);
-            return shadow;
+    public boolean hasShadow() {
+        return getElevation() + getTranslationZ() >= 0.01f && getWidth() > 0 && getHeight() > 0;
+    }
+
+    @Override
+    public void drawShadow(Canvas canvas) {
+        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        if (alpha == 0)
+            return;
+
+        if (!hasShadow())
+            return;
+
+        float z = getElevation() + getTranslationZ();
+        if (shadow == null || shadow.elevation != z)
+            shadow = ShadowGenerator.generateShadow(this, z);
+
+        int saveCount = 0;
+        boolean maskShadow = getBackground() != null && alpha != 1;
+        if (maskShadow)
+            saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+        paint.setAlpha((int) (Shadow.ALPHA * alpha));
+
+        Matrix matrix = MatrixHelper.getMatrix(this);
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.translate(this.getLeft(), this.getTop() + z / 2);
+        canvas.concat(matrix);
+        shadow.draw(canvas, this, paint, shadowColorFilter);
+        canvas.restore();
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.translate(this.getLeft(), this.getTop());
+        canvas.concat(matrix);
+        shadow.draw(canvas, this, paint, shadowColorFilter);
+        canvas.restore();
+
+        if (maskShadow) {
+            canvas.translate(this.getLeft(), this.getTop());
+            canvas.concat(matrix);
+            paint.setXfermode(Carbon.CLEAR_MODE);
+            shadowMaskRect.set(0, 0, getWidth(), getHeight());
+            canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
+            paint.setXfermode(null);
+            canvas.restoreToCount(saveCount);
         }
-        return null;
     }
 
     @Override
@@ -553,6 +601,27 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         shadow = null;
         if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public void setElevationShadowColor(ColorStateList shadowColor) {
+        this.shadowColor = shadowColor;
+        shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(shadowColor == null ? elevation : 0);
+    }
+
+    @Override
+    public void setElevationShadowColor(int color) {
+        shadowColor = ColorStateList.valueOf(color);
+        shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(0);
+    }
+
+    @Override
+    public ColorStateList getElevationShadowColor() {
+        return shadowColor;
     }
 
 

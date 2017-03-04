@@ -2,6 +2,7 @@ package carbon.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -9,7 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -30,7 +31,6 @@ import android.view.animation.Interpolator;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,12 +116,16 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             R.styleable.LinearLayout_carbon_maxWidth,
             R.styleable.LinearLayout_carbon_maxHeight,
     };
+    private static int[] elevationIds = new int[]{
+            R.styleable.LinearLayout_carbon_elevation,
+            R.styleable.LinearLayout_carbon_elevationShadowColor
+    };
 
     private void initLinearLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, R.style.carbon_LinearLayout);
 
         Carbon.initRippleDrawable(this, a, rippleIds);
-        Carbon.initElevation(this, a, R.styleable.LinearLayout_carbon_elevation);
+        Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initInset(this, a, insetIds);
@@ -133,7 +137,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
     }
-
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private boolean drawCalled = false;
@@ -225,7 +228,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
                 internalDispatchDraw(canvas);
             }
 
-            paint.setXfermode(pdMode);
+            paint.setXfermode(Carbon.CLEAR_MODE);
             if (c)
                 canvas.drawPath(cornersMask, paint);
             if (r)
@@ -263,50 +266,10 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        float alpha = ViewHelper.getAlpha(child) * Carbon.getDrawableAlpha(child.getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(child) / 255.0f;
-        if (alpha == 0)
-            return false;
-
         // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
-            Shadow shadow = shadowView.getShadow();
-            if (shadow != null) {
-                int saveCount = 0;
-                boolean maskShadow = child.getBackground() != null && alpha != 1;
-                if (maskShadow)
-                    saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
-
-                paint.setAlpha((int) (ShadowGenerator.ALPHA * alpha));
-
-                float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
-                Matrix matrix = MatrixHelper.getMatrix(child);
-
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(child.getLeft(), child.getTop() + childElevation / 2);
-                canvas.concat(matrix);
-                shadow.draw(canvas, child, paint);
-                canvas.restore();
-
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(child.getLeft(), child.getTop());
-                canvas.concat(matrix);
-                shadow.draw(canvas, child, paint);
-                canvas.restore();
-
-                if (maskShadow) {
-                    canvas.translate(child.getLeft(), child.getTop());
-                    canvas.concat(matrix);
-                    paint.setXfermode(pdMode);
-                    float cr = 0;
-                    if (child instanceof CornerView)
-                        cr = ((CornerView) child).getCornerRadius();
-                    childRect.set(0, 0, child.getWidth(), child.getHeight());
-                    canvas.drawRoundRect(childRect, cr, cr, paint);
-                    paint.setXfermode(null);
-                    canvas.restoreToCount(saveCount);
-                }
-            }
+            shadowView.drawShadow(canvas);
         }
 
         if (child instanceof RippleView) {
@@ -342,7 +305,6 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
 
     private float cornerRadius;
     private Path cornersMask;
-    private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
     public float getCornerRadius() {
         return cornerRadius;
@@ -408,7 +370,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
                 super.draw(canvas);
             }
 
-            paint.setXfermode(pdMode);
+            paint.setXfermode(Carbon.CLEAR_MODE);
             if (c)
                 canvas.drawPath(cornersMask, paint);
             if (r)
@@ -443,6 +405,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         return rippleDrawable;
     }
 
+    @Override
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
@@ -596,19 +559,23 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     private float elevation = 0;
     private float translationZ = 0;
     private Shadow shadow;
+    private ColorStateList shadowColor;
+    private PorterDuffColorFilter shadowColorFilter;
+    private RectF shadowMaskRect = new RectF();
 
     @Override
     public float getElevation() {
         return elevation;
     }
 
+    @Override
     public synchronized void setElevation(float elevation) {
         if (elevation == this.elevation)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(elevation);
+            super.setElevation(shadowColor == null ? elevation : 0);
         this.elevation = elevation;
-        if (getParent() != null && getParent() instanceof View)
+        if (getParent() != null)
             ((View) getParent()).postInvalidate();
     }
 
@@ -621,9 +588,9 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         if (translationZ == this.translationZ)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setTranslationZ(translationZ);
+            super.setTranslationZ(shadowColor == null ? translationZ : 0);
         this.translationZ = translationZ;
-        if (getParent() != null && getParent() instanceof View)
+        if (getParent() != null)
             ((View) getParent()).postInvalidate();
     }
 
@@ -642,14 +609,53 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
     }
 
     @Override
-    public Shadow getShadow() {
-        float elevation = getElevation() + getTranslationZ();
-        if (elevation >= 0.01f && getWidth() > 0 && getHeight() > 0) {
-            if (shadow == null || shadow.elevation != elevation)
-                shadow = ShadowGenerator.generateShadow(this, elevation);
-            return shadow;
+    public boolean hasShadow() {
+        return getElevation() + getTranslationZ() >= 0.01f && getWidth() > 0 && getHeight() > 0;
+    }
+
+    @Override
+    public void drawShadow(Canvas canvas) {
+        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        if (alpha == 0)
+            return;
+
+        if (!hasShadow())
+            return;
+
+        float z = getElevation() + getTranslationZ();
+        if (shadow == null || shadow.elevation != z)
+            shadow = ShadowGenerator.generateShadow(this, z);
+
+        int saveCount = 0;
+        boolean maskShadow = getBackground() != null && alpha != 1;
+        if (maskShadow)
+            saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+        paint.setAlpha((int) (Shadow.ALPHA * alpha));
+
+        Matrix matrix = MatrixHelper.getMatrix(this);
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.translate(this.getLeft(), this.getTop() + z / 2);
+        canvas.concat(matrix);
+        shadow.draw(canvas, this, paint, shadowColorFilter);
+        canvas.restore();
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.translate(this.getLeft(), this.getTop());
+        canvas.concat(matrix);
+        shadow.draw(canvas, this, paint, shadowColorFilter);
+        canvas.restore();
+
+        if (maskShadow) {
+            canvas.translate(this.getLeft(), this.getTop());
+            canvas.concat(matrix);
+            paint.setXfermode(Carbon.CLEAR_MODE);
+            shadowMaskRect.set(0, 0, getWidth(), getHeight());
+            canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
+            paint.setXfermode(null);
+            canvas.restoreToCount(saveCount);
         }
-        return null;
     }
 
     @Override
@@ -659,16 +665,37 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
             ((View) getParent()).postInvalidate();
     }
 
+    @Override
+    public void setElevationShadowColor(ColorStateList shadowColor) {
+        this.shadowColor = shadowColor;
+        shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(shadowColor == null ? elevation : 0);
+    }
+
+    @Override
+    public void setElevationShadowColor(int color) {
+        shadowColor = ColorStateList.valueOf(color);
+        shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(0);
+    }
+
+    @Override
+    public ColorStateList getElevationShadowColor() {
+        return shadowColor;
+    }
+
 
     // -------------------------------
     // touch margin
     // -------------------------------
 
-    private Rect touchMargin;
+    private Rect touchMargin = new Rect();
 
     @Override
     public void setTouchMargin(int left, int top, int right, int bottom) {
-        touchMargin = new Rect(left, top, right, bottom);
+        touchMargin.set(left, top, right, bottom);
     }
 
     @Override
@@ -703,6 +730,7 @@ public class LinearLayout extends android.widget.LinearLayout implements ShadowV
         }
         outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
     }
+
 
     // -------------------------------
     // state animators

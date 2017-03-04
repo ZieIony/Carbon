@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -34,6 +36,8 @@ import carbon.widget.TouchMarginView;
 public class Carbon {
     private static final long DEFAULT_REVEAL_DURATION = 200;
     private static long defaultRevealDuration = DEFAULT_REVEAL_DURATION;
+
+    public static PorterDuffXfermode CLEAR_MODE = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
     private Carbon() {
     }
@@ -181,11 +185,15 @@ public class Carbon {
         view.setOutAnimation(AnimUtils.Style.values()[a.getInt(carbon_outAnimation, 0)]);
     }
 
-    public static void initElevation(ShadowView view, TypedArray a, int id) {
-        float elevation = a.getDimension(id, 0);
+    public static void initElevation(ShadowView view, TypedArray a, int[] ids) {
+        int carbon_elevation = ids[0];
+        int carbon_shadowColor = ids[1];
+
+        float elevation = a.getDimension(carbon_elevation, 0);
         view.setElevation(elevation);
         if (elevation > 0)
             AnimUtils.setupElevationAnimator(((StateAnimatorView) view).getStateAnimator(), view);
+        view.setElevationShadowColor(a.getColorStateList(carbon_shadowColor));
     }
 
     public static void initHtmlText(android.widget.TextView textView, TypedArray a, int id) {
@@ -247,4 +255,5 @@ public class Carbon {
         view.setStroke(a.getColorStateList(carbon_stroke));
         view.setStrokeWidth(a.getDimension(carbon_strokeWidth, 0));
     }
+
 }

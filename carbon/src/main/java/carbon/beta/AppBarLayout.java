@@ -1,32 +1,35 @@
 package carbon.beta;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.view.animation.Interpolator;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,13 +44,16 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
+import carbon.internal.Reveal;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 import carbon.widget.CornerView;
 import carbon.widget.InsetView;
+import carbon.widget.MaxSizeView;
 import carbon.widget.OnInsetsChangedListener;
+import carbon.widget.RevealView;
 import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 
@@ -57,7 +63,9 @@ import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 /**
  * Created by Marcin on 2015-12-30.
  */
-public class AppBarLayout extends android.support.design.widget.AppBarLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView {
+public class AppBarLayout extends android.support.design.widget.AppBarLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView {
+    private OnTouchListener onDispatchTouchListener;
+
     public AppBarLayout(Context context) {
         super(context);
         initAppBarLayout(null, R.attr.carbon_appBarLayoutStyle);
@@ -93,40 +101,127 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
             R.styleable.AppBarLayout_carbon_insetBottom,
             R.styleable.AppBarLayout_carbon_insetColor
     };
+    private static int[] maxSizeIds = new int[]{
+            R.styleable.AppBarLayout_carbon_maxWidth,
+            R.styleable.AppBarLayout_carbon_maxHeight,
+    };
+    private static int[] elevationIds = new int[]{
+            R.styleable.AppBarLayout_carbon_elevation,
+            R.styleable.AppBarLayout_carbon_elevationShadowColor
+    };
 
     private void initAppBarLayout(AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarLayout, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarLayout, defStyleAttr, 0);
 
-            Carbon.initRippleDrawable(this, a, rippleIds);
-            Carbon.initAnimations(this, a, animationIds);
-            Carbon.initTouchMargin(this, a, touchMarginIds);
-            Carbon.initInset(this, a, insetIds);
-            Carbon.initElevation(this, a, R.styleable.AppBarLayout_carbon_elevation);
+        Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initElevation(this, a, elevationIds);
+        Carbon.initAnimations(this, a, animationIds);
+        Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initInset(this, a, insetIds);
+        Carbon.initMaxSize(this, a, maxSizeIds);
+        setCornerRadius(a.getDimension(R.styleable.AppBarLayout_carbon_cornerRadius, 0));
 
-            setCornerRadius(a.getDimension(R.styleable.AppBarLayout_carbon_cornerRadius, 0));
-
-            a.recycle();
-        }
+        a.recycle();
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
     }
 
-    List<View> views;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private boolean drawCalled = false;
+    Reveal reveal;
+
+    @Override
+    public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            android.animation.Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
+            circularReveal.start();
+            return new Animator() {
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public long getStartDelay() {
+                    return circularReveal.getStartDelay();
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public void setStartDelay(long startDelay) {
+                    circularReveal.setStartDelay(startDelay);
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public Animator setDuration(long duration) {
+                    circularReveal.setDuration(duration);
+                    return this;
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public long getDuration() {
+                    return circularReveal.getDuration();
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public void setInterpolator(Interpolator value) {
+                    circularReveal.setInterpolator(value);
+                }
+
+                @Override
+                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+                public boolean isRunning() {
+                    return circularReveal.isRunning();
+                }
+            };
+        } else {
+            reveal = new Reveal(x, y, startRadius);
+            ValueAnimator animator = ValueAnimator.ofFloat(startRadius, finishRadius);
+            animator.setDuration(Carbon.getDefaultRevealDuration());
+            animator.addUpdateListener(animation -> {
+                reveal.radius = (float) animation.getAnimatedValue();
+                reveal.mask.reset();
+                reveal.mask.addCircle(reveal.x, reveal.y, Math.max(reveal.radius, 1), Path.Direction.CW);
+                postInvalidate();
+            });
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    reveal = null;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    reveal = null;
+                }
+            });
+            animator.start();
+            return animator;
+        }
+    }
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
+        boolean r = reveal != null;
+        boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
-        if (cornerRadius > 0 && !drawCalled && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
 
-            internalDispatchDraw(canvas);
+            if (r) {
+                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                internalDispatchDraw(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                internalDispatchDraw(canvas);
+            }
 
-            paint.setXfermode(pdMode);
-            canvas.drawPath(cornersMask, paint);
+            paint.setXfermode(Carbon.CLEAR_MODE);
+            if (c)
+                canvas.drawPath(cornersMask, paint);
+            if (r)
+                canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -137,10 +232,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     }
 
     private void internalDispatchDraw(@NonNull Canvas canvas) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
+        Collections.sort(getViews(), new ElevationComparator());
 
         super.dispatchDraw(canvas);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -163,49 +255,9 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        float alpha = ViewHelper.getAlpha(child) * Carbon.getDrawableAlpha(child.getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(child) / 255.0f;
-        if (alpha == 0)
-            return false;
-
-        if (child instanceof ShadowView && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
-            Shadow shadow = shadowView.getShadow();
-            if (shadow != null) {
-                int saveCount = 0;
-                boolean maskShadow = child.getBackground() != null && alpha != 1;
-                if (maskShadow)
-                    saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
-
-                paint.setAlpha((int) (ShadowGenerator.ALPHA * alpha));
-
-                float childElevation = shadowView.getElevation() + shadowView.getTranslationZ();
-                Matrix matrix = MatrixHelper.getMatrix(child);
-
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(child.getLeft(), child.getTop() + childElevation / 2);
-                canvas.concat(matrix);
-                shadow.draw(canvas, child, paint);
-                canvas.restore();
-
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
-                canvas.translate(child.getLeft(), child.getTop());
-                canvas.concat(matrix);
-                shadow.draw(canvas, child, paint);
-                canvas.restore();
-
-                if (maskShadow) {
-                    canvas.translate(child.getLeft(), child.getTop());
-                    canvas.concat(matrix);
-                    paint.setXfermode(pdMode);
-                    float cr = 0;
-                    if (child instanceof CornerView)
-                        cr = ((CornerView) child).getCornerRadius();
-                    childRect.set(0, 0, child.getWidth(), child.getHeight());
-                    canvas.drawRoundRect(childRect, cr, cr, paint);
-                    paint.setXfermode(null);
-                    canvas.restoreToCount(saveCount);
-                }
-            }
+            shadowView.drawShadow(canvas);
         }
 
         if (child instanceof RippleView) {
@@ -241,7 +293,6 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
 
     private float cornerRadius;
     private Path cornersMask;
-    private static PorterDuffXfermode pdMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
     public float getCornerRadius() {
         return cornerRadius;
@@ -291,13 +342,25 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        boolean r = reveal != null;
+        boolean c = cornerRadius > 0;
+        if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
 
-            super.draw(canvas);
+            if (r) {
+                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                super.draw(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                super.draw(canvas);
+            }
 
-            paint.setXfermode(pdMode);
-            canvas.drawPath(cornersMask, paint);
+            paint.setXfermode(Carbon.CLEAR_MODE);
+            if (c)
+                canvas.drawPath(cornersMask, paint);
+            if (r)
+                canvas.drawPath(reveal.mask, paint);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -315,10 +378,8 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
+        if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
+            return true;
 
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
@@ -330,6 +391,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         return rippleDrawable;
     }
 
+    @Override
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
@@ -483,17 +545,21 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     private float elevation = 0;
     private float translationZ = 0;
     private Shadow shadow;
+    private ColorStateList shadowColor;
+    private ColorFilter shadowColorFilter;
+    private RectF shadowMaskRect = new RectF();
 
     @Override
     public float getElevation() {
         return elevation;
     }
 
+    @Override
     public synchronized void setElevation(float elevation) {
         if (elevation == this.elevation)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(elevation);
+            super.setElevation(shadowColor == null ? elevation : 0);
         this.elevation = elevation;
         if (getParent() != null)
             ((View) getParent()).postInvalidate();
@@ -508,7 +574,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         if (translationZ == this.translationZ)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setTranslationZ(translationZ);
+            super.setTranslationZ(shadowColor == null ? translationZ : 0);
         this.translationZ = translationZ;
         if (getParent() != null)
             ((View) getParent()).postInvalidate();
@@ -529,14 +595,53 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     }
 
     @Override
-    public Shadow getShadow() {
-        float elevation = getElevation() + getTranslationZ();
-        if (elevation >= 0.01f && getWidth() > 0 && getHeight() > 0) {
-            if (shadow == null || shadow.elevation != elevation)
-                shadow = ShadowGenerator.generateShadow(this, elevation);
-            return shadow;
+    public boolean hasShadow() {
+        return getElevation() + getTranslationZ() >= 0.01f && getWidth() > 0 && getHeight() > 0;
+    }
+
+    @Override
+    public void drawShadow(Canvas canvas) {
+        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        if (alpha == 0)
+            return;
+
+        if (!hasShadow())
+            return;
+
+        float z = getElevation() + getTranslationZ();
+        if (shadow == null || shadow.elevation != z)
+            shadow = ShadowGenerator.generateShadow(this, z);
+
+        int saveCount = 0;
+        boolean maskShadow = getBackground() != null && alpha != 1;
+        if (maskShadow)
+            saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+        paint.setAlpha((int) (Shadow.ALPHA * alpha));
+
+        Matrix matrix = MatrixHelper.getMatrix(this);
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.translate(this.getLeft(), this.getTop() + z / 2);
+        canvas.concat(matrix);
+        shadow.draw(canvas, this, paint, shadowColorFilter);
+        canvas.restore();
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.translate(this.getLeft(), this.getTop());
+        canvas.concat(matrix);
+        shadow.draw(canvas, this, paint, shadowColorFilter);
+        canvas.restore();
+
+        if (maskShadow) {
+            canvas.translate(this.getLeft(), this.getTop());
+            canvas.concat(matrix);
+            paint.setXfermode(Carbon.CLEAR_MODE);
+            shadowMaskRect.set(0, 0, getWidth(), getHeight());
+            canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
+            paint.setXfermode(null);
+            canvas.restoreToCount(saveCount);
         }
-        return null;
     }
 
     @Override
@@ -544,6 +649,27 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         shadow = null;
         if (getParent() != null && getParent() instanceof View)
             ((View) getParent()).postInvalidate();
+    }
+
+    @Override
+    public void setElevationShadowColor(ColorStateList shadowColor) {
+        this.shadowColor = shadowColor;
+        shadowColorFilter = shadowColor != null ? new LightingColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), 0) : Shadow.DEFAULT_FILTER;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(shadowColor == null ? elevation : 0);
+    }
+
+    @Override
+    public void setElevationShadowColor(int color) {
+        shadowColor = ColorStateList.valueOf(color);
+        shadowColorFilter = new LightingColorFilter(color, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            super.setElevation(0);
+    }
+
+    @Override
+    public ColorStateList getElevationShadowColor() {
+        return shadowColor;
     }
 
 
@@ -590,6 +716,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         }
         outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
     }
+
 
     // -------------------------------
     // state animators
@@ -758,6 +885,19 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     // ViewGroup utils
     // -------------------------------
 
+    List<View> views = new ArrayList<>();
+
+    public List<View> getViews() {
+        views.clear();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
+        return views;
+    }
+
+    public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
+        this.onDispatchTouchListener = onDispatchTouchListener;
+    }
+
     public List<View> findViewsById(int id) {
         List<View> result = new ArrayList<>();
         List<ViewGroup> groups = new ArrayList<>();
@@ -794,7 +934,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
 
 
     // -------------------------------
-    // anchors
+    // layout params
     // -------------------------------
 
     @Override
@@ -899,6 +1039,47 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
 
         public void setAnchorView(int anchorView) {
             this.anchorView = anchorView;
+        }
+    }
+
+
+    // -------------------------------
+    // maximum width & height
+    // -------------------------------
+
+    int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
+
+    @Override
+    public int getMaximumWidth() {
+        return maxWidth;
+    }
+
+    @Override
+    public void setMaximumWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+        requestLayout();
+    }
+
+    @Override
+    public int getMaximumHeight() {
+        return maxHeight;
+    }
+
+    @Override
+    public void setMaximumHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+        requestLayout();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
+            if (getMeasuredWidth() > maxWidth)
+                widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
+            if (getMeasuredHeight() > maxHeight)
+                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
 
