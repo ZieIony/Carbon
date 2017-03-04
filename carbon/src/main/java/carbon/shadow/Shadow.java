@@ -14,7 +14,7 @@ import android.view.View;
  */
 public class Shadow {
     private static final float SHADOW_SCALE = 1.0f;
-    public static final int ALPHA = 51;
+    public static final int ALPHA = 0x26;
 
     private final int e;
     final int c;

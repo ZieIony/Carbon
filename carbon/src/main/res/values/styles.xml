@@ -503,10 +503,9 @@
         <item name="android:textColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
         <item name="android:maxLines">1</item>
-        <item name="android:background">@drawable/carbon_buttonbackground</item>
+        <item name="android:background">#00000000</item>
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">#00000000</item>
-        <item name="carbon_backgroundTint">#00000000</item>
     </style>
 
     <style name="carbon_Button.Flat">
@@ -528,10 +527,9 @@
 
     <style name="carbon_FloatingActionButton" parent="carbon_ImageView">
         <item name="android:clickable">true</item>
-        <item name="android:background">@drawable/carbon_buttonbackground</item>
+        <item name="android:background">#00000000</item>
         <item name="carbon_rippleColor">?attr/carbon_colorRipple</item>
         <item name="carbon_tint">?attr/carbon_iconColor</item>
-        <item name="carbon_backgroundTint">#00000000</item>
         <item name="carbon_inAnimation">pop</item>
         <item name="carbon_outAnimation">pop</item>
         <item name="carbon_elevation">@dimen/carbon_elevationFAB</item>

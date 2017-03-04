@@ -74,18 +74,18 @@
                 android:tag="enable"
                 android:text="flat button" />
 
-<carbon.widget.Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/carbon_padding"
-    app:carbon_cornerRadius="100dp"
-    android:tag="enable"
-    android:text="Rounded with ripple"
-    android:textColor="@color/carbon_amber_700"
-    app:carbon_backgroundTint="@color/carbon_white"
-    app:carbon_rippleColor="#40ff0000"
-    app:carbon_stroke="@color/carbon_amber_700"
-    app:carbon_strokeWidth="2dp" />
+            <carbon.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:background="@color/carbon_white"
+                android:tag="enable"
+                android:text="Rounded with ripple"
+                android:textColor="@color/carbon_amber_700"
+                app:carbon_cornerRadius="100dp"
+                app:carbon_rippleColor="#40ff0000"
+                app:carbon_stroke="@color/carbon_amber_700"
+                app:carbon_strokeWidth="2dp" />
 
             <carbon.widget.Divider
                 android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher"
                 android:tag="enable"
-                app:carbon_backgroundTint="?attr/colorPrimary" />
+                android:background="?attr/colorPrimary" />
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>
 </carbon.widget.LinearLayout>

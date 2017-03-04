@@ -6,11 +6,14 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedColorStateList;
+import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.DefaultAccentColorStateList;
 
 /**
@@ -55,6 +58,11 @@ public class FloatingActionButton extends ImageView {
             if (resId != 0)
                 setMenu(resId);
         }
+
+        TypedValue bg = new TypedValue();
+        a.getValue(R.styleable.FloatingActionButton_android_background, bg);
+        if (bg.type >= TypedValue.TYPE_FIRST_COLOR_INT && bg.type <= TypedValue.TYPE_LAST_COLOR_INT && bg.data == 0)
+            setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultAccentColorStateList(getContext()), animation -> postInvalidate())));
 
         a.recycle();
     }
