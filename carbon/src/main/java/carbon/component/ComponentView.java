@@ -13,45 +13,47 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import carbon.R;
-import carbon.recycler.Row;
+import carbon.recycler.Component;
 
 /**
  * Created by Marcin on 2017-02-19.
  */
 
-public class Component extends FrameLayout{
-    public Component(Context context, AttributeSet attrs) {
+public class ComponentView<Type extends Component> extends FrameLayout{
+    Type component;
+
+    public ComponentView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public Component(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ComponentView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Component(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ComponentView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
 
     private void init(AttributeSet attrs) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Component, 0, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ComponentView, 0, 0);
         if (a != null) {
-            int id = a.getResourceId(R.styleable.Component_carbon_id, 0);
-            int layout = a.getResourceId(R.styleable.Component_carbon_layout, 0);
-            String type = a.getString(R.styleable.Component_carbon_type);
+            int id = a.getResourceId(R.styleable.ComponentView_carbon_id, 0);
+            int layout = a.getResourceId(R.styleable.ComponentView_carbon_layout, 0);
+            String type = a.getString(R.styleable.ComponentView_carbon_type);
             try {
-                Row row;
+                Component component;
                 if (layout != 0 && type == null) {
-                    row = new DataBindingRow(this, layout);
+                    component = new DataBindingComponent(this, layout);
                 } else {
                     Constructor<?> constructor = Class.forName(type).getConstructor(ViewGroup.class);
-                    row = (Row) constructor.newInstance(this);
+                    component = (Component) constructor.newInstance(this);
                 }
-                View view = row.getView();
-                view.setTag(row);
+                View view = component.getView();
+                view.setTag(component);
                 view.setId(id);
                 addView(view);
             } catch (ClassNotFoundException e) {
@@ -67,5 +69,9 @@ public class Component extends FrameLayout{
             }
             a.recycle();
         }
+    }
+
+    public Type getComponent(){
+        return component;
     }
 }

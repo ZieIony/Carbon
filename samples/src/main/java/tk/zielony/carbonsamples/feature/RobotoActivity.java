@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.feature;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import tk.zielony.carbonsamples.R;
@@ -8,7 +8,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2014-12-15.
  */
-public class RobotoActivity extends Activity {
+public class RobotoActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

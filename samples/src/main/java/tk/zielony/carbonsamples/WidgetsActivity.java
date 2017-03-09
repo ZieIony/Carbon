@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +10,7 @@ import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
+import tk.zielony.carbonsamples.widget.DropDownActivity;
 import tk.zielony.carbonsamples.widget.ExpandableRecyclerActivity;
 import tk.zielony.carbonsamples.widget.FloatingActionMenuActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
@@ -21,13 +21,12 @@ import tk.zielony.carbonsamples.widget.SVGActivity;
 import tk.zielony.carbonsamples.widget.ScrollViewActivity;
 import tk.zielony.carbonsamples.widget.SeekBarActivity;
 import tk.zielony.carbonsamples.widget.SnackbarActivity;
-import tk.zielony.carbonsamples.widget.DropDownActivity;
 import tk.zielony.carbonsamples.widget.TableLayoutActivity;
 import tk.zielony.carbonsamples.widget.TabsActivity;
 import tk.zielony.carbonsamples.widget.TextFieldsActivity;
 import tk.zielony.carbonsamples.widget.ToolbarActivity;
 
-public class WidgetsActivity extends Activity {
+public class WidgetsActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

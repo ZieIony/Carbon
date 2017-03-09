@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.widget;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import tk.zielony.carbonsamples.R;
@@ -8,7 +8,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-06-26.
  */
-public class SeekBarActivity extends Activity {
+public class SeekBarActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

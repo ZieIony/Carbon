@@ -4,7 +4,6 @@ package tk.zielony.carbonsamples.applibrary;
  * Created by Marcin on 2015-03-30.
  */
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +16,9 @@ import carbon.widget.LinearLayout;
 import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-public class DrawerActivity extends Activity {
+public class DrawerActivity extends SamplesActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
 
     private DrawerLayout drawerLayout;

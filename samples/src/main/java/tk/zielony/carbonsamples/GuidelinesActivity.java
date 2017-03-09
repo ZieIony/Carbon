@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,7 @@ import tk.zielony.carbonsamples.guidelines.ToolbarsUsageActivity;
 /**
  * Created by Marcin on 2015-06-14.
  */
-public class GuidelinesActivity extends Activity {
+public class GuidelinesActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

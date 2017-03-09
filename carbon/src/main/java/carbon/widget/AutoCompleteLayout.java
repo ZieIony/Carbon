@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.recycler.Row;
+import carbon.recycler.Component;
 import carbon.recycler.RowListAdapter;
 
 /**
@@ -147,7 +147,7 @@ public class AutoCompleteLayout extends LinearLayout {
         }
     }
 
-    public static class AutoCompleteRow implements Row<AutoCompleteEditText.FilterResult> {
+    public static class AutoCompleteRow implements Component<AutoCompleteEditText.FilterResult> {
 
         private final carbon.widget.TextView text;
         private final View view;

@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.feature;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2014-12-15.
  */
-public class LargeShadowActivity extends Activity {
+public class LargeShadowActivity extends SamplesActivity {
     ValueAnimator animator;
 
     @Override

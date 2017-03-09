@@ -8,7 +8,7 @@ import carbon.recycler.RowFactory;
 /**
  * Created by Marcin on 2017-02-03.
  */
-public class AvatarTextRow extends DataBindingRow<AvatarTextItem> {
+public class AvatarTextRow extends DataBindingComponent<AvatarTextItem> {
     public static final RowFactory FACTORY = AvatarTextRow::new;
 
     public AvatarTextRow(ViewGroup parent) {

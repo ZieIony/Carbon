@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.guidelines;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import tk.zielony.carbonsamples.R;
@@ -8,7 +8,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-06-24.
  */
-public class ToolbarsUsageActivity extends Activity {
+public class ToolbarsUsageActivity extends SamplesActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

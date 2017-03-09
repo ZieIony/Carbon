@@ -18,7 +18,7 @@
 
     <carbon.widget.ImageView
         android:id="@+id/reorder"
-        style="@style/carbon_ImageView.Icon.Inverse"
+        style="@style/carbon_ImageView.Icon"
         android:layout_width="@dimen/carbon_toolbarHeight"
         android:layout_height="@dimen/carbon_toolbarHeight"
         app:carbon_src="@raw/ic_reorder_24px" />

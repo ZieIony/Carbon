@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:src="@{data.getIcon(context)}" />
+            android:src="@{data.getIcon()}" />
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"

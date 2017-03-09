@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="carbon.component.CheckBoxItem" />
+
+    </data>
+
+    <carbon.widget.RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_listItemHeight"
+        app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+        <carbon.widget.CheckBox
+            android:id="@+id/carbon_checkBox"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
+            android:checked="@{data.checked}"
+            app:carbon_tint="?attr/carbon_iconColor" />
+
+        <carbon.widget.TextMarker
+            android:id="@+id/carbon_marker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:carbon_text="Ip"
+            app:carbon_textView="@+id/carbon_label" />
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/carbon_marker"
+            android:layout_marginEnd="@dimen/carbon_windowPadding"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginRight="@dimen/carbon_windowPadding"
+            android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:maxLines="1"
+            android:text="@{data.text}" />
+
+    </carbon.widget.RelativeLayout>
+</layout>

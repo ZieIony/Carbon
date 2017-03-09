@@ -16,4 +16,8 @@ public class DefaultHeaderItem implements HeaderItem {
     public String getText() {
         return text;
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }

@@ -4,8 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/view_debugtoolbar" />
+
     <carbon.widget.RecyclerView
         android:id="@+id/recycler"
+        android:paddingTop="@dimen/carbon_paddingHalf"
+        android:paddingBottom="@dimen/carbon_paddingHalf"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

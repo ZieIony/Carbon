@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.widget;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import java.text.Format;
@@ -17,7 +17,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-12-20.
  */
-public class TableLayoutActivity extends Activity {
+public class TableLayoutActivity extends SamplesActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

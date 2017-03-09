@@ -55,6 +55,7 @@
     <string name="iconTextListItemActivity_title">Icon and text list item</string>
     <string name="avatarTextListItemActivity_title">Avatar and text list item</string>
     <string name="imageTextSubtextDateListItemActivity_title">Image, text, subtext and date list item</string>
+    <string name="registerActivity_title">Registration form</string>
     <string name="widgetAnimationsActivity_title">Widget animations</string>
     <string name="imageFadeActivity_title">Image fade</string>
     <string name="listRippleActivity_title">List ripple</string>

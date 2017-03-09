@@ -8,7 +8,7 @@ import carbon.recycler.RowFactory;
 /**
  * Created by Marcin on 2017-02-03.
  */
-public class PaddedHeaderRow extends DataBindingRow<AvatarTextItem> {
+public class PaddedHeaderRow extends DataBindingComponent<AvatarTextItem> {
     public static final RowFactory FACTORY = PaddedHeaderRow::new;
 
     public PaddedHeaderRow(ViewGroup parent) {

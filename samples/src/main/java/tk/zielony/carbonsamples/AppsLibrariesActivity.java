@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +14,7 @@ import tk.zielony.carbonsamples.applibrary.PicassoActivity;
 import tk.zielony.carbonsamples.applibrary.RecyclerCardsActivity;
 
 
-public class AppsLibrariesActivity extends Activity {
+public class AppsLibrariesActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

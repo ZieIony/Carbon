@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +13,7 @@ import tk.zielony.carbonsamples.animation.RippleComparisonActivity;
 import tk.zielony.carbonsamples.animation.WidgetAnimationsActivity;
 
 
-public class AnimationsActivity extends Activity {
+public class AnimationsActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

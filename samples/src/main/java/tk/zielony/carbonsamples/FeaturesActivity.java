@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +21,7 @@ import tk.zielony.carbonsamples.feature.ThemeActivity;
 import tk.zielony.carbonsamples.feature.ZOrderActivity;
 
 
-public class FeaturesActivity extends Activity {
+public class FeaturesActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -143,6 +143,7 @@
     <attr name="carbon_labelStyle" format="enum">
         <enum name="floating" value="0" />
         <enum name="persistent" value="1" />
+        <enum name="hint" value="2" />
     </attr>
     <attr name="carbon_label" format="string" />
 
@@ -180,7 +181,7 @@
 
 
     <!-- Component -->
-    <declare-styleable name="Component">
+    <declare-styleable name="ComponentView">
         <attr name="carbon_id" format="reference" />
         <attr name="carbon_type" format="string" />
         <attr name="carbon_layout" format="reference" />

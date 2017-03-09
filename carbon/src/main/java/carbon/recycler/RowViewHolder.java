@@ -7,17 +7,17 @@ import android.view.View;
  * Created by Marcin on 2016-06-07.
  */
 public class RowViewHolder extends RecyclerView.ViewHolder {
-    private Row row;
+    private Component component;
 
     public RowViewHolder(View itemView) {
         super(itemView);
     }
 
-    public void setRow(Row row) {
-        this.row = row;
+    public void setComponent(Component component) {
+        this.component = component;
     }
 
-    public Row getRow() {
-        return row;
+    public Component getComponent() {
+        return component;
     }
 }

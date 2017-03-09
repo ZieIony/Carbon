@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.widget;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
@@ -12,7 +12,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2014-12-15.
  */
-public class SnackbarActivity extends Activity {
+public class SnackbarActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

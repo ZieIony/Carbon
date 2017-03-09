@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.widget;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,7 +19,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-12-19.
  */
-public class FlowLayoutActivity extends Activity {
+public class FlowLayoutActivity extends SamplesActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
 
     @Override

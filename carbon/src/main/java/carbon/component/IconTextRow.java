@@ -8,7 +8,7 @@ import carbon.recycler.RowFactory;
 /**
  * Created by Marcin on 2017-02-03.
  */
-public class IconTextRow extends DataBindingRow<IconTextItem> {
+public class IconTextRow extends DataBindingComponent<IconTextItem> {
     public static final RowFactory FACTORY = IconTextRow::new;
 
     public IconTextRow(ViewGroup parent) {

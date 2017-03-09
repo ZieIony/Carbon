@@ -25,7 +25,6 @@
         <carbon.widget.LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/carbon_white"
             android:orientation="vertical"
             android:paddingBottom="@dimen/carbon_paddingHalf"
             android:paddingTop="@dimen/carbon_paddingHalf">
@@ -113,13 +112,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <carbon.widget.RecyclerView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingBottom="@dimen/carbon_paddingHalf"
-            android:paddingTop="@dimen/carbon_paddingHalf" />
+        <carbon.widget.Button
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/carbon_margin"
+            android:text="test" />
+
+        <carbon.widget.Button
+            android:id="@+id/apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/carbon_margin"
+            android:text="apply" />
 
     </carbon.widget.LinearLayout>
 </layout>

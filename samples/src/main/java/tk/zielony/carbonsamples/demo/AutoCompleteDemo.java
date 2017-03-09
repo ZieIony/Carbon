@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.demo;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import carbon.widget.AutoCompleteEditText;
@@ -10,7 +10,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-04-26.
  */
-public class AutoCompleteDemo extends Activity {
+public class AutoCompleteDemo extends SamplesActivity {
 
     String[] fruits = {"Strawberry\npie", "Apple\npie", "Orange\njuice", "Lemon\njuice", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"};
 

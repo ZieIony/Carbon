@@ -7,5 +7,5 @@ import android.view.ViewGroup;
  */
 
 public interface RowFactory {
-    Row create(ViewGroup parent);
+    Component create(ViewGroup parent);
 }

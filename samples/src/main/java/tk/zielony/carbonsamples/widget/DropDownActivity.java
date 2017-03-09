@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.widget;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import carbon.widget.DropDown;
@@ -9,7 +9,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-06-10.
  */
-public class DropDownActivity extends Activity {
+public class DropDownActivity extends SamplesActivity {
     private static String[] months = new String[]{
             "Jan", "Feb", "Mar",
             "Apr", "May", "Jun",

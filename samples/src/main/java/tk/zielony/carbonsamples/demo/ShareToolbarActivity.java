@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.demo;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -17,7 +17,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-04-24.
  */
-public class ShareToolbarActivity extends Activity {
+public class ShareToolbarActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

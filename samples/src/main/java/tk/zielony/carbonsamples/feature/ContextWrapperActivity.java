@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.feature;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-06-29.
  */
-public class ContextWrapperActivity extends Activity {
+public class ContextWrapperActivity extends SamplesActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.applibrary;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
@@ -8,11 +7,12 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 /**
  * Created by Marcin on 2015-01-22.
  */
-public class PicassoActivity extends Activity {
+public class PicassoActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

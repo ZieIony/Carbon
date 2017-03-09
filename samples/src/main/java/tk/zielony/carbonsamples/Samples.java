@@ -1,6 +1,8 @@
 package tk.zielony.carbonsamples;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -71,5 +73,17 @@ public class Samples {
             }
         }
         return result;
+    }
+
+    public static void setTheme(Context context, int theme, int primaryColor, int accentColor) {
+        SharedPreferences preferences = context.getSharedPreferences("theme", Context.MODE_PRIVATE);
+        preferences.edit().putInt("theme", theme).putInt("primary", primaryColor).putInt("accent", accentColor).commit();
+    }
+
+    public static void applyTheme(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("theme", Context.MODE_PRIVATE);
+        context.setTheme(preferences.getInt("theme", R.style.ThemeLight));
+        context.getTheme().applyStyle(preferences.getInt("primary", R.style.PrimaryRed), true);
+        context.getTheme().applyStyle(preferences.getInt("accent", R.style.AccentBlue), true);
     }
 }

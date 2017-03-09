@@ -1,15 +1,17 @@
 package tk.zielony.carbonsamples.feature.scroll;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 
 import java.util.Arrays;
 
 import carbon.component.AvatarTextRow;
+import carbon.component.DefaultAvatarTextItem;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
-import tk.zielony.carbonsamples.component.AvatarTextListItemActivity;
+import tk.zielony.carbonsamples.R;
 
 /**
  * Created by Marcin on 2017-02-09.
@@ -19,9 +21,16 @@ public class ScrollRecycler extends RecyclerView implements ScrollChild {
     public ScrollRecycler(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutManager(new LinearLayoutManager(context));
-        RowListAdapter<AvatarTextListItemActivity.SampleItem> adapter = new RowListAdapter<>(AvatarTextListItemActivity.SampleItem.class, AvatarTextRow::new);
+        RowListAdapter<DefaultAvatarTextItem> adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow::new);
         setAdapter(adapter);
-        adapter.setItems(Arrays.asList(new AvatarTextListItemActivity.SampleItem(), new AvatarTextListItemActivity.SampleItem(), new AvatarTextListItemActivity.SampleItem(), new AvatarTextListItemActivity.SampleItem()));
+        Drawable avatar = getResources().getDrawable(R.drawable.iceland);
+        adapter.setItems(Arrays.asList(
+                new DefaultAvatarTextItem(avatar, "text"),
+                new DefaultAvatarTextItem(avatar, "text"),
+                new DefaultAvatarTextItem(avatar, "text"),
+                new DefaultAvatarTextItem(avatar, "text"),
+                new DefaultAvatarTextItem(avatar, "text"),
+                new DefaultAvatarTextItem(avatar, "text")));
     }
 
     @Override

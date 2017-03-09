@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +12,7 @@ import tk.zielony.carbonsamples.demo.QuickReturnActivity;
 import tk.zielony.carbonsamples.demo.ShareToolbarActivity;
 
 
-public class DemosActivity extends Activity {
+public class DemosActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

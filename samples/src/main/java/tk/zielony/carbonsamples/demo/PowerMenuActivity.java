@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.demo;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -21,7 +21,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-04-19.
  */
-public class PowerMenuActivity extends Activity {
+public class PowerMenuActivity extends SamplesActivity {
     boolean vibration = false, volume = true, airplaneMode = false;
     View powerMenu;
 

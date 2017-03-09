@@ -1,11 +1,9 @@
 package tk.zielony.carbonsamples;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -13,11 +11,11 @@ import tk.zielony.carbonsamples.color.SwatchTestActivity;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
 
-public class ColorsActivity extends Activity {
+public class ColorsActivity extends SamplesActivity {
 
     private Bundle extras = new Bundle();
 
-    static class Item {
+    private static class Item {
         String name;
         int value;
         int color;
@@ -41,13 +39,16 @@ public class ColorsActivity extends Activity {
 
         Samples.initToolbar(this, getString(R.string.colorsActivity_title));
 
-        ViewModel[] items = new ViewModel[]{
-                new ViewModel(SwatchTestActivity.class, getString(R.string.swatchTestActivity_title)).withExtras(extras)
-        };
-        binding.list.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
-                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.list.setAdapter(new MainListAdapter(items));
+        binding.test.setOnClickListener(v -> {
+            Intent intent = new Intent(ColorsActivity.this, SwatchTestActivity.class);
+            intent.putExtras(extras);
+            startActivity(intent);
+        });
+
+        binding.apply.setOnClickListener(v -> {
+            Samples.setTheme(ColorsActivity.this, extras.getInt("theme"), extras.getInt("primary"), extras.getInt("accent"));
+            finish();
+        });
 
         binding.theme.setItems(new Object[]{
                 new Item("Dark", R.style.ThemeDark, R.color.carbon_colorBackground_dark),

@@ -2,15 +2,15 @@ package tk.zielony.carbonsamples.applibrary;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 /**
  * Created by Marcin on 2015-12-30.
  */
-public class DesignActivity extends AppCompatActivity {
+public class DesignActivity extends SamplesActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

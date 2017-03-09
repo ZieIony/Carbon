@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.animation;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +11,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2014-12-15.
  */
-public class WidgetAnimationsActivity extends Activity {
+public class WidgetAnimationsActivity extends SamplesActivity {
     int fabVisibility = View.VISIBLE;
     int buttonVisibility = View.VISIBLE;
 

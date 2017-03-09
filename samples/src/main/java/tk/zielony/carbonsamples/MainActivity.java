@@ -1,13 +1,12 @@
 package tk.zielony.carbonsamples;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
 import carbon.widget.RecyclerView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

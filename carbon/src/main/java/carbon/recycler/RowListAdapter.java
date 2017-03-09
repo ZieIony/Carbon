@@ -31,18 +31,18 @@ public class RowListAdapter<Type> extends ListAdapter<RowViewHolder, Type> {
 
     @Override
     public RowViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        Row row = factories.get(viewType).create(viewGroup);
-        RowViewHolder viewHolder = new RowViewHolder(row.getView());
-        viewHolder.setRow(row);
+        Component component = factories.get(viewType).create(viewGroup);
+        RowViewHolder viewHolder = new RowViewHolder(component.getView());
+        viewHolder.setComponent(component);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(final RowViewHolder holder, final int position) {
         Type data = getItem(position);
-        Row row = holder.getRow();
-        row.bind(data);
-        row.getView().setOnClickListener(view -> fireOnItemClickedEvent(holder.getAdapterPosition()));
+        Component component = holder.getComponent();
+        component.bind(data);
+        component.getView().setOnClickListener(view -> fireOnItemClickedEvent(holder.getAdapterPosition()));
     }
 
     @Override

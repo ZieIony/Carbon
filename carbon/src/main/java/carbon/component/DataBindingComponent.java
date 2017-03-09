@@ -7,17 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.BR;
-import carbon.recycler.Row;
+import carbon.recycler.Component;
 
 /**
  * Created by Marcin on 2017-02-02.
  */
-public class DataBindingRow<DataType> implements Row<DataType> {
+public class DataBindingComponent<DataType> implements Component<DataType> {
     private final ViewDataBinding binding;
     private final View view;
     private DataType data;
 
-    public DataBindingRow(ViewGroup parent, int resId) {
+    public DataBindingComponent(ViewGroup parent, int resId) {
         binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), resId, parent, false);
         view = binding.getRoot();
     }

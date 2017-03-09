@@ -1,17 +1,17 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 /**
  * Created by Marcin on 2014-12-15.
  */
-public class ToolbarActivity extends AppCompatActivity {
+public class ToolbarActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

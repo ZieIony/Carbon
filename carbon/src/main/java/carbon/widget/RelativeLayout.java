@@ -41,12 +41,14 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.MatrixHelper;
 import carbon.internal.PercentLayoutHelper;
 import carbon.internal.Reveal;
+import carbon.recycler.Component;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -909,6 +911,105 @@ public class RelativeLayout extends android.widget.RelativeLayout implements Sha
 
     public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
         this.onDispatchTouchListener = onDispatchTouchListener;
+    }
+
+    public Component findComponentById(int id) {
+        List<ViewGroup> groups = new ArrayList<>();
+        groups.add(this);
+        while (!groups.isEmpty()) {
+            ViewGroup group = groups.remove(0);
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (child instanceof ComponentView && ((ComponentView) child).getComponent().getView().getId() == id)
+                    return ((ComponentView) child).getComponent();
+                if (child instanceof ViewGroup)
+                    groups.add((ViewGroup) child);
+            }
+        }
+        return null;
+    }
+
+    public List<Component> findComponentsById(int id) {
+        List<Component> result = new ArrayList<>();
+        List<ViewGroup> groups = new ArrayList<>();
+        groups.add(this);
+        while (!groups.isEmpty()) {
+            ViewGroup group = groups.remove(0);
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (child instanceof ComponentView && ((ComponentView) child).getComponent().getView().getId() == id)
+                    result.add(((ComponentView) child).getComponent());
+                if (child instanceof ViewGroup)
+                    groups.add((ViewGroup) child);
+            }
+        }
+        return result;
+    }
+
+    public Component findComponentOfType(Class type) {
+        List<ViewGroup> groups = new ArrayList<>();
+        groups.add(this);
+        while (!groups.isEmpty()) {
+            ViewGroup group = groups.remove(0);
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (child instanceof ComponentView && ((ComponentView) child).getComponent().getClass().equals(type))
+                    return ((ComponentView) child).getComponent();
+                if (child instanceof ViewGroup)
+                    groups.add((ViewGroup) child);
+            }
+        }
+        return null;
+    }
+
+    public List<Component> findComponentsOfType(Class type) {
+        List<Component> result = new ArrayList<>();
+        List<ViewGroup> groups = new ArrayList<>();
+        groups.add(this);
+        while (!groups.isEmpty()) {
+            ViewGroup group = groups.remove(0);
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (child instanceof ComponentView && ((ComponentView) child).getComponent().getClass().equals(type))
+                    result.add(((ComponentView) child).getComponent());
+                if (child instanceof ViewGroup)
+                    groups.add((ViewGroup) child);
+            }
+        }
+        return result;
+    }
+
+    public View findViewOfType(Class type) {
+        List<ViewGroup> groups = new ArrayList<>();
+        groups.add(this);
+        while (!groups.isEmpty()) {
+            ViewGroup group = groups.remove(0);
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (child.getClass().equals(type))
+                    return child;
+                if (child instanceof ViewGroup)
+                    groups.add((ViewGroup) child);
+            }
+        }
+        return null;
+    }
+
+    public List<View> findViewsOfType(Class type) {
+        List<View> result = new ArrayList<>();
+        List<ViewGroup> groups = new ArrayList<>();
+        groups.add(this);
+        while (!groups.isEmpty()) {
+            ViewGroup group = groups.remove(0);
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (child.getClass().equals(type))
+                    result.add(child);
+                if (child instanceof ViewGroup)
+                    groups.add((ViewGroup) child);
+            }
+        }
+        return result;
     }
 
     public List<View> findViewsById(int id) {

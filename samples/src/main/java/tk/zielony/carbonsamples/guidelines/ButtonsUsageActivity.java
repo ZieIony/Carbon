@@ -1,6 +1,6 @@
 package tk.zielony.carbonsamples.guidelines;
 
-import android.app.Activity;
+import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import carbon.widget.ProgressBar;
@@ -10,7 +10,7 @@ import tk.zielony.carbonsamples.R;
 /**
  * Created by Marcin on 2015-06-14.
  */
-public class ButtonsUsageActivity extends Activity {
+public class ButtonsUsageActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

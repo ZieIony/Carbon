@@ -23,7 +23,7 @@ import carbon.internal.TypefaceUtils;
 public class InputLayout extends RelativeLayout {
 
     public enum LabelStyle {
-        Floating, Persistent
+        Floating, Persistent, Hint
     }
 
     private TextView errorTextView;
@@ -38,6 +38,8 @@ public class InputLayout extends RelativeLayout {
 
     private ImageView clearImageView;
     private ImageView showPasswordImageView;
+
+    private View child;
 
     TransformationMethod transformationMethod;
 
@@ -140,6 +142,8 @@ public class InputLayout extends RelativeLayout {
     }
 
     private ViewGroup.LayoutParams setTextView(View child, android.widget.RelativeLayout.LayoutParams params) {
+        this.child = child;
+
         if (child.getId() == NO_ID)
             child.setId(R.id.carbon_input);
         params.addRule(BELOW, R.id.carbon_label);
@@ -196,28 +200,36 @@ public class InputLayout extends RelativeLayout {
             InputView inputView = (InputView) child;
             inputView.addOnValidateListener(this::setErrorEnabled);
         }
+
         return params;
     }
 
     private void updateCounter(EditText editText) {
         if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
+            counterTextView.setVisibility(VISIBLE);
             counterTextView.setText(editText.length() + " / " + minCharacters + "-" + maxCharacters);
         } else if (minCharacters > 0) {
+            counterTextView.setVisibility(VISIBLE);
             counterTextView.setText(editText.length() + " / " + minCharacters + "+");
         } else if (maxCharacters < Integer.MAX_VALUE) {
+            counterTextView.setVisibility(VISIBLE);
             counterTextView.setText(editText.length() + " / " + maxCharacters);
+        } else {
+            counterTextView.setVisibility(GONE);
         }
     }
 
     private void updateHint(View child) {
-        if (labelStyle == LabelStyle.Persistent || child.isFocused()) {
+        if (labelStyle == LabelStyle.Persistent || labelStyle == LabelStyle.Floating && child.isFocused()) {
             labelTextView.setVisibility(VISIBLE);
             if (child instanceof EditText)
                 ((EditText) child).setHint(null);
-        } else {
+        } else if (labelStyle != LabelStyle.Hint) {
             labelTextView.setVisibility(INVISIBLE);
             if (child instanceof EditText)
                 ((EditText) child).setHint(labelTextView.getText());
+        } else {
+            labelTextView.setVisibility(GONE);
         }
     }
 
@@ -292,6 +304,8 @@ public class InputLayout extends RelativeLayout {
 
     public void setLabel(String label) {
         labelTextView.setText(label);
+        if (child != null)
+            updateHint(child);
     }
 
     public LabelStyle getLabelStyle() {
@@ -300,6 +314,8 @@ public class InputLayout extends RelativeLayout {
 
     public void setLabelStyle(LabelStyle labelStyle) {
         this.labelStyle = labelStyle;
+        if (child != null)
+            updateHint(child);
     }
 
     public int getMinCharacters() {
@@ -338,4 +354,8 @@ public class InputLayout extends RelativeLayout {
             setShowPasswordButtonEnabled(false);
     }
 
+    @Override
+    public int getBaseline() {
+        return child == null ? super.getBaseline() : child.getTop() + child.getBaseline();
+    }
 }

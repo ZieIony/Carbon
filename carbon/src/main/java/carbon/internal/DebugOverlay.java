@@ -29,12 +29,9 @@ public class DebugOverlay extends PopupWindow {
     private boolean drawRulers = true;
     private Activity context;
 
-    private ViewTreeObserver.OnPreDrawListener listener = new ViewTreeObserver.OnPreDrawListener() {
-        @Override
-        public boolean onPreDraw() {
-            getContentView().postInvalidate();
-            return true;
-        }
+    private ViewTreeObserver.OnPreDrawListener listener = () -> {
+        getContentView().postInvalidate();
+        return true;
     };
 
     public DebugOverlay(Activity context) {
@@ -119,10 +116,11 @@ public class DebugOverlay extends PopupWindow {
             paint.setStrokeWidth(1);
 
             if (drawGrid) {
-                paint.setColor(0x3f000000);
+                paint.setColor(0x1f000000);
                 for (float x = step; x < getWidth(); x += step) {
                     canvas.drawLine(x, 0, x, getHeight(), paint);
                 }
+                paint.setColor(0x3f000000);
                 for (float y = step; y < getHeight(); y += step) {
                     canvas.drawLine(0, y, getWidth(), y, paint);
                 }

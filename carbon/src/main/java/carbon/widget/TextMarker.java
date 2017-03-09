@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 import carbon.R;
 
@@ -68,7 +69,7 @@ public class TextMarker extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (paint == null && id != 0) {
-            paint = ((android.widget.TextView) getRootView().findViewById(id)).getPaint();
+            paint = ((android.widget.TextView) ((ViewGroup) getParent()).findViewById(id)).getPaint();
             paint.getTextBounds(text, 0, text.length(), rect);
             baseline = Math.abs(rect.top);
         }

@@ -1,17 +1,17 @@
 <resources>
 
     <style name="DropDownTheme" parent="carbon_Theme.Light.DropDownPopup">
-        <item name="colorPrimary">@color/carbon_amber_400</item>
-        <item name="colorPrimaryDark">@color/carbon_amber_700</item>
-        <item name="colorAccent">@color/carbon_cyan_a400</item>
+        <item name="colorPrimary">#ff00B1B1</item>
+        <item name="colorPrimaryDark">#ff0E7778</item>
+        <item name="colorAccent">#ffFCB034</item>
     </style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="carbon_Theme.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/carbon_amber_700</item>
-        <item name="colorPrimary">@color/carbon_amber_400</item>
-        <item name="colorPrimaryDark">@color/carbon_amber_700</item>
-        <item name="colorAccent">@color/carbon_cyan_a400</item>
+        <item name="android:statusBarColor">#ff0E7778</item>
+        <item name="colorPrimary">#ff00B1B1</item>
+        <item name="colorPrimaryDark">#ff0E7778</item>
+        <item name="colorAccent">#ffFCB034</item>
         <item name="carbon_dropDownPopupTheme">@style/DropDownTheme</item>
     </style>
 
@@ -23,9 +23,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme2" parent="carbon_Theme.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="colorPrimary">@color/carbon_amber_400</item>
-        <item name="colorPrimaryDark">@color/carbon_amber_700</item>
-        <item name="colorAccent">@color/carbon_cyan_a400</item>
+        <item name="colorPrimary">#ff00B1B1</item>
+        <item name="colorPrimaryDark">#ff0E7778</item>
+        <item name="colorAccent">#ffFCB034</item>
     </style>
 
     <style name="RaisedButtonStyle" parent="AppTheme">

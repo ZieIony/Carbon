@@ -2,14 +2,14 @@ package tk.zielony.carbonsamples.feature;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 /**
  * Created by Marcin on 2017-02-01.
  */
-public class HtmlActivity extends AppCompatActivity {
+public class HtmlActivity extends SamplesActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
