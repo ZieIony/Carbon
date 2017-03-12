@@ -15,7 +15,7 @@
         android:layout_marginLeft="@dimen/carbon_windowPadding"
         android:layout_marginRight="@dimen/carbon_padding"
         android:layout_marginStart="@dimen/carbon_windowPadding"
-        app:carbon_tint="?attr/colorControlNormal" />
+        app:carbon_tint="?attr/carbon_iconColor" />
 
     <carbon.widget.TextView
         android:id="@+id/carbon_itemText"

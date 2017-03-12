@@ -22,7 +22,9 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.view.animation.Animation;
 import android.view.animation.Interpolator;
+import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -210,10 +212,10 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
         boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
         if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
                 canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
                 internalDispatchDraw(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -226,9 +228,9 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
                 canvas.drawPath(cornersMask, paint);
             if (r)
                 canvas.drawPath(reveal.mask, paint);
+            paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
         } else {
             internalDispatchDraw(canvas);
         }
@@ -254,8 +256,6 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
                 canvas.drawRect(0, getHeight() - insetBottom, getWidth(), getHeight(), paint);
         }
     }
-
-    RectF childRect = new RectF();
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
@@ -348,10 +348,10 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
         boolean r = reveal != null;
         boolean c = cornerRadius > 0;
         if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
                 canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
                 super.draw(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -364,9 +364,9 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
                 canvas.drawPath(cornersMask, paint);
             if (r)
                 canvas.drawPath(reveal.mask, paint);
+            paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
         } else {
             super.draw(canvas);
         }
@@ -378,9 +378,17 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
+    private Transformation t = new Transformation();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        Animation a = getAnimation();
+        if (a != null) {
+            a.getTransformation(event.getEventTime(), t);
+            float[] loc = new float[]{event.getX(), event.getY()};
+            t.getMatrix().mapPoints(loc);
+            event.setLocation(loc[0], loc[1]);
+        }
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 

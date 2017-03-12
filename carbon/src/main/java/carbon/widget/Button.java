@@ -146,13 +146,12 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), animation -> postInvalidate())));
 
         Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initElevation(this, a, elevationIds);
         Carbon.initTint(this, a, tintIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
-        Carbon.initElevation(this, a, elevationIds);
         Carbon.initHtmlText(this, a, R.styleable.Button_carbon_htmlText);
         Carbon.initStroke(this, a, strokeIds);
-
         setCornerRadius(a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
 
         a.recycle();

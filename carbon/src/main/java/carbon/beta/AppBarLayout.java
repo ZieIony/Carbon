@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -25,7 +25,9 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.view.animation.Animation;
 import android.view.animation.Interpolator;
+import android.view.animation.Transformation;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -208,10 +210,10 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
         if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
                 canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
                 internalDispatchDraw(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -224,9 +226,9 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
                 canvas.drawPath(cornersMask, paint);
             if (r)
                 canvas.drawPath(reveal.mask, paint);
+            paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
         } else {
             internalDispatchDraw(canvas);
         }
@@ -252,8 +254,6 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
                 canvas.drawRect(0, getHeight() - insetBottom, getWidth(), getHeight(), paint);
         }
     }
-
-    RectF childRect = new RectF();
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
@@ -347,10 +347,10 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
         boolean r = reveal != null;
         boolean c = cornerRadius > 0;
         if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
                 canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
                 super.draw(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -363,9 +363,9 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
                 canvas.drawPath(cornersMask, paint);
             if (r)
                 canvas.drawPath(reveal.mask, paint);
+            paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
         } else {
             super.draw(canvas);
         }
@@ -377,9 +377,17 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
+    private Transformation t = new Transformation();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        Animation a = getAnimation();
+        if (a != null) {
+            a.getTransformation(event.getEventTime(), t);
+            float[] loc = new float[]{event.getX(), event.getY()};
+            t.getMatrix().mapPoints(loc);
+            event.setLocation(loc[0], loc[1]);
+        }
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 
@@ -548,7 +556,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     private float translationZ = 0;
     private Shadow shadow;
     private ColorStateList shadowColor;
-    private ColorFilter shadowColorFilter;
+    private PorterDuffColorFilter shadowColorFilter;
     private RectF shadowMaskRect = new RectF();
 
     @Override
@@ -656,7 +664,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
         this.shadowColor = shadowColor;
-        shadowColorFilter = shadowColor != null ? new LightingColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), 0) : Shadow.DEFAULT_FILTER;
+        shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(shadowColor == null ? elevation : 0);
     }
@@ -664,7 +672,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout imp
     @Override
     public void setElevationShadowColor(int color) {
         shadowColor = ColorStateList.valueOf(color);
-        shadowColorFilter = new LightingColorFilter(color, 0);
+        shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             super.setElevation(0);
     }

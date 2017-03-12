@@ -21,7 +21,7 @@
     <carbon.widget.ImageView
         android:scaleType="center"
         android:id="@+id/carbon_chipClose"
-        app:carbon_tint="?attr/carbon_iconColorInverse"
+        app:carbon_tint="?attr/carbon_iconColor"
         android:layout_width="@dimen/carbon_chipHeight"
         android:layout_height="match_parent"
         app:carbon_cornerRadius="@dimen/carbon_margin"

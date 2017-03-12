@@ -5,9 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     android:padding="@dimen/carbon_paddingHalf"
     app:carbon_insetColor="?attr/colorPrimary">
+
+    <carbon.widget.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_chipHeight"
+        android:layout_margin="@dimen/carbon_marginHalf" />
 
     <carbon.widget.Chip
         android:layout_width="wrap_content"

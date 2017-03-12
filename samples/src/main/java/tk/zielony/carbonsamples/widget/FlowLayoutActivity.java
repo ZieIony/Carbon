@@ -1,10 +1,10 @@
 package tk.zielony.carbonsamples.widget;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.annimon.stream.Stream;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import carbon.animation.AnimUtils;
 import carbon.widget.Chip;
 import carbon.widget.FlowLayout;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 /**
  * Created by Marcin on 2015-12-19.
@@ -28,17 +29,17 @@ public class FlowLayoutActivity extends SamplesActivity {
         setContentView(R.layout.activity_flowlayout);
 
         FlowLayout layout = (FlowLayout) findViewById(R.id.flowLayout);
-        for (int i = 0; i < layout.getChildCount() - 1; i++) {
-            final Chip chip = (Chip) layout.getChildAt(i);
-            chip.setText(fruits.get(i % fruits.size()));
-            if (i % 3 != 1) {
+        Stream.of(layout.getViews()).filter(v -> v instanceof Chip).forEach(v -> {
+            final Chip chip = (Chip) v;
+            chip.setText(fruits.get((int) (Math.random() * fruits.size())));
+            if (Math.random() > 0.5) {
                 chip.setIconVisible(true);
                 String image = "http://lorempixel.com/100/100/people/#" + System.currentTimeMillis();
                 Picasso.with(this).load(image).into((ImageView) chip.getIconView());
             } else {
                 chip.setIconVisible(false);
             }
-            if (i % 3 != 2) {
+            if (Math.random() > 0.5) {
                 chip.setRemovable(true);
                 chip.setOnRemoveListener(() -> {
                     chip.setOutAnimation(AnimUtils.Style.Fade);
@@ -47,6 +48,6 @@ public class FlowLayoutActivity extends SamplesActivity {
             } else {
                 chip.setRemovable(false);
             }
-        }
+        });
     }
 }

@@ -51,12 +51,9 @@ public class Chip extends LinearLayout {
         icon = (ImageView) findViewById(R.id.carbon_chipIcon);
         close = (ImageView) findViewById(R.id.carbon_chipClose);
 
-        close.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onRemoveListener != null)
-                    onRemoveListener.onDismiss();
-            }
+        close.setOnClickListener(v -> {
+            if (onRemoveListener != null)
+                onRemoveListener.onDismiss();
         });
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, R.style.carbon_Chip);
