@@ -4,29 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <tk.zielony.carbonsamples.feature.scroll.CollapsingLayout
+    <tk.zielony.carbonsamples.feature.scroll.LandscapeView
         android:id="@+id/rect"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="?attr/colorPrimary"
-        app:carbon_maxHeight="200dp">
-
-        <carbon.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:text="Hello scrolling"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </tk.zielony.carbonsamples.feature.scroll.CollapsingLayout>
-
-    <tk.zielony.carbonsamples.feature.scroll.DependentImageView
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        app:carbon_anchor="@id/rect"
-        app:carbon_anchorGravity="bottom"
-        app:carbon_dependsOn="@id/rect"
-        app:carbon_src="@raw/carbon_bubble" />
+        android:layout_height="200dp"
+        android:minHeight="64dp"
+        app:carbon_maxHeight="400dp" />
 
     <tk.zielony.carbonsamples.feature.scroll.ScrollRecycler
         android:id="@+id/recycler"
