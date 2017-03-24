@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -20,9 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
-
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.Carbon;
 import carbon.R;
@@ -247,7 +245,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
         indicatorPos2 = savedState.getIndicatorPos2();
         post(new Runnable() {
             public void run() {
-                ViewHelper.setScrollX(PagerTabStrip.this, savedState.getScroll());
+                setScrollX(savedState.getScroll());
             }
         });
     }

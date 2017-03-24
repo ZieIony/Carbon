@@ -1,15 +1,14 @@
 package tk.zielony.carbonsamples.feature;
 
-import tk.zielony.carbonsamples.SamplesActivity;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 
-import com.nineoldandroids.animation.ValueAnimator;
-
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 /**
  * Created by Marcin on 2014-12-15.
@@ -27,7 +26,7 @@ public class LargeShadowActivity extends SamplesActivity {
         animator = ValueAnimator.ofFloat(0.2f, 1);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.setRepeatCount(Animation.INFINITE);
-        animator.setRepeatMode(Animation.REVERSE);
+        animator.setRepeatMode(ValueAnimator.REVERSE);
         animator.setDuration(2000);
         animator.addUpdateListener(valueAnimator -> {
             ViewGroup.LayoutParams layoutParams = view.getLayoutParams();

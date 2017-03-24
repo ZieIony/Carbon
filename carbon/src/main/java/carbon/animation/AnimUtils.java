@@ -1,5 +1,8 @@
 package carbon.animation;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -7,11 +10,6 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 import carbon.internal.MathUtils;
@@ -67,15 +65,15 @@ public class AnimUtils {
 
     public static ValueAnimator fadeIn(final View view, Animator.AnimatorListener listener) {
         if (view.getVisibility() != View.VISIBLE)
-            ViewHelper.setAlpha(view, 0);
-        float start = ViewHelper.getAlpha(view);
+            view.setAlpha(0);
+        float start = view.getAlpha();
         ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
         animator.setDuration((long) (200 * (1 - start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
         animator.addUpdateListener(valueAnimator -> {
-            ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
+            view.setAlpha((Float) valueAnimator.getAnimatedValue());
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
@@ -84,14 +82,14 @@ public class AnimUtils {
     }
 
     public static ValueAnimator fadeOut(final View view, Animator.AnimatorListener listener) {
-        float start = ViewHelper.getAlpha(view);
+        float start = view.getAlpha();
         ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
         animator.setDuration((long) (200 * start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
         animator.addUpdateListener(valueAnimator -> {
-            ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
+            view.setAlpha((Float) valueAnimator.getAnimatedValue());
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
@@ -101,17 +99,17 @@ public class AnimUtils {
 
     public static ValueAnimator popIn(final View view, Animator.AnimatorListener listener) {
         if (view.getVisibility() != View.VISIBLE)
-            ViewHelper.setAlpha(view, 0);
-        float start = ViewHelper.getAlpha(view);
+            view.setAlpha(0);
+        float start = view.getAlpha();
         ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
         animator.setDuration((long) (200 * (1 - start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
         animator.addUpdateListener(valueAnimator -> {
-            ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
-            ViewHelper.setScaleX(view, (Float) valueAnimator.getAnimatedValue());
-            ViewHelper.setScaleY(view, (Float) valueAnimator.getAnimatedValue());
+            view.setAlpha((Float) valueAnimator.getAnimatedValue());
+            view.setScaleX((Float) valueAnimator.getAnimatedValue());
+            view.setScaleY((Float) valueAnimator.getAnimatedValue());
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
@@ -120,16 +118,16 @@ public class AnimUtils {
     }
 
     public static ValueAnimator popOut(final View view, Animator.AnimatorListener listener) {
-        float start = ViewHelper.getAlpha(view);
+        float start = view.getAlpha();
         ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
         animator.setDuration((long) (200 * start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
         animator.addUpdateListener(valueAnimator -> {
-            ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
-            ViewHelper.setScaleX(view, (Float) valueAnimator.getAnimatedValue());
-            ViewHelper.setScaleY(view, (Float) valueAnimator.getAnimatedValue());
+            view.setAlpha((Float) valueAnimator.getAnimatedValue());
+            view.setScaleX((Float) valueAnimator.getAnimatedValue());
+            view.setScaleY((Float) valueAnimator.getAnimatedValue());
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
@@ -139,16 +137,16 @@ public class AnimUtils {
 
     public static ValueAnimator flyIn(final View view, Animator.AnimatorListener listener) {
         if (view.getVisibility() != View.VISIBLE)
-            ViewHelper.setAlpha(view, 0);
-        float start = ViewHelper.getAlpha(view);
+            view.setAlpha(0);
+        float start = view.getAlpha();
         ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
         animator.setDuration((long) (200 * (1 - start)));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
         animator.addUpdateListener(valueAnimator -> {
-            ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
-            ViewHelper.setTranslationY(view, Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
+            view.setAlpha((Float) valueAnimator.getAnimatedValue());
+            view.setTranslationY(Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
@@ -157,15 +155,15 @@ public class AnimUtils {
     }
 
     public static ValueAnimator flyOut(final View view, Animator.AnimatorListener listener) {
-        float start = ViewHelper.getAlpha(view);
+        float start = view.getAlpha();
         ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
         animator.setDuration((long) (200 * start));
         animator.setInterpolator(new DecelerateInterpolator());
         if (listener != null)
             animator.addListener(listener);
         animator.addUpdateListener(valueAnimator -> {
-            ViewHelper.setAlpha(view, (Float) valueAnimator.getAnimatedValue());
-            ViewHelper.setTranslationY(view, Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
+            view.setAlpha((Float) valueAnimator.getAnimatedValue());
+            view.setTranslationY(Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });

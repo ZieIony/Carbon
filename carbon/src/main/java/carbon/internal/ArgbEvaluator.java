@@ -1,6 +1,6 @@
 package carbon.internal;
 
-import com.nineoldandroids.animation.TypeEvaluator;
+import android.animation.TypeEvaluator;
 
 public class ArgbEvaluator implements TypeEvaluator {
 

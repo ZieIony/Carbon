@@ -359,7 +359,6 @@ public class CheckedTextView extends TextView implements Checkable {
     }
 
     @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void jumpDrawablesToCurrentState() {
         super.jumpDrawablesToCurrentState();
         if (drawable != null) drawable.jumpToCurrentState();

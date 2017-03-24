@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nineoldandroids.view.ViewHelper;
-
 import java.util.ArrayList;
 
 import carbon.Carbon;
@@ -121,15 +119,15 @@ public class AutoCompleteLayout extends LinearLayout {
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
                 if (orientation == LinearLayoutManager.VERTICAL) {
-                    bottom = (int) (child.getTop() - params.topMargin + ViewHelper.getTranslationY(child));
+                    bottom = (int) (child.getTop() - params.topMargin + child.getTranslationY());
                     top = bottom - height;
                 } else { //horizontal
-                    right = (int) (child.getLeft() - params.leftMargin + ViewHelper.getTranslationX(child));
+                    right = (int) (child.getLeft() - params.leftMargin + child.getTranslationX());
                     left = right - height;
                 }
                 c.save(Canvas.CLIP_SAVE_FLAG);
                 c.clipRect(left, top, right, bottom);
-                drawable.setAlpha((int) (ViewHelper.getAlpha(child) * 255));
+                drawable.setAlpha((int) (child.getAlpha() * 255));
                 drawable.setBounds(left, top, right, bottom);
                 drawable.draw(c);
                 c.restore();

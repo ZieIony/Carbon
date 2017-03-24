@@ -1,14 +1,12 @@
 package carbon.widget;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 
@@ -60,12 +58,9 @@ public class ExpansionPanel extends RelativeLayout {
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.setDuration(200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
-                expandedIndicator.postInvalidate();
-            }
+        animator.addUpdateListener(animation -> {
+            expandedIndicator.setRotation(180 * (float) (animation.getAnimatedValue()));
+            expandedIndicator.postInvalidate();
         });
         animator.start();
         expanded = true;
@@ -75,19 +70,16 @@ public class ExpansionPanel extends RelativeLayout {
         ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.setDuration(200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
-                expandedIndicator.postInvalidate();
-            }
+        animator.addUpdateListener(animation -> {
+            expandedIndicator.setRotation(180 * (float) (animation.getAnimatedValue()));
+            expandedIndicator.postInvalidate();
         });
         animator.start();
         expanded = false;
     }
 
     public void setExpanded(boolean expanded) {
-        ViewHelper.setRotation(expandedIndicator, expanded ? 180 : 0);
+        expandedIndicator.setRotation(expanded ? 180 : 0);
         this.expanded = expanded;
     }
 

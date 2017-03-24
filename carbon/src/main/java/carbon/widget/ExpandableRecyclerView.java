@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -26,9 +27,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,14 +38,9 @@ import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.internal.DefaultItemAnimator;
 import carbon.internal.ElevationComparator;
-import carbon.internal.MatrixHelper;
 import carbon.recycler.ArrayAdapter;
 import carbon.shadow.ShadowView;
-
-import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
-import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 
 public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerView implements TintedView {
 
@@ -113,7 +106,6 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         a.recycle();
 
         setClipToPadding(false);
-        setItemAnimator(new DefaultItemAnimator());
         setWillNotDraw(false);
     }
 
@@ -304,7 +296,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
                 int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
                 canvas.translate(child.getLeft(), child.getTop());
-                canvas.concat(MatrixHelper.getMatrix(child));
+                canvas.concat(child.getMatrix());
                 rippleDrawable.draw(canvas);
                 canvas.restoreToCount(saveCount);
             }
@@ -868,7 +860,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         }
 
         public void onBindChildViewHolder(CVH holder, final int group, final int position) {
-            ViewHelper.setAlpha(holder.itemView, 1);
+            holder.itemView.setAlpha(1);
             holder.itemView.setOnClickListener(__ -> {
                 if (Adapter.this.onChildItemClickedListener != null)
                     Adapter.this.onChildItemClickedListener.onChildItemClicked(group, position);
@@ -924,7 +916,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             animator.setInterpolator(new DecelerateInterpolator());
             animator.setDuration(200);
             animator.addUpdateListener(animation -> {
-                ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
+                expandedIndicator.setRotation(180 * (float) (animation.getAnimatedValue()));
                 expandedIndicator.postInvalidate();
             });
             animator.start();
@@ -936,7 +928,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
             animator.setInterpolator(new DecelerateInterpolator());
             animator.setDuration(200);
             animator.addUpdateListener(animation -> {
-                ViewHelper.setRotation(expandedIndicator, 180 * (float) (animation.getAnimatedValue()));
+                expandedIndicator.setRotation(180 * (float) (animation.getAnimatedValue()));
                 expandedIndicator.postInvalidate();
             });
             animator.start();
@@ -944,7 +936,7 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         }
 
         public void setExpanded(boolean expanded) {
-            ViewHelper.setRotation(expandedIndicator, expanded ? 180 : 0);
+            expandedIndicator.setRotation(expanded ? 180 : 0);
             this.expanded = expanded;
         }
 
@@ -1012,15 +1004,15 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
                 if (orientation == LinearLayoutManager.VERTICAL) {
-                    bottom = (int) (child.getTop() - params.topMargin + ViewHelper.getTranslationY(child));
+                    bottom = (int) (child.getTop() - params.topMargin + child.getTranslationY());
                     top = bottom - height;
                 } else { //horizontal
-                    right = (int) (child.getLeft() - params.leftMargin + ViewHelper.getTranslationX(child));
+                    right = (int) (child.getLeft() - params.leftMargin + child.getTranslationX());
                     left = right - height;
                 }
                 c.save(Canvas.CLIP_SAVE_FLAG);
                 c.clipRect(left, top, right, bottom);
-                drawable.setAlpha((int) (ViewHelper.getAlpha(child) * 255));
+                drawable.setAlpha((int) (child.getAlpha() * 255));
                 drawable.setBounds(left, top, right, bottom);
                 drawable.draw(c);
                 c.restore();
@@ -1035,155 +1027,6 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
                 throw new IllegalStateException(
                         "DividerItemDecoration can only be used with a LinearLayoutManager.");
             }
-        }
-    }
-
-
-    // -------------------------------
-    // transformations
-    // -------------------------------
-
-    public float getAlpha() {
-        return NEEDS_PROXY ? wrap(this).getAlpha() : super.getAlpha();
-    }
-
-    public void setAlpha(float alpha) {
-        if (NEEDS_PROXY) {
-            wrap(this).setAlpha(alpha);
-        } else {
-            super.setAlpha(alpha);
-        }
-    }
-
-    public float getPivotX() {
-        return NEEDS_PROXY ? wrap(this).getPivotX() : super.getPivotX();
-    }
-
-    public void setPivotX(float pivotX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setPivotX(pivotX);
-        } else {
-            super.setPivotX(pivotX);
-        }
-    }
-
-    public float getPivotY() {
-        return NEEDS_PROXY ? wrap(this).getPivotY() : super.getPivotY();
-    }
-
-    public void setPivotY(float pivotY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setPivotY(pivotY);
-        } else {
-            super.setPivotY(pivotY);
-        }
-    }
-
-    public float getRotation() {
-        return NEEDS_PROXY ? wrap(this).getRotation() : super.getRotation();
-    }
-
-    public void setRotation(float rotation) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotation(rotation);
-        } else {
-            super.setRotation(rotation);
-        }
-    }
-
-    public float getRotationX() {
-        return NEEDS_PROXY ? wrap(this).getRotationX() : super.getRotationX();
-    }
-
-    public void setRotationX(float rotationX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotationX(rotationX);
-        } else {
-            super.setRotationX(rotationX);
-        }
-    }
-
-    public float getRotationY() {
-        return NEEDS_PROXY ? wrap(this).getRotationY() : super.getRotationY();
-    }
-
-    public void setRotationY(float rotationY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotationY(rotationY);
-        } else {
-            super.setRotationY(rotationY);
-        }
-    }
-
-    public float getScaleX() {
-        return NEEDS_PROXY ? wrap(this).getScaleX() : super.getScaleX();
-    }
-
-    public void setScaleX(float scaleX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setScaleX(scaleX);
-        } else {
-            super.setScaleX(scaleX);
-        }
-    }
-
-    public float getScaleY() {
-        return NEEDS_PROXY ? wrap(this).getScaleY() : super.getScaleY();
-    }
-
-    public void setScaleY(float scaleY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setScaleY(scaleY);
-        } else {
-            super.setScaleY(scaleY);
-        }
-    }
-
-    public float getTranslationX() {
-        return NEEDS_PROXY ? wrap(this).getTranslationX() : super.getTranslationX();
-    }
-
-    public void setTranslationX(float translationX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setTranslationX(translationX);
-        } else {
-            super.setTranslationX(translationX);
-        }
-    }
-
-    public float getTranslationY() {
-        return NEEDS_PROXY ? wrap(this).getTranslationY() : super.getTranslationY();
-    }
-
-    public void setTranslationY(float translationY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setTranslationY(translationY);
-        } else {
-            super.setTranslationY(translationY);
-        }
-    }
-
-    public float getX() {
-        return NEEDS_PROXY ? wrap(this).getX() : super.getX();
-    }
-
-    public void setX(float x) {
-        if (NEEDS_PROXY) {
-            wrap(this).setX(x);
-        } else {
-            super.setX(x);
-        }
-    }
-
-    public float getY() {
-        return NEEDS_PROXY ? wrap(this).getY() : super.getY();
-    }
-
-    public void setY(float y) {
-        if (NEEDS_PROXY) {
-            wrap(this).setY(y);
-        } else {
-            super.setY(y);
         }
     }
 }

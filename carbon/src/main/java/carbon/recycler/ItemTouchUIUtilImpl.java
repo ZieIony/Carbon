@@ -23,8 +23,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchUIUtil;
 import android.view.View;
 
-import com.nineoldandroids.view.ViewHelper;
-
 import carbon.shadow.ShadowView;
 
 
@@ -50,8 +48,8 @@ class ItemTouchUIUtilImpl {
                     view.setTag(R.id.item_touch_helper_previous_elevation, originalElevation);
                 }
             }
-            ViewHelper.setTranslationX(view, dX);
-            ViewHelper.setTranslationY(view, dY);
+            view.setTranslationX(dX);
+            view.setTranslationY(dY);
         }
 
         private float findMaxElevation(RecyclerView recyclerView, View itemView) {
@@ -81,8 +79,8 @@ class ItemTouchUIUtilImpl {
                 }
             }
             view.setTag(R.id.item_touch_helper_previous_elevation, null);
-            ViewHelper.setTranslationX(view, 0f);
-            ViewHelper.setTranslationY(view, 0f);
+            view.setTranslationX(0f);
+            view.setTranslationY(0f);
         }
 
         @Override

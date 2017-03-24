@@ -6,8 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.nineoldandroids.view.ViewHelper;
-
 import carbon.widget.RecyclerView;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
@@ -69,15 +67,15 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             View child = parent.getChildAt(i);
 
             if (orientation == LinearLayoutManager.VERTICAL) {
-                bottom = (int) (child.getBottom() + ViewHelper.getTranslationY(child));
+                bottom = (int) (child.getBottom() + child.getTranslationY());
                 top = bottom - height;
             } else { //horizontal
-                right = (int) (child.getRight() + ViewHelper.getTranslationX(child));
+                right = (int) (child.getRight() + child.getTranslationX());
                 left = right - height;
             }
             c.save(Canvas.CLIP_SAVE_FLAG);
             c.clipRect(left, top, right, bottom);
-            drawable.setAlpha((int) (ViewHelper.getAlpha(child) * 255));
+            drawable.setAlpha((int) (child.getAlpha() * 255));
             drawable.setBounds(left, top, right, bottom);
             drawable.draw(c);
             c.restore();

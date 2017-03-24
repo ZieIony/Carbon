@@ -1,11 +1,9 @@
 package tk.zielony.carbonsamples.demo;
 
-import tk.zielony.carbonsamples.SamplesActivity;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-
-import com.nineoldandroids.animation.ValueAnimator;
 
 import java.util.List;
 
@@ -13,6 +11,7 @@ import carbon.animation.AnimUtils;
 import carbon.internal.MathUtils;
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 /**
  * Created by Marcin on 2015-04-24.

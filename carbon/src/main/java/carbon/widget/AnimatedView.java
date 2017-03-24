@@ -1,6 +1,6 @@
 package carbon.widget;
 
-import com.nineoldandroids.animation.Animator;
+import android.animation.Animator;
 
 import carbon.animation.AnimUtils;
 

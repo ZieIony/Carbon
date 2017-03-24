@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
@@ -15,8 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-
-import com.nineoldandroids.animation.ValueAnimator;
 
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -109,24 +108,18 @@ public class BottomBar extends FrameLayout {
         ValueAnimator animator = ValueAnimator.ofFloat(1, getResources().getDimension(R.dimen.carbon_bottomBarActiveTextSize) / getResources().getDimension(R.dimen.carbon_bottomBarInactiveTextSize));
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                text.setScaleX((Float) animation.getAnimatedValue());
-                text.setScaleY((Float) animation.getAnimatedValue());
-                text.postInvalidate();
-            }
+        animator.addUpdateListener(animation -> {
+            text.setScaleX((Float) animation.getAnimatedValue());
+            text.setScaleY((Float) animation.getAnimatedValue());
+            text.postInvalidate();
         });
         animator.start();
         ValueAnimator animator2 = ValueAnimator.ofFloat(0, -getResources().getDimension(R.dimen.carbon_1dip) * 2);
         animator2.setDuration(200);
         animator2.setInterpolator(new DecelerateInterpolator());
-        animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                icon.setTranslationY((Float) animation.getAnimatedValue());
-                icon.postInvalidate();
-            }
+        animator2.addUpdateListener(animation -> {
+            icon.setTranslationY((Float) animation.getAnimatedValue());
+            icon.postInvalidate();
         });
         animator2.start();
     }
@@ -139,24 +132,18 @@ public class BottomBar extends FrameLayout {
         ValueAnimator animator = ValueAnimator.ofFloat(getResources().getDimension(R.dimen.carbon_bottomBarActiveTextSize) / getResources().getDimension(R.dimen.carbon_bottomBarInactiveTextSize), 1);
         animator.setDuration(200);
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                text.setScaleX((Float) animation.getAnimatedValue());
-                text.setScaleY((Float) animation.getAnimatedValue());
-                text.postInvalidate();
-            }
+        animator.addUpdateListener(animation -> {
+            text.setScaleX((Float) animation.getAnimatedValue());
+            text.setScaleY((Float) animation.getAnimatedValue());
+            text.postInvalidate();
         });
         animator.start();
         ValueAnimator animator2 = ValueAnimator.ofFloat(-getResources().getDimension(R.dimen.carbon_1dip) * 2, 0);
         animator2.setDuration(200);
         animator2.setInterpolator(new DecelerateInterpolator());
-        animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                icon.setTranslationY((Float) animation.getAnimatedValue());
-                icon.postInvalidate();
-            }
+        animator2.addUpdateListener(animation -> {
+            icon.setTranslationY((Float) animation.getAnimatedValue());
+            icon.postInvalidate();
         });
         animator2.start();
     }

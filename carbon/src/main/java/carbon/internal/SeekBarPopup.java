@@ -1,5 +1,7 @@
 package carbon.internal;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -7,10 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.view.ViewHelper;
 
 import carbon.R;
 import carbon.widget.FrameLayout;
@@ -45,7 +43,7 @@ public class SeekBarPopup extends PopupWindow {
     public void update(int x, int y) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         super.update(0, y, wm.getDefaultDisplay().getWidth(), contentView.getMeasuredHeight());
-        ViewHelper.setTranslationX(bubble, x);
+        bubble.setTranslationX(x);
     }
 
     public boolean show(View anchor) {

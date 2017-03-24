@@ -1,15 +1,13 @@
 package carbon.drawable.ripple;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.util.FloatProperty;
 
 /**
  * Draws a ripple background.

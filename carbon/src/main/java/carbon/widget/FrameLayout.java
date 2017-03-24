@@ -1,5 +1,9 @@
 package carbon.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -27,12 +31,7 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
-import android.view.animation.Interpolator;
 import android.view.animation.Transformation;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +46,6 @@ import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
-import carbon.internal.MatrixHelper;
 import carbon.internal.PercentLayoutHelper;
 import carbon.internal.Reveal;
 import carbon.recycler.Component;
@@ -55,9 +53,6 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
-
-import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
-import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 
 /**
  * Created by Marcin on 2014-11-20.
@@ -148,42 +143,36 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
     @Override
     public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-            android.animation.Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.start();
             return new Animator() {
                 @Override
-                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
                 public long getStartDelay() {
                     return circularReveal.getStartDelay();
                 }
 
                 @Override
-                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
                 public void setStartDelay(long startDelay) {
                     circularReveal.setStartDelay(startDelay);
                 }
 
                 @Override
-                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
                 public Animator setDuration(long duration) {
                     circularReveal.setDuration(duration);
                     return this;
                 }
 
                 @Override
-                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
                 public long getDuration() {
                     return circularReveal.getDuration();
                 }
 
                 @Override
-                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-                public void setInterpolator(Interpolator value) {
+                public void setInterpolator(TimeInterpolator value) {
                     circularReveal.setInterpolator(value);
                 }
 
                 @Override
-                @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
                 public boolean isRunning() {
                     return circularReveal.isRunning();
                 }
@@ -279,7 +268,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
                 int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
                 canvas.translate(child.getLeft(), child.getTop());
-                canvas.concat(MatrixHelper.getMatrix(child));
+                canvas.concat(child.getMatrix());
                 rippleDrawable.draw(canvas);
                 canvas.restoreToCount(saveCount);
             }
@@ -642,7 +631,7 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
 
         paint.setAlpha((int) (Shadow.ALPHA * alpha));
 
-        Matrix matrix = MatrixHelper.getMatrix(this);
+        Matrix matrix = getMatrix();
 
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
@@ -1253,176 +1242,5 @@ public class FrameLayout extends android.widget.FrameLayout implements ShadowVie
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
-    }
-
-
-    // -------------------------------
-    // transformations
-    // -------------------------------
-
-    public float getAlpha() {
-        return NEEDS_PROXY ? wrap(this).getAlpha() : super.getAlpha();
-    }
-
-    public void setAlpha(float alpha) {
-        if (NEEDS_PROXY) {
-            wrap(this).setAlpha(alpha);
-        } else {
-            super.setAlpha(alpha);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getPivotX() {
-        return NEEDS_PROXY ? wrap(this).getPivotX() : super.getPivotX();
-    }
-
-    public void setPivotX(float pivotX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setPivotX(pivotX);
-        } else {
-            super.setPivotX(pivotX);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getPivotY() {
-        return NEEDS_PROXY ? wrap(this).getPivotY() : super.getPivotY();
-    }
-
-    public void setPivotY(float pivotY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setPivotY(pivotY);
-        } else {
-            super.setPivotY(pivotY);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getRotation() {
-        return NEEDS_PROXY ? wrap(this).getRotation() : super.getRotation();
-    }
-
-    public void setRotation(float rotation) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotation(rotation);
-        } else {
-            super.setRotation(rotation);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getRotationX() {
-        return NEEDS_PROXY ? wrap(this).getRotationX() : super.getRotationX();
-    }
-
-    public void setRotationX(float rotationX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotationX(rotationX);
-        } else {
-            super.setRotationX(rotationX);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getRotationY() {
-        return NEEDS_PROXY ? wrap(this).getRotationY() : super.getRotationY();
-    }
-
-    public void setRotationY(float rotationY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotationY(rotationY);
-        } else {
-            super.setRotationY(rotationY);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getScaleX() {
-        return NEEDS_PROXY ? wrap(this).getScaleX() : super.getScaleX();
-    }
-
-    public void setScaleX(float scaleX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setScaleX(scaleX);
-        } else {
-            super.setScaleX(scaleX);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getScaleY() {
-        return NEEDS_PROXY ? wrap(this).getScaleY() : super.getScaleY();
-    }
-
-    public void setScaleY(float scaleY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setScaleY(scaleY);
-        } else {
-            super.setScaleY(scaleY);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getTranslationX() {
-        return NEEDS_PROXY ? wrap(this).getTranslationX() : super.getTranslationX();
-    }
-
-    public void setTranslationX(float translationX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setTranslationX(translationX);
-        } else {
-            super.setTranslationX(translationX);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getTranslationY() {
-        return NEEDS_PROXY ? wrap(this).getTranslationY() : super.getTranslationY();
-    }
-
-    public void setTranslationY(float translationY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setTranslationY(translationY);
-        } else {
-            super.setTranslationY(translationY);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getX() {
-        return NEEDS_PROXY ? wrap(this).getX() : super.getX();
-    }
-
-    public void setX(float x) {
-        if (NEEDS_PROXY) {
-            wrap(this).setX(x);
-        } else {
-            super.setX(x);
-        }
-    }
-
-    public float getY() {
-        return NEEDS_PROXY ? wrap(this).getY() : super.getY();
-    }
-
-    public void setY(float y) {
-        if (NEEDS_PROXY) {
-            wrap(this).setY(y);
-        } else {
-            super.setY(y);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
     }
 }

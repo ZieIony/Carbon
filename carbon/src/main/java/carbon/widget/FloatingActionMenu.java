@@ -1,5 +1,7 @@
 package carbon.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -14,9 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -110,11 +109,8 @@ public class FloatingActionMenu extends PopupWindow {
 
         for (int i = 0; i < menu.size(); i++) {
             final int finalI = i;
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    content.getChildAt(finalI).setVisibility(View.VISIBLE);
-                }
+            handler.postDelayed(() -> {
+                content.getChildAt(finalI).setVisibility(View.VISIBLE);
             }, top ? i * 50 : (menu.size() - 1 - i) * 50);
         }
 

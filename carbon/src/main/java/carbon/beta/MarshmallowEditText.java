@@ -1,6 +1,5 @@
 package carbon.beta;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.Parcel;
@@ -142,7 +141,6 @@ public class MarshmallowEditText extends EditText {
     }
 
     @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public ActionMode startActionMode(final ActionMode.Callback callback) {
         ActionMode.Callback c = new ActionMode.Callback() {
 
@@ -168,7 +166,6 @@ public class MarshmallowEditText extends EditText {
     }
 
     @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public ActionMode startActionMode(final ActionMode.Callback callback, int type) {
         ActionMode.Callback c = new ActionMode.Callback() {
 

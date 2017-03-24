@@ -1,12 +1,11 @@
 package carbon.animation;
 
+import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.StateSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
-
-import com.nineoldandroids.animation.ValueAnimator;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

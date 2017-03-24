@@ -1,10 +1,9 @@
 package carbon.animation;
 
+import android.animation.Animator;
 import android.util.StateSet;
 import android.view.View;
 import android.view.animation.Animation;
-
-import com.nineoldandroids.animation.Animator;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

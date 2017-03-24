@@ -1,5 +1,9 @@
 package carbon.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -12,12 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,17 +56,17 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         if (swipeToDismiss && animator == null && getParent() != null) {
             swipe = e2.getX() - e1.getX();
-            ViewHelper.setTranslationX(content, swipe);
-            ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(swipe) / content.getMeasuredWidth()));
+            content.setTranslationX(swipe);
+            content.setAlpha(Math.max(0, 1 - 2 * Math.abs(swipe) / content.getMeasuredWidth()));
             if (Math.abs(swipe) > content.getMeasuredWidth() / 4) {
                 handler.removeCallbacks(hideRunnable);
                 animator = ObjectAnimator.ofFloat(swipe, content.getMeasuredWidth() / 2.0f * Math.signum(swipe));
                 animator.setDuration(200);
                 animator.addUpdateListener(valueAnimator -> {
                     float s = (Float) valueAnimator.getAnimatedValue();
-                    ViewHelper.setTranslationX(content, s);
+                    content.setTranslationX(s);
                     float alpha = Math.max(0, 1 - 2 * Math.abs((Float) valueAnimator.getAnimatedValue()) / content.getMeasuredWidth());
-                    ViewHelper.setAlpha(content, alpha);
+                    content.setAlpha(alpha);
                 });
                 animator.start();
                 animator.addListener(new AnimatorListenerAdapter() {
@@ -84,7 +82,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     animator.setInterpolator(new DecelerateInterpolator());
                     animator.addUpdateListener(valueAnimator -> {
                         MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                        ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                        pushedView.setTranslationY((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                         if (pushedView.getParent() != null)
                             ((View) pushedView.getParent()).postInvalidate();
                     });
@@ -177,7 +175,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                 container.getDrawingRect(drawingRect);
                 setPadding(0, 0, 0, drawingRect.bottom - windowFrame.bottom);
                 container.addView(this);
-                ViewHelper.setAlpha(content, 0);
+                content.setAlpha(0);
                 AnimUtils.flyIn(content, null);
                 for (final View pushedView : pushedViews) {
                     ValueAnimator animator = ValueAnimator.ofFloat(0, -1);
@@ -185,7 +183,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     animator.setInterpolator(new DecelerateInterpolator());
                     animator.addUpdateListener(valueAnimator -> {
                         MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                        ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                        pushedView.setTranslationY((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                         if (pushedView.getParent() != null)
                             ((View) pushedView.getParent()).postInvalidate();
                     });
@@ -222,7 +220,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                 animator.setInterpolator(new DecelerateInterpolator());
                 animator.addUpdateListener(valueAnimator -> {
                     MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                    ViewHelper.setTranslationY(pushedView, (content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
+                    pushedView.setTranslationY((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
                     if (pushedView.getParent() != null)
                         ((View) pushedView.getParent()).postInvalidate();
                 });
@@ -335,7 +333,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     if (animator != null) {
                         animator.cancel();
                         animator = null;
-                        swipe = ViewHelper.getTranslationX(content);
+                        swipe = content.getTranslationX();
                     }
                     return true;
                 } else if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && animator == null) {
@@ -343,8 +341,8 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     animator.setDuration(200);
                     animator.addUpdateListener(animation -> {
                         float s = (Float) animation.getAnimatedValue();
-                        ViewHelper.setTranslationX(content, s);
-                        ViewHelper.setAlpha(content, Math.max(0, 1 - 2 * Math.abs(s) / content.getWidth()));
+                        content.setTranslationX(s);
+                        content.setAlpha(Math.max(0, 1 - 2 * Math.abs(s) / content.getWidth()));
                         postInvalidate();
                     });
                     animator.start();

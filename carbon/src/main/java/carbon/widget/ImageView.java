@@ -1,12 +1,13 @@
 package carbon.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -25,11 +26,6 @@ import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
-
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
@@ -40,14 +36,10 @@ import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.internal.MatrixHelper;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
-
-import static com.nineoldandroids.view.animation.AnimatorProxy.NEEDS_PROXY;
-import static com.nineoldandroids.view.animation.AnimatorProxy.wrap;
 
 /**
  * Created by Marcin on 2015-01-22.
@@ -249,8 +241,8 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             a.getTransformation(getDrawingTime(), t);
             float[] loc = new float[]{event.getX(), event.getY()};
             //t.getMatrix().mapPoints(loc);
-            loc[0] -= ViewHelper.getTranslationX(this);
-            loc[1] -= ViewHelper.getTranslationY(this);
+            loc[0] -= getTranslationX();
+            loc[1] -= getTranslationY();
             event.setLocation(loc[0], loc[1]);
             // Log.e("mapped loc", "" + loc[0] + ", " + loc[1]);
         }
@@ -493,7 +485,7 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
 
         paint.setAlpha((int) (Shadow.ALPHA * alpha));
 
-        Matrix matrix = MatrixHelper.getMatrix(this);
+        Matrix matrix = getMatrix();
 
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
@@ -591,10 +583,10 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
                 a.getTransformation(System.currentTimeMillis(), t);
                 float[] loc = new float[]{outRect.left, outRect.top, outRect.right, outRect.bottom};
                 //t.getMatrix().mapPoints(loc);
-                loc[0] += ViewHelper.getTranslationX(this);
-                loc[1] += ViewHelper.getTranslationY(this);
-                loc[2] += ViewHelper.getTranslationX(this);
-                loc[3] += ViewHelper.getTranslationY(this);
+                loc[0] += getTranslationX();
+                loc[1] += getTranslationY();
+                loc[2] += getTranslationX();
+                loc[3] += getTranslationY();
                 outRect.set((int) loc[0], (int) loc[1], (int) loc[2], (int) loc[3]);
             }
             return;
@@ -605,10 +597,10 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             a.getTransformation(System.currentTimeMillis(), t);
             float[] loc = new float[]{outRect.left, outRect.top, outRect.right, outRect.bottom};
             //t.getMatrix().mapPoints(loc);
-            loc[0] += ViewHelper.getTranslationX(this);
-            loc[1] += ViewHelper.getTranslationY(this);
-            loc[2] += ViewHelper.getTranslationX(this);
-            loc[3] += ViewHelper.getTranslationY(this);
+            loc[0] += getTranslationX();
+            loc[1] += getTranslationY();
+            loc[2] += getTranslationX();
+            loc[3] += getTranslationY();
             outRect.set((int) loc[0], (int) loc[1], (int) loc[2], (int) loc[3]);
         }
     }
@@ -814,177 +806,6 @@ public class ImageView extends android.widget.ImageView implements ShadowView, R
             setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
         if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
-    }
-
-
-    // -------------------------------
-    // transformations
-    // -------------------------------
-
-    public float getAlpha() {
-        return NEEDS_PROXY ? wrap(this).getAlpha() : super.getAlpha();
-    }
-
-    public void setAlpha(float alpha) {
-        if (NEEDS_PROXY) {
-            wrap(this).setAlpha(alpha);
-        } else {
-            super.setAlpha(alpha);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getPivotX() {
-        return NEEDS_PROXY ? wrap(this).getPivotX() : super.getPivotX();
-    }
-
-    public void setPivotX(float pivotX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setPivotX(pivotX);
-        } else {
-            super.setPivotX(pivotX);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getPivotY() {
-        return NEEDS_PROXY ? wrap(this).getPivotY() : super.getPivotY();
-    }
-
-    public void setPivotY(float pivotY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setPivotY(pivotY);
-        } else {
-            super.setPivotY(pivotY);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getRotation() {
-        return NEEDS_PROXY ? wrap(this).getRotation() : super.getRotation();
-    }
-
-    public void setRotation(float rotation) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotation(rotation);
-        } else {
-            super.setRotation(rotation);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getRotationX() {
-        return NEEDS_PROXY ? wrap(this).getRotationX() : super.getRotationX();
-    }
-
-    public void setRotationX(float rotationX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotationX(rotationX);
-        } else {
-            super.setRotationX(rotationX);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getRotationY() {
-        return NEEDS_PROXY ? wrap(this).getRotationY() : super.getRotationY();
-    }
-
-    public void setRotationY(float rotationY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setRotationY(rotationY);
-        } else {
-            super.setRotationY(rotationY);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getScaleX() {
-        return NEEDS_PROXY ? wrap(this).getScaleX() : super.getScaleX();
-    }
-
-    public void setScaleX(float scaleX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setScaleX(scaleX);
-        } else {
-            super.setScaleX(scaleX);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getScaleY() {
-        return NEEDS_PROXY ? wrap(this).getScaleY() : super.getScaleY();
-    }
-
-    public void setScaleY(float scaleY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setScaleY(scaleY);
-        } else {
-            super.setScaleY(scaleY);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getTranslationX() {
-        return NEEDS_PROXY ? wrap(this).getTranslationX() : super.getTranslationX();
-    }
-
-    public void setTranslationX(float translationX) {
-        if (NEEDS_PROXY) {
-            wrap(this).setTranslationX(translationX);
-        } else {
-            super.setTranslationX(translationX);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getTranslationY() {
-        return NEEDS_PROXY ? wrap(this).getTranslationY() : super.getTranslationY();
-    }
-
-    public void setTranslationY(float translationY) {
-        if (NEEDS_PROXY) {
-            wrap(this).setTranslationY(translationY);
-        } else {
-            super.setTranslationY(translationY);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
-    }
-
-    public float getX() {
-        return NEEDS_PROXY ? wrap(this).getX() : super.getX();
-    }
-
-    public void setX(float x) {
-        if (NEEDS_PROXY) {
-            wrap(this).setX(x);
-        } else {
-            super.setX(x);
-        }
-    }
-
-    public float getY() {
-        return NEEDS_PROXY ? wrap(this).getY() : super.getY();
-    }
-
-    public void setY(float y) {
-        if (NEEDS_PROXY) {
-            wrap(this).setY(y);
-        } else {
-            super.setY(y);
-        }
-        if (elevation + translationZ > 0 && getParent() != null && getParent() instanceof View)
-            ((View) getParent()).invalidate();
     }
 
 

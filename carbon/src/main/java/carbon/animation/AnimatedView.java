@@ -1,6 +1,6 @@
 package carbon.animation;
 
-import com.nineoldandroids.animation.Animator;
+import android.animation.Animator;
 
 /**
  * Created by Marcin on 2014-11-30.

@@ -3,8 +3,6 @@ package tk.zielony.carbonsamples.feature.scroll;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.nineoldandroids.view.ViewHelper;
-
 import carbon.internal.MathUtils;
 import carbon.widget.LinearLayout;
 
@@ -26,7 +24,7 @@ public class ScrollChildView extends LinearLayout implements ScrollChild {
     @Override
     public int onNestedScrollByY(int y) {
         this.nestedScrollY = MathUtils.constrain(nestedScrollY + y / 2, 0, getNestedScrollRange());
-        ViewHelper.setTranslationY(getChildAt(0), -nestedScrollY);
+        getChildAt(0).setTranslationY(-nestedScrollY);
         return 0;
     }
 

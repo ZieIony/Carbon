@@ -1,10 +1,9 @@
 package carbon.drawable.ripple;
 
+import android.animation.Animator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-
-import com.nineoldandroids.animation.Animator;
 
 /**
  * Abstract class that handles hardware/software hand-off and lifecycle for
