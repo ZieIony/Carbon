@@ -283,6 +283,8 @@
         <item name="android:background">#00000000</item>
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">#00000000</item>
+
+        <item name="carbon_autoSizeStepGranularity">1sp</item>
     </style>
 
     <style name="carbon_Button.Flat">
@@ -324,6 +326,8 @@
 
         <item name="carbon_labelTextSize">@dimen/carbon_textSizeCaption</item>
         <item name="carbon_labelFontFamily">"sans-serif"</item>
+
+        <item name="carbon_autoSizeStepGranularity">1sp</item>
     </style>
 
     <style name="carbon_CollapsingToolbarLayout">
@@ -488,6 +492,8 @@
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">#00000000</item>
         <item name="carbon_backgroundTint">#00000000</item>
+
+        <item name="carbon_autoSizeStepGranularity">1sp</item>
     </style>
 
     <style name="carbon_DropDown" parent="carbon_EditText">

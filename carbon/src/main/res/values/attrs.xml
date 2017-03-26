@@ -179,6 +179,14 @@
         <enum name="center_vertical" value="0x00000010" />
     </attr>
 
+    <attr name="carbon_autoSizeText" format="enum">
+        <enum name="none" value="0" />
+        <enum name="uniform" value="1" />
+    </attr>
+    <attr name="carbon_autoSizeMinTextSize" format="dimension" />
+    <attr name="carbon_autoSizeMaxTextSize" format="dimension" />
+    <attr name="carbon_autoSizeStepGranularity" format="dimension" />
+
 
     <!-- Component -->
     <declare-styleable name="ComponentView">
@@ -244,6 +252,11 @@
         <attr name="carbon_strokeWidth" />
 
         <attr name="carbon_htmlText" />
+
+        <attr name="carbon_autoSizeText" />
+        <attr name="carbon_autoSizeMinTextSize" />
+        <attr name="carbon_autoSizeMaxTextSize" />
+        <attr name="carbon_autoSizeStepGranularity" />
     </declare-styleable>
 
 
@@ -285,6 +298,11 @@
         <attr name="carbon_strokeWidth" />
 
         <attr name="carbon_htmlText" />
+
+        <attr name="carbon_autoSizeText" />
+        <attr name="carbon_autoSizeMinTextSize" />
+        <attr name="carbon_autoSizeMaxTextSize" />
+        <attr name="carbon_autoSizeStepGranularity" />
     </declare-styleable>
 
     <!-- TextMarker -->
@@ -849,7 +867,13 @@
         <attr name="carbon_cursorColor" format="color" />
         <attr name="android:textAppearance" />
         <attr name="carbon_matchingView" format="reference" />
+
         <attr name="carbon_htmlText" />
+
+        <attr name="carbon_autoSizeText" />
+        <attr name="carbon_autoSizeMinTextSize" />
+        <attr name="carbon_autoSizeMaxTextSize" />
+        <attr name="carbon_autoSizeStepGranularity" />
     </declare-styleable>
 
     <attr name="carbon_dropDownStyle" format="reference" />

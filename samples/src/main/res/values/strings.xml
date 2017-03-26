@@ -15,6 +15,7 @@
     <string name="recentsActivity_title">Recents</string>
     <string name="tabsActivity_title">Tabs</string>
     <string name="textFieldsActivity_title">Text fields</string>
+    <string name="autoSizeTextActivity_title">Auto size text</string>
     <string name="svgActivity_title">SVG icons</string>
     <string name="snackbarActivity_title">Snackbar</string>
     <string name="progressBarsActivity_title">Progress bars</string>

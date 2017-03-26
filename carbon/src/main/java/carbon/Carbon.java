@@ -23,6 +23,8 @@ import carbon.drawable.ripple.RippleDrawableLollipop;
 import carbon.drawable.ripple.RippleDrawableMarshmallow;
 import carbon.drawable.ripple.RippleView;
 import carbon.shadow.ShadowView;
+import carbon.widget.AutoSizeTextMode;
+import carbon.widget.AutoSizeTextView;
 import carbon.widget.InsetView;
 import carbon.widget.MaxSizeView;
 import carbon.widget.StateAnimatorView;
@@ -256,4 +258,14 @@ public class Carbon {
         view.setStrokeWidth(a.getDimension(carbon_strokeWidth, 0));
     }
 
+    public static void initAutoSizeText(AutoSizeTextView view, TypedArray a, int[] ids) {
+        int carbon_autoSizeText = ids[0];
+        int carbon_autoSizeMinTextSize = ids[1];
+        int carbon_autoSizeMaxTextSize = ids[2];
+        int carbon_autoSizeStepGranularity = ids[3];
+        view.setAutoSizeText(AutoSizeTextMode.values()[a.getInt(carbon_autoSizeText, 0)]);
+        view.setMinTextSize(a.getDimension(carbon_autoSizeMinTextSize, 0));
+        view.setMaxTextSize(a.getDimension(carbon_autoSizeMaxTextSize, 0));
+        view.setAutoSizeStepGranularity(a.getDimension(carbon_autoSizeStepGranularity, 1));
+    }
 }

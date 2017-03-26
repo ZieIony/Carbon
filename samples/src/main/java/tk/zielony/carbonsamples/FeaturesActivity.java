@@ -1,12 +1,12 @@
 package tk.zielony.carbonsamples;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.feature.AnchorActivity;
+import tk.zielony.carbonsamples.feature.AutoSizeTextActivity;
 import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
 import tk.zielony.carbonsamples.feature.HtmlActivity;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
@@ -32,6 +32,7 @@ public class FeaturesActivity extends SamplesActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
+                new ViewModel(AutoSizeTextActivity.class, getString(R.string.autoSizeTextActivity_title)),
                 new ViewModel(ScrollFlagsActivity.class, getString(R.string.dependencyLayoutActivity_title)),
                 new ViewModel(HtmlActivity.class, getString(R.string.htmlActivity_title)),
                 new ViewModel(RobotoActivity.class, getString(R.string.robotoActivity_title)),

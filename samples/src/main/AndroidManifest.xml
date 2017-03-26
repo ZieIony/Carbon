@@ -107,6 +107,9 @@
             android:label="@string/app_name" />
 
         <activity
+            android:name=".feature.AutoSizeTextActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".feature.ScrollFlagsActivity"
             android:label="@string/app_name" />
         <activity

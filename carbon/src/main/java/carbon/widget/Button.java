@@ -20,6 +20,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -50,8 +53,8 @@ import carbon.shadow.ShadowView;
  * <p/>
  * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other material features.
  */
-public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, StrokeView {
-    protected Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, StrokeView, AutoSizeTextView {
+    protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
         super(context);
@@ -112,6 +115,12 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
             R.styleable.Button_carbon_elevation,
             R.styleable.Button_carbon_elevationShadowColor
     };
+    private static int[] autoSizeTextIds = new int[]{
+            R.styleable.Button_carbon_autoSizeText,
+            R.styleable.Button_carbon_autoSizeMinTextSize,
+            R.styleable.Button_carbon_autoSizeMaxTextSize,
+            R.styleable.Button_carbon_autoSizeStepGranularity
+    };
 
     private void initButton(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, R.style.carbon_Button);
@@ -148,6 +157,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         Carbon.initHtmlText(this, a, R.styleable.Button_carbon_htmlText);
         Carbon.initStroke(this, a, strokeIds);
         setCornerRadius(a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
+        Carbon.initAutoSizeText(this, a, autoSizeTextIds);
 
         a.recycle();
     }
@@ -911,5 +921,186 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
     @Override
     public float getStrokeWidth() {
         return strokeWidth;
+    }
+
+
+    // -------------------------------
+    // auto size
+    // -------------------------------
+
+    private AutoSizeTextMode autoSizeText = AutoSizeTextMode.None;
+    private float minTextSize, maxTextSize, autoSizeStepGranularity;
+    private float[] autoSizeStepPresets;
+
+    private RectF textRect = new RectF();
+    private RectF availableSpaceRect = new RectF();
+    private float spacingMult = 1.0f;
+    private float spacingAdd = 0.0f;
+    private int maxLines = -1;
+
+    @NonNull
+    public AutoSizeTextMode getAutoSizeText() {
+        return autoSizeText;
+    }
+
+    public void setAutoSizeText(@NonNull AutoSizeTextMode autoSizeText) {
+        this.autoSizeText = autoSizeText;
+        adjustTextSize();
+    }
+
+    @Override
+    public void setText(final CharSequence text, BufferType type) {
+        super.setText(text, type);
+        adjustTextSize();
+    }
+
+    @Override
+    public void setTextSize(float size) {
+        super.setTextSize(size);
+        adjustTextSize();
+    }
+
+    @Override
+    public void setMaxLines(int maxLines) {
+        super.setMaxLines(maxLines);
+        this.maxLines = maxLines;
+        adjustTextSize();
+    }
+
+    @Override
+    public void setSingleLine() {
+        super.setSingleLine();
+        adjustTextSize();
+    }
+
+    @Override
+    public void setSingleLine(boolean singleLine) {
+        super.setSingleLine(singleLine);
+        if (!singleLine)
+            super.setMaxLines(-1);
+        adjustTextSize();
+    }
+
+    @Override
+    public void setLines(int lines) {
+        super.setLines(lines);
+        adjustTextSize();
+    }
+
+    @Override
+    public void setTextSize(int unit, float size) {
+        super.setTextSize(unit, size);
+        adjustTextSize();
+    }
+
+    @Override
+    public void setLineSpacing(float add, float mult) {
+        super.setLineSpacing(add, mult);
+        spacingMult = mult;
+        spacingAdd = add;
+    }
+
+    private void initAutoSize() {
+        if (autoSizeText == AutoSizeTextMode.Uniform && minTextSize > 0 && maxTextSize > 0) {
+            autoSizeStepPresets = new float[(int) Math.ceil((maxTextSize - minTextSize) / autoSizeStepGranularity) + 1];
+            for (int i = 0; i < autoSizeStepPresets.length - 1; i++)
+                autoSizeStepPresets[i] = minTextSize + autoSizeStepGranularity * i;
+            autoSizeStepPresets[autoSizeStepPresets.length - 1] = maxTextSize;
+        }
+    }
+
+    public float getMinTextSize() {
+        return minTextSize;
+    }
+
+    public void setMinTextSize(float minTextSize) {
+        this.minTextSize = minTextSize;
+        autoSizeStepPresets = null;
+        adjustTextSize();
+    }
+
+    public float getMaxTextSize() {
+        return maxTextSize;
+    }
+
+    public float getAutoSizeStepGranularity() {
+        return autoSizeStepGranularity;
+    }
+
+    public void setAutoSizeStepGranularity(float autoSizeStepGranularity) {
+        this.autoSizeStepGranularity = autoSizeStepGranularity;
+        autoSizeStepPresets = null;
+        adjustTextSize();
+    }
+
+    public void setMaxTextSize(float maxTextSize) {
+        this.maxTextSize = maxTextSize;
+        autoSizeStepPresets = null;
+        adjustTextSize();
+    }
+
+    private void adjustTextSize() {
+        if (autoSizeText == AutoSizeTextMode.None || minTextSize <= 0 || maxTextSize <= 0 || getMeasuredWidth() == 0 || getMeasuredHeight() == 0)
+            return;
+        if (autoSizeStepPresets == null)
+            initAutoSize();
+        availableSpaceRect.right = getMeasuredWidth() - getCompoundPaddingLeft() - getCompoundPaddingRight();
+        availableSpaceRect.bottom = getMeasuredHeight() - getCompoundPaddingBottom() - getCompoundPaddingTop();
+        super.setTextSize(TypedValue.COMPLEX_UNIT_PX, binarySearch(availableSpaceRect));
+    }
+
+    private float binarySearch(RectF availableSpace) {
+        int lastBest = 0;
+        int lo = 0;
+        int hi = autoSizeStepPresets.length - 1;
+        int mid;
+//        for (int i = 0; i < autoSizeStepPresets.length; i++) {
+//            if (testSize(autoSizeStepPresets[i], availableSpace)) {
+//                lastBest = i;
+//            } else {
+//                break;
+//            }
+//        }
+        while (lo <= hi) {
+            mid = (lo + hi) / 2;
+            boolean fits = testSize(autoSizeStepPresets[mid], availableSpace);
+            if (fits) {
+                lastBest = mid;
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return autoSizeStepPresets[lastBest];
+
+    }
+
+    public boolean testSize(float suggestedSize, RectF availableSpace) {
+        paint.setTextSize(suggestedSize);
+        paint.setTypeface(getTypeface());
+        String text = getText().toString();
+        if (maxLines == 1) {
+            textRect.bottom = paint.getFontSpacing();
+            textRect.right = paint.measureText(text);
+            return availableSpace.width() >= textRect.right && availableSpace.height() >= textRect.bottom;
+        } else {
+            StaticLayout layout = new StaticLayout(text, paint, (int) availableSpace.right, Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
+            if (maxLines != -1 && layout.getLineCount() > maxLines)
+                return false;
+            return availableSpace.width() >= layout.getWidth() && availableSpace.height() >= layout.getHeight();
+        }
+    }
+
+    @Override
+    protected void onTextChanged(final CharSequence text, final int start, final int before, final int after) {
+        super.onTextChanged(text, start, before, after);
+        adjustTextSize();
+    }
+
+    @Override
+    protected void onSizeChanged(int width, int height, int oldwidth, int oldheight) {
+        super.onSizeChanged(width, height, oldwidth, oldheight);
+        if (width != oldwidth || height != oldheight)
+            adjustTextSize();
     }
 }
