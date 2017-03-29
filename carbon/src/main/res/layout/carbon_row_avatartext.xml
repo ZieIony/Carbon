@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:clickable="true"
-        app:carbon_rippleColor="?attr/carbon_colorRipple">
+        app:carbon_rippleColor="?attr/carbon_rippleColor">
 
         <carbon.widget.ImageView
             style="@style/carbon_ImageView.Avatar"

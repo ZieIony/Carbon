@@ -7,6 +7,8 @@
     android:orientation="vertical"
     app:carbon_insetColor="?attr/colorPrimary">
 
+    <include layout="@layout/view_debugtoolbar" />
+
     <carbon.widget.TextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"

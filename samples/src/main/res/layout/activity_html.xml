@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/view_debugtoolbar" />
+
     <carbon.widget.TextView
         style="@style/sectionDescription"
         android:text="Carbon adds 'carbon_htmlText' attribute to all text widgets. With it you can set html text right from xml" />

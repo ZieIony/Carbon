@@ -21,15 +21,4 @@ public class DefaultAccentColorStateList extends ColorStateList {
                 Carbon.getThemeColor(context, R.attr.colorAccent)
         });
     }
-
-    /**
-     * @param context context
-     * @param attr    attribute to get from the current theme
-     * @return color from the current theme
-     * @deprecated use {@link carbon.Carbon#getThemeColor(Context, int)} instead. This method was duplicated in all ColorStateList implementations
-     */
-    @Deprecated
-    public static int getThemeColor(Context context, int attr) {
-        return Carbon.getThemeColor(context, attr);
-    }
 }

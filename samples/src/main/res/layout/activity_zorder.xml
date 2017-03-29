@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/view_debugtoolbar" />
+
     <carbon.widget.TextView
         android:text="Carbon correctly handles z-order of views placed inside Carbon layouts. Elevation is added to the static z value and affects z-order as well"
         style="@style/sectionDescription" />

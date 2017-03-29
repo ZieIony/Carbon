@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:padding="@dimen/carbon_paddingHalf"
     app:carbon_insetColor="?attr/colorPrimary">
+
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.beta.TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:carbon_elevation="@dimen/carbon_elevationCard" />
+        android:layout_height="match_parent" />
 </carbon.widget.LinearLayout>

@@ -1,12 +1,13 @@
 package tk.zielony.carbonsamples.feature;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import carbon.shadow.ShadowView;
 import carbon.widget.Button;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 /**
  * Created by Marcin on 2014-12-15.
@@ -18,6 +19,8 @@ public class ZOrderActivity extends SamplesActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zorder);
+
+        Samples.initToolbar(this, getString(R.string.zOrderActivity_title));
 
         final FrameLayout layout = (FrameLayout) findViewById(R.id.layout);
         Button button = (Button) findViewById(R.id.button);

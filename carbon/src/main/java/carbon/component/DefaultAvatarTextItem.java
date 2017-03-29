@@ -10,6 +10,9 @@ public class DefaultAvatarTextItem implements AvatarTextItem {
     private Drawable avatar;
     private String text;
 
+    public DefaultAvatarTextItem() {
+    }
+
     public DefaultAvatarTextItem(Drawable avatar, String text) {
         this.avatar = avatar;
         this.text = text;

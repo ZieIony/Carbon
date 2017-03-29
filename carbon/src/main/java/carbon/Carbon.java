@@ -204,6 +204,11 @@ public class Carbon {
             textView.setText(Html.fromHtml(string));
     }
 
+    /**
+     * @param context context
+     * @param attr    attribute to get from the current theme
+     * @return color from the current theme
+     */
     public static int getThemeColor(Context context, int attr) {
         Resources.Theme theme = context.getTheme();
         TypedValue typedvalueattr = new TypedValue();

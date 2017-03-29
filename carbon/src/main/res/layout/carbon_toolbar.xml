@@ -28,8 +28,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text=""
-        android:textAppearance="?attr/carbon_textAppearanceTitle"
-        android:visibility="gone" />
+        android:textAppearance="?attr/carbon_textAppearanceTitle" />
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_toolbarContent"
@@ -40,9 +39,9 @@
         android:layoutDirection="locale"
         android:minHeight="@dimen/carbon_toolbarHeight"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingStart="@dimen/carbon_padding"
         android:paddingEnd="@dimen/carbon_toolbarItemMargin"
-        android:paddingRight="@dimen/carbon_toolbarItemMargin" />
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_toolbarItemMargin"
+        android:paddingStart="@dimen/carbon_padding" />
 
 </carbon.widget.LinearLayout>

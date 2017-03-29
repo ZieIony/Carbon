@@ -613,10 +613,16 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         requestLayout();
     }
 
+    /**
+     * @return parallax amount to the header applied when scrolling
+     */
     public float getHeaderParallax() {
         return parallax;
     }
 
+    /**
+     * @param amount parallax amount to apply to the header
+     */
     public void setHeaderParallax(float amount) {
         parallax = amount;
     }
@@ -629,47 +635,17 @@ public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerVi
         headerTint = color;
     }
 
-    public int getHeaderMinHeight() {
-        return minHeader;
-    }
-
-    public void setHeaderMinHeight(int height) {
-        minHeader = height;
-    }
-
-    /**
-     * @return parallax amount to the header applied when scrolling
-     * @deprecated Naming convention change. Use {@link #getHeaderParallax()} instead
-     */
-    @Deprecated
-    public float getParallax() {
-        return parallax;
-    }
-
-    /**
-     * @param amount parallax amount to apply to the header
-     * @deprecated Naming convention change. Use {@link #setHeaderParallax(float)} instead
-     */
-    @Deprecated
-    public void setParallax(float amount) {
-        parallax = amount;
-    }
-
     /**
      * @return min header height
-     * @deprecated Naming convention change. Use {@link #getHeaderMinHeight()} instead
      */
-    @Deprecated
-    public int getMinHeaderHeight() {
+    public int getHeaderMinHeight() {
         return minHeader;
     }
 
     /**
      * @param height min header height
-     * @deprecated Naming convention change. Use {@link #setHeaderMinHeight(int)} instead
      */
-    @Deprecated
-    public void setMinHeaderHeight(int height) {
+    public void setHeaderMinHeight(int height) {
         minHeader = height;
     }
 

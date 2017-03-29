@@ -9,17 +9,6 @@
 
         <attr name="carbon_dividerColor" format="reference|color" />
 
-        <!-- {@deprecated Use carbon_tint instead.} -->
-        <attr name="carbon_edgeEffectColor" format="color|reference" />
-
-        <attr name="carbon_colorRipple" format="reference|color" />
-        <attr name="carbon_colorRippleInverse" format="reference|color" />
-
-        <!-- {@deprecated Use carbon_colorRipple instead.} -->
-        <attr name="carbon_rippleColor" />
-        <!-- {@deprecated Use carbon_colorRippleInverse instead.} -->
-        <attr name="carbon_rippleColorInverse" format="reference|color" />
-
         <attr name="carbon_iconColor" format="reference|color" />
         <attr name="carbon_iconColorInverse" format="reference|color" />
 
@@ -61,7 +50,8 @@
     <attr name="carbon_maxWidth" format="dimension" />
     <attr name="carbon_maxHeight" format="dimension" />
 
-    <attr name="carbon_rippleColor" format="color|reference" />
+    <attr name="carbon_rippleColor" format="reference|color" />
+    <attr name="carbon_rippleColorInverse" format="reference|color" />
     <attr name="carbon_rippleHotspot" format="boolean" />
     <attr name="carbon_rippleStyle" format="enum">
         <enum name="over" value="0" />

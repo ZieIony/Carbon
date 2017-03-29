@@ -252,13 +252,8 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     }
 
     @Override
-    public void setTitle(CharSequence text) {
-        if (text != null) {
-            title.setText(text);
-            title.setVisibility(View.VISIBLE);
-        } else {
-            title.setVisibility(View.GONE);
-        }
+    public void setTitle(@NonNull CharSequence text) {
+        title.setText(text);
     }
 
     @Override
@@ -1171,7 +1166,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar implements Shadow
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
             if (getMeasuredWidth() > maxWidth)
                 widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);

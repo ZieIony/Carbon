@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import tk.zielony.carbonsamples.animation.ImageFadeActivity;
 import tk.zielony.carbonsamples.animation.ListRippleActivity;
 import tk.zielony.carbonsamples.animation.RippleActivity;
-import tk.zielony.carbonsamples.animation.RippleComparisonActivity;
 import tk.zielony.carbonsamples.animation.WidgetAnimationsActivity;
 
 
@@ -27,7 +25,6 @@ public class AnimationsActivity extends SamplesActivity {
                 new ViewModel(WidgetAnimationsActivity.class, getString(R.string.widgetAnimationsActivity_title)),
                 new ViewModel(ImageFadeActivity.class, getString(R.string.imageFadeActivity_title)),
                 new ViewModel(ListRippleActivity.class, getString(R.string.listRippleActivity_title)),
-                new ViewModel(RippleComparisonActivity.class, getString(R.string.rippleComparisonActivity_title), false, true),
                 new ViewModel(RippleActivity.class, getString(R.string.rippleActivity_title))
         };
         recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?

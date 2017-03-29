@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_listItemHeight"
         android:clickable="true"
-        app:carbon_rippleColor="?attr/carbon_colorRipple">
+        app:carbon_rippleColor="?attr/carbon_rippleColor">
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"

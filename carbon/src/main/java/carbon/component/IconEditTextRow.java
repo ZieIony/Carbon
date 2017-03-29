@@ -13,7 +13,7 @@ public class IconEditTextRow extends DataBindingComponent<IconEditTextItem> {
 
     public IconEditTextRow(ViewGroup parent) {
         super(parent, R.layout.carbon_row_iconedittext);
-        editText = (EditText) getView().findViewById(R.id.text);
+        editText = (EditText) getView().findViewById(R.id.carbon_text);
     }
 
     public EditText getEditText() {

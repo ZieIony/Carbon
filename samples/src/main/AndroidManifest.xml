@@ -87,9 +87,6 @@
             android:label="@string/app_name" />
 
         <activity
-            android:name=".animation.RippleComparisonActivity"
-            android:label="@string/app_name" />
-        <activity
             android:name=".animation.ImageFadeActivity"
             android:label="@string/app_name" />
         <activity

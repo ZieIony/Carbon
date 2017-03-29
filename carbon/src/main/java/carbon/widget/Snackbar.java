@@ -104,11 +104,6 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
         return false;
     }
 
-    @Deprecated
-    public interface OnDismissedListener {
-        void onDismissed();
-    }
-
     public interface OnDismissListener {
         void onDismiss();
     }
@@ -369,17 +364,6 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
 
     public void setTapOutsideToDismissEnabled(boolean tapOutsideToDismiss) {
         this.tapOutsideToDismiss = tapOutsideToDismiss;
-    }
-
-    @Deprecated
-    public void setOnDismissedListener(final OnDismissedListener onDismissedListener) {
-        this.onDismissListener = new OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                if (onDismissedListener != null)
-                    onDismissedListener.onDismissed();
-            }
-        };
     }
 
     public void setOnDismissListener(OnDismissListener onDismissListener) {

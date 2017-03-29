@@ -93,21 +93,6 @@ public abstract class ProgressDrawable extends Drawable {
         this.style = style;
     }
 
-    @Deprecated
-    public ColorStateList getBarColor() {
-        return tint;
-    }
-
-    @Deprecated
-    public void setBarColor(int color) {
-        tint = ColorStateList.valueOf(color);
-    }
-
-    @Deprecated
-    public void setBarColor(ColorStateList barColor) {
-        this.tint = barColor;
-    }
-
     public float getBarPadding() {
         return barPadding;
     }
