@@ -18,9 +18,6 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.recycler.ListAdapter;
 
-/**
- * Created by Marcin on 2015-12-18.
- */
 public class TableView extends RecyclerView {
     Map<Class, CellRenderer> cellRenderers = new HashMap<>();
 

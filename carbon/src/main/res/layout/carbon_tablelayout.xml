@@ -57,6 +57,7 @@
             android:id="@+id/carbon_tableRowNumber"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_listItemHeight"
+            app:carbon_mode="fit"
             android:layout_gravity="center_vertical" />
 
         <carbon.widget.TextView

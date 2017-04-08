@@ -1,14 +1,11 @@
 package tk.zielony.carbonsamples.widget;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import carbon.widget.BottomBar;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2016-03-17.
- */
 public class BottomBarActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

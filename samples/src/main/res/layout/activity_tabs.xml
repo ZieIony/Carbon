@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
+
+    <carbon.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        app:carbon_elevation="0dp">
+
+        <carbon.widget.ImageView
+            android:id="@+id/debug"
+            style="@style/carbon_ImageView.IconButton"
+            app:carbon_src="@raw/ic_bug_report_24px" />
+
+        <carbon.widget.CheckBox
+            android:id="@+id/enabled"
+            style="@style/carbon_CheckBox.IconButton"
+            android:checked="true"
+            app:carbon_tint="?attr/carbon_iconColor" />
+    </carbon.widget.Toolbar>
 
     <carbon.widget.PagerTabStrip
-        android:background="?attr/colorPrimary"
         android:id="@+id/pager_title_strip"
-        app:carbon_overScroll="always"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_gravity="top" />
+        android:layout_gravity="top"
+        android:background="?attr/colorPrimary"
+        app:carbon_overScroll="always" />
 
     <carbon.widget.ViewPager
         android:id="@+id/pager"
-        app:carbon_overScroll="always"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:carbon_overScroll="always" />
 </carbon.widget.LinearLayout>

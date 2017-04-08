@@ -12,9 +12,6 @@ import java.util.Arrays;
 
 import carbon.internal.ArgbEvaluator;
 
-/**
- * Created by Marcin on 2016-01-16.
- */
 public class AnimatedColorStateList extends ColorStateList {
     private final int[][] states;
     private int[] currentState = null;

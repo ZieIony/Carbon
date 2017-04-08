@@ -33,10 +33,7 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.SeekBarPopup;
 
-/**
- * Created by Marcin on 2015-06-25.
- */
-public class RangeSeekBar extends View implements RippleView, StateAnimatorView, AnimatedView, TintedView {
+public class RangeSeekBar extends View implements RippleView, StateAnimatorView, AnimatedView, TintedView, VisibleView {
     private static float THUMB_RADIUS, THUMB_RADIUS_DRAGGED, STROKE_WIDTH;
     float value = 0.3f, value2 = 0.7f;  // value < value2
     float min = 0, max = 1, step = 1;

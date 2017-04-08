@@ -28,9 +28,6 @@ import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 
-/**
- * Created by Marcin on 2015-12-23.
- */
 public class CheckedTextView extends TextView implements Checkable {
     private CheckableDrawable drawable;
     private float drawablePadding;

@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.widget;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
@@ -8,16 +7,17 @@ import carbon.widget.CheckBox;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.Snackbar;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2014-12-15.
- */
 public class SnackbarActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snackbar);
+
+        Samples.initToolbar(this, getString(R.string.snackbarActivity_title));
 
         final CheckBox tapCheckBox = (CheckBox) findViewById(R.id.tap);
         final CheckBox swipeCheckBox = (CheckBox) findViewById(R.id.swipe);

@@ -7,18 +7,16 @@ import android.os.Build;
 import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.drawable.DefaultAccentColorStateList;
 import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.internal.TypefaceUtils;
-
-/**
- * Created by Marcin on 2016-07-25.
- */
 
 public class InputLayout extends RelativeLayout {
 
@@ -66,68 +64,71 @@ public class InputLayout extends RelativeLayout {
     private void initInputLayout(AttributeSet attrs, int defStyleAttr) {
         View.inflate(getContext(), R.layout.carbon_inputlayout, this);
         errorTextView = (TextView) findViewById(R.id.carbon_error);
-        errorTextView.setTextColor(new DefaultTextSecondaryColorStateList(getContext()));
+        errorTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         errorTextView.setValid(false);
         counterTextView = (TextView) findViewById(R.id.carbon_counter);
         counterTextView.setTextColor(new DefaultTextSecondaryColorStateList(getContext()));
         labelTextView = (TextView) findViewById(R.id.carbon_label);
+        labelTextView .setTextColor(new DefaultAccentColorStateList(getContext()));
         clearImageView = (ImageView) findViewById(R.id.carbon_clear);
         showPasswordImageView = (ImageView) findViewById(R.id.carbon_showPassword);
 
         if (isInEditMode())
             return;
 
-        if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.InputLayout, defStyleAttr, 0);
+        if (attrs == null)
+            return;
 
-            for (int i = 0; i < a.getIndexCount(); i++) {
-                int attr = a.getIndex(i);
-                if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_errorFontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setErrorTypeface(typeface);
-                } else if (attr == R.styleable.InputLayout_carbon_errorTextSize) {
-                    setErrorTextSize(a.getDimension(attr, 0));
-                } else if (attr == R.styleable.InputLayout_carbon_errorFontFamily) {
-                    int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setErrorTypeface(typeface);
-                } else if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_labelFontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setLabelTypeface(typeface);
-                } else if (attr == R.styleable.InputLayout_carbon_counterTextSize) {
-                    setCounterTextSize(a.getDimension(attr, 0));
-                } else if (attr == R.styleable.InputLayout_carbon_labelFontFamily) {
-                    int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setLabelTypeface(typeface);
-                } else if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_counterFontPath) {
-                    String path = a.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setCounterTypeface(typeface);
-                } else if (attr == R.styleable.InputLayout_carbon_labelTextSize) {
-                    setLabelTextSize(a.getDimension(attr, 0));
-                } else if (attr == R.styleable.InputLayout_carbon_counterFontFamily) {
-                    int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                    setCounterTypeface(typeface);
-                }
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.InputLayout, defStyleAttr, 0);
+
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_errorFontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                setErrorTypeface(typeface);
+            } else if (attr == R.styleable.InputLayout_carbon_errorTextSize) {
+                setErrorTextSize(a.getDimension(attr, 0));
+            } else if (attr == R.styleable.InputLayout_carbon_errorFontFamily) {
+                int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                setErrorTypeface(typeface);
+            } else if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_labelFontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                setLabelTypeface(typeface);
+            } else if (attr == R.styleable.InputLayout_carbon_counterTextSize) {
+                setCounterTextSize(a.getDimension(attr, 0));
+            } else if (attr == R.styleable.InputLayout_carbon_labelFontFamily) {
+                int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                setLabelTypeface(typeface);
+            } else if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_counterFontPath) {
+                String path = a.getString(attr);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
+                setCounterTypeface(typeface);
+            } else if (attr == R.styleable.InputLayout_carbon_labelTextSize) {
+                setLabelTextSize(a.getDimension(attr, 0));
+            } else if (attr == R.styleable.InputLayout_carbon_counterFontFamily) {
+                int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
+                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
+                setCounterTypeface(typeface);
             }
-
-            if (!isInEditMode())
-                setError(a.getString(R.styleable.InputLayout_carbon_errorMessage));
-
-            setMinCharacters(a.getInt(R.styleable.InputLayout_carbon_minCharacters, 0));
-            setMaxCharacters(a.getInt(R.styleable.InputLayout_carbon_maxCharacters, Integer.MAX_VALUE));
-            setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.InputLayout_carbon_labelStyle, LabelStyle.Floating.ordinal())]);
-            setLabel(a.getString(R.styleable.InputLayout_carbon_label));
-            setRequired(a.getBoolean(R.styleable.InputLayout_carbon_required, false));
-            setShowPasswordButtonEnabled(a.getBoolean(R.styleable.InputLayout_carbon_showPassword, false));
-            setClearButtonEnabled(a.getBoolean(R.styleable.InputLayout_carbon_showClear, false));
-
-            a.recycle();
         }
+
+        if (!isInEditMode())
+            setError(a.getString(R.styleable.InputLayout_carbon_errorMessage));
+
+        setMinCharacters(a.getInt(R.styleable.InputLayout_carbon_minCharacters, 0));
+        setMaxCharacters(a.getInt(R.styleable.InputLayout_carbon_maxCharacters, Integer.MAX_VALUE));
+        setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.InputLayout_carbon_labelStyle, LabelStyle.Floating.ordinal())]);
+        setLabel(a.getString(R.styleable.InputLayout_carbon_label));
+        setRequired(a.getBoolean(R.styleable.InputLayout_carbon_required, false));
+        setShowPasswordButtonEnabled(a.getBoolean(R.styleable.InputLayout_carbon_showPassword, false));
+        setClearButtonEnabled(a.getBoolean(R.styleable.InputLayout_carbon_showClear, false));
+        setGravity(a.getInt(R.styleable.InputLayout_android_gravity, Gravity.START | Gravity.LEFT));
+
+        a.recycle();
     }
 
     @Override
@@ -147,9 +148,6 @@ public class InputLayout extends RelativeLayout {
         if (child.getId() == NO_ID)
             child.setId(R.id.carbon_input);
         params.addRule(BELOW, R.id.carbon_label);
-
-        android.widget.RelativeLayout.LayoutParams labelTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) labelTextView.getLayoutParams();
-        labelTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_START : ALIGN_LEFT, child.getId());
 
         android.widget.RelativeLayout.LayoutParams errorTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) errorTextView.getLayoutParams();
         errorTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_START : ALIGN_LEFT, child.getId());
@@ -179,6 +177,7 @@ public class InputLayout extends RelativeLayout {
                 boolean requiredError = required && editText.length() == 0;
 
                 counterTextView.setValid(!counterError);
+                updateHint(editText);
                 updateCounter(editText);
                 if (errorTextView.getVisibility() != GONE)
                     errorTextView.setVisibility(valid ? INVISIBLE : VISIBLE);
@@ -357,5 +356,11 @@ public class InputLayout extends RelativeLayout {
     @Override
     public int getBaseline() {
         return child == null ? super.getBaseline() : child.getTop() + child.getBaseline();
+    }
+
+    @Override
+    public void setGravity(int gravity) {
+        super.setGravity(gravity);
+        labelTextView.setGravity(gravity);
     }
 }

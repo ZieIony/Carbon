@@ -1,16 +1,14 @@
 package tk.zielony.carbonsamples.demo;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import carbon.widget.AutoCompleteEditText;
 import carbon.widget.AutoCompleteLayout;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2015-04-26.
- */
-public class AutoCompleteDemo extends SamplesActivity {
+public class AutoCompleteActivity extends SamplesActivity {
 
     String[] fruits = {"Strawberry\npie", "Apple\npie", "Orange\njuice", "Lemon\njuice", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"};
 
@@ -18,6 +16,8 @@ public class AutoCompleteDemo extends SamplesActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autocomplete);
+
+        Samples.initToolbar(this, getString(R.string.autoCompleteActivity_title));
 
         AutoCompleteLayout autoCompleteLayout = (AutoCompleteLayout) findViewById(R.id.autoComplete);
         autoCompleteLayout.setDataProvider(new AutoCompleteEditText.AutoCompleteDataProvider() {

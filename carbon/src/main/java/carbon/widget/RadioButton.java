@@ -28,9 +28,6 @@ import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 
-/**
- * Created by Marcin on 2015-03-06.
- */
 public class RadioButton extends carbon.widget.Button implements Checkable {
     private CheckableDrawable drawable;
     private float drawablePadding;

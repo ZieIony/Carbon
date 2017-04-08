@@ -28,9 +28,6 @@ import com.caverock.androidsvg.SVGParseException;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 
-/**
- * Created by Marcin on 2015-03-06.
- */
 public class CheckableDrawable extends Drawable {
 
     private float currRadius;

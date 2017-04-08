@@ -3,8 +3,6 @@ package carbon.widget;
 import android.graphics.Rect;
 
 /**
- * Created by Marcin on 2015-02-22.
- * <p/>
  * Interface of a View with support for touch margins. Touch margin is a feature which allows a view
  * to handle events which happened outside of that view. These event have to happen inside the view's
  * parent.

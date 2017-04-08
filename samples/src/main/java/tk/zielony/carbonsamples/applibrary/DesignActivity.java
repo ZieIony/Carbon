@@ -7,9 +7,6 @@ import android.view.Menu;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2015-12-30.
- */
 public class DesignActivity extends SamplesActivity {
 
     @Override

@@ -7,6 +7,8 @@
     android:orientation="vertical"
     app:carbon_insetColor="?attr/colorPrimary">
 
+    <include layout="@layout/view_debugtoolbar" />
+
     <carbon.widget.ProgressBar
         android:id="@+id/progress5"
         android:layout_width="match_parent"
@@ -46,7 +48,7 @@
         android:layout_margin="@dimen/carbon_padding"
         app:carbon_barWidth="5dp"
         app:carbon_progressStyle="bar_query"
-        app:carbon_tint="#ffff0000" />
+        app:carbon_tint="?attr/colorAccent" />
 
     <carbon.widget.Button
         android:id="@+id/button3"

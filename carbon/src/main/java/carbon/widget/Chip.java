@@ -11,9 +11,6 @@ import android.view.View;
 
 import carbon.R;
 
-/**
- * Created by Marcin on 2015-12-19.
- */
 public class Chip extends LinearLayout {
     private ImageView icon;
     private TextView title;

@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.widget;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -10,11 +9,9 @@ import carbon.drawable.CheckableDrawable;
 import carbon.widget.CheckBox;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
+import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.carbonsamples.databinding.ActivityCheckboxRadioBinding;
 
-/**
- * Created by Marcin on 2015-03-06.
- */
 public class CheckBoxRadioActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 
 import carbon.widget.FrameLayout;
 
-/**
- * Created by Marcin on 17.03.2016.
- */
 public class BottomSheet extends FrameLayout {
     private ViewDragHelper mDragHelper;
 

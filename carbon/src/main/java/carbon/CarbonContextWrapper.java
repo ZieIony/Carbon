@@ -5,9 +5,6 @@ import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 
-/**
- * Created by Marcin on 2015-06-29.
- */
 public class CarbonContextWrapper extends ContextWrapper {
     private CarbonLayoutInflater mInflater;
     private CarbonResources resources;

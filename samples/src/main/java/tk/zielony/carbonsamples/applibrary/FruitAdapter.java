@@ -13,9 +13,6 @@ import carbon.widget.RecyclerView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
 
-/**
- * Created by Marcin on 2015-05-09.
- */
 public class FruitAdapter extends ListAdapter<FruitAdapter.ViewHolder, String> {
     private ItemTouchHelper helper;
 

@@ -1,9 +1,5 @@
 package carbon.widget;
 
-/**
- * Created by Marcin on 2017-02-12.
- */
-
 public class ArraySearchDataProvider<Type> implements SearchEditText.SearchDataProvider<Type> {
     private Type[] data;
 

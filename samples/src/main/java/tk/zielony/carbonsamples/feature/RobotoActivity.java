@@ -6,9 +6,6 @@ import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2014-12-15.
- */
 public class RobotoActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

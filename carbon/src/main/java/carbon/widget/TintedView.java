@@ -6,8 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
- * Created by Marcin on 2015-05-08.
- * <p/>
  * Interface of a view with support for tinting.
  */
 public interface TintedView {

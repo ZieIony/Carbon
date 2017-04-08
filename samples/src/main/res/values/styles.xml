@@ -52,7 +52,7 @@
         <item name="android:textAppearance">?attr/carbon_textAppearanceCaption</item>
         <item name="android:layout_marginLeft">@dimen/carbon_margin</item>
         <item name="android:layout_marginRight">@dimen/carbon_margin</item>
-        <item name="android:layout_marginTop">@dimen/carbon_marginHalf</item>
+        <item name="android:layout_marginTop">@dimen/carbon_margin</item>
         <item name="android:layout_marginBottom">@dimen/carbon_marginHalf</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import tk.zielony.carbonsamples.animation.ImageFadeActivity;
-import tk.zielony.carbonsamples.animation.ListRippleActivity;
 import tk.zielony.carbonsamples.animation.RippleActivity;
 import tk.zielony.carbonsamples.animation.WidgetAnimationsActivity;
 
@@ -24,7 +23,6 @@ public class AnimationsActivity extends SamplesActivity {
         ViewModel[] items = new ViewModel[]{
                 new ViewModel(WidgetAnimationsActivity.class, getString(R.string.widgetAnimationsActivity_title)),
                 new ViewModel(ImageFadeActivity.class, getString(R.string.imageFadeActivity_title)),
-                new ViewModel(ListRippleActivity.class, getString(R.string.listRippleActivity_title)),
                 new ViewModel(RippleActivity.class, getString(R.string.rippleActivity_title))
         };
         recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?

@@ -49,11 +49,11 @@ import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
- * Created by Marcin on 2014-11-07.
- * <p/>
  * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other material features.
  */
-public class Button extends android.widget.Button implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, StrokeView, AutoSizeTextView {
+public class Button extends android.widget.Button
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, StrokeView, AutoSizeTextView, VisibleView {
+
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
@@ -131,9 +131,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.Button_carbon_textAllCaps) {
-                setAllCaps(a.getBoolean(R.styleable.Button_carbon_textAllCaps, true));
-            } else if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
+            if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
@@ -196,9 +194,7 @@ public class Button extends android.widget.Button implements ShadowView, RippleV
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
                 int attr = appearance.getIndex(i);
-                if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
-                    setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
+                if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);

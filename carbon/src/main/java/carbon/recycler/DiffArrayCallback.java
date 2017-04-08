@@ -2,9 +2,6 @@ package carbon.recycler;
 
 import android.support.v7.util.DiffUtil;
 
-/**
- * Created by Marcin on 2017-01-16.
- */
 public class DiffArrayCallback<T> extends DiffUtil.Callback {
     protected T[] items, newItems;
 

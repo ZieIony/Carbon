@@ -21,10 +21,6 @@ import carbon.internal.MathUtils;
 import carbon.widget.FrameLayout;
 import tk.zielony.carbonsamples.R;
 
-/**
- * Created by Marcin on 2017-03-18.
- */
-
 public class LandscapeView extends FrameLayout implements ScrollChild {
     private static final float TREE_RANDOM = 0.6f;
 

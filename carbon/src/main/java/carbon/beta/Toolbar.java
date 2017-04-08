@@ -43,9 +43,6 @@ import carbon.R;
 import carbon.widget.ImageView;
 import carbon.widget.TextView;
 
-/**
- * Created by Marcin on 2016-07-29.
- */
 public class Toolbar extends ViewGroup {
     private static final String TAG = "Toolbar";
 

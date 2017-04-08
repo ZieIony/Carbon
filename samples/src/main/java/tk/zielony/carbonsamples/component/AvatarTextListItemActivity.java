@@ -1,12 +1,13 @@
 package tk.zielony.carbonsamples.component;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import java.util.Arrays;
+import java.util.List;
 
 import carbon.component.AvatarTextRow;
+import carbon.component.ComponentItem;
 import carbon.component.DefaultAvatarTextItem;
 import carbon.component.DividerItem;
 import carbon.component.DividerRow;
@@ -15,10 +16,10 @@ import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
-
-/**
- * Created by Marcin on 2017-02-02.
- */
+import tk.zielony.randomdata.Generator;
+import tk.zielony.randomdata.RandomData;
+import tk.zielony.randomdata.person.DrawableAvatarGenerator;
+import tk.zielony.randomdata.person.StringNameGenerator;
 
 public class AvatarTextListItemActivity extends SamplesActivity {
 
@@ -29,16 +30,24 @@ public class AvatarTextListItemActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.avatarTextListItemActivity_title));
 
+        List<ComponentItem> items = Arrays.asList(
+                new DefaultAvatarTextItem(),
+                new DefaultAvatarTextItem(),
+                new DividerItem(),
+                new DefaultAvatarTextItem(),
+                new DefaultAvatarTextItem());
+
+        RandomData randomData = new RandomData();
+        randomData.addGenerators(new Generator[]{
+                new DrawableAvatarGenerator(this),
+                new StringNameGenerator().withMatcher(f -> f.getName().equals("text"))
+        });
+        randomData.fill(items);
+
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         RowListAdapter adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow.FACTORY);
         adapter.addFactory(DividerItem.class, DividerRow.FACTORY);
         recycler.setAdapter(adapter);
-        Drawable avatar = getResources().getDrawable(R.drawable.iceland);
-        adapter.setItems(Arrays.asList(
-                new DefaultAvatarTextItem(avatar, "text"),
-                new DefaultAvatarTextItem(avatar, "text"),
-                new DividerItem(),
-                new DefaultAvatarTextItem(avatar, "text"),
-                new DefaultAvatarTextItem(avatar, "text")));
+        adapter.setItems(items);
     }
 }

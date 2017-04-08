@@ -1,10 +1,7 @@
-package carbon.recycler;
+package carbon.component;
 
 import android.view.View;
 
-/**
- * Created by Marcin on 2016-06-09.
- */
 public interface Component<Type> {
     View getView();
 

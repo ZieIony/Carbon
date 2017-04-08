@@ -9,22 +9,22 @@
     android:padding="@dimen/carbon_padding"
     app:carbon_insetColor="?attr/colorPrimary">
 
+    <include layout="@layout/view_debugtoolbar"/>
+
     <carbon.widget.DropDown
         android:id="@+id/day"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:text="1"
-        app:carbon_tint="?attr/colorPrimary" />
+        android:text="1" />
 
     <carbon.widget.DropDown
         android:id="@+id/month"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Jan"
-        app:carbon_tint="?attr/colorPrimary" />
+        android:text="Jan" />
 
     <carbon.widget.DropDown
         android:id="@+id/year"
@@ -32,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:text="1987"
-        app:carbon_tint="?attr/colorPrimary" />
+        android:text="1987" />
 
 </carbon.widget.LinearLayout>

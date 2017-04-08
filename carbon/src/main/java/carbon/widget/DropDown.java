@@ -22,9 +22,6 @@ import carbon.drawable.VectorDrawable;
 import carbon.internal.DropDownMenu;
 import carbon.recycler.ArrayAdapter;
 
-/**
- * Created by Marcin on 2015-06-11.
- */
 public class DropDown extends EditText {
 
     public enum Mode {

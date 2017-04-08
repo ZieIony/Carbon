@@ -12,9 +12,7 @@
 
     <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:clickable="true"
-        app:carbon_rippleColor="?attr/carbon_rippleColor">
+        android:layout_height="@dimen/carbon_listItemHeight">
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"

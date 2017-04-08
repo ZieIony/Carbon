@@ -7,9 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-/**
- * Created by Marcin on 2014-12-15.
- */
 class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
     private final ViewModel[] items;
 

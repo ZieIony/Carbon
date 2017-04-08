@@ -20,10 +20,6 @@ import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2017-02-02.
- */
-
 public class RegisterActivity extends SamplesActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

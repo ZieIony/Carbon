@@ -6,9 +6,6 @@ import java.util.Comparator;
 
 import carbon.shadow.ShadowView;
 
-/**
- * Created by Marcin on 2015-01-15.
- */
 public class ElevationComparator implements Comparator<View> {
     @Override
     public int compare(View lhs, View rhs) {

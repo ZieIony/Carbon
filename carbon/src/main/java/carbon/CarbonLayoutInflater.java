@@ -5,9 +5,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
-/**
- * Created by Marcin on 2015-06-29.
- */
 public class CarbonLayoutInflater extends LayoutInflater {
     protected CarbonLayoutInflater(Context context) {
         super(context);

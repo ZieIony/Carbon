@@ -26,10 +26,7 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 
-/**
- * Created by Marcin on 2015-02-28.
- */
-public class ViewPager extends android.support.v4.view.ViewPager implements TintedView {
+public class ViewPager extends android.support.v4.view.ViewPager implements TintedView, VisibleView {
     private int mTouchSlop;
     EdgeEffect leftGlow;
     EdgeEffect rightGlow;

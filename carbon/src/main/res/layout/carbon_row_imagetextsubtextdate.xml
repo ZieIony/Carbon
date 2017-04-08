@@ -61,6 +61,7 @@
             android:layout_marginRight="@dimen/carbon_marginHalf"
             android:layout_marginStart="@dimen/carbon_contentPadding"
             android:layout_toLeftOf="@+id/carbon_date"
+            android:maxLines="1"
             android:layout_toStartOf="@+id/carbon_date"
             android:text="@{data.text}"
             android:textAppearance="?attr/carbon_textAppearanceSubhead" />
@@ -76,9 +77,10 @@
             android:layout_marginStart="@dimen/carbon_contentPadding"
             android:layout_toLeftOf="@+id/carbon_date"
             android:layout_toStartOf="@+id/carbon_date"
+            android:maxLines="1"
             android:text="@{data.subtext}"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textAppearance="?attr/carbon_textAppearanceBody1" />
+            android:textAppearance="?attr/carbon_textAppearanceBody1"
+            android:textColor="?android:attr/textColorSecondary" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_date"

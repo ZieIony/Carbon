@@ -16,9 +16,6 @@ import carbon.internal.MathUtils;
 import carbon.shadow.ShadowView;
 import carbon.widget.ProgressBar;
 
-/**
- * Created by Marcin on 2014-11-17.
- */
 public class AnimUtils {
     private AnimUtils() {
     }
@@ -223,10 +220,12 @@ public class AnimUtils {
                 saturationMatrix.setSaturation((Float) animator.getAnimatedValue());
 
                 float scale = 2 - interpolator.getInterpolation(Math.min(fraction * 4 / 3, 1));
-                brightnessMatrix.setScale(scale, scale, scale, interpolator.getInterpolation(Math.min(fraction * 2, 1)));
+                brightnessMatrix.setScale(scale, scale, scale, 1);
 
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
+                imageView.setAlpha(interpolator.getInterpolation(Math.min(fraction * 2, 1)));
+
                 if (imageView.getParent() != null)
                     ((View) imageView.getParent()).postInvalidate();
             }
@@ -253,10 +252,12 @@ public class AnimUtils {
                 saturationMatrix.setSaturation((Float) animator.getAnimatedValue());
 
                 float scale = 2 - interpolator.getInterpolation(Math.min((1 - fraction) * 4 / 3, 1));
-                brightnessMatrix.setScale(scale, scale, scale, interpolator.getInterpolation(Math.min((1 - fraction) * 2, 1)));
+                brightnessMatrix.setScale(scale, scale, scale, 1);
 
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
+                imageView.setAlpha(interpolator.getInterpolation(Math.min((1 - fraction) * 2, 1)));
+
                 if (imageView.getParent() != null)
                     ((View) imageView.getParent()).postInvalidate();
             }

@@ -11,8 +11,6 @@ import android.view.View;
 import java.util.Locale;
 
 /**
- * Created by Marcin on 2015-02-28.
- * <p/>
  * Transformation method used for making all characters capitalized. Can be used by all classes
  * derived from TextView.
  *

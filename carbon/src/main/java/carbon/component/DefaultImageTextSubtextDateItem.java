@@ -2,13 +2,12 @@ package carbon.component;
 
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by Marcin on 2017-03-06.
- */
-
 public class DefaultImageTextSubtextDateItem implements ImageTextSubtextDateItem {
     private Drawable image;
     private String text, subtext, date;
+
+    public DefaultImageTextSubtextDateItem(){
+    }
 
     public DefaultImageTextSubtextDateItem(Drawable image, String text, String subtext, String date) {
         this.image = image;

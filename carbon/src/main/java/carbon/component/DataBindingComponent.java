@@ -7,11 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.BR;
-import carbon.recycler.Component;
 
-/**
- * Created by Marcin on 2017-02-02.
- */
 public class DataBindingComponent<DataType> implements Component<DataType> {
     private final ViewDataBinding binding;
     private final View view;

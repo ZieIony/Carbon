@@ -8,11 +8,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2014-12-15.
- */
 public class LargeShadowActivity extends SamplesActivity {
     ValueAnimator animator;
 
@@ -20,6 +18,8 @@ public class LargeShadowActivity extends SamplesActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_largeshadow);
+
+        Samples.initToolbar(this, getString(R.string.largeShadowActivity_title));
 
         final View view = findViewById(R.id.button);
 

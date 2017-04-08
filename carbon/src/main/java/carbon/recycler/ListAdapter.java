@@ -9,9 +9,6 @@ import java.util.List;
 
 import carbon.widget.AutoCompleteEditText;
 
-/**
- * Created by Marcin on 2017-01-07.
- */
 public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
     private carbon.widget.RecyclerView.OnItemClickedListener onItemClickedListener;
     private boolean diff = true;

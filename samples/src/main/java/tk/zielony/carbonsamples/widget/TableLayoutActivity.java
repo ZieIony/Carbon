@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.widget;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import java.text.Format;
@@ -13,15 +12,16 @@ import carbon.Carbon;
 import carbon.beta.TableLayout;
 import carbon.widget.TableView;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2015-12-20.
- */
 public class TableLayoutActivity extends SamplesActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tablelayout);
+
+        Samples.initToolbar(this, getString(R.string.tableLayoutActivity_title));
 
         TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout);
         List<List<Object>> items = new ArrayList<>();

@@ -18,9 +18,6 @@ import carbon.widget.LinearLayout;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
 
-/**
- * Created by Marcin on 2015-04-19.
- */
 public class PowerMenuActivity extends SamplesActivity {
     boolean vibration = false, volume = true, airplaneMode = false;
     View powerMenu;

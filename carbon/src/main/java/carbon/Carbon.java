@@ -32,9 +32,6 @@ import carbon.widget.StrokeView;
 import carbon.widget.TintedView;
 import carbon.widget.TouchMarginView;
 
-/**
- * Created by Marcin on 2014-12-18.
- */
 public class Carbon {
     private static final long DEFAULT_REVEAL_DURATION = 200;
     private static long defaultRevealDuration = DEFAULT_REVEAL_DURATION;

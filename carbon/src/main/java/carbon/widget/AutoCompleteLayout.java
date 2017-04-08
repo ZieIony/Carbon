@@ -15,12 +15,8 @@ import java.util.ArrayList;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.recycler.Component;
+import carbon.component.Component;
 import carbon.recycler.RowListAdapter;
-
-/**
- * Created by Marcin on 2016-09-19.
- */
 
 public class AutoCompleteLayout extends LinearLayout {
     AutoCompleteEditText search;

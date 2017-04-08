@@ -42,7 +42,8 @@ import carbon.internal.ElevationComparator;
 import carbon.recycler.ArrayAdapter;
 import carbon.shadow.ShadowView;
 
-public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerView implements TintedView {
+// TODO: make extend carbon.widget.RecyclerView
+public class ExpandableRecyclerView extends android.support.v7.widget.RecyclerView implements TintedView, VisibleView {
 
     private EdgeEffect leftGlow;
     private EdgeEffect rightGlow;

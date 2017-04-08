@@ -24,9 +24,6 @@ import carbon.R;
 import carbon.internal.EditTextMenu;
 import carbon.widget.EditText;
 
-/**
- * Created by Marcin on 2016-04-26.
- */
 public class MarshmallowEditText extends EditText {
     private static final int ID_CUT = android.R.id.cut;
     private static final int ID_COPY = android.R.id.copy;

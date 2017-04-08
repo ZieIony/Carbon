@@ -44,20 +44,20 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.PercentLayoutHelper;
 import carbon.internal.Reveal;
-import carbon.recycler.Component;
+import carbon.component.Component;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
- * Created by Marcin on 2014-11-20.
- * <p/>
  * FlowLayout layouts its children from left to right, top to bottom.
  * Has support for material features including shadows, ripples, rounded
  * corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class FlowLayout extends android.widget.FrameLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView {
+public class FlowLayout extends android.widget.FrameLayout
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView, VisibleView {
+
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
     private OnTouchListener onDispatchTouchListener;
 
@@ -1080,11 +1080,18 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
 
     public static class LayoutParams extends android.widget.FrameLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
         private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
+        private RuntimeException delayedException;
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
 
-            percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
+            if (delayedException != null) {
+                percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
+
+                if ((percentLayoutInfo.widthPercent == -1.0f || percentLayoutInfo.heightPercent == -1.0f) && percentLayoutInfo.aspectRatio == -1 ||
+                        (percentLayoutInfo.widthPercent == -1.0f && percentLayoutInfo.heightPercent == -1.0f))
+                    throw delayedException;
+            }
         }
 
         public LayoutParams(int w, int h) {
@@ -1119,16 +1126,9 @@ public class FlowLayout extends android.widget.FrameLayout implements ShadowView
         @Override
         protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
             try {
-                width = a.getLayoutDimension(widthAttr, "layout_width");
+                super.setBaseAttributes(a, widthAttr, heightAttr);
             } catch (RuntimeException e) {
-                if (!a.hasValue(R.styleable.Carbon_carbon_widthPercent))
-                    throw e;
-            }
-            try {
-                height = a.getLayoutDimension(heightAttr, "layout_height");
-            } catch (RuntimeException e) {
-                if (!a.hasValue(R.styleable.Carbon_carbon_widthPercent))
-                    throw e;
+                delayedException = e;
             }
         }
 

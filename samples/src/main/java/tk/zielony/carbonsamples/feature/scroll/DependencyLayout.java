@@ -13,10 +13,6 @@ import com.annimon.stream.Stream;
 
 import carbon.widget.RelativeLayout;
 
-/**
- * Created by Marcin on 2017-02-09.
- */
-
 public class DependencyLayout extends RelativeLayout implements GestureDetector.OnGestureListener {
     GestureDetector detector = new GestureDetector(this);
 

@@ -8,9 +8,6 @@ import android.support.annotation.NonNull;
 
 import carbon.animation.AnimatedColorStateList;
 
-/**
- * Created by Marcin on 2015-08-21.
- */
 public class ColorStateListDrawable extends Drawable implements AlphaDrawable {
     private AnimatedColorStateList list;
 

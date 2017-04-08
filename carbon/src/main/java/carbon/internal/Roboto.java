@@ -2,9 +2,6 @@ package carbon.internal;
 
 import android.graphics.Typeface;
 
-/**
- * Created by Marcin on 2014-11-07.
- */
 public enum Roboto {
     Black("carbon/Roboto-Black.ttf", "sans-serif-black", Typeface.NORMAL),
     BlackItalic("carbon/Roboto-BlackItalic.ttf", "sans-serif-black", Typeface.ITALIC),

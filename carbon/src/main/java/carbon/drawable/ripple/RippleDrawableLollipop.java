@@ -9,9 +9,6 @@ import android.os.Build;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * Created by Marcin on 2015-04-11.
- */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class RippleDrawableLollipop extends android.graphics.drawable.RippleDrawable implements RippleDrawable {
 

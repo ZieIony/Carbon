@@ -1,17 +1,17 @@
 package tk.zielony.carbonsamples.feature;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 15.01.2016.
- */
 public class PercentLayoutActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_percentlayout);
+
+        Samples.initToolbar(this, getString(R.string.percentLayoutActivity_title));
     }
 }

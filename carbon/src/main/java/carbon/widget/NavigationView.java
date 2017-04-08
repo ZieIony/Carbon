@@ -14,9 +14,6 @@ import android.view.ViewGroup;
 import carbon.CarbonContextWrapper;
 import carbon.R;
 
-/**
- * Created by Marcin on 2015-06-25.
- */
 public class NavigationView extends RecyclerView {
     private OnItemClickedListener onItemClickedListener;
     private Menu menu;

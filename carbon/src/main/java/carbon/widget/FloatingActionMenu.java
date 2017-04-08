@@ -20,9 +20,6 @@ import android.widget.PopupWindow;
 import carbon.CarbonContextWrapper;
 import carbon.R;
 
-/**
- * Created by Marcin on 2016-02-16.
- */
 public class FloatingActionMenu extends PopupWindow {
     private final Handler handler;
     private final LinearLayout content;

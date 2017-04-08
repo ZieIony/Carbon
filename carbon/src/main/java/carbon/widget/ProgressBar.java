@@ -27,10 +27,7 @@ import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.ProgressBarDrawable;
 import carbon.drawable.ProgressDrawable;
 
-/**
- * Created by Marcin on 2015-02-08.
- */
-public class ProgressBar extends View implements AnimatedView, TintedView {
+public class ProgressBar extends View implements AnimatedView, TintedView, VisibleView {
     private ProgressDrawable drawable;
 
     public enum Style {

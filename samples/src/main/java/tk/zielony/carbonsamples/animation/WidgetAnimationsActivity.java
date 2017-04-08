@@ -1,16 +1,14 @@
 package tk.zielony.carbonsamples.animation;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import carbon.widget.FrameLayout;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2014-12-15.
- */
 public class WidgetAnimationsActivity extends SamplesActivity {
     int fabVisibility = View.VISIBLE;
     int buttonVisibility = View.VISIBLE;
@@ -19,6 +17,8 @@ public class WidgetAnimationsActivity extends SamplesActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animations);
+
+        Samples.initToolbar(this, getString(R.string.widgetAnimationsActivity_title));
 
         final View fab = findViewById(R.id.fab);
         Button button = (Button) findViewById(R.id.button);

@@ -3,9 +3,6 @@ package carbon;
 import android.os.Handler;
 import android.view.MotionEvent;
 
-/**
- * Created by Marcin on 2014-12-20.
- */
 public class GestureDetector {
 
     private static final int DEFAULT_PRESS_TIMEOUT = 100;

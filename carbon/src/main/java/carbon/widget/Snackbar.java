@@ -23,9 +23,6 @@ import java.util.List;
 import carbon.R;
 import carbon.animation.AnimUtils;
 
-/**
- * Created by Marcin on 2015-01-07.
- */
 public class Snackbar extends FrameLayout implements GestureDetector.OnGestureListener {
     public static int INFINITE = -1;
     private Context context;

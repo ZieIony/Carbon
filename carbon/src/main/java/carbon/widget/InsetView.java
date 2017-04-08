@@ -1,8 +1,5 @@
 package carbon.widget;
 
-/**
- * Created by Marcin on 2015-04-11.
- */
 public interface InsetView {
     int INSET_NULL = -1;
 

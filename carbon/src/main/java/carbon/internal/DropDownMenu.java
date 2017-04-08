@@ -20,9 +20,6 @@ import carbon.widget.DropDown;
 import carbon.widget.FrameLayout;
 import carbon.widget.RecyclerView;
 
-/**
- * Created by Marcin on 2015-06-10.
- */
 public class DropDownMenu extends PopupWindow {
 
     protected RecyclerView recycler;

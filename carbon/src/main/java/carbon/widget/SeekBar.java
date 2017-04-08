@@ -34,10 +34,8 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.MathUtils;
 import carbon.internal.SeekBarPopup;
 
-/**
- * Created by Marcin on 2015-06-25.
- */
-public class SeekBar extends View implements RippleView, StateAnimatorView, AnimatedView, TintedView {
+// TODO: make common carbon.widget.View class
+public class SeekBar extends View implements RippleView, StateAnimatorView, AnimatedView, TintedView, VisibleView {
     private static float THUMB_RADIUS, THUMB_RADIUS_DRAGGED, STROKE_WIDTH;
     float value = 0.5f;
     float min = 0, max = 1, step = 1;

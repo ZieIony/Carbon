@@ -2,10 +2,8 @@ package carbon.recycler;
 
 import android.view.ViewGroup;
 
-/**
- * Created by Marcin on 2016-08-16.
- */
+import carbon.component.Component;
 
-public interface RowFactory {
-    Component create(ViewGroup parent);
+public interface RowFactory<Type> {
+    Component<Type> create(ViewGroup parent);
 }

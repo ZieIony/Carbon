@@ -36,10 +36,7 @@ import carbon.internal.ElevationComparator;
 import carbon.recycler.DividerItemDecoration;
 import carbon.shadow.ShadowView;
 
-/**
- * Created by Marcin on 2015-04-28.
- */
-public class RecyclerView extends android.support.v7.widget.RecyclerView implements TintedView {
+public class RecyclerView extends android.support.v7.widget.RecyclerView implements TintedView, VisibleView {
 
     public interface OnItemClickedListener {
         void onItemClicked(int position);

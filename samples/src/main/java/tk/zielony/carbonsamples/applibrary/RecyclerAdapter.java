@@ -19,9 +19,6 @@ import carbon.drawable.ripple.RippleDrawableFroyo;
 import carbon.widget.RelativeLayout;
 import tk.zielony.carbonsamples.R;
 
-/**
- * Created by Marcin on 2015-02-12.
- */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private List<ViewModel> items;

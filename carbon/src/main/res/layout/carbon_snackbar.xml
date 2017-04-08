@@ -28,6 +28,7 @@
             android:textAppearance="?attr/carbon_textAppearanceBody2Inverse" />
 
         <carbon.widget.Button
+            style="@style/carbon_Button.Flat"
             android:id="@+id/carbon_actionButton"
             android:layout_width="wrap_content"
             android:layout_height="36dp"

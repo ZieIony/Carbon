@@ -21,9 +21,6 @@ import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.drawable.DefaultColorStateList;
 
-/**
- * Created by Marcin on 17.03.2016.
- */
 public class BottomBar extends FrameLayout {
     private LinearLayout content;
     private Menu menu;
@@ -41,12 +38,7 @@ public class BottomBar extends FrameLayout {
         super(context, attrs);
         inflate(context, R.layout.carbon_bottombar, this);
         content = (LinearLayout) findViewById(R.id.carbon_bottomBarContent);
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("dasd", "dsad");
-            }
-        });
+        setOnClickListener(v -> Log.e("dasd", "dsad"));
     }
 
     public BottomBar(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -76,18 +68,15 @@ public class BottomBar extends FrameLayout {
         for (int i = 0; i < menu.size(); i++) {
             final MenuItem item = menu.getItem(i);
             final View view = View.inflate(getContext(), R.layout.carbon_bottombar_item, null);
-            view.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (view == activeView)
-                        return;
-                    if (activeView != null) {
-                        deselectItem(activeView);
-                    }
-                    selectItem(view);
-                    if (listener != null)
-                        listener.onMenuItemClick(item);
+            view.setOnClickListener(v -> {
+                if (view == activeView)
+                    return;
+                if (activeView != null) {
+                    deselectItem(activeView);
                 }
+                selectItem(view);
+                if (listener != null)
+                    listener.onMenuItemClick(item);
             });
             ImageView icon = (ImageView) view.findViewById(R.id.carbon_bottomIcon);
             icon.setTint(new DefaultColorStateList(getContext()));

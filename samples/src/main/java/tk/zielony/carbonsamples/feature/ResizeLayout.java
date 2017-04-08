@@ -9,10 +9,6 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-/**
- * Created by Marcin on 2017-03-20.
- */
-
 public class ResizeLayout extends FrameLayout {
     public ResizeLayout(@NonNull Context context) {
         super(context);

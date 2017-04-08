@@ -42,19 +42,19 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.Reveal;
-import carbon.recycler.Component;
+import carbon.component.Component;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
- * Created by Marcin on 2015-04-01.
- * <p/>
  * Carbon version of a drawer layout with support for shadows, ripples and other material features.
  * Not really useful, but added for sake of completeness.
  */
-public class DrawerLayout extends android.support.v4.widget.DrawerLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView {
+public class DrawerLayout extends android.support.v4.widget.DrawerLayout
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView,VisibleView {
+
     private OnTouchListener onDispatchTouchListener;
 
     public DrawerLayout(Context context) {

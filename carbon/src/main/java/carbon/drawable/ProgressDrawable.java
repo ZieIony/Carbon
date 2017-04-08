@@ -12,9 +12,6 @@ import android.support.annotation.NonNull;
 
 import carbon.widget.ProgressBar;
 
-/**
- * Created by Marcin on 2015-02-28.
- */
 public abstract class ProgressDrawable extends Drawable {
     private static final long DEFAULT_SWEEP_DURATION = 800;
     private static final long DEFAULT_SWEEP_OFFSET = 500;

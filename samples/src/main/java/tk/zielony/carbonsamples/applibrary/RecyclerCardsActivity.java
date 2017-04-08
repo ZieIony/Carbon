@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.applibrary;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -9,10 +8,8 @@ import java.util.List;
 
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2014-12-15.
- */
 public class RecyclerCardsActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

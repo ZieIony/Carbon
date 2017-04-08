@@ -42,7 +42,7 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.Reveal;
-import carbon.recycler.Component;
+import carbon.component.Component;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -55,10 +55,8 @@ import carbon.widget.RevealView;
 import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 
-/**
- * Created by Marcin on 2015-12-30.
- */
-public class CoordinatorLayout extends android.support.design.widget.CoordinatorLayout implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView {
+public class CoordinatorLayout extends android.support.design.widget.CoordinatorLayout
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView {
     private OnTouchListener onDispatchTouchListener;
 
     public CoordinatorLayout(Context context) {

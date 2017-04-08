@@ -6,9 +6,6 @@ import android.content.res.ColorStateList;
 import carbon.Carbon;
 import carbon.R;
 
-/**
- * Created by Marcin on 2015-03-16.
- */
 public class DefaultColorStateList extends ColorStateList {
     public DefaultColorStateList(Context context) {
         super(new int[][]{

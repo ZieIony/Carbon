@@ -6,9 +6,6 @@ import android.graphics.drawable.Drawable;
 import carbon.R;
 import carbon.drawable.VectorDrawable;
 
-/**
- * Created by Marcin on 2017-02-12.
- */
 public class DefaultIconSearchItem implements IconSearchItem {
 
     private Drawable icon;

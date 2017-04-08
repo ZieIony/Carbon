@@ -4,9 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * Created by Marcin on 2015-01-11.
- */
 public class FastLayout extends carbon.widget.FrameLayout {
     public FastLayout(Context context) {
         super(context);

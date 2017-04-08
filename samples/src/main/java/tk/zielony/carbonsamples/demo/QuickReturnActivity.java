@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.demo;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -14,11 +13,9 @@ import carbon.widget.FloatingActionButton;
 import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.carbonsamples.applibrary.FruitAdapter;
 
-/**
- * Created by Marcin on 2015-07-19.
- */
 public class QuickReturnActivity extends SamplesActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
 

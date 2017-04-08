@@ -13,11 +13,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import carbon.R;
-import carbon.recycler.Component;
-
-/**
- * Created by Marcin on 2017-02-19.
- */
 
 public class ComponentView<Type extends Component> extends FrameLayout{
     Type component;

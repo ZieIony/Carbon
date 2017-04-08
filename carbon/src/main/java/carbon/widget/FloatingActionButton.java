@@ -17,8 +17,6 @@ import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.DefaultAccentColorStateList;
 
 /**
- * Created by Marcin on 2014-12-04.
- * <p/>
  * FAB implementation using an ImageView and rounded corners. Supports SVGs, animated shadows, ripples
  * and other material features.
  */

@@ -6,9 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
-/**
- * Created by Marcin on 2015-04-11.
- */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class RippleDrawableMarshmallow extends android.graphics.drawable.RippleDrawable implements RippleDrawable {
 

@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.widget;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -12,11 +11,9 @@ import java.util.List;
 import carbon.recycler.ItemTouchHelper;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.carbonsamples.applibrary.FruitAdapter;
 
-/**
- * Created by Marcin on 2015-05-16.
- */
 public class RecyclerActivity extends SamplesActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
     FruitAdapter fruitAdapter;

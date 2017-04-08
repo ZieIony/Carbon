@@ -6,11 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.guidelines.ButtonsUsageActivity;
-import tk.zielony.carbonsamples.guidelines.ToolbarsUsageActivity;
 
-/**
- * Created by Marcin on 2015-06-14.
- */
 public class GuidelinesActivity extends SamplesActivity {
 
     @Override
@@ -22,8 +18,7 @@ public class GuidelinesActivity extends SamplesActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         ViewModel[] items = new ViewModel[]{
-                new ViewModel(ButtonsUsageActivity.class, getString(R.string.buttonsUsageActivity_title)),
-                new ViewModel(ToolbarsUsageActivity.class, getString(R.string.toolbarsUsageActivity_title))
+                new ViewModel(ButtonsUsageActivity.class, getString(R.string.buttonsUsageActivity_title))
         };
         recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
                 new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :

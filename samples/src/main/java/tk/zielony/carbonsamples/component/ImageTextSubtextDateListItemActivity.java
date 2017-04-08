@@ -1,14 +1,13 @@
 package tk.zielony.carbonsamples.component;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.List;
 
+import carbon.component.ComponentItem;
 import carbon.component.DefaultHeaderItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
@@ -18,13 +17,14 @@ import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
-
-/**
- * Created by Marcin on 2017-02-02.
- */
+import tk.zielony.randomdata.Generator;
+import tk.zielony.randomdata.RandomData;
+import tk.zielony.randomdata.common.DrawableImageGenerator;
+import tk.zielony.randomdata.common.StringDateGenerator;
+import tk.zielony.randomdata.common.TextGenerator;
+import tk.zielony.randomdata.person.StringNameGenerator;
 
 public class ImageTextSubtextDateListItemActivity extends SamplesActivity {
-    static SimpleDateFormat format = new SimpleDateFormat("HH:mm, dd MMM");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,19 +33,28 @@ public class ImageTextSubtextDateListItemActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.imageTextSubtextDateListItemActivity_title));
 
+        List<ComponentItem> items = Arrays.asList(
+                new DefaultHeaderItem("Header"),
+                new DefaultImageTextSubtextDateItem(),
+                new DefaultImageTextSubtextDateItem(),
+                new DefaultHeaderItem("Header"),
+                new DefaultImageTextSubtextDateItem(),
+                new DefaultImageTextSubtextDateItem());
+
+        RandomData randomData = new RandomData();
+        randomData.addGenerators(new Generator[]{
+                new DrawableImageGenerator(this),
+                new StringNameGenerator().withMatcher(f -> f.getName().equals("text") && f.getDeclaringClass().equals(DefaultImageTextSubtextDateItem.class)),
+                new TextGenerator().withMatcher(f -> f.getName().equals("subtext")),
+                new StringDateGenerator()
+        });
+        randomData.fill(items);
+
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter adapter = new RowListAdapter<>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
         adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow.FACTORY);
         recycler.setAdapter(adapter);
-        Drawable drawable = getResources().getDrawable(R.drawable.watermelon);
-        String date = format.format(new Date().getTime());
-        adapter.setItems(Arrays.asList(
-                new DefaultHeaderItem("Header"),
-                new DefaultImageTextSubtextDateItem(drawable, "text", "subtext", date),
-                new DefaultImageTextSubtextDateItem(drawable, "text", "subtext", date),
-                new DefaultHeaderItem("Header"),
-                new DefaultImageTextSubtextDateItem(drawable, "text", "subtext", date),
-                new DefaultImageTextSubtextDateItem(drawable, "text", "subtext", date)));
+        adapter.setItems(items);
     }
 }

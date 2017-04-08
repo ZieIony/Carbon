@@ -1,21 +1,21 @@
 package tk.zielony.carbonsamples.widget;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
 import carbon.widget.ProgressBar;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
+import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2014-12-15.
- */
 public class CircularProgressActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circular_progress);
+
+        Samples.initToolbar(this,getString(R.string.circularProgressActivity_title));
 
         final ProgressBar progress1 = (ProgressBar) findViewById(R.id.progress1);
         final Handler handler = new Handler();

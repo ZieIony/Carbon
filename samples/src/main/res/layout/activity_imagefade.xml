@@ -1,25 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
+
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.Button
         android:id="@+id/button"
-        android:text="fade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:text="fade" />
 
-    <carbon.widget.ImageView
-        android:id="@+id/mazda"
-        android:src="@drawable/mazda"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <carbon.widget.FrameLayout
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <carbon.widget.ImageView
+            android:layout_gravity="left"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+        <carbon.widget.ImageView
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+        <carbon.widget.ImageView
+            android:layout_gravity="right"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+        <carbon.widget.ImageView
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+        <carbon.widget.ImageView
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+        <carbon.widget.ImageView
+            android:layout_gravity="center_vertical|right"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+        <carbon.widget.ImageView
+            android:layout_gravity="bottom|left"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+        <carbon.widget.ImageView
+            android:layout_gravity="bottom|center_horizontal"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+        <carbon.widget.ImageView
+            android:layout_gravity="bottom|right"
+            android:scaleType="centerCrop"
+            app:carbon_heightPercent="33.3%"
+            app:carbon_inAnimation="brightnessSaturationFade"
+            app:carbon_outAnimation="brightnessSaturationFade"
+            app:carbon_widthPercent="33.3%" />
+
+
+    </carbon.widget.FrameLayout>
 
 
 </carbon.widget.LinearLayout>

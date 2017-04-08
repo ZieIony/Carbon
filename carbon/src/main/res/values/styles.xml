@@ -361,6 +361,7 @@
     </style>
 
     <style name="carbon_Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:layout_height">@dimen/carbon_toolbarHeight</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="carbon_elevation">@dimen/carbon_elevationToolbar</item>
         <item name="carbon_icon">@raw/carbon_uparrow</item>
@@ -469,6 +470,8 @@
         <item name="carbon_errorFontFamily">"sans-serif"</item>
         <item name="carbon_counterFontFamily">"sans-serif"</item>
         <item name="carbon_labelFontFamily">"sans-serif"</item>
+
+        <item name="android:gravity">start|left</item>
     </style>
 
     <style name="carbon_EditText" parent="@android:style/Widget.EditText">

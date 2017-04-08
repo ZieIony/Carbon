@@ -30,8 +30,7 @@
                     android:gravity="center_vertical"
                     android:layoutDirection="rtl"
                     android:tag="enable"
-                    android:text="RTL CheckBox"
-                    app:carbon_rippleColor="?attr/carbon_rippleColor" />
+                    android:text="RTL CheckBox" />
 
                 <carbon.widget.CheckBox
                     android:layout_width="match_parent"
@@ -45,9 +44,7 @@
                     android:layout_height="@dimen/carbon_listItemHeight"
                     android:gravity="center_vertical"
                     android:layoutDirection="locale"
-                    android:paddingLeft="@dimen/carbon_padding"
-                    android:text="check me!"
-                    app:carbon_tint="@drawable/checkbox_selector" />
+                    android:text="check me!" />
 
                 <carbon.widget.Divider
                     android:layout_width="match_parent"
@@ -61,13 +58,11 @@
                 <carbon.widget.CheckedTextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/carbon_listItemHeight"
-                    android:clickable="true"
+                    android:layout_marginLeft="@dimen/carbon_margin"
+                    android:layout_marginStart="@dimen/carbon_margin"
                     android:gravity="center_vertical"
                     android:layoutDirection="locale"
-                    android:paddingLeft="@dimen/carbon_padding"
-                    android:paddingRight="@dimen/carbon_padding"
-                    android:text="checked text view"
-                    app:carbon_tint="@drawable/checkbox_selector" />
+                    android:text="checked text view" />
 
                 <carbon.widget.Divider
                     android:layout_width="match_parent"
@@ -111,20 +106,26 @@
 
                 <carbon.widget.CheckBox
                     android:id="@+id/checkBoxGroup"
-                    style="@style/carbon_CheckBox.IconButton.Inverse"
-                    android:gravity="center_vertical" />
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:gravity="center_vertical"
+                    android:text="select all" />
 
                 <carbon.widget.CheckBox
                     android:id="@+id/checkBoxChild1"
-                    style="@style/carbon_CheckBox.IconButton.Inverse"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
                     android:layout_marginLeft="@dimen/carbon_margin"
-                    android:gravity="center_vertical" />
+                    android:gravity="center_vertical"
+                    android:text="subitem 1" />
 
                 <carbon.widget.CheckBox
                     android:id="@+id/checkBoxChild2"
-                    style="@style/carbon_CheckBox.IconButton.Inverse"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
                     android:layout_marginLeft="@dimen/carbon_margin"
-                    android:gravity="center_vertical" />
+                    android:gravity="center_vertical"
+                    android:text="subitem 2" />
 
 
                 <carbon.widget.Divider
@@ -141,7 +142,7 @@
                     style="@style/carbon_CheckBox.IconButton.Inverse"
                     android:gravity="center_vertical" />
 
-                <LinearLayout
+                <carbon.widget.LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -159,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/carbon_padding"
                         android:text="uncheck" />
-                </LinearLayout>
+                </carbon.widget.LinearLayout>
             </carbon.widget.LinearLayout>
         </carbon.widget.ScrollView>
     </carbon.widget.LinearLayout>

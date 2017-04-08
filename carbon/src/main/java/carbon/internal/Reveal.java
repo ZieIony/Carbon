@@ -2,9 +2,6 @@ package carbon.internal;
 
 import android.graphics.Path;
 
-/**
- * Created by Marcin on 2017-01-28.
- */
 public class Reveal {
     public float x,y,radius;
     public Path mask;

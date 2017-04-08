@@ -6,10 +6,6 @@ import android.util.AttributeSet;
 import carbon.internal.MathUtils;
 import carbon.widget.LinearLayout;
 
-/**
- * Created by Marcin on 2017-02-09.
- */
-
 public class ScrollChildView extends LinearLayout implements ScrollChild {
     private int nestedScrollY;
 

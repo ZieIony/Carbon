@@ -28,10 +28,6 @@ import java.util.List;
 import carbon.drawable.EdgeEffect;
 import carbon.widget.FrameLayout;
 
-/**
- * Created by Marcin on 2017-02-06.
- */
-
 public class FlagsScrollView extends FrameLayout {
 
     public FlagsScrollView(Context context, AttributeSet attrs) {

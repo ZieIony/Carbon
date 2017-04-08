@@ -15,11 +15,9 @@ import carbon.animation.AnimUtils;
 import carbon.widget.Chip;
 import carbon.widget.FlowLayout;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2015-12-19.
- */
 public class FlowLayoutActivity extends SamplesActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
 
@@ -27,6 +25,8 @@ public class FlowLayoutActivity extends SamplesActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flowlayout);
+
+        Samples.initToolbar(this, getString(R.string.flowLayoutActivity_title));
 
         FlowLayout layout = (FlowLayout) findViewById(R.id.flowLayout);
         Stream.of(layout.getViews()).filter(v -> v instanceof Chip).forEach(v -> {

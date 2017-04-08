@@ -1,8 +1,6 @@
 package carbon.widget;
 
 /**
- * Created by Marcin on 2015-04-23.
- * <p/>
  * Interface of a view with rounded corners. In case of a layout rounded corners also clip the content.
  */
 public interface CornerView {

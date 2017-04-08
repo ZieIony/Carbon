@@ -8,9 +8,6 @@ import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2014-12-15.
- */
 public class ToolbarActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

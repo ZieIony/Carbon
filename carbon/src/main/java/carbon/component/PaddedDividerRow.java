@@ -5,12 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.R;
-import carbon.recycler.Component;
 import carbon.recycler.RowFactory;
-
-/**
- * Created by Marcin on 2017-02-11.
- */
 
 public class PaddedDividerRow implements Component<DividerItem> {
     public static final RowFactory FACTORY = PaddedDividerRow::new;

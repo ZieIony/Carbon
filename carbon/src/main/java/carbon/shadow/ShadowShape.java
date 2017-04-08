@@ -8,9 +8,6 @@ import android.view.ViewOutlineProvider;
 
 import carbon.widget.CornerView;
 
-/**
- * Created by Marcin on 2015-04-23.
- */
 public enum ShadowShape {
     RECT, ROUND_RECT, CIRCLE;
 

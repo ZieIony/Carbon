@@ -7,9 +7,6 @@ import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2017-02-01.
- */
 public class HtmlActivity extends SamplesActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

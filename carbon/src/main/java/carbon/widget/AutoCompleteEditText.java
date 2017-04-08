@@ -18,16 +18,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import carbon.animation.AnimatedView;
 import carbon.internal.SimpleTextWatcher;
 
 /**
- * Created by Marcin on 2015-02-14.
- * <p/>
  * This implementation extends EditText directly and uses TextWatcher for tracking text changes.
  * This class can be used to create new material search fields with drop down menus separated by a seam.
  */
-public class AutoCompleteEditText extends EditText implements TouchMarginView, AnimatedView {
+public class AutoCompleteEditText extends EditText {
 
     public static final int FILTERING_START = 0, FILTERING_PARTIAL = 1;
 

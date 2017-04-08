@@ -2,9 +2,6 @@ package carbon.widget;
 
 import android.content.res.ColorStateList;
 
-/**
- * Created by Marcin on 2017-02-12.
- */
 public interface StrokeView {
     void setStroke(ColorStateList colorStateList);
 

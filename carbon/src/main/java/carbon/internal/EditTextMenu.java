@@ -18,9 +18,6 @@ import carbon.widget.Button;
 import carbon.widget.EditText;
 import carbon.widget.LinearLayout;
 
-/**
- * Created by Marcin on 2015-09-29.
- */
 public class EditTextMenu extends PopupWindow {
     private EditText editText;
 

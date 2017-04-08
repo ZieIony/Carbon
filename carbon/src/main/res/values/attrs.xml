@@ -122,7 +122,6 @@
 
     <attr name="carbon_src" format="reference" />
     <attr name="carbon_cornerRadius" format="dimension" />
-    <attr name="carbon_textAllCaps" format="boolean" />
     <attr name="carbon_overScroll" format="enum">
         <enum name="always" value="0" />
         <enum name="ifContentScrolls" value="1" />
@@ -234,7 +233,6 @@
         <attr name="carbon_fontFamily" />
         <attr name="android:textStyle" />
         <attr name="carbon_fontPath" />
-        <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
 
         <attr name="carbon_cornerRadius" />
@@ -280,7 +278,6 @@
         <attr name="carbon_fontFamily" />
         <attr name="android:textStyle" />
         <attr name="carbon_fontPath" />
-        <attr name="carbon_textAllCaps" />
         <attr name="android:textAppearance" />
 
         <attr name="carbon_cornerRadius" />
@@ -818,6 +815,8 @@
         <attr name="carbon_labelFontFamily" />
         <attr name="carbon_counterFontFamily" />
         <attr name="android:textStyle" />
+
+        <attr name="android:gravity" />
     </declare-styleable>
 
     <declare-styleable name="EditText">
@@ -850,7 +849,6 @@
 
         <attr name="carbon_fontFamily" />
         <attr name="android:textStyle" />
-        <attr name="carbon_textAllCaps" />
         <attr name="carbon_fontPath" />
         <attr name="carbon_underline" format="boolean" />
         <attr name="carbon_pattern" format="string" />
@@ -896,7 +894,6 @@
         <attr name="carbon_fontFamily" />
         <attr name="android:textStyle" />
         <attr name="carbon_fontPath" />
-        <attr name="carbon_textAllCaps" />
     </declare-styleable>
 
     <declare-styleable name="ScrollView">

@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -27,10 +28,7 @@ import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 
-/**
- * Created by Marcin on 2015-02-26.
- */
-public class PagerTabStrip extends android.widget.HorizontalScrollView implements TintedView {  // TODO: extend carbon.widget.HorizontalScrollView
+public class PagerTabStrip extends android.widget.HorizontalScrollView implements TintedView, VisibleView {  // TODO: extend carbon.widget.HorizontalScrollView
     ViewPager viewPager;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     LinearLayout content;
@@ -337,19 +335,13 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     ColorStateList backgroundTint;
     PorterDuff.Mode backgroundTintMode;
     boolean animateColorChanges;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateTint();
-            ViewCompat.postInvalidateOnAnimation(PagerTabStrip.this);
-        }
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
+        updateTint();
+        ViewCompat.postInvalidateOnAnimation(PagerTabStrip.this);
     };
-    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateBackgroundTint();
-            ViewCompat.postInvalidateOnAnimation(PagerTabStrip.this);
-        }
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
+        updateBackgroundTint();
+        ViewCompat.postInvalidateOnAnimation(PagerTabStrip.this);
     };
 
     @Override
@@ -430,7 +422,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     }
 
     @Override
-    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+    public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
         updateBackgroundTint();
     }

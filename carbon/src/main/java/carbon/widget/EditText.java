@@ -61,10 +61,8 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
-/**
- * Created by Marcin on 2015-02-14.
- */
-public class EditText extends android.widget.EditText implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, ValidStateView, AutoSizeTextView {
+public class EditText extends android.widget.EditText
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, ValidStateView, AutoSizeTextView, VisibleView {
 
     private Field mIgnoreActionUpEventField;
     private Object editor;
@@ -151,9 +149,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.EditText_carbon_textAllCaps) {
-                setAllCaps(a.getBoolean(attr, false));
-            } else if (!isInEditMode() && attr == R.styleable.EditText_carbon_fontPath) {
+            if (!isInEditMode() && attr == R.styleable.EditText_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
@@ -179,26 +175,9 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         Carbon.initTouchMargin(this, a, touchMarginIds);
         setCornerRadius(a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
         Carbon.initHtmlText(this, a, R.styleable.EditText_carbon_htmlText);
-        Carbon.initAutoSizeText(this,a, autoSizeTextIds);
+        Carbon.initAutoSizeText(this, a, autoSizeTextIds);
 
         a.recycle();
-
-        try {
-            Field mHighlightPaintField = android.widget.TextView.class.getDeclaredField("mHighlightPaint");
-            mHighlightPaintField.setAccessible(true);
-            mHighlightPaintField.set(this, new Paint() {
-                @Override
-                public void setColor(int color) {
-                    if (getSelectionStart() == getSelectionEnd()) {
-                        super.setColor(cursorColor);
-                    } else {
-                        super.setColor(color);
-                    }
-                }
-            });
-        } catch (Exception e) {
-
-        }
 
         int underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
         Bitmap dashPathBitmap = Bitmap.createBitmap(underlineWidth * 4, underlineWidth, Bitmap.Config.ARGB_8888);
@@ -223,65 +202,55 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
     }
 
     private void initSelectionHandle() {
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            try {
-                final Field fEditor = android.widget.TextView.class.getDeclaredField("mEditor");
-                fEditor.setAccessible(true);
-                editor = fEditor.get(this);
+        try {
+            final Field fEditor = android.widget.TextView.class.getDeclaredField("mEditor");
+            fEditor.setAccessible(true);
+            editor = fEditor.get(this);
 
-                mIgnoreActionUpEventField = editor.getClass().getDeclaredField("mIgnoreActionUpEvent");
-                mIgnoreActionUpEventField.setAccessible(true);
+            mIgnoreActionUpEventField = editor.getClass().getDeclaredField("mIgnoreActionUpEvent");
+            mIgnoreActionUpEventField.setAccessible(true);
 
-                final Field fSelectHandleLeft = editor.getClass().getDeclaredField("mSelectHandleLeft");
-                final Field fSelectHandleRight = editor.getClass().getDeclaredField("mSelectHandleRight");
-                final Field fSelectHandleCenter = editor.getClass().getDeclaredField("mSelectHandleCenter");
+            final Field fSelectHandleLeft = editor.getClass().getDeclaredField("mSelectHandleLeft");
+            final Field fSelectHandleRight = editor.getClass().getDeclaredField("mSelectHandleRight");
+            final Field fSelectHandleCenter = editor.getClass().getDeclaredField("mSelectHandleCenter");
 
-                fSelectHandleLeft.setAccessible(true);
-                fSelectHandleRight.setAccessible(true);
-                fSelectHandleCenter.setAccessible(true);
+            fSelectHandleLeft.setAccessible(true);
+            fSelectHandleRight.setAccessible(true);
+            fSelectHandleCenter.setAccessible(true);
 
-                VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
-                leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleLeft.set(editor, leftHandle);
+            VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
+            leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+            fSelectHandleLeft.set(editor, leftHandle);
 
-                VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
-                rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleRight.set(editor, rightHandle);
+            VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
+            rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+            fSelectHandleRight.set(editor, rightHandle);
 
-                VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
-                middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleCenter.set(editor, middleHandle);
-            } catch (final Exception ignored) {
-            }
-        } else {
-            try {
-                final Field fSelectHandleLeft = android.widget.TextView.class.getDeclaredField("mSelectHandleLeft");
-                final Field fSelectHandleRight = android.widget.TextView.class.getDeclaredField("mSelectHandleRight");
-                final Field fSelectHandleCenter = android.widget.TextView.class.getDeclaredField("mSelectHandleCenter");
-
-                fSelectHandleLeft.setAccessible(true);
-                fSelectHandleRight.setAccessible(true);
-                fSelectHandleCenter.setAccessible(true);
-
-                VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
-                leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleLeft.set(this, leftHandle);
-
-                VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
-                rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleRight.set(this, rightHandle);
-
-                VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
-                middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
-                fSelectHandleCenter.set(this, middleHandle);
-            } catch (final Exception ignored) {
-            }
-
+            VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
+            middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+            fSelectHandleCenter.set(editor, middleHandle);
+        } catch (final Exception ignored) {
         }
     }
 
     public void setCursorColor(int cursorColor) {
         this.cursorColor = cursorColor;
+        try {
+            Field mHighlightPaintField = android.widget.TextView.class.getDeclaredField("mHighlightPaint");
+            mHighlightPaintField.setAccessible(true);
+            mHighlightPaintField.set(this, new Paint() {
+                @Override
+                public void setColor(int color) {
+                    if (getSelectionStart() == getSelectionEnd()) {
+                        super.setColor(cursorColor);
+                    } else {
+                        super.setColor(color);
+                    }
+                }
+            });
+        } catch (Exception e) {
+
+        }
     }
 
     public int getCursorColor() {
@@ -387,9 +356,7 @@ public class EditText extends android.widget.EditText implements ShadowView, Rip
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
                 int attr = appearance.getIndex(i);
-                if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
-                    setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
+                if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);

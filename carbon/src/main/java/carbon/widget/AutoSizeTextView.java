@@ -2,10 +2,6 @@ package carbon.widget;
 
 import android.support.annotation.NonNull;
 
-/**
- * Created by Marcin on 2017-03-26.
- */
-
 public interface AutoSizeTextView {
 
     @NonNull

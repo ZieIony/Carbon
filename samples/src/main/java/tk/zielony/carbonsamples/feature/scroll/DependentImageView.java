@@ -7,10 +7,6 @@ import android.view.View;
 
 import carbon.widget.FloatingActionButton;
 
-/**
- * Created by Marcin on 2017-02-10.
- */
-
 public class DependentImageView extends FloatingActionButton implements BehaviorView {
     public DependentImageView(Context context, AttributeSet attrs) {
         super(context, attrs);

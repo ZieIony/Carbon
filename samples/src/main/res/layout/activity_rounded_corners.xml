@@ -10,15 +10,32 @@
     <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.TextView
-        android:text="To round corners of a view simply use carbon_cornerRadius. Rounded corners cut view's content."
-        style="@style/sectionDescription" />
+        style="@style/sectionDescription"
+        android:text="To round corners of a view simply use carbon_cornerRadius. Rounded corners cut view's content." />
 
-    <tk.zielony.carbonsamples.applibrary.PicassoView
-        android:id="@+id/image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
-        android:scaleType="centerCrop"
-        android:visibility="invisible"
-        app:carbon_cornerRadius="10dp" />
+        android:background="?attr/carbon_colorBackground"
+        android:orientation="vertical"
+        app:carbon_cornerRadius="8dp"
+        app:carbon_elevation="@dimen/carbon_elevationCard">
+
+        <tk.zielony.carbonsamples.applibrary.PicassoView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:visibility="invisible" />
+
+        <carbon.widget.TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
+            android:text="Card with rounded content" />
+
+    </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

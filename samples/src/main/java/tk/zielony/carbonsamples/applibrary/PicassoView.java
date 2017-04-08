@@ -11,9 +11,6 @@ import com.squareup.picasso.Target;
 
 import carbon.widget.ImageView;
 
-/**
- * Created by Marcin on 2015-02-08.
- */
 public class PicassoView extends ImageView implements Target {
     public PicassoView(Context context) {
         super(context);

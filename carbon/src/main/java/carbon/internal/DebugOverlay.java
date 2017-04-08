@@ -20,9 +20,6 @@ import java.util.List;
 
 import carbon.R;
 
-/**
- * Created by Marcin on 2016-03-15.
- */
 public class DebugOverlay extends PopupWindow {
     private boolean drawBounds = true;
     private boolean drawGrid = true;

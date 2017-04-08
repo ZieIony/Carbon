@@ -9,9 +9,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.view.View;
 
-/**
- * Created by Marcin on 2014-12-26.
- */
 public class Shadow {
     private static final float SHADOW_SCALE = 1.0f;
     public static final int ALPHA = 0x26;

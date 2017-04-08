@@ -49,16 +49,15 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.Reveal;
-import carbon.recycler.Component;
+import carbon.component.Component;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
-/**
- * Created by Marcin on 2014-12-13.
- */
-public class Toolbar extends android.support.v7.widget.Toolbar implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView {
+public class Toolbar extends android.support.v7.widget.Toolbar
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView, VisibleView {
+
     private ViewGroup content;
     private ImageView icon;
     private TextView title;

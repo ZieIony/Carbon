@@ -2,9 +2,6 @@ package carbon;
 
 import android.view.MotionEvent;
 
-/**
- * Created by Marcin on 2014-12-20.
- */
 public interface OnGestureListener {
     void onPress(MotionEvent motionEvent);
 

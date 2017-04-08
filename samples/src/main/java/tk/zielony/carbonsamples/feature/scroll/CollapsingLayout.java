@@ -13,10 +13,6 @@ import carbon.widget.TextView;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
 
-/**
- * Created by Marcin on 2017-02-10.
- */
-
 public class CollapsingLayout extends FrameLayout implements ScrollChild {
     public CollapsingLayout(Context context, AttributeSet attrs) {
         super(context, attrs);

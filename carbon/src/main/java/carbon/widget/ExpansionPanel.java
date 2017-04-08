@@ -10,9 +10,6 @@ import android.view.animation.DecelerateInterpolator;
 
 import carbon.R;
 
-/**
- * Created by Marcin on 2016-06-08.
- */
 public class ExpansionPanel extends RelativeLayout {
     ImageView expandedIndicator;
     private boolean expanded;

@@ -19,14 +19,8 @@
             android:orientation="vertical">
 
             <carbon.widget.TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/carbon_marginHalf"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_marginRight="@dimen/carbon_margin"
-                android:layout_marginTop="@dimen/carbon_marginHalf"
-                android:text="Plain buttons with different styles"
-                android:textAppearance="?attr/carbon_textAppearanceCaption" />
+                style="@style/sectionDescription"
+                android:text="Plain buttons with different styles"/>
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
@@ -41,6 +35,7 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:background="@drawable/buttonshape"
                 android:tag="enable"
+                android:textColor="@color/carbon_text_primary_dark"
                 android:text="Shape"
                 app:carbon_backgroundTint="@null" />
 
@@ -92,14 +87,8 @@
                 android:layout_height="wrap_content" />
 
             <carbon.widget.TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/carbon_marginHalf"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_marginRight="@dimen/carbon_margin"
-                android:layout_marginTop="@dimen/carbon_marginHalf"
-                android:text="Floating action buttons with vector graphics and proper sizes"
-                android:textAppearance="?attr/carbon_textAppearanceCaption" />
+                style="@style/sectionDescription"
+                android:text="Floating action buttons with vector graphics and proper sizes" />
 
             <carbon.widget.FloatingActionButton
                 android:layout_width="@dimen/carbon_fabSize"

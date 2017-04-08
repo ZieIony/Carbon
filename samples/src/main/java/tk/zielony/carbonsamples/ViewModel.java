@@ -2,9 +2,6 @@ package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
 
-/**
- * Created by Marcin on 2015-04-28.
- */
 public class ViewModel {
     Class klass;
     String name;

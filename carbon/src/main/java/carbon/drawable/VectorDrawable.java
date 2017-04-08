@@ -15,15 +15,12 @@ import android.util.SparseArray;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
-/**
- * Created by Marcin on 2015-06-25.
- */
 public class VectorDrawable extends Drawable implements AlphaDrawable {
     private VectorState state;
     private Bitmap bitmap;
     private ColorStateList tint = ColorStateList.valueOf(0x00ffffff);   // TODO: maybe tint should be a part of VectorState?
 
-    static SparseArray<SVG> cache = new SparseArray<>();
+    private static SparseArray<SVG> cache = new SparseArray<>();
 
     public static void clearCache() {
         cache.clear();

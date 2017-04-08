@@ -8,9 +8,6 @@ import android.graphics.drawable.Drawable;
 
 import carbon.drawable.AlphaDrawable;
 
-/**
- * Created by Marcin on 2014-11-19.
- */
 public interface RippleDrawable extends AlphaDrawable{
 
     Drawable getBackground();

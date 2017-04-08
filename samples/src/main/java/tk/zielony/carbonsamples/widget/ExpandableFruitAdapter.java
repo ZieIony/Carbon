@@ -11,9 +11,6 @@ import carbon.widget.RecyclerView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
 
-/**
- * Created by Marcin on 2015-05-09.
- */
 public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<ExpandableFruitAdapter.ChildViewHolder, ExpandableRecyclerView.SimpleGroupViewHolder, String, String> {
     private List<String> fruits;
 

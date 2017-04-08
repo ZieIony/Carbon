@@ -14,14 +14,11 @@ import carbon.R;
 import carbon.widget.FrameLayout;
 import carbon.widget.TextView;
 
-/**
- * Created by Marcin on 2016-02-29.
- */
 public class SeekBarPopup extends PopupWindow {
     private final Context context;
     private final View contentView;
-    FrameLayout bubble;
-    TextView label;
+    private FrameLayout bubble;
+    private TextView label;
 
     public SeekBarPopup(Context context) {
         super(LayoutInflater.from(context).inflate(R.layout.carbon_seekbar_bubble, null, false));

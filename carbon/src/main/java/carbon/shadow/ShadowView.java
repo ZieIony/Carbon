@@ -3,9 +3,6 @@ package carbon.shadow;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 
-/**
- * Created by Marcin on 2014-11-19.
- */
 public interface ShadowView {
     /**
      * Gets the elevation.

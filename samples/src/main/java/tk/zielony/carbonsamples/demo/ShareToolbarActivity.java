@@ -13,9 +13,6 @@ import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-/**
- * Created by Marcin on 2015-04-24.
- */
 public class ShareToolbarActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

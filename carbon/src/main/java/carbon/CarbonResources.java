@@ -32,9 +32,6 @@ import carbon.drawable.ripple.LollipopDrawable;
 import carbon.drawable.ripple.LollipopDrawablesCompat;
 import carbon.drawable.ripple.RippleDrawableFroyo;
 
-/**
- * Created by Marcin on 2015-07-01.
- */
 public class CarbonResources extends Resources {
     private final Object mAccessLock = new Object();
 

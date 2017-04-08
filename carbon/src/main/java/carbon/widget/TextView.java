@@ -50,10 +50,8 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
-/**
- * Created by Marcin on 2014-11-07.
- */
-public class TextView extends android.widget.TextView implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, ValidStateView, AutoSizeTextView {
+public class TextView extends android.widget.TextView
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, ValidStateView, AutoSizeTextView, VisibleView {
 
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -129,9 +127,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.TextView_carbon_textAllCaps) {
-                setAllCaps(a.getBoolean(attr, false));
-            } else if (!isInEditMode() && attr == R.styleable.TextView_carbon_fontPath) {
+            if (!isInEditMode() && attr == R.styleable.TextView_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
@@ -208,9 +204,7 @@ public class TextView extends android.widget.TextView implements ShadowView, Rip
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
                 int attr = appearance.getIndex(i);
-                if (attr == R.styleable.TextAppearance_carbon_textAllCaps) {
-                    setAllCaps(appearance.getBoolean(R.styleable.TextAppearance_carbon_textAllCaps, true));
-                } else if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
+                if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);

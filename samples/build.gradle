@@ -33,4 +33,5 @@ dependencies {
     compile project(':carbon')
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'com.annimon:stream:1.1.4'
+    compile 'com.github.ZieIony.RandomData:person:4b76016d78'
 }

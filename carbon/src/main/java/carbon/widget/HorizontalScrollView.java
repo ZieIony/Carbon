@@ -24,10 +24,7 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 
-/**
- * Created by Marcin on 2015-02-28.
- */
-public class HorizontalScrollView extends android.widget.HorizontalScrollView implements TintedView {
+public class HorizontalScrollView extends android.widget.HorizontalScrollView implements TintedView, VisibleView {
     private int mTouchSlop;
     EdgeEffect leftGlow;
     EdgeEffect rightGlow;

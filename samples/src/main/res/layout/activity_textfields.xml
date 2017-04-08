@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
+                android:gravity="center_horizontal"
                 app:carbon_label="email"
                 app:carbon_labelStyle="floating"
                 app:carbon_showClear="true">

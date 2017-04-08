@@ -12,9 +12,6 @@ import carbon.widget.TableView;
 import carbon.widget.TextView;
 import carbon.widget.Toolbar;
 
-/**
- * Created by Marcin on 2015-12-18.
- */
 public class TableLayout extends LinearLayout {
     private TableView table;
     Toolbar toolbar;

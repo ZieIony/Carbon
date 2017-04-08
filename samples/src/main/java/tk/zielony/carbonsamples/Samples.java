@@ -15,9 +15,6 @@ import carbon.widget.CheckBox;
 import carbon.widget.ImageView;
 import carbon.widget.Toolbar;
 
-/**
- * Created by Marcin on 2016-03-23.
- */
 public class Samples {
     private Samples() {
     }
@@ -50,12 +47,13 @@ public class Samples {
         }
 
         CheckBox checkBox = (CheckBox) activity.findViewById(R.id.enabled);
-        if (checkBox != null)
+        if (checkBox != null) {
             checkBox.setOnCheckedChangeListener((compoundButton, checked) -> {
                 List<View> views = findViewsWithTag((ViewGroup) activity.getWindow().getDecorView().getRootView(), "enable");
                 for (View v : views)
                     v.setEnabled(checked);
             });
+        }
     }
 
     private static List<View> findViewsWithTag(ViewGroup start, Object tag) {
@@ -75,15 +73,10 @@ public class Samples {
         return result;
     }
 
-    public static void setTheme(Context context, int theme, int primaryColor, int accentColor) {
-        SharedPreferences preferences = context.getSharedPreferences("theme", Context.MODE_PRIVATE);
-        preferences.edit().putInt("theme", theme).putInt("primary", primaryColor).putInt("accent", accentColor).commit();
-    }
-
     public static void applyTheme(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("theme", Context.MODE_PRIVATE);
-        context.setTheme(preferences.getInt("theme", R.style.ThemeLight));
-        context.getTheme().applyStyle(preferences.getInt("primary", R.style.PrimaryRed), true);
-        context.getTheme().applyStyle(preferences.getInt("accent", R.style.AccentBlue), true);
+        SharedPreferences preferences = context.getSharedPreferences(ColorsActivity.THEME, Context.MODE_PRIVATE);
+        context.setTheme(ColorsActivity.styles[preferences.getInt(ColorsActivity.STYLE, R.style.ThemeLight)].value);
+        context.getTheme().applyStyle(ColorsActivity.primary[preferences.getInt(ColorsActivity.PRIMARY, R.style.PrimaryRed)].value, true);
+        context.getTheme().applyStyle(ColorsActivity.accents[preferences.getInt(ColorsActivity.ACCENT, R.style.AccentBlue)].value, true);
     }
 }

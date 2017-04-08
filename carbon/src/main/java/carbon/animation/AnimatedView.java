@@ -2,9 +2,6 @@ package carbon.animation;
 
 import android.animation.Animator;
 
-/**
- * Created by Marcin on 2014-11-30.
- */
 public interface AnimatedView {
     Animator getAnimator();
 
