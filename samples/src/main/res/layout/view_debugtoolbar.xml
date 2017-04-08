@@ -8,7 +8,7 @@
     <carbon.widget.ImageView
         android:id="@+id/debug"
         style="@style/carbon_ImageView.IconButton"
-        app:carbon_src="@raw/ic_bug_report_24px" />
+        android:src="@raw/ic_bug_report_24px" />
 
     <carbon.widget.CheckBox
         android:id="@+id/enabled"

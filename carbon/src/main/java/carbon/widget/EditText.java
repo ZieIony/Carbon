@@ -138,9 +138,6 @@ public class EditText extends android.widget.EditText
     };
 
     private void initEditText(AttributeSet attrs, int defStyleAttr) {
-        if (isInEditMode())
-            return;
-
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, R.style.carbon_EditText);
 
         int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
@@ -372,8 +369,6 @@ public class EditText extends android.widget.EditText
 
     public void drawInternal(@NonNull Canvas canvas) {
         super.draw(canvas);
-        if (isInEditMode())
-            return;
 
         int paddingBottom = getPaddingBottom();
 

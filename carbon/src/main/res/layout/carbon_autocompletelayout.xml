@@ -13,7 +13,7 @@
             android:layout_width="@dimen/carbon_toolbarHeight"
             android:layout_height="@dimen/carbon_toolbarHeight"
             android:padding="@dimen/carbon_padding"
-            app:carbon_src="@raw/carbon_search"
+            android:src="@raw/carbon_search"
             app:carbon_tint="@color/carbon_black_54" />
 
         <carbon.widget.AutoCompleteEditText

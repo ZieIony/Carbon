@@ -76,7 +76,7 @@
         android:id="@+id/button"
         android:layout_margin="@dimen/carbon_padding"
         android:layout_gravity="end|bottom"
-        app:carbon_src="@raw/ic_print_24px"
+        android:src="@raw/ic_print_24px"
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize" />
 </carbon.widget.FrameLayout>

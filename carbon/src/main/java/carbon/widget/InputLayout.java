@@ -73,9 +73,6 @@ public class InputLayout extends RelativeLayout {
         clearImageView = (ImageView) findViewById(R.id.carbon_clear);
         showPasswordImageView = (ImageView) findViewById(R.id.carbon_showPassword);
 
-        if (isInEditMode())
-            return;
-
         if (attrs == null)
             return;
 
@@ -116,8 +113,7 @@ public class InputLayout extends RelativeLayout {
             }
         }
 
-        if (!isInEditMode())
-            setError(a.getString(R.styleable.InputLayout_carbon_errorMessage));
+        setError(a.getString(R.styleable.InputLayout_carbon_errorMessage));
 
         setMinCharacters(a.getInt(R.styleable.InputLayout_carbon_minCharacters, 0));
         setMaxCharacters(a.getInt(R.styleable.InputLayout_carbon_maxCharacters, Integer.MAX_VALUE));

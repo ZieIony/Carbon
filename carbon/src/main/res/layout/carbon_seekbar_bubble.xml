@@ -16,7 +16,7 @@
         <carbon.widget.ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:carbon_src="@raw/carbon_bubble"
+            android:src="@raw/carbon_bubble"
             app:carbon_tint="?attr/colorAccent" />
 
         <carbon.widget.TextView

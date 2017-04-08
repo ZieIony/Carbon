@@ -3,6 +3,7 @@ package tk.zielony.carbonsamples.widget;
 import android.os.Bundle;
 
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
 public class SVGActivity extends SamplesActivity {
@@ -10,5 +11,7 @@ public class SVGActivity extends SamplesActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_svg);
+
+        Samples.initToolbar(this, getString(R.string.svgActivity_title));
     }
 }

@@ -28,7 +28,7 @@
             android:clickable="true"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
             app:carbon_rippleStyle="borderless"
-            app:carbon_src="@raw/ic_refresh_24px"
+            android:src="@raw/ic_refresh_24px"
             app:carbon_tint="#ffffffff" />
     </carbon.widget.Toolbar>
 </carbon.widget.LinearLayout>

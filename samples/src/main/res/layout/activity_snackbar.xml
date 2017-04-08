@@ -71,6 +71,6 @@
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/carbon_padding"
         app:carbon_rippleColor="#7fffffff"
-        app:carbon_src="@raw/ic_face_24px" />
+        android:src="@raw/ic_face_24px" />
 
 </carbon.widget.RelativeLayout>

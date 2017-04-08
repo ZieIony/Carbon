@@ -116,9 +116,6 @@ public class TextView extends android.widget.TextView
     };
 
     private void initTextView(AttributeSet attrs, int defStyleAttr) {
-        if (isInEditMode())
-            return;
-
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, R.style.carbon_TextView);
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);

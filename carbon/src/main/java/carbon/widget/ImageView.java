@@ -107,12 +107,13 @@ public class ImageView extends android.widget.ImageView
             int attr = a.getIndex(i);
             if (attr == R.styleable.ImageView_android_src) {
                 int resId = a.getResourceId(attr, 0);
-                if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
-                    setImageDrawable(new VectorDrawable(getResources(), resId));
-            } else if (attr == R.styleable.ImageView_carbon_src) {
-                int resId = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
-                if (resId != 0 && !isInEditMode() && getContext().getResources().getResourceTypeName(resId).equals("raw"))
-                    setImageDrawable(new VectorDrawable(getResources(), resId));
+                if (resId != 0 && getContext().getResources().getResourceTypeName(resId).equals("raw")) {
+                    if (!isInEditMode()) {
+                        setImageDrawable(new VectorDrawable(getResources(), resId));
+                    } else {
+                        setImageResource(R.drawable.carbon_iconplaceholder);
+                    }
+                }
             } else if (attr == R.styleable.ImageView_android_enabled) {
                 setEnabled(a.getBoolean(attr, true));
             } else if (attr == R.styleable.ImageView_carbon_cornerRadius) {

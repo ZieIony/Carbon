@@ -107,7 +107,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
                 context = ((ContextWrapper) context).getBaseContext();
             if (context instanceof UpAwareActivity) {
                 ((UpAwareActivity) context).onUpPressed();
-            } else if (context instanceof Activity) {
+            } else {
                 ((Activity) context).onBackPressed();
             }
         });
@@ -251,7 +251,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     }
 
     @Override
-    public void setTitle(@NonNull CharSequence text) {
+    public void setTitle(@Nullable CharSequence text) {
         title.setText(text);
     }
 

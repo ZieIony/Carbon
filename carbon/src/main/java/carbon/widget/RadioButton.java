@@ -29,7 +29,7 @@ import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 
 public class RadioButton extends carbon.widget.Button implements Checkable {
-    private CheckableDrawable drawable;
+    private Drawable drawable;
     private float drawablePadding;
 
     public RadioButton(Context context) {
@@ -54,7 +54,12 @@ public class RadioButton extends carbon.widget.Button implements Checkable {
     }
 
     public void initRadioButton(AttributeSet attrs, int defStyleAttr) {
-        CheckableDrawable d = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(0, 0));
+        Drawable d;
+        if (!isInEditMode()) {
+            d = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
+        } else {
+            d = getResources().getDrawable(android.R.drawable.radiobutton_on_background);
+        }
         setButtonDrawable(d);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, R.style.carbon_RadioButton);
@@ -142,7 +147,8 @@ public class RadioButton extends carbon.widget.Button implements Checkable {
 
     public void setCheckedImmediate(boolean checked) {
         setChecked(checked);
-        drawable.setCheckedImmediate(checked);
+        if (!isInEditMode())
+            ((CheckableDrawable) drawable).setCheckedImmediate(checked);
     }
 
     /**
@@ -185,7 +191,7 @@ public class RadioButton extends carbon.widget.Button implements Checkable {
      *
      * @param d The Drawable to use as the button graphic
      */
-    public void setButtonDrawable(CheckableDrawable d) {
+    public void setButtonDrawable(Drawable d) {
         if (drawable != d) {
             if (drawable != null) {
                 drawable.setCallback(null);
@@ -228,10 +234,12 @@ public class RadioButton extends carbon.widget.Button implements Checkable {
 
     private void applyButtonTint() {
         if (drawable != null && getTint() != null && getTintMode() != null) {
-            drawable = (CheckableDrawable) drawable.mutate();
+            drawable = drawable.mutate();
 
-            drawable.setTint(getTint());
-            drawable.setTintMode(getTintMode());
+            if (!isInEditMode()) {
+                ((CheckableDrawable) drawable).setTint(getTint());
+                ((CheckableDrawable) drawable).setTintMode(getTintMode());
+            }
 
             // The drawable (or one of its children) may not have been
             // stateful before applying the tint, so let's try again.

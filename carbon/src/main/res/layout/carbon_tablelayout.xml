@@ -75,7 +75,7 @@
             android:clickable="true"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
             app:carbon_rippleStyle="borderless"
-            app:carbon_src="@raw/carbon_prev"
+            android:src="@raw/carbon_prev"
             app:carbon_tint="?attr/carbon_iconColor" />
 
         <carbon.widget.ImageView
@@ -86,7 +86,7 @@
             android:clickable="true"
             app:carbon_rippleColor="?attr/carbon_rippleColor"
             app:carbon_rippleStyle="borderless"
-            app:carbon_src="@raw/carbon_next"
+            android:src="@raw/carbon_next"
             app:carbon_tint="?attr/carbon_iconColor" />
     </carbon.widget.LinearLayout>
 </merge>

@@ -16,7 +16,7 @@
             style="@style/carbon_ImageView.Icon"
             android:layout_width="@dimen/carbon_toolbarItemSize"
             android:layout_height="@dimen/carbon_toolbarItemSize"
-            app:carbon_src="@raw/ic_bug_report_24px"
+            android:src="@raw/ic_bug_report_24px"
             app:carbon_tint="?attr/colorControlNormal" />
     </carbon.widget.Toolbar>
 

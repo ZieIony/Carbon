@@ -124,7 +124,7 @@
         android:layout_margin="@dimen/carbon_margin"
         android:clickable="true"
         app:carbon_elevation="@dimen/carbon_elevationToolbar"
-        app:carbon_src="@raw/ic_search_24px"
+        android:src="@raw/ic_search_24px"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end" />
 

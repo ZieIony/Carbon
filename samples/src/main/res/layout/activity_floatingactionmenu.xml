@@ -19,7 +19,7 @@
             android:layout_height="@dimen/carbon_fabSize"
             android:layout_gravity="bottom|right"
             android:layout_margin="@dimen/carbon_padding"
-            app:carbon_src="@raw/ic_print_24px" />
+            android:src="@raw/ic_print_24px" />
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/fab2"
@@ -28,7 +28,7 @@
             android:layout_gravity="bottom|left"
             android:layout_margin="@dimen/carbon_padding"
             app:carbon_menu="@menu/menu_fab"
-            app:carbon_src="@raw/ic_airplanemode_off_24px" />
+            android:src="@raw/ic_airplanemode_off_24px" />
 
         <carbon.widget.TextView
             style="@style/sectionDescription"
@@ -42,7 +42,7 @@
             android:layout_gravity="top|right"
             android:layout_margin="@dimen/carbon_padding"
             app:carbon_menu="@menu/menu_fab"
-            app:carbon_src="@raw/ic_refresh_24px" />
+            android:src="@raw/ic_refresh_24px" />
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/fab4"
@@ -51,6 +51,6 @@
             android:layout_gravity="top|left"
             android:layout_margin="@dimen/carbon_padding"
             app:carbon_menu="@menu/menu_fab"
-            app:carbon_src="@raw/ic_vibration_24px" />
+            android:src="@raw/ic_vibration_24px" />
     </carbon.widget.FrameLayout>
 </carbon.widget.LinearLayout>

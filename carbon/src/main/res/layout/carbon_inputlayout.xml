@@ -38,7 +38,7 @@
         android:layout_height="@dimen/carbon_iconSize"
         android:baselineAlignBottom="true"
         android:tag="inputLayout"
-        app:carbon_src="@raw/carbon_clear" />
+        android:src="@raw/carbon_clear" />
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_showPassword"
@@ -47,5 +47,5 @@
         android:layout_height="@dimen/carbon_iconSize"
         android:baselineAlignBottom="true"
         android:tag="inputLayout"
-        app:carbon_src="@raw/carbon_visibility" />
+        android:src="@raw/carbon_visibility" />
 </merge>

@@ -120,7 +120,6 @@
     <attr name="carbon_state_invalid" format="boolean" />
     <attr name="carbon_state_indeterminate" format="boolean" />
 
-    <attr name="carbon_src" format="reference" />
     <attr name="carbon_cornerRadius" format="dimension" />
     <attr name="carbon_overScroll" format="enum">
         <enum name="always" value="0" />
@@ -749,7 +748,6 @@
         <attr name="carbon_animateColorChanges" />
 
         <attr name="android:src" />
-        <attr name="carbon_src" />
         <attr name="carbon_cornerRadius" />
         <attr name="carbon_stroke" />
         <attr name="carbon_strokeWidth" />

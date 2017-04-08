@@ -27,6 +27,6 @@
         app:carbon_cornerRadius="@dimen/carbon_margin"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless"
-        app:carbon_src="@raw/carbon_remove" />
+        android:src="@raw/carbon_remove" />
 
 </merge>

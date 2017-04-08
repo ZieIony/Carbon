@@ -40,7 +40,7 @@
             android:layout_marginEnd="@dimen/carbon_toolbarItemMargin"
             android:layout_marginRight="@dimen/carbon_toolbarItemMargin"
             android:clickable="true"
-            app:carbon_src="@raw/carbon_clear" />
+            android:src="@raw/carbon_clear" />
     </LinearLayout>
 
     <FrameLayout

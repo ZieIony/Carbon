@@ -32,5 +32,5 @@
         android:layout_margin="@dimen/carbon_padding"
         app:carbon_anchor="@id/bottomLayout"
         app:carbon_anchorGravity="top"
-        app:carbon_src="@raw/ic_face_24px" />
+        android:src="@raw/ic_face_24px" />
 </carbon.widget.RelativeLayout>

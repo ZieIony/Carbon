@@ -17,7 +17,7 @@
         android:layout_marginRight="@dimen/carbon_margin"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        app:carbon_src="@raw/carbon_arrow_down"
+        android:src="@raw/carbon_arrow_down"
         app:carbon_tint="?attr/carbon_iconColor" />
 
 </carbon.widget.RelativeLayout>
