@@ -23,6 +23,20 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="center_horizontal"
+                app:carbon_label="username"
+                app:carbon_labelStyle="ifNotEmpty">
+
+                <carbon.widget.EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="enable"
+                    android:text="hello text" />
+            </carbon.widget.InputLayout>
+
+            <carbon.widget.InputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
                 app:carbon_label="email"
                 app:carbon_labelStyle="floating"
                 app:carbon_showClear="true">

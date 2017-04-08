@@ -133,6 +133,7 @@
         <enum name="floating" value="0" />
         <enum name="persistent" value="1" />
         <enum name="hint" value="2" />
+        <enum name="ifNotEmpty" value="3" />
     </attr>
     <attr name="carbon_label" format="string" />
 

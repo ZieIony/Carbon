@@ -21,7 +21,7 @@ import carbon.internal.TypefaceUtils;
 public class InputLayout extends RelativeLayout {
 
     public enum LabelStyle {
-        Floating, Persistent, Hint
+        Floating, Persistent, Hint, IfNotEmpty
     }
 
     private TextView errorTextView;
@@ -69,7 +69,7 @@ public class InputLayout extends RelativeLayout {
         counterTextView = (TextView) findViewById(R.id.carbon_counter);
         counterTextView.setTextColor(new DefaultTextSecondaryColorStateList(getContext()));
         labelTextView = (TextView) findViewById(R.id.carbon_label);
-        labelTextView .setTextColor(new DefaultAccentColorStateList(getContext()));
+        labelTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         clearImageView = (ImageView) findViewById(R.id.carbon_clear);
         showPasswordImageView = (ImageView) findViewById(R.id.carbon_showPassword);
 
@@ -219,7 +219,8 @@ public class InputLayout extends RelativeLayout {
     }
 
     private void updateHint(View child) {
-        if (labelStyle == LabelStyle.Persistent || labelStyle == LabelStyle.Floating && child.isFocused()) {
+        if (labelStyle == LabelStyle.Persistent || labelStyle == LabelStyle.Floating && child.isFocused() ||
+                labelStyle == LabelStyle.IfNotEmpty && (child.isFocused() || child instanceof android.widget.TextView && ((android.widget.TextView) child).getText().length() > 0)) {
             labelTextView.setVisibility(VISIBLE);
             if (child instanceof EditText)
                 ((EditText) child).setHint(null);
