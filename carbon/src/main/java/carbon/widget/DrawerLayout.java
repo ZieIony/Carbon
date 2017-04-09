@@ -41,7 +41,7 @@ import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
-import carbon.internal.Reveal;
+import carbon.internal.RevealAnimator;
 import carbon.component.Component;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
@@ -125,7 +125,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private boolean drawCalled = false;
-    Reveal reveal;
+    RevealAnimator revealAnimator;
 
     @Override
     public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
@@ -165,34 +165,34 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
                 }
             };
         } else {
-            reveal = new Reveal(x, y, startRadius);
-            ValueAnimator animator = ValueAnimator.ofFloat(startRadius, finishRadius);
-            animator.setDuration(Carbon.getDefaultRevealDuration());
-            animator.addUpdateListener(animation -> {
-                reveal.radius = (float) animation.getAnimatedValue();
+            revealAnimator = new RevealAnimator(x, y, startRadius, finishRadius);
+            revealAnimator.setDuration(Carbon.getDefaultRevealDuration());
+            revealAnimator.addUpdateListener(animation -> {
+                RevealAnimator reveal = ((RevealAnimator) animation);
+                reveal.radius = (float) reveal.getAnimatedValue();
                 reveal.mask.reset();
-                reveal.mask.addCircle(reveal.x, reveal.y, Math.max(reveal.radius, 1), Path.Direction.CW);
+                reveal.mask.addCircle(reveal.x, reveal.y, Math.max((Float) reveal.getAnimatedValue(), 1), Path.Direction.CW);
                 postInvalidate();
             });
-            animator.addListener(new AnimatorListenerAdapter() {
+            revealAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationCancel(Animator animation) {
-                    reveal = null;
+                    revealAnimator = null;
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    reveal = null;
+                    revealAnimator = null;
                 }
             });
-            animator.start();
-            return animator;
+            revealAnimator.start();
+            return revealAnimator;
         }
     }
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
-        boolean r = reveal != null;
+        boolean r = revealAnimator != null;
         boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
         if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
@@ -200,7 +200,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
 
             if (r) {
                 int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
-                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
                 internalDispatchDraw(canvas);
                 canvas.restoreToCount(saveCount2);
             } else {
@@ -211,7 +211,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
             if (c)
                 canvas.drawPath(cornersMask, paint);
             if (r)
-                canvas.drawPath(reveal.mask, paint);
+                canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
@@ -330,14 +330,14 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
-        boolean r = reveal != null;
+        boolean r = revealAnimator != null;
         boolean c = cornerRadius > 0;
         if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
                 int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
-                canvas.clipRect(reveal.x - reveal.radius, reveal.y - reveal.radius, reveal.x + reveal.radius, reveal.y + reveal.radius);
+                canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
                 super.draw(canvas);
                 canvas.restoreToCount(saveCount2);
             } else {
@@ -348,7 +348,7 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
             if (c)
                 canvas.drawPath(cornersMask, paint);
             if (r)
-                canvas.drawPath(reveal.mask, paint);
+                canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
@@ -610,8 +610,13 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
 
         int saveCount = 0;
         boolean maskShadow = getBackground() != null && alpha != 1;
-        if (maskShadow)
+        boolean r = revealAnimator != null && revealAnimator.isRunning();
+        if (maskShadow) {
             saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        } else if (r) {
+            saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+            canvas.clipRect(getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius, getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
+        }
 
         paint.setAlpha((int) (Shadow.ALPHA * alpha));
 
@@ -629,14 +634,21 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
         shadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
-        if (maskShadow) {
+        if (saveCount != 0) {
             canvas.translate(this.getLeft(), this.getTop());
             canvas.concat(matrix);
             paint.setXfermode(Carbon.CLEAR_MODE);
+        }
+        if (maskShadow) {
             shadowMaskRect.set(0, 0, getWidth(), getHeight());
             canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
-            paint.setXfermode(null);
+        }
+        if (r) {
+            canvas.drawPath(revealAnimator.mask, paint);
+        }
+        if (saveCount != 0) {
             canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
         }
     }
 

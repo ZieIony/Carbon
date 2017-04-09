@@ -2,6 +2,7 @@ package carbon.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -32,6 +33,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -54,6 +56,7 @@ import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.AllCapsTransformationMethod;
+import carbon.internal.RevealAnimator;
 import carbon.internal.SimpleTextWatcher;
 import carbon.internal.TypefaceUtils;
 import carbon.shadow.Shadow;
@@ -62,7 +65,7 @@ import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 public class EditText extends android.widget.EditText
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, ValidStateView, AutoSizeTextView, VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
 
     private Field mIgnoreActionUpEventField;
     private Object editor;
@@ -317,6 +320,71 @@ public class EditText extends android.widget.EditText
     private void fireOnValidateEvent() {
         for (OnValidateListener validateListener : validateListeners)
             validateListener.onValidate(valid);
+    }
+
+    RevealAnimator revealAnimator;
+
+    @Override
+    public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
+            circularReveal.start();
+            return new Animator() {
+                @Override
+                public long getStartDelay() {
+                    return circularReveal.getStartDelay();
+                }
+
+                @Override
+                public void setStartDelay(long startDelay) {
+                    circularReveal.setStartDelay(startDelay);
+                }
+
+                @Override
+                public Animator setDuration(long duration) {
+                    circularReveal.setDuration(duration);
+                    return this;
+                }
+
+                @Override
+                public long getDuration() {
+                    return circularReveal.getDuration();
+                }
+
+                @Override
+                public void setInterpolator(TimeInterpolator value) {
+                    circularReveal.setInterpolator(value);
+                }
+
+                @Override
+                public boolean isRunning() {
+                    return circularReveal.isRunning();
+                }
+            };
+        } else {
+            revealAnimator = new RevealAnimator(x, y, startRadius, finishRadius);
+            revealAnimator.setDuration(Carbon.getDefaultRevealDuration());
+            revealAnimator.addUpdateListener(animation -> {
+                RevealAnimator reveal = ((RevealAnimator) animation);
+                reveal.radius = (float) reveal.getAnimatedValue();
+                reveal.mask.reset();
+                reveal.mask.addCircle(reveal.x, reveal.y, Math.max((Float) reveal.getAnimatedValue(), 1), Path.Direction.CW);
+                postInvalidate();
+            });
+            revealAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    revealAnimator = null;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    revealAnimator = null;
+                }
+            });
+            revealAnimator.start();
+            return revealAnimator;
+        }
     }
 
     /**
@@ -762,8 +830,13 @@ public class EditText extends android.widget.EditText
 
         int saveCount = 0;
         boolean maskShadow = getBackground() != null && alpha != 1;
-        if (maskShadow)
+        boolean r = revealAnimator != null && revealAnimator.isRunning();
+        if (maskShadow) {
             saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        } else if (r) {
+            saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+            canvas.clipRect(getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius, getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
+        }
 
         paint.setAlpha((int) (Shadow.ALPHA * alpha));
 
@@ -781,14 +854,21 @@ public class EditText extends android.widget.EditText
         shadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
-        if (maskShadow) {
+        if (saveCount != 0) {
             canvas.translate(this.getLeft(), this.getTop());
             canvas.concat(matrix);
             paint.setXfermode(Carbon.CLEAR_MODE);
+        }
+        if (maskShadow) {
             shadowMaskRect.set(0, 0, getWidth(), getHeight());
             canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
-            paint.setXfermode(null);
+        }
+        if (r) {
+            canvas.drawPath(revealAnimator.mask, paint);
+        }
+        if (saveCount != 0) {
             canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
         }
     }
 
