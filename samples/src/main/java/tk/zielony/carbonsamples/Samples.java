@@ -75,8 +75,8 @@ public class Samples {
 
     public static void applyTheme(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(ColorsActivity.THEME, Context.MODE_PRIVATE);
-        context.setTheme(ColorsActivity.styles[preferences.getInt(ColorsActivity.STYLE, R.style.ThemeLight)].value);
-        context.getTheme().applyStyle(ColorsActivity.primary[preferences.getInt(ColorsActivity.PRIMARY, R.style.PrimaryRed)].value, true);
-        context.getTheme().applyStyle(ColorsActivity.accents[preferences.getInt(ColorsActivity.ACCENT, R.style.AccentBlue)].value, true);
+        context.setTheme(ColorsActivity.styles[preferences.getInt(ColorsActivity.STYLE, 0)].value);
+        context.getTheme().applyStyle(ColorsActivity.primary[preferences.getInt(ColorsActivity.PRIMARY, 8)].value, true);
+        context.getTheme().applyStyle(ColorsActivity.accents[preferences.getInt(ColorsActivity.ACCENT, 14)].value, true);
     }
 }

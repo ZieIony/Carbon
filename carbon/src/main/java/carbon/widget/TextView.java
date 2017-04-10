@@ -230,6 +230,11 @@ public class TextView extends android.widget.TextView
         return valid;
     }
 
+    @Override
+    public boolean isEmpty() {
+        return getText().length() == 0;
+    }
+
     RevealAnimator revealAnimator;
 
     @Override

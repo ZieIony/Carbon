@@ -473,6 +473,11 @@ public class EditText extends android.widget.EditText
         return valid;
     }
 
+    @Override
+    public boolean isEmpty() {
+        return getText().length() == 0;
+    }
+
     public String getPattern() {
         return pattern.pattern();
     }
