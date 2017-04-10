@@ -378,18 +378,17 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
         if (topGlow != null) {
             final int scrollY = getScrollY();
             if (!topGlow.isFinished()) {
-                final int restoreCount = canvas.save();
+                final int restoreCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
 
                 canvas.translate(getPaddingLeft(), Math.min(0, scrollY));
                 topGlow.setSize(width, getHeight());
-                if (topGlow.draw(canvas)) {
-                    postInvalidate();
-                }
+                if (topGlow.draw(canvas))
+                    invalidate();
                 canvas.restoreToCount(restoreCount);
             }
             if (!bottomGlow.isFinished()) {
-                final int restoreCount = canvas.save();
+                final int restoreCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
                 final int height = getHeight();
 
@@ -397,9 +396,8 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
                         Math.max(computeVerticalScrollRange() - getHeight(), scrollY) + height);
                 canvas.rotate(180, width, 0);
                 bottomGlow.setSize(width, height);
-                if (bottomGlow.draw(canvas)) {
-                    postInvalidate();
-                }
+                if (bottomGlow.draw(canvas))
+                    invalidate();
                 canvas.restoreToCount(restoreCount);
             }
         }
