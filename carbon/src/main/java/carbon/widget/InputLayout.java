@@ -25,7 +25,12 @@ public class InputLayout extends RelativeLayout {
         Floating, Persistent, Hint, IfNotEmpty
     }
 
+    public enum ErrorMode {
+        WhenInvalid, Always, Never
+    }
+
     private TextView errorTextView;
+    ErrorMode errorMode = ErrorMode.WhenInvalid;
 
     boolean required = false;
     private String label;
@@ -115,7 +120,9 @@ public class InputLayout extends RelativeLayout {
             }
         }
 
-        setError(a.getString(R.styleable.InputLayout_carbon_errorMessage));
+        String error = a.getString(R.styleable.InputLayout_carbon_error);
+        setError(error == null ? a.getString(R.styleable.InputLayout_carbon_errorMessage) : error);
+        setErrorMode(ErrorMode.values()[a.getInt(R.styleable.InputLayout_carbon_errorMode, ErrorMode.WhenInvalid.ordinal())]);
 
         setMinCharacters(a.getInt(R.styleable.InputLayout_carbon_minCharacters, 0));
         setMaxCharacters(a.getInt(R.styleable.InputLayout_carbon_maxCharacters, Integer.MAX_VALUE));
@@ -186,7 +193,7 @@ public class InputLayout extends RelativeLayout {
             labelTextView.setOutAnimation(AnimUtils.Style.None);
             errorTextView.setInAnimation(AnimUtils.Style.None);
             errorTextView.setOutAnimation(AnimUtils.Style.None);
-            updateError(editText, true);
+            updateError(editText, editText.isValid());
             updateHint(editText);
             updateCounter(editText);
             labelTextView.setInAnimation(AnimUtils.Style.Fly);
@@ -201,7 +208,7 @@ public class InputLayout extends RelativeLayout {
             labelTextView.setOutAnimation(AnimUtils.Style.None);
             errorTextView.setInAnimation(AnimUtils.Style.None);
             errorTextView.setOutAnimation(AnimUtils.Style.None);
-            updateError(inputView, true);
+            updateError(inputView, inputView.isValid());
             updateHint(child);
             labelTextView.setInAnimation(AnimUtils.Style.Fly);
             labelTextView.setOutAnimation(AnimUtils.Style.Fly);
@@ -216,8 +223,7 @@ public class InputLayout extends RelativeLayout {
         boolean requiredError = required && validStateView.isEmpty();
         labelTextView.setValid(!requiredError);
 
-        if (errorTextView.getVisibility() != GONE)
-            errorTextView.setVisibility(valid ? INVISIBLE : VISIBLE);
+        errorTextView.setVisibility(errorMode == ErrorMode.Always || errorMode == ErrorMode.WhenInvalid && !valid ? VISIBLE : errorMode == ErrorMode.Never ? GONE : INVISIBLE);
     }
 
     private void updateCounter(EditText editText) {
@@ -239,6 +245,10 @@ public class InputLayout extends RelativeLayout {
     }
 
     private void updateHint(View child) {
+        if (child == null) {
+            labelTextView.setVisibility(GONE);
+            return;
+        }
         if (labelStyle == LabelStyle.Persistent || labelStyle == LabelStyle.Floating && child.isFocused() ||
                 labelStyle == LabelStyle.IfNotEmpty && (child.isFocused() || child instanceof android.widget.TextView && ((android.widget.TextView) child).getText().length() > 0)) {
             labelTextView.setVisibility(VISIBLE);
@@ -259,15 +269,24 @@ public class InputLayout extends RelativeLayout {
 
     public void setRequired(boolean required) {
         this.required = required;
+        updateHint(child);
     }
 
     public void setError(String text) {
         errorTextView.setText(text);
-        setErrorEnabled(text != null);
     }
 
+    public void setErrorMode(ErrorMode errorMode) {
+        this.errorMode = errorMode;
+        errorTextView.setVisibility(errorMode == ErrorMode.WhenInvalid ? INVISIBLE : errorMode == ErrorMode.Always ? VISIBLE : GONE);
+    }
+
+    @Deprecated
+    /**
+     * Deprecated use {@link carbon.widget.InputLayout.setErrorMode} instead.
+     */
     public void setErrorEnabled(boolean errorVisible) {
-        errorTextView.setVisibility(errorVisible ? INVISIBLE : GONE);
+        setErrorMode(errorVisible ? ErrorMode.WhenInvalid : ErrorMode.Never);
     }
 
     public float getErrorTextSize() {

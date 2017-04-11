@@ -23,6 +23,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="center_horizontal"
+                app:carbon_errorMessage="Error message"
+                app:carbon_errorMode="always"
                 app:carbon_label="username"
                 app:carbon_labelStyle="ifNotEmpty">
 
