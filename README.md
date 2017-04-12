@@ -66,6 +66,8 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
 
 ### [Changelog](https://github.com/ZieIony/Carbon/wiki/Changelog)
 
+### [JavaDoc](http://zieiony.github.io/Carbon/javadoc/)
+
 ### License
 ```
 Copyright 2015 Marcin Korniluk 'Zielony'
