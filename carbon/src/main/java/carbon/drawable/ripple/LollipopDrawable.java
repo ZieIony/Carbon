@@ -90,8 +90,7 @@ public abstract class LollipopDrawable extends Drawable {
      * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides
      * tint.
      *
-     * @param tint Color state list to use for tinting this drawable, or null to
-     *             clear the tint
+     * @param tint Color state list to use for tinting this drawable, or null to clear the tint
      * @see #setTintMode(PorterDuff.Mode)
      */
     public void setTintList(ColorStateList tint) {
@@ -103,8 +102,7 @@ public abstract class LollipopDrawable extends Drawable {
      * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides
      * tint.
      *
-     * @param tintMode Color state list to use for tinting this drawable, or null to
-     *                 clear the tint
+     * @param tintMode Color state list to use for tinting this drawable, or null to clear the tint
      * @param tintMode A Porter-Duff blending mode
      */
     public void setTintMode(PorterDuff.Mode tintMode) {

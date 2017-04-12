@@ -3,8 +3,8 @@ package carbon.internal;
 import android.animation.ValueAnimator;
 import android.graphics.Path;
 
-public class RevealAnimator extends ValueAnimator{
-    public float x,y;
+public class RevealAnimator extends ValueAnimator {
+    public float x, y;
     public Path mask;
     public float radius;
 
@@ -13,6 +13,6 @@ public class RevealAnimator extends ValueAnimator{
         this.y = y;
         mask = new Path();
         mask.setFillType(Path.FillType.INVERSE_WINDING);
-        setFloatValues(startRadius,finishRadius);
+        setFloatValues(startRadius, finishRadius);
     }
 }

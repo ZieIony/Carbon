@@ -22,7 +22,7 @@ class RippleBackground extends RippleComponent {
     // Software rendering properties.
     private float mOpacity = 0;
 
-    public RippleBackground(RippleDrawableFroyo owner, Rect bounds) {
+    public RippleBackground(RippleDrawableICS owner, Rect bounds) {
         super(owner, bounds);
     }
 

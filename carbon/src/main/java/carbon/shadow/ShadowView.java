@@ -12,7 +12,9 @@ public interface ShadowView {
     float getElevation();
 
     /**
-     * Sets the elevation value. There are useful values of elevation defined in xml as carbon_elevationFlat, carbon_elevationLow, carbon_elevationMedium, carbon_elevationHigh, carbon_elevationMax
+     * Sets the elevation value. There are useful values of elevation defined in xml as
+     * carbon_elevationFlat, carbon_elevationLow, carbon_elevationMedium, carbon_elevationHigh,
+     * carbon_elevationMax
      *
      * @param elevation can be from range [0 - 25]
      */

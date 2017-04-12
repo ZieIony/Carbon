@@ -52,7 +52,8 @@ import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
- * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other material features.
+ * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other
+ * material features.
  */
 public class Button extends android.widget.Button
         implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, StrokeView, AutoSizeTextView, RevealView, VisibleView {
@@ -285,7 +286,8 @@ public class Button extends android.widget.Button
     private Path cornersMask;
 
     /**
-     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
+     * Shadows work faster when corner radius is less than 2.5dp.
      *
      * @return corner radius, equal to or greater than 0.
      */
@@ -294,7 +296,8 @@ public class Button extends android.widget.Button
     }
 
     /**
-     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
+     * Shadows work faster when corner radius is less than 2.5dp.
      *
      * @param cornerRadius
      */

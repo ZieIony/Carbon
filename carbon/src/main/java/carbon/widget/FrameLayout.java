@@ -54,8 +54,8 @@ import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
- * A FrameLayout implementation with support for material features including shadows, ripples, rounded
- * corners, insets, custom drawing order, touch margins, state animators and others.
+ * A FrameLayout implementation with support for material features including shadows, ripples,
+ * rounded corners, insets, custom drawing order, touch margins, state animators and others.
  */
 public class FrameLayout extends android.widget.FrameLayout
         implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView, VisibleView {

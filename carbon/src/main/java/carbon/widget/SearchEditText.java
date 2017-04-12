@@ -15,7 +15,8 @@ import carbon.internal.SimpleTextWatcher;
 
 /**
  * This implementation extends EditText directly and uses TextWatcher for tracking text changes.
- * This class can be used to create new material search fields with drop down menus separated by a seam.
+ * This class can be used to create new material search fields with drop down menus separated by a
+ * seam.
  */
 public class SearchEditText extends EditText {
 

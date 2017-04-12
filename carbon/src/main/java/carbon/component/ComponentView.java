@@ -14,7 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import carbon.R;
 
-public class ComponentView<Type extends Component> extends FrameLayout{
+public class ComponentView<Type extends Component> extends FrameLayout {
     Type component;
 
     public ComponentView(Context context, AttributeSet attrs) {
@@ -66,7 +66,7 @@ public class ComponentView<Type extends Component> extends FrameLayout{
         }
     }
 
-    public Type getComponent(){
+    public Type getComponent() {
         return component;
     }
 }

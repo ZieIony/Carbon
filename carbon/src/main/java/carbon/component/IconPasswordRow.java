@@ -22,11 +22,11 @@ public class IconPasswordRow extends DataBindingComponent<IconPasswordItem> {
         return editText;
     }
 
-    public String getText(){
+    public String getText() {
         return editText.getText().toString();
     }
 
-    public void setText(String text){
+    public void setText(String text) {
         editText.setText(text);
     }
 }

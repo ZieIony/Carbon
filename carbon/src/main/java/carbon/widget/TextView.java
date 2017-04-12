@@ -53,6 +53,39 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
+/**
+ * @attr ref R.styleable#carbon_theme
+ * @attr ref R.styleable#carbon_rippleColor
+ * @attr ref R.styleable#carbon_rippleHotspot
+ * @attr ref R.styleable#carbon_rippleStyle
+ * @attr ref R.styleable#carbon_rippleRadius
+ * @attr ref R.styleable#carbon_elevation
+ * @attr ref R.styleable#carbon_elevationShadowColor
+ * @attr ref R.styleable#carbon_touchMargin
+ * @attr ref R.styleable#carbon_touchMarginLeft
+ * @attr ref R.styleable#carbon_touchMarginTop
+ * @attr ref R.styleable#carbon_touchMarginRight
+ * @attr ref R.styleable#carbon_touchMarginBottom
+ * @attr ref R.styleable#carbon_inAnimation
+ * @attr ref R.styleable#carbon_outAnimation
+ * @attr ref R.styleable#carbon_tint
+ * @attr ref R.styleable#carbon_tintMode
+ * @attr ref R.styleable#carbon_backgroundTint
+ * @attr ref R.styleable#carbon_backgroundTintMode
+ * @attr ref R.styleable#carbon_animateColorChanges
+ * @attr ref R.styleable#carbon_fontFamily
+ * @attr ref R.styleable#android:textStyle
+ * @attr ref R.styleable#carbon_fontPath
+ * @attr ref R.styleable#android:textAppearance
+ * @attr ref R.styleable#carbon_cornerRadius
+ * @attr ref R.styleable#carbon_stroke
+ * @attr ref R.styleable#carbon_strokeWidth
+ * @attr ref R.styleable#carbon_htmlText
+ * @attr ref R.styleable#carbon_autoSizeText
+ * @attr ref R.styleable#carbon_autoSizeMinTextSize
+ * @attr ref R.styleable#carbon_autoSizeMaxTextSize
+ * @attr ref R.styleable#carbon_autoSizeStepGranularity
+ */
 public class TextView extends android.widget.TextView
         implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
 
@@ -309,7 +342,8 @@ public class TextView extends android.widget.TextView
     private Path cornersMask;
 
     /**
-     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
+     * Shadows work faster when corner radius is less than 2.5dp.
      *
      * @return corner radius, equal to or greater than 0.
      */
@@ -318,7 +352,8 @@ public class TextView extends android.widget.TextView
     }
 
     /**
-     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
+     * Shadows work faster when corner radius is less than 2.5dp.
      *
      * @param cornerRadius
      */

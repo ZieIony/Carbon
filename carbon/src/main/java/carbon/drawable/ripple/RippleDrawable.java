@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 
 import carbon.drawable.AlphaDrawable;
 
-public interface RippleDrawable extends AlphaDrawable{
+public interface RippleDrawable extends AlphaDrawable {
 
     Drawable getBackground();
 

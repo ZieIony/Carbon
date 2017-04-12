@@ -237,8 +237,8 @@ public class PercentLayoutHelper {
      * {@code android:layout_width="wrap_content"}. In this case if the child receives too little
      * space, it will be remeasured with width set to {@code WRAP_CONTENT}.
      *
-     * @return True if the measure phase needs to be rerun because one of the children would like
-     * to receive more space.
+     * @return True if the measure phase needs to be rerun because one of the children would like to
+     * receive more space.
      */
     public boolean handleMeasuredStateTooSmall() {
         boolean needsSecondMeasure = false;

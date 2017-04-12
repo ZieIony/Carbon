@@ -15,14 +15,14 @@ import android.util.TypedValue;
 import android.view.View;
 
 import carbon.animation.AnimUtils;
-import carbon.animation.AnimatedView;
 import carbon.drawable.AlphaDrawable;
 import carbon.drawable.ripple.RippleDrawable;
-import carbon.drawable.ripple.RippleDrawableFroyo;
+import carbon.drawable.ripple.RippleDrawableICS;
 import carbon.drawable.ripple.RippleDrawableLollipop;
 import carbon.drawable.ripple.RippleDrawableMarshmallow;
 import carbon.drawable.ripple.RippleView;
 import carbon.shadow.ShadowView;
+import carbon.animation.AnimatedView;
 import carbon.widget.AutoSizeTextMode;
 import carbon.widget.AutoSizeTextView;
 import carbon.widget.InsetView;
@@ -77,7 +77,7 @@ public class Carbon {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
         } else {
-            rippleDrawable = new RippleDrawableFroyo(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
+            rippleDrawable = new RippleDrawableICS(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
         }
         rippleDrawable.setCallback(view);
         rippleDrawable.setHotspotEnabled(useHotspot);
@@ -92,7 +92,7 @@ public class Carbon {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             rippleDrawable = new RippleDrawableLollipop(color, background, style);
         } else {
-            rippleDrawable = new RippleDrawableFroyo(color, background, style);
+            rippleDrawable = new RippleDrawableICS(color, background, style);
         }
         rippleDrawable.setCallback(view);
         rippleDrawable.setHotspotEnabled(useHotspot);

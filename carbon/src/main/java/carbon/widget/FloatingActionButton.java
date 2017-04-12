@@ -17,8 +17,8 @@ import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.DefaultAccentColorStateList;
 
 /**
- * FAB implementation using an ImageView and rounded corners. Supports SVGs, animated shadows, ripples
- * and other material features.
+ * FAB implementation using an ImageView and rounded corners. Supports SVGs, animated shadows,
+ * ripples and other material features.
  */
 public class FloatingActionButton extends ImageView {
     FloatingActionMenu floatingActionMenu;

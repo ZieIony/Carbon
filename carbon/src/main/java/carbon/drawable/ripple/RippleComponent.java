@@ -10,7 +10,7 @@ import android.graphics.Rect;
  * animated ripple foreground and background components.
  */
 abstract class RippleComponent {
-    private final RippleDrawableFroyo mOwner;
+    private final RippleDrawableICS mOwner;
 
     /**
      * Bounds used for computing max radius. May be modified by the owner.
@@ -34,7 +34,7 @@ abstract class RippleComponent {
      */
     protected float mDensity;
 
-    public RippleComponent(RippleDrawableFroyo owner, Rect bounds) {
+    public RippleComponent(RippleDrawableICS owner, Rect bounds) {
         mOwner = owner;
         mBounds = bounds;
     }

@@ -40,21 +40,21 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.component.Component;
 import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.PercentLayoutHelper;
 import carbon.internal.RevealAnimator;
-import carbon.component.Component;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
 /**
- * A GridLayout implementation with support for material features including shadows, ripples, rounded
- * corners, insets, custom drawing order, touch margins, state animators and others.
+ * A GridLayout implementation with support for material features including shadows, ripples,
+ * rounded corners, insets, custom drawing order, touch margins, state animators and others.
  */
 public class GridLayout extends android.support.v7.widget.GridLayout
         implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView, VisibleView {

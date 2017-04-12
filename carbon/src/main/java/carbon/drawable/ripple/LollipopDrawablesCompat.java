@@ -34,7 +34,7 @@ public class LollipopDrawablesCompat {
     private static final IDrawable IMPL;
 
     static {
-        registerDrawable(RippleDrawableFroyo.class, "ripple");
+        registerDrawable(RippleDrawableICS.class, "ripple");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             IMPL = new LollipopDrawableImpl();

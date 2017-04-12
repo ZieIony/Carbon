@@ -26,11 +26,11 @@ public class IconDropDownRow extends DataBindingComponent<IconDropDownItem> {
         return dropDown;
     }
 
-    public Object getSelectedItem(){
+    public Object getSelectedItem() {
         return dropDown.getSelectedItem();
     }
 
-    public void setSelectedItem(Object item){
+    public void setSelectedItem(Object item) {
         dropDown.setSelectedItem(item);
     }
 }

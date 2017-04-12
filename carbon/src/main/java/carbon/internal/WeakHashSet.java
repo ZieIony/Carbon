@@ -99,8 +99,7 @@ public class WeakHashSet extends HashSet {
      * present.
      *
      * @param o element to be added to this set.
-     * @return <code>true</code> if the set did not already contain the specified
-     * element.
+     * @return <code>true</code> if the set did not already contain the specified element.
      */
     public boolean add(Object o) {
         processQueue();

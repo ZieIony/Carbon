@@ -88,8 +88,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Creates a new layer drawable with the list of specified layers.
      *
-     * @param layers a list of drawables to use as layers in this new drawable,
-     *               must be non-null
+     * @param layers a list of drawables to use as layers in this new drawable, must be non-null
      */
     public LayerDrawable(@NonNull Drawable[] layers) {
         this(layers, null);
@@ -423,8 +422,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
      * {@link Drawable} for the matching layer at the highest index.
      *
      * @param id The layer ID to search for.
-     * @return The {@link Drawable} for the highest-indexed layer that has the
-     * given ID, or null if not found.
+     * @return The {@link Drawable} for the highest-indexed layer that has the given ID, or null if
+     * not found.
      */
     public Drawable findDrawableByLayerId(int id) {
         final ChildDrawable[] layers = mLayerState.mChildren;
@@ -440,8 +439,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Sets the ID of a layer.
      *
-     * @param index The index of the layer to modify, must be in the range
-     *              {@code 0...getNumberOfLayers()-1}.
+     * @param index The index of the layer to modify, must be in the range {@code
+     *              0...getNumberOfLayers()-1}.
      * @param id    The id to assign to the layer.
      * @attr ref android.R.styleable#LayerDrawableItem_id
      * @see #getId(int)
@@ -453,10 +452,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the ID of the specified layer.
      *
-     * @param index The index of the layer, must be in the range
-     *              {@code 0...getNumberOfLayers()-1}.
-     * @return The id of the layer or {@link android.view.View#NO_ID} if the
-     * layer has no id.
+     * @param index The index of the layer, must be in the range {@code 0...getNumberOfLayers()-1}.
+     * @return The id of the layer or {@link android.view.View#NO_ID} if the layer has no id.
      * @attr ref android.R.styleable#LayerDrawableItem_id
      * @see #setId(int, int)
      */
@@ -481,8 +478,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
      *
      * @param id       The layer ID to search for.
      * @param drawable The replacement {@link Drawable}.
-     * @return Whether the {@link Drawable} was replaced (could return false if
-     * the id was not found).
+     * @return Whether the {@link Drawable} was replaced (could return false if the id was not
+     * found).
      */
     public boolean setDrawableByLayerId(int id, Drawable drawable) {
         final int index = findIndexByLayerId(id);
@@ -519,8 +516,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Sets the drawable for the layer at the specified index.
      *
-     * @param index    The index of the layer to modify, must be in the range
-     *                 {@code 0...getNumberOfLayers()-1}.
+     * @param index    The index of the layer to modify, must be in the range {@code
+     *                 0...getNumberOfLayers()-1}.
      * @param drawable The drawable to set for the layer.
      * @attr ref android.R.styleable#LayerDrawableItem_drawable
      * @see #getDrawable(int)
@@ -554,8 +551,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the drawable for the layer at the specified index.
      *
-     * @param index The index of the layer, must be in the range
-     *              {@code 0...getNumberOfLayers()-1}.
+     * @param index The index of the layer, must be in the range {@code 0...getNumberOfLayers()-1}.
      * @return The {@link Drawable} at the specified layer index.
      * @attr ref android.R.styleable#LayerDrawableItem_drawable
      * @see #setDrawable(int, Drawable)
@@ -655,8 +651,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
 
     /**
      * @param index the index of the layer
-     * @return the gravity used to position or stretch the specified layer
-     * within its container
+     * @return the gravity used to position or stretch the specified layer within its container
      * @attr ref android.R.styleable#LayerDrawableItem_gravity
      * @see #setLayerGravity(int, int)
      */
@@ -834,13 +829,9 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
      * Specifies how layer padding should affect the bounds of subsequent
      * layers. The default value is {@link #PADDING_MODE_NEST}.
      *
-     * @param mode padding mode, one of:
-     *             <ul>
-     *             <li>{@link #PADDING_MODE_NEST} to nest each layer inside the
-     *             padding of the previous layer
-     *             <li>{@link #PADDING_MODE_STACK} to stack each layer directly
-     *             atop the previous layer
-     *             </ul>
+     * @param mode padding mode, one of: <ul> <li>{@link #PADDING_MODE_NEST} to nest each layer
+     *             inside the padding of the previous layer <li>{@link #PADDING_MODE_STACK} to stack
+     *             each layer directly atop the previous layer </ul>
      * @attr ref android.R.styleable#LayerDrawable_paddingMode
      * @see #getPaddingMode()
      */
@@ -946,8 +937,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
      * @param left   the left padding in pixels, or -1 to use computed padding
      * @param top    the top padding in pixels, or -1 to use computed padding
      * @param right  the right padding in pixels, or -1 to use computed padding
-     * @param bottom the bottom padding in pixels, or -1 to use computed
-     *               padding
+     * @param bottom the bottom padding in pixels, or -1 to use computed padding
      * @attr ref android.R.styleable#LayerDrawable_paddingLeft
      * @attr ref android.R.styleable#LayerDrawable_paddingTop
      * @attr ref android.R.styleable#LayerDrawable_paddingRight
@@ -979,8 +969,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
      * @param start  the start padding in pixels, or -1 to use computed padding
      * @param top    the top padding in pixels, or -1 to use computed padding
      * @param end    the end padding in pixels, or -1 to use computed padding
-     * @param bottom the bottom padding in pixels, or -1 to use computed
-     *               padding
+     * @param bottom the bottom padding in pixels, or -1 to use computed padding
      * @attr ref android.R.styleable#LayerDrawable_paddingStart
      * @attr ref android.R.styleable#LayerDrawable_paddingTop
      * @attr ref android.R.styleable#LayerDrawable_paddingEnd
@@ -1299,8 +1288,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
      * Sets the opacity of this drawable directly instead of collecting the
      * states from the layers.
      *
-     * @param opacity The opacity to use, or {@link PixelFormat#UNKNOWN
-     *                PixelFormat.UNKNOWN} for the default behavior
+     * @param opacity The opacity to use, or {@link PixelFormat#UNKNOWN PixelFormat.UNKNOWN} for the
+     *                default behavior
      * @see PixelFormat#UNKNOWN
      * @see PixelFormat#TRANSLUCENT
      * @see PixelFormat#TRANSPARENT
@@ -1641,20 +1630,11 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     }
 
     /**
-     * @hide /
-     * public void clearMutated() {
-     * super.clearMutated();
+     * @hide / public void clearMutated() { super.clearMutated();
      * <p/>
-     * final ChildDrawable[] array = mLayerState.mChildren;
-     * final int N = mLayerState.mNum;
-     * for (int i = 0; i < N; i++) {
-     * final Drawable dr = array[i].mDrawable;
-     * if (dr != null) {
-     * dr.clearMutated();
-     * }
-     * }
-     * mMutated = false;
-     * }
+     * final ChildDrawable[] array = mLayerState.mChildren; final int N = mLayerState.mNum; for (int
+     * i = 0; i < N; i++) { final Drawable dr = array[i].mDrawable; if (dr != null) {
+     * dr.clearMutated(); } } mMutated = false; }
      */
 
     @Override

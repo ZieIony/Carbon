@@ -30,7 +30,7 @@ import java.util.Map;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.LollipopDrawable;
 import carbon.drawable.ripple.LollipopDrawablesCompat;
-import carbon.drawable.ripple.RippleDrawableFroyo;
+import carbon.drawable.ripple.RippleDrawableICS;
 
 public class CarbonResources extends Resources {
     private final Object mAccessLock = new Object();
@@ -47,13 +47,12 @@ public class CarbonResources extends Resources {
      * AssetManager.
      *
      * @param assets  Previously created AssetManager.
-     * @param metrics Current display metrics to consider when
-     *                selecting/computing resource values.
+     * @param metrics Current display metrics to consider when selecting/computing resource values.
      * @param config  Desired device configuration to consider when
      */
     public CarbonResources(AssetManager assets, DisplayMetrics metrics, Configuration config) {
         super(assets, metrics, config);
-        registerDrawable(RippleDrawableFroyo.class, "ripple");
+        registerDrawable(RippleDrawableICS.class, "ripple");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             IMPL = new LollipopDrawableImpl();

@@ -59,8 +59,8 @@ class TypedArrayCompat {
      * Return a mask of the configuration parameters for which the values in
      * this typed array may change.
      *
-     * @return Returns a mask of the changing configuration parameters, as
-     * defined by {@link android.content.pm.ActivityInfo}.
+     * @return Returns a mask of the changing configuration parameters, as defined by {@link
+     * android.content.pm.ActivityInfo}.
      * @see android.content.pm.ActivityInfo
      */
     public static int getChangingConfigurations(TypedArray array) {
@@ -105,8 +105,7 @@ class TypedArrayCompat {
      * original resource that was specified by the attribute.
      *
      * @param index Index of attribute to retrieve.
-     * @param def   Value to return if the attribute is not defined or
-     *              not a resource.
+     * @param def   Value to return if the attribute is not defined or not a resource.
      * @return Attribute resource identifier, or defValue if not defined.
      */
     public static int getResourceId(Resources.Theme theme, TypedArray a, TypedValue[] values, int index, int def) {
@@ -140,10 +139,9 @@ class TypedArrayCompat {
      * Retrieve from extracted first if no value than tries from {@link TypedArray}
      *
      * @param index Index of attribute to retrieve.
-     * @param def   Value to return if the attribute is not defined or
-     *              not a resource.
-     * @return Attribute dimension value multiplied by the appropriate
-     * metric and truncated to integer pixels, or defValue if not defined.
+     * @param def   Value to return if the attribute is not defined or not a resource.
+     * @return Attribute dimension value multiplied by the appropriate metric and truncated to
+     * integer pixels, or defValue if not defined.
      * @see TypedArray#getDimension
      * @see TypedArray#getDimensionPixelSize
      */
@@ -185,8 +183,7 @@ class TypedArrayCompat {
      * getters will return the default value without crashing.
      *
      * @return an array of length {@link TypedArray#getIndexCount()} populated with theme
-     * attributes, or null if there are no theme attributes in the typed
-     * array
+     * attributes, or null if there are no theme attributes in the typed array
      */
     public static int[] extractThemeAttrs(TypedArray array) {
         int[] scrap = null;

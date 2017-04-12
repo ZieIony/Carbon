@@ -67,7 +67,7 @@ class RippleForeground extends RippleComponent {
      */
     private boolean mHasFinishedExit;
 
-    public RippleForeground(RippleDrawableFroyo owner, Rect bounds, float startingX, float startingY,
+    public RippleForeground(RippleDrawableICS owner, Rect bounds, float startingX, float startingY,
                             boolean isBounded) {
         super(owner, bounds);
 

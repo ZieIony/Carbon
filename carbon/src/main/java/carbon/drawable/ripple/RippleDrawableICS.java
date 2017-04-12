@@ -81,7 +81,7 @@ import carbon.R;
  *
  * @attr ref android.R.styleable#RippleDrawable_color
  */
-public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable {
+public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     /**
      * Radius value that specifies the ripple radius should be computed based
      * on the size of the ripple's container.
@@ -186,11 +186,11 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
     /**
      * Constructor used for drawable inflation.
      */
-    RippleDrawableFroyo() {
+    RippleDrawableICS() {
         this(new RippleState(null, null, null), null);
     }
 
-    public RippleDrawableFroyo(ColorStateList color, Drawable background, Style style) {
+    public RippleDrawableICS(ColorStateList color, Drawable background, Style style) {
         this(color, background, style == Style.Borderless ? null : new ColorDrawable(0xffffffff));
         this.style = style;
     }
@@ -203,8 +203,8 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
      * @param content The content drawable, may be {@code null}
      * @param mask    The mask drawable, may be {@code null}
      */
-    public RippleDrawableFroyo(@NonNull ColorStateList color, @Nullable Drawable content,
-                               @Nullable Drawable mask) {
+    public RippleDrawableICS(@NonNull ColorStateList color, @Nullable Drawable content,
+                             @Nullable Drawable mask) {
         this(new RippleState(null, null, null), null);
 
         if (color == null) {
@@ -356,31 +356,19 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
 
     /**
      * @hide /
-     * @Override public boolean isProjected() {
-     * // If the layer is bounded, then we don't need to project.
-     * if (isBounded()) {
-     * return false;
-     * }
+     * @Override public boolean isProjected() { // If the layer is bounded, then we don't need to
+     * project. if (isBounded()) { return false; }
      * <p/>
-     * // Otherwise, if the maximum radius is contained entirely within the
-     * // bounds then we don't need to project. This is sort of a hack to
-     * // prevent check box ripples from being projected across the edges of
-     * // scroll views. It does not impact rendering performance, and it can
-     * // be removed once we have better handling of projection in scrollable
-     * // views.
-     * final int radius = mState.mMaxRadius;
-     * final Rect drawableBounds = getBounds();
-     * final Rect hotspotBounds = mHotspotBounds;
-     * if (radius != RADIUS_AUTO
-     * && radius <= hotspotBounds.width() / 2
-     * && radius <= hotspotBounds.height() / 2
-     * && (drawableBounds.equals(hotspotBounds)
-     * || drawableBounds.contains(hotspotBounds))) {
-     * return false;
-     * }
+     * // Otherwise, if the maximum radius is contained entirely within the // bounds then we don't
+     * need to project. This is sort of a hack to // prevent check box ripples from being projected
+     * across the edges of // scroll views. It does not impact rendering performance, and it can //
+     * be removed once we have better handling of projection in scrollable // views. final int
+     * radius = mState.mMaxRadius; final Rect drawableBounds = getBounds(); final Rect hotspotBounds
+     * = mHotspotBounds; if (radius != RADIUS_AUTO && radius <= hotspotBounds.width() / 2 && radius
+     * <= hotspotBounds.height() / 2 && (drawableBounds.equals(hotspotBounds) ||
+     * drawableBounds.contains(hotspotBounds))) { return false; }
      * <p/>
-     * return true;
-     * }
+     * return true; }
      */
 
     private boolean isBounded() {
@@ -406,8 +394,8 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
     /**
      * Sets the radius in pixels of the fully expanded ripple.
      *
-     * @param radius ripple radius in pixels, or {@link #RADIUS_AUTO} to
-     *               compute the radius based on the container size
+     * @param radius ripple radius in pixels, or {@link #RADIUS_AUTO} to compute the radius based on
+     *               the container size
      * @attr ref android.R.styleable#RippleDrawable_radius
      */
     public void setRadius(int radius) {
@@ -416,9 +404,8 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
     }
 
     /**
-     * @return the radius in pixels of the fully expanded ripple if an explicit
-     * radius has been set, or {@link #RADIUS_AUTO} if the radius is
-     * computed based on the container size
+     * @return the radius in pixels of the fully expanded ripple if an explicit radius has been set,
+     * or {@link #RADIUS_AUTO} if the radius is computed based on the container size
      * @attr ref android.R.styleable#RippleDrawable_radius
      */
     public int getRadius() {
@@ -461,13 +448,9 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
      * layers. The default and recommended value for RippleDrawable is
      * {@link #PADDING_MODE_STACK}.
      *
-     * @param mode padding mode, one of:
-     *             <ul>
-     *             <li>{@link #PADDING_MODE_NEST} to nest each layer inside the
-     *             padding of the previous layer
-     *             <li>{@link #PADDING_MODE_STACK} to stack each layer directly
-     *             atop the previous layer
-     *             </ul>
+     * @param mode padding mode, one of: <ul> <li>{@link #PADDING_MODE_NEST} to nest each layer
+     *             inside the padding of the previous layer <li>{@link #PADDING_MODE_STACK} to stack
+     *             each layer directly atop the previous layer </ul>
      * @see #getPaddingMode()
      */
     @Override
@@ -1004,7 +987,7 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
         ColorStateList mColor = ColorStateList.valueOf(Color.MAGENTA);
         int mMaxRadius = RADIUS_AUTO;
 
-        public RippleState(LayerState orig, RippleDrawableFroyo owner, Resources res) {
+        public RippleState(LayerState orig, RippleDrawableICS owner, Resources res) {
             super(orig, owner, res);
 
             if (orig != null && orig instanceof RippleState) {
@@ -1024,12 +1007,12 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
 
         @Override
         public Drawable newDrawable() {
-            return new RippleDrawableFroyo(this, null);
+            return new RippleDrawableICS(this, null);
         }
 
         @Override
         public Drawable newDrawable(Resources res) {
-            return new RippleDrawableFroyo(this, res);
+            return new RippleDrawableICS(this, res);
         }
 
       /* @Override
@@ -1039,7 +1022,7 @@ public class RippleDrawableFroyo extends LayerDrawable implements RippleDrawable
         }*/
     }
 
-    private RippleDrawableFroyo(RippleState state, Resources res) {
+    private RippleDrawableICS(RippleState state, Resources res) {
         mState = new RippleState(state, this, res);
         mLayerState = mState;
 

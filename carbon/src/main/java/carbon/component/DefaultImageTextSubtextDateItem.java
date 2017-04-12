@@ -6,7 +6,7 @@ public class DefaultImageTextSubtextDateItem implements ImageTextSubtextDateItem
     private Drawable image;
     private String text, subtext, date;
 
-    public DefaultImageTextSubtextDateItem(){
+    public DefaultImageTextSubtextDateItem() {
     }
 
     public DefaultImageTextSubtextDateItem(Drawable image, String text, String subtext, String date) {

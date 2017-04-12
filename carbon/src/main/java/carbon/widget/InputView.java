@@ -1,11 +1,32 @@
 package carbon.widget;
 
+import android.support.annotation.NonNull;
+
+/**
+ * Interface of a view with input, which can be validated. Used by {@link carbon.widget.InputLayout}
+ */
 public interface InputView extends ValidStateView {
+    /**
+     * Performs validation
+     */
     void validate();
 
-    void addOnValidateListener(OnValidateListener listener);
+    /**
+     * Adds a listener
+     *
+     * @param listener cannot be null
+     */
+    void addOnValidateListener(@NonNull OnValidateListener listener);
 
-    void removeOnValidateListener(OnValidateListener listener);
+    /**
+     * Removes a listener
+     *
+     * @param listener cannot be null
+     */
+    void removeOnValidateListener(@NonNull OnValidateListener listener);
 
+    /**
+     * Removes all listeners
+     */
     void clearOnValidateListeners();
 }

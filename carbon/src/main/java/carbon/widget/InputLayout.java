@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -267,6 +268,12 @@ public class InputLayout extends RelativeLayout {
         return required;
     }
 
+    /**
+     * Sets it the underlying InputView has to be not empty. Adds an asterisk to hint text and label
+     * text
+     *
+     * @param required
+     */
     public void setRequired(boolean required) {
         this.required = required;
         updateHint(child);
@@ -276,15 +283,24 @@ public class InputLayout extends RelativeLayout {
         errorTextView.setText(text);
     }
 
-    public void setErrorMode(ErrorMode errorMode) {
+    /**
+     * Changes error message mode. Nothing will be shown until error text is set. Can be set from
+     * xml using `carbon_errorMode`.
+     *
+     * @param errorMode error message mode
+     */
+    public void setErrorMode(@NonNull ErrorMode errorMode) {
         this.errorMode = errorMode;
         errorTextView.setVisibility(errorMode == ErrorMode.WhenInvalid ? INVISIBLE : errorMode == ErrorMode.Always ? VISIBLE : GONE);
     }
 
-    @Deprecated
     /**
      * Deprecated use {@link carbon.widget.InputLayout.setErrorMode} instead.
+     *
+     * @param errorVisible true to make error messages show when the underlying InputView is
+     *                     invalid
      */
+    @Deprecated
     public void setErrorEnabled(boolean errorVisible) {
         setErrorMode(errorVisible ? ErrorMode.WhenInvalid : ErrorMode.Never);
     }

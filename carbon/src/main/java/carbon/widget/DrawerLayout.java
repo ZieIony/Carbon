@@ -37,12 +37,12 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.component.Component;
 import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.component.Component;
 import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
@@ -53,7 +53,7 @@ import carbon.shadow.ShadowView;
  * Not really useful, but added for sake of completeness.
  */
 public class DrawerLayout extends android.support.v4.widget.DrawerLayout
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView,VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView, VisibleView {
 
     private OnTouchListener onDispatchTouchListener;
 

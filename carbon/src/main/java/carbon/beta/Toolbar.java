@@ -239,8 +239,8 @@ public class Toolbar extends ViewGroup {
     }
 
     /**
-     * @return resource identifier of the theme used to inflate popup menus, or
-     * 0 if menus are inflated against the toolbar theme
+     * @return resource identifier of the theme used to inflate popup menus, or 0 if menus are
+     * inflated against the toolbar theme
      * @see #setPopupTheme(int)
      */
     public int getPopupTheme() {
@@ -660,8 +660,8 @@ public class Toolbar extends ViewGroup {
      * description will be read via screen readers or other accessibility systems to explain
      * the action of the navigation button.
      *
-     * @param resId Resource ID of a content description string to set, or 0 to
-     *              clear the description
+     * @param resId Resource ID of a content description string to set, or 0 to clear the
+     *              description
      */
     public void setNavigationContentDescription(int resId) {
         setNavigationContentDescription(resId != 0 ? getContext().getText(resId) : null);
@@ -672,8 +672,8 @@ public class Toolbar extends ViewGroup {
      * description will be read via screen readers or other accessibility systems to explain
      * the action of the navigation button.
      *
-     * @param description Content description to set, or <code>null</code> to
-     *                    clear the content description
+     * @param description Content description to set, or <code>null</code> to clear the content
+     *                    description
      */
     public void setNavigationContentDescription(@Nullable CharSequence description) {
         if (!TextUtils.isEmpty(description)) {

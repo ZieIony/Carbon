@@ -510,7 +510,8 @@ public class EditText extends android.widget.EditText
     private Path cornersMask;
 
     /**
-     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
+     * Shadows work faster when corner radius is less than 2.5dp.
      *
      * @return corner radius, equal to or greater than 0.
      */
@@ -519,7 +520,8 @@ public class EditText extends android.widget.EditText
     }
 
     /**
-     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off. Shadows work faster when corner radius is less than 2.5dp.
+     * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
+     * Shadows work faster when corner radius is less than 2.5dp.
      *
      * @param cornerRadius
      */
