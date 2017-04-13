@@ -157,6 +157,8 @@ public class EditText extends android.widget.EditText
                 int textStyle = a.getInt(R.styleable.EditText_android_textStyle, 0);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                 setTypeface(typeface);
+            } else if (attr == R.styleable.EditText_android_textAllCaps) {
+                setAllCaps(a.getBoolean(attr, true));
             }
         }
 
@@ -429,6 +431,8 @@ public class EditText extends android.widget.EditText
                     int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
                     setTypeface(typeface);
+                } else if (attr == R.styleable.EditText_android_textAllCaps) {
+                    setAllCaps(appearance.getBoolean(attr, true));
                 }
             }
             appearance.recycle();

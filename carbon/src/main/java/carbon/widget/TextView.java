@@ -168,6 +168,8 @@ public class TextView extends android.widget.TextView
                 int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                 setTypeface(typeface);
+            } else if (attr == R.styleable.TextView_android_textAllCaps) {
+                setAllCaps(a.getBoolean(attr, true));
             }
         }
 
@@ -245,6 +247,8 @@ public class TextView extends android.widget.TextView
                     int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
                     setTypeface(typeface);
+                } else if (attr == R.styleable.TextView_android_textAllCaps) {
+                    setAllCaps(appearance.getBoolean(attr, true));
                 }
             }
             appearance.recycle();
