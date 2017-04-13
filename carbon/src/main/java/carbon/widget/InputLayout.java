@@ -23,12 +23,15 @@ import carbon.internal.TypefaceUtils;
 public class InputLayout extends RelativeLayout {
 
     public enum LabelStyle {
-        Floating, Persistent, Hint, IfNotEmpty
+        Floating, Persistent, Hint, IfNotEmpty;
     }
 
+
     public enum ErrorMode {
-        WhenInvalid, Always, Never
+        WhenInvalid, Always, Never;
     }
+
+    private boolean inDrawableStateChanged = false;
 
     private TextView errorTextView;
     ErrorMode errorMode = ErrorMode.WhenInvalid;
@@ -80,6 +83,8 @@ public class InputLayout extends RelativeLayout {
         labelTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         clearImageView = (ImageView) findViewById(R.id.carbon_clear);
         showPasswordImageView = (ImageView) findViewById(R.id.carbon_showPassword);
+
+        setAddStatesFromChildren(true);
 
         if (attrs == null)
             return;
@@ -171,9 +176,6 @@ public class InputLayout extends RelativeLayout {
         showPasswordImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_END : ALIGN_RIGHT, child.getId());
         showPasswordImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
 
-        child.setOnFocusChangeListener((view, b) -> {
-            updateHint(child);
-        });
         if (child instanceof EditText) {
             final EditText editText = (EditText) child;
             if (labelTextView.getText().length() == 0)
@@ -218,6 +220,17 @@ public class InputLayout extends RelativeLayout {
         }
 
         return params;
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        if (inDrawableStateChanged)
+            return;
+
+        inDrawableStateChanged = true;
+        super.drawableStateChanged();
+        updateHint(child);
+        inDrawableStateChanged = false;
     }
 
     private void updateError(ValidStateView validStateView, boolean valid) {
