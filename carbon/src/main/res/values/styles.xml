@@ -32,6 +32,7 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+        <item name="carbon_viewPagerIndicatorStyle">@style/carbon_ViewPagerIndicator</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
         <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
@@ -160,6 +161,7 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+        <item name="carbon_viewPagerIndicatorStyle">@style/carbon_ViewPagerIndicator</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
         <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
@@ -508,6 +510,10 @@
         <item name="carbon_fixedTabs">true</item>
     </style>
 
+    <style name="carbon_ViewPagerIndicator">
+        <item name="carbon_tint">?attr/carbon_iconColor</item>
+    </style>
+
     <style name="carbon_ScrollView">
         <item name="android:scrollbars">vertical</item>
         <item name="android:scrollbarSize">8dp</item>
@@ -640,7 +646,7 @@
         <item name="carbon_labelFormat">%.0f</item>
     </style>
 
-    <style name="carbon_NavigationView" />
+    <style name="carbon_NavigationView"/>
 
     <style name="carbon_TextView.Tooltip">
         <item name="android:minHeight">@dimen/carbon_tooltipHeight</item>

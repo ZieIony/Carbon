@@ -888,6 +888,17 @@
         <attr name="carbon_fixedTabs" format="boolean"/>
     </declare-styleable>
 
+    <attr name="carbon_viewPagerIndicatorStyle" format="reference"/>
+    <declare-styleable name="ViewPagerIndicator">
+        <attr name="carbon_theme"/>
+
+        <attr name="carbon_tint"/>
+        <attr name="carbon_tintMode"/>
+        <attr name="carbon_backgroundTint"/>
+        <attr name="carbon_backgroundTintMode"/>
+        <attr name="carbon_animateColorChanges"/>
+    </declare-styleable>
+
     <declare-styleable name="TextAppearance">
         <attr name="carbon_fontFamily"/>
         <attr name="android:textStyle"/>

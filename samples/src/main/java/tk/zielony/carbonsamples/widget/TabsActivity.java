@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import carbon.widget.PagerTabStrip;
 import carbon.widget.RelativeLayout;
 import carbon.widget.ViewPager;
+import carbon.widget.ViewPagerIndicator;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
@@ -57,7 +58,9 @@ public class TabsActivity extends SamplesActivity {
             }
 
         });
-        PagerTabStrip tabs = (PagerTabStrip) findViewById(R.id.pager_title_strip);
+        PagerTabStrip tabs = (PagerTabStrip) findViewById(R.id.tabStrip);
         tabs.setViewPager(pager);
+        ViewPagerIndicator indicator = (ViewPagerIndicator) findViewById(R.id.indicator);
+        indicator.setViewPager(pager);
     }
 }

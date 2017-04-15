@@ -316,15 +316,6 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
         };
     }
 
-    @Override
-    public void setOverScrollMode(int mode) {
-        try {
-            super.setOverScrollMode(OVER_SCROLL_NEVER);
-        } catch (Exception e) {
-            // Froyo
-        }
-    }
-
 
     // -------------------------------
     // tint
