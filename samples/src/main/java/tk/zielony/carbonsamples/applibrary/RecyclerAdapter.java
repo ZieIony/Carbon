@@ -1,7 +1,5 @@
 package tk.zielony.carbonsamples.applibrary;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import java.util.List;
 
-import carbon.drawable.ripple.RippleDrawable;
-import carbon.drawable.ripple.RippleDrawableICS;
-import carbon.widget.RelativeLayout;
 import tk.zielony.carbonsamples.R;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
@@ -40,18 +32,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         ViewModel item = items.get(position);
         holder.text.setText(item.getText());
-        holder.image.setImageBitmap(null);
-        Picasso.with(holder.image.getContext()).cancelRequest(holder.image);
-        holder.image.setVisibility(View.INVISIBLE);
-        Picasso.with(holder.image.getContext()).load(item.getImage()).into((Target) holder.image);
-        //Picasso.with(holder.image.getContext()).load(R.drawable.mazda).into((Target)holder.image);
-        holder.itemView.setTag(item);
-
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.card.getLayoutParams();
-        if (position != items.size() - 1) {
-            layoutParams.bottomMargin = 0;
-            holder.card.setLayoutParams(layoutParams);
-        }
+        holder.image.setImageDrawable(item.getImage());
     }
 
     @Override
@@ -62,20 +43,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
         public TextView text;
-        public RelativeLayout card;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);
             text = (TextView) itemView.findViewById(R.id.text);
-            card = (RelativeLayout) itemView;
-            card.setClickable(true);
-            card.setBackgroundColor(Color.WHITE);
-
-            RippleDrawable rippleDrawable = new RippleDrawableICS(ColorStateList.valueOf(0x42ff0000), null, RippleDrawable.Style.Over);
-            rippleDrawable.setCallback(card);
-            rippleDrawable.setHotspotEnabled(true);
-            card.setRippleDrawable(rippleDrawable);
         }
     }
 }

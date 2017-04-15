@@ -30,7 +30,7 @@
                 <carbon.widget.ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginTop="@dimen/carbon_padding"
+                    android:layout_marginTop="24dp"
                     android:layout_marginLeft="@dimen/carbon_windowPadding"
                     android:src="@raw/ic_restaurant_menu_24px"
                     app:carbon_tint="?attr/colorPrimary" />
@@ -39,8 +39,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/carbon_contentSpace"
-                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:paddingLeft="@dimen/carbon_contentSpace"
+                    android:paddingRight="@dimen/carbon_windowPadding"
                     android:paddingBottom="@dimen/carbon_padding"
                     android:paddingTop="@dimen/carbon_padding">
 
@@ -106,8 +106,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/carbon_contentSpace"
-                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:paddingLeft="@dimen/carbon_contentSpace"
+                    android:paddingRight="@dimen/carbon_windowPadding"
                     android:paddingBottom="@dimen/carbon_padding"
                     android:paddingTop="@dimen/carbon_padding">
 
@@ -213,8 +213,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/carbon_contentSpace"
-                    android:layout_marginRight="@dimen/carbon_windowPadding"
+                    android:paddingLeft="@dimen/carbon_contentSpace"
+                    android:paddingRight="@dimen/carbon_windowPadding"
                     android:paddingBottom="@dimen/carbon_padding"
                     android:paddingTop="@dimen/carbon_padding">
 

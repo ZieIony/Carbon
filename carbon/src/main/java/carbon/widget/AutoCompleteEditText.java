@@ -287,9 +287,9 @@ public class AutoCompleteEditText extends EditText {
                     super.setImeOptions(prevOptions);
                 }
             }
-            autoCompleting = false;
         }
         autoComplete();
+        autoCompleting = false;
         super.onSelectionChanged(selStart, selEnd);
     }
 

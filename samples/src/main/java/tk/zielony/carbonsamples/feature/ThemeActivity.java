@@ -1,11 +1,11 @@
 package tk.zielony.carbonsamples.feature;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import tk.zielony.carbonsamples.R;
 
-public class ThemeActivity extends Activity {
+public class ThemeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

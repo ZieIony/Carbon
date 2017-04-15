@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.Arrays;
-import java.util.List;
 
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.randomdata.Generator;
+import tk.zielony.randomdata.RandomData;
+import tk.zielony.randomdata.common.DrawableImageGenerator;
+import tk.zielony.randomdata.common.StringDateGenerator;
 
 public class RecyclerCardsActivity extends SamplesActivity {
     @Override
@@ -16,12 +20,17 @@ public class RecyclerCardsActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_cards);
 
-        List<ViewModel> items = Arrays.asList(new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel(), new ViewModel());
+        Samples.initToolbar(this, getString(R.string.recyclerCardsActivity_title));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new RecyclerAdapter(items, R.layout.card));
 
-        recyclerView.setHeader(R.layout.header_scrollview);
+        RandomData randomData = new RandomData();
+        randomData.addGenerators(new Generator[]{
+                new StringDateGenerator(),
+                new DrawableImageGenerator(this)
+        });
+        ViewModel[] items = new ViewModel[5];
+        randomData.fillAsync(items, () -> recyclerView.setAdapter(new RecyclerAdapter(Arrays.asList(items), R.layout.card)));
     }
 }

@@ -28,7 +28,7 @@ import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 
-public class RadioButton extends carbon.widget.Button implements Checkable {
+public class RadioButton extends carbon.widget.TextView implements Checkable {
     private Drawable drawable;
     private float drawablePadding;
 
@@ -56,7 +56,7 @@ public class RadioButton extends carbon.widget.Button implements Checkable {
     public void initRadioButton(AttributeSet attrs, int defStyleAttr) {
         Drawable d;
         if (!isInEditMode()) {
-            d = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
+            d = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(-0.09f, 0.11f));
         } else {
             d = getResources().getDrawable(android.R.drawable.radiobutton_on_background);
         }

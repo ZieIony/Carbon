@@ -88,7 +88,7 @@ public class DebugOverlay extends PopupWindow {
         Rect rect2 = new Rect();
         float step;
         private int[] location;
-        float[] rulers = new float[4];
+        float[] rulers = new float[5];
 
         public DebugLayout(Context context, View view) {
             super(context);
@@ -99,8 +99,9 @@ public class DebugOverlay extends PopupWindow {
             step = res.getDimension(R.dimen.carbon_grid8);
             rulers[0] = res.getDimension(R.dimen.carbon_windowPadding);
             rulers[1] = res.getDimension(R.dimen.carbon_windowPadding) + res.getDimension(R.dimen.carbon_iconSize);
-            rulers[2] = res.getDimension(R.dimen.carbon_contentSpace);
-            rulers[3] = wm.getDefaultDisplay().getWidth() - res.getDimension(R.dimen.carbon_windowPadding);
+            rulers[2] = res.getDimension(R.dimen.carbon_contentSpace) - res.getDimension(R.dimen.carbon_padding);
+            rulers[3] = res.getDimension(R.dimen.carbon_contentSpace);
+            rulers[4] = wm.getDefaultDisplay().getWidth() - res.getDimension(R.dimen.carbon_windowPadding);
         }
 
         @Override
@@ -130,9 +131,14 @@ public class DebugOverlay extends PopupWindow {
             }
 
             if (drawRulers) {
-                paint.setColor(0x7fff0000);
+                paint.setColor(0x7fff00ff);
                 for (float ruler : rulers)
                     canvas.drawLine(ruler, 0, ruler, getHeight(), paint);
+                paint.setColor(0x3f00ffff);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawRect(0, 0, rulers[0], getHeight(), paint);
+                canvas.drawRect(rulers[2], 0, rulers[3], getHeight(), paint);
+                canvas.drawRect(rulers[4], 0, getWidth(), getHeight(), paint);
             }
         }
 

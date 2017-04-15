@@ -28,7 +28,7 @@ import carbon.drawable.CheckableDrawable;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 
-public class CheckBox extends carbon.widget.Button implements Checkable {
+public class CheckBox extends carbon.widget.TextView implements Checkable {
     private Drawable drawable;
     private float drawablePadding;
 

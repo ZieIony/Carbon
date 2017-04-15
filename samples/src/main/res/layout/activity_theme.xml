@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -13,32 +13,38 @@
         android:layout_weight="1"
         android:background="?attr/carbon_colorBackground"
         android:orientation="vertical"
-        app:carbon_theme="@style/AppTheme2">
+        app:carbon_theme="@style/carbon_Theme.Dark">
 
         <carbon.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_toolbarHeight" />
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:text="Dark theme">
+
+            <carbon.widget.ImageView
+                style="@style/carbon_ImageView.IconButton"
+                android:src="@raw/ic_search_24px"/>
+        </carbon.widget.Toolbar>
 
         <carbon.widget.Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:text="button" />
+            android:text="button"/>
 
         <carbon.widget.CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:text="checkbox" />
+            android:text="checkbox"/>
 
         <carbon.widget.RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:text="radiobutton" />
+            android:text="radiobutton"/>
 
         <carbon.widget.EditText
             android:layout_width="match_parent"
@@ -46,7 +52,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
-            android:text="edittext" />
+            android:text="edittext"/>
     </carbon.widget.LinearLayout>
 
     <carbon.widget.LinearLayout
@@ -55,32 +61,38 @@
         android:layout_weight="1"
         android:background="?attr/carbon_colorBackground"
         android:orientation="vertical"
-        app:carbon_theme="@style/AppTheme">
+        app:carbon_theme="@style/carbon_Theme.Light">
 
         <carbon.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_toolbarHeight" />
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:text="Light theme">
+
+            <carbon.widget.ImageView
+                style="@style/carbon_ImageView.IconButton"
+                android:src="@raw/ic_search_24px"/>
+        </carbon.widget.Toolbar>
 
         <carbon.widget.Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:text="button" />
+            android:text="button"/>
 
         <carbon.widget.CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:text="checkbox" />
+            android:text="checkbox"/>
 
         <carbon.widget.RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:text="radiobutton" />
+            android:text="radiobutton"/>
 
         <carbon.widget.EditText
             android:layout_width="match_parent"
@@ -88,6 +100,6 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
-            android:text="edittext" />
+            android:text="edittext"/>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

@@ -2,12 +2,11 @@ package tk.zielony.carbonsamples.feature;
 
 import android.os.Bundle;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
+import carbon.widget.ImageView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.randomdata.common.DrawableImageGenerator;
 
 public class RoundedCornersActivity extends SamplesActivity {
 
@@ -18,8 +17,7 @@ public class RoundedCornersActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.roundedCornersActivity_title));
 
-        Target view = (Target) findViewById(R.id.image);
-
-        Picasso.with(this).load(R.drawable.mazda).into(view);
+        ImageView view = (ImageView) findViewById(R.id.image);
+        view.setImageDrawable(new DrawableImageGenerator(this).next(null));
     }
 }

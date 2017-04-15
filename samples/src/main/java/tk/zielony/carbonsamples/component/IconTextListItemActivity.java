@@ -20,6 +20,8 @@ import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.randomdata.DataContext;
+import tk.zielony.randomdata.person.StringNameGenerator;
 
 public class IconTextListItemActivity extends SamplesActivity {
 
@@ -34,18 +36,24 @@ public class IconTextListItemActivity extends SamplesActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter adapter = new RowListAdapter<>(DefaultIconTextItem.class, IconTextRow::new);
         adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow(parent, new ArraySearchDataProvider(new String[]{}), filterResults -> {
-
         }));
         recycler.setAdapter(adapter);
+
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_dividerColor)), getResources().getDimensionPixelSize(R.dimen.carbon_1dip));
         dividerItemDecoration.setDrawRules(position -> position == 0);
         recycler.addItemDecoration(dividerItemDecoration);
+
         VectorDrawable drawable = new VectorDrawable(getResources(), R.raw.ic_face_24px);
+        StringNameGenerator generator = new StringNameGenerator();
         adapter.setItems(Arrays.asList(
                 new DefaultIconSearchItem(this),
-                new DefaultIconTextItem(drawable, "text"),
-                new DefaultIconTextItem(drawable, "text"),
-                new DefaultIconTextItem(drawable, "text"),
-                new DefaultIconTextItem(drawable, "text")));
+                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new DefaultIconTextItem(drawable, generator.next(new DataContext()))));
     }
 }

@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import tk.zielony.carbonsamples.feature.PercentLayoutActivity;
 import tk.zielony.carbonsamples.widget.BottomBarActivity;
 import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
@@ -17,7 +18,6 @@ import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
 import tk.zielony.carbonsamples.widget.NavigationViewActivity;
 import tk.zielony.carbonsamples.widget.ProgressBarsActivity;
 import tk.zielony.carbonsamples.widget.RecyclerActivity;
-import tk.zielony.carbonsamples.widget.SVGActivity;
 import tk.zielony.carbonsamples.widget.ScrollViewActivity;
 import tk.zielony.carbonsamples.widget.SeekBarActivity;
 import tk.zielony.carbonsamples.widget.SnackbarActivity;
@@ -42,7 +42,7 @@ public class WidgetsActivity extends SamplesActivity {
                 new ViewModel(CircularProgressActivity.class, getString(R.string.circularProgressActivity_title)),
                 new ViewModel(ProgressBarsActivity.class, getString(R.string.progressBarsActivity_title)),
                 new ViewModel(SnackbarActivity.class, getString(R.string.snackbarActivity_title)),
-                new ViewModel(SVGActivity.class, getString(R.string.svgActivity_title)),
+                new ViewModel(PercentLayoutActivity.class, getString(R.string.percentLayoutActivity_title)),
                 new ViewModel(TextFieldsActivity.class, getString(R.string.textFieldsActivity_title)),
                 new ViewModel(TabsActivity.class, getString(R.string.tabsActivity_title)),
                 new ViewModel(ScrollViewActivity.class, getString(R.string.scrollViewActivity_title)),
