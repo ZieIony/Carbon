@@ -8,57 +8,61 @@
 
 Carbon
 ================
-Material Design implementation for Android 4.0 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. The library also features some additional non-standard extensions, like rounded corners for layouts or a Divider view for easy divider creation.
+Material Design implementation for Android 4.0 and newer. This is not the exact copy of the Lollipop's API and features. It's a custom implementation of the most useful things as shown in the design specification. Carbon tries to:
 
-### Samples
-[![Sample App](http://img.youtube.com/vi/YcTQ8a8sTpU/0.jpg)](https://www.youtube.com/watch?v=YcTQ8a8sTpU)
-
-![Colored shadows](https://github.com/ZieIony/Carbon/blob/master/images/coloredshadows.png)
-![SeekBar and RangeSeekBar](https://github.com/ZieIony/Carbon/blob/master/images/seekbar.png)
-![FlowLayout and Chip](https://github.com/ZieIony/Carbon/blob/master/images/flowlayoutchips.png)
-![Anchors](https://github.com/ZieIony/Carbon/blob/master/images/anchors.png)
-![Spinner](https://github.com/ZieIony/Carbon/blob/master/images/spinner.png)
-![Buttons / Usage sample](https://github.com/ZieIony/Carbon/blob/master/images/buttonsusage.png)
-![Auto complete demo](https://github.com/ZieIony/Carbon/blob/master/images/autocomplete.png)
-![Power menu demo](https://github.com/ZieIony/Carbon/blob/master/images/powermenu.png)
-![Circular progress indicators](https://github.com/ZieIony/Carbon/blob/master/images/progress.png)
-![Text appearances](https://github.com/ZieIony/Carbon/blob/master/images/textappearances.png)
-![Calculator](https://github.com/ZieIony/Carbon/blob/master/images/calculator.png)
-![ScrollView](https://github.com/ZieIony/Carbon/blob/master/images/scrollview.png)
-![Sample app](https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png)
-![RecyclerView and CardView](https://github.com/ZieIony/Carbon/blob/master/images/recyclercards.png)
-![CheckBoxes](https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png)
-![PagerTabStrip](https://github.com/ZieIony/Carbon/blob/master/images/pagertabstrip.png)
-![Drawer](https://github.com/ZieIony/Carbon/blob/master/images/drawer.png)
+ - make things easier (specify cornerRadius='dp' instead of creating an xml and/or a ViewOutlineProvider)
+ - make it all work and look the same on all APIs (like CheckBox's left padding)
+ - really backport features (don't use gradients for shadows!)
+ - fix Android's everlasting bugs (FrameLayout ignores child's padding when no gravity is set)
 
 ### Features
- - realtime, animated shadows
+
+##### Android 4.x
+
+ - generated, animated shadows with elevation system
  - the touch ripple
- - an elevation system (changing z order changes view rendering order)
- - widget tinting
- - rounded corners
- - SVG rendering
- - a floating action button view
- - text appearances, sizes, colors and many more useful definitions
- - custom, xml-selectable fonts for all text Views
- - predefined animation styles and visibility change animations
- - a saturation/brightness/alpha fade for ImageView
- - Divider drag&drop view
- - dark and light themes
- - a radial transition animation
- - circular progress indicators
- - CardView with real shadows and rounded corners
- - state animators
- - debug mode showing draw and hit areas when in edit mode
- - tab strip with animated underline
- - fading edges
- - animated checkboxes and radiobuttons
- - DrawerLayout with real shadows
- - EditText with pattern validation
- - InputLayout with floating label, character counter and error message
- - Snackbar with swipe-to-dismiss, tap-outside-to-dismiss, message queue and view pushing
- - view anchors
- - DropDown with PopupMenu
+ - rounded corners with content clipping
+ - circular reveal
+ - theme xml attribute
+ - widget and drawable tinting
+
+##### All APIs
+
+ - simple to use xml attributes for corners and ripples
+ - colored shadows
+ - brightness/saturadion fade
+ - SVG support (with transformations, text, gradients, etc.)
+ 
+###### Useful extensions and bugfixes
+
+ - html text
+ - percent layouts, anchors, colored insets
+ - view stroke
+ - visibility animations
+ - ttf/otf fonts
+ - text auto size
+ - TextMarker
+
+##### Material constants, widgets and components
+
+ - colors, dimensions, typography
+ - ready-to-use rows and adapters for RecyclerView
+ - DropDown, FloatingActionMenu, RangeSeekBar, ExpandableRecyclerView, FlowLayout, TableView
+
+### Samples
+![Sample app](https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png)
+![Buttons / Usage sample](https://github.com/ZieIony/Carbon/blob/master/images/buttonsusage.png)
+![CheckBoxes](https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png)
+![Colored shadows](https://github.com/ZieIony/Carbon/blob/master/images/coloredshadows.png)
+![Component](https://github.com/ZieIony/Carbon/blob/master/images/component.png)
+![HTML](https://github.com/ZieIony/Carbon/blob/master/images/html.png)
+![PagerTabStrip](https://github.com/ZieIony/Carbon/blob/master/images/pagertabstrip.png)
+![Registration form](https://github.com/ZieIony/Carbon/blob/master/images/registrationform.png)
+![Rounded corners](https://github.com/ZieIony/Carbon/blob/master/images/roundedcorners.png)
+![SeekBar and RangeSeekBar](https://github.com/ZieIony/Carbon/blob/master/images/seekbar.png)
+![Spinner](https://github.com/ZieIony/Carbon/blob/master/images/spinner.png)
+![Table layout](https://github.com/ZieIony/Carbon/blob/master/images/tablelayout.png)
+![Theme](https://github.com/ZieIony/Carbon/blob/master/images/theme.png)
 
 ### [Installation](https://github.com/ZieIony/Carbon/wiki/Installation)
 
