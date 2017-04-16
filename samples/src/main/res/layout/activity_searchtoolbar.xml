@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:orientation="vertical">
+
+    <carbon.widget.FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:carbon_elevation="@dimen/carbon_elevationToolbar">
+
+        <carbon.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:text="Search"
+            app:carbon_elevation="0dp">
+
+            <carbon.widget.ImageView
+                android:id="@+id/search"
+                style="@style/carbon_ImageView.IconButton"
+                android:src="@raw/ic_search_24px"/>
+        </carbon.widget.Toolbar>
+
+        <carbon.widget.LinearLayout
+            android:id="@+id/searchbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/carbon_colorBackground"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/carbon_toolbarItemMargin"
+            android:paddingRight="@dimen/carbon_toolbarItemMargin"
+            android:visibility="invisible">
+
+            <carbon.widget.ImageView
+                android:id="@+id/close"
+                style="@style/carbon_ImageView.IconButton"
+                android:src="@raw/carbon_clear"/>
+
+            <carbon.widget.SearchEditText
+                android:layout_width="0dp"
+                android:layout_height="@dimen/carbon_toolbarHeight"
+                android:layout_weight="1"
+                android:padding="0dp"
+                app:carbon_underline="false"/>
+
+            <carbon.widget.ImageView
+                style="@style/carbon_ImageView.IconButton"
+                android:clickable="false"
+                android:src="@raw/ic_search_24px"/>
+        </carbon.widget.LinearLayout>
+    </carbon.widget.FrameLayout>
+</carbon.widget.FrameLayout>

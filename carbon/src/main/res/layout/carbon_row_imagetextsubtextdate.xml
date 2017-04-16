@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="data"
-            type="carbon.component.ImageTextSubtextDateItem" />
+            type="carbon.component.ImageTextSubtextDateItem"/>
 
     </data>
 
     <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
+        android:background="?attr/carbon_colorBackground"
         android:clickable="true"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
@@ -24,7 +25,7 @@
             android:layout_marginStart="@dimen/carbon_windowPadding"
             android:scaleType="centerCrop"
             android:src="@{data.getImage()}"
-            app:carbon_tint="@null" />
+            app:carbon_tint="@null"/>
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_text" />
+            app:carbon_textView="@+id/carbon_text"/>
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker2"
@@ -41,7 +42,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_subtext" />
+            app:carbon_textView="@+id/carbon_subtext"/>
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker3"
@@ -49,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_date" />
+            app:carbon_textView="@+id/carbon_date"/>
 
         <carbon.widget.TextView
             android:id="@+id/carbon_text"
@@ -61,10 +62,10 @@
             android:layout_marginRight="@dimen/carbon_marginHalf"
             android:layout_marginStart="@dimen/carbon_contentPadding"
             android:layout_toLeftOf="@+id/carbon_date"
-            android:maxLines="1"
             android:layout_toStartOf="@+id/carbon_date"
+            android:maxLines="1"
             android:text="@{data.text}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
 
         <carbon.widget.TextView
             android:id="@+id/carbon_subtext"
@@ -80,7 +81,7 @@
             android:maxLines="1"
             android:text="@{data.subtext}"
             android:textAppearance="?attr/carbon_textAppearanceBody1"
-            android:textColor="?android:attr/textColorSecondary" />
+            android:textColor="?android:attr/textColorSecondary"/>
 
         <carbon.widget.TextView
             android:id="@+id/carbon_date"
@@ -92,7 +93,7 @@
             android:layout_marginEnd="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:text="@{data.date}"
-            android:textAppearance="?attr/carbon_textAppearanceCaption" />
+            android:textAppearance="?attr/carbon_textAppearanceCaption"/>
 
     </carbon.widget.RelativeLayout>
 </layout>

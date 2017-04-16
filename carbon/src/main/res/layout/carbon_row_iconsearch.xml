@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="data"
-            type="carbon.component.IconSearchItem" />
+            type="carbon.component.IconSearchItem"/>
 
     </data>
 
     <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_listItemHeight">
+        android:layout_height="@dimen/carbon_listItemHeight"
+        android:background="?attr/carbon_colorBackground">
 
         <carbon.widget.ImageView
             style="@style/carbon_ImageView.Icon"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:src="@{data.getIcon()}" />
+            android:src="@{data.getIcon()}"/>
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_query" />
+            app:carbon_textView="@+id/carbon_query"/>
 
         <carbon.widget.SearchEditText
             android:id="@+id/carbon_query"
@@ -41,7 +42,7 @@
             android:hint="@{data.hint}"
             android:padding="0dp"
             android:text="@{data.query}"
-            app:carbon_underline="false" />
+            app:carbon_underline="false"/>
 
     </carbon.widget.RelativeLayout>
 </layout>

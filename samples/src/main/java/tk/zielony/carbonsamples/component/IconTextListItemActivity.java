@@ -39,7 +39,7 @@ public class IconTextListItemActivity extends SamplesActivity {
         }));
         recycler.setAdapter(adapter);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_dividerColor)), getResources().getDimensionPixelSize(R.dimen.carbon_1dip));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_dividerColor)), getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
         dividerItemDecoration.setDrawRules(position -> position == 0);
         recycler.addItemDecoration(dividerItemDecoration);
 

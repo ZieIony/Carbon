@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="data"
-            type="carbon.component.AvatarTextItem" />
+            type="carbon.component.AvatarTextItem"/>
 
     </data>
 
     <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="?attr/carbon_colorBackground"
         android:clickable="true"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
@@ -21,7 +22,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:src="@{data.getAvatar()}" />
+            android:src="@{data.getAvatar()}"/>
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_text" />
+            app:carbon_textView="@+id/carbon_text"/>
 
         <carbon.widget.TextView
             android:id="@+id/carbon_text"
@@ -41,7 +42,7 @@
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_contentPadding"
             android:text="@{data.text}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
 
     </carbon.widget.RelativeLayout>
 </layout>

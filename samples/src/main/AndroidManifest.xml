@@ -162,13 +162,16 @@
             android:name=".demo.PowerMenuActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".demo.ShareToolbarActivity"
+            android:name=".demo.QuickReturnActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".demo.AutoCompleteActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".demo.QuickReturnActivity"
+            android:name=".demo.SearchToolbarActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".demo.ShareToolbarActivity"
             android:label="@string/app_name" />
 
         <activity

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.Divider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginBottom="8dp"
-    android:layout_marginLeft="@dimen/carbon_contentPadding"
-    android:layout_marginStart="@dimen/carbon_contentPadding"
-    android:layout_marginTop="7dp" />
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:background="?attr/carbon_colorBackground">
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_dividerHeight"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:layout_marginStart="@dimen/carbon_contentPadding"
+        android:layout_marginTop="7dp"/>
+</carbon.widget.FrameLayout>
