@@ -862,6 +862,9 @@
         <attr name="carbon_autoSizeStepGranularity"/>
     </declare-styleable>
 
+    <!-- SearchEditText -->
+    <attr name="carbon_searchEditTextStyle" format="reference"/>
+
     <attr name="carbon_dropDownStyle" format="reference"/>
     <declare-styleable name="DropDown">
         <attr name="carbon_theme"/>

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.R;
@@ -17,13 +18,23 @@ public class SearchToolbarActivity extends SamplesActivity {
         setContentView(R.layout.activity_searchtoolbar);
 
         LinearLayout searchEditText = (LinearLayout) findViewById(R.id.searchbar);
-        float margin = getResources().getDimension(R.dimen.carbon_toolbarItemMargin);
-        findViewById(R.id.search).setOnClickListener(v -> {
+        View searchButton = findViewById(R.id.search);
+        searchButton.setOnClickListener(v -> {
             searchEditText.setVisibility(View.VISIBLE);
-            searchEditText.startReveal((int) (searchEditText.getWidth() - v.getWidth() / 2 - margin), searchEditText.getHeight() / 2, 0, searchEditText.getWidth());
+            int[] setLocation = new int[2];
+            searchEditText.getLocationOnScreen(setLocation);
+            int[] sbLocation = new int[2];
+            searchButton.getLocationOnScreen(sbLocation);
+            Animator animator = searchEditText.startReveal(sbLocation[0] - setLocation[0] + v.getWidth() / 2, searchEditText.getHeight() / 2, 0, searchEditText.getWidth());
+            animator.setInterpolator(new DecelerateInterpolator());
         });
         findViewById(R.id.close).setOnClickListener(v -> {
-            Animator animator = searchEditText.startReveal((int) (searchEditText.getWidth() - v.getWidth() / 2 - margin), searchEditText.getHeight() / 2, searchEditText.getWidth(), 0);
+            int[] setLocation = new int[2];
+            searchEditText.getLocationOnScreen(setLocation);
+            int[] sbLocation = new int[2];
+            searchButton.getLocationOnScreen(sbLocation);
+            Animator animator = searchEditText.startReveal(sbLocation[0] - setLocation[0] + v.getWidth() / 2, searchEditText.getHeight() / 2, searchEditText.getWidth(), 0);
+            animator.setInterpolator(new DecelerateInterpolator());
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {

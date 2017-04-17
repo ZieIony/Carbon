@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import carbon.R;
 import carbon.internal.SimpleTextWatcher;
 
 /**
@@ -40,7 +41,7 @@ public class SearchEditText extends EditText {
     SearchDataProvider dataProvider;
 
     public SearchEditText(Context context) {
-        super(context);
+        super(context, null, R.attr.carbon_searchEditTextStyle);
         initSearchEditText();
     }
 
@@ -51,18 +52,18 @@ public class SearchEditText extends EditText {
      * @param attrs
      */
     public SearchEditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs, R.attr.carbon_searchEditTextStyle);
         initSearchEditText();
     }
 
     public SearchEditText(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+        super(context, attrs, R.attr.carbon_searchEditTextStyle);
         initSearchEditText();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public SearchEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, R.attr.carbon_searchEditTextStyle, defStyleRes);
         initSearchEditText();
     }
 

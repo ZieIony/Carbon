@@ -30,6 +30,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
+        <item name="carbon_searchEditTextStyle">@style/carbon_SearchEditText</item>
         <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerIndicatorStyle">@style/carbon_ViewPagerIndicator</item>
@@ -159,6 +160,7 @@
         <item name="carbon_chipStyle">@style/carbon_Chip</item>
         <item name="carbon_dividerStyle">@style/carbon_Divider</item>
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
+        <item name="carbon_searchEditTextStyle">@style/carbon_SearchEditText</item>
         <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
         <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
         <item name="carbon_viewPagerIndicatorStyle">@style/carbon_ViewPagerIndicator</item>
@@ -489,6 +491,12 @@
         <item name="carbon_backgroundTint">#00000000</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
+    </style>
+
+    <style name="carbon_SearchEditText" parent="carbon_EditText">
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:imeOptions">actionSearch</item>
     </style>
 
     <style name="carbon_DropDown" parent="carbon_EditText">
