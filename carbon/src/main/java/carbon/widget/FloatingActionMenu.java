@@ -5,10 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
-import android.support.v7.view.menu.MenuBuilder;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,16 +15,19 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
+import java.util.ArrayList;
+
 import carbon.CarbonContextWrapper;
 import carbon.R;
+import carbon.internal.FloatingMenuBuilder;
 
 public class FloatingActionMenu extends PopupWindow {
     private final Handler handler;
     private final LinearLayout content;
-    private Menu menu;
+    private FloatingMenuBuilder menu;
 
     MenuItem.OnMenuItemClickListener listener;
-    private View anchor;
+    View anchor;
 
     public FloatingActionMenu(Context context) {
         super(new LinearLayout(context), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -51,34 +52,9 @@ public class FloatingActionMenu extends PopupWindow {
     }
 
     public void build() {
-        int[] location = new int[2];
-        anchor.getLocationOnScreen(location);
-
-        WindowManager wm = (WindowManager) anchor.getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-
-        boolean left = location[0] < display.getWidth() + anchor.getWidth() - location[0];
-
         content.removeAllViews();
-
-        for (int i = 0; i < menu.size(); i++) {
-            final MenuItem item = menu.getItem(i);
-            LayoutInflater inflater = LayoutInflater.from(content.getContext());
-            final LinearLayout view = (LinearLayout) inflater.inflate(left ? R.layout.carbon_floatingactionmenu_left : R.layout.carbon_floatingactionmenu_right, content, false);
-            TextView tooltip = (TextView) view.findViewById(R.id.carbon_tooltip);
-            FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.carbon_fab);
-
-            tooltip.setText(item.getTitle());
-            fab.setImageDrawable(item.getIcon());
-            fab.setOnClickListener(v -> {
-                if (listener != null)
-                    listener.onMenuItemClick(item);
-                dismiss();
-            });
-            content.addView(view);
-
-            view.setVisibilityImmediate(View.INVISIBLE);
-        }
+        for (int i = 0; i < menu.size(); i++)
+            ((FloatingMenuItem) menu.getItem(i)).build();
 
         content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
     }
@@ -104,10 +80,16 @@ public class FloatingActionMenu extends PopupWindow {
             update(location[0], location[1] + anchor.getHeight(), content.getMeasuredWidth(), content.getMeasuredHeight());
         }
 
+        ArrayList<View> items = new ArrayList<>();
         for (int i = 0; i < menu.size(); i++) {
+            if (menu.getItem(i).isVisible())
+                items.add(content.getChildAt(i));
+        }
+
+        for (int i = 0; i < items.size(); i++) {
             final int finalI = i;
             handler.postDelayed(() -> {
-                content.getChildAt(finalI).setVisibility(View.VISIBLE);
+                items.get(finalI).setVisibility(View.VISIBLE);
             }, top ? i * 50 : (menu.size() - 1 - i) * 50);
         }
 
@@ -137,14 +119,18 @@ public class FloatingActionMenu extends PopupWindow {
     }
 
     public void setMenu(int resId) {
-        Menu menu = new MenuBuilder(new CarbonContextWrapper(getContentView().getContext()));
-        MenuInflater inflater = new MenuInflater(getContentView().getContext());
+        CarbonContextWrapper contextWrapper = new CarbonContextWrapper(getContentView().getContext());
+        this.menu = new FloatingMenuBuilder(this);
+        MenuInflater inflater = new MenuInflater(contextWrapper);
         inflater.inflate(resId, menu);
-        setMenu(menu);
     }
 
-    public void setMenu(final Menu menu) {
-        this.menu = menu;
+    public void setMenu(final Menu baseMenu) {
+        this.menu = new FloatingMenuBuilder(this);
+        for (int i = 0; i < baseMenu.size(); i++) {
+            MenuItem menuItem = baseMenu.getItem(i);
+            this.menu.add(menuItem.getGroupId(), menuItem.getItemId(), menuItem.getOrder(), menuItem.getTitle()).setIcon(menuItem.getIcon()).setVisible(menuItem.isVisible()).setEnabled(menuItem.isEnabled());
+        }
     }
 
     public Menu getMenu() {

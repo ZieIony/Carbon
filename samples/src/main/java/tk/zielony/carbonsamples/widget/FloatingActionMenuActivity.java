@@ -1,8 +1,15 @@
 package tk.zielony.carbonsamples.widget;
 
+import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import carbon.Carbon;
 import carbon.widget.FloatingActionButton;
+import carbon.widget.FloatingMenuItem;
+import tk.zielony.carbonsamples.ColorsActivity;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
@@ -17,5 +24,31 @@ public class FloatingActionMenuActivity extends SamplesActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setMenu(R.menu.menu_fab);
+        Menu menu = fab.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            FloatingMenuItem item = (FloatingMenuItem) menu.getItem(i);
+            item.setBackgroundDrawable(new ColorDrawable(getResources().getColor(ColorsActivity.primary[i].color)));
+        }
+
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        Menu menu2 = fab2.getMenu();
+        for (int i = 0; i < menu2.size(); i++) {
+            MenuItem item = menu2.getItem(i);
+            item.setEnabled(i % 2 == 0);
+        }
+
+        FloatingActionButton fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+        Menu menu3 = fab3.getMenu();
+        for (int i = 0; i < menu3.size(); i++) {
+            MenuItem item = menu3.getItem(i);
+            item.setVisible(i % 2 == 0);
+        }
+
+        FloatingActionButton fab4 = (FloatingActionButton) findViewById(R.id.fab4);
+        Menu menu4 = fab4.getMenu();
+        for (int i = 0; i < menu4.size(); i++) {
+            FloatingMenuItem item = (FloatingMenuItem) menu4.getItem(i);
+            item.setIconTint(ColorStateList.valueOf(Carbon.getThemeColor(this, R.attr.carbon_iconColorInverse)));
+        }
     }
 }

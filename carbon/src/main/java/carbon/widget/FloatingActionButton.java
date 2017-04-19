@@ -22,7 +22,6 @@ import carbon.drawable.DefaultAccentColorStateList;
  */
 public class FloatingActionButton extends ImageView {
     FloatingActionMenu floatingActionMenu;
-    private Menu menu;
 
     public FloatingActionButton(Context context) {
         super(context, null, R.attr.carbon_fabStyle);
@@ -82,14 +81,10 @@ public class FloatingActionButton extends ImageView {
         floatingActionMenu.setMenu(resId);
         floatingActionMenu.setAnchor(this);
 
-        this.menu = floatingActionMenu.getMenu();
-
         setOnClickListener(__ -> floatingActionMenu.show());
     }
 
     public void setMenu(Menu menu) {
-        this.menu = menu;
-
         if (menu != null) {
             floatingActionMenu = new FloatingActionMenu(getContext());
             floatingActionMenu.setMenu(menu);
@@ -103,7 +98,7 @@ public class FloatingActionButton extends ImageView {
     }
 
     public Menu getMenu() {
-        return menu;
+        return floatingActionMenu != null ? floatingActionMenu.getMenu() : null;
     }
 
     public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener) {

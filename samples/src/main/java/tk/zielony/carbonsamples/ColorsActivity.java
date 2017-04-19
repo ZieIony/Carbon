@@ -22,7 +22,7 @@ public class ColorsActivity extends SamplesActivity {
     public static class Item {
         String name;
         int value;
-        int color;
+        public int color;
 
         public Item(String name, int value, int color) {
             this.name = name;
@@ -41,7 +41,7 @@ public class ColorsActivity extends SamplesActivity {
             new Item("Light", R.style.ThemeLight, R.color.carbon_colorBackground_light)
     };
 
-    static Item[] primary = new Item[]{
+    public static Item[] primary = new Item[]{
             new Item("Red", R.style.PrimaryRed, R.color.carbon_red_400),
             new Item("Pink", R.style.PrimaryPink, R.color.carbon_pink_400),
             new Item("Purple", R.style.PrimaryPurple, R.color.carbon_purple_400),
