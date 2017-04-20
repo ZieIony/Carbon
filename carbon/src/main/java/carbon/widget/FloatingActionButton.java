@@ -97,8 +97,8 @@ public class FloatingActionButton extends ImageView {
         }
     }
 
-    public Menu getMenu() {
-        return floatingActionMenu != null ? floatingActionMenu.getMenu() : null;
+    public FloatingActionMenu getFloatingActionMenu(){
+        return floatingActionMenu;
     }
 
     public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener) {

@@ -69,9 +69,10 @@ public class FloatingMenuItem implements MenuItem {
             fab.setTint(iconTint);
         fab.setImageDrawable(icon != null ? icon : context.getResources().getDrawable(iconRes));  // always null
         fab.setOnClickListener(v -> {
-            if (menu.listener != null)
-                menu.listener.onMenuItemClick(this);
-            menu.dismiss();
+            if (enabled) {
+                if (menu.listener == null || menu.listener.onMenuItemClick(this))
+                    menu.dismiss();
+            }
         });
         content.addView(view);
 
