@@ -20,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.AppCompatImageHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -123,6 +124,8 @@ public class ImageView extends android.widget.ImageView
                 setCornerRadius(a.getDimension(attr, 0));
             }
         }
+
+        new AppCompatImageHelper(this).loadFromAttributes(attrs, defStyleAttr);
 
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);

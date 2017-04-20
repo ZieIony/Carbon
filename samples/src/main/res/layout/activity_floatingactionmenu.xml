@@ -19,7 +19,7 @@
             android:layout_height="@dimen/carbon_fabSize"
             android:layout_gravity="bottom|right"
             android:layout_margin="@dimen/carbon_padding"
-            android:src="@raw/ic_print_24px" />
+            app:srcCompat="@drawable/ic_android_black_24dp" />
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/fab2"
