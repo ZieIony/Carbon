@@ -114,12 +114,12 @@ public class Chip extends LinearLayout {
     }
 
     public void setIconVisible(boolean visible) {
-        icon.setVisibilityImmediate(visible ? VISIBLE : GONE);
+        icon.setVisibility(visible ? VISIBLE : GONE);
         setPadding(visible ? 0 : (int) getResources().getDimension(R.dimen.carbon_chipPadding), getPaddingTop(), getPaddingRight(), getPaddingBottom());
     }
 
     public void setRemovable(boolean removable) {
-        close.setVisibilityImmediate(removable ? VISIBLE : GONE);
+        close.setVisibility(removable ? VISIBLE : GONE);
         setPadding(getPaddingLeft(), getPaddingTop(), removable ? 0 : (int) getResources().getDimension(R.dimen.carbon_chipPadding), getPaddingBottom());
     }
 

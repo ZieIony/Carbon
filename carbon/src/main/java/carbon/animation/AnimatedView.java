@@ -41,4 +41,11 @@ public interface AnimatedView {
      * @param inAnim new in animation. Use AnimUtils.Style.None for no animation.
      */
     void setInAnimation(AnimUtils.Style inAnim);
+
+    /**
+     * Sets visibility using set animation style.
+     * @param visibility one of View.VISIBLE/INVISIBLE/GONE flags
+     * @return visibility animation animator
+     */
+    Animator animateVisibility(int visibility);
 }

@@ -51,7 +51,7 @@ public class SeekBarPopup extends PopupWindow {
         contentView.measure(View.MeasureSpec.makeMeasureSpec(wm.getDefaultDisplay().getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         super.update(wm.getDefaultDisplay().getWidth(), contentView.getMeasuredHeight());
 
-        bubble.setVisibility(View.VISIBLE);
+        bubble.animateVisibility(View.VISIBLE);
 
         return true;
     }
@@ -63,14 +63,14 @@ public class SeekBarPopup extends PopupWindow {
         contentView.measure(View.MeasureSpec.makeMeasureSpec(wm.getDefaultDisplay().getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         super.update(wm.getDefaultDisplay().getWidth(), contentView.getMeasuredHeight());
 
-        bubble.setVisibilityImmediate(View.VISIBLE);
+        bubble.setVisibility(View.VISIBLE);
 
         return true;
     }
 
     @Override
     public void dismiss() {
-        bubble.setVisibility(View.INVISIBLE);
+        bubble.animateVisibility(View.INVISIBLE);
         Animator animator = bubble.getAnimator();
         if (animator != null) {
             animator.addListener(new AnimatorListenerAdapter() {

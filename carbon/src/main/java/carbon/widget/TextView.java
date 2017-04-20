@@ -837,7 +837,8 @@ public class TextView extends android.widget.TextView
     private AnimUtils.Style inAnim = AnimUtils.Style.None, outAnim = AnimUtils.Style.None;
     private Animator animator;
 
-    public void setVisibility(final int visibility) {
+    public Animator animateVisibility(final int visibility) {
+        float alpha = getAlpha();
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
@@ -846,32 +847,29 @@ public class TextView extends android.widget.TextView
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
-                        clearAnimation();
+                        setAlpha(alpha);
                     }
                 });
             }
-            super.setVisibility(visibility);
+            setVisibility(visibility);
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
             if (outAnim == AnimUtils.Style.None) {
-                super.setVisibility(visibility);
-                return;
+                setVisibility(visibility);
+                return null;
             }
             animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
-                        TextView.super.setVisibility(visibility);
+                        setVisibility(visibility);
                     animator = null;
-                    clearAnimation();
+                    setAlpha(alpha);
                 }
             });
         }
-    }
-
-    public void setVisibilityImmediate(final int visibility) {
-        super.setVisibility(visibility);
+        return animator;
     }
 
     public Animator getAnimator() {

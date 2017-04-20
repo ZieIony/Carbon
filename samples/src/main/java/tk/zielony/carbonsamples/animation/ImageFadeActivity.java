@@ -36,7 +36,7 @@ public class ImageFadeActivity extends SamplesActivity {
             for (int i = 0; i < grid.getChildCount(); i++) {
                 ImageView imageView = (ImageView) grid.getChildAt(i);
                 handler.postDelayed(() -> {
-                        imageView.setVisibility(imageView.isVisible()?View.INVISIBLE:View.VISIBLE);
+                    imageView.animateVisibility(imageView.isVisible() ? View.INVISIBLE : View.VISIBLE);
                 }, i * 50);
             }
         });

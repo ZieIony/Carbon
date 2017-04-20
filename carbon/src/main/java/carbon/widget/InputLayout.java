@@ -237,7 +237,7 @@ public class InputLayout extends RelativeLayout {
         boolean requiredError = required && validStateView.isEmpty();
         labelTextView.setValid(!requiredError);
 
-        errorTextView.setVisibility(errorMode == ErrorMode.Always || errorMode == ErrorMode.WhenInvalid && !valid ? VISIBLE : errorMode == ErrorMode.Never ? GONE : INVISIBLE);
+        errorTextView.animateVisibility(errorMode == ErrorMode.Always || errorMode == ErrorMode.WhenInvalid && !valid ? VISIBLE : errorMode == ErrorMode.Never ? GONE : INVISIBLE);
     }
 
     private void updateCounter(EditText editText) {
@@ -265,11 +265,11 @@ public class InputLayout extends RelativeLayout {
         }
         if (labelStyle == LabelStyle.Persistent || labelStyle == LabelStyle.Floating && child.isFocused() ||
                 labelStyle == LabelStyle.IfNotEmpty && (child.isFocused() || child instanceof android.widget.TextView && ((android.widget.TextView) child).getText().length() > 0)) {
-            labelTextView.setVisibility(VISIBLE);
+            labelTextView.animateVisibility(VISIBLE);
             if (child instanceof EditText)
                 ((EditText) child).setHint(null);
         } else if (labelStyle != LabelStyle.Hint) {
-            labelTextView.setVisibility(INVISIBLE);
+            labelTextView.animateVisibility(INVISIBLE);
             if (child instanceof EditText)
                 ((EditText) child).setHint(label + (required ? "*" : ""));
         } else {
@@ -408,7 +408,7 @@ public class InputLayout extends RelativeLayout {
     }
 
     public void setShowPasswordButtonEnabled(boolean b) {
-        showPasswordImageView.setVisibilityImmediate(b ? VISIBLE : GONE);
+        showPasswordImageView.setVisibility(b ? VISIBLE : GONE);
         if (b)
             setClearButtonEnabled(false);
     }
@@ -418,7 +418,7 @@ public class InputLayout extends RelativeLayout {
     }
 
     public void setClearButtonEnabled(boolean b) {
-        clearImageView.setVisibilityImmediate(b ? VISIBLE : GONE);
+        clearImageView.setVisibility(b ? VISIBLE : GONE);
         if (b)
             setShowPasswordButtonEnabled(false);
     }

@@ -55,7 +55,7 @@ public class EditTextMenu extends PopupWindow {
         update();
 
         LinearLayout content = (LinearLayout) getContentView().findViewById(R.id.carbon_menuContainer);
-        content.setVisibilityImmediate(View.VISIBLE);
+        content.setVisibility(View.VISIBLE);
 
         return true;
     }

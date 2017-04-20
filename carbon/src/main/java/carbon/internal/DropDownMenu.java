@@ -56,8 +56,8 @@ public class DropDownMenu extends PopupWindow {
 
         update();
 
-        View content = getContentView().findViewById(R.id.carbon_popupContainer);
-        content.setVisibility(View.VISIBLE);
+        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
+        content.animateVisibility(View.VISIBLE);
 
         return true;
     }
@@ -70,7 +70,7 @@ public class DropDownMenu extends PopupWindow {
         update();
 
         FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
-        content.setVisibilityImmediate(View.VISIBLE);
+        content.setVisibility(View.VISIBLE);
 
         return true;
     }
@@ -147,8 +147,7 @@ public class DropDownMenu extends PopupWindow {
     @Override
     public void dismiss() {
         FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
-        content.setVisibility(View.INVISIBLE);
-        content.getAnimator().addListener(new AnimatorListenerAdapter() {
+        content.animateVisibility(View.INVISIBLE).addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 DropDownMenu.super.dismiss();

@@ -6,8 +6,7 @@
                             android:gravity="left"
                             android:layoutDirection="ltr"
                             android:orientation="horizontal"
-                            app:carbon_inAnimation="fade"
-                            app:carbon_outAnimation="fade">
+                            app:carbon_inAnimation="fade">
 
     <carbon.widget.FloatingActionButton
         android:id="@+id/carbon_fab"

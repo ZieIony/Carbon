@@ -2,8 +2,9 @@ package tk.zielony.carbonsamples.animation;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
+import carbon.widget.Button;
+import carbon.widget.FloatingActionButton;
 import carbon.widget.FrameLayout;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
@@ -20,26 +21,26 @@ public class WidgetAnimationsActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.widgetAnimationsActivity_title));
 
-        final View fab = findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(view -> {
             if (fabVisibility != View.VISIBLE) {
-                fab.setVisibility(View.VISIBLE);
+                fab.animateVisibility(View.VISIBLE);
                 fabVisibility = View.VISIBLE;
             } else {
-                fab.setVisibility(View.INVISIBLE);
+                fab.animateVisibility(View.INVISIBLE);
                 fabVisibility = View.INVISIBLE;
             }
         });
 
-        final View button2 = findViewById(R.id.button2);
+        final Button button2 = (Button) findViewById(R.id.button2);
         Button button3 = (Button) findViewById(R.id.button3);
         button3.setOnClickListener(view -> {
             if (buttonVisibility != View.VISIBLE) {
-                button2.setVisibility(View.VISIBLE);
+                button2.animateVisibility(View.VISIBLE);
                 buttonVisibility = View.VISIBLE;
             } else {
-                button2.setVisibility(View.INVISIBLE);
+                button2.animateVisibility(View.INVISIBLE);
                 buttonVisibility = View.INVISIBLE;
             }
         });

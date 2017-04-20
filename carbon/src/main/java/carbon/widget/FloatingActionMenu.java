@@ -15,10 +15,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
+import com.annimon.stream.Stream;
+
 import java.util.ArrayList;
 
 import carbon.CarbonContextWrapper;
 import carbon.R;
+import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.internal.FloatingMenuBuilder;
 
 public class FloatingActionMenu extends PopupWindow {
@@ -35,6 +39,7 @@ public class FloatingActionMenu extends PopupWindow {
         content.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         content.setOrientation(android.widget.LinearLayout.VERTICAL);
         content.setPadding(0, content.getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf), 0, content.getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf));
+        content.setOutAnimation(AnimUtils.Style.Fade);
 
         setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
 
@@ -80,16 +85,18 @@ public class FloatingActionMenu extends PopupWindow {
             update(location[0], location[1] + anchor.getHeight(), content.getMeasuredWidth(), content.getMeasuredHeight());
         }
 
-        ArrayList<View> items = new ArrayList<>();
+        content.setVisibility(View.VISIBLE);
+
+        ArrayList<AnimatedView> items = new ArrayList<>();
         for (int i = 0; i < menu.size(); i++) {
             if (menu.getItem(i).isVisible())
-                items.add(content.getChildAt(i));
+                items.add((AnimatedView) content.getChildAt(i));
         }
 
         for (int i = 0; i < items.size(); i++) {
             final int finalI = i;
             handler.postDelayed(() -> {
-                items.get(finalI).setVisibility(View.VISIBLE);
+                items.get(finalI).animateVisibility(View.VISIBLE);
             }, top ? i * 50 : (menu.size() - 1 - i) * 50);
         }
 
@@ -98,20 +105,17 @@ public class FloatingActionMenu extends PopupWindow {
 
     @Override
     public void dismiss() {
-        final LinearLayout content = (LinearLayout) getContentView();
-        LinearLayout child = null;
-        for (int i = 0; i < content.getChildCount(); i++) {
-            child = (LinearLayout) content.getChildAt(i);
-            child.setVisibility(View.INVISIBLE);
-        }
-        if (child != null) {
-            child.getAnimator().addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    dismissImmediate();
+        content.animateVisibility(View.INVISIBLE).addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                for (int i = 0; i < menu.size(); i++) {
+                    if (menu.getItem(i).isVisible())
+                        content.getChildAt(i).setVisibility(View.INVISIBLE);
                 }
-            });
-        }
+
+                dismissImmediate();
+            }
+        });
     }
 
     public void dismissImmediate() {

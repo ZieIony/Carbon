@@ -38,6 +38,7 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.component.Component;
 import carbon.component.ComponentView;
@@ -49,7 +50,6 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
-import carbon.animation.AnimatedView;
 import carbon.widget.CornerView;
 import carbon.widget.InsetView;
 import carbon.widget.MaxSizeView;
@@ -754,7 +754,8 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
     private AnimUtils.Style inAnim = AnimUtils.Style.None, outAnim = AnimUtils.Style.None;
     private Animator animator;
 
-    public void setVisibility(final int visibility) {
+    public Animator animateVisibility(final int visibility) {
+        float alpha = getAlpha();
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
@@ -763,32 +764,29 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
                     @Override
                     public void onAnimationEnd(Animator a) {
                         animator = null;
-                        clearAnimation();
+                        setAlpha(alpha);
                     }
                 });
             }
-            super.setVisibility(visibility);
+            setVisibility(visibility);
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
             if (outAnim == AnimUtils.Style.None) {
-                super.setVisibility(visibility);
-                return;
+                setVisibility(visibility);
+                return null;
             }
             animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
-                        AppBarLayout.super.setVisibility(visibility);
+                        setVisibility(visibility);
                     animator = null;
-                    clearAnimation();
+                    setAlpha(alpha);
                 }
             });
         }
-    }
-
-    public void setVisibilityImmediate(final int visibility) {
-        super.setVisibility(visibility);
+        return animator;
     }
 
     public Animator getAnimator() {
