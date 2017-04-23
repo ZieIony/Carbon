@@ -14,6 +14,12 @@
         android:hint="title"
         android:text="Title"/>
 
+    <carbon.widget.DropDown
+        android:id="@+id/dropDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/carbon_margin"/>
+
     <carbon.widget.Button
         android:id="@+id/button"
         android:layout_width="wrap_content"

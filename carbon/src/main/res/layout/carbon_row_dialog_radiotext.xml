@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="Object"/>
+
+    </data>
+
+    <carbon.widget.RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_listItemHeight"
+        android:background="?attr/carbon_colorForeground"
+        android:clickable="true"
+        app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+        <carbon.widget.RadioButton
+            android:id="@+id/carbon_radioButton"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:paddingLeft="@null"
+            android:paddingStart="@null"
+            android:layout_marginLeft="@dimen/carbon_dialogPadding"
+            android:layout_marginStart="@dimen/carbon_dialogPadding"
+            android:layout_marginTop="@dimen/carbon_toolbarItemPadding"/>
+
+        <carbon.widget.TextMarker
+            android:id="@+id/carbon_marker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:carbon_text="Ip"
+            app:carbon_textView="@+id/carbon_text"/>
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/carbon_marker"
+            android:layout_marginEnd="@dimen/carbon_windowPadding"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginRight="@dimen/carbon_windowPadding"
+            android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:text="@{String.valueOf(data)}"
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
+
+    </carbon.widget.RelativeLayout>
+</layout>

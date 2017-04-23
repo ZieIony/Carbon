@@ -39,7 +39,7 @@ import carbon.shadow.ShadowView;
 public class RecyclerView extends android.support.v7.widget.RecyclerView implements TintedView, VisibleView {
 
     public interface OnItemClickedListener {
-        void onItemClicked(int position);
+        void onItemClicked(View view, int position);
     }
 
     private EdgeEffect leftGlow;

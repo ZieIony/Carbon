@@ -7,15 +7,13 @@ import android.support.annotation.StyleRes;
 import android.view.View;
 import android.view.ViewGroup;
 
-import carbon.Carbon;
-import carbon.R;
 import carbon.widget.LinearLayout;
 import carbon.widget.ScrollView;
 
 public class Dialog extends DialogBase {
 
     public Dialog(@NonNull Context context) {
-        super(context, Carbon.getThemeResId(context, R.attr.dialogTheme));
+        super(context);
     }
 
     public Dialog(@NonNull Context context, @StyleRes int themeResId) {

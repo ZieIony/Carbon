@@ -36,7 +36,7 @@ public class DrawerActivity extends SamplesActivity {
 
         FruitAdapter adapter = new FruitAdapter(fruits, null);
         drawerList.setAdapter(adapter);
-        adapter.setOnItemClickedListener(position -> {
+        adapter.setOnItemClickedListener((view, position) -> {
             setTitle(fruits.get(position));
             drawerLayout.closeDrawer(drawerMenu);
         });

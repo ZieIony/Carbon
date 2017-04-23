@@ -27,7 +27,7 @@ public abstract class DialogBase extends android.app.Dialog {
     private Divider bottomDivider;
 
     public DialogBase(@NonNull Context context) {
-        super(context, Carbon.getThemeResId(context, R.attr.dialogTheme));
+        super(context, Carbon.getThemeResId(context, android.R.attr.dialogTheme));
         initLayout();
     }
 

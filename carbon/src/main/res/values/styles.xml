@@ -13,6 +13,7 @@
         <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
         <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="android:seekBarStyle">@style/carbon_SeekBar</item>
+        <item name="android:dialogTheme">@style/carbon_Theme.Dark.Dialog</item>
 
         <item name="toolbarStyle">@style/carbon_Toolbar</item>
         <item name="checkedTextViewStyle">@style/carbon_CheckedTextView</item>
@@ -128,7 +129,9 @@
 
     </style>
 
-    <style name="carbon_Theme.Dark.Dialog"/>
+    <style name="carbon_Theme.Dark.Dialog">
+        <item name="android:windowBackground">?attr/carbon_colorForeground</item>
+    </style>
 
     <style name="carbon_Theme.Light" parent="Theme.AppCompat.Light">
         <item name="carbon_colorError">#ffF44336</item>
@@ -143,6 +146,7 @@
         <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
         <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
         <item name="android:seekBarStyle">@style/carbon_SeekBar</item>
+        <item name="android:dialogTheme">@style/carbon_Theme.Light.Dialog</item>
 
         <item name="toolbarStyle">@style/carbon_Toolbar</item>
         <item name="checkedTextViewStyle">@style/carbon_CheckedTextView</item>
@@ -257,7 +261,9 @@
 
     </style>
 
-    <style name="carbon_Theme.Light.Dialog"/>
+    <style name="carbon_Theme.Light.Dialog">
+        <item name="android:windowBackground">?attr/carbon_colorForeground</item>
+    </style>
 
     <style name="carbon_Button" parent="@android:style/Widget.Button">
         <item name="android:gravity">center_vertical|center_horizontal</item>

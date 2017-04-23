@@ -125,11 +125,11 @@ public class DropDown extends EditText {
 
     RecyclerView.OnItemClickedListener onItemClickedListener = new RecyclerView.OnItemClickedListener() {
         @Override
-        public void onItemClicked(int position) {
+        public void onItemClicked(View view, int position) {
             setText(dropDownMenu.getAdapter().getItem(position).toString());
             selectedIndex = position;
             if (onItemSelectedListener != null)
-                onItemSelectedListener.onItemSelected(null, null, selectedIndex, 0);
+                onItemSelectedListener.onItemSelected(null, view, selectedIndex, 0);
             dropDownMenu.dismiss();
         }
     };
@@ -157,7 +157,7 @@ public class DropDown extends EditText {
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.tv.setText(items[position].toString());
-            holder.itemView.setOnClickListener(view -> fireOnItemClickedEvent(holder.getAdapterPosition()));
+            holder.itemView.setOnClickListener(view -> fireOnItemClickedEvent(holder.itemView, holder.getAdapterPosition()));
         }
     }
 

@@ -71,6 +71,7 @@
     <string name="themeActivity_title">Theme</string>
 
     <string name="simpleDialogActivity_title">Simple dialog</string>
+    <string name="selectDialogActivity_title">Select dialog</string>
     <string name="listDialogActivity_title">List dialog</string>
 
     <string name="swatchTestActivity_title">Swatch test</string>

@@ -3,6 +3,7 @@ package carbon.recycler;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +69,9 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
         this.onItemClickedListener = onItemClickedListener;
     }
 
-    protected void fireOnItemClickedEvent(int position) {
+    protected void fireOnItemClickedEvent(View view, int position) {
         if (onItemClickedListener != null)
-            onItemClickedListener.onItemClicked(position);
+            onItemClickedListener.onItemClicked(view, position);
     }
 
     public void setDiffEnabled(boolean useDiff) {

@@ -40,7 +40,7 @@ public class RowArrayAdapter<Type> extends ArrayAdapter<RowViewHolder<Type>, Typ
         Type data = getItem(position);
         Component component = holder.getComponent();
         component.bind(data);
-        component.getView().setOnClickListener(view -> fireOnItemClickedEvent(holder.getAdapterPosition()));
+        component.getView().setOnClickListener(view -> fireOnItemClickedEvent(component.getView(), holder.getAdapterPosition()));
     }
 
     @Override

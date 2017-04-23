@@ -10,7 +10,6 @@ import carbon.component.ComponentItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
 import carbon.dialog.ListDialog;
-import carbon.widget.CheckBox;
 import carbon.widget.EditText;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
@@ -32,7 +31,6 @@ public class ListDialogActivity extends SamplesActivity {
         Samples.initToolbar(this, getString(R.string.listDialogActivity_title));
 
         EditText titleText = (EditText) findViewById(R.id.titleText);
-        CheckBox multiSelect = (CheckBox) findViewById(R.id.multiSelect);
 
         List<ComponentItem> items = Arrays.asList(
                 new DefaultImageTextSubtextDateItem(),
@@ -54,8 +52,6 @@ public class ListDialogActivity extends SamplesActivity {
             dialog.setItems(items, ImageTextSubtextDateRow.FACTORY);
             if (titleText.length() > 0)
                 dialog.setTitle(titleText.getText());
-            if (multiSelect.isChecked())
-                dialog.setPositiveButton("ok", null);
             dialog.show();
         });
     }

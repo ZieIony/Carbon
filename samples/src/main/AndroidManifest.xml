@@ -196,6 +196,9 @@
             android:name=".dialog.SimpleDialogActivity"
             android:label="@string/app_name" />
         <activity
+            android:name=".dialog.SelectDialogActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".dialog.ListDialogActivity"
             android:label="@string/app_name" />
 
