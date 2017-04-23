@@ -25,7 +25,6 @@ public class ShadowGenerator {
     private static WeakHashSet shadowSet = new WeakHashSet();
 
     private static void blur(Bitmap bitmap, float radius) {
-        radius = MathUtils.constrain(radius, 0, 25);
         if (software) {
             blurSoftware(bitmap, radius);
         } else {
@@ -83,6 +82,8 @@ public class ShadowGenerator {
     }
 
     public static Shadow generateShadow(View view, float elevation) {
+        elevation = MathUtils.constrain(elevation, 0, 25);
+
         if (!software && renderScript == null) {
             try {
                 renderScript = RenderScript.create(view.getContext());
@@ -116,7 +117,7 @@ public class ShadowGenerator {
 
         blur(bitmap, elevation);
 
-        Shadow shadow = new Shadow(bitmap, elevation, c);
+        Shadow shadow = new Shadow(bitmap, elevation, c, view.getContext().getResources().getDisplayMetrics().density);
         shadowSet.add(shadow);
         return shadow;
     }

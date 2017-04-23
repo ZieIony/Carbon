@@ -1,13 +1,13 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.ScrollView
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:tag="enable"
-                android:text="Theme style" />
+                android:text="Theme style"/>
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
@@ -35,9 +35,9 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:background="@drawable/buttonshape"
                 android:tag="enable"
-                android:textColor="@color/carbon_text_primary_dark"
                 android:text="Shape"
-                app:carbon_backgroundTint="@null" />
+                android:textColor="@color/carbon_text_primary_dark"
+                app:carbon_backgroundTint="@null"/>
 
             <carbon.widget.Button
                 style="@style/carbon_Button"
@@ -59,7 +59,7 @@
                 app:carbon_touchMarginBottom="6dp"
                 app:carbon_touchMarginLeft="100dp"
                 app:carbon_touchMarginRight="100dp"
-                app:carbon_touchMarginTop="6dp" />
+                app:carbon_touchMarginTop="6dp"/>
 
             <carbon.widget.Button
                 style="@style/carbon_Button.Flat"
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 android:tag="enable"
-                android:text="flat button" />
+                android:text="flat button"/>
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
@@ -80,39 +80,39 @@
                 app:carbon_cornerRadius="100dp"
                 app:carbon_rippleColor="#40ff0000"
                 app:carbon_stroke="@color/carbon_amber_700"
-                app:carbon_strokeWidth="2dp" />
+                app:carbon_strokeWidth="2dp"/>
 
             <carbon.widget.Divider
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <carbon.widget.TextView
                 style="@style/sectionDescription"
-                android:text="Floating action buttons with vector graphics and proper sizes" />
+                android:text="Floating action buttons with vector graphics and proper sizes"/>
+
+            <carbon.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_padding"
+                android:src="@raw/ic_shopping_cart_24px"
+                android:tag="enable"/>
+
+            <carbon.widget.FloatingActionButton
+                style="@style/carbon_FloatingActionButton.Small"
+                android:layout_margin="@dimen/carbon_padding"
+                android:src="@raw/ic_data_usage_24px"
+                android:tag="enable"/>
 
             <carbon.widget.FloatingActionButton
                 android:layout_width="@dimen/carbon_fabSize"
                 android:layout_height="@dimen/carbon_fabSize"
                 android:layout_margin="@dimen/carbon_padding"
-                android:tag="enable"
-                android:src="@raw/ic_shopping_cart_24px" />
-
-            <carbon.widget.FloatingActionButton
-                android:layout_width="@dimen/carbon_smallFabSize"
-                android:layout_height="@dimen/carbon_smallFabSize"
-                android:layout_margin="@dimen/carbon_padding"
-                android:tag="enable"
-                android:src="@raw/ic_data_usage_24px" />
-
-            <carbon.widget.FloatingActionButton
-                android:layout_width="@dimen/carbon_fabSize"
-                android:layout_height="@dimen/carbon_fabSize"
-                android:layout_margin="@dimen/carbon_padding"
+                android:background="?attr/colorPrimary"
                 android:padding="@dimen/carbon_padding"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher"
-                android:tag="enable"
-                android:background="?attr/colorPrimary" />
+                android:tag="enable"/>
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>
+
 </carbon.widget.LinearLayout>

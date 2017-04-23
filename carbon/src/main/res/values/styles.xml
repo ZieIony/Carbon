@@ -274,7 +274,7 @@
         <item name="android:textColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
         <item name="android:maxLines">1</item>
-        <item name="android:background">#00000000</item>
+        <item name="android:background">@drawable/carbon_defaultprimarybackground</item>
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">#00000000</item>
 
@@ -299,8 +299,11 @@
     </style>
 
     <style name="carbon_FloatingActionButton" parent="carbon_ImageView">
+        <item name="android:layout_width">@dimen/carbon_fabSize</item>
+        <item name="android:layout_height">@dimen/carbon_fabSize</item>
+        <item name="android:padding">@dimen/carbon_padding</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">#00000000</item>
+        <item name="android:background">@drawable/carbon_defaultaccentbackground</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_tint">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">pop</item>
@@ -310,6 +313,14 @@
         <item name="android:minHeight">@dimen/carbon_fabSize</item>
         <item name="carbon_cornerRadius">@dimen/carbon_fabSize</item>
         <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Small">
+        <item name="android:layout_width">@dimen/carbon_smallFabSize</item>
+        <item name="android:layout_height">@dimen/carbon_smallFabSize</item>
+        <item name="android:minWidth">@dimen/carbon_smallFabSize</item>
+        <item name="android:minHeight">@dimen/carbon_smallFabSize</item>
+        <item name="android:padding">@dimen/carbon_paddingHalf</item>
     </style>
 
     <style name="carbon_TextView" parent="@android:style/Widget.TextView">
@@ -669,7 +680,7 @@
     </style>
 
     <style name="carbon_AutoCompleteLayout" parent="carbon_LinearLayout">
-        <item name="android:background">#ffffffff</item>
+        <item name="android:background">?attr/carbon_colorForeground</item>
         <item name="android:orientation">vertical</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>

@@ -100,6 +100,12 @@ public class TextView extends android.widget.TextView
         initTextView(null, android.R.attr.textViewStyle);
     }
 
+    public TextView(Context context, String text) {
+        super(context, null);
+        initTextView(null, android.R.attr.textViewStyle);
+        setText(text);
+    }
+
     public TextView(Context context, AttributeSet attrs) {
         super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, android.R.attr.textViewStyle, R.styleable.TextView_carbon_theme), attrs);
         initTextView(attrs, android.R.attr.textViewStyle);
@@ -669,7 +675,7 @@ public class TextView extends android.widget.TextView
 
         float z = getElevation() + getTranslationZ();
         if (shadow == null || shadow.elevation != z)
-            shadow = ShadowGenerator.generateShadow(this, z);
+            shadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
 
         int saveCount = 0;
         boolean maskShadow = getBackground() != null && alpha != 1;

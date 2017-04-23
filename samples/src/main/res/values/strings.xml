@@ -23,6 +23,7 @@
     <string name="buttonsActivity_title">Buttons</string>
     <string name="checkBoxRadioActivity_title"><![CDATA[CheckBoxes & RadioButtons]]></string>
     <string name="widgetsActivity_title">Widgets</string>
+    <string name="dialogsActivity_title">Dialogs</string>
     <string name="featuresActivity_title">Features</string>
     <string name="componentsActivity_title">Components</string>
     <string name="animationsActivity_title">Animations</string>
@@ -68,6 +69,9 @@
     <string name="bottomBarActivity_title">BottomBar</string>
     <string name="bottomSheetActivity_title">BottomSheet</string>
     <string name="themeActivity_title">Theme</string>
+
+    <string name="simpleDialogActivity_title">Simple dialog</string>
+    <string name="listDialogActivity_title">List dialog</string>
 
     <string name="swatchTestActivity_title">Swatch test</string>
 

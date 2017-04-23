@@ -15,7 +15,7 @@
 
     <item
         android:title="Hagström"
-        android:icon="@raw/ic_airplanemode_on_24px" />
+        android:icon="@drawable/ic_android_black_24dp" />
 
     <item
         android:title="Ibanez"

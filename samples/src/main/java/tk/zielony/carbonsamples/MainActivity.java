@@ -22,6 +22,7 @@ public class MainActivity extends SamplesActivity {
                 new ViewModel(ColorsActivity.class, getString(R.string.colorsActivity_title)),
                 new ViewModel(ComponentsActivity.class, getString(R.string.componentsActivity_title)),
                 new ViewModel(DemosActivity.class, getString(R.string.demosActivity_title)),
+                new ViewModel(DialogsActivity.class, getString(R.string.dialogsActivity_title)),
                 new ViewModel(FeaturesActivity.class, getString(R.string.featuresActivity_title)),
                 new ViewModel(GuidelinesActivity.class, getString(R.string.guidelinesActivity_title)),
                 new ViewModel(WidgetsActivity.class, getString(R.string.widgetsActivity_title))

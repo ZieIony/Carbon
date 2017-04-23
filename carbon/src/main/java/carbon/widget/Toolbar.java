@@ -11,6 +11,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -299,10 +300,27 @@ public class Toolbar extends android.support.v7.widget.Toolbar
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
-        boolean r = revealAnimator != null;
+        boolean r = revealAnimator != null && revealAnimator.isRunning();
         boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
-        if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (isInEditMode() && !drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0) {
+            Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas layerCanvas = new Canvas(layer);
+            internalDispatchDraw(layerCanvas);
+
+            Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas maskCanvas = new Canvas(mask);
+            Paint maskPaint = new Paint(0xffffffff);
+            maskCanvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, maskPaint);
+
+            for (int x = 0; x < getWidth(); x++) {
+                for (int y = 0; y < getHeight(); y++) {
+                    int maskPixel = mask.getPixel(x, y);
+                    layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
+                }
+            }
+            canvas.drawBitmap(layer, 0, 0, paint);
+        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -438,7 +456,24 @@ public class Toolbar extends android.support.v7.widget.Toolbar
         drawCalled = true;
         boolean r = revealAnimator != null;
         boolean c = cornerRadius > 0;
-        if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
+            Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas layerCanvas = new Canvas(layer);
+            super.draw(layerCanvas);
+
+            Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas maskCanvas = new Canvas(mask);
+            Paint maskPaint = new Paint(0xffffffff);
+            maskCanvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, maskPaint);
+
+            for (int x = 0; x < getWidth(); x++) {
+                for (int y = 0; y < getHeight(); y++) {
+                    int maskPixel = mask.getPixel(x, y);
+                    layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
+                }
+            }
+            canvas.drawBitmap(layer, 0, 0, paint);
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -712,7 +747,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
 
         float z = getElevation() + getTranslationZ();
         if (shadow == null || shadow.elevation != z)
-            shadow = ShadowGenerator.generateShadow(this, z);
+            shadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
 
         int saveCount = 0;
         boolean maskShadow = getBackground() != null && alpha != 1;

@@ -10,7 +10,6 @@ import android.graphics.Rect;
 import android.view.View;
 
 public class Shadow {
-    private static final float SHADOW_SCALE = 1.0f;
     public static final int ALPHA = 0x26;
 
     private final int e;
@@ -23,10 +22,12 @@ public class Shadow {
     private int[] xDivDst;
     private int[] yDivDst;
     public float elevation;
+    private float scale;
 
     public static final PorterDuffColorFilter DEFAULT_FILTER = new PorterDuffColorFilter(0xff000000, PorterDuff.Mode.MULTIPLY);
 
-    public Shadow(Bitmap bitmap, float elevation, int cornerRadius) {
+    public Shadow(Bitmap bitmap, float elevation, int cornerRadius, float scale) {
+        this.scale = scale;
         this.bitmap = bitmap;
         this.elevation = elevation;
 
@@ -34,15 +35,15 @@ public class Shadow {
         c = cornerRadius;
         xDiv = new int[]{0, e + c, bitmap.getWidth() - e - c, bitmap.getWidth()};
         yDiv = new int[]{0, e + c, bitmap.getHeight() - e - c, bitmap.getHeight()};
-        xDivDst = new int[]{(int) (-e * SHADOW_SCALE), c, 0, 0};
-        yDivDst = new int[]{(int) (-e * SHADOW_SCALE), c, 0, 0};
+        xDivDst = new int[]{(int) (-e * scale), c, 0, 0};
+        yDivDst = new int[]{(int) (-e * scale), c, 0, 0};
     }
 
     public void draw(Canvas canvas, View view, Paint paint, ColorFilter colorFilter) {
         xDivDst[2] = view.getWidth() - c;
         yDivDst[2] = view.getHeight() - c;
-        xDivDst[3] = (int) (view.getWidth() + e * SHADOW_SCALE);
-        yDivDst[3] = (int) (view.getHeight() + e * SHADOW_SCALE);
+        xDivDst[3] = (int) (view.getWidth() + e * scale);
+        yDivDst[3] = (int) (view.getHeight() + e * scale);
 
         paint.setColorFilter(colorFilter);
 

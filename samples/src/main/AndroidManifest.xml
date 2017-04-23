@@ -193,6 +193,13 @@
             android:label="@string/app_name" />
 
         <activity
+            android:name=".dialog.SimpleDialogActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".dialog.ListDialogActivity"
+            android:label="@string/app_name" />
+
+        <activity
             android:name=".AnimationsActivity"
             android:label="@string/app_name" />
         <activity
@@ -216,6 +223,9 @@
         <activity
             android:name=".WidgetsActivity"
             android:label="@string/app_name" />
+        <activity
+                android:name=".DialogsActivity"
+                android:label="@string/app_name" />
     </application>
 
 </manifest>

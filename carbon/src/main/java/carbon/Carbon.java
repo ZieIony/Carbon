@@ -15,6 +15,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedView;
 import carbon.drawable.AlphaDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleDrawableICS;
@@ -22,7 +23,6 @@ import carbon.drawable.ripple.RippleDrawableLollipop;
 import carbon.drawable.ripple.RippleDrawableMarshmallow;
 import carbon.drawable.ripple.RippleView;
 import carbon.shadow.ShadowView;
-import carbon.animation.AnimatedView;
 import carbon.widget.AutoSizeTextMode;
 import carbon.widget.AutoSizeTextView;
 import carbon.widget.InsetView;
@@ -269,5 +269,12 @@ public class Carbon {
         view.setMinTextSize(a.getDimension(carbon_autoSizeMinTextSize, 0));
         view.setMaxTextSize(a.getDimension(carbon_autoSizeMaxTextSize, 0));
         view.setAutoSizeStepGranularity(a.getDimension(carbon_autoSizeStepGranularity, 1));
+    }
+
+    public static int getThemeResId(Context context, int attr) {
+        Resources.Theme theme = context.getTheme();
+        TypedValue typedvalueattr = new TypedValue();
+        theme.resolveAttribute(attr, typedvalueattr, true);
+        return typedvalueattr.resourceId;
     }
 }

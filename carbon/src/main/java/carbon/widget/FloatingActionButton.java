@@ -58,7 +58,7 @@ public class FloatingActionButton extends ImageView {
 
         TypedValue bg = new TypedValue();
         a.getValue(R.styleable.FloatingActionButton_android_background, bg);
-        if (bg.type >= TypedValue.TYPE_FIRST_COLOR_INT && bg.type <= TypedValue.TYPE_LAST_COLOR_INT && bg.data == 0)
+        if (bg.resourceId == R.drawable.carbon_defaultprimarybackground)
             setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultAccentColorStateList(getContext()), animation -> postInvalidate())));
 
         a.recycle();
@@ -97,7 +97,7 @@ public class FloatingActionButton extends ImageView {
         }
     }
 
-    public FloatingActionMenu getFloatingActionMenu(){
+    public FloatingActionMenu getFloatingActionMenu() {
         return floatingActionMenu;
     }
 

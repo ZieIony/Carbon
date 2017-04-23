@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content">
+
+    <carbon.widget.Divider
+        android:id="@+id/carbon_bottomDivider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <carbon.widget.LinearLayout
+        android:id="@+id/carbon_buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/carbon_paddingHalf"
+        android:paddingLeft="@dimen/carbon_paddingHalf"
+        android:paddingRight="@dimen/carbon_paddingHalf"
+        android:paddingTop="@dimen/carbon_paddingHalf"
+        android:visibility="gone">
+
+        <carbon.widget.Button
+            android:id="@+id/carbon_buttonNegative"
+            style="@style/carbon_Button.Flat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorAccent"/>
+
+        <carbon.widget.Button
+            android:id="@+id/carbon_buttonPositive"
+            style="@style/carbon_Button.Flat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorAccent"/>
+    </carbon.widget.LinearLayout>
+</carbon.widget.FrameLayout>

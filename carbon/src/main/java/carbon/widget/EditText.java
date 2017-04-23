@@ -201,6 +201,8 @@ public class EditText extends android.widget.EditText
 
         if (getElevation() > 0)
             AnimUtils.setupElevationAnimator(stateAnimator, this);
+
+        setSelection(length());
     }
 
     private void initSelectionHandle() {
@@ -837,7 +839,7 @@ public class EditText extends android.widget.EditText
 
         float z = getElevation() + getTranslationZ();
         if (shadow == null || shadow.elevation != z)
-            shadow = ShadowGenerator.generateShadow(this, z);
+            shadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
 
         int saveCount = 0;
         boolean maskShadow = getBackground() != null && alpha != 1;

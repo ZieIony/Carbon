@@ -13,7 +13,7 @@
     <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="?attr/carbon_colorBackground"
+        android:background="?attr/carbon_colorForeground"
         android:clickable="true"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 

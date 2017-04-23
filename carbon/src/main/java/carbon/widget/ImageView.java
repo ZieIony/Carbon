@@ -8,7 +8,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -275,7 +277,26 @@ public class ImageView extends android.widget.ImageView
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (isInEditMode() && cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
+            Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas layerCanvas = new Canvas(layer);
+            super.draw(layerCanvas);
+            if (stroke != null)
+                drawStroke(layerCanvas);
+
+            Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas maskCanvas = new Canvas(mask);
+            Paint maskPaint = new Paint(0xffffffff);
+            maskCanvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, maskPaint);
+
+            for (int x = 0; x < getWidth(); x++) {
+                for (int y = 0; y < getHeight(); y++) {
+                    int maskPixel = mask.getPixel(x, y);
+                    layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
+                }
+            }
+            canvas.drawBitmap(layer, 0, 0, paint);
+        } else if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
@@ -548,7 +569,7 @@ public class ImageView extends android.widget.ImageView
 
         float z = getElevation() + getTranslationZ();
         if (shadow == null || shadow.elevation != z)
-            shadow = ShadowGenerator.generateShadow(this, z);
+            shadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
 
         int saveCount = 0;
         boolean maskShadow = getBackground() != null && alpha != 1;
