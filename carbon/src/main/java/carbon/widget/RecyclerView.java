@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -245,12 +244,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         this.overscrollMode = mode;
     }
 
-    RectF childRect = new RectF();
-
     @Override
     public boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
         // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }

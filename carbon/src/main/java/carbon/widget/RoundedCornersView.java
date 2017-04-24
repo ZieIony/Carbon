@@ -4,7 +4,7 @@ package carbon.widget;
  * Interface of a view with rounded corners. In case of a layout rounded corners also clip the
  * content.
  */
-public interface CornerView {
+public interface RoundedCornersView extends RenderingModeView {
     /**
      * Gets the corner radius
      *
@@ -20,4 +20,5 @@ public interface CornerView {
      * @param cornerRadius the corner radius
      */
     void setCornerRadius(float cornerRadius);
+
 }

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -47,8 +48,9 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
+@SuppressLint("AppCompatCustomView")
 public class ImageView extends android.widget.ImageView
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, CornerView, TintedView, StrokeView, RevealView, VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, RevealView, VisibleView {
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -152,7 +154,7 @@ public class ImageView extends android.widget.ImageView
 
     @Override
     public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.start();
             return new Animator() {
@@ -237,7 +239,8 @@ public class ImageView extends android.widget.ImageView
      */
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
-        invalidateShadow();
+        if (getWidth() > 0 && getHeight() > 0)
+            updateCorners();
     }
 
     @Override
@@ -247,31 +250,29 @@ public class ImageView extends android.widget.ImageView
         if (!changed)
             return;
 
-        invalidateShadow();
-
         if (getWidth() == 0 || getHeight() == 0)
             return;
 
-        initCorners();
+        updateCorners();
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
-    private void initCorners() {
+    private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && renderingMode == RenderingMode.Auto) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
                 cornersMask = new Path();
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+                shadow = null;
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                setOutlineProvider(ViewOutlineProvider.BOUNDS);
+            setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
 
@@ -296,7 +297,7 @@ public class ImageView extends android.widget.ImageView
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        } else if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || renderingMode == RenderingMode.Software) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
@@ -517,11 +518,22 @@ public class ImageView extends android.widget.ImageView
     public synchronized void setElevation(float elevation) {
         if (elevation == this.elevation)
             return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(shadowColor == null ? elevation : 0);
         this.elevation = elevation;
-        if (getParent() != null)
+        updateElevation();
+    }
+
+    private void updateElevation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+                super.setElevation(elevation);
+                super.setTranslationZ(translationZ);
+            } else {
+                super.setElevation(0);
+                super.setTranslationZ(0);
+            }
+        } else if (getParent() != null) {
             ((View) getParent()).postInvalidate();
+        }
     }
 
     @Override
@@ -532,11 +544,8 @@ public class ImageView extends android.widget.ImageView
     public synchronized void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setTranslationZ(shadowColor == null ? translationZ : 0);
         this.translationZ = translationZ;
-        if (getParent() != null)
-            ((View) getParent()).postInvalidate();
+        updateElevation();
     }
 
     @Override
@@ -616,26 +625,17 @@ public class ImageView extends android.widget.ImageView
     }
 
     @Override
-    public void invalidateShadow() {
-        shadow = null;
-        if (getParent() != null && getParent() instanceof View)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
         this.shadowColor = shadowColor;
         shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(shadowColor == null ? elevation : 0);
+        updateElevation();
     }
 
     @Override
     public void setElevationShadowColor(int color) {
         shadowColor = ColorStateList.valueOf(color);
         shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(0);
+        updateElevation();
     }
 
     @Override
@@ -960,5 +960,24 @@ public class ImageView extends android.widget.ImageView
     @Override
     public float getStrokeWidth() {
         return strokeWidth;
+    }
+
+
+    // -------------------------------
+    // rendering mode
+    // -------------------------------
+
+    private RenderingMode renderingMode = RenderingMode.Auto;
+
+    @Override
+    public void setRenderingMode(RenderingMode mode) {
+        this.renderingMode = mode;
+        updateElevation();
+        updateCorners();
+    }
+
+    @Override
+    public RenderingMode getRenderingMode() {
+        return renderingMode;
     }
 }

@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
-import com.annimon.stream.Stream;
-
 import java.util.ArrayList;
 
 import carbon.CarbonContextWrapper;

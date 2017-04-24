@@ -55,7 +55,7 @@ import carbon.shadow.ShadowView;
  * rounded corners, insets, custom drawing order, touch margins, state animators and others.
  */
 public class ConstraintLayout extends android.support.constraint.ConstraintLayout
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, CornerView, MaxSizeView, RevealView, VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, RoundedCornersView, MaxSizeView, RevealView, VisibleView {
 
     private OnTouchListener onDispatchTouchListener;
 
@@ -131,7 +131,7 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
 
     @Override
     public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.start();
             return new Animator() {
@@ -214,7 +214,7 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || renderingMode == RenderingMode.Software) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -262,7 +262,7 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -307,7 +307,8 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
 
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
-        invalidateShadow();
+        if (getWidth() > 0 && getHeight() > 0)
+            updateCorners();
     }
 
     @Override
@@ -317,21 +318,19 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
         if (!changed)
             return;
 
-        invalidateShadow();
-
         if (getWidth() == 0 || getHeight() == 0)
             return;
 
-        initCorners();
+        updateCorners();
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
     }
 
-    private void initCorners() {
+    private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && renderingMode == RenderingMode.Auto) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
@@ -340,8 +339,7 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                setOutlineProvider(ViewOutlineProvider.BOUNDS);
+            setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
 
@@ -367,7 +365,7 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || renderingMode == RenderingMode.Software) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -589,11 +587,22 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     public synchronized void setElevation(float elevation) {
         if (elevation == this.elevation)
             return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(shadowColor == null ? elevation : 0);
         this.elevation = elevation;
-        if (getParent() != null)
+        updateElevation();
+    }
+
+    private void updateElevation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+                super.setElevation(elevation);
+                super.setTranslationZ(translationZ);
+            } else {
+                super.setElevation(0);
+                super.setTranslationZ(0);
+            }
+        } else if (getParent() != null) {
             ((View) getParent()).postInvalidate();
+        }
     }
 
     @Override
@@ -604,11 +613,8 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     public synchronized void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setTranslationZ(shadowColor == null ? translationZ : 0);
         this.translationZ = translationZ;
-        if (getParent() != null)
-            ((View) getParent()).postInvalidate();
+        updateElevation();
     }
 
     @Override
@@ -688,26 +694,17 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     }
 
     @Override
-    public void invalidateShadow() {
-        shadow = null;
-        if (getParent() != null && getParent() instanceof View)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
         this.shadowColor = shadowColor;
         shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(shadowColor == null ? elevation : 0);
+        updateElevation();
     }
 
     @Override
     public void setElevationShadowColor(int color) {
         shadowColor = ColorStateList.valueOf(color);
         shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            super.setElevation(0);
+        updateElevation();
     }
 
     @Override
@@ -1111,5 +1108,24 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
+    }
+
+
+    // -------------------------------
+    // rendering mode
+    // -------------------------------
+
+    private RenderingMode renderingMode = RenderingMode.Auto;
+
+    @Override
+    public void setRenderingMode(RenderingMode mode) {
+        this.renderingMode = mode;
+        updateElevation();
+        updateCorners();
+    }
+
+    @Override
+    public RenderingMode getRenderingMode() {
+        return renderingMode;
     }
 }

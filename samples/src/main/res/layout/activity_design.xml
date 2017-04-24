@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.beta.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+<carbon.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                 android:id="@+id/main_content"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="match_parent"
+                                 android:fitsSystemWindows="true">
 
     <carbon.beta.AppBarLayout
         android:id="@+id/appbar"
@@ -128,4 +128,4 @@
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end" />
 
-</carbon.beta.CoordinatorLayout>
+</carbon.widget.CoordinatorLayout>

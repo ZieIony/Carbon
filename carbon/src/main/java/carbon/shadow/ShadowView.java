@@ -3,7 +3,9 @@ package carbon.shadow;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 
-public interface ShadowView {
+import carbon.widget.RenderingModeView;
+
+public interface ShadowView extends RenderingModeView {
     /**
      * Gets the elevation.
      *
@@ -30,11 +32,10 @@ public interface ShadowView {
 
     void drawShadow(Canvas canvas);
 
-    void invalidateShadow();
-
     void setElevationShadowColor(ColorStateList shadowColor);
 
     void setElevationShadowColor(int color);
 
     ColorStateList getElevationShadowColor();
+
 }
