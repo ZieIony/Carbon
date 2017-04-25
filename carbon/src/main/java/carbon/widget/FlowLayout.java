@@ -616,14 +616,7 @@ public class FlowLayout extends android.widget.FrameLayout
     }
 
     @Override
-    public synchronized void setElevation(float elevation) {
-        if (elevation == this.elevation)
-            return;
-        this.elevation = elevation;
-        updateElevation();
-    }
-
-    private void updateElevation() {
+    public void setElevation(float elevation) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (shadowColor == null && renderingMode == RenderingMode.Auto) {
                 super.setElevation(elevation);
@@ -632,9 +625,10 @@ public class FlowLayout extends android.widget.FrameLayout
                 super.setElevation(0);
                 super.setTranslationZ(0);
             }
-        } else if (getParent() != null) {
+        } else if (elevation != this.elevation && getParent() != null) {
             ((View) getParent()).postInvalidate();
         }
+        this.elevation = elevation;
     }
 
     @Override
@@ -642,11 +636,19 @@ public class FlowLayout extends android.widget.FrameLayout
         return translationZ;
     }
 
-    public synchronized void setTranslationZ(float translationZ) {
+    public void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+                super.setTranslationZ(translationZ);
+            } else {
+                super.setTranslationZ(0);
+            }
+        } else if (translationZ != this.translationZ && getParent() != null) {
+            ((View) getParent()).postInvalidate();
+        }
         this.translationZ = translationZ;
-        updateElevation();
     }
 
     @Override
@@ -729,14 +731,16 @@ public class FlowLayout extends android.widget.FrameLayout
     public void setElevationShadowColor(ColorStateList shadowColor) {
         this.shadowColor = shadowColor;
         shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
-        updateElevation();
+        setElevation(elevation);
+        setTranslationZ(translationZ);
     }
 
     @Override
     public void setElevationShadowColor(int color) {
         shadowColor = ColorStateList.valueOf(color);
         shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        updateElevation();
+        setElevation(elevation);
+        setTranslationZ(translationZ);
     }
 
     @Override
@@ -1239,7 +1243,8 @@ public class FlowLayout extends android.widget.FrameLayout
     @Override
     public void setRenderingMode(RenderingMode mode) {
         this.renderingMode = mode;
-        updateElevation();
+        setElevation(elevation);
+        setTranslationZ(translationZ);
         updateCorners();
     }
 
