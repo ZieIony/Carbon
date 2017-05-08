@@ -130,6 +130,10 @@
     </style>
 
     <style name="carbon_Theme.Dark.Dialog">
+        <item name="colorPrimary">@color/carbon_colorPrimary_dark</item>
+        <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_dark</item>
+        <item name="colorAccent">@color/carbon_cyan_a700</item>
+
         <item name="android:windowBackground">?attr/carbon_colorForeground</item>
     </style>
 
@@ -262,6 +266,10 @@
     </style>
 
     <style name="carbon_Theme.Light.Dialog">
+        <item name="colorPrimary">@color/carbon_colorPrimary_light</item>
+        <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_light</item>
+        <item name="colorAccent">@color/carbon_cyan_a700</item>
+
         <item name="android:windowBackground">?attr/carbon_colorForeground</item>
     </style>
 

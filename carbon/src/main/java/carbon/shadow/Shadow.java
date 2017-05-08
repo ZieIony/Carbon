@@ -10,10 +10,9 @@ import android.graphics.Rect;
 import android.view.View;
 
 public class Shadow {
-    public static final int ALPHA = 0x26;
+    public static final int ALPHA = 0x12;
 
     private final int e;
-    final int c;
     private final Bitmap bitmap;
     private Rect src = new Rect();
     private Rect dst = new Rect();
@@ -22,6 +21,7 @@ public class Shadow {
     private int[] xDivDst;
     private int[] yDivDst;
     public float elevation;
+    public int cornerRadius;
     private float scale;
 
     public static final PorterDuffColorFilter DEFAULT_FILTER = new PorterDuffColorFilter(0xff000000, PorterDuff.Mode.MULTIPLY);
@@ -32,16 +32,16 @@ public class Shadow {
         this.elevation = elevation;
 
         e = (int) (Math.ceil(elevation));
-        c = cornerRadius;
-        xDiv = new int[]{0, e + c, bitmap.getWidth() - e - c, bitmap.getWidth()};
-        yDiv = new int[]{0, e + c, bitmap.getHeight() - e - c, bitmap.getHeight()};
-        xDivDst = new int[]{(int) (-e * scale), c, 0, 0};
-        yDivDst = new int[]{(int) (-e * scale), c, 0, 0};
+        this.cornerRadius = cornerRadius;
+        xDiv = new int[]{0, e + this.cornerRadius, bitmap.getWidth() - e - this.cornerRadius, bitmap.getWidth()};
+        yDiv = new int[]{0, e + this.cornerRadius, bitmap.getHeight() - e - this.cornerRadius, bitmap.getHeight()};
+        xDivDst = new int[]{(int) (-e * scale), this.cornerRadius, 0, 0};
+        yDivDst = new int[]{(int) (-e * scale), this.cornerRadius, 0, 0};
     }
 
     public void draw(Canvas canvas, View view, Paint paint, ColorFilter colorFilter) {
-        xDivDst[2] = view.getWidth() - c;
-        yDivDst[2] = view.getHeight() - c;
+        xDivDst[2] = view.getWidth() - cornerRadius;
+        yDivDst[2] = view.getHeight() - cornerRadius;
         xDivDst[3] = (int) (view.getWidth() + e * scale);
         yDivDst[3] = (int) (view.getHeight() + e * scale);
 
@@ -60,6 +60,6 @@ public class Shadow {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Shadow && elevation == ((Shadow) o).elevation && c == ((Shadow) o).c;
+        return o instanceof Shadow && elevation == ((Shadow) o).elevation && cornerRadius == ((Shadow) o).cornerRadius;
     }
 }

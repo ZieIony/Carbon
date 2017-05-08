@@ -11,7 +11,7 @@ import java.util.List;
 import carbon.widget.AutoCompleteEditText;
 
 public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
-    private carbon.widget.RecyclerView.OnItemClickedListener onItemClickedListener;
+    private carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener;
     private boolean diff = true;
     private DiffListCallback<I> diffCallback;
 
@@ -65,13 +65,13 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
         return position;
     }
 
-    public void setOnItemClickedListener(carbon.widget.RecyclerView.OnItemClickedListener onItemClickedListener) {
+    public void setOnItemClickedListener(carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener) {
         this.onItemClickedListener = onItemClickedListener;
     }
 
     protected void fireOnItemClickedEvent(View view, int position) {
         if (onItemClickedListener != null)
-            onItemClickedListener.onItemClicked(view, position);
+            onItemClickedListener.onItemClicked(view, items.get(position), position);
     }
 
     public void setDiffEnabled(boolean useDiff) {

@@ -24,7 +24,6 @@ import android.view.animation.DecelerateInterpolator;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -587,40 +586,55 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
     // animations
     // -------------------------------
 
-    private AnimUtils.Style inAnim = AnimUtils.Style.None, outAnim = AnimUtils.Style.None;
+    private Animator inAnim = null, outAnim = null;
     private Animator animator;
 
     public Animator animateVisibility(final int visibility) {
-        float alpha = getAlpha();
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
-            if (inAnim != AnimUtils.Style.None) {
-                animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+            if (inAnim != null) {
+                animator = inAnim;
+                animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
+                        animator.removeListener(this);
                         animator = null;
-                        setAlpha(alpha);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        animator.removeListener(this);
+                        animator = null;
                     }
                 });
+                animator.start();
             }
             setVisibility(visibility);
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
-            if (outAnim == AnimUtils.Style.None) {
+            if (outAnim == null) {
                 setVisibility(visibility);
                 return null;
             }
-            animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
+            animator = outAnim;
+            animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
+                    animator.removeListener(this);
                     animator = null;
-                    setAlpha(alpha);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    animator.removeListener(this);
+                    animator = null;
                 }
             });
+            animator.start();
         }
         return animator;
     }
@@ -629,20 +643,28 @@ public class SeekBar extends View implements RippleView, StateAnimatorView, Anim
         return animator;
     }
 
-    public AnimUtils.Style getOutAnimation() {
+    public Animator getOutAnimator() {
         return outAnim;
     }
 
-    public void setOutAnimation(AnimUtils.Style outAnim) {
+    public void setOutAnimator(Animator outAnim) {
+        if (this.outAnim != null)
+            this.outAnim.setTarget(null);
         this.outAnim = outAnim;
+        if (outAnim != null)
+            outAnim.setTarget(this);
     }
 
-    public AnimUtils.Style getInAnimation() {
+    public Animator getInAnimator() {
         return inAnim;
     }
 
-    public void setInAnimation(AnimUtils.Style inAnim) {
+    public void setInAnimator(Animator inAnim) {
+        if (this.inAnim != null)
+            this.inAnim.setTarget(null);
         this.inAnim = inAnim;
+        if (inAnim != null)
+            inAnim.setTarget(this);
     }
 
 

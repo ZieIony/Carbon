@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/carbon_bottomBarHeight">
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/carbon_bottomBarHeight">
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_bottomBarContent"
@@ -13,6 +13,6 @@
         <carbon.widget.Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sadsad" />
+            android:text="sadsad"/>
     </carbon.widget.LinearLayout>
 </merge>

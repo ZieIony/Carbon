@@ -2,7 +2,6 @@ package carbon.beta;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -19,7 +18,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -36,7 +34,6 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.component.Component;
@@ -134,42 +131,11 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     RevealAnimator revealAnimator;
 
     @Override
-    public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH && renderingMode == RenderingMode.Auto) {
+    public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
+        if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
-            circularReveal.start();
-            return new Animator() {
-                @Override
-                public long getStartDelay() {
-                    return circularReveal.getStartDelay();
-                }
-
-                @Override
-                public void setStartDelay(long startDelay) {
-                    circularReveal.setStartDelay(startDelay);
-                }
-
-                @Override
-                public Animator setDuration(long duration) {
-                    circularReveal.setDuration(duration);
-                    return this;
-                }
-
-                @Override
-                public long getDuration() {
-                    return circularReveal.getDuration();
-                }
-
-                @Override
-                public void setInterpolator(TimeInterpolator value) {
-                    circularReveal.setInterpolator(value);
-                }
-
-                @Override
-                public boolean isRunning() {
-                    return circularReveal.isRunning();
-                }
-            };
+            circularReveal.setDuration(Carbon.getDefaultRevealDuration());
+            return circularReveal;
         } else {
             revealAnimator = new RevealAnimator(x, y, startRadius, finishRadius);
             revealAnimator.setDuration(Carbon.getDefaultRevealDuration());
@@ -191,7 +157,6 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
                     revealAnimator = null;
                 }
             });
-            revealAnimator.start();
             return revealAnimator;
         }
     }
@@ -218,7 +183,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || renderingMode == RenderingMode.Software) {
+        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && !Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -266,7 +231,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -334,7 +299,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && renderingMode == RenderingMode.Auto) {
+            if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
@@ -342,7 +307,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP) {
             setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
@@ -369,7 +334,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || renderingMode == RenderingMode.Software) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && !Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -589,7 +554,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
 
     @Override
     public void setElevation(float elevation) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP) {
             if (shadowColor == null && renderingMode == RenderingMode.Auto) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
@@ -611,7 +576,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     public void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP) {
             if (shadowColor == null && renderingMode == RenderingMode.Auto) {
                 super.setTranslationZ(translationZ);
             } else {
@@ -652,7 +617,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
             return;
 
         float z = getElevation() + getTranslationZ();
-        if (shadow == null || shadow.elevation != z)
+        if (shadow == null || shadow.elevation != z || shadow.cornerRadius != cornerRadius)
             shadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
 
         int saveCount = 0;
@@ -791,40 +756,55 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     // animations
     // -------------------------------
 
-    private AnimUtils.Style inAnim = AnimUtils.Style.None, outAnim = AnimUtils.Style.None;
+    private Animator inAnim = null, outAnim = null;
     private Animator animator;
 
     public Animator animateVisibility(final int visibility) {
-        float alpha = getAlpha();
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
-            if (inAnim != AnimUtils.Style.None) {
-                animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+            if (inAnim != null) {
+                animator = inAnim;
+                animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
+                        animator.removeListener(this);
                         animator = null;
-                        setAlpha(alpha);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        animator.removeListener(this);
+                        animator = null;
                     }
                 });
+                animator.start();
             }
             setVisibility(visibility);
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
-            if (outAnim == AnimUtils.Style.None) {
+            if (outAnim == null) {
                 setVisibility(visibility);
                 return null;
             }
-            animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
+            animator = outAnim;
+            animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
+                    animator.removeListener(this);
                     animator = null;
-                    setAlpha(alpha);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    animator.removeListener(this);
+                    animator = null;
                 }
             });
+            animator.start();
         }
         return animator;
     }
@@ -833,20 +813,28 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
         return animator;
     }
 
-    public AnimUtils.Style getOutAnimation() {
+    public Animator getOutAnimator() {
         return outAnim;
     }
 
-    public void setOutAnimation(AnimUtils.Style outAnim) {
+    public void setOutAnimator(Animator outAnim) {
+        if (this.outAnim != null)
+            this.outAnim.setTarget(null);
         this.outAnim = outAnim;
+        if (outAnim != null)
+            outAnim.setTarget(this);
     }
 
-    public AnimUtils.Style getInAnimation() {
+    public Animator getInAnimator() {
         return inAnim;
     }
 
-    public void setInAnimation(AnimUtils.Style inAnim) {
+    public void setInAnimator(Animator inAnim) {
+        if (this.inAnim != null)
+            this.inAnim.setTarget(null);
         this.inAnim = inAnim;
+        if (inAnim != null)
+            inAnim.setTarget(this);
     }
 
 

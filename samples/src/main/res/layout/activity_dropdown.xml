@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -24,14 +24,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="1" />
+            android:text="1"/>
 
         <carbon.widget.DropDown
             android:id="@+id/month"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Jan" />
+            android:text="Jan"/>
 
         <carbon.widget.DropDown
             android:id="@+id/year"
@@ -39,6 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="1987" />
+            android:text="1987"/>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

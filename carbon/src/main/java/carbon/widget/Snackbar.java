@@ -148,6 +148,8 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
         View.inflate(themedContext, R.layout.carbon_snackbar, this);
         content = (LinearLayout) findViewById(R.id.carbon_snackbarContent);
         content.setElevation(getResources().getDimension(R.dimen.carbon_elevationSnackbar));
+        content.setInAnimator(AnimUtils.getFlyInAnimator());
+        content.setOutAnimator(AnimUtils.getFlyOutAnimator());
 
         message = (TextView) content.findViewById(R.id.carbon_messageText);
         button = (Button) content.findViewById(R.id.carbon_actionButton);
@@ -167,8 +169,8 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                 container.getDrawingRect(drawingRect);
                 setPadding(0, 0, 0, drawingRect.bottom - windowFrame.bottom);
                 container.addView(this);
-                content.setAlpha(0);
-                AnimUtils.flyIn(content, null);
+                content.setVisibility(INVISIBLE);
+                content.animateVisibility(View.VISIBLE);
                 for (final View pushedView : pushedViews) {
                     ValueAnimator animator = ValueAnimator.ofFloat(0, -1);
                     animator.setDuration(200);
@@ -200,12 +202,13 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
             handler.removeCallbacks(hideRunnable);
             if (onDismissListener != null)
                 onDismissListener.onDismiss();
-            AnimUtils.flyOut(content, new AnimatorListenerAdapter() {
+            content.getOutAnimator().addListener(new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationEnd(Animator animator) {
+                public void onAnimationEnd(Animator animation) {
                     hideInternal();
                 }
             });
+            content.animateVisibility(GONE);
             for (final View pushedView : pushedViews) {
                 ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
                 animator.setDuration(200);
@@ -365,5 +368,25 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
 
     public void setOnDismissListener(OnDismissListener onDismissListener) {
         this.onDismissListener = onDismissListener;
+    }
+
+    @Override
+    public void setInAnimator(Animator inAnim) {
+        content.setInAnimator(inAnim);
+    }
+
+    @Override
+    public Animator getInAnimator() {
+        return content.getInAnimator();
+    }
+
+    @Override
+    public void setOutAnimator(Animator outAnim) {
+        content.setOutAnimator(outAnim);
+    }
+
+    @Override
+    public Animator getOutAnimator() {
+        return content.getOutAnimator();
     }
 }

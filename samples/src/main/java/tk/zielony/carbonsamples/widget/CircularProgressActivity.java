@@ -15,7 +15,7 @@ public class CircularProgressActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circular_progress);
 
-        Samples.initToolbar(this,getString(R.string.circularProgressActivity_title));
+        Samples.initToolbar(this, getString(R.string.circularProgressActivity_title));
 
         final ProgressBar progress1 = (ProgressBar) findViewById(R.id.progress1);
         final Handler handler = new Handler();

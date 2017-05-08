@@ -37,7 +37,7 @@ public class FloatingActionMenu extends PopupWindow {
         content.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         content.setOrientation(android.widget.LinearLayout.VERTICAL);
         content.setPadding(0, content.getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf), 0, content.getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf));
-        content.setOutAnimation(AnimUtils.Style.Fade);
+        content.setOutAnimator(AnimUtils.getFadeOutAnimator());
 
         setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
 

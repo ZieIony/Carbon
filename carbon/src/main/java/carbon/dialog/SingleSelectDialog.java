@@ -27,14 +27,14 @@ public class SingleSelectDialog<Type> extends ListDialog<Type> {
     }
 
     private void init() {
-        super.setOnItemClickedListener((view, position) -> {
+        super.setOnItemClickedListener((view, item, position) -> {
             RadioButton radio = (RadioButton) view.findViewById(R.id.carbon_radioButton);
             radio.setChecked(true);
             RadioButton prevRadio = (RadioButton) recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.carbon_radioButton);
             prevRadio.setChecked(false);
             selectedItem = items.get(position);
             if (listener != null)
-                listener.onItemClicked(view, position);
+                listener.onItemClicked(view, item, position);
         });
     }
 

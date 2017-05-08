@@ -17,33 +17,34 @@ public interface AnimatedView {
     /**
      * Gets the animation used when view's visibility is changed from VISIBLE to GONE/INVISIBLE
      *
-     * @return the current out animation or AnimUtils.Style.None if nothing is set.
+     * @return the current out animation or null if nothing is set.
      */
-    AnimUtils.Style getOutAnimation();
+    Animator getOutAnimator();
 
     /**
      * Sets the animation used when view's visibility is changed from VISIBLE to GONE/INVISIBLE
      *
-     * @param outAnim new out animation. Use AnimUtils.Style.None for no animation.
+     * @param outAnim new out animation. Use null for no animation.
      */
-    void setOutAnimation(AnimUtils.Style outAnim);
+    void setOutAnimator(Animator outAnim);
 
     /**
      * Gets the animation used when view's visibility is changed from GONE/INVISIBLE to VISIBLE
      *
-     * @return the current in animation or AnimUtils.Style.None if nothing is set.
+     * @return the current in animation or null if nothing is set.
      */
-    AnimUtils.Style getInAnimation();
+    Animator getInAnimator();
 
     /**
      * Sets the animation used when view's visibility is changed from GONE/INVISIBLE to VISIBLE
      *
-     * @param inAnim new in animation. Use AnimUtils.Style.None for no animation.
+     * @param inAnim new in animation. Use null for no animation.
      */
-    void setInAnimation(AnimUtils.Style inAnim);
+    void setInAnimator(Animator inAnim);
 
     /**
      * Sets visibility using set animation style.
+     *
      * @param visibility one of View.VISIBLE/INVISIBLE/GONE flags
      * @return visibility animation animator
      */

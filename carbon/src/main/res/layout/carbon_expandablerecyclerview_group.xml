@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/carbon_colorBackground"
-    android:clickable="true"
-    android:orientation="horizontal"
-    app:carbon_rippleColor="?attr/carbon_rippleColor">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/carbon_colorBackground"
+                            android:clickable="true"
+                            android:orientation="horizontal"
+                            app:carbon_rippleColor="?attr/carbon_rippleColor">
 
     <carbon.widget.TextView
         android:id="@+id/carbon_groupText"
@@ -16,7 +16,7 @@
         android:layout_marginStart="@dimen/carbon_margin"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:textAppearance="?attr/carbon_textAppearanceBody1" />
+        android:textAppearance="?attr/carbon_textAppearanceBody1"/>
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_groupExpandedIndicator"
@@ -26,6 +26,6 @@
         android:layout_marginEnd="@dimen/carbon_margin"
         android:layout_marginRight="@dimen/carbon_margin"
         android:src="@raw/carbon_arrow_down"
-        app:carbon_tint="?attr/carbon_iconColor" />
+        app:carbon_tint="?attr/carbon_iconColor"/>
 
 </carbon.widget.LinearLayout>

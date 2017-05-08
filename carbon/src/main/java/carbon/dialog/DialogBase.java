@@ -1,5 +1,7 @@
 package carbon.dialog;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.LayoutRes;
@@ -16,15 +18,24 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.widget.Button;
 import carbon.widget.Divider;
+import carbon.widget.LinearLayout;
 import carbon.widget.TextView;
 
 public abstract class DialogBase extends android.app.Dialog {
-    private ViewGroup container;
+
+    private LinearLayout container;
+
     private TextView titleTextView;
+
     private ViewGroup buttonContainer;
+
     private View dialogLayout;
-    private Divider topDivider;
-    private Divider bottomDivider;
+
+    protected Divider topDivider;
+
+    protected Divider bottomDivider;
+
+    private View contentView;
 
     public DialogBase(@NonNull Context context) {
         super(context, Carbon.getThemeResId(context, android.R.attr.dialogTheme));
@@ -48,29 +59,38 @@ public abstract class DialogBase extends android.app.Dialog {
 
     @Override
     public void setContentView(@NonNull View view, ViewGroup.LayoutParams params) {
+        contentView = view;
+        contentView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            dividerCallback(contentView.getHeight());
+        });
         container.addView(view);
     }
 
     protected void initLayout() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Window window = getWindow();
+        if (window != null) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
         dialogLayout = getLayoutInflater().inflate(R.layout.carbon_dialog, null);
-        container = (ViewGroup) dialogLayout.findViewById(R.id.carbon_windowContent);
-        container.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            if (container.getChildCount() == 0 || container.getChildAt(0).getHeight() <= bottom - top) {
-                if (topDivider != null)
-                    topDivider.setVisibility(View.GONE);
-                if (bottomDivider != null)
-                    bottomDivider.setVisibility(View.GONE);
-            } else {
-                if (topDivider != null)
-                    topDivider.setVisibility(View.VISIBLE);
-                if (bottomDivider != null)
-                    bottomDivider.setVisibility(View.VISIBLE);
-            }
-        });
+        container = (LinearLayout) dialogLayout.findViewById(R.id.carbon_windowContent);
         super.setContentView(dialogLayout);
+    }
+
+    protected void dividerCallback(int contentHeight) {
+        if (container.getChildCount() == 0 || container.getChildAt(0).getHeight() <= contentHeight) {
+            if (topDivider != null)
+                topDivider.setVisibility(View.GONE);
+            if (bottomDivider != null)
+                bottomDivider.setVisibility(View.GONE);
+        } else {
+            if (topDivider != null)
+                topDivider.setVisibility(View.VISIBLE);
+            if (bottomDivider != null)
+                bottomDivider.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -109,11 +129,30 @@ public abstract class DialogBase extends android.app.Dialog {
         Button button = (Button) findViewById(buttonId);
         button.setText(text);
         button.setOnClickListener(v -> {
-            if (listener != null)
+            if (listener != null) {
                 listener.onClick(v);
+            }
             dismiss();
         });
         button.setVisibility(View.VISIBLE);
         buttonContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void show() {
+        container.requestLayout();
+        container.setVisibility(View.INVISIBLE);
+        super.show();
+        container.animateVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void dismiss() {
+        container.animateVisibility(View.INVISIBLE).addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                DialogBase.super.dismiss();
+            }
+        });
     }
 }

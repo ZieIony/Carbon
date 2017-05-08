@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,9 +22,9 @@ public class ListDialog<Type> extends DialogBase {
     protected RowListAdapter adapter;
     protected List<Type> items;
     private RecyclerView.OnItemClickedListener listener;
-    private RecyclerView.OnItemClickedListener internalListener = (view, position) -> {
+    private RecyclerView.OnItemClickedListener internalListener = (view, item, position) -> {
         if (listener != null)
-            listener.onItemClicked(view, position);
+            listener.onItemClicked(view, item, position);
         dismiss();
     };
 
@@ -40,9 +41,31 @@ public class ListDialog<Type> extends DialogBase {
     private void init() {
         recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+
         int padding = getContext().getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf);
         recyclerView.setPadding(0, padding, 0, padding);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         super.setContentView(recyclerView, null);
+    }
+
+    protected void dividerCallback(int contentHeight) {
+        int padding = getContext().getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf);
+        int height = padding * 2;
+        for (int i = 0; i < recyclerView.getChildCount(); i++) {
+            height += recyclerView.getChildAt(i).getHeight();
+        }
+        height += recyclerView.getAdapter().getItemCount() - recyclerView.getChildCount();
+        if (height <= contentHeight) {
+            if (topDivider != null)
+                topDivider.setVisibility(View.GONE);
+            if (bottomDivider != null)
+                bottomDivider.setVisibility(View.GONE);
+        } else {
+            if (topDivider != null)
+                topDivider.setVisibility(View.VISIBLE);
+            if (bottomDivider != null)
+                bottomDivider.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

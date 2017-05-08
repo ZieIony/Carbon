@@ -161,19 +161,19 @@ public class InputLayout extends RelativeLayout {
         params.addRule(BELOW, R.id.carbon_label);
 
         android.widget.RelativeLayout.LayoutParams errorTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) errorTextView.getLayoutParams();
-        errorTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_START : ALIGN_LEFT, child.getId());
+        errorTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_START : ALIGN_LEFT, child.getId());
         errorTextViewLayoutParams.addRule(BELOW, child.getId());
 
         android.widget.RelativeLayout.LayoutParams counterTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
-        counterTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_END : ALIGN_RIGHT, child.getId());
+        counterTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_END : ALIGN_RIGHT, child.getId());
         counterTextViewLayoutParams.addRule(BELOW, child.getId());
 
         android.widget.RelativeLayout.LayoutParams clearImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) clearImageView.getLayoutParams();
-        clearImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_END : ALIGN_RIGHT, child.getId());
+        clearImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_END : ALIGN_RIGHT, child.getId());
         clearImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
 
         android.widget.RelativeLayout.LayoutParams showPasswordImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) showPasswordImageView.getLayoutParams();
-        showPasswordImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= 17 ? ALIGN_END : ALIGN_RIGHT, child.getId());
+        showPasswordImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_END : ALIGN_RIGHT, child.getId());
         showPasswordImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
 
         if (child instanceof EditText) {
@@ -192,31 +192,31 @@ public class InputLayout extends RelativeLayout {
             });
             clearImageView.setOnClickListener(view -> editText.setText(""));
 
-            labelTextView.setInAnimation(AnimUtils.Style.None);
-            labelTextView.setOutAnimation(AnimUtils.Style.None);
-            errorTextView.setInAnimation(AnimUtils.Style.None);
-            errorTextView.setOutAnimation(AnimUtils.Style.None);
+            labelTextView.setInAnimator(null);
+            labelTextView.setOutAnimator(null);
+            errorTextView.setInAnimator(null);
+            errorTextView.setOutAnimator(null);
             updateError(editText, editText.isValid());
             updateHint(editText);
             updateCounter(editText);
-            labelTextView.setInAnimation(AnimUtils.Style.Fly);
-            labelTextView.setOutAnimation(AnimUtils.Style.Fly);
-            errorTextView.setInAnimation(AnimUtils.Style.Fade);
-            errorTextView.setOutAnimation(AnimUtils.Style.Fade);
+            labelTextView.setInAnimator(AnimUtils.getFlyInAnimator());
+            labelTextView.setOutAnimator(AnimUtils.getFadeOutAnimator());
+            errorTextView.setInAnimator(AnimUtils.getFadeInAnimator());
+            errorTextView.setOutAnimator(AnimUtils.getFadeOutAnimator());
         } else if (child instanceof InputView) {
             InputView inputView = (InputView) child;
             inputView.addOnValidateListener(valid -> updateError(inputView, valid));
 
-            labelTextView.setInAnimation(AnimUtils.Style.None);
-            labelTextView.setOutAnimation(AnimUtils.Style.None);
-            errorTextView.setInAnimation(AnimUtils.Style.None);
-            errorTextView.setOutAnimation(AnimUtils.Style.None);
+            labelTextView.setInAnimator(null);
+            labelTextView.setOutAnimator(null);
+            errorTextView.setInAnimator(null);
+            errorTextView.setOutAnimator(null);
             updateError(inputView, inputView.isValid());
             updateHint(child);
-            labelTextView.setInAnimation(AnimUtils.Style.Fly);
-            labelTextView.setOutAnimation(AnimUtils.Style.Fly);
-            errorTextView.setInAnimation(AnimUtils.Style.Fade);
-            errorTextView.setOutAnimation(AnimUtils.Style.Fade);
+            labelTextView.setInAnimator(AnimUtils.getFlyInAnimator());
+            labelTextView.setOutAnimator(AnimUtils.getFadeOutAnimator());
+            errorTextView.setInAnimator(AnimUtils.getFadeInAnimator());
+            errorTextView.setOutAnimator(AnimUtils.getFadeOutAnimator());
         }
 
         return params;

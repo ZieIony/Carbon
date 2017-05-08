@@ -36,6 +36,11 @@ public class ListDialogActivity extends SamplesActivity {
                 new DefaultImageTextSubtextDateItem(),
                 new DefaultImageTextSubtextDateItem(),
                 new DefaultImageTextSubtextDateItem(),
+                new DefaultImageTextSubtextDateItem(),
+                new DefaultImageTextSubtextDateItem(),
+                new DefaultImageTextSubtextDateItem(),
+                new DefaultImageTextSubtextDateItem(),
+                new DefaultImageTextSubtextDateItem(),
                 new DefaultImageTextSubtextDateItem());
 
         RandomData randomData = new RandomData();

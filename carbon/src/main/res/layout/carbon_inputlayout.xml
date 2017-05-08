@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
 
     <carbon.widget.TextView
         android:id="@+id/carbon_label"
@@ -11,7 +11,7 @@
         android:tag="inputLayout"
         android:textAppearance="?attr/carbon_textAppearanceCaption"
         app:carbon_inAnimation="fly"
-        app:carbon_outAnimation="fly" />
+        app:carbon_outAnimation="fly"/>
 
     <carbon.widget.TextView
         android:id="@+id/carbon_error"
@@ -22,14 +22,14 @@
         android:tag="inputLayout"
         android:textAppearance="?attr/carbon_textAppearanceCaption"
         app:carbon_inAnimation="fade"
-        app:carbon_outAnimation="fade" />
+        app:carbon_outAnimation="fade"/>
 
     <carbon.widget.TextView
         android:id="@+id/carbon_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="inputLayout"
-        android:textAppearance="?attr/carbon_textAppearanceCaption" />
+        android:textAppearance="?attr/carbon_textAppearanceCaption"/>
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_clear"
@@ -38,7 +38,7 @@
         android:layout_height="@dimen/carbon_iconSize"
         android:baselineAlignBottom="true"
         android:tag="inputLayout"
-        android:src="@raw/carbon_clear" />
+        android:src="@raw/carbon_clear"/>
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_showPassword"
@@ -47,5 +47,5 @@
         android:layout_height="@dimen/carbon_iconSize"
         android:baselineAlignBottom="true"
         android:tag="inputLayout"
-        android:src="@raw/carbon_visibility" />
+        android:src="@raw/carbon_visibility"/>
 </merge>

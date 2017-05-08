@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:background="#388E3C"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:layout_width="match_parent"
+                           android:background="#388E3C"
+                           android:layout_gravity="center"
+                           android:orientation="vertical"
+                           android:layout_height="match_parent">
 
     <LinearLayout
         android:gravity="center"
@@ -23,7 +23,7 @@
             android:layout_marginRight="@dimen/carbon_padding"
             android:id="@+id/progress"
             android:layout_width="@dimen/carbon_smallFabSize"
-            android:layout_height="@dimen/carbon_smallFabSize" />
+            android:layout_height="@dimen/carbon_smallFabSize"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -37,7 +37,7 @@
                 android:text="Airplane Mode"
                 android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <carbon.widget.TextView
                 android:tag="animate"
@@ -45,7 +45,7 @@
                 android:text="Switching Mode..."
                 android:textAppearance="?attr/carbon_textAppearanceCaptionInverse"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 </carbon.widget.FrameLayout>

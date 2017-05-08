@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+    <include layout="@layout/view_debugtoolbar"/>
+
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <carbon.widget.TextView
+                style="@style/sectionDescription"
+                app:carbon_htmlText="android.support.v7.widget.CardView on pre-Lollipop can't clip content, adds its own padding and draws shadows using simple gradients. CardView extends FrameLayout, so to create a nice card one needs to add a child layout for that purpose."/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/carbon_margin"
+                android:layout_weight="1"
+                android:background="#1f000000">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_margin"
+                    app:cardCornerRadius="8dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/mazda"/>
+                </android.support.v7.widget.CardView>
+            </FrameLayout>
+
+            <carbon.widget.TextView
+                style="@style/sectionDescription"
+                app:carbon_htmlText="There's no CardView in Carbon. Instead there's a style you can set to any layout or view."/>
+
+            <carbon.widget.FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/carbon_margin"
+                android:layout_weight="1"
+                android:background="#1f000000">
+
+                <carbon.widget.FrameLayout
+                    style="@style/carbon_CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_margin"
+                    app:carbon_cornerRadius="8dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/mazda"/>
+                </carbon.widget.FrameLayout>
+            </carbon.widget.FrameLayout>
+        </LinearLayout>
+    </carbon.widget.ScrollView>
+</carbon.widget.LinearLayout>

@@ -11,6 +11,8 @@ import carbon.component.ComponentItem;
 import carbon.component.DefaultAvatarTextItem;
 import carbon.component.DividerItem;
 import carbon.component.DividerRow;
+import carbon.component.PaddingItem;
+import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
@@ -31,11 +33,13 @@ public class AvatarTextListItemActivity extends SamplesActivity {
         Samples.initToolbar(this, getString(R.string.avatarTextListItemActivity_title));
 
         List<ComponentItem> items = Arrays.asList(
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new DefaultAvatarTextItem(),
                 new DefaultAvatarTextItem(),
                 new DividerItem(),
                 new DefaultAvatarTextItem(),
-                new DefaultAvatarTextItem());
+                new DefaultAvatarTextItem(),
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
 
         RandomData randomData = new RandomData();
         randomData.addGenerators(new Generator[]{
@@ -46,6 +50,7 @@ public class AvatarTextListItemActivity extends SamplesActivity {
 
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         RowListAdapter adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow.FACTORY);
+        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
         adapter.addFactory(DividerItem.class, DividerRow.FACTORY);
         recycler.setAdapter(adapter);
         adapter.setItems(items);

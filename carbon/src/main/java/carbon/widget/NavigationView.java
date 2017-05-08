@@ -41,9 +41,9 @@ public class NavigationView extends RecyclerView {
         this.onItemClickedListener = onItemClickedListener;
     }
 
-    protected void fireOnItemClickedEvent(View view, int position) {
+    protected void fireOnItemClickedEvent(View view, Object item, int position) {
         if (onItemClickedListener != null)
-            onItemClickedListener.onItemClicked(view, position);
+            onItemClickedListener.onItemClicked(view, item, position);
     }
 
     public void setMenu(int resId) {
@@ -82,9 +82,10 @@ public class NavigationView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            holder.tv.setText(items.getItem(position).getTitle());
-            holder.iv.setImageDrawable(items.getItem(position).getIcon());
-            holder.itemView.setOnClickListener(v -> fireOnItemClickedEvent(holder.itemView, holder.getAdapterPosition()));
+            MenuItem item = items.getItem(position);
+            holder.tv.setText(item.getTitle());
+            holder.iv.setImageDrawable(item.getIcon());
+            holder.itemView.setOnClickListener(v -> fireOnItemClickedEvent(holder.itemView, item, holder.getAdapterPosition()));
         }
 
         @Override

@@ -29,7 +29,8 @@
     </style>
 
     <style name="RaisedButtonStyle" parent="AppTheme">
-        <item name="colorPrimaryDark">#ff9C27B0</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="colorPrimaryDark">#ff731D82</item>
         <item name="colorPrimary">#ff9C27B0</item>
         <item name="colorAccent">#ffFF5252</item>
     </style>
@@ -41,11 +42,6 @@
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">30sp</item>
         <item name="carbon_fontPath">"carbon/Roboto-Light.ttf"</item>
-    </style>
-
-    <style name="calcButtonStyle2" parent="calcButtonStyle">
-        <item name="android:textSize">16sp</item>
-        <item name="carbon_fontPath">"carbon/Roboto-Regular.ttf"</item>
     </style>
 
     <style name="sectionDescription">

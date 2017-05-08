@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:orientation="vertical">
 
     <carbon.beta.BottomSheet
         android:background="@color/carbon_amber_700"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"/>
 </carbon.widget.FrameLayout>

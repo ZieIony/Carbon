@@ -12,6 +12,8 @@ import carbon.component.DefaultIconSearchItem;
 import carbon.component.DefaultIconTextItem;
 import carbon.component.IconSearchRow;
 import carbon.component.IconTextRow;
+import carbon.component.PaddingItem;
+import carbon.component.PaddingRow;
 import carbon.drawable.VectorDrawable;
 import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.RowListAdapter;
@@ -35,6 +37,7 @@ public class IconTextListItemActivity extends SamplesActivity {
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter adapter = new RowListAdapter<>(DefaultIconTextItem.class, IconTextRow::new);
+        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
         adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow(parent, new ArraySearchDataProvider(new String[]{}), filterResults -> {
         }));
         recycler.setAdapter(adapter);
@@ -46,6 +49,7 @@ public class IconTextListItemActivity extends SamplesActivity {
         VectorDrawable drawable = new VectorDrawable(getResources(), R.raw.ic_face_24px);
         StringNameGenerator generator = new StringNameGenerator();
         adapter.setItems(Arrays.asList(
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new DefaultIconSearchItem(this),
                 new DefaultIconTextItem(drawable, generator.next(new DataContext())),
                 new DefaultIconTextItem(drawable, generator.next(new DataContext())),
@@ -54,6 +58,7 @@ public class IconTextListItemActivity extends SamplesActivity {
                 new DefaultIconTextItem(drawable, generator.next(new DataContext())),
                 new DefaultIconTextItem(drawable, generator.next(new DataContext())),
                 new DefaultIconTextItem(drawable, generator.next(new DataContext())),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext()))));
+                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))));
     }
 }

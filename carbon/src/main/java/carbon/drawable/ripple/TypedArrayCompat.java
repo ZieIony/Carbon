@@ -11,13 +11,15 @@ import android.util.TypedValue;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
+import carbon.Carbon;
+
 class TypedArrayCompat {
     private static final int[] TEMP_ARRAY = new int[1];
 
     private final static ITypedArray IMPL;
 
     static {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP) {
             IMPL = new TypedArrayLollipop();
         } else {
             IMPL = new BaseTypedArray();

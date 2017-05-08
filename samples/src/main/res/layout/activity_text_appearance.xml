@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:fitsSystemWindows="true"
+                            app:carbon_insetColor="?attr/colorPrimary"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.TextView
-        android:text="Headline"
+        android:id="@+id/headline"
+        app:carbon_htmlText="Headline, &lt;b>Headline&lt;/b>, Headline, Headline, Headline, Headline, Headline, Headline, Headline, Headline, Headline, Headline, Headline, "
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:textAppearance="?attr/carbon_textAppearanceHeadline" />
+        android:textAppearance="?attr/carbon_textAppearanceHeadline"/>
 
     <carbon.widget.TextView
         android:text="Title"
@@ -25,7 +28,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:textAppearance="?attr/carbon_textAppearanceTitle" />
+        android:textAppearance="?attr/carbon_textAppearanceTitle"/>
 
     <carbon.widget.TextView
         android:text="Subhead"
@@ -34,7 +37,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+        android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
 
     <carbon.widget.TextView
         android:text="Body 2"
@@ -43,7 +46,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:textAppearance="?attr/carbon_textAppearanceBody2" />
+        android:textAppearance="?attr/carbon_textAppearanceBody2"/>
 
     <carbon.widget.TextView
         android:text="Body 1"
@@ -52,7 +55,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:textAppearance="?attr/carbon_textAppearanceBody1" />
+        android:textAppearance="?attr/carbon_textAppearanceBody1"/>
 
     <carbon.widget.TextView
         android:text="Caption"
@@ -61,7 +64,7 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:textAppearance="?attr/carbon_textAppearanceCaption" />
+        android:textAppearance="?attr/carbon_textAppearanceCaption"/>
 
     <carbon.widget.TextView
         android:text="Button"
@@ -70,6 +73,6 @@
         android:paddingRight="@dimen/carbon_padding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:textAppearance="?attr/carbon_textAppearanceButton" />
+        android:textAppearance="?attr/carbon_textAppearanceButton"/>
 
 </carbon.widget.LinearLayout>

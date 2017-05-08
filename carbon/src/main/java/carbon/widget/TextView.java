@@ -2,8 +2,8 @@ package carbon.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -22,9 +22,12 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.text.DynamicLayout;
 import android.text.Layout;
+import android.text.Spannable;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -86,6 +89,7 @@ import carbon.shadow.ShadowView;
  * @attr ref R.styleable#carbon_autoSizeMaxTextSize
  * @attr ref R.styleable#carbon_autoSizeStepGranularity
  */
+@SuppressLint("AppCompatCustomView")
 public class TextView extends android.widget.TextView
         implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
 
@@ -176,6 +180,10 @@ public class TextView extends android.widget.TextView
                 setTypeface(typeface);
             } else if (attr == R.styleable.TextView_android_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, true));
+            } else if (attr == R.styleable.TextView_android_singleLine) {
+                setSingleLine(a.getBoolean(attr, false));
+            } else if (attr == R.styleable.TextView_android_maxLines) {
+                setMaxLines(a.getInt(attr, Integer.MAX_VALUE));
             }
         }
 
@@ -253,7 +261,7 @@ public class TextView extends android.widget.TextView
                     int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
                     setTypeface(typeface);
-                } else if (attr == R.styleable.TextView_android_textAllCaps) {
+                } else if (attr == R.styleable.TextAppearance_android_textAllCaps) {
                     setAllCaps(appearance.getBoolean(attr, true));
                 }
             }
@@ -281,42 +289,11 @@ public class TextView extends android.widget.TextView
     RevealAnimator revealAnimator;
 
     @Override
-    public Animator startReveal(int x, int y, float startRadius, float finishRadius) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH && renderingMode == RenderingMode.Auto) {
+    public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
+        if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
-            circularReveal.start();
-            return new Animator() {
-                @Override
-                public long getStartDelay() {
-                    return circularReveal.getStartDelay();
-                }
-
-                @Override
-                public void setStartDelay(long startDelay) {
-                    circularReveal.setStartDelay(startDelay);
-                }
-
-                @Override
-                public Animator setDuration(long duration) {
-                    circularReveal.setDuration(duration);
-                    return this;
-                }
-
-                @Override
-                public long getDuration() {
-                    return circularReveal.getDuration();
-                }
-
-                @Override
-                public void setInterpolator(TimeInterpolator value) {
-                    circularReveal.setInterpolator(value);
-                }
-
-                @Override
-                public boolean isRunning() {
-                    return circularReveal.isRunning();
-                }
-            };
+            circularReveal.setDuration(Carbon.getDefaultRevealDuration());
+            return circularReveal;
         } else {
             revealAnimator = new RevealAnimator(x, y, startRadius, finishRadius);
             revealAnimator.setDuration(Carbon.getDefaultRevealDuration());
@@ -338,7 +315,6 @@ public class TextView extends android.widget.TextView
                     revealAnimator = null;
                 }
             });
-            revealAnimator.start();
             return revealAnimator;
         }
     }
@@ -374,6 +350,72 @@ public class TextView extends android.widget.TextView
     }
 
     @Override
+    public void setOverScrollMode(int overScrollMode) {
+        super.setOverScrollMode(overScrollMode);
+        fixSpannableEllipsis();
+    }
+
+    private void fixSpannableEllipsis() {
+        if (maxLines > 1 && maxLines < Integer.MAX_VALUE && getEllipsize() != null && getText() instanceof Spannable) {
+            try {
+                Field staticField = DynamicLayout.class.getDeclaredField("sStaticLayout");
+                staticField.setAccessible(true);
+                StaticLayout layout = (StaticLayout) staticField.get(DynamicLayout.class);
+
+                if (layout != null) {
+                    Field field = StaticLayout.class.getDeclaredField("mMaximumVisibleLineCount");
+                    field.setAccessible(true);
+                    field.setInt(layout, maxLines);
+                }
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+            /*super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            if (layout != null && field != null) {
+                try {
+                    field.setInt(layout, Integer.MAX_VALUE);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }*/
+            /*if(getEllipsize()== TextUtils.TruncateAt.START) {
+                StaticLayout layout = new StaticLayout(getText(), getPaint(), getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
+                int end = layout.getLineVisibleEnd(0);
+                StringBuilder builder = new StringBuilder(TextUtils.ellipsize(getText().subSequence(0, end),getPaint(),layout.getWidth(),getEllipsize()));
+                builder.append(getText().subSequence(end,length()));
+                setText(builder);
+            }else*/
+            /*if(getEllipsize()== TextUtils.TruncateAt.END){
+                StaticLayout layout = new StaticLayout(getText(), getPaint(), getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
+                int start = layout.getLineStart(maxLines - 1);
+                StringBuilder builder = new StringBuilder(getText().subSequence(0,start));
+                builder.append(TextUtils.ellipsize(getText().subSequence(start, length()),getPaint(),layout.getWidth(),getEllipsize()));
+                setTransformationMethod(new ReplaceTransformationMethod(builder));
+            }else{
+                StaticLayout layout = new StaticLayout(getText(), getPaint(), getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
+                int end = layout.getLineVisibleEnd(maxLines - 1);
+                setTransformationMethod(new ReplaceTransformationMethod(getText().subSequence(0,end)));
+            }*/
+        if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.AT_MOST && getMeasuredWidth() == MeasureSpec.getSize(widthMeasureSpec) && getEllipsize() == null) {
+            StaticLayout layout = new StaticLayout(getText(), getPaint(), getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
+            int width = 0;
+            for (int i = 0; i < layout.getLineCount(); i++) {
+                width = (int) Math.max(width, layout.getLineMax(i));
+            }
+            super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), heightMeasureSpec);
+        }
+    }
+
+    @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
@@ -392,7 +434,7 @@ public class TextView extends android.widget.TextView
     private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && renderingMode == RenderingMode.Auto) {
+            if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
@@ -400,14 +442,14 @@ public class TextView extends android.widget.TextView
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP) {
             setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || renderingMode == RenderingMode.Software) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && !Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
@@ -619,7 +661,7 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void setElevation(float elevation) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP) {
             if (shadowColor == null && renderingMode == RenderingMode.Auto) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
@@ -641,7 +683,7 @@ public class TextView extends android.widget.TextView
     public void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP) {
             if (shadowColor == null && renderingMode == RenderingMode.Auto) {
                 super.setTranslationZ(translationZ);
             } else {
@@ -682,7 +724,7 @@ public class TextView extends android.widget.TextView
             return;
 
         float z = getElevation() + getTranslationZ();
-        if (shadow == null || shadow.elevation != z)
+        if (shadow == null || shadow.elevation != z || shadow.cornerRadius != cornerRadius)
             shadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
 
         int saveCount = 0;
@@ -837,44 +879,60 @@ public class TextView extends android.widget.TextView
         return super.onCreateDrawableState(extraSpace);
     }
 
+
     // -------------------------------
     // animations
     // -------------------------------
 
-    private AnimUtils.Style inAnim = AnimUtils.Style.None, outAnim = AnimUtils.Style.None;
+    private Animator inAnim = null, outAnim = null;
     private Animator animator;
 
     public Animator animateVisibility(final int visibility) {
-        float alpha = getAlpha();
         if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
-            if (inAnim != AnimUtils.Style.None) {
-                animator = AnimUtils.animateIn(this, inAnim, new AnimatorListenerAdapter() {
+            if (inAnim != null) {
+                animator = inAnim;
+                animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
+                        animator.removeListener(this);
                         animator = null;
-                        setAlpha(alpha);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        animator.removeListener(this);
+                        animator = null;
                     }
                 });
+                animator.start();
             }
             setVisibility(visibility);
         } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
-            if (outAnim == AnimUtils.Style.None) {
+            if (outAnim == null) {
                 setVisibility(visibility);
                 return null;
             }
-            animator = AnimUtils.animateOut(this, outAnim, new AnimatorListenerAdapter() {
+            animator = outAnim;
+            animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
+                    animator.removeListener(this);
                     animator = null;
-                    setAlpha(alpha);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    animator.removeListener(this);
+                    animator = null;
                 }
             });
+            animator.start();
         }
         return animator;
     }
@@ -883,20 +941,28 @@ public class TextView extends android.widget.TextView
         return animator;
     }
 
-    public AnimUtils.Style getOutAnimation() {
+    public Animator getOutAnimator() {
         return outAnim;
     }
 
-    public void setOutAnimation(AnimUtils.Style outAnim) {
+    public void setOutAnimator(Animator outAnim) {
+        if (this.outAnim != null)
+            this.outAnim.setTarget(null);
         this.outAnim = outAnim;
+        if (outAnim != null)
+            outAnim.setTarget(this);
     }
 
-    public AnimUtils.Style getInAnimation() {
+    public Animator getInAnimator() {
         return inAnim;
     }
 
-    public void setInAnimation(AnimUtils.Style inAnim) {
+    public void setInAnimator(Animator inAnim) {
+        if (this.inAnim != null)
+            this.inAnim.setTarget(null);
         this.inAnim = inAnim;
+        if (inAnim != null)
+            inAnim.setTarget(this);
     }
 
 
@@ -1048,6 +1114,7 @@ public class TextView extends android.widget.TextView
     @Override
     public void setText(final CharSequence text, BufferType type) {
         super.setText(text, type);
+        fixSpannableEllipsis();
         adjustTextSize();
     }
 
@@ -1058,8 +1125,15 @@ public class TextView extends android.widget.TextView
     }
 
     @Override
+    public void setEllipsize(TextUtils.TruncateAt where) {
+        super.setEllipsize(where);
+        fixSpannableEllipsis();
+    }
+
+    @Override
     public void setMaxLines(int maxLines) {
         super.setMaxLines(maxLines);
+        fixSpannableEllipsis();
         this.maxLines = maxLines;
         adjustTextSize();
     }
@@ -1073,9 +1147,13 @@ public class TextView extends android.widget.TextView
     @Override
     public void setSingleLine(boolean singleLine) {
         super.setSingleLine(singleLine);
-        if (!singleLine)
-            super.setMaxLines(-1);
         adjustTextSize();
+    }
+
+    @Override
+    public void setGravity(int gravity) {
+        super.setGravity(gravity);
+        fixSpannableEllipsis();
     }
 
     @Override

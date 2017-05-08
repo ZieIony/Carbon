@@ -1,10 +1,8 @@
 package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 
-import carbon.widget.RecyclerView;
+import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.feature.AnchorActivity;
 import tk.zielony.carbonsamples.feature.AutoSizeTextActivity;
 import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
@@ -21,36 +19,34 @@ import tk.zielony.carbonsamples.feature.ZOrderActivity;
 import tk.zielony.carbonsamples.widget.SVGActivity;
 
 
-public class FeaturesActivity extends SamplesActivity {
+public class FeaturesActivity extends SampleListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
 
         Samples.initToolbar(this, getString(R.string.featuresActivity_title));
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
-        ViewModel[] items = new ViewModel[]{
-                new ViewModel(AutoSizeTextActivity.class, getString(R.string.autoSizeTextActivity_title)),
-                new ViewModel(ScrollFlagsActivity.class, getString(R.string.dependencyLayoutActivity_title)),
-                new ViewModel(HtmlActivity.class, getString(R.string.htmlActivity_title)),
-                new ViewModel(RobotoActivity.class, getString(R.string.robotoActivity_title)),
-                new ViewModel(ShadowActivity.class, getString(R.string.shadowActivity_title)),
-                new ViewModel(LargeShadowActivity.class, getString(R.string.largeShadowActivity_title)),
-                new ViewModel(TextAppearanceActivity.class, getString(R.string.textappearanceActivity_title)),
-                new ViewModel(SVGActivity.class, getString(R.string.svgActivity_title)),
-                new ViewModel(ZOrderActivity.class, getString(R.string.zOrderActivity_title)),
-                new ViewModel(RoundedCornersActivity.class, getString(R.string.roundedCornersActivity_title)),
-                new ViewModel(AnchorActivity.class, getString(R.string.anchorsActivity_title)),
-                new ViewModel(ContextWrapperActivity.class, getString(R.string.contextWrapperActivity_title)),
-                new ViewModel(TextMarkerActivity.class, getString(R.string.textMarkerActivity_title)),
-                new ViewModel(ThemeActivity.class, getString(R.string.themeActivity_title))
-        };
-        recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
-                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new MainListAdapter(items));
+        setItems(new Object[]{
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
+                "Carbon adds tons of useful festures to all popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
+                        "others",
+                new SampleActivityItem(AutoSizeTextActivity.class, getString(R.string.autoSizeTextActivity_title)),
+                new SampleActivityItem(ScrollFlagsActivity.class, getString(R.string.dependencyLayoutActivity_title)),
+                new SampleActivityItem(HtmlActivity.class, getString(R.string.htmlActivity_title)),
+                new SampleActivityItem(RobotoActivity.class, getString(R.string.robotoActivity_title)),
+                new SampleActivityItem(ShadowActivity.class, getString(R.string.shadowActivity_title)),
+                new SampleActivityItem(LargeShadowActivity.class, getString(R.string.largeShadowActivity_title)),
+                new SampleActivityItem(TextAppearanceActivity.class, getString(R.string.textappearanceActivity_title)),
+                new SampleActivityItem(SVGActivity.class, getString(R.string.svgActivity_title)),
+                new SampleActivityItem(ZOrderActivity.class, getString(R.string.zOrderActivity_title)),
+                new SampleActivityItem(RoundedCornersActivity.class, getString(R.string.roundedCornersActivity_title)),
+                new SampleActivityItem(AnchorActivity.class, getString(R.string.anchorsActivity_title)),
+                new SampleActivityItem(ContextWrapperActivity.class, getString(R.string.contextWrapperActivity_title)),
+                new SampleActivityItem(TextMarkerActivity.class, getString(R.string.textMarkerActivity_title)),
+                new SampleActivityItem(ThemeActivity.class, getString(R.string.themeActivity_title)),
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+        });
     }
 
 }

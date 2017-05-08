@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent"
+                              android:fitsSystemWindows="true"
+                              android:orientation="vertical"
+                              app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/view_debugtoolbar" />
+        <include layout="@layout/view_debugtoolbar"/>
 
         <carbon.widget.Button
             android:id="@+id/button"
@@ -20,7 +20,7 @@
             android:layout_height="40dp"
             android:layout_gravity="left"
             android:layout_margin="@dimen/carbon_padding"
-            android:text="Show snackbar" />
+            android:text="Show snackbar"/>
 
         <carbon.widget.CheckBox
             android:id="@+id/swipe"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:padding="@dimen/carbon_padding"
-            android:text="swipe to dismiss" />
+            android:text="swipe to dismiss"/>
 
         <carbon.widget.CheckBox
             android:id="@+id/tap"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:padding="@dimen/carbon_padding"
-            android:text="tap outside to dismiss" />
+            android:text="tap outside to dismiss"/>
 
         <carbon.widget.CheckBox
             android:id="@+id/floating"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:padding="@dimen/carbon_padding"
-            android:text="floating snackbar" />
+            android:text="floating snackbar"/>
 
         <carbon.widget.CheckBox
             android:id="@+id/infinite"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:padding="@dimen/carbon_padding"
-            android:text="infinite" />
+            android:text="infinite"/>
 
         <carbon.widget.CheckBox
             android:id="@+id/push"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:padding="@dimen/carbon_padding"
-            android:text="push fab" />
+            android:text="push fab"/>
     </carbon.widget.LinearLayout>
 
     <carbon.widget.FloatingActionButton
@@ -71,6 +71,6 @@
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/carbon_padding"
         app:carbon_rippleColor="#7fffffff"
-        android:src="@raw/ic_face_24px" />
+        android:src="@raw/ic_face_24px"/>
 
 </carbon.widget.RelativeLayout>

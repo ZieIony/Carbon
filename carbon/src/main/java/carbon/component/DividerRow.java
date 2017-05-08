@@ -21,8 +21,4 @@ public class DividerRow implements Component<DividerItem> {
         return view;
     }
 
-    @Override
-    public void bind(DividerItem data) {
-    }
-
 }

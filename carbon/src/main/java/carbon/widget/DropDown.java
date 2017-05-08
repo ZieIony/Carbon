@@ -125,8 +125,8 @@ public class DropDown extends EditText {
 
     RecyclerView.OnItemClickedListener onItemClickedListener = new RecyclerView.OnItemClickedListener() {
         @Override
-        public void onItemClicked(View view, int position) {
-            setText(dropDownMenu.getAdapter().getItem(position).toString());
+        public void onItemClicked(View view, Object item, int position) {
+            setText(item.toString());
             selectedIndex = position;
             if (onItemSelectedListener != null)
                 onItemSelectedListener.onItemSelected(null, view, selectedIndex, 0);

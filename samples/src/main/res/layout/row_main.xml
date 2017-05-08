@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layoutDirection="locale"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/carbon_windowPadding"
-    android:paddingRight="@dimen/carbon_windowPadding"
-    app:carbon_rippleColor="?attr/carbon_rippleColor">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <carbon.widget.TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:text="Row" />
+    <data>
 
-    <carbon.widget.TextView
-        android:id="@+id/beta"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:text="beta"
-        android:textColor="#ffcf0000"
-        android:textSize="16sp" />
+        <variable
+            name="data"
+            type="tk.zielony.carbonsamples.SampleActivityItem"/>
 
-    <carbon.widget.TextView
-        android:id="@+id/lollipop"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:text="Lollipop"
-        android:textColor="#ff7f00ff"
-        android:textSize="16sp" />
+        <import type="android.view.View"/>
+    </data>
 
-</carbon.widget.LinearLayout>
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="locale"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/carbon_windowPadding"
+        android:paddingRight="@dimen/carbon_windowPadding"
+        android:background="?attr/carbon_colorForeground"
+        app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+        <carbon.widget.TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@{data.name}"/>
+
+        <carbon.widget.TextView
+            android:id="@+id/beta"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:text="beta"
+            android:visibility="@{data.beta?View.VISIBLE:View.GONE}"
+            android:textColor="#ffcf0000"
+            android:textSize="16sp"/>
+    </carbon.widget.LinearLayout>
+</layout>

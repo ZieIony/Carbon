@@ -903,7 +903,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
 
         final int paddingRtlLeft;
         final int paddingRtlRight;
-        if (Build.VERSION.SDK_INT >= 23 && getLayoutDirection() == LayoutDirection.RTL) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
             paddingRtlLeft = layerState.mPaddingEnd;
             paddingRtlRight = layerState.mPaddingStart;
         } else {

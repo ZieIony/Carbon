@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.ScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:tag="enable"
-                    android:text="hello text" />
+                    android:text="hello text"/>
             </carbon.widget.InputLayout>
 
             <carbon.widget.InputLayout
@@ -50,7 +50,7 @@
                     android:tag="enable"
                     android:text="hello text"
                     app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"
-                    app:carbon_required="true" />
+                    app:carbon_required="true"/>
             </carbon.widget.InputLayout>
 
             <carbon.widget.InputLayout
@@ -70,7 +70,7 @@
                     android:hint="your email"
                     android:tag="enable"
                     android:text="hello text"
-                    app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$" />
+                    app:carbon_pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"/>
             </carbon.widget.InputLayout>
 
             <carbon.widget.InputLayout
@@ -87,7 +87,7 @@
                     android:inputType="numberPassword"
                     android:tag="enable"
                     app:carbon_maxCharacters="10"
-                    app:carbon_minCharacters="3" />
+                    app:carbon_minCharacters="3"/>
             </carbon.widget.InputLayout>
 
         </carbon.widget.LinearLayout>

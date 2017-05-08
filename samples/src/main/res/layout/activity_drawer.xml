@@ -1,8 +1,8 @@
 <carbon.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawerLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/drawerLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
     <carbon.widget.LinearLayout
         android:id="@+id/content"
@@ -15,7 +15,7 @@
         <carbon.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_toolbarHeight" />
+            android:layout_height="@dimen/carbon_toolbarHeight"/>
 
     </carbon.widget.LinearLayout>
 
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:src="@drawable/mazda"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"/>
 
         <carbon.widget.RecyclerView
             android:id="@+id/drawerList"
@@ -42,6 +42,6 @@
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
-            android:background="?attr/carbon_colorBackground" />
+            android:background="?attr/carbon_colorBackground"/>
     </carbon.widget.LinearLayout>
 </carbon.widget.DrawerLayout>

@@ -2,8 +2,8 @@
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                            xmlns:app="http://schemas.android.com/apk/res-auto"
                            android:id="@+id/carbon_window"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent">
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content">
 
     <carbon.widget.LinearLayout
         android:layout_width="wrap_content"
@@ -13,6 +13,8 @@
         android:background="?android:attr/windowBackground"
         android:minWidth="280dp"
         android:id="@+id/carbon_windowContent"
+        app:carbon_inAnimation="fly"
+        app:carbon_outAnimation="fade"
         android:orientation="vertical"
         app:carbon_cornerRadius="2dp"
         app:carbon_elevation="@dimen/carbon_elevationDialog"/>

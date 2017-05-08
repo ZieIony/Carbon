@@ -8,7 +8,7 @@ import android.view.View;
 import carbon.widget.AutoCompleteEditText;
 
 public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
-    private carbon.widget.RecyclerView.OnItemClickedListener onItemClickedListener;
+    private carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener;
     private boolean diff = true;
     private DiffArrayCallback<I> diffCallback;
 
@@ -62,13 +62,13 @@ public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extend
         return position;
     }
 
-    public void setOnItemClickedListener(carbon.widget.RecyclerView.OnItemClickedListener onItemClickedListener) {
+    public void setOnItemClickedListener(carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener) {
         this.onItemClickedListener = onItemClickedListener;
     }
 
     protected void fireOnItemClickedEvent(View view, int position) {
         if (onItemClickedListener != null)
-            onItemClickedListener.onItemClicked(view, position);
+            onItemClickedListener.onItemClicked(view, items[position], position);
     }
 
     public void setDiffEnabled(boolean useDiff) {

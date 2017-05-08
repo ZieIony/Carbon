@@ -21,8 +21,4 @@ public class PaddedDividerRow implements Component<DividerItem> {
         return view;
     }
 
-    @Override
-    public void bind(DividerItem data) {
-    }
-
 }

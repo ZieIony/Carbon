@@ -100,7 +100,7 @@ public class ShadowGenerator {
 
         for (Object o : shadowSet) {
             Shadow s = (Shadow) o;
-            if (s != null && s.elevation == elevation && s.c == c)
+            if (s != null && s.elevation == elevation && s.cornerRadius == c)
                 return s;
         }
 

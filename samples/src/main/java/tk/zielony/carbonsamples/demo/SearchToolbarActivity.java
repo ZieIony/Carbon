@@ -25,15 +25,16 @@ public class SearchToolbarActivity extends SamplesActivity {
             searchEditText.getLocationOnScreen(setLocation);
             int[] sbLocation = new int[2];
             searchButton.getLocationOnScreen(sbLocation);
-            Animator animator = searchEditText.startReveal(sbLocation[0] - setLocation[0] + v.getWidth() / 2, searchEditText.getHeight() / 2, 0, searchEditText.getWidth());
+            Animator animator = searchEditText.createCircularReveal(sbLocation[0] - setLocation[0] + v.getWidth() / 2, searchEditText.getHeight() / 2, 0, searchEditText.getWidth());
             animator.setInterpolator(new DecelerateInterpolator());
+            animator.start();
         });
         findViewById(R.id.close).setOnClickListener(v -> {
             int[] setLocation = new int[2];
             searchEditText.getLocationOnScreen(setLocation);
             int[] sbLocation = new int[2];
             searchButton.getLocationOnScreen(sbLocation);
-            Animator animator = searchEditText.startReveal(sbLocation[0] - setLocation[0] + v.getWidth() / 2, searchEditText.getHeight() / 2, searchEditText.getWidth(), 0);
+            Animator animator = searchEditText.createCircularReveal(sbLocation[0] - setLocation[0] + v.getWidth() / 2, searchEditText.getHeight() / 2, searchEditText.getWidth(), 0);
             animator.setInterpolator(new DecelerateInterpolator());
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -41,6 +42,7 @@ public class SearchToolbarActivity extends SamplesActivity {
                     searchEditText.setVisibility(View.INVISIBLE);
                 }
             });
+            animator.start();
         });
     }
 }

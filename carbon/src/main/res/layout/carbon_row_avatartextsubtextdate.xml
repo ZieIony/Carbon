@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="carbon.component.AvatarTextSubtextDateItem"/>
+
+    </data>
+
+    <carbon.widget.RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="?attr/carbon_colorForeground"
+        android:clickable="true"
+        app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+        <carbon.widget.ImageView
+            style="@style/carbon_ImageView.Avatar"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
+            android:layout_marginTop="@dimen/carbon_margin"
+            android:src="@{data.getAvatar()}"/>
+
+        <carbon.widget.TextMarker
+            android:id="@+id/carbon_marker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:carbon_text="Ip"
+            app:carbon_textView="@+id/carbon_text"/>
+
+        <carbon.widget.TextMarker
+            android:id="@+id/carbon_marker2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/carbon_marker"
+            android:layout_marginTop="@dimen/carbon_marginHalf"
+            app:carbon_text="Ip"
+            app:carbon_textView="@+id/carbon_subtext"/>
+
+        <carbon.widget.TextMarker
+            android:id="@+id/carbon_marker3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:carbon_text="Ip"
+            app:carbon_textView="@+id/carbon_date"/>
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/carbon_marker"
+            android:layout_marginEnd="@dimen/carbon_marginHalf"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginRight="@dimen/carbon_marginHalf"
+            android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:layout_toLeftOf="@+id/carbon_date"
+            android:layout_toStartOf="@+id/carbon_date"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{data.text}"
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_subtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/carbon_marker2"
+            android:layout_marginEnd="@dimen/carbon_marginHalf"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginRight="@dimen/carbon_marginHalf"
+            android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:layout_toLeftOf="@+id/carbon_date"
+            android:layout_toStartOf="@+id/carbon_date"
+            android:maxLines="1"
+            android:text="@{data.subtext}"
+            android:textAppearance="?attr/carbon_textAppearanceBody1"
+            android:textColor="?android:attr/textColorSecondary"/>
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/carbon_marker3"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/carbon_windowPadding"
+            android:layout_marginRight="@dimen/carbon_windowPadding"
+            android:maxLines="1"
+            android:text="@{data.date}"
+            android:textAppearance="?attr/carbon_textAppearanceCaption"/>
+
+    </carbon.widget.RelativeLayout>
+</layout>

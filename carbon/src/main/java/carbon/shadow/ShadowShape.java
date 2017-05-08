@@ -2,10 +2,10 @@ package carbon.shadow;
 
 import android.annotation.SuppressLint;
 import android.graphics.Outline;
-import android.os.Build;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 
+import carbon.Carbon;
 import carbon.widget.RoundedCornersView;
 
 public enum ShadowShape {
@@ -14,7 +14,7 @@ public enum ShadowShape {
     public static ViewOutlineProvider viewOutlineProvider;
 
     static {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP) {
             viewOutlineProvider = new ViewOutlineProvider() {
                 @SuppressLint("NewApi")
                 @Override

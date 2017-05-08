@@ -3,9 +3,9 @@ package tk.zielony.carbonsamples.animation;
 import android.os.Bundle;
 import android.view.View;
 
-import carbon.widget.Button;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.FrameLayout;
+import carbon.widget.rx.Button;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
@@ -23,7 +23,7 @@ public class WidgetAnimationsActivity extends SamplesActivity {
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(view -> {
+        button.clicks().subscribe(view -> {
             if (fabVisibility != View.VISIBLE) {
                 fab.animateVisibility(View.VISIBLE);
                 fabVisibility = View.VISIBLE;
@@ -35,7 +35,7 @@ public class WidgetAnimationsActivity extends SamplesActivity {
 
         final Button button2 = (Button) findViewById(R.id.button2);
         Button button3 = (Button) findViewById(R.id.button3);
-        button3.setOnClickListener(view -> {
+        button3.clicks().subscribe(view -> {
             if (buttonVisibility != View.VISIBLE) {
                 button2.animateVisibility(View.VISIBLE);
                 buttonVisibility = View.VISIBLE;
@@ -46,7 +46,8 @@ public class WidgetAnimationsActivity extends SamplesActivity {
         });
 
         FrameLayout frame = (FrameLayout) findViewById(R.id.frame);
-        carbon.widget.Button reveal = (carbon.widget.Button) findViewById(R.id.reveal);
-        reveal.setOnClickListener(v -> frame.startReveal(20, 20, 0, (float) Math.sqrt((frame.getWidth() - 20) * (frame.getWidth() - 20) + (frame.getHeight() - 20) * (frame.getHeight() - 20))));
+        Button reveal = (Button) findViewById(R.id.reveal);
+        reveal.clicks().subscribe(v -> frame.createCircularReveal(20, 20, 0, (float) Math.sqrt((frame.getWidth() - 20) * (frame.getWidth() - 20) + (frame.getHeight() -
+                20) * (frame.getHeight() - 20))).start());
     }
 }

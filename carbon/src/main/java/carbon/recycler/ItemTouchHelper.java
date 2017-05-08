@@ -19,7 +19,6 @@ package carbon.recycler;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.animation.AnimatorCompatHelper;
 import android.support.v4.animation.AnimatorListenerCompat;
@@ -47,6 +46,7 @@ import android.view.animation.Interpolator;
 import java.util.ArrayList;
 import java.util.List;
 
+import carbon.Carbon;
 import carbon.R;
 
 /**
@@ -1261,26 +1261,23 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
     }
 
     private void addChildDrawingOrderCallback() {
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Carbon.IS_LOLLIPOP)
             return;// we use elevation on Lollipop
-        }
+
         if (mChildDrawingOrderCallback == null) {
-            mChildDrawingOrderCallback = new RecyclerView.ChildDrawingOrderCallback() {
-                @Override
-                public int onGetChildDrawingOrder(int childCount, int i) {
-                    if (mOverdrawChild == null) {
-                        return i;
-                    }
-                    int childPosition = mOverdrawChildPosition;
-                    if (childPosition == -1) {
-                        childPosition = mRecyclerView.indexOfChild(mOverdrawChild);
-                        mOverdrawChildPosition = childPosition;
-                    }
-                    if (i == childCount - 1) {
-                        return childPosition;
-                    }
-                    return i < childPosition ? i : i + 1;
+            mChildDrawingOrderCallback = (childCount, i) -> {
+                if (mOverdrawChild == null) {
+                    return i;
                 }
+                int childPosition = mOverdrawChildPosition;
+                if (childPosition == -1) {
+                    childPosition = mRecyclerView.indexOfChild(mOverdrawChild);
+                    mOverdrawChildPosition = childPosition;
+                }
+                if (i == childCount - 1) {
+                    return childPosition;
+                }
+                return i < childPosition ? i : i + 1;
             };
         }
         mRecyclerView.setChildDrawingOrderCallback(mChildDrawingOrderCallback);

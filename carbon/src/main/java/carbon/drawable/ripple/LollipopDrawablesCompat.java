@@ -23,6 +23,8 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
+import carbon.Carbon;
+
 public class LollipopDrawablesCompat {
     private static final Object mAccessLock = new Object();
 
@@ -36,7 +38,7 @@ public class LollipopDrawablesCompat {
     static {
         registerDrawable(RippleDrawableICS.class, "ripple");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP) {
             IMPL = new LollipopDrawableImpl();
         } else {
             IMPL = new BaseDrawableImpl();
@@ -145,7 +147,7 @@ public class LollipopDrawablesCompat {
             throw new XmlPullParserException("Error while inflating drawable resource", parser, e);
         }
         if (drawable == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Carbon.IS_LOLLIPOP) {
                 return Drawable.createFromXmlInner(r, parser, attrs, theme);
             } else {
                 return Drawable.createFromXmlInner(r, parser, attrs);

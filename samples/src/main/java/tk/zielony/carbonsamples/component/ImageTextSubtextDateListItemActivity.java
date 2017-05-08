@@ -12,6 +12,8 @@ import carbon.component.DefaultHeaderItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
 import carbon.component.PaddedHeaderRow;
+import carbon.component.PaddingItem;
+import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
@@ -34,12 +36,14 @@ public class ImageTextSubtextDateListItemActivity extends SamplesActivity {
         Samples.initToolbar(this, getString(R.string.imageTextSubtextDateListItemActivity_title));
 
         List<ComponentItem> items = Arrays.asList(
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new DefaultHeaderItem("Header"),
                 new DefaultImageTextSubtextDateItem(),
                 new DefaultImageTextSubtextDateItem(),
                 new DefaultHeaderItem("Header"),
                 new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem());
+                new DefaultImageTextSubtextDateItem(),
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
 
         RandomData randomData = new RandomData();
         randomData.addGenerators(new Generator[]{
@@ -53,6 +57,7 @@ public class ImageTextSubtextDateListItemActivity extends SamplesActivity {
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter adapter = new RowListAdapter<>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
+        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
         adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow.FACTORY);
         recycler.setAdapter(adapter);
         adapter.setItems(items);

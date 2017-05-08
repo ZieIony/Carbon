@@ -2,12 +2,17 @@
 <resources>
 
     <string name="app_name">Carbon Samples</string>
+
+    <string name="comparisonActivity_title">Comparison</string>
+
+    <string name="textViewComparisonActivity_title">TextView</string>
+    <string name="cardViewComparisonActivity_title">CardView</string>
+
     <string name="floatingActionMenuActivity_title">FloatingActionMenu</string>
     <string name="tableLayoutActivity_title">TableLayout</string>
     <string name="flowLayoutActivity_title"><![CDATA[FlowLayout & Chips]]></string>
     <string name="toolbarActivity_title">Toolbar</string>
     <string name="seekBarActivity_title">SeekBar</string>
-    <string name="navigationViewActivity_title">NavigationView</string>
     <string name="dropDownActivityActivity_title">DropDown</string>
     <string name="expandableRecyclerActivity_title">ExpandableRecyclerView</string>
     <string name="recyclerViewActivity_title">RecyclerView</string>
@@ -27,7 +32,7 @@
     <string name="featuresActivity_title">Features</string>
     <string name="componentsActivity_title">Components</string>
     <string name="animationsActivity_title">Animations</string>
-    <string name="appsLibrariesActivity_title"><![CDATA[Apps & Libraries]]></string>
+    <string name="librariesActivity_title">Libraries</string>
     <string name="colorsActivity_title">Colors</string>
     <string name="demosActivity_title">Demos</string>
     <string name="guidelinesActivity_title">Guidelines</string>
@@ -48,11 +53,11 @@
     <string name="searchToolbarActivity_title">Search Toolbar</string>
     <string name="shareToolbarActivity_title">Share Toolbar</string>
     <string name="autoCompleteActivity_title">Auto Complete</string>
-    <string name="quickReturenActivity_title">Quick Return</string>
+    <string name="quickReturnActivity_title">Quick Return</string>
     <string name="calculatorActivity_title">Calculator</string>
     <string name="picassoActivity_title">Picasso</string>
     <string name="recyclerCardsActivity_title"><![CDATA[RecyclerView & cards]]></string>
-    <string name="drawerActivity_title">Nawigation drawer</string>
+    <string name="drawerActivity_title">Navigation drawer</string>
     <string name="designActivity_title">Design Support Library</string>
     <string name="constraintLayoutActivity_title">Constraint Layout</string>
     <string name="iconTextListItemActivity_title">Icon and text list item</string>

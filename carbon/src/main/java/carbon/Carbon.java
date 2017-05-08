@@ -1,5 +1,6 @@
 package carbon;
 
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -35,6 +36,8 @@ import carbon.widget.TouchMarginView;
 public class Carbon {
     private static final long DEFAULT_REVEAL_DURATION = 200;
     private static long defaultRevealDuration = DEFAULT_REVEAL_DURATION;
+
+    public static final boolean IS_LOLLIPOP = Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH;
 
     public static PorterDuffXfermode CLEAR_MODE = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
@@ -74,7 +77,7 @@ public class Carbon {
         RippleDrawable rippleDrawable;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rippleDrawable = new RippleDrawableMarshmallow(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP) {
             rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
         } else {
             rippleDrawable = new RippleDrawableICS(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
@@ -89,7 +92,7 @@ public class Carbon {
         RippleDrawable rippleDrawable;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rippleDrawable = new RippleDrawableMarshmallow(color, background, style);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP) {
             rippleDrawable = new RippleDrawableLollipop(color, background, style);
         } else {
             rippleDrawable = new RippleDrawableICS(color, background, style);
@@ -178,10 +181,26 @@ public class Carbon {
 
     public static void initAnimations(AnimatedView view, TypedArray a, int[] ids) {
         int carbon_inAnimation = ids[0];
-        int carbon_outAnimation = ids[1];
+        if (a.hasValue(carbon_inAnimation)) {
+            TypedValue typedValue = new TypedValue();
+            a.getValue(carbon_inAnimation, typedValue);
+            if (typedValue.resourceId != 0) {
+                view.setInAnimator(AnimatorInflater.loadAnimator(((View) view).getContext(), typedValue.resourceId));
+            } else {
+                view.setInAnimator(AnimUtils.Style.values()[typedValue.data].getInAnimator());
+            }
+        }
 
-        view.setInAnimation(AnimUtils.Style.values()[a.getInt(carbon_inAnimation, 0)]);
-        view.setOutAnimation(AnimUtils.Style.values()[a.getInt(carbon_outAnimation, 0)]);
+        int carbon_outAnimation = ids[1];
+        if (a.hasValue(carbon_outAnimation)) {
+            TypedValue typedValue = new TypedValue();
+            a.getValue(carbon_outAnimation, typedValue);
+            if (typedValue.resourceId != 0) {
+                view.setOutAnimator(AnimatorInflater.loadAnimator(((View) view).getContext(), typedValue.resourceId));
+            } else {
+                view.setOutAnimator(AnimUtils.Style.values()[typedValue.data].getOutAnimator());
+            }
+        }
     }
 
     public static void initElevation(ShadowView view, TypedArray a, int[] ids) {
@@ -208,9 +227,9 @@ public class Carbon {
      */
     public static int getThemeColor(Context context, int attr) {
         Resources.Theme theme = context.getTheme();
-        TypedValue typedvalueattr = new TypedValue();
-        theme.resolveAttribute(attr, typedvalueattr, true);
-        return typedvalueattr.resourceId != 0 ? context.getResources().getColor(typedvalueattr.resourceId) : typedvalueattr.data;
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(attr, typedValue, true);
+        return typedValue.resourceId != 0 ? context.getResources().getColor(typedValue.resourceId) : typedValue.data;
     }
 
     public static Context getThemedContext(Context context, AttributeSet attributeSet, int[] attrs, int defStyleAttr, int attr) {

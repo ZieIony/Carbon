@@ -140,8 +140,7 @@ public class FlagsScrollView extends FrameLayout {
     }
 
     /**
-     * @return The maximum amount this scroll view will scroll in response to
-     * an arrow event.
+     * @return The maximum amount this scroll view will scroll in response to an arrow event.
      */
     public int getMaxScrollAmount() {
         return (int) (MAX_SCROLL_FACTOR * (getBottom() - getTop()));
@@ -622,15 +621,11 @@ public class FlagsScrollView extends FrameLayout {
      * Finds the next focusable component that fits in the specified bounds.
      * </p>
      *
-     * @param topFocus look for a candidate is the one at the top of the bounds
-     *                 if topFocus is true, or at the bottom of the bounds if topFocus is
-     *                 false
-     * @param top      the top offset of the bounds in which a focusable must be
-     *                 found
-     * @param bottom   the bottom offset of the bounds in which a focusable must
-     *                 be found
-     * @return the next focusable component in the bounds or null if none can
-     * be found
+     * @param topFocus look for a candidate is the one at the top of the bounds if topFocus is true,
+     *                 or at the bottom of the bounds if topFocus is false
+     * @param top      the top offset of the bounds in which a focusable must be found
+     * @param bottom   the bottom offset of the bounds in which a focusable must be found
+     * @return the next focusable component in the bounds or null if none can be found
      */
     private View findFocusableViewInBounds(boolean topFocus, int top, int bottom) {
 
@@ -707,9 +702,8 @@ public class FlagsScrollView extends FrameLayout {
      * component is a good candidate for focus, this scrollview reclaims the
      * focus.</p>
      *
-     * @param direction the scroll direction: {@link android.view.View#FOCUS_UP}
-     *                  to go one page up or
-     *                  {@link android.view.View#FOCUS_DOWN} to go one page down
+     * @param direction the scroll direction: {@link android.view.View#FOCUS_UP} to go one page up
+     *                  or {@link android.view.View#FOCUS_DOWN} to go one page down
      * @return true if the key event is consumed by this method, false otherwise
      */
     public boolean pageScroll(int direction) {
@@ -743,9 +737,8 @@ public class FlagsScrollView extends FrameLayout {
      * component is a good candidate for focus, this scrollview reclaims the
      * focus.</p>
      *
-     * @param direction the scroll direction: {@link android.view.View#FOCUS_UP}
-     *                  to go the top of the view or
-     *                  {@link android.view.View#FOCUS_DOWN} to go the bottom
+     * @param direction the scroll direction: {@link android.view.View#FOCUS_UP} to go the top of
+     *                  the view or {@link android.view.View#FOCUS_DOWN} to go the bottom
      * @return true if the key event is consumed by this method, false otherwise
      */
     public boolean fullScroll(int direction) {
@@ -773,8 +766,8 @@ public class FlagsScrollView extends FrameLayout {
      * to a component visible in this area. If no component can be focused in
      * the new visible area, the focus is reclaimed by this ScrollView.</p>
      *
-     * @param direction the scroll direction: {@link android.view.View#FOCUS_UP}
-     *                  to go upward, {@link android.view.View#FOCUS_DOWN} to downward
+     * @param direction the scroll direction: {@link android.view.View#FOCUS_UP} to go upward,
+     *                  {@link android.view.View#FOCUS_DOWN} to downward
      * @param top       the top offset of the new area to be made visible
      * @param bottom    the bottom offset of the new area to be made visible
      * @return true if the key event is consumed by this method, false otherwise
@@ -807,8 +800,7 @@ public class FlagsScrollView extends FrameLayout {
     /**
      * Handle scrolling in response to an up or down arrow click.
      *
-     * @param direction The direction corresponding to the arrow key that was
-     *                  pressed
+     * @param direction The direction corresponding to the arrow key that was pressed
      * @return True if we consumed the event, false otherwise
      */
     public boolean arrowScroll(int direction) {
@@ -863,16 +855,15 @@ public class FlagsScrollView extends FrameLayout {
     }
 
     /**
-     * @return whether the descendant of this scroll view is scrolled off
-     * screen.
+     * @return whether the descendant of this scroll view is scrolled off screen.
      */
     private boolean isOffScreen(View descendant) {
         return !isWithinDeltaOfScreen(descendant, 0, getHeight());
     }
 
     /**
-     * @return whether the descendant of this scroll view is within delta
-     * pixels of being on the screen.
+     * @return whether the descendant of this scroll view is within delta pixels of being on the
+     * screen.
      */
     private boolean isWithinDeltaOfScreen(View descendant, int delta, int height) {
         descendant.getDrawingRect(mTempRect);
@@ -1241,9 +1232,9 @@ public class FlagsScrollView extends FrameLayout {
     /**
      * Fling the scroll view
      *
-     * @param velocityY The initial velocity in the Y direction. Positive
-     *                  numbers mean that the finger/cursor is moving down the screen,
-     *                  which means we want to scroll towards the top.
+     * @param velocityY The initial velocity in the Y direction. Positive numbers mean that the
+     *                  finger/cursor is moving down the screen, which means we want to scroll
+     *                  towards the top.
      */
     public void fling(int velocityY) {
         if (getChildCount() > 0) {
@@ -1293,7 +1284,7 @@ public class FlagsScrollView extends FrameLayout {
             if (getChildAt(i) instanceof ScrollChild) {
                 ScrollChild scrollChild = (ScrollChild) getChildAt(i);
                 int nestedScrollY = scrollChild.getNestedScrollY();
-                dy-=scrollChild.onNestedScrollByY(dy);
+                dy -= scrollChild.onNestedScrollByY(dy);
             }
         }
         super.scrollTo(x, currY + dy);

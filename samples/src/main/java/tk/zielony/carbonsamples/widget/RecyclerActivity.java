@@ -12,7 +12,7 @@ import carbon.recycler.ItemTouchHelper;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
-import tk.zielony.carbonsamples.applibrary.FruitAdapter;
+import tk.zielony.carbonsamples.library.FruitAdapter;
 
 public class RecyclerActivity extends SamplesActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));

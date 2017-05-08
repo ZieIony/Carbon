@@ -3,22 +3,22 @@
 
     <item
         android:title="Fender"
-        android:icon="@raw/ic_face_24px" />
+        android:icon="@raw/ic_face_24px"/>
 
     <item
         android:title="Schecter"
-        android:icon="@raw/ic_print_24px" />
+        android:icon="@raw/ic_print_24px"/>
 
     <item
         android:title="Gibson"
-        android:icon="@raw/ic_dns_24px" />
+        android:icon="@raw/ic_dns_24px"/>
 
     <item
         android:title="Hagström"
-        android:icon="@raw/ic_airplanemode_on_24px" />
+        android:icon="@raw/ic_airplanemode_on_24px"/>
 
     <item
         android:title="Ibanez"
-        android:icon="@raw/ic_search_24px" />
+        android:icon="@raw/ic_search_24px"/>
 
 </menu>

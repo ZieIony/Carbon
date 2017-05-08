@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.TextView
         style="@style/sectionDescription"
-        android:text="Carbon adds 'carbon_htmlText' attribute to all text widgets. With it you can set html text right from xml" />
+        android:text="Carbon adds 'carbon_htmlText' attribute to all text widgets. With it you can set html text right from xml"/>
 
     <carbon.widget.Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_margin"
-        app:carbon_htmlText="&lt;font color='#FF0000'&gt;O&lt;/font&gt;&lt;font color='#00FF00'&gt;K&lt;/font&gt;" />
+        app:carbon_htmlText="&lt;font color='#FF0000'&gt;O&lt;/font&gt;&lt;font color='#00FF00'&gt;K&lt;/font&gt;"/>
 
     <carbon.widget.TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_margin"
-        app:carbon_htmlText="&lt;a href='github.com/zieiony/carbon'>github.com/zieiony/carbon" />
+        app:carbon_htmlText="&lt;a href='github.com/zieiony/carbon'>github.com/zieiony/carbon"/>
 
     <carbon.widget.CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_margin"
-        app:carbon_htmlText="&lt;blockquote>to be or not to be, that is the question" />
+        app:carbon_htmlText="&lt;blockquote>to be or not to be, that is the question"/>
 
     <carbon.widget.EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_margin"
-        app:carbon_htmlText="@string/samplehtml" />
+        app:carbon_htmlText="@string/samplehtml"/>
 
 </carbon.widget.LinearLayout>

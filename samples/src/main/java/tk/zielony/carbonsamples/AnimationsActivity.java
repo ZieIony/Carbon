@@ -1,34 +1,29 @@
 package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
+import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.animation.ImageFadeActivity;
 import tk.zielony.carbonsamples.animation.RippleActivity;
 import tk.zielony.carbonsamples.animation.WidgetAnimationsActivity;
 
 
-public class AnimationsActivity extends SamplesActivity {
+public class AnimationsActivity extends SampleListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
 
         Samples.initToolbar(this, getString(R.string.animationsActivity_title));
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
-        ViewModel[] items = new ViewModel[]{
-                new ViewModel(WidgetAnimationsActivity.class, getString(R.string.widgetAnimationsActivity_title)),
-                new ViewModel(ImageFadeActivity.class, getString(R.string.imageFadeActivity_title)),
-                new ViewModel(RippleActivity.class, getString(R.string.rippleActivity_title))
-        };
-        recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
-                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new MainListAdapter(items));
+        setItems(new Object[]{
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
+                "Carbon adds easy visibility animations, brightness/saturation fade for images, backports the touch ripple and the circular reveal animation",
+                new SampleActivityItem(WidgetAnimationsActivity.class, getString(R.string.widgetAnimationsActivity_title)),
+                new SampleActivityItem(ImageFadeActivity.class, getString(R.string.imageFadeActivity_title)),
+                new SampleActivityItem(RippleActivity.class, getString(R.string.rippleActivity_title)),
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+        });
     }
 
 }

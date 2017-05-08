@@ -54,7 +54,7 @@ public class CarbonResources extends Resources {
         super(assets, metrics, config);
         registerDrawable(RippleDrawableICS.class, "ripple");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP) {
             IMPL = new LollipopDrawableImpl();
         } else {
             IMPL = new BaseDrawableImpl();
@@ -163,7 +163,7 @@ public class CarbonResources extends Resources {
             throw new XmlPullParserException("Error while inflating drawable resource", parser, e);
         }
         if (drawable == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Carbon.IS_LOLLIPOP) {
                 return Drawable.createFromXmlInner(this, parser, attrs, theme);
             } else {
                 return Drawable.createFromXmlInner(this, parser, attrs);
@@ -287,26 +287,24 @@ public class CarbonResources extends Resources {
 
         String file = value.string.toString();
 
-        final Drawable dr;
+        Drawable dr = null;
 
         if (file.endsWith(".xml")) {
             try {
                 XmlResourceParser rp = getAssets().openXmlResourceParser(value.assetCookie, file);
-                dr = createFromXml(rp, theme);
+                dr = LollipopDrawablesCompat.createFromXml(this, rp, theme);
                 rp.close();
             } catch (Exception e) {
-                Log.w(LollipopDrawablesCompat.class.getSimpleName(), "Failed to load drawable resource, " + "using a fallback...", e);
-                return getDrawable(value.resourceId);
+                Log.w(LollipopDrawablesCompat.class.getSimpleName(), "Failed to load drawable resource", e);
             }
 
         } else {
             try {
                 InputStream is = getAssets().openNonAssetFd(value.assetCookie, file).createInputStream();
-                dr = createFromResourceStream(value, is, file, null);
+                dr = LollipopDrawablesCompat.createFromResourceStream(this, value, is, file, null);
                 is.close();
             } catch (Exception e) {
-                Log.w(LollipopDrawablesCompat.class.getSimpleName(), "Failed to load drawable resource, " + "using a fallback...", e);
-                return getDrawable(value.resourceId);
+                Log.w(LollipopDrawablesCompat.class.getSimpleName(), "Failed to load drawable resource", e);
             }
         }
 
@@ -375,7 +373,7 @@ public class CarbonResources extends Resources {
 
     @Nullable
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Drawable getvDrawableForDensity(int resId, int density, Theme theme) {
+    public Drawable getDrawableForDensity(int resId, int density, Theme theme) {
         if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
             return new VectorDrawable(this, resId);
         } else {
@@ -385,7 +383,7 @@ public class CarbonResources extends Resources {
 
     @Nullable
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Drawable getvDrawableForDensity(int resId, int density) throws NotFoundException {
+    public Drawable getDrawableForDensity(int resId, int density) throws NotFoundException {
         if (resId != 0 && getResourceTypeName(resId).equals("raw")) {
             return new VectorDrawable(this, resId);
         } else {

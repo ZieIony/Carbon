@@ -39,9 +39,7 @@ public class SelectDialogActivity extends SamplesActivity {
                     if (titleText.length() > 0)
                         dialog.setTitle(titleText.getText());
                     dialog.setItems(items);
-                    dialog.setOnItemClickedListener((view1, position) -> {
-                        selectedItem = items[position];
-                    });
+                    dialog.setOnItemClickedListener((view1, item, position) -> selectedItem = item);
                     dialog.setSelectedItem(selectedItem);
                     dialog.show();
                     break;

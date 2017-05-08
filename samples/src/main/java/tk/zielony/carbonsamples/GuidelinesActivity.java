@@ -1,29 +1,24 @@
 package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 
-import carbon.widget.RecyclerView;
+import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.guidelines.ButtonsUsageActivity;
 
-public class GuidelinesActivity extends SamplesActivity {
+public class GuidelinesActivity extends SampleListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
 
         Samples.initToolbar(this, getString(R.string.guidelinesActivity_title));
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
-        ViewModel[] items = new ViewModel[]{
-                new ViewModel(ButtonsUsageActivity.class, getString(R.string.buttonsUsageActivity_title))
-        };
-        recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
-                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new MainListAdapter(items));
+        setItems(new Object[]{
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
+                "Sample screens taken from Material Design guidelines",
+                new SampleActivityItem(ButtonsUsageActivity.class, getString(R.string.buttonsUsageActivity_title)),
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+        });
     }
 
 }

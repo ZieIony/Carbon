@@ -1,8 +1,6 @@
 package tk.zielony.carbonsamples;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -73,10 +71,4 @@ public class Samples {
         return result;
     }
 
-    public static void applyTheme(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(ColorsActivity.THEME, Context.MODE_PRIVATE);
-        context.setTheme(ColorsActivity.styles[preferences.getInt(ColorsActivity.STYLE, 1)].value);
-        context.getTheme().applyStyle(ColorsActivity.primary[preferences.getInt(ColorsActivity.PRIMARY, 8)].value, true);
-        context.getTheme().applyStyle(ColorsActivity.accents[preferences.getInt(ColorsActivity.ACCENT, 14)].value, true);
-    }
 }

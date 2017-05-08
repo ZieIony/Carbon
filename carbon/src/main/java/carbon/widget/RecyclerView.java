@@ -10,7 +10,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,8 +36,8 @@ import carbon.shadow.ShadowView;
 
 public class RecyclerView extends android.support.v7.widget.RecyclerView implements TintedView, VisibleView {
 
-    public interface OnItemClickedListener {
-        void onItemClicked(View view, int position);
+    public interface OnItemClickedListener<Type> {
+        void onItemClicked(View view, Type type, int position);
     }
 
     private EdgeEffect leftGlow;
@@ -46,6 +45,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     private int mTouchSlop;
     EdgeEffect topGlow;
     EdgeEffect bottomGlow;
+
+    private float edgeEffectOffsetTop;
+    private float edgeEffectOffsetBottom;
+
     private boolean drag = true;
     private float prevY;
     private int overscrollMode;
@@ -92,8 +95,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
             } else if (attr == R.styleable.RecyclerView_android_divider) {
                 Drawable drawable = a.getDrawable(attr);
                 float height = a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0);
-                if (drawable != null && height > 0)
+                if (drawable != null && height > 0) {
                     setDivider(drawable, (int) height);
+                }
+            } else if (attr == R.styleable.RecyclerView_edgeEffectOffsetTop) {
+                setEdgeEffectOffsetTop(a.getDimension(attr, 0));
+            } else if (attr == R.styleable.RecyclerView_edgeEffectOffsetBottom) {
+                setEdgeEffectOffsetBottom(a.getDimension(attr, 0));
             }
         }
 
@@ -207,6 +215,14 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
         }
     }
 
+    public void setEdgeEffectOffsetTop(float edgeEffectOffsetTop) {
+        this.edgeEffectOffsetTop = edgeEffectOffsetTop;
+    }
+
+    public void setEdgeEffectOffsetBottom(float edgeEffectOffsetBottom) {
+        this.edgeEffectOffsetBottom = edgeEffectOffsetBottom;
+    }
+
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
@@ -247,7 +263,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     @Override
     public boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
         // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -455,7 +471,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 final int restoreCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
 
-                canvas.translate(getPaddingLeft(), Math.min(0, scrollY));
+                canvas.translate(getPaddingLeft(), edgeEffectOffsetTop + Math.min(0, scrollY));
                 topGlow.setSize(width, getHeight());
                 if (topGlow.draw(canvas))
                     invalidate();
@@ -466,8 +482,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
                 final int height = getHeight();
 
-                canvas.translate(-width + getPaddingLeft(),
-                        height);
+                canvas.translate(-width + getPaddingLeft(), -edgeEffectOffsetBottom + height);
                 canvas.rotate(180, width, 0);
                 bottomGlow.setSize(width, height);
                 if (bottomGlow.draw(canvas))

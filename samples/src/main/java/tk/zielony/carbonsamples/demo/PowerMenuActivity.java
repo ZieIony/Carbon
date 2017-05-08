@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.demo;
 
-import tk.zielony.carbonsamples.SamplesActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -8,7 +7,6 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 
 import com.annimon.stream.Stream;
-import com.annimon.stream.function.Consumer;
 
 import java.util.List;
 
@@ -17,6 +15,7 @@ import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SamplesActivity;
 
 public class PowerMenuActivity extends SamplesActivity {
     boolean vibration = false, volume = true, airplaneMode = false;

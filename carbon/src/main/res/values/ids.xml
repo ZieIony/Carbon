@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="carbon_mask" type="id" />
+    <item name="carbon_mask" type="id"/>
     <item name="carbon_input" type="id">1</item>
 </resources>

@@ -20,201 +20,210 @@ public class AnimUtils {
     private AnimUtils() {
     }
 
+    interface AnimatorFactory {
+        Animator getAnimator();
+    }
+
     public enum Style {
-        None, Fade, Pop, Fly, BrightnessSaturationFade, ProgressWidth
-    }
+        None(() -> null, () -> null),
+        Fade(AnimUtils::getFadeInAnimator, AnimUtils::getFadeOutAnimator),
+        Pop(AnimUtils::getPopInAnimator, AnimUtils::getPopOutAnimator),
+        Fly(AnimUtils::getFlyInAnimator, AnimUtils::getFlyOutAnimator),
+        BrightnessSaturationFade(AnimUtils::getBrightnessSaturationFadeInAnimator, AnimUtils::getBrightnessSaturationFadeOutAnimator),
+        ProgressWidth(AnimUtils::getProgressWidthInAnimator, AnimUtils::getProgressWidthOutAnimator);
 
-    public static ValueAnimator animateIn(View view, Style style, Animator.AnimatorListener listener) {
-        switch (style) {
-            case Fade:
-                return fadeIn(view, listener);
-            case Pop:
-                return popIn(view, listener);
-            case Fly:
-                return flyIn(view, listener);
-            case BrightnessSaturationFade:
-                return view instanceof ImageView ? brightnessSaturationFadeIn((ImageView) view, listener) : fadeIn(view, listener);
-            case ProgressWidth:
-                return view instanceof ProgressBar ? progressWidthIn((ProgressBar) view, listener) : fadeIn(view, listener);
+        private AnimatorFactory inAnimator;
+
+        private AnimatorFactory outAnimator;
+
+        Style(AnimatorFactory inAnimator, AnimatorFactory outAnimator) {
+            this.inAnimator = inAnimator;
+            this.outAnimator = outAnimator;
         }
-        if (listener != null)
-            listener.onAnimationEnd(null);
-        return null;
-    }
 
-    public static ValueAnimator animateOut(View view, Style style, Animator.AnimatorListener listener) {
-        switch (style) {
-            case Fade:
-                return fadeOut(view, listener);
-            case Pop:
-                return popOut(view, listener);
-            case Fly:
-                return flyOut(view, listener);
-            case BrightnessSaturationFade:
-                return view instanceof ImageView ? brightnessSaturationFadeOut((ImageView) view, listener) : fadeOut(view, listener);
-            case ProgressWidth:
-                return view instanceof ProgressBar ? progressWidthOut((ProgressBar) view, listener) : fadeOut(view, listener);
+        public Animator getInAnimator() {
+            return inAnimator.getAnimator();
         }
-        if (listener != null)
-            listener.onAnimationEnd(null);
-        return null;
+
+        public Animator getOutAnimator() {
+            return outAnimator.getAnimator();
+        }
     }
 
-    public static ValueAnimator fadeIn(final View view, Animator.AnimatorListener listener) {
-        if (view.getVisibility() != View.VISIBLE)
-            view.setAlpha(0);
-        float start = view.getAlpha();
-        ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
-        animator.setDuration((long) (200 * (1 - start)));
+    public static ValueAnimator getFadeInAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new DecelerateInterpolator());
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            View view = animator.getTarget();
+            if (view.getVisibility() != View.VISIBLE)
+                view.setAlpha(0);
+            float start = view.getAlpha();
+            animator.setFloatValues(start, 1);
+            animator.setDuration((long) (200 * (1 - start)));
+        });
         animator.addUpdateListener(valueAnimator -> {
+            View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator fadeOut(final View view, Animator.AnimatorListener listener) {
-        float start = view.getAlpha();
-        ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (200 * start));
+    public static ValueAnimator getFadeOutAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new DecelerateInterpolator());
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            View view = animator.getTarget();
+            float start = view.getAlpha();
+            animator.setFloatValues(start, 0);
+            animator.setDuration((long) (200 * start));
+        });
         animator.addUpdateListener(valueAnimator -> {
+            View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator popIn(final View view, Animator.AnimatorListener listener) {
-        if (view.getVisibility() != View.VISIBLE)
-            view.setAlpha(0);
-        float start = view.getAlpha();
-        ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
-        animator.setDuration((long) (200 * (1 - start)));
+    public static Animator getPopInAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new DecelerateInterpolator());
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            View view = animator.getTarget();
+            if (view.getVisibility() != View.VISIBLE)
+                view.setAlpha(0);
+            float start = view.getAlpha();
+            animator.setFloatValues(start, 1);
+            animator.setDuration((long) (200 * (1 - start)));
+        });
         animator.addUpdateListener(valueAnimator -> {
+            View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setScaleX((Float) valueAnimator.getAnimatedValue());
             view.setScaleY((Float) valueAnimator.getAnimatedValue());
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator popOut(final View view, Animator.AnimatorListener listener) {
-        float start = view.getAlpha();
-        ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (200 * start));
+    public static Animator getPopOutAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new DecelerateInterpolator());
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            View view = animator.getTarget();
+            float start = view.getAlpha();
+            animator.setFloatValues(start, 0);
+            animator.setDuration((long) (200 * start));
+        });
         animator.addUpdateListener(valueAnimator -> {
+            View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setScaleX((Float) valueAnimator.getAnimatedValue());
             view.setScaleY((Float) valueAnimator.getAnimatedValue());
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator flyIn(final View view, Animator.AnimatorListener listener) {
-        if (view.getVisibility() != View.VISIBLE)
-            view.setAlpha(0);
-        float start = view.getAlpha();
-        ValueAnimator animator = ValueAnimator.ofFloat(start, 1);
-        animator.setDuration((long) (200 * (1 - start)));
+    public static ValueAnimator getFlyInAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new DecelerateInterpolator());
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            View view = animator.getTarget();
+            if (view.getVisibility() != View.VISIBLE)
+                view.setAlpha(0);
+            float start = view.getAlpha();
+            animator.setFloatValues(start, 1);
+            animator.setDuration((long) (200 * (1 - start)));
+        });
         animator.addUpdateListener(valueAnimator -> {
+            View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setTranslationY(Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator flyOut(final View view, Animator.AnimatorListener listener) {
-        float start = view.getAlpha();
-        ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (200 * start));
+    public static ValueAnimator getFlyOutAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new DecelerateInterpolator());
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            View view = animator.getTarget();
+            float start = view.getAlpha();
+            animator.setFloatValues(start, 0);
+            animator.setDuration((long) (200 * start));
+        });
         animator.addUpdateListener(valueAnimator -> {
+            View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setTranslationY(Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
             if (view.getParent() != null)
                 ((View) view.getParent()).postInvalidate();
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator progressWidthIn(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
-        final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
-        float start = circularProgress.getBarWidth();
-        ValueAnimator animator = ValueAnimator.ofFloat(circularProgress.getBarWidth(), arcWidth);
-        animator.setDuration((long) (100 * (arcWidth - start)));
+    public static ValueAnimator getProgressWidthInAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new DecelerateInterpolator());
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            ProgressBar circularProgress = (ProgressBar) animator.getTarget();
+            final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
+            float start = circularProgress.getBarWidth();
+            animator.setFloatValues(circularProgress.getBarWidth(), arcWidth);
+            animator.setDuration((long) (100 * (arcWidth - start)));
+        });
         animator.addUpdateListener(valueAnimator -> {
+            ProgressBar circularProgress = (ProgressBar) animator.getTarget();
+            final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
             float value = (Float) valueAnimator.getAnimatedValue();
             circularProgress.setBarWidth(value);
             circularProgress.setBarPadding(arcWidth - value);
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator progressWidthOut(final ProgressBar circularProgress, Animator.AnimatorListener listener) {
-        final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
-        float start = circularProgress.getBarWidth();
-        ValueAnimator animator = ValueAnimator.ofFloat(start, 0);
-        animator.setDuration((long) (100 * start));
+    public static Animator getProgressWidthOutAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new DecelerateInterpolator());
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            ProgressBar circularProgress = (ProgressBar) animator.getTarget();
+            float start = circularProgress.getBarWidth();
+            animator.setFloatValues(start, 0);
+            animator.setDuration((long) (100 * start));
+        });
         animator.addUpdateListener(valueAnimator -> {
+            ProgressBar circularProgress = (ProgressBar) animator.getTarget();
+            final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
             float value = (Float) valueAnimator.getAnimatedValue();
             circularProgress.setBarWidth(value);
             circularProgress.setBarPadding(arcWidth - value);
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator brightnessSaturationFadeIn(final ImageView imageView, Animator.AnimatorListener listener) {
-        final ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+    public static Animator getBrightnessSaturationFadeInAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         final AccelerateDecelerateInterpolator interpolator = new AccelerateDecelerateInterpolator();
         animator.setInterpolator(interpolator);
-        animator.setDuration(800);
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            animator.setFloatValues(0, 1);  // TODO: start values
+            animator.setDuration(800);
+        });
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             ColorMatrix saturationMatrix = new ColorMatrix();
             ColorMatrix brightnessMatrix = new ColorMatrix();
 
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                ImageView imageView = (ImageView) animator.getTarget();
                 float fraction = animator.getAnimatedFraction();
 
                 saturationMatrix.setSaturation((Float) animator.getAnimatedValue());
@@ -230,23 +239,24 @@ public class AnimUtils {
                     ((View) imageView.getParent()).postInvalidate();
             }
         });
-        animator.start();
         return animator;
     }
 
-    public static ValueAnimator brightnessSaturationFadeOut(final ImageView imageView, Animator.AnimatorListener listener) {
-        final ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
+    public static Animator getBrightnessSaturationFadeOutAnimator() {
+        ViewAnimator animator = new ViewAnimator();
         final AccelerateDecelerateInterpolator interpolator = new AccelerateDecelerateInterpolator();
         animator.setInterpolator(interpolator);
-        animator.setDuration(800);
-        if (listener != null)
-            animator.addListener(listener);
+        animator.setOnSetupValuesListener(() -> {
+            animator.setFloatValues(1, 0);
+            animator.setDuration(800);
+        });
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             ColorMatrix saturationMatrix = new ColorMatrix();
             ColorMatrix brightnessMatrix = new ColorMatrix();
 
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                ImageView imageView = (ImageView) animator.getTarget();
                 float fraction = animator.getAnimatedFraction();
 
                 saturationMatrix.setSaturation((Float) animator.getAnimatedValue());
@@ -262,7 +272,6 @@ public class AnimUtils {
                     ((View) imageView.getParent()).postInvalidate();
             }
         });
-        animator.start();
         return animator;
     }
 

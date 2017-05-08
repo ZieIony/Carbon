@@ -1,54 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.Button
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
         android:text="Background"
         app:carbon_rippleColor="#42ffffff"
         app:carbon_rippleStyle="background"
-        app:carbon_touchMargin="6dp" />
+        app:carbon_touchMargin="6dp"/>
 
     <carbon.widget.Button
         android:layout_width="200dp"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
         android:text="Radius = 50dp"
         app:carbon_rippleColor="#42ffffff"
         app:carbon_rippleRadius="50dp"
         app:carbon_rippleStyle="background"
         app:carbon_rippleHotspot="true"
-        app:carbon_touchMargin="6dp" />
+        app:carbon_touchMargin="6dp"/>
 
     <carbon.widget.Button
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
-        android:background="@null"
+        style="@style/carbon_Button.Flat"
         android:text="Borderless"
-        android:textColor="#ff000000"
-        app:carbon_elevation="0dp"
-        app:carbon_rippleColor="#42ff0000"
         app:carbon_rippleStyle="borderless"
-        app:carbon_touchMargin="6dp" />
+        app:carbon_touchMargin="6dp"/>
 
     <carbon.widget.Button
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
         android:text="Over"
         app:carbon_rippleColor="#42ffffff"
         app:carbon_rippleStyle="over"
-        app:carbon_touchMargin="6dp" />
+        app:carbon_touchMargin="6dp"/>
 
     <carbon.widget.ImageView
         android:layout_width="100dp"
@@ -59,5 +56,5 @@
         android:src="@drawable/mazda"
         app:carbon_cornerRadius="0dp"
         app:carbon_rippleColor="#42ffffff"
-        app:carbon_rippleStyle="over" />
+        app:carbon_rippleStyle="over"/>
 </carbon.widget.LinearLayout>

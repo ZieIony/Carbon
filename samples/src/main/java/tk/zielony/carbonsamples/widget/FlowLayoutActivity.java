@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import carbon.animation.AnimUtils;
 import carbon.widget.Chip;
 import carbon.widget.FlowLayout;
 import tk.zielony.carbonsamples.R;
@@ -42,7 +41,7 @@ public class FlowLayoutActivity extends SamplesActivity {
             if (Math.random() > 0.5) {
                 chip.setRemovable(true);
                 chip.setOnRemoveListener(() -> {
-                    chip.setOutAnimation(AnimUtils.Style.Fade);
+                    //       chip.setOutAnimator(AnimUtils.Style.Fade);
                     chip.setVisibility(View.GONE);
                 });
             } else {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <include layout="@layout/view_debugtoolbar"/>
 
     <tk.zielony.carbonsamples.feature.ResizeLayout
         android:layout_width="match_parent"
@@ -21,13 +21,13 @@
             android:textColor="@color/carbon_text_primary_dark"
             app:carbon_autoSizeMaxTextSize="30sp"
             app:carbon_autoSizeMinTextSize="15sp"
-            app:carbon_autoSizeText="uniform" />
+            app:carbon_autoSizeText="uniform"/>
 
     </tk.zielony.carbonsamples.feature.ResizeLayout>
 
     <carbon.widget.TextView
         android:id="@+id/textSize"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 </carbon.widget.LinearLayout>

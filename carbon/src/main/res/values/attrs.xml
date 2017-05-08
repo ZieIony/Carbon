@@ -93,7 +93,7 @@
     <attr name="carbon_touchMarginRight" format="dimension"/>
     <attr name="carbon_touchMarginBottom" format="dimension"/>
 
-    <attr name="carbon_inAnimation" format="enum">
+    <attr name="carbon_inAnimation" format="enum|reference">
         <enum name="none" value="0"/>
         <enum name="fade" value="1"/>
         <enum name="pop" value="2"/>
@@ -102,7 +102,7 @@
         <enum name="progressWidth" value="5"/>
     </attr>
 
-    <attr name="carbon_outAnimation" format="enum">
+    <attr name="carbon_outAnimation" format="enum|reference">
         <enum name="none" value="0"/>
         <enum name="fade" value="1"/>
         <enum name="pop" value="2"/>
@@ -262,6 +262,8 @@
         <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="android:textAppearance"/>
+        <attr name="android:singleLine"/>
+        <attr name="android:maxLines"/>
         <attr name="android:textAllCaps"/>
 
         <attr name="carbon_cornerRadius"/>
@@ -906,6 +908,7 @@
         <attr name="carbon_fontFamily"/>
         <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
+        <attr name="android:textAllCaps"/>
     </declare-styleable>
 
     <declare-styleable name="ScrollView">
@@ -965,6 +968,9 @@
         <attr name="carbon_headerParallax"/>
         <attr name="android:divider"/>
         <attr name="android:dividerHeight"/>
+
+        <attr name="edgeEffectOffsetTop" format="dimension"/>
+        <attr name="edgeEffectOffsetBottom" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="CheckedTextView">

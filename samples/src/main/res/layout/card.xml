@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <tk.zielony.carbonsamples.applibrary.PicassoView
+        <tk.zielony.carbonsamples.library.PicassoView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="150dp"

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_cornerRadius="0dp"
-            app:carbon_elevation="2dp" />
+            app:carbon_elevation="4dp"/>
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -29,7 +29,7 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="0dp"
             app:carbon_elevation="4dp"
-            app:carbon_elevationShadowColor="@color/carbon_black" />
+            app:carbon_elevationShadowColor="@color/carbon_black"/>
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -38,7 +38,7 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="0dp"
             app:carbon_elevation="6dp"
-            app:carbon_elevationShadowColor="@color/carbon_amber_700" />
+            app:carbon_elevationShadowColor="@color/carbon_amber_700"/>
 
     </carbon.widget.LinearLayout>
 
@@ -53,7 +53,7 @@
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_cornerRadius="2dp"
-            app:carbon_elevation="2dp" />
+            app:carbon_elevation="4dp"/>
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -62,7 +62,7 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="2dp"
             app:carbon_elevation="4dp"
-            app:carbon_elevationShadowColor="@color/carbon_black" />
+            app:carbon_elevationShadowColor="@color/carbon_black"/>
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -71,7 +71,7 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="2dp"
             app:carbon_elevation="6dp"
-            app:carbon_elevationShadowColor="@color/carbon_red_700" />
+            app:carbon_elevationShadowColor="@color/carbon_red_700"/>
 
     </carbon.widget.LinearLayout>
 
@@ -87,7 +87,7 @@
             android:background="#ffffff"
             app:carbon_backgroundTint="#ffffffff"
             app:carbon_cornerRadius="10dp"
-            app:carbon_elevation="2dp" />
+            app:carbon_elevation="4dp"/>
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -96,7 +96,7 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="10dp"
             app:carbon_elevation="4dp"
-            app:carbon_elevationShadowColor="@color/carbon_black" />
+            app:carbon_elevationShadowColor="@color/carbon_black"/>
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -105,7 +105,7 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="10dp"
             app:carbon_elevation="6dp"
-            app:carbon_elevationShadowColor="@color/carbon_green_700" />
+            app:carbon_elevationShadowColor="@color/carbon_green_700"/>
 
     </carbon.widget.LinearLayout>
 
@@ -120,7 +120,7 @@
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_cornerRadius="28dp"
-            app:carbon_elevation="2dp" />
+            app:carbon_elevation="4dp"/>
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -129,7 +129,7 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="28dp"
             app:carbon_elevation="4dp"
-            app:carbon_elevationShadowColor="@color/carbon_black" />
+            app:carbon_elevationShadowColor="@color/carbon_black"/>
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -138,7 +138,7 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="28dp"
             app:carbon_elevation="6dp"
-            app:carbon_elevationShadowColor="@color/carbon_blue_700" />
+            app:carbon_elevationShadowColor="@color/carbon_blue_700"/>
 
     </carbon.widget.LinearLayout>
 

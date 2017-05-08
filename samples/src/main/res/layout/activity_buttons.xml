@@ -18,6 +18,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <carbon.widget.ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/ic_android_black_24dp"/>
+
             <carbon.widget.TextView
                 style="@style/sectionDescription"
                 android:text="Plain buttons with different styles"/>

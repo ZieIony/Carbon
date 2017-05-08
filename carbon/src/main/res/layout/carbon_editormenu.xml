@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/carbon_menuContainer"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/carbon_padding"
-    android:visibility="invisible"
-    app:carbon_inAnimation="fade"
-    app:carbon_outAnimation="fade">
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/carbon_menuContainer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/carbon_padding"
+                            android:visibility="invisible"
+                            app:carbon_inAnimation="fade"
+                            app:carbon_outAnimation="fade">
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_menuContent"
@@ -27,7 +27,7 @@
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
             android:paddingRight="@dimen/carbon_padding"
-            android:text="cut" />
+            android:text="cut"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_copy"
@@ -37,7 +37,7 @@
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
             android:paddingRight="@dimen/carbon_padding"
-            android:text="copy" />
+            android:text="copy"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_paste"
@@ -47,7 +47,7 @@
             android:minWidth="0dp"
             android:paddingLeft="@dimen/carbon_padding"
             android:paddingRight="@dimen/carbon_padding"
-            android:text="paste" />
+            android:text="paste"/>
 
         <carbon.widget.Button
             android:id="@+id/carbon_selectAll"
@@ -57,6 +57,6 @@
             android:minWidth="0dp"
             android:text="select all"
             android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding" />
+            android:paddingRight="@dimen/carbon_padding"/>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>
