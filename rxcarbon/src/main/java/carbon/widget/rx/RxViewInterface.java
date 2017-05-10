@@ -1,10 +1,5 @@
 package carbon.widget.rx;
 
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
-import static android.os.Build.VERSION_CODES.M;
-import static com.jakewharton.rxbinding2.internal.Functions.CALLABLE_ALWAYS_TRUE;
-import static com.jakewharton.rxbinding2.internal.Functions.PREDICATE_ALWAYS_TRUE;
-
 import android.annotation.SuppressLint;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
@@ -13,15 +8,24 @@ import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.view.ViewAttachEvent;
 import com.jakewharton.rxbinding2.view.ViewLayoutChangeEvent;
 import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;
+
+import java.util.concurrent.Callable;
+
+import carbon.animation.AnimatedView;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
-import java.util.concurrent.Callable;
+
+import static android.os.Build.VERSION_CODES.JELLY_BEAN;
+import static android.os.Build.VERSION_CODES.M;
+import static com.jakewharton.rxbinding2.internal.Functions.CALLABLE_ALWAYS_TRUE;
+import static com.jakewharton.rxbinding2.internal.Functions.PREDICATE_ALWAYS_TRUE;
 
 @SuppressLint("NewApi")
 interface RxViewInterface {
@@ -191,21 +195,14 @@ interface RxViewInterface {
 
     @CheckResult
     @NonNull
-    default Consumer<? super Boolean> visibility() {
-        return visibility(View.GONE);
+    default Consumer<? super Integer> visibility() {
+        return (Consumer<Integer>) ((View) this)::setVisibility;
     }
 
     @CheckResult
     @NonNull
-    default Consumer<? super Boolean> visibility(final int visibilityWhenFalse) {
-        if (visibilityWhenFalse == View.VISIBLE) {
-            throw new IllegalArgumentException(
-                    "Setting visibility to VISIBLE when false would have no effect.");
-        }
-        if (visibilityWhenFalse != View.INVISIBLE && visibilityWhenFalse != View.GONE) {
-            throw new IllegalArgumentException("Must set visibility to INVISIBLE or GONE when false.");
-        }
-        return (Consumer<Boolean>) value -> ((View) this).setVisibility(value ? View.VISIBLE : visibilityWhenFalse);
+    default Consumer<? super Integer> animatedVisibility() {
+        return (Consumer<Integer>) ((AnimatedView) this)::animateVisibility;
     }
 
 }

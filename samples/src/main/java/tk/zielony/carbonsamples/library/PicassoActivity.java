@@ -1,11 +1,11 @@
 package tk.zielony.carbonsamples.library;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import carbon.widget.rx.Button;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
@@ -19,9 +19,9 @@ public class PicassoActivity extends SamplesActivity {
         Samples.initToolbar(this, getString(R.string.picassoActivity_title));
 
         final PicassoView image = (PicassoView) findViewById(R.id.image);
-        findViewById(R.id.button).setOnClickListener(view -> {
-            image.setVisibility(View.INVISIBLE);
-            Picasso.with(PicassoActivity.this).load("http://lorempixel.com/400/500/people/#" + System.currentTimeMillis()).into((Target) image);
+        Button button = (Button) findViewById(R.id.button);
+        button.clicks().subscribe(view -> {
+            Picasso.with(PicassoActivity.this).load("http://lorempixel.com/" + image.getWidth() + "/" + image.getHeight() + "/people/#" + System.currentTimeMillis()).into((Target) image);
         });
     }
 }

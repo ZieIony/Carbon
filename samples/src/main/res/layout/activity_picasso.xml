@@ -9,7 +9,7 @@
 
     <include layout="@layout/view_debugtoolbar"/>
 
-    <carbon.widget.Button
+    <carbon.widget.rx.Button
         android:id="@+id/button"
         android:text="load"
         android:layout_margin="@dimen/carbon_padding"
@@ -18,7 +18,6 @@
 
     <tk.zielony.carbonsamples.library.PicassoView
         android:id="@+id/image"
-        app:carbon_outAnimation="none"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

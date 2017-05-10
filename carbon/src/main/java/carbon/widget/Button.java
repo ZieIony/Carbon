@@ -268,7 +268,6 @@ public class Button extends android.widget.Button
 
     /**
      * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
-     * Shadows work faster when corner radius is less than 2.5dp.
      *
      * @return corner radius, equal to or greater than 0.
      */
@@ -278,7 +277,6 @@ public class Button extends android.widget.Button
 
     /**
      * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
-     * Shadows work faster when corner radius is less than 2.5dp.
      *
      * @param cornerRadius
      */
@@ -621,7 +619,7 @@ public class Button extends android.widget.Button
 
         float z = getElevation() + getTranslationZ();
         if (ambientShadow == null || ambientShadow.elevation != z || ambientShadow.cornerRadius != cornerRadius) {
-            ambientShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
+            ambientShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density / 4);
             spotShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
         }
 
@@ -642,15 +640,15 @@ public class Button extends android.widget.Button
         Matrix matrix = getMatrix();
 
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
-        canvas.translate(this.getLeft(), this.getTop() + z / 2);
-        canvas.concat(matrix);
-        spotShadow.draw(canvas, this, paint, shadowColorFilter);
-        canvas.restore();
-
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
         ambientShadow.draw(canvas, this, paint, shadowColorFilter);
+        canvas.restore();
+
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.translate(this.getLeft(), this.getTop() + z / 2);
+        canvas.concat(matrix);
+        spotShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
         if (saveCount != 0) {

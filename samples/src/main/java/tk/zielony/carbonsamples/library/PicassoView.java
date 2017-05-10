@@ -27,7 +27,7 @@ public class PicassoView extends ImageView implements Target {
     @Override
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
         setImageBitmap(bitmap);
-        setVisibility(View.VISIBLE);
+        animateVisibility(View.VISIBLE);
     }
 
     @Override
@@ -36,5 +36,6 @@ public class PicassoView extends ImageView implements Target {
 
     @Override
     public void onPrepareLoad(Drawable placeHolderDrawable) {
+        animateVisibility(View.INVISIBLE);
     }
 }

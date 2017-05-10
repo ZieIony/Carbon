@@ -1,11 +1,20 @@
 package tk.zielony.carbonsamples;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.annimon.stream.Stream;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import carbon.Carbon;
 import carbon.internal.DebugOverlay;
@@ -71,4 +80,27 @@ public class Samples {
         return result;
     }
 
+    public static Spannable colorSyntax(String text) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(text);
+
+        int quotedTextColor = Color.GREEN;
+        int keywordColor = Color.BLUE;
+
+        Pattern pattern = Pattern.compile("\"([^\"]*)\"");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            builder.setSpan(new ForegroundColorSpan(quotedTextColor), matcher.start(), matcher.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+
+        String[] keyword = new String[]{"wrap_content", "match_parent"};
+        Stream.of(keyword).forEach(k -> {
+            int index = 0;
+            while (index < text.length()) {
+                index = text.indexOf(k, index);
+                builder.setSpan(new ForegroundColorSpan(keywordColor), index, index + k.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                index += k.length();
+            }
+        });
+        return builder;
+    }
 }

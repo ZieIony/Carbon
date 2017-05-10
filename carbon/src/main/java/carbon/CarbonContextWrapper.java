@@ -11,7 +11,7 @@ public class CarbonContextWrapper extends ContextWrapper {
 
     public CarbonContextWrapper(Context base) {
         super(base);
-        resources = new CarbonResources(getAssets(), super.getResources().getDisplayMetrics(), super.getResources().getConfiguration());
+        resources = new CarbonResources(this, getAssets(), super.getResources().getDisplayMetrics(), super.getResources().getConfiguration());
     }
 
     @Override

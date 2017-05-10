@@ -541,7 +541,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
 
     private float elevation = 0;
     private float translationZ = 0;
-    private Shadow shadow;
+    private Shadow ambientShadow, spotShadow;
     private ColorStateList shadowColor;
     private PorterDuffColorFilter shadowColorFilter;
     private RectF shadowMaskRect = new RectF();
@@ -616,8 +616,10 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             return;
 
         float z = getElevation() + getTranslationZ();
-        if (shadow == null || shadow.elevation != z || shadow.cornerRadius != cornerRadius)
-            shadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
+        if (ambientShadow == null || ambientShadow.elevation != z || ambientShadow.cornerRadius != cornerRadius) {
+            ambientShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density / 4);
+            spotShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
+        }
 
         int saveCount = 0;
         boolean maskShadow = getBackground() != null && alpha != 1;
@@ -626,7 +628,9 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
         } else if (r) {
             saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
-            canvas.clipRect(getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius, getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
+            canvas.clipRect(
+                    getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius,
+                    getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
 
         paint.setAlpha((int) (Shadow.ALPHA * alpha));
@@ -634,15 +638,15 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
         Matrix matrix = getMatrix();
 
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
-        canvas.translate(this.getLeft(), this.getTop() + z / 2);
+        canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
-        shadow.draw(canvas, this, paint, shadowColorFilter);
+        ambientShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
-        canvas.translate(this.getLeft(), this.getTop());
+        canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
-        shadow.draw(canvas, this, paint, shadowColorFilter);
+        spotShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
         if (saveCount != 0) {

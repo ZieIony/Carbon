@@ -1,6 +1,7 @@
 package carbon;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -12,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,7 +31,6 @@ import java.util.Map;
 
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.LollipopDrawable;
-import carbon.drawable.ripple.LollipopDrawablesCompat;
 import carbon.drawable.ripple.RippleDrawableICS;
 
 public class CarbonResources extends Resources {
@@ -41,6 +42,7 @@ public class CarbonResources extends Resources {
     private final LongSparseArray<WeakReference<Drawable.ConstantState>> sColorDrawableCache = new LongSparseArray<>();
 
     private final IDrawable IMPL;
+    private final Context context;
 
     /**
      * Create a new Resources object on top of an existing set of assets in an
@@ -50,8 +52,9 @@ public class CarbonResources extends Resources {
      * @param metrics Current display metrics to consider when selecting/computing resource values.
      * @param config  Desired device configuration to consider when
      */
-    public CarbonResources(AssetManager assets, DisplayMetrics metrics, Configuration config) {
+    public CarbonResources(Context context, AssetManager assets, DisplayMetrics metrics, Configuration config) {
         super(assets, metrics, config);
+        this.context = context;
         registerDrawable(RippleDrawableICS.class, "ripple");
 
         if (Carbon.IS_LOLLIPOP) {
@@ -281,9 +284,8 @@ public class CarbonResources extends Resources {
     }
 
     private Drawable loadDrawableForCookie(TypedValue value, int id, Resources.Theme theme) {
-        if (value.string == null) {
+        if (value.string == null)
             throw new Resources.NotFoundException("Resource \"" + getResourceName(id) + "\" (" + Integer.toHexString(id) + ")  is not a Drawable (color or path): " + value);
-        }
 
         String file = value.string.toString();
 
@@ -292,19 +294,27 @@ public class CarbonResources extends Resources {
         if (file.endsWith(".xml")) {
             try {
                 XmlResourceParser rp = getAssets().openXmlResourceParser(value.assetCookie, file);
-                dr = LollipopDrawablesCompat.createFromXml(this, rp, theme);
+                dr = createFromXml(rp, theme);
                 rp.close();
             } catch (Exception e) {
-                Log.w(LollipopDrawablesCompat.class.getSimpleName(), "Failed to load drawable resource", e);
+                try {
+                    dr = AppCompatResources.getDrawable(context, id);
+                } catch (Exception e2) {
+                    Log.w(CarbonResources.class.getSimpleName(), "Failed to load drawable resource", e);
+                }
             }
 
         } else {
             try {
                 InputStream is = getAssets().openNonAssetFd(value.assetCookie, file).createInputStream();
-                dr = LollipopDrawablesCompat.createFromResourceStream(this, value, is, file, null);
+                dr = createFromResourceStream(value, is, file, null);
                 is.close();
             } catch (Exception e) {
-                Log.w(LollipopDrawablesCompat.class.getSimpleName(), "Failed to load drawable resource", e);
+                try {
+                    dr = AppCompatResources.getDrawable(context, id);
+                } catch (Exception e2) {
+                    Log.w(CarbonResources.class.getSimpleName(), "Failed to load drawable resource", e);
+                }
             }
         }
 

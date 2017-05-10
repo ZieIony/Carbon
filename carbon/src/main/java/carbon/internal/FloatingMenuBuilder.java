@@ -26,11 +26,11 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.internal.view.SupportMenu;
 import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.appcompat.R;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.view.menu.MenuPresenter;
 import android.util.SparseArray;
 import android.view.KeyCharacterMap;
@@ -825,8 +825,6 @@ public class FloatingMenuBuilder implements SupportMenu {
 
     private void setHeaderInternal(final int titleRes, final CharSequence title, final int iconRes,
                                    final Drawable icon, final View view) {
-        final Resources r = getResources();
-
         if (view != null) {
             mHeaderView = view;
 
@@ -835,13 +833,13 @@ public class FloatingMenuBuilder implements SupportMenu {
             mHeaderIcon = null;
         } else {
             if (titleRes > 0) {
-                mHeaderTitle = r.getText(titleRes);
+                mHeaderTitle = getResources().getText(titleRes);
             } else if (title != null) {
                 mHeaderTitle = title;
             }
 
             if (iconRes > 0) {
-                mHeaderIcon = ContextCompat.getDrawable(getContext(), iconRes);
+                mHeaderIcon = AppCompatResources.getDrawable(getContext(), iconRes);
             } else if (icon != null) {
                 mHeaderIcon = icon;
             }
