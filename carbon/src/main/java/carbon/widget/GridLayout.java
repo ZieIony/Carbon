@@ -17,6 +17,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
@@ -253,8 +254,14 @@ public class GridLayout extends android.support.v7.widget.GridLayout
     }
 
     @Override
+    public boolean gatherTransparentRegion(Region region) {
+        getViews();
+        return super.gatherTransparentRegion(region);
+    }
+
+    @Override
     protected int getChildDrawingOrder(int childCount, int child) {
-        return views != null ? indexOfChild(views.get(child)) : child;
+        return views.size() > child ? indexOfChild(views.get(child)) : child;
     }
 
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {

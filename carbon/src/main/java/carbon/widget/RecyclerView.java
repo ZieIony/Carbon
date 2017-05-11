@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
@@ -230,15 +231,20 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
 
-    List<View> views;
+    List<View> views = new ArrayList<>();
+
+    public List<View> getViews() {
+        views.clear();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
+        return views;
+    }
+
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
-        views = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        Collections.sort(views, new ElevationComparator());
+        Collections.sort(getViews(), new ElevationComparator());
 
         dispatchDrawWithHeader(canvas);
     }
@@ -284,10 +290,16 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView impleme
     }
 
     @Override
+    public boolean gatherTransparentRegion(Region region) {
+        getViews();
+        return super.gatherTransparentRegion(region);
+    }
+
+    @Override
     protected int getChildDrawingOrder(int childCount, int child) {
         if (childDrawingOrderCallbackSet)
             return super.getChildDrawingOrder(childCount, child);
-        return views != null ? indexOfChild(views.get(child)) : child;
+        return views.size() > child ? indexOfChild(views.get(child)) : child;
     }
 
     @Override
