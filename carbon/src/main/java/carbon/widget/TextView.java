@@ -409,7 +409,7 @@ public class TextView extends android.widget.TextView
             for (int i = 0; i < layout.getLineCount(); i++) {
                 width = (int) Math.max(width, layout.getLineMax(i));
             }
-            super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), heightMeasureSpec);
+            super.onMeasure(MeasureSpec.makeMeasureSpec(width + getPaddingLeft() + getPaddingRight(), MeasureSpec.EXACTLY), heightMeasureSpec);
         }
     }
 

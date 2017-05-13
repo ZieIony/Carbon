@@ -77,7 +77,7 @@ public class FloatingMenuItem implements MenuItem {
         content.addView(view);
 
         view.setEnabled(enabled);
-        view.setVisibility(visible ? View.INVISIBLE : View.GONE);
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     @Override

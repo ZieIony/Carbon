@@ -55,6 +55,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
             swipe = e2.getX() - e1.getX();
             content.setTranslationX(swipe);
             content.setAlpha(Math.max(0, 1 - 2 * Math.abs(swipe) / content.getMeasuredWidth()));
+            postInvalidate();
             if (Math.abs(swipe) > content.getMeasuredWidth() / 4) {
                 handler.removeCallbacks(hideRunnable);
                 animator = ObjectAnimator.ofFloat(swipe, content.getMeasuredWidth() / 2.0f * Math.signum(swipe));
@@ -64,6 +65,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     content.setTranslationX(s);
                     float alpha = Math.max(0, 1 - 2 * Math.abs((Float) valueAnimator.getAnimatedValue()) / content.getMeasuredWidth());
                     content.setAlpha(alpha);
+                    postInvalidate();
                 });
                 animator.start();
                 animator.addListener(new AnimatorListenerAdapter() {

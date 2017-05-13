@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.AnimatedView;
 import carbon.internal.FloatingMenuBuilder;
 
 public class FloatingActionMenu extends PopupWindow {
@@ -58,8 +57,6 @@ public class FloatingActionMenu extends PopupWindow {
         content.removeAllViews();
         for (int i = 0; i < menu.size(); i++)
             ((FloatingMenuItem) menu.getItem(i)).build();
-
-        content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
     }
 
     public boolean show() {
@@ -72,6 +69,9 @@ public class FloatingActionMenu extends PopupWindow {
         boolean left = location[0] < display.getWidth() + anchor.getWidth() - location[0];
         boolean top = location[1] < display.getHeight() + anchor.getHeight() - location[1];
 
+        content.setGravity(left ? Gravity.LEFT : Gravity.RIGHT);
+        content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
         super.showAtLocation(anchor, Gravity.TOP | Gravity.LEFT, 0, 0);
         if (!left & top) {  // right top
             update(location[0] - content.getMeasuredWidth() + anchor.getWidth(), location[1] + anchor.getHeight(), content.getMeasuredWidth(), content.getMeasuredHeight());
@@ -83,20 +83,21 @@ public class FloatingActionMenu extends PopupWindow {
             update(location[0], location[1] + anchor.getHeight(), content.getMeasuredWidth(), content.getMeasuredHeight());
         }
 
-        content.setVisibility(View.VISIBLE);
-
-        ArrayList<AnimatedView> items = new ArrayList<>();
+        ArrayList<LinearLayout> items = new ArrayList<>();
         for (int i = 0; i < menu.size(); i++) {
             if (menu.getItem(i).isVisible())
-                items.add((AnimatedView) content.getChildAt(i));
+                items.add((LinearLayout) content.getChildAt(i));
         }
 
         for (int i = 0; i < items.size(); i++) {
-            final int finalI = i;
-            handler.postDelayed(() -> {
-                items.get(finalI).animateVisibility(View.VISIBLE);
-            }, top ? i * 50 : (menu.size() - 1 - i) * 50);
+            LinearLayout item = items.get(i);
+            item.setVisibility(View.INVISIBLE);
+            int delay = top ? i * 50 : (menu.size() - 1 - i) * 50;
+            handler.postDelayed(() -> item.animateVisibility(View.VISIBLE), delay);
         }
+
+        content.setAlpha(1);
+        content.setVisibility(View.VISIBLE);
 
         return true;
     }
@@ -106,11 +107,6 @@ public class FloatingActionMenu extends PopupWindow {
         content.animateVisibility(View.INVISIBLE).addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                for (int i = 0; i < menu.size(); i++) {
-                    if (menu.getItem(i).isVisible())
-                        content.getChildAt(i).setVisibility(View.INVISIBLE);
-                }
-
                 dismissImmediate();
             }
         });

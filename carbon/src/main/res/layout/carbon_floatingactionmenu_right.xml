@@ -3,7 +3,6 @@
                             xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/carbon_fabSize"
-                            android:gravity="right"
                             android:layoutDirection="ltr"
                             android:orientation="horizontal"
                             app:carbon_inAnimation="fade"
