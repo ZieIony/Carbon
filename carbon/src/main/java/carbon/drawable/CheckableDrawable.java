@@ -325,14 +325,11 @@ public class CheckableDrawable extends Drawable {
         invalidateSelf();
     }
 
-    public void setCheckedImmediate(boolean checked) {
-        setCheckedImmediate(checked ? CheckedState.CHECKED : CheckedState.UNCHECKED);
-    }
-
-    public void setCheckedImmediate(CheckedState state) {
-        if (checkedState == state)
-            return;
-        checkedState = state;
+    @Override
+    public void jumpToCurrentState() {
+        super.jumpToCurrentState();
+        if (animator != null)
+            animator.end();
         invalidateSelf();
     }
 

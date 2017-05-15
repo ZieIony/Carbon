@@ -21,12 +21,8 @@ public class ListDialog<Type> extends DialogBase {
     protected RecyclerView recyclerView;
     protected RowListAdapter adapter;
     protected List<Type> items;
-    private RecyclerView.OnItemClickedListener listener;
-    private RecyclerView.OnItemClickedListener internalListener = (view, item, position) -> {
-        if (listener != null)
-            listener.onItemClicked(view, item, position);
-        dismiss();
-    };
+    protected RecyclerView.OnItemClickedListener listener;
+    private RecyclerView.OnItemClickedListener internalListener = getInternalListener();
 
     public ListDialog(@NonNull Context context) {
         super(context);
@@ -46,6 +42,14 @@ public class ListDialog<Type> extends DialogBase {
         recyclerView.setPadding(0, padding, 0, padding);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         super.setContentView(recyclerView, null);
+    }
+
+    protected RecyclerView.OnItemClickedListener getInternalListener() {
+        return (view, item, position) -> {
+            if (listener != null)
+                listener.onItemClicked(view, item, position);
+            dismiss();
+        };
     }
 
     protected void dividerCallback(int contentHeight) {

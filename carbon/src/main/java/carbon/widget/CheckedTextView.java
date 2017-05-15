@@ -141,7 +141,7 @@ public class CheckedTextView extends TextView implements Checkable {
 
     public void setCheckedImmediate(boolean checked) {
         setChecked(checked);
-        drawable.setCheckedImmediate(checked);
+        drawable.setChecked(checked);
     }
 
     /**

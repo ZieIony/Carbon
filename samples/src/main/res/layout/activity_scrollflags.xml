@@ -4,7 +4,7 @@
                                                           android:layout_width="match_parent"
                                                           android:layout_height="match_parent">
 
-    <tk.zielony.carbonsamples.feature.scroll.LandscapeView
+    <tk.zielony.landscapeview.LandscapeView
         android:id="@+id/rect"
         android:layout_width="match_parent"
         android:layout_height="200dp"

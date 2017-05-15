@@ -53,7 +53,7 @@ public class ListDialogActivity extends SamplesActivity {
         randomData.fill(items);
 
         findViewById(R.id.button).setOnClickListener(view -> {
-            ListDialog dialog = new ListDialog(this);
+            ListDialog<ComponentItem> dialog = new ListDialog<>(this);
             dialog.setItems(items, ImageTextSubtextDateRow.FACTORY);
             if (titleText.length() > 0)
                 dialog.setTitle(titleText.getText());

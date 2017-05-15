@@ -69,7 +69,7 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
             if (attr == R.styleable.RadioButton_android_drawablePadding) {
                 drawablePadding = a.getDimension(attr, 0);
             } else if (attr == R.styleable.RadioButton_android_checked) {
-                setCheckedImmediate(a.getBoolean(attr, false));
+                setChecked(a.getBoolean(attr, false));
             }
         }
 
@@ -143,12 +143,6 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
 
             mBroadcasting = false;
         }
-    }
-
-    public void setCheckedImmediate(boolean checked) {
-        setChecked(checked);
-        if (!isInEditMode())
-            ((CheckableDrawable) drawable).setCheckedImmediate(checked);
     }
 
     /**

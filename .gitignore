@@ -1,6 +1,5 @@
 .gradle
 local.properties
-.idea/*
-.DS_Store
+/.idea
 build
 Carbon.iml

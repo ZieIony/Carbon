@@ -6,6 +6,9 @@ import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -132,7 +135,7 @@ public class AnimUtils {
 
     public static ValueAnimator getFlyInAnimator() {
         ViewAnimator animator = new ViewAnimator();
-        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setInterpolator(new LinearOutSlowInInterpolator());
         animator.setOnSetupValuesListener(() -> {
             View view = animator.getTarget();
             if (view.getVisibility() != View.VISIBLE)
@@ -153,7 +156,7 @@ public class AnimUtils {
 
     public static ValueAnimator getFlyOutAnimator() {
         ViewAnimator animator = new ViewAnimator();
-        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setInterpolator(new FastOutLinearInInterpolator());
         animator.setOnSetupValuesListener(() -> {
             View view = animator.getTarget();
             float start = view.getAlpha();
@@ -172,7 +175,7 @@ public class AnimUtils {
 
     public static ValueAnimator getProgressWidthInAnimator() {
         ViewAnimator animator = new ViewAnimator();
-        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setInterpolator(new LinearOutSlowInInterpolator());
         animator.setOnSetupValuesListener(() -> {
             ProgressBar circularProgress = (ProgressBar) animator.getTarget();
             final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
@@ -192,7 +195,7 @@ public class AnimUtils {
 
     public static Animator getProgressWidthOutAnimator() {
         ViewAnimator animator = new ViewAnimator();
-        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setInterpolator(new FastOutLinearInInterpolator());
         animator.setOnSetupValuesListener(() -> {
             ProgressBar circularProgress = (ProgressBar) animator.getTarget();
             float start = circularProgress.getBarWidth();
@@ -287,7 +290,7 @@ public class AnimUtils {
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
             animator.setDuration(200);
-            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {
@@ -300,7 +303,7 @@ public class AnimUtils {
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
             animator.setDuration(200);
-            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {
@@ -313,7 +316,7 @@ public class AnimUtils {
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
             animator.setDuration(200);
-            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {
@@ -326,7 +329,7 @@ public class AnimUtils {
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
             animator.setDuration(200);
-            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {

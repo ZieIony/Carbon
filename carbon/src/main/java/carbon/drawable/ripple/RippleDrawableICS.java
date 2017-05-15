@@ -228,8 +228,7 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
 
     @Override
     public void jumpToCurrentState() {
-        if (Build.VERSION.SDK_INT >= 11)
-            super.jumpToCurrentState();
+        super.jumpToCurrentState();
 
         if (mRipple != null) {
             mRipple.end();

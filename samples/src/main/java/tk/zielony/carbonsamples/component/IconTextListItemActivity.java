@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import carbon.Carbon;
@@ -36,14 +37,14 @@ public class IconTextListItemActivity extends SamplesActivity {
 
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        RowListAdapter adapter = new RowListAdapter<>(DefaultIconTextItem.class, IconTextRow::new);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconTextItem.class, IconTextRow::new);
         adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-        adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow(parent, new ArraySearchDataProvider(new String[]{}), filterResults -> {
+        adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow(parent, new ArraySearchDataProvider<>(new String[]{}), filterResults -> {
         }));
         recycler.setAdapter(adapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_dividerColor)), getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
-        dividerItemDecoration.setDrawRules(position -> position == 0);
+        dividerItemDecoration.setDrawRules(position -> position == 1);
         recycler.addItemDecoration(dividerItemDecoration);
 
         VectorDrawable drawable = new VectorDrawable(getResources(), R.raw.ic_face_24px);

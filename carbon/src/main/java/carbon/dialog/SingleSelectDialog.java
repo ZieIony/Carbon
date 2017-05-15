@@ -14,20 +14,17 @@ import carbon.widget.RecyclerView;
 
 public class SingleSelectDialog<Type> extends ListDialog<Type> {
     private Type selectedItem;
-    private RecyclerView.OnItemClickedListener listener;
 
     public SingleSelectDialog(@NonNull Context context) {
         super(context);
-        init();
     }
 
     public SingleSelectDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
-        init();
     }
 
-    private void init() {
-        super.setOnItemClickedListener((view, item, position) -> {
+    protected RecyclerView.OnItemClickedListener getInternalListener() {
+        return (view, item, position) -> {
             RadioButton radio = (RadioButton) view.findViewById(R.id.carbon_radioButton);
             radio.setChecked(true);
             RadioButton prevRadio = (RadioButton) recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.carbon_radioButton);
@@ -35,7 +32,7 @@ public class SingleSelectDialog<Type> extends ListDialog<Type> {
             selectedItem = items.get(position);
             if (listener != null)
                 listener.onItemClicked(view, item, position);
-        });
+        };
     }
 
     @Override
@@ -55,7 +52,7 @@ public class SingleSelectDialog<Type> extends ListDialog<Type> {
                 super.bind(data);
                 if (selectedItem == data) {
                     RadioButton radio = (RadioButton) getView().findViewById(R.id.carbon_radioButton);
-                    radio.setCheckedImmediate(true);
+                    radio.setChecked(true);
                 }
             }
         });
@@ -65,8 +62,4 @@ public class SingleSelectDialog<Type> extends ListDialog<Type> {
         this.selectedItem = selectedItem;
     }
 
-    @Override
-    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener listener) {
-        this.listener = listener;
-    }
 }

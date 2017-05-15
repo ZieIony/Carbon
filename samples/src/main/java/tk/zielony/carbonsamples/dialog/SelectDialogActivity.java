@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.annimon.stream.Stream;
 
+import carbon.dialog.MultiSelectDialog;
 import carbon.dialog.SingleSelectDialog;
 import carbon.widget.DropDown;
 import carbon.widget.EditText;
@@ -26,7 +27,7 @@ public class SelectDialogActivity extends SamplesActivity {
 
         EditText titleText = (EditText) findViewById(R.id.titleText);
         DropDown dropDown = (DropDown) findViewById(R.id.dropDown);
-        dropDown.setItems(new String[]{"Single select"});
+        dropDown.setItems(new String[]{"Single select", "Multi select"});
 
         StringFruitGenerator generator = new StringFruitGenerator();
         Object[] items = Stream.generate(generator::next).limit(5).toArray();
@@ -34,7 +35,7 @@ public class SelectDialogActivity extends SamplesActivity {
 
         findViewById(R.id.button).setOnClickListener(view -> {
             switch (dropDown.getSelectedIndex()) {
-                case 0:
+                case 0: {
                     SingleSelectDialog dialog = new SingleSelectDialog(this);
                     if (titleText.length() > 0)
                         dialog.setTitle(titleText.getText());
@@ -42,7 +43,18 @@ public class SelectDialogActivity extends SamplesActivity {
                     dialog.setOnItemClickedListener((view1, item, position) -> selectedItem = item);
                     dialog.setSelectedItem(selectedItem);
                     dialog.show();
-                    break;
+                }
+                break;
+                case 1: {
+                    MultiSelectDialog dialog = new MultiSelectDialog(this);
+                    if (titleText.length() > 0)
+                        dialog.setTitle(titleText.getText());
+                    dialog.setItems(items);
+                    dialog.setOnItemClickedListener((view1, item, position) -> selectedItem = item);
+                    dialog.setSelectedItems(new Object[]{selectedItem});
+                    dialog.show();
+                }
+                break;
             }
         });
     }

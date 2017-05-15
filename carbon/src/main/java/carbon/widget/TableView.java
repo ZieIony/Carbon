@@ -198,7 +198,7 @@ public class TableView extends RecyclerView {
 
         @Override
         public void bindView(FrameLayout view, Boolean value, Format format) {
-            ((CheckBox) view.getChildAt(0)).setCheckedImmediate(value);
+            ((CheckBox) view.getChildAt(0)).setChecked(value);
         }
     }
 }

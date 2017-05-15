@@ -3,8 +3,8 @@ package tk.zielony.carbonsamples.demo;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.R;
@@ -26,7 +26,7 @@ public class SearchToolbarActivity extends SamplesActivity {
             int[] sbLocation = new int[2];
             searchButton.getLocationOnScreen(sbLocation);
             Animator animator = searchEditText.createCircularReveal(sbLocation[0] - setLocation[0] + v.getWidth() / 2, searchEditText.getHeight() / 2, 0, searchEditText.getWidth());
-            animator.setInterpolator(new DecelerateInterpolator());
+            animator.setInterpolator(new FastOutSlowInInterpolator());
             animator.start();
         });
         findViewById(R.id.close).setOnClickListener(v -> {
@@ -35,7 +35,7 @@ public class SearchToolbarActivity extends SamplesActivity {
             int[] sbLocation = new int[2];
             searchButton.getLocationOnScreen(sbLocation);
             Animator animator = searchEditText.createCircularReveal(sbLocation[0] - setLocation[0] + v.getWidth() / 2, searchEditText.getHeight() / 2, searchEditText.getWidth(), 0);
-            animator.setInterpolator(new DecelerateInterpolator());
+            animator.setInterpolator(new FastOutSlowInInterpolator());
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {

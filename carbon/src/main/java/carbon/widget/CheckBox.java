@@ -71,7 +71,7 @@ public class CheckBox extends carbon.widget.TextView implements Checkable {
             if (attr == R.styleable.CheckBox_android_drawablePadding) {
                 drawablePadding = a.getDimension(attr, 0);
             } else if (attr == R.styleable.RadioButton_android_checked) {
-                setCheckedImmediate(a.getBoolean(attr, false));
+                setChecked(a.getBoolean(attr, false));
             }
         }
 
@@ -142,18 +142,6 @@ public class CheckBox extends carbon.widget.TextView implements Checkable {
             checkedState = state;
             refreshDrawableState();
         }
-    }
-
-    public void setCheckedImmediate(boolean checked) {
-        setChecked(checked);
-        if (!isInEditMode())
-            ((CheckableDrawable) drawable).setCheckedImmediate(checked);
-    }
-
-    public void setCheckedImmediate(CheckableDrawable.CheckedState state) {
-        setChecked(state);
-        if (!isInEditMode())
-            ((CheckableDrawable) drawable).setCheckedImmediate(state);
     }
 
     /**
