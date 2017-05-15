@@ -91,7 +91,7 @@ import carbon.shadow.ShadowView;
  */
 @SuppressLint("AppCompatCustomView")
 public class TextView extends android.widget.TextView
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
 
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -150,6 +150,10 @@ public class TextView extends android.widget.TextView
             R.styleable.TextView_carbon_backgroundTintMode,
             R.styleable.TextView_carbon_animateColorChanges
     };
+    private static int[] strokeIds = new int[]{
+            R.styleable.TextView_carbon_stroke,
+            R.styleable.TextView_carbon_strokeWidth
+    };
     private static int[] elevationIds = new int[]{
             R.styleable.TextView_carbon_elevation,
             R.styleable.TextView_carbon_elevationShadowColor
@@ -189,6 +193,7 @@ public class TextView extends android.widget.TextView
 
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
+        Carbon.initStroke(this, a, strokeIds);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
@@ -451,6 +456,8 @@ public class TextView extends android.widget.TextView
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
+            if (stroke != null)
+                drawStroke(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
 
@@ -461,6 +468,8 @@ public class TextView extends android.widget.TextView
             paint.setXfermode(null);
         } else {
             super.draw(canvas);
+            if (stroke != null)
+                drawStroke(canvas);
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
                 rippleDrawable.draw(canvas);
         }
@@ -1086,6 +1095,57 @@ public class TextView extends android.widget.TextView
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
         if (!(getTextColors() instanceof AnimatedColorStateList))
             setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
+    }
+
+
+    // -------------------------------
+    // stroke
+    // -------------------------------
+
+    private ColorStateList stroke;
+    private float strokeWidth;
+    private Paint strokePaint;
+    private RectF strokeRect;
+
+    private void drawStroke(Canvas canvas) {
+        strokePaint.setStrokeWidth(strokeWidth * 2);
+        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
+        strokeRect.set(0, 0, getWidth(), getHeight());
+        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+    }
+
+    @Override
+    public void setStroke(ColorStateList colorStateList) {
+        stroke = colorStateList;
+
+        if (stroke == null)
+            return;
+
+        if (strokePaint == null) {
+            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            strokePaint.setStyle(Paint.Style.STROKE);
+            strokeRect = new RectF();
+        }
+    }
+
+    @Override
+    public void setStroke(int color) {
+        setStroke(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public float getStrokeWidth() {
+        return strokeWidth;
     }
 
 
