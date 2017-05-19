@@ -5,34 +5,23 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.animation.AnimatedColorStateList;
-import carbon.animation.AnimatedView;
-import carbon.animation.StateAnimator;
-import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
-import carbon.drawable.ripple.RippleView;
 import carbon.internal.SeekBarPopup;
 
-public class RangeSeekBar extends View implements RippleView, StateAnimatorView, AnimatedView, TintedView, VisibleView {
+public class RangeSeekBar extends View {
     private static float THUMB_RADIUS, THUMB_RADIUS_DRAGGED, STROKE_WIDTH;
     float value = 0.3f, value2 = 0.7f;  // value < value2
     float min = 0, max = 1, step = 1;
@@ -66,43 +55,25 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     }
 
     public RangeSeekBar(Context context) {
-        super(context);
+        super(context, null, android.R.attr.seekBarStyle);
         initSeekBar(null, android.R.attr.seekBarStyle);
     }
 
     public RangeSeekBar(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, android.R.attr.seekBarStyle, R.styleable.SeekBar_carbon_theme), attrs);
+        super(context, attrs, android.R.attr.seekBarStyle);
         initSeekBar(attrs, android.R.attr.seekBarStyle);
     }
 
     public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, defStyleAttr, R.styleable.SeekBar_carbon_theme), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initSeekBar(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.SeekBar, defStyleAttr, R.styleable.SeekBar_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initSeekBar(attrs, defStyleAttr);
     }
-
-    private static int[] rippleIds = new int[]{
-            R.styleable.SeekBar_carbon_rippleColor,
-            R.styleable.SeekBar_carbon_rippleStyle,
-            R.styleable.SeekBar_carbon_rippleHotspot,
-            R.styleable.SeekBar_carbon_rippleRadius
-    };
-    private static int[] animationIds = new int[]{
-            R.styleable.SeekBar_carbon_inAnimation,
-            R.styleable.SeekBar_carbon_outAnimation
-    };
-    private static int[] tintIds = new int[]{
-            R.styleable.SeekBar_carbon_tint,
-            R.styleable.SeekBar_carbon_tintMode,
-            R.styleable.SeekBar_carbon_backgroundTint,
-            R.styleable.SeekBar_carbon_backgroundTintMode,
-            R.styleable.SeekBar_carbon_animateColorChanges
-    };
 
     private void initSeekBar(AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode())
@@ -127,10 +98,6 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         setTickColor(a.getColor(R.styleable.SeekBar_carbon_tickColor, 0));
         setShowLabel(a.getBoolean(R.styleable.SeekBar_carbon_showLabel, false));
         setLabelFormat(a.getString(R.styleable.SeekBar_carbon_labelFormat));
-
-        Carbon.initAnimations(this, a, animationIds);
-        Carbon.initTint(this, a, tintIds);
-        Carbon.initRippleDrawable(this, a, rippleIds);
 
         a.recycle();
 
@@ -181,20 +148,6 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
-        if (!changed)
-            return;
-
-        if (getWidth() == 0 || getHeight() == 0)
-            return;
-
-        if (rippleDrawable != null)
-            rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
-    }
-
-    @Override
     public void draw(@NonNull Canvas canvas) {
         super.draw(canvas);
 
@@ -213,7 +166,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
             canvas.drawLine(thumbX2 + thumbRadius2, thumbY, getWidth() - getPaddingLeft(), thumbY, paint);
 
         if (!isInEditMode())
-            paint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
+            paint.setColor(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
         if (thumbX + thumbRadius2 < thumbX2 - thumbRadius)
             canvas.drawLine(thumbX + thumbRadius, thumbY, thumbX2 - thumbRadius2, thumbY, paint);
 
@@ -226,7 +179,7 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         }
 
         if (!isInEditMode())
-            paint.setColor(tint.getColorForState(getDrawableState(), tint.getDefaultColor()));
+            paint.setColor(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
         canvas.drawCircle(thumbX, thumbY, thumbRadius, paint);
         canvas.drawCircle(thumbX2, thumbY, thumbRadius2, paint);
 
@@ -364,8 +317,6 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
     // -------------------------------
     // ripple
     // -------------------------------
-
-    private RippleDrawable rippleDrawable;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -544,350 +495,4 @@ public class RangeSeekBar extends View implements RippleView, StateAnimatorView,
         return true;
     }
 
-    @Override
-    public RippleDrawable getRippleDrawable() {
-        return rippleDrawable;
-    }
-
-    public void setRippleDrawable(RippleDrawable newRipple) {
-        if (rippleDrawable != null) {
-            rippleDrawable.setCallback(null);
-            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable(rippleDrawable.getBackground());
-        }
-
-        if (newRipple != null) {
-            newRipple.setCallback(this);
-            newRipple.setBounds(0, 0, getWidth(), getHeight());
-            if (newRipple.getStyle() == RippleDrawable.Style.Background)
-                super.setBackgroundDrawable((Drawable) newRipple);
-        }
-
-        rippleDrawable = newRipple;
-    }
-
-    @Override
-    protected boolean verifyDrawable(@NonNull Drawable who) {
-        return super.verifyDrawable(who) || rippleDrawable == who;
-    }
-
-    @Override
-    public void invalidateDrawable(@NonNull Drawable drawable) {
-        super.invalidateDrawable(drawable);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate();
-    }
-
-    @Override
-    public void invalidate(@NonNull Rect dirty) {
-        super.invalidate(dirty);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate(dirty);
-    }
-
-    @Override
-    public void invalidate(int l, int t, int r, int b) {
-        super.invalidate(l, t, r, b);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate(l, t, r, b);
-    }
-
-    @Override
-    public void invalidate() {
-        super.invalidate();
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate();
-    }
-
-    @Override
-    public void postInvalidateDelayed(long delayMilliseconds) {
-        super.postInvalidateDelayed(delayMilliseconds);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
-    }
-
-    @Override
-    public void postInvalidateDelayed(long delayMilliseconds, int left, int top, int right, int bottom) {
-        super.postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
-    }
-
-    @Override
-    public void postInvalidate() {
-        super.postInvalidate();
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
-    public void postInvalidate(int left, int top, int right, int bottom) {
-        super.postInvalidate(left, top, right, bottom);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate(left, top, right, bottom);
-    }
-
-    @Override
-    public void setBackground(Drawable background) {
-        setBackgroundDrawable(background);
-    }
-
-    @Override
-    public void setBackgroundDrawable(Drawable background) {
-        if (background instanceof RippleDrawable) {
-            setRippleDrawable((RippleDrawable) background);
-            return;
-        }
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Background) {
-            rippleDrawable.setCallback(null);
-            rippleDrawable = null;
-        }
-        super.setBackgroundDrawable(background);
-    }
-
-
-    // -------------------------------
-    // state animators
-    // -------------------------------
-
-    private StateAnimator stateAnimator = new StateAnimator(this);
-
-    @Override
-    public StateAnimator getStateAnimator() {
-        return stateAnimator;
-    }
-
-    @Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
-        if (rippleDrawable != null && rippleDrawable.getStyle() != RippleDrawable.Style.Background)
-            rippleDrawable.setState(getDrawableState());
-        if (stateAnimator != null)
-            stateAnimator.setState(getDrawableState());
-    }
-
-
-    // -------------------------------
-    // animations
-    // -------------------------------
-
-    private Animator inAnim = null, outAnim = null;
-    private Animator animator;
-
-    public Animator animateVisibility(final int visibility) {
-        if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
-            if (animator != null)
-                animator.cancel();
-            if (inAnim != null) {
-                animator = inAnim;
-                animator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator a) {
-                        animator.removeListener(this);
-                        animator = null;
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        animator.removeListener(this);
-                        animator = null;
-                    }
-                });
-                animator.start();
-            }
-            setVisibility(visibility);
-        } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
-            if (animator != null)
-                animator.cancel();
-            if (outAnim == null) {
-                setVisibility(visibility);
-                return null;
-            }
-            animator = outAnim;
-            animator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator a) {
-                    if (((ValueAnimator) a).getAnimatedFraction() == 1)
-                        setVisibility(visibility);
-                    animator.removeListener(this);
-                    animator = null;
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                    animator.removeListener(this);
-                    animator = null;
-                }
-            });
-            animator.start();
-        }
-        return animator;
-    }
-
-    public Animator getAnimator() {
-        return animator;
-    }
-
-    public Animator getOutAnimator() {
-        return outAnim;
-    }
-
-    public void setOutAnimator(Animator outAnim) {
-        if (this.outAnim != null)
-            this.outAnim.setTarget(null);
-        this.outAnim = outAnim;
-        if (outAnim != null)
-            outAnim.setTarget(this);
-    }
-
-    public Animator getInAnimator() {
-        return inAnim;
-    }
-
-    public void setInAnimator(Animator inAnim) {
-        if (this.inAnim != null)
-            this.inAnim.setTarget(null);
-        this.inAnim = inAnim;
-        if (inAnim != null)
-            inAnim.setTarget(this);
-    }
-
-
-    // -------------------------------
-    // tint
-    // -------------------------------
-
-    ColorStateList tint;
-    PorterDuff.Mode tintMode;
-    ColorStateList backgroundTint;
-    PorterDuff.Mode backgroundTintMode;
-    boolean animateColorChanges;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateTint();
-            ViewCompat.postInvalidateOnAnimation(RangeSeekBar.this);
-        }
-    };
-    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            updateBackgroundTint();
-            ViewCompat.postInvalidateOnAnimation(RangeSeekBar.this);
-        }
-    };
-
-    @Override
-    public void setTint(ColorStateList list) {
-        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
-        updateTint();
-    }
-
-    @Override
-    public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
-    }
-
-    @Override
-    public ColorStateList getTint() {
-        return tint;
-    }
-
-    private void updateTint() {
-        postInvalidate();
-    }
-
-    @Override
-    public void setTintMode(@NonNull PorterDuff.Mode mode) {
-        this.tintMode = mode;
-        updateTint();
-    }
-
-    @Override
-    public PorterDuff.Mode getTintMode() {
-        return tintMode;
-    }
-
-    @Override
-    public void setBackgroundTint(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
-        updateBackgroundTint();
-    }
-
-    @Override
-    public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
-    }
-
-    @Override
-    public ColorStateList getBackgroundTint() {
-        return backgroundTint;
-    }
-
-    private void updateBackgroundTint() {
-        if (getBackground() == null)
-            return;
-        if (backgroundTint != null && backgroundTintMode != null) {
-            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
-        } else {
-            getBackground().setColorFilter(null);
-        }
-    }
-
-    @Override
-    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
-        this.backgroundTintMode = mode;
-        updateBackgroundTint();
-    }
-
-    @Override
-    public PorterDuff.Mode getBackgroundTintMode() {
-        return backgroundTintMode;
-    }
-
-    public boolean isAnimateColorChangesEnabled() {
-        return animateColorChanges;
-    }
-
-    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
-        this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
-    }
 }

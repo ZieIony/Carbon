@@ -1,13 +1,11 @@
 package tk.zielony.carbonsamples;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Typeface;
+import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,11 +17,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import carbon.Carbon;
-import carbon.dialog.Dialog;
 import carbon.internal.DebugOverlay;
 import carbon.widget.CheckBox;
 import carbon.widget.ImageView;
-import carbon.widget.TextView;
 import carbon.widget.Toolbar;
 
 public class Samples {
@@ -84,23 +80,11 @@ public class Samples {
         return result;
     }
 
-    public static void showCodeDialog(Context context, String code) {
-        Dialog dialog = new Dialog(context);
-        ViewGroup content = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.dialog_code, null);
-        dialog.setContentView(content);
-        TextView codeTV = (TextView) content.findViewById(R.id.code);
-        codeTV.setText(Samples.colorSyntax(code));
-        codeTV.setTypeface(Typeface.MONOSPACE);
-        dialog.setTitle("Code");
-        dialog.setPositiveButton("ok", null);
-        dialog.show();
-    }
-
     public static Spannable colorSyntax(String text) {
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
 
-        int quotedTextColor = 0xff388e3c;
-        int keywordColor = 0xff0d47a1;
+        int quotedTextColor = Color.GREEN;
+        int keywordColor = Color.BLUE;
 
         Pattern pattern = Pattern.compile("\"([^\"]*)\"");
         Matcher matcher = pattern.matcher(text);
@@ -108,13 +92,11 @@ public class Samples {
             builder.setSpan(new ForegroundColorSpan(quotedTextColor), matcher.start(), matcher.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
-        String[] keyword = new String[]{"carbon_cornerRadius", "carbon_elevation", "carbon_stroke", "carbon_strokeWidth"};
+        String[] keyword = new String[]{"wrap_content", "match_parent"};
         Stream.of(keyword).forEach(k -> {
             int index = 0;
             while (index < text.length()) {
                 index = text.indexOf(k, index);
-                if (index == -1)
-                    break;
                 builder.setSpan(new ForegroundColorSpan(keywordColor), index, index + k.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 index += k.length();
             }

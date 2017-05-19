@@ -2,9 +2,9 @@ package tk.zielony.carbonsamples;
 
 import android.app.Activity;
 
-import carbon.component.ComponentItem;
+import java.io.Serializable;
 
-public class SampleActivityItem implements ComponentItem {
+public class SampleActivityItem implements Serializable {
     private Class<? extends Activity> activityClass;
     private String name;
     private boolean beta = false;

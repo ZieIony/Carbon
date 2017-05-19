@@ -252,24 +252,18 @@ public class ProgressBar extends View implements AnimatedView, TintedView, Visib
     ColorStateList backgroundTint;
     PorterDuff.Mode backgroundTintMode;
     boolean animateColorChanges;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            postInvalidate();
-            ViewCompat.postInvalidateOnAnimation(ProgressBar.this);
-        }
+    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
+        postInvalidate();
+        ViewCompat.postInvalidateOnAnimation(this);
     };
-    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            postInvalidate();
-            ViewCompat.postInvalidateOnAnimation(ProgressBar.this);
-        }
+    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
+        postInvalidate();
+        ViewCompat.postInvalidateOnAnimation(this);
     };
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 

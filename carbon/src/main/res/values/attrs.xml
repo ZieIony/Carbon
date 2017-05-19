@@ -181,6 +181,43 @@
     </declare-styleable>
 
 
+    <!-- View -->
+    <declare-styleable name="View">
+        <attr name="carbon_theme"/>
+        <attr name="android:background"/>
+
+        <attr name="carbon_rippleColor"/>
+        <attr name="carbon_rippleHotspot"/>
+        <attr name="carbon_rippleStyle"/>
+        <attr name="carbon_rippleRadius"/>
+
+        <attr name="carbon_elevation"/>
+        <attr name="carbon_elevationShadowColor"/>
+
+        <attr name="carbon_touchMargin"/>
+        <attr name="carbon_touchMarginLeft"/>
+        <attr name="carbon_touchMarginTop"/>
+        <attr name="carbon_touchMarginRight"/>
+        <attr name="carbon_touchMarginBottom"/>
+
+        <attr name="carbon_inAnimation"/>
+        <attr name="carbon_outAnimation"/>
+
+        <attr name="carbon_maxWidth"/>
+        <attr name="carbon_maxHeight"/>
+
+        <attr name="carbon_tint"/>
+        <attr name="carbon_tintMode"/>
+        <attr name="carbon_backgroundTint"/>
+        <attr name="carbon_backgroundTintMode"/>
+        <attr name="carbon_animateColorChanges"/>
+
+        <attr name="carbon_cornerRadius"/>
+        <attr name="carbon_stroke"/>
+        <attr name="carbon_strokeWidth"/>
+    </declare-styleable>
+
+
     <!-- Button -->
     <declare-styleable name="Button">
         <attr name="carbon_theme"/>
@@ -955,6 +992,9 @@
     <attr name="carbon_recyclerViewStyle"/>
     <declare-styleable name="RecyclerView">
         <attr name="carbon_theme"/>
+
+        <attr name="carbon_inAnimation"/>
+        <attr name="carbon_outAnimation"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>

@@ -73,7 +73,7 @@ public class FloatingActionButton extends ImageView {
 
     public void invalidateMenu() {
         if (floatingActionMenu != null)
-            floatingActionMenu.build();
+            floatingActionMenu.invalidate();
     }
 
     public void setMenu(int resId) {

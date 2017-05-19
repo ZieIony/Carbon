@@ -2,6 +2,8 @@ package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
 
+import java.io.Serializable;
+
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.component.AvatarTextListItemActivity;
 import tk.zielony.carbonsamples.component.IconTextListItemActivity;
@@ -17,7 +19,7 @@ public class ComponentsActivity extends SampleListActivity {
 
         Samples.initToolbar(this, getString(R.string.animationsActivity_title));
 
-        setItems(new Object[]{
+        setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Lists and forms composed of reusable components with data binding",
                 new SampleActivityItem(IconTextListItemActivity.class, getString(R.string.iconTextListItemActivity_title)),

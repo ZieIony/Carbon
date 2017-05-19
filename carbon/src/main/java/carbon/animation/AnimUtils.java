@@ -67,8 +67,6 @@ public class AnimUtils {
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
-            if (view.getParent() != null)
-                ((View) view.getParent()).postInvalidate();
         });
         return animator;
     }
@@ -85,8 +83,6 @@ public class AnimUtils {
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
-            if (view.getParent() != null)
-                ((View) view.getParent()).postInvalidate();
         });
         return animator;
     }
@@ -107,8 +103,6 @@ public class AnimUtils {
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setScaleX((Float) valueAnimator.getAnimatedValue());
             view.setScaleY((Float) valueAnimator.getAnimatedValue());
-            if (view.getParent() != null)
-                ((View) view.getParent()).postInvalidate();
         });
         return animator;
     }
@@ -127,8 +121,6 @@ public class AnimUtils {
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setScaleX((Float) valueAnimator.getAnimatedValue());
             view.setScaleY((Float) valueAnimator.getAnimatedValue());
-            if (view.getParent() != null)
-                ((View) view.getParent()).postInvalidate();
         });
         return animator;
     }
@@ -148,8 +140,6 @@ public class AnimUtils {
             View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setTranslationY(Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
-            if (view.getParent() != null)
-                ((View) view.getParent()).postInvalidate();
         });
         return animator;
     }
@@ -167,8 +157,6 @@ public class AnimUtils {
             View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setTranslationY(Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
-            if (view.getParent() != null)
-                ((View) view.getParent()).postInvalidate();
         });
         return animator;
     }
@@ -237,9 +225,6 @@ public class AnimUtils {
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
                 imageView.setAlpha(interpolator.getInterpolation(Math.min(fraction * 2, 1)));
-
-                if (imageView.getParent() != null)
-                    ((View) imageView.getParent()).postInvalidate();
             }
         });
         return animator;
@@ -270,9 +255,6 @@ public class AnimUtils {
                 saturationMatrix.preConcat(brightnessMatrix);
                 imageView.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
                 imageView.setAlpha(interpolator.getInterpolation(Math.min((1 - fraction) * 2, 1)));
-
-                if (imageView.getParent() != null)
-                    ((View) imageView.getParent()).postInvalidate();
             }
         });
         return animator;

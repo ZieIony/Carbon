@@ -3,11 +3,11 @@ package tk.zielony.carbonsamples.component;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 import carbon.component.AvatarTextRow;
-import carbon.component.ComponentItem;
 import carbon.component.DefaultAvatarTextItem;
 import carbon.component.DividerItem;
 import carbon.component.DividerRow;
@@ -32,7 +32,7 @@ public class AvatarTextListItemActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.avatarTextListItemActivity_title));
 
-        List<ComponentItem> items = Arrays.asList(
+        List<Serializable> items = Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new DefaultAvatarTextItem(),
                 new DefaultAvatarTextItem(),

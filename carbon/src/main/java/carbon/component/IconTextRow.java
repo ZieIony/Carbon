@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import carbon.R;
 import carbon.recycler.RowFactory;
 
-public class IconTextRow extends DataBindingComponent<IconTextItem> {
+public class IconTextRow<Type extends IconTextItem> extends DataBindingComponent<Type> {
     public static final RowFactory FACTORY = IconTextRow::new;
 
     public IconTextRow(ViewGroup parent) {

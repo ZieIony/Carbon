@@ -2,6 +2,8 @@ package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
 
+import java.io.Serializable;
+
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.dialog.ListDialogActivity;
 import tk.zielony.carbonsamples.dialog.SelectDialogActivity;
@@ -15,7 +17,7 @@ public class DialogsActivity extends SampleListActivity {
 
         Samples.initToolbar(this, getString(R.string.dialogsActivity_title));
 
-        setItems(new Object[]{
+        setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Various dialog windows",
                 new SampleActivityItem(SimpleDialogActivity.class, getString(R.string.simpleDialogActivity_title)),

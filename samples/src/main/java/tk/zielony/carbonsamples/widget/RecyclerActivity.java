@@ -60,7 +60,5 @@ public class RecyclerActivity extends SamplesActivity {
 
         fruitAdapter = new FruitAdapter(fruits, itemTouchHelper);
         recyclerView.setAdapter(fruitAdapter);
-
-        recyclerView.setHeader(R.layout.header_scrollview);
     }
 }

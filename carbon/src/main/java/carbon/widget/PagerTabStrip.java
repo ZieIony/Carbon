@@ -328,16 +328,16 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     boolean animateColorChanges;
     ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
         updateTint();
-        ViewCompat.postInvalidateOnAnimation(PagerTabStrip.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
         updateBackgroundTint();
-        ViewCompat.postInvalidateOnAnimation(PagerTabStrip.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 
@@ -434,5 +434,4 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
         if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
-
 }

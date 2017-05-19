@@ -13,6 +13,7 @@ import android.os.Build;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.MenuInflater;
 import android.view.View;
 
 import carbon.animation.AnimUtils;
@@ -23,6 +24,7 @@ import carbon.drawable.ripple.RippleDrawableICS;
 import carbon.drawable.ripple.RippleDrawableLollipop;
 import carbon.drawable.ripple.RippleDrawableMarshmallow;
 import carbon.drawable.ripple.RippleView;
+import carbon.internal.Menu;
 import carbon.shadow.ShadowView;
 import carbon.widget.AutoSizeTextMode;
 import carbon.widget.AutoSizeTextView;
@@ -239,7 +241,7 @@ public class Carbon {
             context.getTheme().applyStyle(themeId, true);
         }
         a.recycle();
-        return context;
+        return new CarbonContextWrapper(context);
     }
 
     public static int getDrawableAlpha(Drawable background) {
@@ -295,5 +297,23 @@ public class Carbon {
         TypedValue typedvalueattr = new TypedValue();
         theme.resolveAttribute(attr, typedvalueattr, true);
         return typedvalueattr.resourceId;
+    }
+
+    public static Menu getMenu(Context context, int resId) {
+        CarbonContextWrapper contextWrapper = new CarbonContextWrapper(context);
+        Menu menu = new Menu(contextWrapper);
+        MenuInflater inflater = new MenuInflater(contextWrapper);
+        inflater.inflate(resId, menu);
+        return menu;
+    }
+
+    public static Menu getMenu(Context context, android.view.Menu baseMenu) {
+        CarbonContextWrapper contextWrapper = new CarbonContextWrapper(context);
+        Menu menu = new Menu(contextWrapper);
+        for (int i = 0; i < baseMenu.size(); i++) {
+            android.view.MenuItem menuItem = baseMenu.getItem(i);
+            menu.add(menuItem.getGroupId(), menuItem.getItemId(), menuItem.getOrder(), menuItem.getTitle()).setIcon(menuItem.getIcon()).setVisible(menuItem.isVisible()).setEnabled(menuItem.isEnabled());
+        }
+        return menu;
     }
 }

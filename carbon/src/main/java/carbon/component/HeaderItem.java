@@ -1,5 +1,7 @@
 package carbon.component;
 
-public interface HeaderItem extends ComponentItem {
+import java.io.Serializable;
+
+public interface HeaderItem extends Serializable {
     String getText();
 }

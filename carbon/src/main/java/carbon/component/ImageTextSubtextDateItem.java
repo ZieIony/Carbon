@@ -2,7 +2,9 @@ package carbon.component;
 
 import android.graphics.drawable.Drawable;
 
-public interface ImageTextSubtextDateItem extends ComponentItem {
+import java.io.Serializable;
+
+public interface ImageTextSubtextDateItem extends Serializable {
     Drawable getImage();
 
     String getText();

@@ -1,0 +1,30 @@
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary"
+                            tools:context=".MainActivity">
+
+    <include layout="@layout/view_debugtoolbar"/>
+
+    <carbon.widget.TextView
+        style="@style/sectionDescription"
+        android:text="Path animation using NURBS"/>
+
+    <carbon.widget.FrameLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.ImageView
+            android:id="@+id/image"
+            android:scaleType="centerCrop"
+            app:carbon_elevation="2dp"
+            app:carbon_cornerRadius="2dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+    </carbon.widget.FrameLayout>
+</carbon.widget.LinearLayout>

@@ -22,7 +22,7 @@ import carbon.drawable.VectorDrawable;
 import carbon.internal.DropDownMenu;
 import carbon.recycler.ArrayAdapter;
 
-public class DropDown extends EditText {
+public class DropDown<Type> extends EditText {
 
     public enum Mode {
         Over, Fit
@@ -102,12 +102,12 @@ public class DropDown extends EditText {
         return selectedIndex;
     }
 
-    public void setSelectedItem(Object item) {
+    public void setSelectedItem(Type item) {
         setSelectedIndex(Arrays.binarySearch(getAdapter().getItems(), item));
     }
 
-    public Object getSelectedItem() {
-        return getAdapter().getItem(selectedIndex);
+    public Type getSelectedItem() {
+        return (Type) getAdapter().getItem(selectedIndex);
     }
 
     public void setAdapter(final RecyclerView.Adapter adapter) {
@@ -138,7 +138,7 @@ public class DropDown extends EditText {
         this.onItemSelectedListener = onItemSelectedListener;
     }
 
-    public void setItems(Object[] items) {
+    public void setItems(Type[] items) {
         dropDownMenu.setAdapter(defaultAdapter);
         defaultAdapter.setItems(items);
         defaultAdapter.notifyDataSetChanged();

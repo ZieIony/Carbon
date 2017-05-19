@@ -4,7 +4,7 @@
                            android:id="@+id/carbon_popupContainer"
                            android:layout_width="match_parent"
                            android:layout_height="match_parent"
-                           android:padding="@dimen/carbon_paddingHalf"
+                           android:padding="@dimen/carbon_margin"
                            android:visibility="invisible"
                            app:carbon_inAnimation="fade"
                            app:carbon_outAnimation="fade">
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/carbon_colorForeground"
-        app:carbon_elevation="@dimen/carbon_elevationFAB">
+        app:carbon_elevation="@dimen/carbon_elevationDropDown">
 
         <carbon.widget.RecyclerView
             android:id="@+id/recycler"

@@ -12,6 +12,7 @@
         android:orientation="vertical"
         app:carbon_insetColor="?attr/colorPrimary">
 
+        <include layout="@layout/view_debugtoolbar"/>
 
     </carbon.widget.LinearLayout>
 

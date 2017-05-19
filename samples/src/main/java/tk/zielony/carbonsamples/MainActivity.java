@@ -2,7 +2,8 @@ package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
 
-import carbon.component.ComponentItem;
+import java.io.Serializable;
+
 import carbon.component.PaddingItem;
 
 public class MainActivity extends SampleListActivity {
@@ -13,7 +14,7 @@ public class MainActivity extends SampleListActivity {
 
         Samples.initToolbar(this, getString(R.string.app_name));
 
-        setItems(new ComponentItem[]{
+        setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new SampleActivityItem(AnimationsActivity.class, getString(R.string.animationsActivity_title)),
                 new SampleActivityItem(ColorsActivity.class, getString(R.string.colorsActivity_title)),

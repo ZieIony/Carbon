@@ -310,13 +310,13 @@ public class Toolbar extends ViewGroup {
     }
 
     /** @ hide * /
-     public void setMenu(MenuBuilder menu, ActionMenuPresenter outerPresenter) {
+     public void setMenu(Menu menu, ActionMenuPresenter outerPresenter) {
      if (menu == null && mMenuView == null) {
      return;
      }
 
      ensureMenuView();
-     final MenuBuilder oldMenu = mMenuView.peekMenu();
+     final Menu oldMenu = mMenuView.peekMenu();
      if (oldMenu == menu) {
      return;
      }

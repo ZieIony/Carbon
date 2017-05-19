@@ -83,7 +83,7 @@ public class DropDownMenu extends PopupWindow {
 
         final Resources res = getContentView().getContext().getResources();
 
-        int margin = (int) res.getDimension(R.dimen.carbon_padding);
+        int margin = (int) res.getDimension(R.dimen.carbon_margin);
         int itemHeight = (int) res.getDimension(R.dimen.carbon_listItemHeight);
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
@@ -118,10 +118,15 @@ public class DropDownMenu extends PopupWindow {
             int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
             int itemsAbove = Math.min(selectedItem, maxItemsAbove);
 
-            int popupX = location[0] - margin - marginHalf;
-            int popupY = location[1] - marginHalf * 2 - itemsAbove * itemHeight - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() - mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
-            int popupWidth = mAnchorView.getWidth() + margin * 2 + marginHalf * 2 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
-            int popupHeight = marginHalf * 4 + Math.max(1, itemsAbove + itemsBelow) * itemHeight;
+            int popupX = location[0] - margin * 2;
+            int popupY = location[1] - margin - marginHalf - itemsAbove * itemHeight - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() -
+                    mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
+            int popupWidth = mAnchorView.getWidth() + margin * 4 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
+            int popupHeight = margin * 2 + marginHalf * 2 + Math.max(1, itemsAbove + itemsBelow) * itemHeight;
+
+            popupWidth = Math.min(popupWidth, wWindow - margin * 2);
+            popupX = Math.max(popupX, 0);
+            popupX = Math.min(popupX, wWindow - popupWidth);
 
             LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
             manager.scrollToPositionWithOffset(selectedItem - itemsAbove, 0);

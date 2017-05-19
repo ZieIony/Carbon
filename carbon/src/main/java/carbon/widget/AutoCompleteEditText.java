@@ -14,6 +14,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +47,7 @@ public class AutoCompleteEditText extends EditText {
         }
     }
 
-    public static class FilterResult implements Comparable<FilterResult> {
+    public static class FilterResult implements Comparable<FilterResult>, Serializable {
         int type;
         Spannable text;
         private Object item;

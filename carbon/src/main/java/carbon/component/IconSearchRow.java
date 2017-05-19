@@ -6,7 +6,7 @@ import carbon.R;
 import carbon.databinding.CarbonRowIconsearchBinding;
 import carbon.widget.SearchEditText;
 
-public class IconSearchRow extends DataBindingComponent<IconSearchItem> {
+public class IconSearchRow<Type extends IconSearchItem> extends DataBindingComponent<Type> {
 
     public IconSearchRow(ViewGroup parent, SearchEditText.SearchDataProvider dataProvider, SearchEditText.OnFilterListener listener) {
         super(parent, R.layout.carbon_row_iconsearch);

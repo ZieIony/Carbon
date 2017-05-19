@@ -10,7 +10,6 @@
     <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.ScrollView
-        app:carbon_overScroll="always"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,12 +21,6 @@
             <carbon.widget.TextView
                 style="@style/sectionDescription"
                 android:text="Plain buttons with different styles"/>
-
-            <carbon.widget.ImageView
-                android:id="@+id/code"
-                android:layout_gravity="end"
-                style="@style/carbon_ImageView.IconButton"
-                android:src="@raw/ic_code"/>
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"

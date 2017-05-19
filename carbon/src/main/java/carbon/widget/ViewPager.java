@@ -258,16 +258,16 @@ public class ViewPager extends android.support.v4.view.ViewPager implements Tint
     boolean animateColorChanges;
     ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
         updateTint();
-        ViewCompat.postInvalidateOnAnimation(ViewPager.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
         updateBackgroundTint();
-        ViewCompat.postInvalidateOnAnimation(ViewPager.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 

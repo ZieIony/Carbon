@@ -28,8 +28,7 @@
         app:carbon_rippleHotspot="true"
         app:carbon_rippleRadius="25dp"
         app:carbon_rippleStyle="borderless"
-        app:carbon_showLabel="true"
-        app:carbon_tint="?attr/colorAccent"/>
+        app:carbon_showLabel="true"/>
 
     <carbon.widget.RangeSeekBar
         android:layout_width="match_parent"
@@ -38,12 +37,7 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:padding="@dimen/carbon_padding"
-        app:carbon_rippleColor="?attr/carbon_rippleColor"
-        app:carbon_rippleHotspot="true"
-        app:carbon_rippleRadius="25dp"
-        app:carbon_rippleStyle="borderless"
-        app:carbon_tint="?attr/colorAccent"/>
+        android:padding="@dimen/carbon_padding"/>
 
     <carbon.widget.Divider
         android:layout_width="match_parent"

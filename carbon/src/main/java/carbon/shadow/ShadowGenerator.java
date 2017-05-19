@@ -117,7 +117,7 @@ public class ShadowGenerator {
 
         blur(bitmap, elevation);
 
-        Shadow shadow = new Shadow(bitmap, elevation, c, view.getContext().getResources().getDisplayMetrics().density);
+        Shadow shadow = new Shadow(bitmap, elevation, c, 1.5f * view.getContext().getResources().getDisplayMetrics().density);
         shadowSet.add(shadow);
         return shadow;
     }

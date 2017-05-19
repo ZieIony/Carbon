@@ -66,7 +66,7 @@
             android:name=".widget.DropDownActivity"
             android:label="@string/app_name"/>
         <activity
-            android:name=".widget.DrawerActivity"
+            android:name=".widget.NavigationViewActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Translucent"/>
         <activity
@@ -99,6 +99,9 @@
             android:label="@string/app_name"/>
         <activity
             android:name=".animation.WidgetAnimationsActivity"
+            android:label="@string/app_name"/>
+        <activity
+            android:name=".animation.PathAnimationActivity"
             android:label="@string/app_name"/>
 
         <activity
@@ -146,9 +149,6 @@
 
         <activity
             android:name=".comparison.TextViewComparisonActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".comparison.FrameLayoutFixActivity"
             android:label="@string/app_name"/>
         <activity
             android:name=".comparison.CardViewComparisonActivity"

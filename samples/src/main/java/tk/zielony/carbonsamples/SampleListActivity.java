@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
+import java.io.Serializable;
+
 import carbon.component.DataBindingComponent;
 import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
@@ -14,7 +16,7 @@ import carbon.widget.RecyclerView;
 
 public class SampleListActivity extends SamplesActivity {
 
-    RowArrayAdapter<Object> adapter;
+    RowArrayAdapter<Serializable> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class SampleListActivity extends SamplesActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    protected void setItems(Object[] items) {
+    protected void setItems(Serializable[] items) {
         adapter.setItems(items);
     }
 

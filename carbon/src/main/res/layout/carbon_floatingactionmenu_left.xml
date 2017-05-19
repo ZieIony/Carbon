@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/carbon_fabSize"
-                            android:layoutDirection="ltr"
-                            android:orientation="horizontal"
-                            app:carbon_inAnimation="fade">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <carbon.widget.FloatingActionButton
-        android:id="@+id/carbon_fab"
-        android:layout_width="@dimen/carbon_smallFabSize"
-        android:layout_height="@dimen/carbon_smallFabSize"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/carbon_paddingHalf"
-        android:layout_marginRight="@dimen/carbon_paddingHalf"
-        android:duplicateParentState="true"
-        android:padding="@dimen/carbon_paddingHalf"
-        android:scaleType="fitXY"/>
+    <data>
 
-    <carbon.widget.TextView
-        android:id="@+id/carbon_tooltip"
-        style="@style/carbon_TextView.Tooltip"
+        <variable
+            name="data"
+            type="carbon.component.MenuItem"/>
+    </data>
+
+    <carbon.widget.LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:duplicateParentState="true"
-        android:maxLines="1"/>
-</carbon.widget.LinearLayout>
+        android:layout_height="@dimen/carbon_fabSize"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal"
+        app:carbon_inAnimation="fade">
+
+        <carbon.widget.FloatingActionButton
+            android:id="@+id/carbon_fab"
+            android:layout_width="@dimen/carbon_smallFabSize"
+            android:enabled="@{data.enabled}"
+            android:layout_height="@dimen/carbon_smallFabSize"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/carbon_paddingHalf"
+            android:clickable="false"
+            android:focusable="false"
+            android:layout_marginRight="@dimen/carbon_paddingHalf"
+            android:duplicateParentState="true"
+            android:padding="@dimen/carbon_paddingHalf"
+            android:scaleType="fitXY"/>
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_tooltip"
+            style="@style/carbon_TextView.Tooltip"
+            android:layout_width="wrap_content"
+            android:enabled="@{data.enabled}"
+            android:layout_height="wrap_content"
+            android:text="@{data.title}"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/carbon_marginHalf"
+            android:duplicateParentState="true"
+            android:maxLines="1"/>
+    </carbon.widget.LinearLayout>
+</layout>

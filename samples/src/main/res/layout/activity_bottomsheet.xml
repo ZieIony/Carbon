@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:orientation="vertical">
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-    <carbon.beta.BottomSheet
-        android:background="@color/carbon_amber_700"
+    <include layout="@layout/view_debugtoolbar"/>
+
+    <carbon.widget.DropDown
+        android:id="@+id/dropDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/carbon_margin"/>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom"/>
-</carbon.widget.FrameLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <carbon.beta.BottomSheetLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/carbon_colorForeground"
+        app:carbon_elevation="@dimen/carbon_elevationBottomSheet"/>
+</carbon.widget.LinearLayout>

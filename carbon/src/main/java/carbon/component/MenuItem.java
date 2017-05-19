@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.component;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,22 +9,12 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.view.ActionProvider;
 import android.view.ContextMenu;
-import android.view.Display;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 
-import carbon.CarbonContextWrapper;
-import carbon.R;
+import java.io.Serializable;
 
-public class FloatingMenuItem implements MenuItem {
-    private final FloatingActionMenu menu;
-    private LinearLayout view;
-    private TextView tooltip;
-    private FloatingActionButton fab;
+public class MenuItem implements android.view.MenuItem, Serializable {
     private Drawable background;
     private boolean enabled;
     private boolean visible;
@@ -37,47 +27,24 @@ public class FloatingMenuItem implements MenuItem {
     private int order;
     private ColorStateList iconTint;
 
-    public FloatingMenuItem(int id, int groupId, int order, CharSequence title, FloatingActionMenu menu) {
+    public MenuItem(int id, int groupId, int order, CharSequence title) {
         this.id = id;
         this.groupId = groupId;
         this.order = order;
         this.title = title;
-        this.menu = menu;
     }
 
     public void build() {
-        int[] location = new int[2];
-        menu.anchor.getLocationOnScreen(location);
 
-        WindowManager wm = (WindowManager) menu.anchor.getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
 
-        boolean left = location[0] < display.getWidth() + menu.anchor.getWidth() - location[0];
-
-        ViewGroup content = (ViewGroup) menu.getContentView();
-        Context context = new CarbonContextWrapper(content.getContext());
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        view = (LinearLayout) inflater.inflate(left ? R.layout.carbon_floatingactionmenu_left : R.layout.carbon_floatingactionmenu_right, content, false);
-        tooltip = (TextView) view.findViewById(R.id.carbon_tooltip);
-        fab = (FloatingActionButton) view.findViewById(R.id.carbon_fab);
-
-        tooltip.setText(titleRes == 0 ? title : context.getResources().getString(titleRes));
-        if (background != null)
-            fab.setBackgroundDrawable(background);
-        if (iconTint != null)
-            fab.setTint(iconTint);
-        fab.setImageDrawable(icon != null ? icon : context.getResources().getDrawable(iconRes));  // always null
-        fab.setOnClickListener(v -> {
+        //tooltip.setText(titleRes == 0 ? title : context.getResources().getString(titleRes));
+        //fab.setImageDrawable(icon != null ? icon : context.getResources().getDrawable(iconRes));  // always null
+        /*fab.setOnClickListener(v -> {
             if (enabled) {
-                if (menu.listener == null || menu.listener.onMenuItemClick(this))
-                    menu.dismiss();
+            //    if (menu.listener == null || menu.listener.onMenuItemClick(this))
+              //      menu.dismiss();
             }
-        });
-        content.addView(view);
-
-        view.setEnabled(enabled);
-        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        });*/
     }
 
     @Override
@@ -96,28 +63,24 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setTitle(CharSequence title) {
+    public android.view.MenuItem setTitle(CharSequence title) {
         this.title = title;
-        if (tooltip != null)
-            tooltip.setText(title);
         return this;
     }
 
     @Override
-    public MenuItem setTitle(@StringRes int titleRes) {
+    public android.view.MenuItem setTitle(@StringRes int titleRes) {
         this.titleRes = titleRes;
-        if (tooltip != null)
-            tooltip.setText(titleRes);
         return this;
     }
 
     @Override
     public CharSequence getTitle() {
-        return tooltip.getText();
+        return title;
     }
 
     @Override
-    public MenuItem setTitleCondensed(CharSequence title) {
+    public android.view.MenuItem setTitleCondensed(CharSequence title) {
         return this;
     }
 
@@ -127,18 +90,14 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setIcon(Drawable icon) {
+    public android.view.MenuItem setIcon(Drawable icon) {
         this.icon = icon;
-        if (fab != null)
-            fab.setImageDrawable(icon);
         return this;
     }
 
     @Override
-    public MenuItem setIcon(@DrawableRes int iconRes) {
+    public android.view.MenuItem setIcon(@DrawableRes int iconRes) {
         this.iconRes = iconRes;
-        if (fab != null)
-            fab.setImageResource(iconRes);
         return this;
     }
 
@@ -147,8 +106,12 @@ public class FloatingMenuItem implements MenuItem {
         return icon;
     }
 
+    public Drawable getIcon(Context context) {
+        return iconRes == 0 ? icon : context.getResources().getDrawable(iconRes);
+    }
+
     @Override
-    public MenuItem setIntent(Intent intent) {
+    public android.view.MenuItem setIntent(Intent intent) {
         return this;
     }
 
@@ -158,12 +121,12 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setShortcut(char numericChar, char alphaChar) {
+    public android.view.MenuItem setShortcut(char numericChar, char alphaChar) {
         return this;
     }
 
     @Override
-    public MenuItem setNumericShortcut(char numericChar) {
+    public android.view.MenuItem setNumericShortcut(char numericChar) {
         return this;
     }
 
@@ -173,7 +136,7 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setAlphabeticShortcut(char alphaChar) {
+    public android.view.MenuItem setAlphabeticShortcut(char alphaChar) {
         return this;
     }
 
@@ -183,7 +146,7 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setCheckable(boolean checkable) {
+    public android.view.MenuItem setCheckable(boolean checkable) {
         return this;
     }
 
@@ -193,7 +156,7 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setChecked(boolean checked) {
+    public android.view.MenuItem setChecked(boolean checked) {
         return this;
     }
 
@@ -203,10 +166,8 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setVisible(boolean visible) {
+    public android.view.MenuItem setVisible(boolean visible) {
         this.visible = visible;
-        if (view != null)
-            view.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 
@@ -216,10 +177,8 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setEnabled(boolean enabled) {
+    public android.view.MenuItem setEnabled(boolean enabled) {
         this.enabled = enabled;
-        if (view != null)
-            view.setEnabled(enabled);
         return this;
     }
 
@@ -239,7 +198,7 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setOnMenuItemClickListener(OnMenuItemClickListener menuItemClickListener) {
+    public android.view.MenuItem setOnMenuItemClickListener(OnMenuItemClickListener menuItemClickListener) {
         return this;
     }
 
@@ -253,17 +212,17 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setShowAsActionFlags(int actionEnum) {
+    public android.view.MenuItem setShowAsActionFlags(int actionEnum) {
         return this;
     }
 
     @Override
-    public MenuItem setActionView(View view) {
+    public android.view.MenuItem setActionView(View view) {
         return this;
     }
 
     @Override
-    public MenuItem setActionView(@LayoutRes int resId) {
+    public android.view.MenuItem setActionView(@LayoutRes int resId) {
         return this;
     }
 
@@ -273,7 +232,7 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setActionProvider(ActionProvider actionProvider) {
+    public android.view.MenuItem setActionProvider(ActionProvider actionProvider) {
         return this;
     }
 
@@ -298,14 +257,12 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     @Override
-    public MenuItem setOnActionExpandListener(OnActionExpandListener listener) {
+    public android.view.MenuItem setOnActionExpandListener(OnActionExpandListener listener) {
         return this;
     }
 
-    public MenuItem setBackgroundDrawable(Drawable drawable) {
+    public android.view.MenuItem setBackgroundDrawable(Drawable drawable) {
         background = drawable;
-        if (fab != null)
-            fab.setBackgroundDrawable(drawable);
         return this;
     }
 
@@ -314,12 +271,14 @@ public class FloatingMenuItem implements MenuItem {
     }
 
     public void performAction() {
-        view.performClick();
+        //   view.performClick();
     }
 
     public void setIconTint(ColorStateList tint) {
         iconTint = tint;
-        if (fab != null)
-            fab.setTint(tint);
+    }
+
+    public ColorStateList getIconTint() {
+        return iconTint;
     }
 }

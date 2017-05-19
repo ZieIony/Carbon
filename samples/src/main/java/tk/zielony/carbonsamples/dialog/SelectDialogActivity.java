@@ -16,7 +16,7 @@ import tk.zielony.randomdata.food.StringFruitGenerator;
 
 public class SelectDialogActivity extends SamplesActivity {
 
-    private Object selectedItem;
+    private String selectedItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,17 +26,17 @@ public class SelectDialogActivity extends SamplesActivity {
         Samples.initToolbar(this, getString(R.string.simpleDialogActivity_title));
 
         EditText titleText = (EditText) findViewById(R.id.titleText);
-        DropDown dropDown = (DropDown) findViewById(R.id.dropDown);
+        DropDown<String> dropDown = (DropDown<String>) findViewById(R.id.dropDown);
         dropDown.setItems(new String[]{"Single select", "Multi select"});
 
         StringFruitGenerator generator = new StringFruitGenerator();
-        Object[] items = Stream.generate(generator::next).limit(5).toArray();
+        String[] items = (String[]) Stream.generate(generator::next).limit(5).toArray();
         selectedItem = items[0];
 
         findViewById(R.id.button).setOnClickListener(view -> {
             switch (dropDown.getSelectedIndex()) {
                 case 0: {
-                    SingleSelectDialog dialog = new SingleSelectDialog(this);
+                    SingleSelectDialog<String> dialog = new SingleSelectDialog<>(this);
                     if (titleText.length() > 0)
                         dialog.setTitle(titleText.getText());
                     dialog.setItems(items);
@@ -46,12 +46,12 @@ public class SelectDialogActivity extends SamplesActivity {
                 }
                 break;
                 case 1: {
-                    MultiSelectDialog dialog = new MultiSelectDialog(this);
+                    MultiSelectDialog<String> dialog = new MultiSelectDialog<>(this);
                     if (titleText.length() > 0)
                         dialog.setTitle(titleText.getText());
                     dialog.setItems(items);
                     dialog.setOnItemClickedListener((view1, item, position) -> selectedItem = item);
-                    dialog.setSelectedItems(new Object[]{selectedItem});
+                    dialog.setSelectedItems(new String[]{selectedItem});
                     dialog.show();
                 }
                 break;

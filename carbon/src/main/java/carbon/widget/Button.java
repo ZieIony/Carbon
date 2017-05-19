@@ -21,6 +21,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.text.Layout;
@@ -415,45 +416,28 @@ public class Button extends android.widget.Button
     @Override
     public void invalidateDrawable(@NonNull Drawable drawable) {
         super.invalidateDrawable(drawable);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate();
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).invalidate();
+        invalidateParentIfNeeded();
     }
 
     @Override
     public void invalidate(@NonNull Rect dirty) {
         super.invalidate(dirty);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate(dirty);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).invalidate(dirty);
+        invalidateParentIfNeeded();
     }
 
     @Override
     public void invalidate(int l, int t, int r, int b) {
         super.invalidate(l, t, r, b);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate(l, t, r, b);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).invalidate(l, t, r, b);
+        invalidateParentIfNeeded();
     }
 
     @Override
     public void invalidate() {
         super.invalidate();
+        invalidateParentIfNeeded();
+    }
+
+    private void invalidateParentIfNeeded() {
         if (getParent() == null || !(getParent() instanceof View))
             return;
 
@@ -467,53 +451,24 @@ public class Button extends android.widget.Button
     @Override
     public void postInvalidateDelayed(long delayMilliseconds) {
         super.postInvalidateDelayed(delayMilliseconds);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
+        postInvalidateParentIfNeededDelayed(delayMilliseconds);
     }
 
     @Override
     public void postInvalidateDelayed(long delayMilliseconds, int left, int top, int right, int bottom) {
         super.postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
+        postInvalidateParentIfNeededDelayed(delayMilliseconds);
     }
 
-    @Override
-    public void postInvalidate() {
-        super.postInvalidate();
+    private void postInvalidateParentIfNeededDelayed(long delayMilliseconds) {
         if (getParent() == null || !(getParent() instanceof View))
             return;
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate();
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
         if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
-    public void postInvalidate(int left, int top, int right, int bottom) {
-        super.postInvalidate(left, top, right, bottom);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate(left, top, right, bottom);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).postInvalidate(left, top, right, bottom);
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
     @Override
@@ -863,17 +818,17 @@ public class Button extends android.widget.Button
     boolean animateColorChanges;
     ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
         updateTint();
-        ViewCompat.postInvalidateOnAnimation(Button.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
         updateBackgroundTint();
-        ViewCompat.postInvalidateOnAnimation(Button.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = animation -> setHintTextColor(getHintTextColors());
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 
@@ -1225,5 +1180,70 @@ public class Button extends android.widget.Button
     @Override
     public RenderingMode getRenderingMode() {
         return renderingMode;
+    }
+
+
+    // -------------------------------
+    // transformations
+    // -------------------------------
+
+    @Override
+    public void setRotation(float rotation) {
+        super.setRotation(rotation);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setRotationY(float rotationY) {
+        super.setRotationY(rotationY);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setRotationX(float rotationX) {
+        super.setRotationX(rotationX);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setScaleX(float scaleX) {
+        super.setScaleX(scaleX);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setScaleY(float scaleY) {
+        super.setScaleY(scaleY);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setPivotX(float pivotX) {
+        super.setPivotX(pivotX);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setPivotY(float pivotY) {
+        super.setPivotY(pivotY);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setAlpha(@FloatRange(from = 0.0, to = 1.0) float alpha) {
+        super.setAlpha(alpha);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setTranslationX(float translationX) {
+        super.setTranslationX(translationX);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setTranslationY(float translationY) {
+        super.setTranslationY(translationY);
+        invalidateParentIfNeeded();
     }
 }

@@ -2,7 +2,9 @@ package carbon.component;
 
 import android.graphics.drawable.Drawable;
 
-public interface IconTextItem extends ComponentItem {
+import java.io.Serializable;
+
+public interface IconTextItem extends Serializable {
     Drawable getIcon();
 
     String getText();

@@ -3,10 +3,10 @@ package tk.zielony.carbonsamples.dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import carbon.component.ComponentItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
 import carbon.dialog.ListDialog;
@@ -32,7 +32,7 @@ public class ListDialogActivity extends SamplesActivity {
 
         EditText titleText = (EditText) findViewById(R.id.titleText);
 
-        List<ComponentItem> items = Arrays.asList(
+        List<Serializable> items = Arrays.asList(
                 new DefaultImageTextSubtextDateItem(),
                 new DefaultImageTextSubtextDateItem(),
                 new DefaultImageTextSubtextDateItem(),
@@ -53,7 +53,7 @@ public class ListDialogActivity extends SamplesActivity {
         randomData.fill(items);
 
         findViewById(R.id.button).setOnClickListener(view -> {
-            ListDialog<ComponentItem> dialog = new ListDialog<>(this);
+            ListDialog<Serializable> dialog = new ListDialog<>(this);
             dialog.setItems(items, ImageTextSubtextDateRow.FACTORY);
             if (titleText.length() > 0)
                 dialog.setTitle(titleText.getText());

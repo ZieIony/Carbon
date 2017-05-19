@@ -5,36 +5,39 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
-import java.util.ArrayList;
-
+import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.internal.FloatingMenuBuilder;
+import carbon.component.FloatingActionMenuLeftRow;
+import carbon.component.FloatingActionMenuRightRow;
+import carbon.component.MenuItem;
+import carbon.internal.Menu;
+import carbon.recycler.RowListAdapter;
 
 public class FloatingActionMenu extends PopupWindow {
     private final Handler handler;
-    private final LinearLayout content;
-    private FloatingMenuBuilder menu;
+    private final RecyclerView content;
+    private Menu menu;
 
-    MenuItem.OnMenuItemClickListener listener;
-    View anchor;
+    android.view.MenuItem.OnMenuItemClickListener listener;
+    private View anchor;
+
+    private RowListAdapter adapter;
 
     public FloatingActionMenu(Context context) {
-        super(new LinearLayout(context), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        content = (LinearLayout) getContentView();
+        super(new RecyclerView(new CarbonContextWrapper(context)), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        content = (RecyclerView) getContentView();
         content.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        content.setOrientation(android.widget.LinearLayout.VERTICAL);
+        content.setLayoutManager(new LinearLayoutManager(context));
         content.setPadding(0, content.getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf), 0, content.getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf));
         content.setOutAnimator(AnimUtils.getFadeOutAnimator());
 
@@ -53,10 +56,13 @@ public class FloatingActionMenu extends PopupWindow {
         this.anchor = anchor;
     }
 
-    public void build() {
-        content.removeAllViews();
-        for (int i = 0; i < menu.size(); i++)
-            ((FloatingMenuItem) menu.getItem(i)).build();
+    public View getAnchor() {
+        return anchor;
+    }
+
+    public void invalidate() {
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
     public boolean show() {
@@ -69,9 +75,18 @@ public class FloatingActionMenu extends PopupWindow {
         boolean left = location[0] < display.getWidth() + anchor.getWidth() - location[0];
         boolean top = location[1] < display.getHeight() + anchor.getHeight() - location[1];
 
-        content.setGravity(left ? Gravity.LEFT : Gravity.RIGHT);
-        content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        adapter = new RowListAdapter<>(MenuItem.class, left ? FloatingActionMenuLeftRow.FACTORY : FloatingActionMenuRightRow.FACTORY);
+        content.setAdapter(adapter);
+        adapter.setItems(menu.getVisibleItems());
+        adapter.notifyDataSetChanged();
 
+        adapter.setOnItemClickedListener((view, o, position) -> {
+            if (listener != null)
+                listener.onMenuItemClick(menu.getItem(position));
+            dismiss();
+        });
+
+        content.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         super.showAtLocation(anchor, Gravity.TOP | Gravity.LEFT, 0, 0);
         if (!left & top) {  // right top
             update(location[0] - content.getMeasuredWidth() + anchor.getWidth(), location[1] + anchor.getHeight(), content.getMeasuredWidth(), content.getMeasuredHeight());
@@ -83,14 +98,8 @@ public class FloatingActionMenu extends PopupWindow {
             update(location[0], location[1] + anchor.getHeight(), content.getMeasuredWidth(), content.getMeasuredHeight());
         }
 
-        ArrayList<LinearLayout> items = new ArrayList<>();
-        for (int i = 0; i < menu.size(); i++) {
-            if (menu.getItem(i).isVisible())
-                items.add((LinearLayout) content.getChildAt(i));
-        }
-
-        for (int i = 0; i < items.size(); i++) {
-            LinearLayout item = items.get(i);
+        for (int i = 0; i < content.getChildCount(); i++) {
+            LinearLayout item = (LinearLayout) content.getChildAt(i);
             item.setVisibility(View.INVISIBLE);
             int delay = top ? i * 50 : (menu.size() - 1 - i) * 50;
             handler.postDelayed(() -> item.animateVisibility(View.VISIBLE), delay);
@@ -117,25 +126,18 @@ public class FloatingActionMenu extends PopupWindow {
     }
 
     public void setMenu(int resId) {
-        CarbonContextWrapper contextWrapper = new CarbonContextWrapper(getContentView().getContext());
-        this.menu = new FloatingMenuBuilder(this);
-        MenuInflater inflater = new MenuInflater(contextWrapper);
-        inflater.inflate(resId, menu);
+        menu = Carbon.getMenu(getContentView().getContext(), resId);
     }
 
-    public void setMenu(final Menu baseMenu) {
-        this.menu = new FloatingMenuBuilder(this);
-        for (int i = 0; i < baseMenu.size(); i++) {
-            MenuItem menuItem = baseMenu.getItem(i);
-            this.menu.add(menuItem.getGroupId(), menuItem.getItemId(), menuItem.getOrder(), menuItem.getTitle()).setIcon(menuItem.getIcon()).setVisible(menuItem.isVisible()).setEnabled(menuItem.isEnabled());
-        }
+    public void setMenu(final android.view.Menu baseMenu) {
+        menu = Carbon.getMenu(getContentView().getContext(), baseMenu);
     }
 
-    public Menu getMenu() {
+    public android.view.Menu getMenu() {
         return menu;
     }
 
-    public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener) {
+    public void setOnMenuItemClickListener(android.view.MenuItem.OnMenuItemClickListener listener) {
         this.listener = listener;
     }
 }

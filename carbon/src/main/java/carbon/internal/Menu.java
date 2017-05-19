@@ -35,24 +35,19 @@ import android.support.v7.view.menu.MenuPresenter;
 import android.util.SparseArray;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import carbon.CarbonContextWrapper;
-import carbon.widget.FloatingActionMenu;
-import carbon.widget.FloatingMenuItem;
+import carbon.component.MenuItem;
 
 /**
  * Implementation of the {@link android.support.v4.internal.view.SupportMenu} interface for creating
- * a menu for {@link carbon.widget.FloatingActionButton}.
+ * a menu for {@link carbon.widget.FloatingActionButton} and {@link carbon.widget.NavigationView}.
  */
-public class FloatingMenuBuilder implements SupportMenu {
-
-    private static final String TAG = "FloatingMenuBuilder";
+public class Menu implements SupportMenu {
 
     private static final String PRESENTER_KEY = "android:menu:presenters";
     private static final String ACTION_VIEW_STATES_KEY = "android:menu:actionviewstates";
@@ -92,13 +87,13 @@ public class FloatingMenuBuilder implements SupportMenu {
     /**
      * Contains all of the items for this menu
      */
-    private ArrayList<FloatingMenuItem> mItems;
+    private ArrayList<MenuItem> mItems;
 
     /**
      * Contains only the items that are currently visible.  This will be created/refreshed from
      * {@link #getVisibleItems()}
      */
-    private ArrayList<FloatingMenuItem> mVisibleItems;
+    private ArrayList<MenuItem> mVisibleItems;
 
     /**
      * Whether or not the items (or any one item's shown state) has changed since it was last
@@ -135,9 +130,7 @@ public class FloatingMenuBuilder implements SupportMenu {
 
     private boolean mOptionalIconsVisible = false;
 
-    private ArrayList<FloatingMenuItem> mTempShortcutItemList = new ArrayList<>();
-
-    private FloatingActionMenu menu;
+    private ArrayList<MenuItem> mTempShortcutItemList = new ArrayList<>();
 
     /**
      * Called by menu to notify of close and selection changes.
@@ -153,19 +146,18 @@ public class FloatingMenuBuilder implements SupportMenu {
          * @param item The menu item that is selected
          * @return whether the menu item selection was handled
          */
-        public boolean onMenuItemSelected(FloatingMenuBuilder menu, MenuItem item);
+        public boolean onMenuItemSelected(Menu menu, android.view.MenuItem item);
 
         /**
          * Called when the mode of the menu changes (for example, from icon to expanded).
          *
          * @param menu the menu that has changed modes
          */
-        public void onMenuModeChange(FloatingMenuBuilder menu);
+        public void onMenuModeChange(Menu menu);
     }
 
-    public FloatingMenuBuilder(FloatingActionMenu menu) {
-        this.menu = menu;
-        mContext = new CarbonContextWrapper(menu.getContentView().getContext());
+    public Menu(Context context) {
+        mContext = context;
         mResources = mContext.getResources();
 
         mItems = new ArrayList<>();
@@ -176,7 +168,7 @@ public class FloatingMenuBuilder implements SupportMenu {
         setShortcutsVisibleInner(true);
     }
 
-    public FloatingMenuBuilder setDefaultShowAsAction(int defaultShowAsAction) {
+    public Menu setDefaultShowAsAction(int defaultShowAsAction) {
         mDefaultShowAsAction = defaultShowAsAction;
         return this;
     }
@@ -186,7 +178,7 @@ public class FloatingMenuBuilder implements SupportMenu {
 
         final int itemCount = size();
         for (int i = 0; i < itemCount; i++) {
-            final MenuItem item = getItem(i);
+            final android.view.MenuItem item = getItem(i);
             final View v = MenuItemCompat.getActionView(item);
             if (v != null && v.getId() != View.NO_ID) {
                 if (viewStates == null) {
@@ -214,7 +206,7 @@ public class FloatingMenuBuilder implements SupportMenu {
 
         final int itemCount = size();
         for (int i = 0; i < itemCount; i++) {
-            final MenuItem item = getItem(i);
+            final android.view.MenuItem item = getItem(i);
             final View v = MenuItemCompat.getActionView(item);
             if (v != null && v.getId() != View.NO_ID) {
                 v.restoreHierarchyState(viewStates);
@@ -223,7 +215,7 @@ public class FloatingMenuBuilder implements SupportMenu {
 
         final int expandedId = states.getInt(EXPANDED_ACTION_VIEW_ID);
         if (expandedId > 0) {
-            MenuItem itemToExpand = findItem(expandedId);
+            android.view.MenuItem itemToExpand = findItem(expandedId);
             if (itemToExpand != null) {
                 MenuItemCompat.expandActionView(itemToExpand);
             }
@@ -241,10 +233,10 @@ public class FloatingMenuBuilder implements SupportMenu {
     /**
      * Adds an item to the menu.  The other add methods funnel to this.
      */
-    private MenuItem addInternal(int group, int id, int categoryOrder, CharSequence title) {
+    private android.view.MenuItem addInternal(int group, int id, int categoryOrder, CharSequence title) {
         final int ordering = getOrdering(categoryOrder);
 
-        final FloatingMenuItem item = createNewMenuItem(group, id, categoryOrder, ordering, title,
+        final MenuItem item = createNewMenuItem(group, id, categoryOrder, ordering, title,
                 mDefaultShowAsAction);
 /*
         if (mCurrentMenuInfo != null) {
@@ -258,28 +250,28 @@ public class FloatingMenuBuilder implements SupportMenu {
         return item;
     }
 
-    // Layoutlib overrides this method to return its custom implementation of FloatingMenuItem
-    private FloatingMenuItem createNewMenuItem(int group, int id, int categoryOrder, int ordering,
-                                               CharSequence title, int defaultShowAsAction) {
-        return new FloatingMenuItem(group, id, categoryOrder, title, menu);
+    // Layoutlib overrides this method to return its custom implementation of MenuItem
+    private MenuItem createNewMenuItem(int group, int id, int categoryOrder, int ordering,
+                                       CharSequence title, int defaultShowAsAction) {
+        return new MenuItem(group, id, categoryOrder, title);
     }
 
-    public MenuItem add(CharSequence title) {
+    public android.view.MenuItem add(CharSequence title) {
         return addInternal(0, 0, 0, title);
     }
 
     @Override
-    public MenuItem add(int titleRes) {
+    public android.view.MenuItem add(int titleRes) {
         return addInternal(0, 0, 0, mResources.getString(titleRes));
     }
 
     @Override
-    public MenuItem add(int group, int id, int categoryOrder, CharSequence title) {
+    public android.view.MenuItem add(int group, int id, int categoryOrder, CharSequence title) {
         return addInternal(group, id, categoryOrder, title);
     }
 
     @Override
-    public MenuItem add(int group, int id, int categoryOrder, int title) {
+    public android.view.MenuItem add(int group, int id, int categoryOrder, int title) {
         return addInternal(group, id, categoryOrder, mResources.getString(title));
     }
 
@@ -305,7 +297,7 @@ public class FloatingMenuBuilder implements SupportMenu {
 
     @Override
     public int addIntentOptions(int group, int id, int categoryOrder, ComponentName caller,
-                                Intent[] specifics, Intent intent, int flags, MenuItem[] outSpecificItems) {
+                                Intent[] specifics, Intent intent, int flags, android.view.MenuItem[] outSpecificItems) {
         PackageManager pm = mContext.getPackageManager();
         final List<ResolveInfo> lri =
                 pm.queryIntentActivityOptions(caller, specifics, intent, 0);
@@ -322,7 +314,7 @@ public class FloatingMenuBuilder implements SupportMenu {
             rintent.setComponent(new ComponentName(
                     ri.activityInfo.applicationInfo.packageName,
                     ri.activityInfo.name));
-            final MenuItem item = add(group, id, categoryOrder, ri.loadLabel(pm))
+            final android.view.MenuItem item = add(group, id, categoryOrder, ri.loadLabel(pm))
                     .setIcon(ri.loadIcon(pm))
                     .setIntent(rintent);
             if (outSpecificItems != null && ri.specificIndex >= 0) {
@@ -406,7 +398,7 @@ public class FloatingMenuBuilder implements SupportMenu {
 
         boolean changedAtLeastOneItem = false;
         for (int i = 0; i < N; i++) {
-            FloatingMenuItem item = mItems.get(i);
+            MenuItem item = mItems.get(i);
             if (item.getGroupId() == group) {
                 if (item.isVisible() != visible) {
                     item.setVisible(visible);
@@ -423,7 +415,7 @@ public class FloatingMenuBuilder implements SupportMenu {
         final int N = mItems.size();
 
         for (int i = 0; i < N; i++) {
-            FloatingMenuItem item = mItems.get(i);
+            MenuItem item = mItems.get(i);
             if (item.getGroupId() == group) {
                 item.setEnabled(enabled);
             }
@@ -435,7 +427,7 @@ public class FloatingMenuBuilder implements SupportMenu {
         final int size = size();
 
         for (int i = 0; i < size; i++) {
-            FloatingMenuItem item = mItems.get(i);
+            MenuItem item = mItems.get(i);
             if (item.isVisible()) {
                 return true;
             }
@@ -445,14 +437,14 @@ public class FloatingMenuBuilder implements SupportMenu {
     }
 
     @Override
-    public MenuItem findItem(int id) {
+    public android.view.MenuItem findItem(int id) {
         final int size = size();
         for (int i = 0; i < size; i++) {
-            FloatingMenuItem item = mItems.get(i);
+            MenuItem item = mItems.get(i);
             if (item.getItemId() == id) {
                 return item;
             } else if (item.hasSubMenu()) {
-                MenuItem possibleItem = item.getSubMenu().findItem(id);
+                android.view.MenuItem possibleItem = item.getSubMenu().findItem(id);
 
                 if (possibleItem != null) {
                     return possibleItem;
@@ -467,7 +459,7 @@ public class FloatingMenuBuilder implements SupportMenu {
         final int size = size();
 
         for (int i = 0; i < size; i++) {
-            FloatingMenuItem item = mItems.get(i);
+            MenuItem item = mItems.get(i);
             if (item.getItemId() == id) {
                 return i;
             }
@@ -488,7 +480,7 @@ public class FloatingMenuBuilder implements SupportMenu {
         }
 
         for (int i = start; i < size; i++) {
-            final FloatingMenuItem item = mItems.get(i);
+            final MenuItem item = mItems.get(i);
 
             if (item.getGroupId() == group) {
                 return i;
@@ -504,7 +496,7 @@ public class FloatingMenuBuilder implements SupportMenu {
     }
 
     @Override
-    public MenuItem getItem(int index) {
+    public android.view.MenuItem getItem(int index) {
         return mItems.get(index);
     }
 
@@ -584,7 +576,7 @@ public class FloatingMenuBuilder implements SupportMenu {
         return mContext;
     }
 
-    boolean dispatchMenuItemSelected(FloatingMenuBuilder menu, MenuItem item) {
+    boolean dispatchMenuItemSelected(Menu menu, android.view.MenuItem item) {
         return mCallback != null && mCallback.onMenuItemSelected(menu, item);
     }
 
@@ -597,9 +589,9 @@ public class FloatingMenuBuilder implements SupportMenu {
         }
     }
 
-    private static int findInsertIndex(ArrayList<FloatingMenuItem> items, int ordering) {
+    private static int findInsertIndex(ArrayList<MenuItem> items, int ordering) {
         for (int i = items.size() - 1; i >= 0; i--) {
-            FloatingMenuItem item = items.get(i);
+            MenuItem item = items.get(i);
             if (item.getOrder() <= ordering) {
                 return i + 1;
             }
@@ -610,7 +602,7 @@ public class FloatingMenuBuilder implements SupportMenu {
 
     @Override
     public boolean performShortcut(int keyCode, KeyEvent event, int flags) {
-        final FloatingMenuItem item = findItemWithShortcutForKey(keyCode, event);
+        final MenuItem item = findItemWithShortcutForKey(keyCode, event);
 
         boolean handled = false;
 
@@ -628,7 +620,7 @@ public class FloatingMenuBuilder implements SupportMenu {
      * with the keyCode.
      */
     @SuppressWarnings("deprecation")
-    void findItemsWithShortcutForKey(List<FloatingMenuItem> items, int keyCode, KeyEvent event) {
+    void findItemsWithShortcutForKey(List<MenuItem> items, int keyCode, KeyEvent event) {
         final boolean qwerty = isQwertyMode();
         final int metaState = event.getMetaState();
         final KeyCharacterMap.KeyData possibleChars = new KeyCharacterMap.KeyData();
@@ -642,9 +634,9 @@ public class FloatingMenuBuilder implements SupportMenu {
         // Look for an item whose shortcut is this key.
         final int N = mItems.size();
         for (int i = 0; i < N; i++) {
-            FloatingMenuItem item = mItems.get(i);
+            MenuItem item = mItems.get(i);
             if (item.hasSubMenu()) {
-                ((FloatingMenuBuilder) item.getSubMenu()).findItemsWithShortcutForKey(items, keyCode, event);
+                ((Menu) item.getSubMenu()).findItemsWithShortcutForKey(items, keyCode, event);
             }
             final char shortcutChar = qwerty ? item.getAlphabeticShortcut() : item.getNumericShortcut();
             if (((metaState & (KeyEvent.META_SHIFT_ON | KeyEvent.META_SYM_ON)) == 0) &&
@@ -671,9 +663,9 @@ public class FloatingMenuBuilder implements SupportMenu {
      * we have to only return the exact match.
      */
     @SuppressWarnings("deprecation")
-    FloatingMenuItem findItemWithShortcutForKey(int keyCode, KeyEvent event) {
+    MenuItem findItemWithShortcutForKey(int keyCode, KeyEvent event) {
         // Get all items that can be associated directly or indirectly with the keyCode
-        ArrayList<FloatingMenuItem> items = mTempShortcutItemList;
+        ArrayList<MenuItem> items = mTempShortcutItemList;
         items.clear();
         findItemsWithShortcutForKey(items, keyCode, event);
 
@@ -696,7 +688,7 @@ public class FloatingMenuBuilder implements SupportMenu {
         // If we found more than one item associated with the key,
         // we have to return the exact match
         for (int i = 0; i < size; i++) {
-            final FloatingMenuItem item = items.get(i);
+            final MenuItem item = items.get(i);
             final char shortcutChar = qwerty ? item.getAlphabeticShortcut() :
                     item.getNumericShortcut();
             if ((shortcutChar == possibleChars.meta[0] &&
@@ -717,12 +709,12 @@ public class FloatingMenuBuilder implements SupportMenu {
         return performItemAction(findItem(id), flags);
     }
 
-    public boolean performItemAction(MenuItem item, int flags) {
+    public boolean performItemAction(android.view.MenuItem item, int flags) {
         return performItemAction(item, null, flags);
     }
 
-    public boolean performItemAction(MenuItem item, MenuPresenter preferredPresenter, int flags) {
-        FloatingMenuItem itemImpl = (FloatingMenuItem) item;
+    public boolean performItemAction(android.view.MenuItem item, MenuPresenter preferredPresenter, int flags) {
+        MenuItem itemImpl = (MenuItem) item;
 
         if (itemImpl == null || !itemImpl.isEnabled()) {
             return false;
@@ -777,34 +769,34 @@ public class FloatingMenuBuilder implements SupportMenu {
     }
 
     /**
-     * Called by {@link FloatingMenuItem} when its visible flag is changed.
+     * Called by {@link MenuItem} when its visible flag is changed.
      *
      * @param item The item that has gone through a visibility change.
      */
-    void onItemVisibleChanged(FloatingMenuItem item) {
+    void onItemVisibleChanged(MenuItem item) {
         // Notify of items being changed
         mIsVisibleItemsStale = true;
         onItemsChanged(true);
     }
 
     /**
-     * Called by {@link FloatingMenuItem} when its action request status is changed.
+     * Called by {@link MenuItem} when its action request status is changed.
      *
      * @param item The item that has gone through a change in action request status.
      */
-    void onItemActionRequestChanged(FloatingMenuItem item) {
+    void onItemActionRequestChanged(MenuItem item) {
         // Notify of items being changed
         onItemsChanged(true);
     }
 
-    public ArrayList<FloatingMenuItem> getVisibleItems() {
+    public ArrayList<MenuItem> getVisibleItems() {
         if (!mIsVisibleItemsStale) return mVisibleItems;
 
         // Refresh the visible items
         mVisibleItems.clear();
 
         final int itemsSize = mItems.size();
-        FloatingMenuItem item;
+        MenuItem item;
         for (int i = 0; i < itemsSize; i++) {
             item = mItems.get(i);
             if (item.isVisible()) mVisibleItems.add(item);
@@ -857,9 +849,9 @@ public class FloatingMenuBuilder implements SupportMenu {
      * builder-style methods of subclasses.
      *
      * @param title The new title.
-     * @return This FloatingMenuBuilder so additional setters can be called.
+     * @return This Menu so additional setters can be called.
      */
-    protected FloatingMenuBuilder setHeaderTitleInt(CharSequence title) {
+    protected Menu setHeaderTitleInt(CharSequence title) {
         setHeaderInternal(0, title, 0, null, null);
         return this;
     }
@@ -869,9 +861,9 @@ public class FloatingMenuBuilder implements SupportMenu {
      * builder-style methods of subclasses.
      *
      * @param titleRes The new title (as a resource ID).
-     * @return This FloatingMenuBuilder so additional setters can be called.
+     * @return This Menu so additional setters can be called.
      */
-    protected FloatingMenuBuilder setHeaderTitleInt(int titleRes) {
+    protected Menu setHeaderTitleInt(int titleRes) {
         setHeaderInternal(titleRes, null, 0, null, null);
         return this;
     }
@@ -881,9 +873,9 @@ public class FloatingMenuBuilder implements SupportMenu {
      * builder-style methods of subclasses.
      *
      * @param icon The new icon.
-     * @return This FloatingMenuBuilder so additional setters can be called.
+     * @return This Menu so additional setters can be called.
      */
-    protected FloatingMenuBuilder setHeaderIconInt(Drawable icon) {
+    protected Menu setHeaderIconInt(Drawable icon) {
         setHeaderInternal(0, null, 0, icon, null);
         return this;
     }
@@ -893,9 +885,9 @@ public class FloatingMenuBuilder implements SupportMenu {
      * builder-style methods of subclasses.
      *
      * @param iconRes The new icon (as a resource ID).
-     * @return This FloatingMenuBuilder so additional setters can be called.
+     * @return This Menu so additional setters can be called.
      */
-    protected FloatingMenuBuilder setHeaderIconInt(int iconRes) {
+    protected Menu setHeaderIconInt(int iconRes) {
         setHeaderInternal(0, null, iconRes, null, null);
         return this;
     }
@@ -905,9 +897,9 @@ public class FloatingMenuBuilder implements SupportMenu {
      * builder-style methods of subclasses.
      *
      * @param view The new view.
-     * @return This FloatingMenuBuilder so additional setters can be called.
+     * @return This Menu so additional setters can be called.
      */
-    protected FloatingMenuBuilder setHeaderViewInt(View view) {
+    protected Menu setHeaderViewInt(View view) {
         setHeaderInternal(0, null, 0, null, view);
         return this;
     }
@@ -929,7 +921,7 @@ public class FloatingMenuBuilder implements SupportMenu {
      *
      * @return The root menu.
      */
-    public FloatingMenuBuilder getRootMenu() {
+    public Menu getRootMenu() {
         return this;
     }
 

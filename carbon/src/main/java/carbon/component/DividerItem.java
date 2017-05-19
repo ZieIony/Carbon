@@ -1,4 +1,6 @@
 package carbon.component;
 
-public class DividerItem implements ComponentItem {
+import java.io.Serializable;
+
+public class DividerItem implements Serializable {
 }

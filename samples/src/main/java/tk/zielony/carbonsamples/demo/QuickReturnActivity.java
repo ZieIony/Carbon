@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.component.ComponentItem;
 import carbon.component.DefaultHeaderItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
@@ -35,7 +35,7 @@ public class QuickReturnActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quickreturn);
 
-        List<ComponentItem> items = Arrays.asList(
+        List<Serializable> items = Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_toolbarHeight) + getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new DefaultHeaderItem("Header"),
                 new DefaultImageTextSubtextDateItem(),

@@ -342,7 +342,7 @@ public class ToolbarWidgetWrapper implements DecorToolbar {
             mActionMenuPresenter.setId(R.id.action_menu_presenter);
         }
         mActionMenuPresenter.setCallback(cb);
-        mToolbar.setMenu((MenuBuilder) menu, mActionMenuPresenter);*/
+        mToolbar.setMenu((Menu) menu, mActionMenuPresenter);*/
     }
 
     @Override

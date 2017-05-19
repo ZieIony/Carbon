@@ -2,6 +2,8 @@ package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
 
+import java.io.Serializable;
+
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.feature.PercentLayoutActivity;
 import tk.zielony.carbonsamples.widget.BottomBarActivity;
@@ -9,7 +11,7 @@ import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
-import tk.zielony.carbonsamples.widget.DrawerActivity;
+import tk.zielony.carbonsamples.widget.NavigationViewActivity;
 import tk.zielony.carbonsamples.widget.DropDownActivity;
 import tk.zielony.carbonsamples.widget.ExpandableRecyclerActivity;
 import tk.zielony.carbonsamples.widget.FloatingActionMenuActivity;
@@ -32,7 +34,7 @@ public class WidgetsActivity extends SampleListActivity {
 
         Samples.initToolbar(this, getString(R.string.widgetsActivity_title));
 
-        setItems(new Object[]{
+        setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Widgets with sample styles, data and applications",
                 new SampleActivityItem(CheckBoxRadioActivity.class, getString(R.string.checkBoxRadioActivity_title)),
@@ -47,7 +49,7 @@ public class WidgetsActivity extends SampleListActivity {
                 new SampleActivityItem(RecyclerActivity.class, getString(R.string.recyclerViewActivity_title)),
                 new SampleActivityItem(ExpandableRecyclerActivity.class, getString(R.string.expandableRecyclerActivity_title)),
                 new SampleActivityItem(DropDownActivity.class, getString(R.string.dropDownActivityActivity_title)),
-                new SampleActivityItem(DrawerActivity.class, getString(R.string.drawerActivity_title)),
+                new SampleActivityItem(NavigationViewActivity.class, getString(R.string.navigationViewActivity_title)),
                 new SampleActivityItem(SeekBarActivity.class, getString(R.string.seekBarActivity_title)),
                 new SampleActivityItem(ToolbarActivity.class, getString(R.string.toolbarActivity_title)),
                 new SampleActivityItem(FlowLayoutActivity.class, getString(R.string.flowLayoutActivity_title)),

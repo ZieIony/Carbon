@@ -40,7 +40,6 @@ public class LargeShadowActivity extends SamplesActivity {
             layoutParams.width = (int) ((float) valueAnimator.getAnimatedValue() * (parent.getWidth() - margin * 2));
             layoutParams.height = (int) ((float) valueAnimator.getAnimatedValue() * (parent.getHeight() - margin * 2));
             view.setLayoutParams(layoutParams);
-            ((View) view.getParent()).postInvalidate();
         });
         animator.start();
     }

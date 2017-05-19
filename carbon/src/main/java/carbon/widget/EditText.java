@@ -20,8 +20,10 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
@@ -31,12 +33,15 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
@@ -64,6 +69,7 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 
+@SuppressLint("AppCompatCustomView")
 public class EditText extends android.widget.EditText
         implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
 
@@ -83,6 +89,7 @@ public class EditText extends android.widget.EditText
     private boolean valid = true;
 
     private List<OnValidateListener> validateListeners = new ArrayList<>();
+    private boolean clearFocusOnTouchOutside = false;
 
     public EditText(Context context) {
         super(context, null);
@@ -471,8 +478,42 @@ public class EditText extends android.widget.EditText
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
+        if (focused) {
+            if (clearFocusOnTouchOutside) {
+                PopupWindow popupWindow = new PopupWindow(getContext());
+                popupWindow.setBackgroundDrawable(new ColorDrawable(0x7fff0000));
+                popupWindow.setTouchable(true);
+                popupWindow.setAnimationStyle(0);
+                View view = new View(getContext());
+                view.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                popupWindow.setContentView(view);
+                popupWindow.setTouchInterceptor((v, event) -> {
+                    popupWindow.dismiss();
+                    ViewGroup rootView = (ViewGroup) getRootView();
+                    boolean focusable = rootView.isFocusable();
+                    boolean focusableInTouchMode = rootView.isFocusableInTouchMode();
+                    int focusability = rootView.getDescendantFocusability();
+                    rootView.setFocusable(true);
+                    rootView.setFocusableInTouchMode(true);
+                    rootView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+                    rootView.requestFocus();
+                    rootView.setDescendantFocusability(focusability);
+                    //rootView.setFocusableInTouchMode(focusableInTouchMode);
+                    //rootView.setFocusable(focusable);
+                    rootView.dispatchTouchEvent(event);
+                    return true;
+                });
+                popupWindow.setWidth(getRootView().getWidth());
+                popupWindow.setHeight(getRootView().getHeight());
+                popupWindow.showAtLocation(getRootView(), Gravity.START | Gravity.TOP, 0, 0);
+            }
+        }
         if (!focused)
             validateInternalEvent();
+    }
+
+    public void setClearFocusOnTouchOutside(boolean enabled) {
+        clearFocusOnTouchOutside = enabled;
     }
 
 
@@ -610,45 +651,28 @@ public class EditText extends android.widget.EditText
     @Override
     public void invalidateDrawable(@NonNull Drawable drawable) {
         super.invalidateDrawable(drawable);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate();
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).invalidate();
+        invalidateParentIfNeeded();
     }
 
     @Override
     public void invalidate(@NonNull Rect dirty) {
         super.invalidate(dirty);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate(dirty);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).invalidate(dirty);
+        invalidateParentIfNeeded();
     }
 
     @Override
     public void invalidate(int l, int t, int r, int b) {
         super.invalidate(l, t, r, b);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).invalidate(l, t, r, b);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).invalidate(l, t, r, b);
+        invalidateParentIfNeeded();
     }
 
     @Override
     public void invalidate() {
         super.invalidate();
+        invalidateParentIfNeeded();
+    }
+
+    private void invalidateParentIfNeeded() {
         if (getParent() == null || !(getParent() instanceof View))
             return;
 
@@ -662,53 +686,24 @@ public class EditText extends android.widget.EditText
     @Override
     public void postInvalidateDelayed(long delayMilliseconds) {
         super.postInvalidateDelayed(delayMilliseconds);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
+        postInvalidateParentIfNeededDelayed(delayMilliseconds);
     }
 
     @Override
     public void postInvalidateDelayed(long delayMilliseconds, int left, int top, int right, int bottom) {
         super.postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
+        postInvalidateParentIfNeededDelayed(delayMilliseconds);
     }
 
-    @Override
-    public void postInvalidate() {
-        super.postInvalidate();
+    private void postInvalidateParentIfNeededDelayed(long delayMilliseconds) {
         if (getParent() == null || !(getParent() instanceof View))
             return;
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate();
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
         if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).postInvalidate();
-    }
-
-    @Override
-    public void postInvalidate(int left, int top, int right, int bottom) {
-        super.postInvalidate(left, top, right, bottom);
-        if (getParent() == null || !(getParent() instanceof View))
-            return;
-
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((View) getParent()).postInvalidate(left, top, right, bottom);
-
-        if (getElevation() > 0 || getCornerRadius() > 0)
-            ((View) getParent()).postInvalidate(left, top, right, bottom);
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
     @Override
@@ -1063,18 +1058,18 @@ public class EditText extends android.widget.EditText
     boolean animateColorChanges;
     ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
         updateTint();
-        ViewCompat.postInvalidateOnAnimation(EditText.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
         updateBackgroundTint();
-        ViewCompat.postInvalidateOnAnimation(EditText.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = animation -> setHintTextColor(getHintTextColors());
 
     @Override
     public void setTint(ColorStateList list) {
         if (list != null) {
-            tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+            tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         } else {
             tint = null;
         }
@@ -1375,5 +1370,70 @@ public class EditText extends android.widget.EditText
     @Override
     public RenderingMode getRenderingMode() {
         return renderingMode;
+    }
+
+
+    // -------------------------------
+    // transformations
+    // -------------------------------
+
+    @Override
+    public void setRotation(float rotation) {
+        super.setRotation(rotation);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setRotationY(float rotationY) {
+        super.setRotationY(rotationY);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setRotationX(float rotationX) {
+        super.setRotationX(rotationX);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setScaleX(float scaleX) {
+        super.setScaleX(scaleX);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setScaleY(float scaleY) {
+        super.setScaleY(scaleY);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setPivotX(float pivotX) {
+        super.setPivotX(pivotX);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setPivotY(float pivotY) {
+        super.setPivotY(pivotY);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setAlpha(@FloatRange(from = 0.0, to = 1.0) float alpha) {
+        super.setAlpha(alpha);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setTranslationX(float translationX) {
+        super.setTranslationX(translationX);
+        invalidateParentIfNeeded();
+    }
+
+    @Override
+    public void setTranslationY(float translationY) {
+        super.setTranslationY(translationY);
+        invalidateParentIfNeeded();
     }
 }

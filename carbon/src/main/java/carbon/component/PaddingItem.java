@@ -1,6 +1,8 @@
 package carbon.component;
 
-public class PaddingItem implements ComponentItem {
+import java.io.Serializable;
+
+public class PaddingItem implements Serializable {
 
     private int padding;
 

@@ -154,16 +154,16 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
     boolean animateColorChanges;
     ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
         updateTint();
-        ViewCompat.postInvalidateOnAnimation(ViewPagerIndicator.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
         updateBackgroundTint();
-        ViewCompat.postInvalidateOnAnimation(ViewPagerIndicator.this);
+        ViewCompat.postInvalidateOnAnimation(this);
     };
 
     @Override
     public void setTint(ColorStateList list) {
-        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 
@@ -251,5 +251,4 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
         if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
-
 }

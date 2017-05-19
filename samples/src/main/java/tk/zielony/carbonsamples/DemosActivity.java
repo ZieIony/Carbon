@@ -2,6 +2,8 @@ package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
 
+import java.io.Serializable;
+
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.demo.AutoCompleteActivity;
 import tk.zielony.carbonsamples.demo.PowerMenuActivity;
@@ -18,7 +20,7 @@ public class DemosActivity extends SampleListActivity {
 
         Samples.initToolbar(this, getString(R.string.demosActivity_title));
 
-        setItems(new Object[]{
+        setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "The most popular problem solutions and other fun ideas implemented with Carbon's widgets and features",
                 new SampleActivityItem(PowerMenuActivity.class, getString(R.string.powerMenuActivity_title)),

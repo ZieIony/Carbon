@@ -6,6 +6,7 @@ import android.support.annotation.StyleRes;
 
 import com.annimon.stream.Stream;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import carbon.recycler.RowFactory;
 import carbon.widget.CheckBox;
 import carbon.widget.RecyclerView;
 
-public class MultiSelectDialog<Type> extends ListDialog<Type> {
+public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Type> {
     private List<Type> selectedItems = new ArrayList<>();
 
     public MultiSelectDialog(@NonNull Context context) {
@@ -32,7 +33,7 @@ public class MultiSelectDialog<Type> extends ListDialog<Type> {
         setPositiveButton("ok", null);
     }
 
-    protected RecyclerView.OnItemClickedListener getInternalListener() {
+    protected RecyclerView.OnItemClickedListener<Type> getInternalListener() {
         return (view, item, position) -> {
             Type selectedItem = items.get(position);
             if (selectedItems.contains(selectedItem)) {

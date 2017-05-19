@@ -35,8 +35,6 @@ public class ShareToolbarActivity extends SamplesActivity {
                 shareToolbar.layout((int) left, shareToolbar.getTop(), (int) right, shareToolbar.getBottom());
                 shareToolbar.setElevation(frac);
                 shareToolbar.setBackgroundColor(AnimUtils.lerpColor(frac, 0xff9ACE00, 0xffffffff));
-                if (shareToolbar.getParent() != null)
-                    ((View) shareToolbar.getParent()).postInvalidate();
             });
             animator.setStartDelay(200);
             animator.setDuration(500);

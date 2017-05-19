@@ -57,23 +57,25 @@
     <string name="calculatorActivity_title">Calculator</string>
     <string name="picassoActivity_title">Picasso</string>
     <string name="recyclerCardsActivity_title"><![CDATA[RecyclerView & cards]]></string>
-    <string name="drawerActivity_title">Navigation drawer</string>
+    <string name="navigationViewActivity_title">NavigationView</string>
     <string name="designActivity_title">Design Support Library</string>
     <string name="constraintLayoutActivity_title">Constraint Layout</string>
     <string name="iconTextListItemActivity_title">Icon and text list item</string>
     <string name="avatarTextListItemActivity_title">Avatar and text list item</string>
     <string name="imageTextSubtextDateListItemActivity_title">Image, text, subtext and date list item</string>
     <string name="registerActivity_title">Registration form</string>
-    <string name="widgetAnimationsActivity_title">Widget animations</string>
-    <string name="imageFadeActivity_title">Image fade</string>
     <string name="listRippleActivity_title">List ripple</string>
     <string name="rippleComparisonActivity_title">Ripple comparison</string>
     <string name="radialTransitionActivity_title">Radial transition</string>
-    <string name="rippleActivity_title">Touch ripple</string>
     <string name="textMarkerActivity_title">Text marker</string>
     <string name="bottomBarActivity_title">BottomBar</string>
     <string name="bottomSheetActivity_title">BottomSheet</string>
     <string name="themeActivity_title">Theme</string>
+
+    <string name="widgetAnimationsActivity_title">Widget animations</string>
+    <string name="imageFadeActivity_title">Image fade</string>
+    <string name="rippleActivity_title">Touch ripple</string>
+    <string name="pathAnimationActivity_title">Path animation</string>
 
     <string name="simpleDialogActivity_title">Simple dialog</string>
     <string name="selectDialogActivity_title">Select dialog</string>

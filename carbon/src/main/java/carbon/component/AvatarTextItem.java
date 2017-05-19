@@ -2,7 +2,9 @@ package carbon.component;
 
 import android.graphics.drawable.Drawable;
 
-public interface AvatarTextItem extends ComponentItem {
+import java.io.Serializable;
+
+public interface AvatarTextItem extends Serializable {
     Drawable getAvatar();
 
     String getText();

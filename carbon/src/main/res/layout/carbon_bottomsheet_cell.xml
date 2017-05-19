@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="carbon.component.MenuItem"/>
+    </data>
+
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleStyle="borderless">
+
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_itemIcon"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/carbon_padding"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            android:layout_marginRight="@dimen/carbon_padding"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
+            app:carbon_tint="?attr/carbon_iconColor"/>
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_itemText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:layout_marginLeft="@dimen/carbon_padding"
+            android:layout_marginRight="@dimen/carbon_padding"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{data.title}"
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
+    </carbon.widget.LinearLayout>
+</layout>

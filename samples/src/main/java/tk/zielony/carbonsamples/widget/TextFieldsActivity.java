@@ -17,5 +17,6 @@ public class TextFieldsActivity extends SamplesActivity {
 
         EditText editText = (EditText) findViewById(R.id.editText);
         editText.setOnFocusChangeListener((v, hasFocus) -> editText.setText(""));
+        editText.setClearFocusOnTouchOutside(true);
     }
 }

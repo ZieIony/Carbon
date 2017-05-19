@@ -1,18 +1,14 @@
 package carbon.recycler;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import carbon.component.Component;
 
 public class RowViewHolder<Type> extends RecyclerView.ViewHolder {
     private Component<Type> component;
 
-    public RowViewHolder(View itemView) {
-        super(itemView);
-    }
-
-    public void setComponent(Component<Type> component) {
+    public RowViewHolder(Component<Type> component) {
+        super(component.getView());
         this.component = component;
     }
 

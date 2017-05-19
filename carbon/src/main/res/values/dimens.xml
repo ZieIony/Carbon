@@ -63,6 +63,7 @@
     <dimen name="carbon_elevationButton">2dp</dimen>
     <dimen name="carbon_elevationCard">2dp</dimen>
     <dimen name="carbon_elevationTooltip">2dp</dimen>
+    <dimen name="carbon_elevationDropDown">2dp</dimen>
     <dimen name="carbon_elevationRefreshIndicator">3dp</dimen>
     <dimen name="carbon_elevationToolbar">4dp</dimen>
     <dimen name="carbon_elevationSnackbar">6dp</dimen>

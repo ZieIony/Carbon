@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import carbon.component.ComponentItem;
 import carbon.component.DefaultHeaderItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
@@ -35,7 +35,7 @@ public class ImageTextSubtextDateListItemActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.imageTextSubtextDateListItemActivity_title));
 
-        List<ComponentItem> items = Arrays.asList(
+        List<Serializable> items = Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new DefaultHeaderItem("Header"),
                 new DefaultImageTextSubtextDateItem(),
@@ -56,9 +56,13 @@ public class ImageTextSubtextDateListItemActivity extends SamplesActivity {
 
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        RowListAdapter adapter = new RowListAdapter<>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
+
+
+        RowListAdapter<Serializable> adapter = new RowListAdapter<Serializable>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
         adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
         adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow.FACTORY);
+
+
         recycler.setAdapter(adapter);
         adapter.setItems(items);
     }

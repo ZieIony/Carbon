@@ -3,6 +3,7 @@ package tk.zielony.carbonsamples.component;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import carbon.component.DataBindingComponent;
@@ -32,7 +33,7 @@ public class RegisterActivity extends SamplesActivity {
         Samples.initToolbar(this, getString(R.string.registerActivity_title));
 
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
-        RowListAdapter adapter = new RowListAdapter<>(DefaultIconEditTextItem.class, IconEditTextRow.FACTORY);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconEditTextItem.class, IconEditTextRow.FACTORY);
         adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
         adapter.addFactory(String.class, parent -> new DataBindingComponent(parent, R.layout.row_description));
         adapter.addFactory(DividerItem.class, DividerRow.FACTORY);

@@ -2,6 +2,8 @@ package tk.zielony.carbonsamples;
 
 import android.os.Bundle;
 
+import java.io.Serializable;
+
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.feature.AnchorActivity;
 import tk.zielony.carbonsamples.feature.AutoSizeTextActivity;
@@ -27,7 +29,7 @@ public class FeaturesActivity extends SampleListActivity {
 
         Samples.initToolbar(this, getString(R.string.featuresActivity_title));
 
-        setItems(new Object[]{
+        setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Carbon adds tons of useful festures to all popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
                         "others",

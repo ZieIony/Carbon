@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,12 +18,12 @@ import carbon.recycler.RowListAdapter;
 import carbon.widget.LinearLayout;
 import carbon.widget.RecyclerView;
 
-public class ListDialog<Type> extends DialogBase {
+public class ListDialog<Type extends Serializable> extends DialogBase {
     protected RecyclerView recyclerView;
-    protected RowListAdapter adapter;
+    protected RowListAdapter<Type> adapter;
     protected List<Type> items;
-    protected RecyclerView.OnItemClickedListener listener;
-    private RecyclerView.OnItemClickedListener internalListener = getInternalListener();
+    protected RecyclerView.OnItemClickedListener<Type> listener;
+    private RecyclerView.OnItemClickedListener<Type> internalListener = getInternalListener();
 
     public ListDialog(@NonNull Context context) {
         super(context);
@@ -44,7 +45,7 @@ public class ListDialog<Type> extends DialogBase {
         super.setContentView(recyclerView, null);
     }
 
-    protected RecyclerView.OnItemClickedListener getInternalListener() {
+    protected RecyclerView.OnItemClickedListener<Type> getInternalListener() {
         return (view, item, position) -> {
             if (listener != null)
                 listener.onItemClicked(view, item, position);
@@ -101,7 +102,7 @@ public class ListDialog<Type> extends DialogBase {
         recyclerView.setAdapter(adapter);
     }
 
-    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener listener) {
+    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener<Type> listener) {
         this.listener = listener;
     }
 }

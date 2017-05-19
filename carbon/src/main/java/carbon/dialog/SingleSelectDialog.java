@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 
+import java.io.Serializable;
 import java.util.List;
 
 import carbon.R;
@@ -12,7 +13,7 @@ import carbon.recycler.RowFactory;
 import carbon.widget.RadioButton;
 import carbon.widget.RecyclerView;
 
-public class SingleSelectDialog<Type> extends ListDialog<Type> {
+public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Type> {
     private Type selectedItem;
 
     public SingleSelectDialog(@NonNull Context context) {
@@ -23,7 +24,7 @@ public class SingleSelectDialog<Type> extends ListDialog<Type> {
         super(context, themeResId);
     }
 
-    protected RecyclerView.OnItemClickedListener getInternalListener() {
+    protected RecyclerView.OnItemClickedListener<Type> getInternalListener() {
         return (view, item, position) -> {
             RadioButton radio = (RadioButton) view.findViewById(R.id.carbon_radioButton);
             radio.setChecked(true);

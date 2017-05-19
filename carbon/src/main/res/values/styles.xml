@@ -273,6 +273,9 @@
         <item name="android:windowBackground">?attr/carbon_colorForeground</item>
     </style>
 
+    <style name="carbon_View" parent="@android:style/Widget">
+    </style>
+
     <style name="carbon_Button" parent="@android:style/Widget.Button">
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:paddingTop">0dp</item>

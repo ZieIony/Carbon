@@ -1,6 +1,8 @@
 package carbon.component;
 
-public interface CheckBoxItem extends ComponentItem {
+import java.io.Serializable;
+
+public interface CheckBoxItem extends Serializable {
     boolean isChecked();
 
     String getText();

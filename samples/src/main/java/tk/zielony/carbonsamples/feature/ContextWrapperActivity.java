@@ -1,13 +1,13 @@
 package tk.zielony.carbonsamples.feature;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
 import carbon.CarbonContextWrapper;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.SamplesActivity;
 
-public class ContextWrapperActivity extends SamplesActivity {
+public class ContextWrapperActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

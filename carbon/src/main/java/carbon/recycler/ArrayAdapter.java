@@ -5,10 +5,14 @@ import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import carbon.widget.AutoCompleteEditText;
 
 public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
     private carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener;
+    private Map<Class<? extends I>, carbon.widget.RecyclerView.OnItemClickedListener<? extends I>> onItemClickedListeners = new HashMap<>();
     private boolean diff = true;
     private DiffArrayCallback<I> diffCallback;
 
@@ -66,7 +70,16 @@ public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extend
         this.onItemClickedListener = onItemClickedListener;
     }
 
+    public void setOnItemClickedListener(Class<? extends I> type, carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener) {
+        this.onItemClickedListeners.put(type, onItemClickedListener);
+    }
+
     protected void fireOnItemClickedEvent(View view, int position) {
+        I item = items[position];
+        carbon.widget.RecyclerView.OnItemClickedListener<I> typeSpecificListener = (carbon.widget.RecyclerView.OnItemClickedListener<I>) onItemClickedListeners.get(item.getClass());
+        if (typeSpecificListener != null) {
+            typeSpecificListener.onItemClicked(view, item, position);
+        }
         if (onItemClickedListener != null)
             onItemClickedListener.onItemClicked(view, items[position], position);
     }
