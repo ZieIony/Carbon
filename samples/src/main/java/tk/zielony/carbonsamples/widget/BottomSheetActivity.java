@@ -21,7 +21,7 @@ public class BottomSheetActivity extends SamplesActivity {
         BottomSheetLayout bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomSheet);
         bottomSheet.setStyle(BottomSheetLayout.Style.List);
         bottomSheet.setTitle("Menu");
-        bottomSheet.setMenu(R.menu.menu_fab);
+        bottomSheet.setMenu(R.menu.menu_navigation);
 
         DropDown<String> dropDown = (DropDown<String>) findViewById(R.id.dropDown);
         String[] items = {"List", "Grid"};

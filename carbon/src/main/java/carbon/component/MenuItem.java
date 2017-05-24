@@ -27,7 +27,7 @@ public class MenuItem implements android.view.MenuItem, Serializable {
     private int order;
     private ColorStateList iconTint;
 
-    public MenuItem(int id, int groupId, int order, CharSequence title) {
+    public MenuItem(int groupId, int id, int order, CharSequence title) {
         this.id = id;
         this.groupId = groupId;
         this.order = order;

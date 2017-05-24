@@ -11,6 +11,7 @@ import java.util.List;
 import carbon.recycler.ItemTouchHelper;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.carbonsamples.library.FruitAdapter;
 
@@ -22,6 +23,8 @@ public class RecyclerActivity extends SamplesActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler);
+
+        Samples.initToolbar(this, getString(R.string.recentsActivity_title));
 
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

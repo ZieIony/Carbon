@@ -3,14 +3,16 @@ package carbon.widget;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
-import android.view.MenuInflater;
 import android.view.View;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import carbon.CarbonContextWrapper;
+import carbon.Carbon;
 import carbon.R;
+import carbon.component.Component;
+import carbon.component.DividerItem;
+import carbon.component.DividerRow;
 import carbon.component.MenuItem;
 import carbon.component.NavigationRow;
 import carbon.component.PaddingItem;
@@ -21,6 +23,28 @@ import carbon.recycler.RowListAdapter;
 public class NavigationView extends RecyclerView {
     private OnItemClickedListener onItemClickedListener;
     private Menu menu;
+    private View header;
+
+    private class CustomHeaderItem implements Serializable {
+    }
+
+    private class CustomHeaderRow implements Component<CustomHeaderItem> {
+
+        private View view;
+
+        CustomHeaderRow(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public View getView() {
+            return view;
+        }
+
+        @Override
+        public void bind(CustomHeaderItem data) {
+        }
+    }
 
     public NavigationView(Context context) {
         super(context);
@@ -51,34 +75,35 @@ public class NavigationView extends RecyclerView {
     }
 
     public void setMenu(int resId) {
-        CarbonContextWrapper contextWrapper = new CarbonContextWrapper(getContext());
-        Menu menu = new Menu(contextWrapper);
-        MenuInflater inflater = new MenuInflater(getContext());
-        inflater.inflate(resId, menu);
-        setMenuInternal(menu);
+        setMenuInternal(Carbon.getMenu(getContext(), resId));
     }
 
     public void setMenu(android.view.Menu baseMenu) {
-        CarbonContextWrapper contextWrapper = new CarbonContextWrapper(getContext());
-        Menu menu = new Menu(contextWrapper);
-        for (int i = 0; i < baseMenu.size(); i++) {
-            android.view.MenuItem menuItem = baseMenu.getItem(i);
-            this.menu.add(menuItem.getGroupId(), menuItem.getItemId(), menuItem.getOrder(), menuItem.getTitle()).setIcon(menuItem.getIcon()).setVisible(menuItem.isVisible()).setEnabled(menuItem.isEnabled());
-        }
-        setMenuInternal(menu);
+        setMenuInternal(Carbon.getMenu(getContext(), baseMenu));
     }
 
     private void setMenuInternal(Menu menu) {
         this.menu = menu;
-        if (getAdapter() == null) {
-            RowListAdapter<Serializable> adapter = new RowListAdapter<>(MenuItem.class, NavigationRow.FACTORY);
-            adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-            setAdapter(adapter);
-        }
+
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(MenuItem.class, NavigationRow.FACTORY);
+        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
+        adapter.addFactory(DividerItem.class, DividerRow.FACTORY);
+        setAdapter(adapter);
+
         ArrayList<Serializable> items = new ArrayList<>();
-        items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
         items.addAll(menu.getVisibleItems());
+        for (int i = 0; i < items.size() - 1; i++) {
+            if (((android.view.MenuItem) items.get(i)).getGroupId() != ((android.view.MenuItem) items.get(i + 1)).getGroupId())
+                items.add(++i, new DividerItem());
+        }
+        items.add(0, new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
         items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
+
+        if (header != null) {
+            items.add(new CustomHeaderItem());
+            adapter.addFactory(CustomHeaderItem.class, parent -> new CustomHeaderRow(header));
+        }
+
         ((RowListAdapter<Serializable>) getAdapter()).setItems(items);
     }
 
@@ -86,4 +111,7 @@ public class NavigationView extends RecyclerView {
         return menu;
     }
 
+    public void addHeader(View header) {
+        this.header = header;
+    }
 }

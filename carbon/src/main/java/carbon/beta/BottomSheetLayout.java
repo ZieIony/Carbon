@@ -9,12 +9,13 @@ import android.view.View;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
 import carbon.component.BottomSheetCell;
 import carbon.component.BottomSheetRow;
+import carbon.component.DividerItem;
+import carbon.component.DividerRow;
 import carbon.component.MenuItem;
 import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
@@ -102,14 +103,19 @@ public class BottomSheetLayout extends LinearLayout {
 
         recycler.setLayoutManager(style == Style.List ? new LinearLayoutManager(getContext()) : new GridLayoutManager(getContext(), 3));
 
-        List<Serializable> items = new ArrayList<>();
-        if (!titleTv.isVisible())
-            items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
+        ArrayList<Serializable> items = new ArrayList<>();
         items.addAll(menu.getVisibleItems());
-        items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
+        if(style == Style.List) {
+            for (int i = 0; i < items.size() - 1; i++) {
+                if (((android.view.MenuItem) items.get(i)).getGroupId() != ((android.view.MenuItem) items.get(i + 1)).getGroupId())
+                    items.add(++i, new DividerItem());
+            }
+            items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
+        }
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(MenuItem.class, style == Style.List ? BottomSheetRow.FACTORY : BottomSheetCell.FACTORY);
         adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.addFactory(DividerItem.class, DividerRow::new);
         adapter.setItems(items);
 
         recycler.setAdapter(adapter);
