@@ -16,6 +16,8 @@ import android.util.TypedValue;
 import android.view.MenuInflater;
 import android.view.View;
 
+import java.security.InvalidParameterException;
+
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedView;
 import carbon.drawable.AlphaDrawable;
@@ -34,6 +36,8 @@ import carbon.widget.StateAnimatorView;
 import carbon.widget.StrokeView;
 import carbon.widget.TintedView;
 import carbon.widget.TouchMarginView;
+
+import static carbon.widget.RevealView.MAX_RADIUS;
 
 public class Carbon {
     private static final long DEFAULT_REVEAL_DURATION = 200;
@@ -316,4 +320,15 @@ public class Carbon {
         }
         return menu;
     }
+
+    public static float getRevealRadius(View view, int x, int y, float radius) {
+        if (radius >= 0)
+            return radius;
+        if (radius != MAX_RADIUS)
+            throw new InvalidParameterException("radius should be RevealView.MAX_RADIUS, 0.0f or a positive float");
+        int w = Math.max(view.getWidth() - x, x);
+        int h = Math.max(view.getHeight() - y, y);
+        return (float) Math.sqrt(w * w + h * h);
+    }
+
 }

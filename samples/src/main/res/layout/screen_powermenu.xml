@@ -172,6 +172,7 @@
             android:layout_height="@dimen/carbon_smallFabSize"
             android:layout_marginRight="@dimen/carbon_padding"
             android:background="#00695D"
+            app:carbon_tint="#ffffff"
             android:padding="@dimen/carbon_paddingHalf"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"

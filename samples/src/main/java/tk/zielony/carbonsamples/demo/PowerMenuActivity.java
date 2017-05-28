@@ -1,5 +1,7 @@
 package tk.zielony.carbonsamples.demo;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -10,87 +12,140 @@ import com.annimon.stream.Stream;
 
 import java.util.List;
 
+import carbon.animation.AnimatedView;
+import carbon.widget.Button;
 import carbon.widget.FrameLayout;
 import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
+import carbon.widget.RevealView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 
 public class PowerMenuActivity extends SamplesActivity {
     boolean vibration = false, volume = true, airplaneMode = false;
-    View powerMenu;
+
+    Button button;
+    LinearLayout powerMenu, screenPowerMenu;
+    FrameLayout transition, screenPowerOff, screenReboot, screenAirplaneMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_powermenu);
 
-        powerMenu = findViewById(R.id.powerMenu);
-        final FrameLayout transitionLayout = (FrameLayout) findViewById(R.id.transition);
+        button = (Button) findViewById(R.id.button);
+        powerMenu = (LinearLayout) findViewById(R.id.powerMenu);
+        transition = (FrameLayout) findViewById(R.id.transition);
+        screenPowerMenu = (LinearLayout) findViewById(R.id.screen_powerMenu);
+        screenPowerOff = (FrameLayout) findViewById(R.id.screen_powerOff);
+        screenReboot = (FrameLayout) findViewById(R.id.screen_reboot);
+        screenAirplaneMode = (FrameLayout) findViewById(R.id.screen_airplaneMode);
 
-        findViewById(R.id.button).setOnClickListener(view -> {
+        button.setOnClickListener(view -> {
             if (powerMenu.getVisibility() == View.VISIBLE)
                 return;
-            for (int i = 0; i < transitionLayout.getChildCount(); i++)
-                transitionLayout.getChildAt(i).setVisibility(i == 0 ? View.VISIBLE : View.GONE);
-            final List<View> viewsWithTag = ((LinearLayout) transitionLayout.getChildAt(0)).findViewsWithTag("animate");
+            for (int i = 0; i < transition.getChildCount(); i++)
+                transition.getChildAt(i).setVisibility(i == 0 ? View.VISIBLE : View.GONE);
+            final List<View> viewsWithTag = screenPowerMenu.findViewsWithTag("animate");
             Stream.of(viewsWithTag).forEach(v -> v.setVisibility(View.INVISIBLE));
-            powerMenu.setVisibility(View.VISIBLE);
-            view.getHandler().postDelayed(() -> {
-                Stream.of(viewsWithTag).forEach(v -> {
-                    v.getHandler().postDelayed(() -> {
-                        v.setVisibility(View.VISIBLE);
-                    }, viewsWithTag.indexOf(v) * 40);
-                });
-            }, 200);
+            Animator animator = powerMenu.animateVisibility(View.VISIBLE);
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    Stream.of(viewsWithTag).forEach(v -> {
+                        v.getHandler().postDelayed(() -> {
+                            if (v instanceof AnimatedView) {
+                                ((AnimatedView) v).animateVisibility(View.VISIBLE);
+                            } else {
+                                v.setVisibility(View.VISIBLE);
+                            }
+                        }, viewsWithTag.indexOf(v) * 40);
+                    });
+                }
+            });
         });
 
         findViewById(R.id.powerOff).setOnClickListener(view -> {
-            final List<View> viewsWithTag = ((FrameLayout) transitionLayout.getChildAt(1)).findViewsWithTag("animate");
-            for (int i = 0; i < viewsWithTag.size(); i++)
-                viewsWithTag.get(i).setVisibility(View.INVISIBLE);
-            view.getHandler().postDelayed(() -> {
-                for (int i = 0; i < viewsWithTag.size(); i++) {
-                    final int finalI = i;
-                    view.getHandler().postDelayed(() -> viewsWithTag.get(finalI).setVisibility(View.VISIBLE), i * 20);
+            final List<View> viewsWithTag = screenPowerOff.findViewsWithTag("animate");
+            Stream.of(viewsWithTag).forEach(v -> v.setVisibility(View.INVISIBLE));
+            screenPowerOff.setVisibility(View.VISIBLE);
+            Animator circularReveal = screenPowerOff.createCircularReveal(view.findViewById(R.id.powerOffIcon), 0, RevealView.MAX_RADIUS);
+            circularReveal.setDuration(400);
+            circularReveal.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    Stream.of(viewsWithTag).forEach(v -> {
+                        view.getHandler().postDelayed(() -> {
+                            if (v instanceof AnimatedView) {
+                                ((AnimatedView) v).animateVisibility(View.VISIBLE);
+                            } else {
+                                v.setVisibility(View.VISIBLE);
+                            }
+                        }, viewsWithTag.indexOf(v) * 20);
+                    });
                 }
-            }, 400);
-            //transitionLayout.setHotspot(view.findViewById(R.id.powerOffIcon));
-            //transitionLayout.startTransition(1, TransitionLayout.TransitionType.Radial);
-            view.getHandler().postDelayed(() -> powerMenu.setVisibility(View.INVISIBLE), 3000);
+            });
+            circularReveal.start();
+            view.getHandler().postDelayed(() -> powerMenu.animateVisibility(View.INVISIBLE), 3000);
         });
 
 
         findViewById(R.id.reboot).setOnClickListener(view -> {
-            final List<View> viewsWithTag = ((FrameLayout) transitionLayout.getChildAt(2)).findViewsWithTag("animate");
-            for (int i = 0; i < viewsWithTag.size(); i++)
-                viewsWithTag.get(i).setVisibility(View.INVISIBLE);
-            view.getHandler().postDelayed(() -> {
-                for (int i = 0; i < viewsWithTag.size(); i++) {
-                    final int finalI = i;
-                    view.getHandler().postDelayed(() -> viewsWithTag.get(finalI).setVisibility(View.VISIBLE), i * 20);
+            final List<View> viewsWithTag = screenReboot.findViewsWithTag("animate");
+            Stream.of(viewsWithTag).forEach(v -> v.setVisibility(View.INVISIBLE));
+            screenReboot.setVisibility(View.VISIBLE);
+            Animator circularReveal = screenReboot.createCircularReveal(view.findViewById(R.id.rebootIcon), 0, RevealView.MAX_RADIUS);
+            circularReveal.setDuration(400);
+            circularReveal.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    Stream.of(viewsWithTag).forEach(v -> {
+                        view.getHandler().postDelayed(() -> {
+                            if (v instanceof AnimatedView) {
+                                ((AnimatedView) v).animateVisibility(View.VISIBLE);
+                            } else {
+                                v.setVisibility(View.VISIBLE);
+                            }
+                        }, viewsWithTag.indexOf(v) * 20);
+                    });
                 }
-            }, 400);
-            //transitionLayout.setHotspot(view.findViewById(R.id.rebootIcon));
-            //transitionLayout.startTransition(2, TransitionLayout.TransitionType.Radial);
-            view.getHandler().postDelayed(() -> powerMenu.setVisibility(View.INVISIBLE), 3000);
+            });
+            circularReveal.start();
+            view.getHandler().postDelayed(() -> powerMenu.animateVisibility(View.INVISIBLE), 3000);
         });
 
         findViewById(R.id.airplaneMode).setOnClickListener(view -> {
-            final List<View> viewsWithTag = ((FrameLayout) transitionLayout.getChildAt(3)).findViewsWithTag("animate");
-            for (int i = 0; i < viewsWithTag.size(); i++)
-                viewsWithTag.get(i).setVisibility(View.INVISIBLE);
-            view.getHandler().postDelayed(() -> {
-                for (int i = 0; i < viewsWithTag.size(); i++) {
-                    final int finalI = i;
-                    view.getHandler().postDelayed(() -> viewsWithTag.get(finalI).setVisibility(View.VISIBLE), i * 20);
+            final List<View> viewsWithTag = screenAirplaneMode.findViewsWithTag("animate");
+            Stream.of(viewsWithTag).forEach(v -> v.setVisibility(View.INVISIBLE));
+            screenAirplaneMode.setVisibility(View.VISIBLE);
+            Animator circularReveal = screenAirplaneMode.createCircularReveal(view.findViewById(R.id.airplaneModeIcon), 0, RevealView.MAX_RADIUS);
+            circularReveal.setDuration(400);
+            circularReveal.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    Stream.of(viewsWithTag).forEach(v -> {
+                        view.getHandler().postDelayed(() -> {
+                            if (v instanceof AnimatedView) {
+                                ((AnimatedView) v).animateVisibility(View.VISIBLE);
+                            } else {
+                                v.setVisibility(View.VISIBLE);
+                            }
+                        }, viewsWithTag.indexOf(v) * 20);
+                    });
                 }
-            }, 400);
-            //transitionLayout.setHotspot(view.findViewById(R.id.airplaneModeIcon));
-            //transitionLayout.startTransition(3, TransitionLayout.TransitionType.Radial);
+            });
+            circularReveal.start();
             view.getHandler().postDelayed(() -> {
-                //transitionLayout.startTransition(0, TransitionLayout.TransitionType.Radial, TransitionLayout.DEFAULT_DURATION, false);
+                Animator circularReveal2 = screenAirplaneMode.createCircularReveal(view.findViewById(R.id.airplaneModeIcon), RevealView.MAX_RADIUS, 0);
+                circularReveal2.setDuration(400);
+                circularReveal2.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        screenAirplaneMode.setVisibility(View.INVISIBLE);
+                    }
+                });
+                circularReveal2.start();
                 airplaneMode = !airplaneMode;
                 TextView amStatus = (TextView) findViewById(R.id.airplaneModeStatus);
                 amStatus.setText("Airplane Mode is " + (airplaneMode ? "on" : "off"));
@@ -132,8 +187,8 @@ public class PowerMenuActivity extends SamplesActivity {
 
     @Override
     public void onBackPressed() {
-        if (powerMenu.getVisibility() == View.VISIBLE) {
-            powerMenu.setVisibility(View.INVISIBLE);
+        if (powerMenu.isVisible()) {
+            powerMenu.animateVisibility(View.INVISIBLE);
             return;
         }
         super.onBackPressed();

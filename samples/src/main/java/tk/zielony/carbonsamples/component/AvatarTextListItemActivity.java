@@ -2,6 +2,7 @@ package tk.zielony.carbonsamples.component;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -49,6 +50,8 @@ public class AvatarTextListItemActivity extends SamplesActivity {
         randomData.fill(items);
 
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+
         RowListAdapter adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow.FACTORY);
         adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
         adapter.addFactory(DividerItem.class, DividerRow.FACTORY);

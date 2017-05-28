@@ -14,17 +14,45 @@
         style="@style/sectionDescription"
         android:text="Path animation using NURBS"/>
 
-    <carbon.widget.FrameLayout
+    <carbon.widget.LinearLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <carbon.widget.ImageView
-            android:id="@+id/image"
-            android:scaleType="centerCrop"
-            app:carbon_elevation="2dp"
+        <carbon.widget.LinearLayout
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             app:carbon_cornerRadius="2dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
-    </carbon.widget.FrameLayout>
+            app:carbon_elevation="2dp">
+
+            <carbon.widget.ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:maxHeight="200dp"
+                android:minHeight="100dp"
+                android:scaleType="centerCrop"/>
+
+            <carbon.widget.LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/carbon_colorForeground"
+                android:orientation="vertical">
+
+                <carbon.widget.TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Title"/>
+
+                <carbon.widget.TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Subtitle"/>
+            </carbon.widget.LinearLayout>
+        </carbon.widget.LinearLayout>
+    </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

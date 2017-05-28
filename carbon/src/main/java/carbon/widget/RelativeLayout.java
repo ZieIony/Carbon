@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -141,8 +142,30 @@ public class RelativeLayout extends android.widget.RelativeLayout
     private boolean drawCalled = false;
     RevealAnimator revealAnimator;
 
+    public Point getLocationOnScreen() {
+        int[] outLocation = new int[2];
+        super.getLocationOnScreen(outLocation);
+        return new Point(outLocation[0], outLocation[1]);
+    }
+
+    public Point getLocationInWindow() {
+        int[] outLocation = new int[2];
+        super.getLocationInWindow(outLocation);
+        return new Point(outLocation[0], outLocation[1]);
+    }
+
+    public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
+        int[] location = new int[2];
+        hotspot.getLocationOnScreen(location);
+        int[] myLocation = new int[2];
+        getLocationOnScreen(myLocation);
+        return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
+    }
+
     @Override
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
+        startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
+        finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
         if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.setDuration(Carbon.getDefaultRevealDuration());
@@ -1314,5 +1337,42 @@ public class RelativeLayout extends android.widget.RelativeLayout
     public void setTranslationY(float translationY) {
         super.setTranslationY(translationY);
         invalidateParentIfNeeded();
+    }
+
+    public void setWidth(int width) {
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        if (layoutParams == null) {
+            setLayoutParams(new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
+        } else {
+            layoutParams.width = width;
+            setLayoutParams(layoutParams);
+        }
+    }
+
+    public void setHeight(int height) {
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        if (layoutParams == null) {
+            setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height));
+        } else {
+            layoutParams.height = height;
+            setLayoutParams(layoutParams);
+        }
+    }
+
+    public void setSize(int width, int height) {
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        if (layoutParams == null) {
+            setLayoutParams(new ViewGroup.LayoutParams(width, height));
+        } else {
+            layoutParams.width = width;
+            layoutParams.height = height;
+            setLayoutParams(layoutParams);
+        }
+    }
+
+    public void setBounds(int x, int y, int width, int height) {
+        setSize(width, height);
+        setTranslationX(x);
+        setTranslationY(y);
     }
 }
