@@ -54,6 +54,12 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
+import carbon.view.AutoSizeTextView;
+import carbon.view.RevealView;
+import carbon.view.RoundedCornersView;
+import carbon.view.StateAnimatorView;
+import carbon.view.StrokeView;
+import carbon.view.VisibleView;
 
 /**
  * Carbon version of android.widget.Button. Supports shadows, ripples, animations and all other
@@ -307,8 +313,7 @@ public class Button extends android.widget.Button
      */
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
-        if (getWidth() > 0 && getHeight() > 0)
-            updateCorners();
+        updateCorners();
     }
 
     @Override
@@ -329,11 +334,14 @@ public class Button extends android.widget.Button
 
     private void updateCorners() {
         if (cornerRadius > 0) {
-            cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
+            if (getWidth() > 0 && getHeight() > 0)
+                cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
             if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
+                if (Carbon.IS_LOLLIPOP)
+                    setClipToOutline(false);
                 cornersMask = new Path();
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
@@ -343,14 +351,21 @@ public class Button extends android.widget.Button
         }
     }
 
+    public void drawInternal(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
+    @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
         if (isInEditMode() && cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
-            super.draw(layerCanvas);
-            if (stroke != null)
-                drawStroke(layerCanvas);
+            drawInternal(layerCanvas);
 
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
@@ -367,11 +382,7 @@ public class Button extends android.widget.Button
         } else if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && !Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
-            super.draw(canvas);
-            if (stroke != null)
-                drawStroke(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
+            drawInternal(canvas);
 
             paint.setXfermode(Carbon.CLEAR_MODE);
             canvas.drawPath(cornersMask, paint);
@@ -379,11 +390,7 @@ public class Button extends android.widget.Button
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
         } else {
-            super.draw(canvas);
-            if (stroke != null)
-                drawStroke(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
+            drawInternal(canvas);
         }
     }
 
@@ -761,13 +768,13 @@ public class Button extends android.widget.Button
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
-                        animator.removeListener(this);
+                        a.removeListener(this);
                         animator = null;
                     }
 
                     @Override
-                    public void onAnimationCancel(Animator animation) {
-                        animator.removeListener(this);
+                    public void onAnimationCancel(Animator a) {
+                        a.removeListener(this);
                         animator = null;
                     }
                 });
@@ -787,13 +794,13 @@ public class Button extends android.widget.Button
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
-                    animator.removeListener(this);
+                    a.removeListener(this);
                     animator = null;
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animation) {
-                    animator.removeListener(this);
+                public void onAnimationCancel(Animator a) {
+                    a.removeListener(this);
                     animator = null;
                 }
             });

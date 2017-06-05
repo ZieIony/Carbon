@@ -52,6 +52,12 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
+import carbon.view.RenderingModeView;
+import carbon.view.RevealView;
+import carbon.view.RoundedCornersView;
+import carbon.view.StateAnimatorView;
+import carbon.view.StrokeView;
+import carbon.view.VisibleView;
 
 public class RecyclerView extends android.support.v7.widget.RecyclerView
         implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, RevealView, VisibleView {
@@ -875,7 +881,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     private Animator animator;
 
     public Animator animateVisibility(final int visibility) {
-        if (visibility == android.view.View.VISIBLE && (getVisibility() != android.view.View.VISIBLE || animator != null)) {
+        if (visibility == View.VISIBLE && (getVisibility() != View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
             if (inAnim != null) {
@@ -883,20 +889,20 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
-                        animator.removeListener(this);
+                        a.removeListener(this);
                         animator = null;
                     }
 
                     @Override
-                    public void onAnimationCancel(Animator animation) {
-                        animator.removeListener(this);
+                    public void onAnimationCancel(Animator a) {
+                        a.removeListener(this);
                         animator = null;
                     }
                 });
                 animator.start();
             }
             setVisibility(visibility);
-        } else if (visibility != android.view.View.VISIBLE && (getVisibility() == android.view.View.VISIBLE || animator != null)) {
+        } else if (visibility != View.VISIBLE && (getVisibility() == View.VISIBLE || animator != null)) {
             if (animator != null)
                 animator.cancel();
             if (outAnim == null) {
@@ -909,13 +915,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
-                    animator.removeListener(this);
+                    a.removeListener(this);
                     animator = null;
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animation) {
-                    animator.removeListener(this);
+                public void onAnimationCancel(Animator a) {
+                    a.removeListener(this);
                     animator = null;
                 }
             });

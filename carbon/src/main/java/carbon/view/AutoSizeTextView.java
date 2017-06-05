@@ -1,6 +1,8 @@
-package carbon.widget;
+package carbon.view;
 
 import android.support.annotation.NonNull;
+
+import carbon.widget.AutoSizeTextMode;
 
 /**
  * Interface of a text view capable of automatic text size adjusting.

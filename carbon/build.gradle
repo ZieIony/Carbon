@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 // apply from: 'maven-push.gradle'
 
 ext {
@@ -31,9 +30,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    retrolambda {
-        defaultMethods true
-    }
 }
 
 dependencies {
@@ -45,6 +41,6 @@ dependencies {
     compile "com.android.support:appcompat-v7:$supportLibVersion"
     compile "com.android.support:design:$supportLibVersion"
     compile 'de.greenrobot:androidsvg:1.2.2-beta-1-tweaked-2'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0'
-    compile 'com.annimon:stream:1.1.4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.annimon:stream:1.1.6'
 }

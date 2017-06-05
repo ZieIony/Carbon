@@ -4,6 +4,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fitsSystemWindows="true"
+                            android:background="?attr/carbon_colorForeground"
                             android:orientation="vertical"
                             app:carbon_insetColor="?attr/colorPrimary">
 
@@ -20,25 +21,33 @@
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_cornerRadius="0dp"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             app:carbon_elevation="4dp"/>
 
         <carbon.widget.Button
+            app:carbon_elevationShadowColor="#ff000000"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
+            android:shadowColor="#ff000000"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             app:carbon_cornerRadius="0dp"
             app:carbon_elevation="4dp"
-            app:carbon_elevationShadowColor="@color/carbon_black"/>
+            />
 
         <carbon.widget.Button
             android:layout_width="56dp"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             android:layout_height="56dp"
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_cornerRadius="0dp"
             app:carbon_elevation="6dp"
-            app:carbon_elevationShadowColor="@color/carbon_amber_700"/>
+            />
 
     </carbon.widget.LinearLayout>
 
@@ -49,6 +58,8 @@
 
         <carbon.widget.Button
             android:layout_width="56dp"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             android:layout_height="56dp"
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
@@ -57,12 +68,16 @@
 
         <carbon.widget.Button
             android:layout_width="56dp"
+            app:carbon_elevationShadowColor="#ff000000"
             android:layout_height="56dp"
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
+            android:shadowColor="#ff000000"
             app:carbon_cornerRadius="2dp"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             app:carbon_elevation="4dp"
-            app:carbon_elevationShadowColor="@color/carbon_black"/>
+            />
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -70,8 +85,10 @@
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_cornerRadius="2dp"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             app:carbon_elevation="6dp"
-            app:carbon_elevationShadowColor="@color/carbon_red_700"/>
+            />
 
     </carbon.widget.LinearLayout>
 
@@ -86,17 +103,23 @@
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_backgroundTint="#ffffffff"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             app:carbon_cornerRadius="10dp"
             app:carbon_elevation="4dp"/>
 
         <carbon.widget.Button
+            app:carbon_elevationShadowColor="#ff000000"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_cornerRadius="10dp"
+            app:carbon_stroke="#ffffff"
+            android:shadowColor="#ff000000"
+            app:carbon_strokeWidth="1dp"
             app:carbon_elevation="4dp"
-            app:carbon_elevationShadowColor="@color/carbon_black"/>
+            />
 
         <carbon.widget.Button
             android:layout_width="56dp"
@@ -105,7 +128,9 @@
             android:background="#ffffff"
             app:carbon_cornerRadius="10dp"
             app:carbon_elevation="6dp"
-            app:carbon_elevationShadowColor="@color/carbon_green_700"/>
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
+            />
 
     </carbon.widget.LinearLayout>
 
@@ -116,6 +141,8 @@
 
         <carbon.widget.Button
             android:layout_width="56dp"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             android:layout_height="56dp"
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
@@ -125,20 +152,25 @@
         <carbon.widget.Button
             android:layout_width="56dp"
             android:layout_height="56dp"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
             app:carbon_cornerRadius="28dp"
             app:carbon_elevation="4dp"
-            app:carbon_elevationShadowColor="@color/carbon_black"/>
+            app:carbon_elevationShadowColor="#ff000000"
+            />
 
         <carbon.widget.Button
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_margin="@dimen/carbon_padding"
+            app:carbon_stroke="#ffffff"
+            app:carbon_strokeWidth="1dp"
             android:background="#ffffff"
             app:carbon_cornerRadius="28dp"
             app:carbon_elevation="6dp"
-            app:carbon_elevationShadowColor="@color/carbon_blue_700"/>
+            />
 
     </carbon.widget.LinearLayout>
 

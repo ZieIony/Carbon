@@ -19,6 +19,7 @@ import carbon.R;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.internal.MathUtils;
 import carbon.internal.SeekBarPopup;
+import carbon.view.View;
 
 public class SeekBar extends View {
     private static float THUMB_RADIUS, THUMB_RADIUS_DRAGGED, STROKE_WIDTH;

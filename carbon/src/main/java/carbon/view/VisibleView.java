@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.view;
 
 import android.annotation.SuppressLint;
 import android.view.View;

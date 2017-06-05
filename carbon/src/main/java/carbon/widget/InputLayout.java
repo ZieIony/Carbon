@@ -19,6 +19,8 @@ import carbon.animation.AnimUtils;
 import carbon.drawable.DefaultAccentColorStateList;
 import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.internal.TypefaceUtils;
+import carbon.view.InputView;
+import carbon.view.ValidStateView;
 
 public class InputLayout extends RelativeLayout {
 

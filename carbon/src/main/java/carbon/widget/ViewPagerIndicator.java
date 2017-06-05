@@ -22,6 +22,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
+import carbon.view.VisibleView;
 
 public class ViewPagerIndicator extends View implements TintedView, VisibleView {
     ViewPager viewPager;

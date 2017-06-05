@@ -34,6 +34,13 @@ import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+import com.annimon.stream.Stream;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
@@ -48,10 +55,17 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
+import carbon.view.DependencyView;
+import carbon.view.RevealView;
+import carbon.view.RoundedCornersView;
+import carbon.view.StateAnimatorView;
+import carbon.view.StrokeView;
+import carbon.view.TransformationView;
+import carbon.view.VisibleView;
 
 @SuppressLint("AppCompatCustomView")
 public class ImageView extends android.widget.ImageView
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, RevealView, VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, RevealView, VisibleView, TransformationView, DependencyView {
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -704,13 +718,13 @@ public class ImageView extends android.widget.ImageView
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
-                        animator.removeListener(this);
+                        a.removeListener(this);
                         animator = null;
                     }
 
                     @Override
-                    public void onAnimationCancel(Animator animation) {
-                        animator.removeListener(this);
+                    public void onAnimationCancel(Animator a) {
+                        a.removeListener(this);
                         animator = null;
                     }
                 });
@@ -730,13 +744,13 @@ public class ImageView extends android.widget.ImageView
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
-                    animator.removeListener(this);
+                    a.removeListener(this);
                     animator = null;
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animation) {
-                    animator.removeListener(this);
+                public void onAnimationCancel(Animator a) {
+                    a.removeListener(this);
                     animator = null;
                 }
             });
@@ -962,64 +976,93 @@ public class ImageView extends android.widget.ImageView
     // transformations
     // -------------------------------
 
+    List<OnTransformationChangedListener> transformationChangedListeners = new ArrayList<>();
+
+    public void addOnTransformationChangedListener(OnTransformationChangedListener listener) {
+        transformationChangedListeners.add(listener);
+    }
+
+    public void removeOnTransformationChangedListener(OnTransformationChangedListener listener) {
+        transformationChangedListeners.remove(listener);
+    }
+
+    public void clearOnTransformationChangedListeners() {
+        transformationChangedListeners.clear();
+    }
+
+    private void fireOnTransformationChangedListener() {
+        for (OnTransformationChangedListener listener : transformationChangedListeners)
+            listener.onTransformationChanged();
+    }
+
     @Override
     public void setRotation(float rotation) {
         super.setRotation(rotation);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setRotationY(float rotationY) {
         super.setRotationY(rotationY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setRotationX(float rotationX) {
         super.setRotationX(rotationX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setScaleX(float scaleX) {
         super.setScaleX(scaleX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setScaleY(float scaleY) {
         super.setScaleY(scaleY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setPivotX(float pivotX) {
         super.setPivotX(pivotX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setPivotY(float pivotY) {
         super.setPivotY(pivotY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setAlpha(@FloatRange(from = 0.0, to = 1.0) float alpha) {
         super.setAlpha(alpha);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setTranslationX(float translationX) {
         super.setTranslationX(translationX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setTranslationY(float translationY) {
         super.setTranslationY(translationY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     public void setWidth(int width) {
@@ -1057,5 +1100,51 @@ public class ImageView extends android.widget.ImageView
         setSize(width, height);
         setTranslationX(x);
         setTranslationY(y);
+    }
+
+
+    // -------------------------------
+    // dependency
+    // -------------------------------
+
+    private Map<View, Dependency> dependencies = new HashMap<>();
+
+    @Override
+    public void addDependency(View view, OnDependencyChangedListener listener) {
+        Dependency dependency = new Dependency(view, listener::onDependencyChanged, (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> listener.onDependencyChanged());
+        dependencies.put(view, dependency);
+        addDependency(dependency);
+    }
+
+    private void addDependency(Dependency dependency) {
+        View view = dependency.view;
+        if (view instanceof TransformationView)
+            ((TransformationView) view).addOnTransformationChangedListener(dependency.transformationListener);
+        view.addOnLayoutChangeListener(dependency.layoutListener);
+    }
+
+    @Override
+    public void removeDependency(View view) {
+        Dependency dependency = dependencies.remove(view);
+        removeDependency(dependency);
+    }
+
+    private void removeDependency(Dependency dependency) {
+        View view = dependency.view;
+        if (view instanceof TransformationView)
+            ((TransformationView) view).removeOnTransformationChangedListener(dependency.transformationListener);
+        view.removeOnLayoutChangeListener(dependency.layoutListener);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Stream.of(dependencies.values()).forEach(this::removeDependency);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Stream.of(dependencies.values()).forEach(this::addDependency);
     }
 }

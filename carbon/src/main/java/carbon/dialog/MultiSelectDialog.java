@@ -57,9 +57,22 @@ public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Typ
     }
 
     public void setItems(Type[] items) {
-        super.setItems(items, parent -> new DataBindingComponent(parent, R.layout.carbon_row_dialog_checkboxtext) {
+        super.setItems(items, parent -> new DataBindingComponent<Type>(parent, R.layout.carbon_row_dialog_checkboxtext) {
             @Override
-            public void bind(Object data) {
+            public void bind(Type data) {
+                super.bind(data);
+                if (selectedItems.contains(data)) {
+                    CheckBox checkBox = (CheckBox) getView().findViewById(R.id.carbon_checkBox);
+                    checkBox.setChecked(true);
+                }
+            }
+        });
+    }
+
+    public void setItems(List<Type> items) {
+        super.setItems(items, parent -> new DataBindingComponent<Type>(parent, R.layout.carbon_row_dialog_checkboxtext) {
+            @Override
+            public void bind(Type data) {
                 super.bind(data);
                 if (selectedItems.contains(data)) {
                     CheckBox checkBox = (CheckBox) getView().findViewById(R.id.carbon_checkBox);

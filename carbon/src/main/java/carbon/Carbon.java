@@ -29,15 +29,15 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.Menu;
 import carbon.shadow.ShadowView;
 import carbon.widget.AutoSizeTextMode;
-import carbon.widget.AutoSizeTextView;
-import carbon.widget.InsetView;
-import carbon.widget.MaxSizeView;
-import carbon.widget.StateAnimatorView;
-import carbon.widget.StrokeView;
+import carbon.view.AutoSizeTextView;
+import carbon.view.InsetView;
+import carbon.view.MaxSizeView;
+import carbon.view.StateAnimatorView;
+import carbon.view.StrokeView;
 import carbon.widget.TintedView;
 import carbon.widget.TouchMarginView;
 
-import static carbon.widget.RevealView.MAX_RADIUS;
+import static carbon.view.RevealView.MAX_RADIUS;
 
 public class Carbon {
     private static final long DEFAULT_REVEAL_DURATION = 200;

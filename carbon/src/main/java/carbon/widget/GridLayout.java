@@ -3,6 +3,7 @@ package carbon.widget;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -34,9 +35,13 @@ import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+import com.annimon.stream.Stream;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import carbon.Carbon;
 import carbon.R;
@@ -53,13 +58,36 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
+import carbon.view.DependencyView;
+import carbon.view.InsetView;
+import carbon.view.MaxSizeView;
+import carbon.view.RenderingModeView;
+import carbon.view.RevealView;
+import carbon.view.RoundedCornersView;
+import carbon.view.StateAnimatorView;
+import carbon.view.StrokeView;
+import carbon.view.TransformationView;
+import carbon.view.VisibleView;
 
 /**
  * A GridLayout implementation with support for material features including shadows, ripples,
  * rounded corners, insets, custom drawing order, touch margins, state animators and others.
  */
 public class GridLayout extends android.support.v7.widget.GridLayout
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, RoundedCornersView, MaxSizeView, RevealView, VisibleView {
+        implements
+        ShadowView,
+        RippleView,
+        TouchMarginView,
+        StateAnimatorView,
+        AnimatedView,
+        InsetView,
+        RoundedCornersView,
+        StrokeView,
+        MaxSizeView,
+        RevealView,
+        VisibleView,
+        TransformationView,
+        DependencyView {
 
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
     private OnTouchListener onDispatchTouchListener;
@@ -104,6 +132,10 @@ public class GridLayout extends android.support.v7.widget.GridLayout
             R.styleable.GridLayout_carbon_insetBottom,
             R.styleable.GridLayout_carbon_insetColor
     };
+    private static int[] strokeIds = new int[]{
+            R.styleable.GridLayout_carbon_stroke,
+            R.styleable.GridLayout_carbon_strokeWidth
+    };
     private static int[] maxSizeIds = new int[]{
             R.styleable.GridLayout_carbon_maxWidth,
             R.styleable.GridLayout_carbon_maxHeight,
@@ -122,6 +154,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initInset(this, a, insetIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
+        Carbon.initStroke(this, a, strokeIds);
         setCornerRadius(a.getDimension(R.styleable.GridLayout_carbon_cornerRadius, 0));
 
         a.recycle();
@@ -195,7 +228,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout
         if (isInEditMode() && !drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
-            internalDispatchDraw(layerCanvas);
+            dispatchDrawInternal(layerCanvas);
 
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
@@ -215,10 +248,10 @@ public class GridLayout extends android.support.v7.widget.GridLayout
             if (r) {
                 int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
-                internalDispatchDraw(canvas);
+                dispatchDrawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
             } else {
-                internalDispatchDraw(canvas);
+                dispatchDrawInternal(canvas);
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
@@ -230,15 +263,17 @@ public class GridLayout extends android.support.v7.widget.GridLayout
 
             canvas.restoreToCount(saveCount);
         } else {
-            internalDispatchDraw(canvas);
+            dispatchDrawInternal(canvas);
         }
         drawCalled = false;
     }
 
-    private void internalDispatchDraw(@NonNull Canvas canvas) {
+    private void dispatchDrawInternal(@NonNull Canvas canvas) {
         Collections.sort(getViews(), new ElevationComparator());
 
         super.dispatchDraw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
             rippleDrawable.draw(canvas);
         if (insetColor != 0) {
@@ -347,6 +382,15 @@ public class GridLayout extends android.support.v7.widget.GridLayout
         }
     }
 
+    public void drawInternal(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
+    @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
@@ -355,7 +399,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout
         if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
-            super.draw(layerCanvas);
+            drawInternal(layerCanvas);
 
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
@@ -375,10 +419,10 @@ public class GridLayout extends android.support.v7.widget.GridLayout
             if (r) {
                 int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
-                super.draw(canvas);
+                drawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
             } else {
-                super.draw(canvas);
+                drawInternal(canvas);
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
@@ -390,7 +434,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout
 
             canvas.restoreToCount(saveCount);
         } else {
-            super.draw(canvas);
+            drawInternal(canvas);
         }
     }
 
@@ -761,13 +805,13 @@ public class GridLayout extends android.support.v7.widget.GridLayout
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
-                        animator.removeListener(this);
+                        a.removeListener(this);
                         animator = null;
                     }
 
                     @Override
-                    public void onAnimationCancel(Animator animation) {
-                        animator.removeListener(this);
+                    public void onAnimationCancel(Animator a) {
+                        a.removeListener(this);
                         animator = null;
                     }
                 });
@@ -787,13 +831,13 @@ public class GridLayout extends android.support.v7.widget.GridLayout
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
-                    animator.removeListener(this);
+                    a.removeListener(this);
                     animator = null;
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animation) {
-                    animator.removeListener(this);
+                public void onAnimationCancel(Animator a) {
+                    a.removeListener(this);
                     animator = null;
                 }
             });
@@ -1060,6 +1104,57 @@ public class GridLayout extends android.support.v7.widget.GridLayout
 
 
     // -------------------------------
+    // stroke
+    // -------------------------------
+
+    private ColorStateList stroke;
+    private float strokeWidth;
+    private Paint strokePaint;
+    private RectF strokeRect;
+
+    private void drawStroke(Canvas canvas) {
+        strokePaint.setStrokeWidth(strokeWidth * 2);
+        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
+        strokeRect.set(0, 0, getWidth(), getHeight());
+        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+    }
+
+    @Override
+    public void setStroke(ColorStateList colorStateList) {
+        stroke = colorStateList;
+
+        if (stroke == null)
+            return;
+
+        if (strokePaint == null) {
+            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            strokePaint.setStyle(Paint.Style.STROKE);
+            strokeRect = new RectF();
+        }
+    }
+
+    @Override
+    public void setStroke(int color) {
+        setStroke(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public float getStrokeWidth() {
+        return strokeWidth;
+    }
+
+
+    // -------------------------------
     // layout params
     // -------------------------------
 
@@ -1274,64 +1369,93 @@ public class GridLayout extends android.support.v7.widget.GridLayout
     // transformations
     // -------------------------------
 
+    List<OnTransformationChangedListener> transformationChangedListeners = new ArrayList<>();
+
+    public void addOnTransformationChangedListener(OnTransformationChangedListener listener) {
+        transformationChangedListeners.add(listener);
+    }
+
+    public void removeOnTransformationChangedListener(OnTransformationChangedListener listener) {
+        transformationChangedListeners.remove(listener);
+    }
+
+    public void clearOnTransformationChangedListeners() {
+        transformationChangedListeners.clear();
+    }
+
+    private void fireOnTransformationChangedListener() {
+        for (OnTransformationChangedListener listener : transformationChangedListeners)
+            listener.onTransformationChanged();
+    }
+
     @Override
     public void setRotation(float rotation) {
         super.setRotation(rotation);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setRotationY(float rotationY) {
         super.setRotationY(rotationY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setRotationX(float rotationX) {
         super.setRotationX(rotationX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setScaleX(float scaleX) {
         super.setScaleX(scaleX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setScaleY(float scaleY) {
         super.setScaleY(scaleY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setPivotX(float pivotX) {
         super.setPivotX(pivotX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setPivotY(float pivotY) {
         super.setPivotY(pivotY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setAlpha(@FloatRange(from = 0.0, to = 1.0) float alpha) {
         super.setAlpha(alpha);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setTranslationX(float translationX) {
         super.setTranslationX(translationX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setTranslationY(float translationY) {
         super.setTranslationY(translationY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     public void setWidth(int width) {
@@ -1369,5 +1493,51 @@ public class GridLayout extends android.support.v7.widget.GridLayout
         setSize(width, height);
         setTranslationX(x);
         setTranslationY(y);
+    }
+
+
+    // -------------------------------
+    // dependency
+    // -------------------------------
+
+    private Map<View, Dependency> dependencies = new HashMap<>();
+
+    @Override
+    public void addDependency(View view, OnDependencyChangedListener listener) {
+        Dependency dependency = new Dependency(view, listener::onDependencyChanged, (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> listener.onDependencyChanged());
+        dependencies.put(view, dependency);
+        addDependency(dependency);
+    }
+
+    private void addDependency(Dependency dependency) {
+        View view = dependency.view;
+        if (view instanceof TransformationView)
+            ((TransformationView) view).addOnTransformationChangedListener(dependency.transformationListener);
+        view.addOnLayoutChangeListener(dependency.layoutListener);
+    }
+
+    @Override
+    public void removeDependency(View view) {
+        Dependency dependency = dependencies.remove(view);
+        removeDependency(dependency);
+    }
+
+    private void removeDependency(Dependency dependency) {
+        View view = dependency.view;
+        if (view instanceof TransformationView)
+            ((TransformationView) view).removeOnTransformationChangedListener(dependency.transformationListener);
+        view.removeOnLayoutChangeListener(dependency.layoutListener);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Stream.of(dependencies.values()).forEach(this::removeDependency);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Stream.of(dependencies.values()).forEach(this::addDependency);
     }
 }

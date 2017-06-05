@@ -3,6 +3,7 @@ package carbon.beta;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -52,18 +53,32 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
-import carbon.widget.InsetView;
-import carbon.widget.MaxSizeView;
+import carbon.view.InsetView;
+import carbon.view.MaxSizeView;
+import carbon.view.RenderingModeView;
+import carbon.view.RevealView;
+import carbon.view.RoundedCornersView;
+import carbon.view.StateAnimatorView;
+import carbon.view.StrokeView;
+import carbon.view.VisibleView;
 import carbon.widget.OnInsetsChangedListener;
 import carbon.widget.RenderingMode;
-import carbon.widget.RenderingModeView;
-import carbon.widget.RevealView;
-import carbon.widget.RoundedCornersView;
-import carbon.widget.StateAnimatorView;
 import carbon.widget.TouchMarginView;
 
 public class AppBarLayout extends android.support.design.widget.AppBarLayout
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, InsetView, RoundedCornersView, MaxSizeView, RevealView {
+        implements
+        ShadowView,
+        RippleView,
+        TouchMarginView,
+        StateAnimatorView,
+        AnimatedView,
+        InsetView,
+        RoundedCornersView,
+        StrokeView,
+        MaxSizeView,
+        RevealView,
+        VisibleView {
+
     private OnTouchListener onDispatchTouchListener;
 
     public AppBarLayout(Context context) {
@@ -101,6 +116,10 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             R.styleable.AppBarLayout_carbon_insetBottom,
             R.styleable.AppBarLayout_carbon_insetColor
     };
+    private static int[] strokeIds = new int[]{
+            R.styleable.AppBarLayout_carbon_stroke,
+            R.styleable.AppBarLayout_carbon_strokeWidth
+    };
     private static int[] maxSizeIds = new int[]{
             R.styleable.AppBarLayout_carbon_maxWidth,
             R.styleable.AppBarLayout_carbon_maxHeight,
@@ -119,6 +138,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initInset(this, a, insetIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
+        Carbon.initStroke(this, a, strokeIds);
         setCornerRadius(a.getDimension(R.styleable.AppBarLayout_carbon_cornerRadius, 0));
 
         a.recycle();
@@ -192,7 +212,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
         if (isInEditMode() && !drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
-            internalDispatchDraw(layerCanvas);
+            dispatchDrawInternal(layerCanvas);
 
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
@@ -212,10 +232,10 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             if (r) {
                 int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
-                internalDispatchDraw(canvas);
+                dispatchDrawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
             } else {
-                internalDispatchDraw(canvas);
+                dispatchDrawInternal(canvas);
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
@@ -227,15 +247,17 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
 
             canvas.restoreToCount(saveCount);
         } else {
-            internalDispatchDraw(canvas);
+            dispatchDrawInternal(canvas);
         }
         drawCalled = false;
     }
 
-    private void internalDispatchDraw(@NonNull Canvas canvas) {
+    private void dispatchDrawInternal(@NonNull Canvas canvas) {
         Collections.sort(getViews(), new ElevationComparator());
 
         super.dispatchDraw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
             rippleDrawable.draw(canvas);
         if (insetColor != 0) {
@@ -342,6 +364,15 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
         }
     }
 
+    public void drawInternal(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
+    @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
@@ -350,7 +381,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
         if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
-            super.draw(layerCanvas);
+            drawInternal(layerCanvas);
 
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
@@ -370,10 +401,10 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             if (r) {
                 int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
-                super.draw(canvas);
+                drawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
             } else {
-                super.draw(canvas);
+                drawInternal(canvas);
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
@@ -385,7 +416,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
 
             canvas.restoreToCount(saveCount);
         } else {
-            super.draw(canvas);
+            drawInternal(canvas);
         }
     }
 
@@ -756,13 +787,13 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
-                        animator.removeListener(this);
+                        a.removeListener(this);
                         animator = null;
                     }
 
                     @Override
-                    public void onAnimationCancel(Animator animation) {
-                        animator.removeListener(this);
+                    public void onAnimationCancel(Animator a) {
+                        a.removeListener(this);
                         animator = null;
                     }
                 });
@@ -782,13 +813,13 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
-                    animator.removeListener(this);
+                    a.removeListener(this);
                     animator = null;
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animation) {
-                    animator.removeListener(this);
+                public void onAnimationCancel(Animator a) {
+                    a.removeListener(this);
                     animator = null;
                 }
             });
@@ -1051,6 +1082,57 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             }
         }
         return result;
+    }
+
+
+    // -------------------------------
+    // stroke
+    // -------------------------------
+
+    private ColorStateList stroke;
+    private float strokeWidth;
+    private Paint strokePaint;
+    private RectF strokeRect;
+
+    private void drawStroke(Canvas canvas) {
+        strokePaint.setStrokeWidth(strokeWidth * 2);
+        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
+        strokeRect.set(0, 0, getWidth(), getHeight());
+        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+    }
+
+    @Override
+    public void setStroke(ColorStateList colorStateList) {
+        stroke = colorStateList;
+
+        if (stroke == null)
+            return;
+
+        if (strokePaint == null) {
+            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            strokePaint.setStyle(Paint.Style.STROKE);
+            strokeRect = new RectF();
+        }
+    }
+
+    @Override
+    public void setStroke(int color) {
+        setStroke(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public float getStrokeWidth() {
+        return strokeWidth;
     }
 
 

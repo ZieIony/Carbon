@@ -4,18 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
-import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
+import android.support.annotation.NonNull;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,168 +21,78 @@ import java.util.List;
 import carbon.R;
 import carbon.animation.AnimUtils;
 
-public class Snackbar extends FrameLayout implements GestureDetector.OnGestureListener {
-    public static int INFINITE = -1;
-    private Context context;
-    private float swipe;
-    private ValueAnimator animator;
-    private List<View> pushedViews = new ArrayList<>();
-    GestureDetector gestureDetector = new GestureDetector(this);
-    private Rect rect = new Rect();
-    private boolean tapOutsideToDismiss;
-    private ViewGroup container;
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
+public class Snackbar {
+
+    public interface OnActionListener {
+        void onAction();
     }
 
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (swipeToDismiss && animator == null && getParent() != null) {
-            swipe = e2.getX() - e1.getX();
-            content.setTranslationX(swipe);
-            content.setAlpha(Math.max(0, 1 - 2 * Math.abs(swipe) / content.getMeasuredWidth()));
-            postInvalidate();
-            if (Math.abs(swipe) > content.getMeasuredWidth() / 4) {
-                handler.removeCallbacks(hideRunnable);
-                animator = ObjectAnimator.ofFloat(swipe, content.getMeasuredWidth() / 2.0f * Math.signum(swipe));
-                animator.setDuration(200);
-                animator.addUpdateListener(valueAnimator -> {
-                    float s = (Float) valueAnimator.getAnimatedValue();
-                    content.setTranslationX(s);
-                    float alpha = Math.max(0, 1 - 2 * Math.abs((Float) valueAnimator.getAnimatedValue()) / content.getMeasuredWidth());
-                    content.setAlpha(alpha);
-                    postInvalidate();
-                });
-                animator.start();
-                animator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        hideInternal();
-                        animator = null;
-                    }
-                });
-                for (final View pushedView : pushedViews) {
-                    ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
-                    animator.setDuration(200);
-                    animator.setInterpolator(new DecelerateInterpolator());
-                    animator.addUpdateListener(valueAnimator -> {
-                        MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                        pushedView.setTranslationY((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
-                        if (pushedView.getParent() != null)
-                            ((View) pushedView.getParent()).postInvalidate();
-                    });
-                    animator.start();
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-    }
-
-    public interface OnDismissListener {
+    public interface OnDismissedListener {
         void onDismiss();
     }
-
-    private TextView message;
-    private Button button;
-    private Style style;
-    private long duration;
-    private Runnable hideRunnable = this::dismiss;
-    private Handler handler;
-    private LinearLayout content;
-    OnDismissListener onDismissListener;
-    boolean swipeToDismiss = true;
-
-    static List<Snackbar> next = new ArrayList<>();
 
     public enum Style {
         Floating, Docked, Auto
     }
 
+    public static int INFINITE = -1;
+
+    private Context context;
+    private ViewGroup container;
+
+    private Snackbar.Style style = null;
+    private long duration;
+    private Runnable hideRunnable = this::dismiss;
+    private Handler handler;
+    private Snackbar.OnDismissedListener onDismissedListener;
+    private boolean swipeToDismiss = true;
+    private boolean tapOutsideToDismiss;
+
+    private SnackbarLayout snackbarLayout;
+
+    private static List<Snackbar> next = new ArrayList<>();
+
     public Snackbar(Context context) {
-        super(context);
         this.context = context;
-        initSnackbar(R.attr.carbon_snackbarTheme);
+        handler = new Handler();
     }
 
-    public Snackbar(Context context, String message, String action, int duration) {
-        super(context);
+    public Snackbar(Context context, String message, int duration) {
         this.context = context;
-        initSnackbar(R.attr.carbon_snackbarTheme);
-        setMessage(message);
-        setAction(action);
+        handler = new Handler();
+        snackbarLayout = new SnackbarLayout(context);
+        snackbarLayout.getView().setMessage(message);
         setDuration(duration);
         setTapOutsideToDismissEnabled(false);
     }
 
-    private void initSnackbar(int defStyleAttr) {
-        setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
-
-        TypedValue outValue = new TypedValue();
-        getContext().getTheme().resolveAttribute(defStyleAttr, outValue, true);
-        int theme = outValue.resourceId;
-        Context themedContext = new ContextThemeWrapper(getContext(), theme);
-
-        View.inflate(themedContext, R.layout.carbon_snackbar, this);
-        content = (LinearLayout) findViewById(R.id.carbon_snackbarContent);
-        content.setElevation(getResources().getDimension(R.dimen.carbon_elevationSnackbar));
-        content.setInAnimator(AnimUtils.getFlyInAnimator());
-        content.setOutAnimator(AnimUtils.getFlyOutAnimator());
-
-        message = (TextView) content.findViewById(R.id.carbon_messageText);
-        button = (Button) content.findViewById(R.id.carbon_actionButton);
-
-        handler = new Handler();
-    }
-
     public void show(final ViewGroup container) {
-        synchronized (Snackbar.class) {
+        synchronized (SnackbarLayout.class) {
             this.container = container;
             if (!next.contains(this))
                 next.add(this);
             if (next.indexOf(this) == 0) {
+                SnackbarView snackbarView = snackbarLayout.getView();
                 Rect windowFrame = new Rect();
                 container.getWindowVisibleDisplayFrame(windowFrame);
                 Rect drawingRect = new Rect();
                 container.getDrawingRect(drawingRect);
-                setPadding(0, 0, 0, drawingRect.bottom - windowFrame.bottom);
-                container.addView(this);
-                content.setVisibility(INVISIBLE);
-                content.animateVisibility(View.VISIBLE);
-                for (final View pushedView : pushedViews) {
-                    ValueAnimator animator = ValueAnimator.ofFloat(0, -1);
-                    animator.setDuration(200);
-                    animator.setInterpolator(new DecelerateInterpolator());
-                    animator.addUpdateListener(valueAnimator -> {
-                        MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                        pushedView.setTranslationY((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
-                        if (pushedView.getParent() != null)
-                            ((View) pushedView.getParent()).postInvalidate();
-                    });
-                    animator.start();
-                }
+                //setPadding(0, 0, 0, drawingRect.bottom - windowFrame.bottom);
+                if (style == null)
+                    setStyle(Style.Auto);
+                if (snackbarView.getInAnimator() == null)
+                    snackbarView.setInAnimator(AnimUtils.getSlideInAnimator());
+                if (snackbarView.getOutAnimator() == null)
+                    snackbarView.setOutAnimator(AnimUtils.getSlideOutAnimator());
+                container.addView(snackbarLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                snackbarView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
+                snackbarView.setTranslationY(snackbarView.getMeasuredHeight() + layoutParams.bottomMargin);
+                snackbarView.setVisibility(INVISIBLE);
+                snackbarView.animateVisibility(View.VISIBLE);
                 if (duration != INFINITE)
                     handler.postDelayed(hideRunnable, duration);
             }
@@ -200,37 +108,30 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
     }
 
     public void dismiss() {
-        synchronized (Snackbar.class) {
+        synchronized (SnackbarLayout.class) {
             handler.removeCallbacks(hideRunnable);
-            if (onDismissListener != null)
-                onDismissListener.onDismiss();
-            content.getOutAnimator().addListener(new AnimatorListenerAdapter() {
+            SnackbarView snackbarView = snackbarLayout.getView();
+            snackbarView.getOutAnimator().addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
+                    fireOnDismissedListener();
                     hideInternal();
                 }
             });
-            content.animateVisibility(GONE);
-            for (final View pushedView : pushedViews) {
-                ValueAnimator animator = ValueAnimator.ofFloat(-1, 0);
-                animator.setDuration(200);
-                animator.setInterpolator(new DecelerateInterpolator());
-                animator.addUpdateListener(valueAnimator -> {
-                    MarginLayoutParams lp = (MarginLayoutParams) content.getLayoutParams();
-                    pushedView.setTranslationY((content.getHeight() + lp.bottomMargin) * (Float) valueAnimator.getAnimatedValue());
-                    if (pushedView.getParent() != null)
-                        ((View) pushedView.getParent()).postInvalidate();
-                });
-                animator.start();
-            }
+            snackbarView.animateVisibility(GONE);
         }
     }
 
+    private void fireOnDismissedListener() {
+        if (onDismissedListener != null)
+            onDismissedListener.onDismiss();
+    }
+
     private void hideInternal() {
-        synchronized (Snackbar.class) {
-            if (getParent() == null)
+        synchronized (SnackbarLayout.class) {
+            if (snackbarLayout.getParent() == null)
                 return;
-            ((ViewGroup) getParent()).removeView(this);
+            ((ViewGroup) snackbarLayout.getParent()).removeView(snackbarLayout);
             if (next.contains(this))
                 next.remove(this);
             if (next.size() != 0)
@@ -238,65 +139,31 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
         }
     }
 
-    public void setOnClickListener(View.OnClickListener l) {
-        button.setOnClickListener(l);
-    }
-
-    public void addPushedView(View view) {
-        pushedViews.add(view);
-    }
-
-    public void removePushedView(View view) {
-        pushedViews.remove(view);
-    }
-
-    public void setAction(String action) {
-        if (action != null) {
-            button.setText(action);
-            button.setVisibility(View.VISIBLE);
-            content.setPadding(content.getPaddingLeft(), 0, (int) context.getResources().getDimension(R.dimen.carbon_paddingHalf), 0);
-        } else {
-            content.setPadding(content.getPaddingLeft(), 0, content.getPaddingLeft(), 0);
-            button.setVisibility(View.GONE);
-        }
-    }
-
-    public String getAction() {
-        return button.getText().toString();
-    }
-
-    public void setMessage(String message) {
-        this.message.setText(message);
-    }
-
-    public String getMessage() {
-        return message.getText().toString();
-    }
-
-    public Style getStyle() {
+    public Snackbar.Style getStyle() {
         return style;
     }
 
-    public void setStyle(Style style) {
+    public void setStyle(Snackbar.Style style) {
         this.style = style;
-        if (style == Style.Auto)
-            this.style = getResources().getBoolean(R.bool.carbon_isPhone) ? Style.Docked : Style.Floating;
-        FrameLayout.LayoutParams layoutParams = generateDefaultLayoutParams();
-        if (style == Style.Floating) {
+        SnackbarView snackbarView = snackbarLayout.getView();
+        if (style == Snackbar.Style.Auto)
+            this.style = context.getResources().getBoolean(R.bool.carbon_isPhone) ? Snackbar.Style.Docked : Snackbar.Style.Floating;
+        FrameLayout.LayoutParams layoutParams = snackbarLayout.generateDefaultLayoutParams();
+        if (style == Snackbar.Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             int margin = (int) context.getResources().getDimension(R.dimen.carbon_margin);
             layoutParams.setMargins(margin, 0, margin, margin);
             layoutParams.gravity = Gravity.START | Gravity.BOTTOM;
-            content.setCornerRadius((int) context.getResources().getDimension(R.dimen.carbon_cornerRadiusButton));
+            snackbarView.setCornerRadius((int) context.getResources().getDimension(R.dimen.carbon_cornerRadiusButton));
         } else {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.setMargins(0, 0, 0, 0);
             layoutParams.gravity = Gravity.BOTTOM;
-            content.setCornerRadius(0);
+            snackbarView.setCornerRadius(0);
         }
-        content.setLayoutParams(layoutParams);
+        snackbarView.setLayoutParams(layoutParams);
     }
 
     public long getDuration() {
@@ -313,16 +180,90 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
 
     public void setSwipeToDismissEnabled(boolean swipeToDismiss) {
         this.swipeToDismiss = swipeToDismiss;
-        setOnDispatchTouchListener((v, event) -> {
-            content.getHitRect(rect);
-            if (rect.contains((int) event.getX(), (int) event.getY())) {
-                return gestureDetector.onTouchEvent(event);
-            } else if (isTapOutsideToDismissEnabled()) {
-                dismiss();
+        snackbarLayout.initSwipeToDismissEnabled();
+    }
+
+    public boolean isTapOutsideToDismissEnabled() {
+        return tapOutsideToDismiss;
+    }
+
+    public void setTapOutsideToDismissEnabled(boolean tapOutsideToDismiss) {
+        this.tapOutsideToDismiss = tapOutsideToDismiss;
+    }
+
+    public void setOnDismissedListener(Snackbar.OnDismissedListener onDismissedListener) {
+        this.onDismissedListener = onDismissedListener;
+    }
+
+    public void setInAnimator(Animator inAnim) {
+        snackbarLayout.getView().setInAnimator(inAnim);
+    }
+
+    public Animator getInAnimator() {
+        return snackbarLayout.getView().getInAnimator();
+    }
+
+    public void setOutAnimator(Animator outAnim) {
+        snackbarLayout.getView().setOutAnimator(outAnim);
+    }
+
+    public Animator getOutAnimator() {
+        return snackbarLayout.getView().getOutAnimator();
+    }
+
+    public View getView() {
+        return snackbarLayout.getView();
+    }
+
+    public void setAction(String text, OnActionListener listener) {
+        snackbarLayout.getView().setAction(text, listener);
+    }
+
+    class SnackbarLayout extends FrameLayout {
+
+        private float swipe;
+        private ValueAnimator animator;
+        private SnackbarView snackbarView;
+        private Rect rect = new Rect();
+        private Handler handler;
+
+        GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                if (swipeToDismiss && animator == null && getParent() != null) {
+                    swipe = e2.getX() - e1.getX();
+                    snackbarView.setTranslationX(swipe);
+                    snackbarView.setAlpha(Math.max(0, 1 - 2 * Math.abs(swipe) / snackbarView.getMeasuredWidth()));
+                    postInvalidate();
+                    if (Math.abs(swipe) > snackbarView.getMeasuredWidth() / 4) {
+                        handler.removeCallbacks(hideRunnable);
+                        animator = ObjectAnimator.ofFloat(swipe, snackbarView.getMeasuredWidth() / 2.0f * Math.signum(swipe));
+                        animator.setDuration(200);
+                        animator.addUpdateListener(valueAnimator -> {
+                            float s = (Float) valueAnimator.getAnimatedValue();
+                            snackbarView.setTranslationX(s);
+                            float alpha = Math.max(0, 1 - 2 * Math.abs((Float) valueAnimator.getAnimatedValue()) / snackbarView.getMeasuredWidth());
+                            snackbarView.setAlpha(alpha);
+                            postInvalidate();
+                        });
+                        animator.start();
+                        animator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                hideInternal();
+                                animator = null;
+                            }
+                        });
+                    }
+                    return true;
+                }
+                return false;
             }
-            return false;
+
         });
-        content.setOnTouchListener((v, event) -> {
+
+        @SuppressLint("ClickableViewAccessibility")
+        private OnTouchListener listener = (v, event) -> {
             if (isSwipeToDismissEnabled()) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     swipe = 0;
@@ -330,7 +271,7 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     if (animator != null) {
                         animator.cancel();
                         animator = null;
-                        swipe = content.getTranslationX();
+                        swipe = snackbarView.getTranslationX();
                     }
                     return true;
                 } else if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && animator == null) {
@@ -338,8 +279,8 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
                     animator.setDuration(200);
                     animator.addUpdateListener(animation -> {
                         float s = (Float) animation.getAnimatedValue();
-                        content.setTranslationX(s);
-                        content.setAlpha(Math.max(0, 1 - 2 * Math.abs(s) / content.getWidth()));
+                        snackbarView.setTranslationX(s);
+                        snackbarView.setAlpha(Math.max(0, 1 - 2 * Math.abs(s) / snackbarView.getWidth()));
                         postInvalidate();
                     });
                     animator.start();
@@ -357,38 +298,33 @@ public class Snackbar extends FrameLayout implements GestureDetector.OnGestureLi
             }
 
             return false;
-        });
+        };
+
+        public SnackbarLayout(Context context) {
+            super(context);
+            handler = new Handler();
+            snackbarView = new SnackbarView(context);
+            addView(snackbarView);
+        }
+
+        @Override
+        public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+            snackbarView.getHitRect(rect);
+            if (rect.contains((int) event.getX(), (int) event.getY())) {
+                return gestureDetector.onTouchEvent(event);
+            } else if (isTapOutsideToDismissEnabled()) {
+                dismiss();
+            }
+            return false;
+        }
+
+        public void initSwipeToDismissEnabled() {
+            snackbarView.setOnTouchListener(swipeToDismiss ? listener : null);
+        }
+
+        public SnackbarView getView() {
+            return snackbarView;
+        }
     }
 
-    public boolean isTapOutsideToDismissEnabled() {
-        return tapOutsideToDismiss;
-    }
-
-    public void setTapOutsideToDismissEnabled(boolean tapOutsideToDismiss) {
-        this.tapOutsideToDismiss = tapOutsideToDismiss;
-    }
-
-    public void setOnDismissListener(OnDismissListener onDismissListener) {
-        this.onDismissListener = onDismissListener;
-    }
-
-    @Override
-    public void setInAnimator(Animator inAnim) {
-        content.setInAnimator(inAnim);
-    }
-
-    @Override
-    public Animator getInAnimator() {
-        return content.getInAnimator();
-    }
-
-    @Override
-    public void setOutAnimator(Animator outAnim) {
-        content.setOutAnimator(outAnim);
-    }
-
-    @Override
-    public Animator getOutAnimator() {
-        return content.getOutAnimator();
-    }
 }

@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 
 import com.annimon.stream.Stream;
 
+import java.util.List;
+
 import carbon.dialog.MultiSelectDialog;
 import carbon.dialog.SingleSelectDialog;
 import carbon.widget.DropDown;
@@ -30,8 +32,8 @@ public class SelectDialogActivity extends SamplesActivity {
         dropDown.setItems(new String[]{"Single select", "Multi select"});
 
         StringFruitGenerator generator = new StringFruitGenerator();
-        String[] items = (String[]) Stream.generate(generator::next).limit(5).toArray();
-        selectedItem = items[0];
+        List<String> items = Stream.generate(generator::next).limit(5).toList();
+        selectedItem = items.get(0);
 
         findViewById(R.id.button).setOnClickListener(view -> {
             switch (dropDown.getSelectedIndex()) {

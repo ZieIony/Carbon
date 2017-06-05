@@ -9,7 +9,9 @@ import android.graphics.ColorMatrixColorFilter;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
@@ -32,6 +34,7 @@ public class AnimUtils {
         Fade(AnimUtils::getFadeInAnimator, AnimUtils::getFadeOutAnimator),
         Pop(AnimUtils::getPopInAnimator, AnimUtils::getPopOutAnimator),
         Fly(AnimUtils::getFlyInAnimator, AnimUtils::getFlyOutAnimator),
+        Slide(AnimUtils::getSlideInAnimator, AnimUtils::getSlideOutAnimator),
         BrightnessSaturationFade(AnimUtils::getBrightnessSaturationFadeInAnimator, AnimUtils::getBrightnessSaturationFadeOutAnimator),
         ProgressWidth(AnimUtils::getProgressWidthInAnimator, AnimUtils::getProgressWidthOutAnimator);
 
@@ -157,6 +160,47 @@ public class AnimUtils {
             View view = animator.getTarget();
             view.setAlpha((Float) valueAnimator.getAnimatedValue());
             view.setTranslationY(Math.min(view.getHeight() / 2, view.getResources().getDimension(R.dimen.carbon_1dip) * 50.0f) * (1 - (Float) valueAnimator.getAnimatedValue()));
+        });
+        return animator;
+    }
+
+    public static ValueAnimator getSlideInAnimator() {
+        ViewAnimator animator = new ViewAnimator();
+        animator.setInterpolator(new LinearOutSlowInInterpolator());
+        animator.setOnSetupValuesListener(() -> {
+            View view = animator.getTarget();
+            animator.setFloatValues(view.getTranslationY(), 0);
+            int height = view.getMeasuredHeight();
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            if (layoutParams != null && layoutParams instanceof ViewGroup.MarginLayoutParams)
+                height += ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
+            long duration = (long) (200 * Math.abs(view.getTranslationY() / height));
+            animator.setDuration(duration);
+        });
+        animator.addUpdateListener(valueAnimator -> {
+            View view = animator.getTarget();
+            view.setTranslationY((Float) valueAnimator.getAnimatedValue());
+        });
+        return animator;
+    }
+
+    public static ValueAnimator getSlideOutAnimator() {
+        ViewAnimator animator = new ViewAnimator();
+        animator.setInterpolator(new FastOutLinearInInterpolator());
+        animator.setOnSetupValuesListener(() -> {
+            View view = animator.getTarget();
+            int height = view.getMeasuredHeight();
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            if (layoutParams != null && layoutParams instanceof ViewGroup.MarginLayoutParams)
+                height += ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
+            animator.setFloatValues(view.getTranslationY(), height);
+            long duration = (long) (200 * (1 - Math.abs(view.getTranslationY() / height)));
+            animator.setDuration(duration);
+        });
+        animator.addUpdateListener(valueAnimator -> {
+            View view = animator.getTarget();
+            view.setTranslationY((Float) valueAnimator.getAnimatedValue());
+            Log.e("anim", "" + (Float) valueAnimator.getAnimatedValue());
         });
         return animator;
     }

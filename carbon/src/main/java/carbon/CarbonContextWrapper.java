@@ -3,7 +3,6 @@ package carbon;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Resources;
-import android.view.LayoutInflater;
 
 public class CarbonContextWrapper extends ContextWrapper {
     private CarbonLayoutInflater mInflater;
@@ -19,7 +18,7 @@ public class CarbonContextWrapper extends ContextWrapper {
         return resources;
     }
 
-    @Override
+    /*@Override
     public Object getSystemService(String name) {
         if (LAYOUT_INFLATER_SERVICE.equals(name)) {
             if (mInflater == null) {
@@ -33,5 +32,5 @@ public class CarbonContextWrapper extends ContextWrapper {
     @Override
     public Resources.Theme getTheme() {
         return super.getTheme();
-    }
+    }*/
 }

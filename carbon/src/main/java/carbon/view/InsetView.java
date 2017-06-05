@@ -1,4 +1,6 @@
-package carbon.widget;
+package carbon.view;
+
+import carbon.widget.OnInsetsChangedListener;
 
 /**
  * Interface of a view with insets. Used by layouts to handle standard system insets added by status
@@ -13,10 +15,10 @@ public interface InsetView {
     /**
      * Sets insets
      *
-     * @param left   has to be greater than or equal to 0 or {@link carbon.widget.InsetView.INSET_NULL}
-     * @param top    has to be greater than or equal to 0 or {@link carbon.widget.InsetView.INSET_NULL}
-     * @param right  has to be greater than or equal to 0 or {@link carbon.widget.InsetView.INSET_NULL}
-     * @param bottom has to be greater than or equal to 0 or {@link carbon.widget.InsetView.INSET_NULL}
+     * @param left   has to be greater than or equal to 0 or {@link InsetView.INSET_NULL}
+     * @param top    has to be greater than or equal to 0 or {@link InsetView.INSET_NULL}
+     * @param right  has to be greater than or equal to 0 or {@link InsetView.INSET_NULL}
+     * @param bottom has to be greater than or equal to 0 or {@link InsetView.INSET_NULL}
      */
     void setInset(int left, int top, int right, int bottom);
 

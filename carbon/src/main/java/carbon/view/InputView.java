@@ -1,6 +1,8 @@
-package carbon.widget;
+package carbon.view;
 
 import android.support.annotation.NonNull;
+
+import carbon.widget.OnValidateListener;
 
 /**
  * Interface of a view with input, which can be validated. Used by {@link carbon.widget.InputLayout}

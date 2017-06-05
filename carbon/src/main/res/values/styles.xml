@@ -21,6 +21,7 @@
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
+        <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_constraintLayoutStyle">@style/carbon_ConstraintLayout</item>
         <item name="carbon_flowLayoutStyle">@style/carbon_FlowLayout</item>
@@ -158,6 +159,7 @@
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
         <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
+        <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_constraintLayoutStyle">@style/carbon_ConstraintLayout</item>
         <item name="carbon_flowLayoutStyle">@style/carbon_FlowLayout</item>
@@ -338,6 +340,20 @@
         <item name="android:minWidth">@dimen/carbon_smallFabSize</item>
         <item name="android:minHeight">@dimen/carbon_smallFabSize</item>
         <item name="android:padding">@dimen/carbon_paddingHalf</item>
+    </style>
+
+    <style name="carbon_Snackbar" parent="carbon_LinearLayout">
+        <item name="carbon_elevation">@dimen/carbon_elevationSnackbar</item>
+        <item name="android:background">?attr/carbon_colorBackgroundInverse</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:maxHeight">80dp</item>
+        <item name="android:maxWidth">568dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">288dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingStart">24dp</item>
     </style>
 
     <style name="carbon_TextView" parent="@android:style/Widget.TextView">

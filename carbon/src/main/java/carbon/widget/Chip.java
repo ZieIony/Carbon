@@ -63,8 +63,6 @@ public class Chip extends LinearLayout {
         } else {
             setIconVisible(false);
         }
-        int color = a.getColor(R.styleable.Chip_android_background, 0);
-        setBackgroundColor(color);
 
         a.recycle();
     }

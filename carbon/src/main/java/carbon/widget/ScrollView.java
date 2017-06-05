@@ -26,6 +26,7 @@ import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
+import carbon.view.VisibleView;
 
 public class ScrollView extends android.widget.ScrollView implements TintedView, VisibleView {
     private int mTouchSlop;

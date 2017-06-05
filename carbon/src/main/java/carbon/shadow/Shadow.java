@@ -10,7 +10,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 public class Shadow {
-    public static final int ALPHA = 0x12;
+    public static final int ALPHA = 47;
 
     private final int e;
     private final Bitmap bitmap;
@@ -35,13 +35,15 @@ public class Shadow {
         this.cornerRadius = cornerRadius;
         xDiv = new int[]{0, e + this.cornerRadius, bitmap.getWidth() - e - this.cornerRadius, bitmap.getWidth()};
         yDiv = new int[]{0, e + this.cornerRadius, bitmap.getHeight() - e - this.cornerRadius, bitmap.getHeight()};
-        xDivDst = new int[]{(int) (-e * scale), this.cornerRadius, 0, 0};
-        yDivDst = new int[]{(int) (-e * scale), this.cornerRadius, 0, 0};
+        xDivDst = new int[]{(int) (-e * scale), (int) (this.cornerRadius * scale), 0, 0};
+        yDivDst = new int[]{(int) (-e * scale), (int) (this.cornerRadius * scale), 0, 0};
     }
 
     public void draw(Canvas canvas, View view, Paint paint, ColorFilter colorFilter) {
-        xDivDst[2] = view.getWidth() - cornerRadius;
-        yDivDst[2] = view.getHeight() - cornerRadius;
+        xDivDst[1] = (int) Math.min(this.cornerRadius * scale, view.getWidth() / 2);
+        yDivDst[1] = (int) Math.min(this.cornerRadius * scale, view.getHeight() / 2);
+        xDivDst[2] = (int) Math.max(view.getWidth() - cornerRadius * scale, view.getWidth() / 2);
+        yDivDst[2] = (int) Math.max(view.getHeight() - cornerRadius * scale, view.getHeight() / 2);
         xDivDst[3] = (int) (view.getWidth() + e * scale);
         yDivDst[3] = (int) (view.getHeight() + e * scale);
 

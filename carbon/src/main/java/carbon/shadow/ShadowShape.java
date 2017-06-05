@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 
 import carbon.Carbon;
-import carbon.widget.RoundedCornersView;
+import carbon.view.RoundedCornersView;
 
 public enum ShadowShape {
     RECT, ROUND_RECT, CIRCLE;

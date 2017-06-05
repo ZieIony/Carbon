@@ -12,9 +12,6 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-
-import java.util.Arrays;
 
 import carbon.Carbon;
 import carbon.R;
@@ -28,13 +25,22 @@ public class DropDown<Type> extends EditText {
         Over, Fit
     }
 
+    public interface OnItemSelectedListener<Type> {
+        void onItemSelected(Type item, int position);
+    }
+
+    public interface OnSelectionChangedListener<Type> {
+        void onSelectionChanged(Type item, int position);
+    }
+
     DropDownMenu dropDownMenu;
 
     private int selectedIndex;
 
     Adapter defaultAdapter;
 
-    AdapterView.OnItemSelectedListener onItemSelectedListener;
+    OnItemSelectedListener<Type> onItemSelectedListener;
+    OnSelectionChangedListener<Type> onSelectionChangedListener;
 
     private boolean isShowingPopup = false;
 
@@ -103,7 +109,13 @@ public class DropDown<Type> extends EditText {
     }
 
     public void setSelectedItem(Type item) {
-        setSelectedIndex(Arrays.binarySearch(getAdapter().getItems(), item));
+        Object[] items = getAdapter().getItems();
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].equals(item)) {
+                setSelectedIndex(i);
+                return;
+            }
+        }
     }
 
     public Type getSelectedItem() {
@@ -123,19 +135,26 @@ public class DropDown<Type> extends EditText {
         return dropDownMenu.getAdapter();
     }
 
-    RecyclerView.OnItemClickedListener onItemClickedListener = new RecyclerView.OnItemClickedListener() {
+    RecyclerView.OnItemClickedListener<Type> onItemClickedListener = new RecyclerView.OnItemClickedListener<Type>() {
         @Override
-        public void onItemClicked(View view, Object item, int position) {
+        public void onItemClicked(View view, Type item, int position) {
             setText(item.toString());
+            int prevSelectedIndex = selectedIndex;
             selectedIndex = position;
             if (onItemSelectedListener != null)
-                onItemSelectedListener.onItemSelected(null, view, selectedIndex, 0);
+                onItemSelectedListener.onItemSelected(item, selectedIndex);
+            if (onSelectionChangedListener != null && prevSelectedIndex != selectedIndex)
+                onSelectionChangedListener.onSelectionChanged(item, position);
             dropDownMenu.dismiss();
         }
     };
 
-    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener onItemSelectedListener) {
+    public void setOnItemSelectedListener(OnItemSelectedListener<Type> onItemSelectedListener) {
         this.onItemSelectedListener = onItemSelectedListener;
+    }
+
+    public void setOnSelectionChangedListener(OnSelectionChangedListener<Type> onSelectionChangedListener) {
+        this.onSelectionChangedListener = onSelectionChangedListener;
     }
 
     public void setItems(Type[] items) {

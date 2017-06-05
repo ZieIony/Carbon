@@ -6,9 +6,8 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 
+import carbon.widget.DropDown;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
 
@@ -92,18 +91,12 @@ public class ColorsActivity extends SamplesActivity {
         Samples.initToolbar(this, getString(R.string.colorsActivity_title));
 
         binding.style.setItems(styles);
-        binding.style.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.primary.setOnSelectionChangedListener(new DropDown.OnSelectionChangedListener<Item>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onSelectionChanged(Item item, int position) {
                 SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
                 preferences.edit().putInt(STYLE, binding.style.getSelectedIndex()).commit();
-                Item item = (Item) binding.style.getSelectedItem();
                 binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         {
@@ -114,19 +107,14 @@ public class ColorsActivity extends SamplesActivity {
         }
 
         binding.primary.setItems(primary);
-        binding.primary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.primary.setOnSelectionChangedListener(new DropDown.OnSelectionChangedListener<Item>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onSelectionChanged(Item item, int position) {
                 SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
                 preferences.edit().putInt(PRIMARY, binding.primary.getSelectedIndex()).commit();
-                Item item = (Item) binding.primary.getSelectedItem();
                 binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
@@ -136,18 +124,12 @@ public class ColorsActivity extends SamplesActivity {
         }
 
         binding.accent.setItems(accents);
-        binding.accent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.primary.setOnSelectionChangedListener(new DropDown.OnSelectionChangedListener<Item>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onSelectionChanged(Item item, int position) {
                 SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
                 preferences.edit().putInt(ACCENT, binding.accent.getSelectedIndex()).commit();
-                Item item = (Item) binding.accent.getSelectedItem();
                 binding.accentbg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         {

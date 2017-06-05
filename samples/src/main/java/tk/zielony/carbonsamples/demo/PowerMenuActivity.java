@@ -17,7 +17,7 @@ import carbon.widget.Button;
 import carbon.widget.FrameLayout;
 import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
-import carbon.widget.RevealView;
+import carbon.view.RevealView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;

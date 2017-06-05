@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -47,11 +47,14 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
+import carbon.widget.RenderingMode;
+import carbon.widget.TintedView;
+import carbon.widget.TouchMarginView;
 
 /**
  * Basic View class for making views from scratch
  */
-public class View extends android.view.View
+public abstract class View extends android.view.View
         implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, RevealView, VisibleView {
 
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
@@ -659,13 +662,13 @@ public class View extends android.view.View
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator a) {
-                        animator.removeListener(this);
+                        a.removeListener(this);
                         animator = null;
                     }
 
                     @Override
-                    public void onAnimationCancel(Animator animation) {
-                        animator.removeListener(this);
+                    public void onAnimationCancel(Animator a) {
+                        a.removeListener(this);
                         animator = null;
                     }
                 });
@@ -685,13 +688,13 @@ public class View extends android.view.View
                 public void onAnimationEnd(Animator a) {
                     if (((ValueAnimator) a).getAnimatedFraction() == 1)
                         setVisibility(visibility);
-                    animator.removeListener(this);
+                    a.removeListener(this);
                     animator = null;
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animation) {
-                    animator.removeListener(this);
+                public void onAnimationCancel(Animator a) {
+                    a.removeListener(this);
                     animator = null;
                 }
             });
@@ -733,8 +736,8 @@ public class View extends android.view.View
     // tint
     // -------------------------------
 
-    ColorStateList tint;
-    PorterDuff.Mode tintMode;
+    protected ColorStateList tint;
+    protected PorterDuff.Mode tintMode;
     ColorStateList backgroundTint;
     PorterDuff.Mode backgroundTintMode;
     boolean animateColorChanges;

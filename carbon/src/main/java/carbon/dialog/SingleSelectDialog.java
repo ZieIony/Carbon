@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import carbon.R;
@@ -47,9 +48,22 @@ public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Ty
     }
 
     public void setItems(Type[] items) {
-        super.setItems(items, parent -> new DataBindingComponent(parent, R.layout.carbon_row_dialog_radiotext) {
+        super.setItems(items, parent -> new DataBindingComponent<Type>(parent, R.layout.carbon_row_dialog_radiotext) {
             @Override
-            public void bind(Object data) {
+            public void bind(Type data) {
+                super.bind(data);
+                if (selectedItem == data) {
+                    RadioButton radio = (RadioButton) getView().findViewById(R.id.carbon_radioButton);
+                    radio.setChecked(true);
+                }
+            }
+        });
+    }
+
+    public void setItems(List<Type> items) {
+        super.setItems(new ArrayList<>(items), parent -> new DataBindingComponent<Type>(parent, R.layout.carbon_row_dialog_radiotext) {
+            @Override
+            public void bind(Type data) {
                 super.bind(data);
                 if (selectedItem == data) {
                     RadioButton radio = (RadioButton) getView().findViewById(R.id.carbon_radioButton);

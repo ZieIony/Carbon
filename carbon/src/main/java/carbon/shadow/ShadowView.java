@@ -3,7 +3,7 @@ package carbon.shadow;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 
-import carbon.widget.RenderingModeView;
+import carbon.view.RenderingModeView;
 
 public interface ShadowView extends RenderingModeView {
     /**

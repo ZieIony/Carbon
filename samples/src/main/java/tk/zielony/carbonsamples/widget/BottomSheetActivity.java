@@ -1,8 +1,6 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 
 import carbon.beta.BottomSheetLayout;
 import carbon.widget.DropDown;
@@ -26,16 +24,6 @@ public class BottomSheetActivity extends SamplesActivity {
         DropDown<String> dropDown = (DropDown<String>) findViewById(R.id.dropDown);
         String[] items = {"List", "Grid"};
         dropDown.setItems(items);
-        dropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                bottomSheet.setStyle(items[position].equals("List") ? BottomSheetLayout.Style.List : BottomSheetLayout.Style.Grid);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        dropDown.setOnSelectionChangedListener((item, position) -> bottomSheet.setStyle(item.equals("List") ? BottomSheetLayout.Style.List : BottomSheetLayout.Style.Grid));
     }
 }

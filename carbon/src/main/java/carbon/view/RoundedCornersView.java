@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.view;
 
 /**
  * Interface of a view with rounded corners. In case of a layout rounded corners also clip the

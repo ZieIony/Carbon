@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/carbon_snackbarContent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/carbon_colorBackgroundInverse"
+    android:fitsSystemWindows="false"
+    android:maxHeight="80dp"
+    android:maxWidth="568dp"
+    android:minHeight="48dp"
+    android:minWidth="288dp"
+    android:orientation="horizontal"
+    android:paddingEnd="8dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="8dp"
+    android:paddingStart="24dp">
 
-    <carbon.widget.LinearLayout
-        android:id="@+id/carbon_snackbarContent"
+    <carbon.widget.TextView
+        android:id="@+id/carbon_messageText"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:textAppearance="?attr/carbon_textAppearanceBody2Inverse"/>
+
+    <carbon.widget.Button
+        android:id="@+id/carbon_actionButton"
+        style="@style/carbon_Button.Flat"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/carbon_colorBackgroundInverse"
-        android:fitsSystemWindows="false"
-        android:maxHeight="80dp"
-        android:maxWidth="568dp"
-        android:minHeight="48dp"
-        android:minWidth="288dp"
-        android:orientation="horizontal"
-        android:paddingLeft="24dp"
-        android:paddingRight="8dp">
-
-        <carbon.widget.TextView
-            android:id="@+id/carbon_messageText"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:maxLines="2"
-            android:textAppearance="?attr/carbon_textAppearanceBody2Inverse"/>
-
-        <carbon.widget.Button
-            style="@style/carbon_Button.Flat"
-            android:id="@+id/carbon_actionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginBottom="6dp"
-            android:layout_marginTop="6dp"
-            android:textColor="?attr/colorAccent"
-            android:visibility="invisible"
-            app:carbon_rippleColor="?attr/carbon_rippleColorInverse"/>
-    </carbon.widget.LinearLayout>
+        android:layout_height="36dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:textColor="?attr/colorAccent"
+        android:visibility="invisible"
+        app:carbon_rippleColor="?attr/carbon_rippleColorInverse"/>
 </merge>

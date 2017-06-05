@@ -98,8 +98,9 @@
         <enum name="fade" value="1"/>
         <enum name="pop" value="2"/>
         <enum name="fly" value="3"/>
-        <enum name="brightnessSaturationFade" value="4"/>
-        <enum name="progressWidth" value="5"/>
+        <enum name="slide" value="4"/>
+        <enum name="brightnessSaturationFade" value="5"/>
+        <enum name="progressWidth" value="6"/>
     </attr>
 
     <attr name="carbon_outAnimation" format="enum|reference">
@@ -107,8 +108,9 @@
         <enum name="fade" value="1"/>
         <enum name="pop" value="2"/>
         <enum name="fly" value="3"/>
-        <enum name="brightnessSaturationFade" value="4"/>
-        <enum name="progressWidth" value="5"/>
+        <enum name="slide" value="4"/>
+        <enum name="brightnessSaturationFade" value="5"/>
+        <enum name="progressWidth" value="6"/>
     </attr>
 
     <attr name="carbon_elevation" format="dimension"/>
@@ -164,6 +166,11 @@
         <attr name="carbon_id" format="reference"/>
         <attr name="carbon_type" format="string"/>
         <attr name="carbon_layout" format="reference"/>
+    </declare-styleable>
+
+
+    <attr name="carbon_snackbarStyle" format="reference"/>
+    <declare-styleable name="Snackbar">
     </declare-styleable>
 
 
@@ -353,6 +360,8 @@
         <attr name="carbon_elevationShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
+        <attr name="carbon_stroke"/>
+        <attr name="carbon_strokeWidth"/>
     </declare-styleable>
 
     <attr name="carbon_appBarLayoutStyle" format="reference"/>
@@ -480,10 +489,6 @@
     <declare-styleable name="FrameLayout_Layout">
         <attr name="carbon_anchor"/>
         <attr name="carbon_anchorGravity"/>
-    </declare-styleable>
-
-    <declare-styleable name="DependencyLayout_Layout">
-        <attr name="carbon_dependsOn" format="reference"/>
     </declare-styleable>
 
     <attr name="carbon_constraintLayoutStyle" format="reference"/>
@@ -779,11 +784,6 @@
     </declare-styleable>
 
     <attr name="carbon_dividerStyle" format="reference"/>
-    <declare-styleable name="Divider">
-        <attr name="carbon_theme"/>
-
-        <attr name="android:background"/>
-    </declare-styleable>
 
     <declare-styleable name="ProgressBar">
         <attr name="carbon_theme"/>

@@ -298,7 +298,7 @@ public class CarbonResources extends Resources {
                 rp.close();
             } catch (Exception e) {
                 try {
-                    dr = AppCompatResources.getDrawable(context, id);
+                    dr = AppCompatResources.getDrawable(context.getApplicationContext(), id);
                 } catch (Exception e2) {
                     Log.w(CarbonResources.class.getSimpleName(), "Failed to load drawable resource", e);
                 }
@@ -311,7 +311,7 @@ public class CarbonResources extends Resources {
                 is.close();
             } catch (Exception e) {
                 try {
-                    dr = AppCompatResources.getDrawable(context, id);
+                    dr = AppCompatResources.getDrawable(context.getApplicationContext(), id);
                 } catch (Exception e2) {
                     Log.w(CarbonResources.class.getSimpleName(), "Failed to load drawable resource", e);
                 }

@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.view;
 
 /**
  * Interface of a view with support for maximum size.

@@ -1,4 +1,6 @@
-package carbon.widget;
+package carbon.view;
+
+import carbon.widget.RenderingMode;
 
 public interface RenderingModeView {
 
