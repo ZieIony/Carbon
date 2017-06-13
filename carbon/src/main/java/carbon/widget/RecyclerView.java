@@ -57,6 +57,8 @@ import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
+import carbon.view.TintedView;
+import carbon.view.TouchMarginView;
 import carbon.view.VisibleView;
 
 public class RecyclerView extends android.support.v7.widget.RecyclerView

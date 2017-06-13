@@ -25,6 +25,7 @@ import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
+import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
 public class ViewPager extends android.support.v4.view.ViewPager implements TintedView, VisibleView {

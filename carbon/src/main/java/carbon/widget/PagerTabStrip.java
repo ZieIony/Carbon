@@ -27,6 +27,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
+import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
 public class PagerTabStrip extends android.widget.HorizontalScrollView implements TintedView, VisibleView {  // TODO: extend carbon.widget.HorizontalScrollView

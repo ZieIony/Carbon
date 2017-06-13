@@ -2,15 +2,12 @@ apply plugin: 'com.android.library'
 // apply from: 'maven-push.gradle'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '25.0.3'
 
-    dataBinding {
-        enabled = true
-    }
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 42
         versionName "0.14.0"
         renderscriptTargetApi 20
@@ -29,7 +26,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
-    compile project(':carbon')
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    implementation project(':carbon')
 }

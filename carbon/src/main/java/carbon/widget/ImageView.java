@@ -55,17 +55,19 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
-import carbon.view.DependencyView;
+import carbon.view.BehaviorView;
 import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
+import carbon.view.TintedView;
+import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
 
 @SuppressLint("AppCompatCustomView")
 public class ImageView extends android.widget.ImageView
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, RevealView, VisibleView, TransformationView, DependencyView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, RevealView, VisibleView, TransformationView {
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -1100,51 +1102,5 @@ public class ImageView extends android.widget.ImageView
         setSize(width, height);
         setTranslationX(x);
         setTranslationY(y);
-    }
-
-
-    // -------------------------------
-    // dependency
-    // -------------------------------
-
-    private Map<View, Dependency> dependencies = new HashMap<>();
-
-    @Override
-    public void addDependency(View view, OnDependencyChangedListener listener) {
-        Dependency dependency = new Dependency(view, listener::onDependencyChanged, (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> listener.onDependencyChanged());
-        dependencies.put(view, dependency);
-        addDependency(dependency);
-    }
-
-    private void addDependency(Dependency dependency) {
-        View view = dependency.view;
-        if (view instanceof TransformationView)
-            ((TransformationView) view).addOnTransformationChangedListener(dependency.transformationListener);
-        view.addOnLayoutChangeListener(dependency.layoutListener);
-    }
-
-    @Override
-    public void removeDependency(View view) {
-        Dependency dependency = dependencies.remove(view);
-        removeDependency(dependency);
-    }
-
-    private void removeDependency(Dependency dependency) {
-        View view = dependency.view;
-        if (view instanceof TransformationView)
-            ((TransformationView) view).removeOnTransformationChangedListener(dependency.transformationListener);
-        view.removeOnLayoutChangeListener(dependency.layoutListener);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        Stream.of(dependencies.values()).forEach(this::removeDependency);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        Stream.of(dependencies.values()).forEach(this::addDependency);
     }
 }

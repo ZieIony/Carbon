@@ -60,7 +60,7 @@ import carbon.view.StrokeView;
 import carbon.view.VisibleView;
 import carbon.widget.OnInsetsChangedListener;
 import carbon.widget.RenderingMode;
-import carbon.widget.TouchMarginView;
+import carbon.view.TouchMarginView;
 
 public class CollapsingToolbarLayout extends android.support.design.widget.CollapsingToolbarLayout
         implements

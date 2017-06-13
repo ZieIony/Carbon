@@ -62,6 +62,8 @@ import carbon.view.AutoSizeTextView;
 import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
+import carbon.view.TintedView;
+import carbon.view.TouchMarginView;
 import carbon.view.ValidStateView;
 import carbon.view.VisibleView;
 
@@ -1185,8 +1187,12 @@ public class TextView extends android.widget.TextView
         return maxTextSize;
     }
 
-    public float getAutoSizeStepGranularity() {
-        return autoSizeStepGranularity;
+    public int getAutoSizeStepGranularity() {
+        return (int) autoSizeStepGranularity;
+    }
+
+    public void setAutoSizeStepGranularity(int autoSizeStepGranularity) {
+        setAutoSizeStepGranularity((float) autoSizeStepGranularity);
     }
 
     public void setAutoSizeStepGranularity(float autoSizeStepGranularity) {

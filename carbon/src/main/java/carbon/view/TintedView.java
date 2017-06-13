@@ -1,4 +1,4 @@
-package carbon.widget;
+package carbon.view;
 
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;

@@ -23,6 +23,7 @@ import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
+import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
 public class HorizontalScrollView extends android.widget.HorizontalScrollView implements TintedView, VisibleView {

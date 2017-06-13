@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import carbon.beta.Behavior;
 import carbon.widget.CheckBox;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.RelativeLayout;
@@ -36,15 +37,21 @@ public class SnackbarActivity extends SamplesActivity {
             snackbar.setStyle(floatingCheckBox.isChecked() ? Snackbar.Style.Floating : Snackbar.Style.Docked);
             snackbar.setTapOutsideToDismissEnabled(tapCheckBox.isChecked());
             snackbar.setSwipeToDismissEnabled(swipeCheckBox.isChecked());
-            if (pushCheckBox.isChecked())
-                fab.addDependency(snackbarView, () -> {
-                    if (snackbarView.getAlpha() < 1) {
-                        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
-                        fab.setTranslationY(-root.getHeight() + snackbarView.getTop() + (1 - snackbarView.getAlpha()) * (snackbarView.getHeight() + layoutParams.bottomMargin));
-                    } else {
-                        fab.setTranslationY(-root.getHeight() + snackbarView.getTop() + snackbarView.getTranslationY());
+            if (pushCheckBox.isChecked()) {
+                Behavior<FloatingActionButton> behavior = new Behavior<FloatingActionButton>(fab) {
+                    @Override
+                    public void onDependencyChanged(View view) {
+                        if (snackbarView.getAlpha() < 1) {
+                            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
+                            fab.setTranslationY(-root.getHeight() + snackbarView.getTop() + (1 - snackbarView.getAlpha()) * (snackbarView.getHeight() + layoutParams.bottomMargin));
+                        } else {
+                            fab.setTranslationY(-root.getHeight() + snackbarView.getTop() + snackbarView.getTranslationY());
+                        }
                     }
-                });
+                };
+                behavior.setDependency(snackbarView);
+                root.addBehavior(behavior);
+            }
             snackbar.show(root);
         });
 

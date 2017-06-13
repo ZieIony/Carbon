@@ -34,8 +34,8 @@ import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
-import carbon.widget.TintedView;
-import carbon.widget.TouchMarginView;
+import carbon.view.TintedView;
+import carbon.view.TouchMarginView;
 
 import static carbon.view.RevealView.MAX_RADIUS;
 

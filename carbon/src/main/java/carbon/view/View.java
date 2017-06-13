@@ -48,8 +48,6 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 import carbon.widget.RenderingMode;
-import carbon.widget.TintedView;
-import carbon.widget.TouchMarginView;
 
 /**
  * Basic View class for making views from scratch

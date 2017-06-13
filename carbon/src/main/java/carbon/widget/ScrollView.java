@@ -7,17 +7,15 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
@@ -26,9 +24,10 @@ import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
+import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
-public class ScrollView extends android.widget.ScrollView implements TintedView, VisibleView {
+public class ScrollView extends android.widget.ScrollView implements TintedView, VisibleView, NestedScrollingParent {
     private int mTouchSlop;
     EdgeEffect topGlow;
     EdgeEffect bottomGlow;
@@ -78,15 +77,8 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.ScrollView_carbon_overScroll) {
+            if (attr == R.styleable.ScrollView_carbon_overScroll)
                 setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
-            } else if (attr == R.styleable.ScrollView_carbon_headerTint) {
-                setHeaderTint(a.getColor(attr, 0));
-            } else if (attr == R.styleable.ScrollView_carbon_headerMinHeight) {
-                setHeaderMinHeight((int) a.getDimension(attr, 0.0f));
-            } else if (attr == R.styleable.ScrollView_carbon_headerParallax) {
-                setHeaderParallax(a.getFloat(attr, 0.0f));
-            }
         }
 
         Carbon.initTint(this, a, tintIds);
@@ -99,8 +91,6 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
-        if (header != null)
-            header.dispatchTouchEvent(ev);
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 float deltaY = prevY - ev.getY();
@@ -341,41 +331,9 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
     }
 
 
-    // -------------------------------
-    // header (do not copy)
-    // -------------------------------
-
-    View header;
-    private float parallax = 0.5f;
-    private int headerPadding = 0;
-    private int headerTint = 0;
-    Paint paint = new Paint();
-    private int minHeader = 0;
-
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
-        if (header != null) {
-            int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
-            int headerHeight = header.getMeasuredHeight();
-            float scroll = getScrollY();
-            canvas.clipRect(0, 0, getWidth(), Math.max(minHeader + scroll, headerHeight));
-            canvas.translate(0, scroll * parallax);
-            header.draw(canvas);
-
-            if (headerTint != 0) {
-                paint.setColor(headerTint);
-                paint.setAlpha((int) (Color.alpha(headerTint) * Math.min(headerHeight - minHeader, scroll) / (headerHeight - minHeader)));
-                canvas.drawRect(0, 0, getWidth(), Math.max(minHeader + scroll, headerHeight), paint);
-            }
-            canvas.restoreToCount(saveCount);
-
-            saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG);
-            canvas.clipRect(0, Math.max(minHeader + scroll, headerHeight), getWidth(), Integer.MAX_VALUE);
             super.dispatchDraw(canvas);
-            canvas.restoreToCount(saveCount);
-        } else {
-            super.dispatchDraw(canvas);
-        }
         if (topGlow != null) {
             final int scrollY = getScrollY();
             if (!topGlow.isFinished()) {
@@ -404,60 +362,4 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
         }
     }
 
-    public View getHeader() {
-        return header;
-    }
-
-    public void setHeader(View view) {
-        header = view;
-        requestLayout();
-    }
-
-    public void setHeader(int resId) {
-        header = LayoutInflater.from(getContext()).inflate(resId, this, false);
-        requestLayout();
-    }
-
-    public float getHeaderParallax() {
-        return parallax;
-    }
-
-    public void setHeaderParallax(float amount) {
-        parallax = amount;
-    }
-
-    public int getHeaderTint() {
-        return headerTint;
-    }
-
-    public void setHeaderTint(int color) {
-        headerTint = color;
-    }
-
-    public int getHeaderMinHeight() {
-        return minHeader;
-    }
-
-    public void setHeaderMinHeight(int height) {
-        minHeader = height;
-    }
-
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int paddingTop = getPaddingTop() - headerPadding;
-        if (header != null) {
-            measureChildWithMargins(header, widthMeasureSpec, 0, heightMeasureSpec, 0);
-            headerPadding = header.getMeasuredHeight();
-        } else {
-            headerPadding = 0;
-        }
-        setPadding(getPaddingLeft(), paddingTop + headerPadding, getPaddingRight(), getPaddingBottom());
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        if (header != null)
-            header.layout(0, 0, getWidth(), header.getMeasuredHeight());
-    }
 }

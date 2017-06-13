@@ -49,6 +49,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.beta.Behavior;
 import carbon.component.Component;
 import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
@@ -60,7 +61,7 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
-import carbon.view.DependencyView;
+import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
 import carbon.view.RenderingModeView;
@@ -68,6 +69,7 @@ import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
+import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
 
@@ -89,7 +91,7 @@ public class LinearLayout extends android.widget.LinearLayout
         RevealView,
         VisibleView,
         TransformationView,
-        DependencyView {
+        BehaviorView {
 
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
     private OnTouchListener onDispatchTouchListener;
@@ -1510,44 +1512,27 @@ public class LinearLayout extends android.widget.LinearLayout
     // dependency
     // -------------------------------
 
-    private Map<View, Dependency> dependencies = new HashMap<>();
+    private Map<View, Behavior> behaviors = new HashMap<>();
 
     @Override
-    public void addDependency(View view, OnDependencyChangedListener listener) {
-        Dependency dependency = new Dependency(view, listener::onDependencyChanged, (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> listener.onDependencyChanged());
-        dependencies.put(view, dependency);
-        addDependency(dependency);
-    }
-
-    private void addDependency(Dependency dependency) {
-        View view = dependency.view;
-        if (view instanceof TransformationView)
-            ((TransformationView) view).addOnTransformationChangedListener(dependency.transformationListener);
-        view.addOnLayoutChangeListener(dependency.layoutListener);
+    public void addBehavior(Behavior behavior) {
+        behaviors.put(behavior.getTarget(), behavior);
     }
 
     @Override
-    public void removeDependency(View view) {
-        Dependency dependency = dependencies.remove(view);
-        removeDependency(dependency);
-    }
-
-    private void removeDependency(Dependency dependency) {
-        View view = dependency.view;
-        if (view instanceof TransformationView)
-            ((TransformationView) view).removeOnTransformationChangedListener(dependency.transformationListener);
-        view.removeOnLayoutChangeListener(dependency.layoutListener);
+    public void removeBehavior(View view) {
+        behaviors.remove(view);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Stream.of(dependencies.values()).forEach(this::removeDependency);
+        Stream.of(behaviors.values()).forEach(Behavior::onDetachedFromWindow);
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Stream.of(dependencies.values()).forEach(this::addDependency);
+        Stream.of(behaviors.values()).forEach(Behavior::onAttachedToWindow);
     }
 }

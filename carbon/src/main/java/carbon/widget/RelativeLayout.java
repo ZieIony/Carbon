@@ -28,6 +28,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +50,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
+import carbon.beta.Behavior;
 import carbon.component.Component;
 import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
@@ -60,7 +62,7 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
-import carbon.view.DependencyView;
+import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
 import carbon.view.RenderingModeView;
@@ -68,6 +70,7 @@ import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
+import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
 
@@ -89,7 +92,7 @@ public class RelativeLayout extends android.widget.RelativeLayout
         RevealView,
         VisibleView,
         TransformationView,
-        DependencyView {
+        BehaviorView {
 
     private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
     private OnTouchListener onDispatchTouchListener;
@@ -454,6 +457,33 @@ public class RelativeLayout extends android.widget.RelativeLayout
 
     private RippleDrawable rippleDrawable;
     private Transformation t = new Transformation();
+    GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            float scrollLeftX = distanceX, scrollLeftY = distanceY;
+            for (Behavior b : behaviors.values()) {
+                PointF scrollLeft = b.onNestedScroll(scrollLeftX, scrollLeftY);
+                scrollLeftX = scrollLeft.x;
+                scrollLeftY = scrollLeft.y;
+            }
+            return distanceX != scrollLeftX || distanceY != scrollLeftY;
+        }
+
+        /*@Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            float scrollLeftX = velocityX, scrollLeftY = velocityY;
+            for (int i = 0; i < getChildCount(); i++) {
+                View v = getChildAt(i);
+                if (v instanceof ExtendedScrollView) {
+                    ExtendedScrollView scrollView = (ExtendedScrollView) v;
+                    PointF scrollLeft = scrollView.onNestedScroll(scrollLeftX, scrollLeftY);
+                    scrollLeftX = scrollLeft.x;
+                    scrollLeftY = scrollLeft.y;
+                }
+            }
+            return velocityX != scrollLeftX || velocityY != scrollLeftY;
+        }*/
+    });
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
@@ -469,7 +499,8 @@ public class RelativeLayout extends android.widget.RelativeLayout
 
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
-        return super.dispatchTouchEvent(event);
+
+        return gestureDetector.onTouchEvent(event) || super.dispatchTouchEvent(event);
     }
 
     @Override
@@ -1505,44 +1536,27 @@ public class RelativeLayout extends android.widget.RelativeLayout
     // dependency
     // -------------------------------
 
-    private Map<View, Dependency> dependencies = new HashMap<>();
+    private Map<View, Behavior> behaviors = new HashMap<>();
 
     @Override
-    public void addDependency(View view, OnDependencyChangedListener listener) {
-        Dependency dependency = new Dependency(view, listener::onDependencyChanged, (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> listener.onDependencyChanged());
-        dependencies.put(view, dependency);
-        addDependency(dependency);
-    }
-
-    private void addDependency(Dependency dependency) {
-        View view = dependency.view;
-        if (view instanceof TransformationView)
-            ((TransformationView) view).addOnTransformationChangedListener(dependency.transformationListener);
-        view.addOnLayoutChangeListener(dependency.layoutListener);
+    public void addBehavior(Behavior behavior) {
+        behaviors.put(behavior.getTarget(), behavior);
     }
 
     @Override
-    public void removeDependency(View view) {
-        Dependency dependency = dependencies.remove(view);
-        removeDependency(dependency);
-    }
-
-    private void removeDependency(Dependency dependency) {
-        View view = dependency.view;
-        if (view instanceof TransformationView)
-            ((TransformationView) view).removeOnTransformationChangedListener(dependency.transformationListener);
-        view.removeOnLayoutChangeListener(dependency.layoutListener);
+    public void removeBehavior(View view) {
+        behaviors.remove(view);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Stream.of(dependencies.values()).forEach(this::removeDependency);
+        Stream.of(behaviors.values()).forEach(Behavior::onDetachedFromWindow);
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Stream.of(dependencies.values()).forEach(this::addDependency);
+        Stream.of(behaviors.values()).forEach(Behavior::onAttachedToWindow);
     }
 }

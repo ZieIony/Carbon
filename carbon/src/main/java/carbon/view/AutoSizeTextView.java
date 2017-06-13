@@ -53,13 +53,21 @@ public interface AutoSizeTextView {
      *
      * @return granularity
      */
-    float getAutoSizeStepGranularity();
+    int getAutoSizeStepGranularity();
 
     /**
      * Sets automatic text size granularity. Text can only take values which are equal to minSize *
      * [0 to N] * granularity or maxSize. This parameter helps to keep automatic text sizes count
      * low and easy to predict. Setting granularity to a larger value speeds up the adjustment
      * process.
+     *
+     * @param autoSizeStepGranularity granularity
+     */
+    void setAutoSizeStepGranularity(int autoSizeStepGranularity);
+
+    /**
+     * This method is not compatible with the official API, but allows setting even more granular
+     * values.
      *
      * @param autoSizeStepGranularity granularity
      */
