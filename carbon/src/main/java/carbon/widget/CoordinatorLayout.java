@@ -30,21 +30,17 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
-import android.view.animation.Transformation;
 
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.beta.Behavior;
 import carbon.component.Component;
 import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
@@ -434,17 +430,9 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private Transformation t = new Transformation();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        Animation a = getAnimation();
-        if (a != null) {
-            a.getTransformation(event.getEventTime(), t);
-            float[] loc = new float[]{event.getX(), event.getY()};
-            t.getMatrix().mapPoints(loc);
-            event.setLocation(loc[0], loc[1]);
-        }
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 
@@ -749,12 +737,21 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
         return touchMargin;
     }
 
+    final RectF tmpHitRect = new RectF();
     public void getHitRect(@NonNull Rect outRect) {
-        if (touchMargin == null) {
-            super.getHitRect(outRect);
-            return;
+        Matrix matrix = getMatrix();
+        if (matrix.isIdentity()) {
+            outRect.set(getLeft(), getTop(), getRight(), getBottom());
+        } else {
+            tmpHitRect.set(0, 0, getWidth(), getHeight());
+            matrix.mapRect(tmpHitRect);
+            outRect.set((int) tmpHitRect.left + getLeft(), (int) tmpHitRect.top + getTop(),
+                    (int) tmpHitRect.right + getLeft(), (int) tmpHitRect.bottom + getTop());
         }
-        outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
+        outRect.left -= touchMargin.left;
+        outRect.top -= touchMargin.top;
+        outRect.right += touchMargin.right;
+        outRect.bottom += touchMargin.bottom;
     }
 
 
@@ -1340,27 +1337,27 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     // dependency
     // -------------------------------
 
-    private Map<View, carbon.beta.Behavior> behaviors = new HashMap<>();
+    private List<carbon.beta.Behavior> behaviors = new ArrayList<>();
 
     @Override
     public void addBehavior(carbon.beta.Behavior behavior) {
-        behaviors.put(behavior.getTarget(), behavior);
+        behaviors.add(behavior);
     }
 
     @Override
-    public void removeBehavior(View view) {
-        behaviors.remove(view);
+    public void removeBehavior(carbon.beta.Behavior behavior) {
+        behaviors.remove(behavior);
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Stream.of(behaviors.values()).forEach(carbon.beta.Behavior::onDetachedFromWindow);
+        Stream.of(behaviors).forEach(carbon.beta.Behavior::onDetachedFromWindow);
     }
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Stream.of(behaviors.values()).forEach(carbon.beta.Behavior::onAttachedToWindow);
+        Stream.of(behaviors).forEach(carbon.beta.Behavior::onAttachedToWindow);
     }
 }

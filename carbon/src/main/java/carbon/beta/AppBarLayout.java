@@ -33,7 +33,6 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
-import android.view.animation.Transformation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -426,17 +425,9 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private Transformation t = new Transformation();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        Animation a = getAnimation();
-        if (a != null) {
-            a.getTransformation(event.getEventTime(), t);
-            float[] loc = new float[]{event.getX(), event.getY()};
-            t.getMatrix().mapPoints(loc);
-            event.setLocation(loc[0], loc[1]);
-        }
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 
@@ -741,12 +732,21 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
         return touchMargin;
     }
 
+    final RectF tmpHitRect = new RectF();
     public void getHitRect(@NonNull Rect outRect) {
-        if (touchMargin == null) {
-            super.getHitRect(outRect);
-            return;
+        Matrix matrix = getMatrix();
+        if (matrix.isIdentity()) {
+            outRect.set(getLeft(), getTop(), getRight(), getBottom());
+        } else {
+            tmpHitRect.set(0, 0, getWidth(), getHeight());
+            matrix.mapRect(tmpHitRect);
+            outRect.set((int) tmpHitRect.left + getLeft(), (int) tmpHitRect.top + getTop(),
+                    (int) tmpHitRect.right + getLeft(), (int) tmpHitRect.bottom + getTop());
         }
-        outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
+        outRect.left -= touchMargin.left;
+        outRect.top -= touchMargin.top;
+        outRect.right += touchMargin.right;
+        outRect.bottom += touchMargin.bottom;
     }
 
 

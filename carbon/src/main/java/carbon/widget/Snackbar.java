@@ -311,11 +311,12 @@ public class Snackbar {
         public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
             snackbarView.getHitRect(rect);
             if (rect.contains((int) event.getX(), (int) event.getY())) {
-                return gestureDetector.onTouchEvent(event);
+                if (gestureDetector.onTouchEvent(event))
+                    return true;
             } else if (isTapOutsideToDismissEnabled()) {
                 dismiss();
             }
-            return false;
+            return super.dispatchTouchEvent(event);
         }
 
         public void initSwipeToDismissEnabled() {

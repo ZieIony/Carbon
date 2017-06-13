@@ -31,15 +31,9 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
-
-import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import carbon.Carbon;
 import carbon.R;
@@ -55,7 +49,6 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
-import carbon.view.BehaviorView;
 import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
@@ -332,20 +325,9 @@ public class ImageView extends android.widget.ImageView
     // -------------------------------
 
     private RippleDrawable rippleDrawable;
-    private Transformation t = new Transformation();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        Animation a = getAnimation();
-        if (a != null && a.hasStarted()) {
-            a.getTransformation(getDrawingTime(), t);
-            float[] loc = new float[]{event.getX(), event.getY()};
-            //t.getMatrix().mapPoints(loc);
-            loc[0] -= getTranslationX();
-            loc[1] -= getTranslationY();
-            event.setLocation(loc[0], loc[1]);
-            // Log.e("mapped loc", "" + loc[0] + ", " + loc[1]);
-        }
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);
@@ -648,34 +630,21 @@ public class ImageView extends android.widget.ImageView
         return touchMargin;
     }
 
+    final RectF tmpHitRect = new RectF();
     public void getHitRect(@NonNull Rect outRect) {
-        if (touchMargin == null) {
-            super.getHitRect(outRect);
-            Animation a = getAnimation();
-            if (a != null && a.hasStarted()) {
-                a.getTransformation(System.currentTimeMillis(), t);
-                float[] loc = new float[]{outRect.left, outRect.top, outRect.right, outRect.bottom};
-                //t.getMatrix().mapPoints(loc);
-                loc[0] += getTranslationX();
-                loc[1] += getTranslationY();
-                loc[2] += getTranslationX();
-                loc[3] += getTranslationY();
-                outRect.set((int) loc[0], (int) loc[1], (int) loc[2], (int) loc[3]);
-            }
-            return;
+        Matrix matrix = getMatrix();
+        if (matrix.isIdentity()) {
+            outRect.set(getLeft(), getTop(), getRight(), getBottom());
+        } else {
+            tmpHitRect.set(0, 0, getWidth(), getHeight());
+            matrix.mapRect(tmpHitRect);
+            outRect.set((int) tmpHitRect.left + getLeft(), (int) tmpHitRect.top + getTop(),
+                    (int) tmpHitRect.right + getLeft(), (int) tmpHitRect.bottom + getTop());
         }
-        outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
-        Animation a = getAnimation();
-        if (a != null && a.hasStarted()) {
-            a.getTransformation(System.currentTimeMillis(), t);
-            float[] loc = new float[]{outRect.left, outRect.top, outRect.right, outRect.bottom};
-            //t.getMatrix().mapPoints(loc);
-            loc[0] += getTranslationX();
-            loc[1] += getTranslationY();
-            loc[2] += getTranslationX();
-            loc[3] += getTranslationY();
-            outRect.set((int) loc[0], (int) loc[1], (int) loc[2], (int) loc[3]);
-        }
+        outRect.left -= touchMargin.left;
+        outRect.top -= touchMargin.top;
+        outRect.right += touchMargin.right;
+        outRect.bottom += touchMargin.bottom;
     }
 
 

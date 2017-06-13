@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.ViewParent;
 import android.view.animation.Animation;
-import android.view.animation.Transformation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -527,17 +526,9 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     // -------------------------------
 
     protected RippleDrawable rippleDrawable;
-    private Transformation t = new Transformation();
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
-        Animation a = getAnimation();
-        if (a != null) {
-            a.getTransformation(event.getEventTime(), t);
-            float[] loc = new float[]{event.getX(), event.getY()};
-            t.getMatrix().mapPoints(loc);
-            event.setLocation(loc[0], loc[1]);
-        }
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return dispatchTouchEvent2(event);
@@ -807,11 +798,11 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     // touch margin
     // -------------------------------
 
-    private Rect touchMargin;
+    private Rect touchMargin = new Rect();
 
     @Override
     public void setTouchMargin(int left, int top, int right, int bottom) {
-        touchMargin = new Rect(left, top, right, bottom);
+        touchMargin.set(left, top, right, bottom);
     }
 
     @Override
@@ -839,12 +830,21 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         return touchMargin;
     }
 
+    final RectF tmpHitRect = new RectF();
     public void getHitRect(@NonNull Rect outRect) {
-        if (touchMargin == null) {
-            super.getHitRect(outRect);
-            return;
+        Matrix matrix = getMatrix();
+        if (matrix.isIdentity()) {
+            outRect.set(getLeft(), getTop(), getRight(), getBottom());
+        } else {
+            tmpHitRect.set(0, 0, getWidth(), getHeight());
+            matrix.mapRect(tmpHitRect);
+            outRect.set((int) tmpHitRect.left + getLeft(), (int) tmpHitRect.top + getTop(),
+                    (int) tmpHitRect.right + getLeft(), (int) tmpHitRect.bottom + getTop());
         }
-        outRect.set(getLeft() - touchMargin.left, getTop() - touchMargin.top, getRight() + touchMargin.right, getBottom() + touchMargin.bottom);
+        outRect.left -= touchMargin.left;
+        outRect.top -= touchMargin.top;
+        outRect.right += touchMargin.right;
+        outRect.bottom += touchMargin.bottom;
     }
 
 

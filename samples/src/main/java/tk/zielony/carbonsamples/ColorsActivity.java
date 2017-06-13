@@ -90,14 +90,11 @@ public class ColorsActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.colorsActivity_title));
 
-        binding.style.setItems(styles);
-        binding.primary.setOnSelectionChangedListener(new DropDown.OnSelectionChangedListener<Item>() {
-            @Override
-            public void onSelectionChanged(Item item, int position) {
-                SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-                preferences.edit().putInt(STYLE, binding.style.getSelectedIndex()).commit();
-                binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
-            }
+        ((DropDown<Item>)binding.style).setItems(styles);
+        ((DropDown<Item>)binding.style).setOnSelectionChangedListener((item, position) -> {
+            SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
+            preferences.edit().putInt(STYLE, binding.style.getSelectedIndex()).commit();
+            binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
@@ -106,15 +103,11 @@ public class ColorsActivity extends SamplesActivity {
             binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }
 
-        binding.primary.setItems(primary);
-        binding.primary.setOnSelectionChangedListener(new DropDown.OnSelectionChangedListener<Item>() {
-            @Override
-            public void onSelectionChanged(Item item, int position) {
-                SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-                preferences.edit().putInt(PRIMARY, binding.primary.getSelectedIndex()).commit();
-                binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
-            }
-
+        ((DropDown<Item>)binding.primary).setItems(primary);
+        ((DropDown<Item>)binding.primary).setOnSelectionChangedListener((item, position) -> {
+            SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
+            preferences.edit().putInt(PRIMARY, binding.primary.getSelectedIndex()).commit();
+            binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
@@ -123,14 +116,11 @@ public class ColorsActivity extends SamplesActivity {
             binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }
 
-        binding.accent.setItems(accents);
-        binding.primary.setOnSelectionChangedListener(new DropDown.OnSelectionChangedListener<Item>() {
-            @Override
-            public void onSelectionChanged(Item item, int position) {
-                SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-                preferences.edit().putInt(ACCENT, binding.accent.getSelectedIndex()).commit();
-                binding.accentbg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
-            }
+        ((DropDown<Item>)binding.accent).setItems(accents);
+        ((DropDown<Item>)binding.accent).setOnSelectionChangedListener((item, position) -> {
+            SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
+            preferences.edit().putInt(ACCENT, binding.accent.getSelectedIndex()).commit();
+            binding.accentbg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);

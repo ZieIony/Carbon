@@ -91,11 +91,13 @@
                 android:text="Floating action buttons with vector graphics and proper sizes"/>
 
             <carbon.widget.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/carbon_FloatingActionButton"
                 android:layout_margin="@dimen/carbon_padding"
-                android:src="@raw/ic_shopping_cart_24px"
-                android:tag="enable"/>
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/mazda"
+                android:tag="enable"
+                app:carbon_tint="@null"/>
 
             <carbon.widget.FloatingActionButton
                 style="@style/carbon_FloatingActionButton.Small"
