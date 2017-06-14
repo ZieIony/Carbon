@@ -835,6 +835,8 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

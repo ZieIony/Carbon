@@ -829,6 +829,8 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

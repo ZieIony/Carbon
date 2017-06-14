@@ -108,7 +108,7 @@
             android:name=".feature.AutoSizeTextActivity"
             android:label="@string/app_name"/>
         <activity
-            android:name=".feature.ScrollFlagsActivity"
+            android:name=".feature.BehaviorActivity"
             android:label="@string/app_name"/>
         <activity
             android:name=".feature.HtmlActivity"

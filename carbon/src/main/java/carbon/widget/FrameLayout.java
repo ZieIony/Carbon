@@ -869,6 +869,8 @@ public class FrameLayout extends android.widget.FrameLayout
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

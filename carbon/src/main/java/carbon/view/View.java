@@ -697,6 +697,8 @@ public abstract class View extends android.view.View
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

@@ -834,6 +834,8 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

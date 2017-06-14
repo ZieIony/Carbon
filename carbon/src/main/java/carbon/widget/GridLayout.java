@@ -842,6 +842,8 @@ public class GridLayout extends android.support.v7.widget.GridLayout
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

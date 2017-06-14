@@ -879,6 +879,8 @@ public class RelativeLayout extends android.widget.RelativeLayout
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

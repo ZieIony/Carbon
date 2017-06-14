@@ -825,6 +825,8 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

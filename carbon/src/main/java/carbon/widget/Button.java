@@ -807,6 +807,8 @@ public class Button extends android.widget.Button
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

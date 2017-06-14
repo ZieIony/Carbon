@@ -733,6 +733,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {
@@ -824,6 +825,8 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

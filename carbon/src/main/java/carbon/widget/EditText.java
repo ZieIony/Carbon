@@ -1044,6 +1044,8 @@ public class EditText extends android.widget.EditText
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

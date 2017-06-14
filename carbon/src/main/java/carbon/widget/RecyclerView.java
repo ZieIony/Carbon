@@ -928,6 +928,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

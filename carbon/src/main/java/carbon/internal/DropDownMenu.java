@@ -113,18 +113,18 @@ public class DropDownMenu extends PopupWindow {
             int maxHeightAbove = location[1] - windowRect.top - marginHalf * 2;
             int maxItemsAbove = maxHeightAbove / itemHeight;
             int maxHeightBelow = hWindow - location[1] - marginHalf * 2;
-            int maxItemsBelow = maxHeightBelow / itemHeight + 1;
+            int maxItemsBelow = maxHeightBelow / itemHeight;
 
             int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
             int itemsAbove = Math.min(selectedItem, maxItemsAbove);
 
-            int popupX = location[0] - margin * 2;
-            int popupY = location[1] - margin - marginHalf - itemsAbove * itemHeight - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() -
+            int popupX = location[0] - margin - marginHalf;
+            int popupY = location[1] - marginHalf * 2 - itemsAbove * itemHeight - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() -
                     mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
-            int popupWidth = mAnchorView.getWidth() + margin * 4 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
-            int popupHeight = margin * 2 + marginHalf * 2 + Math.max(1, itemsAbove + itemsBelow) * itemHeight;
+            int popupWidth = mAnchorView.getWidth() + margin * 2 + marginHalf * 2 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
+            int popupHeight = marginHalf * 4 + Math.max(1, itemsAbove + itemsBelow) * itemHeight;
 
-            popupWidth = Math.min(popupWidth, wWindow - margin * 2);
+            popupWidth = Math.min(popupWidth, wWindow - marginHalf * 2);
             popupX = Math.max(popupX, 0);
             popupX = Math.min(popupX, wWindow - popupWidth);
 

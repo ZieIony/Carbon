@@ -24,7 +24,7 @@
             android:layout_gravity="center_vertical"
             android:background="#3f000000"
             android:maxLines="2"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."/>
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur gravida sollicitudin dolor, id viverra arcu interdum in."/>
     </FrameLayout>
 
     <carbon.widget.TextView
@@ -44,6 +44,6 @@
             android:layout_gravity="center_vertical"
             android:background="#3f000000"
             android:maxLines="2"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."/>
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur gravida sollicitudin dolor, id viverra arcu interdum in."/>
     </FrameLayout>
 </carbon.widget.LinearLayout>

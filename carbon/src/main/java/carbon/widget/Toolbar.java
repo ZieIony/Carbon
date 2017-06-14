@@ -919,6 +919,8 @@ public class Toolbar extends android.support.v7.widget.Toolbar
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

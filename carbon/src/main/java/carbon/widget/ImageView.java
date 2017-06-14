@@ -726,6 +726,8 @@ public class ImageView extends android.widget.ImageView
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

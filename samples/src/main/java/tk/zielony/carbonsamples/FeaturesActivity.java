@@ -12,7 +12,7 @@ import tk.zielony.carbonsamples.feature.HtmlActivity;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
 import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
-import tk.zielony.carbonsamples.feature.ScrollFlagsActivity;
+import tk.zielony.carbonsamples.feature.BehaviorActivity;
 import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.feature.TextAppearanceActivity;
 import tk.zielony.carbonsamples.feature.TextMarkerActivity;
@@ -31,10 +31,10 @@ public class FeaturesActivity extends SampleListActivity {
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
-                "Carbon adds tons of useful festures to all popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
+                "Carbon adds tons of useful features to all popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
                         "others",
                 new SampleActivityItem(AutoSizeTextActivity.class, getString(R.string.autoSizeTextActivity_title)),
-                new SampleActivityItem(ScrollFlagsActivity.class, getString(R.string.dependencyLayoutActivity_title)),
+                new SampleActivityItem(BehaviorActivity.class, getString(R.string.behaviorActivity_title)),
                 new SampleActivityItem(HtmlActivity.class, getString(R.string.htmlActivity_title)),
                 new SampleActivityItem(RobotoActivity.class, getString(R.string.robotoActivity_title)),
                 new SampleActivityItem(ShadowActivity.class, getString(R.string.shadowActivity_title)),

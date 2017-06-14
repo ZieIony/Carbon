@@ -867,6 +867,8 @@ public class FlowLayout extends android.widget.FrameLayout
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

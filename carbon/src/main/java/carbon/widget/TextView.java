@@ -922,6 +922,8 @@ public class TextView extends android.widget.TextView
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }

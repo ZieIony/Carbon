@@ -851,6 +851,8 @@ public class LinearLayout extends android.widget.LinearLayout
                 }
             });
             animator.start();
+        } else {
+            setVisibility(visibility);
         }
         return animator;
     }
