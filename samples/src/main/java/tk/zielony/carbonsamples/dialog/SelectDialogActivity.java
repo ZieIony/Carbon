@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.annimon.stream.Stream;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import carbon.dialog.MultiSelectDialog;
@@ -19,6 +20,7 @@ import tk.zielony.randomdata.food.StringFruitGenerator;
 public class SelectDialogActivity extends SamplesActivity {
 
     private String selectedItem;
+    private List<String> selectedItems;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class SelectDialogActivity extends SamplesActivity {
         StringFruitGenerator generator = new StringFruitGenerator();
         List<String> items = Stream.generate(generator::next).limit(5).toList();
         selectedItem = items.get(0);
+        selectedItems = new ArrayList<>();
+        selectedItems.add(selectedItem);
 
         findViewById(R.id.button).setOnClickListener(view -> {
             switch (dropDown.getSelectedIndex()) {
@@ -42,7 +46,7 @@ public class SelectDialogActivity extends SamplesActivity {
                     if (titleText.length() > 0)
                         dialog.setTitle(titleText.getText());
                     dialog.setItems(items);
-                    dialog.setOnItemClickedListener((view1, item, position) -> selectedItem = item);
+                    dialog.setOnDismissListener(dialogInterface -> selectedItem = dialog.getSelectedItem());
                     dialog.setSelectedItem(selectedItem);
                     dialog.show();
                 }
@@ -52,8 +56,8 @@ public class SelectDialogActivity extends SamplesActivity {
                     if (titleText.length() > 0)
                         dialog.setTitle(titleText.getText());
                     dialog.setItems(items);
-                    dialog.setOnItemClickedListener((view1, item, position) -> selectedItem = item);
-                    dialog.setSelectedItems(new String[]{selectedItem});
+                    dialog.setOnDismissListener(dialogInterface -> selectedItems = dialog.getSelectedItems());
+                    dialog.setSelectedItems(selectedItems);
                     dialog.show();
                 }
                 break;

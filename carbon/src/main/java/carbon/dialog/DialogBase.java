@@ -75,7 +75,7 @@ public abstract class DialogBase extends android.app.Dialog {
         }
 
         dialogLayout = getLayoutInflater().inflate(R.layout.carbon_dialog, null);
-        container = (LinearLayout) dialogLayout.findViewById(R.id.carbon_windowContent);
+        container = dialogLayout.findViewById(R.id.carbon_windowContent);
         super.setContentView(dialogLayout);
     }
 
@@ -97,9 +97,9 @@ public abstract class DialogBase extends android.app.Dialog {
     public void setTitle(@Nullable CharSequence title) {
         if (titleTextView == null && title != null) {
             container.addView(getLayoutInflater().inflate(R.layout.carbon_dialogheader, null), 0);
-            titleTextView = (TextView) dialogLayout.findViewById(R.id.carbon_windowTitle);
+            titleTextView = dialogLayout.findViewById(R.id.carbon_windowTitle);
             titleTextView.setText(title);
-            topDivider = (Divider) dialogLayout.findViewById(R.id.carbon_topDivider);
+            topDivider = dialogLayout.findViewById(R.id.carbon_topDivider);
         } else if (titleTextView != null && title == null) {
             container.removeViewAt(0);
             titleTextView = null;
@@ -123,10 +123,10 @@ public abstract class DialogBase extends android.app.Dialog {
     private void setButton(String text, View.OnClickListener listener, int buttonId) {
         if (buttonContainer == null) {
             container.addView(getLayoutInflater().inflate(R.layout.carbon_dialogfooter, null));
-            buttonContainer = (ViewGroup) dialogLayout.findViewById(R.id.carbon_buttonContainer);
-            bottomDivider = (Divider) dialogLayout.findViewById(R.id.carbon_bottomDivider);
+            buttonContainer = dialogLayout.findViewById(R.id.carbon_buttonContainer);
+            bottomDivider = dialogLayout.findViewById(R.id.carbon_bottomDivider);
         }
-        Button button = (Button) findViewById(buttonId);
+        Button button = findViewById(buttonId);
         button.setText(text);
         button.setOnClickListener(v -> {
             if (listener != null) {

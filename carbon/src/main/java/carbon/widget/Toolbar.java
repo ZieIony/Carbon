@@ -34,7 +34,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import com.annimon.stream.Stream;
 
@@ -120,9 +119,9 @@ public class Toolbar extends android.support.v7.widget.Toolbar
         inflate(getContext(), R.layout.carbon_toolbar, this);
         super.setNavigationIcon(null);
         super.setTitle(null);
-        content = (ViewGroup) findViewById(R.id.carbon_toolbarContent);
-        title = (TextView) findViewById(R.id.carbon_toolbarTitle);
-        icon = (ImageView) findViewById(R.id.carbon_toolbarIcon);
+        content = findViewById(R.id.carbon_toolbarContent);
+        title = findViewById(R.id.carbon_toolbarTitle);
+        icon = findViewById(R.id.carbon_toolbarIcon);
 
         icon.setOnClickListener(view -> {
             if (getContext() == null)
@@ -389,7 +388,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
             RippleView rippleView = (RippleView) child;
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
-                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                int saveCount = canvas.save();
                 canvas.translate(child.getLeft(), child.getTop());
                 canvas.concat(child.getMatrix());
                 rippleDrawable.draw(canvas);
@@ -739,13 +738,13 @@ public class Toolbar extends android.support.v7.widget.Toolbar
 
         Matrix matrix = getMatrix();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
         ambientShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
         spotShadow.draw(canvas, this, paint, shadowColorFilter);

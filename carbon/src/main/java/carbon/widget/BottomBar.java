@@ -31,27 +31,27 @@ public class BottomBar extends FrameLayout {
     public BottomBar(Context context) {
         super(context);
         inflate(context, R.layout.carbon_bottombar, this);
-        content = (LinearLayout) findViewById(R.id.carbon_bottomBarContent);
+        content = findViewById(R.id.carbon_bottomBarContent);
     }
 
     public BottomBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         inflate(context, R.layout.carbon_bottombar, this);
-        content = (LinearLayout) findViewById(R.id.carbon_bottomBarContent);
+        content = findViewById(R.id.carbon_bottomBarContent);
         setOnClickListener(v -> Log.e("dasd", "dsad"));
     }
 
     public BottomBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         inflate(context, R.layout.carbon_bottombar, this);
-        content = (LinearLayout) findViewById(R.id.carbon_bottomBarContent);
+        content = findViewById(R.id.carbon_bottomBarContent);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public BottomBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         inflate(context, R.layout.carbon_bottombar, this);
-        content = (LinearLayout) findViewById(R.id.carbon_bottomBarContent);
+        content = findViewById(R.id.carbon_bottomBarContent);
     }
 
     public void setMenu(int resId) {
@@ -78,10 +78,10 @@ public class BottomBar extends FrameLayout {
                 if (listener != null)
                     listener.onMenuItemClick(item);
             });
-            ImageView icon = (ImageView) view.findViewById(R.id.carbon_bottomIcon);
+            ImageView icon = view.findViewById(R.id.carbon_bottomIcon);
             icon.setTint(new DefaultColorStateList(getContext()));
             icon.setImageDrawable(item.getIcon());
-            TextView text = (TextView) view.findViewById(R.id.carbon_bottomText);
+            TextView text = view.findViewById(R.id.carbon_bottomText);
             text.setTextColor(new DefaultColorStateList(getContext()));
             text.setText(item.getTitle());
             content.addView(view, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
@@ -90,9 +90,9 @@ public class BottomBar extends FrameLayout {
 
     private void selectItem(final View item) {
         activeView = item;
-        final ImageView icon = (ImageView) item.findViewById(R.id.carbon_bottomIcon);
+        final ImageView icon = item.findViewById(R.id.carbon_bottomIcon);
         icon.setSelected(true);
-        final TextView text = (TextView) item.findViewById(R.id.carbon_bottomText);
+        final TextView text = item.findViewById(R.id.carbon_bottomText);
         text.setSelected(true);
         ValueAnimator animator = ValueAnimator.ofFloat(1, getResources().getDimension(R.dimen.carbon_bottomBarActiveTextSize) / getResources().getDimension(R.dimen.carbon_bottomBarInactiveTextSize));
         animator.setDuration(200);
@@ -114,9 +114,9 @@ public class BottomBar extends FrameLayout {
     }
 
     private void deselectItem(final View item) {
-        final ImageView icon = (ImageView) item.findViewById(R.id.carbon_bottomIcon);
+        final ImageView icon = item.findViewById(R.id.carbon_bottomIcon);
         icon.setSelected(false);
-        final TextView text = (TextView) item.findViewById(R.id.carbon_bottomText);
+        final TextView text = item.findViewById(R.id.carbon_bottomText);
         text.setSelected(false);
         ValueAnimator animator = ValueAnimator.ofFloat(getResources().getDimension(R.dimen.carbon_bottomBarActiveTextSize) / getResources().getDimension(R.dimen.carbon_bottomBarInactiveTextSize), 1);
         animator.setDuration(200);

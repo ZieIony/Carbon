@@ -23,8 +23,8 @@ public class SeekBarPopup extends PopupWindow {
     public SeekBarPopup(Context context) {
         super(LayoutInflater.from(context).inflate(R.layout.carbon_seekbar_bubble, null, false));
         contentView = getContentView();
-        label = (TextView) contentView.findViewById(R.id.carbon_label);
-        bubble = (FrameLayout) contentView.findViewById(R.id.carbon_bubble);
+        label = contentView.findViewById(R.id.carbon_label);
+        bubble = contentView.findViewById(R.id.carbon_bubble);
         this.context = context;
 
         setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));

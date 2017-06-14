@@ -1297,7 +1297,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
      * An interface which can be implemented by LayoutManager for better integration with
      * {@link ItemTouchHelper}.
      */
-    public static interface ViewDropHandler {
+    public interface ViewDropHandler {
 
         /**
          * Called by the {@link ItemTouchHelper} after a View is dropped over another View.
@@ -1318,7 +1318,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
          * @param y      The <code>top</code> offset of the View that is being dragged. This value
          *               includes the movement caused by the user.
          */
-        public void prepareForDrop(View view, View target, int x, int y);
+        void prepareForDrop(View view, View target, int x, int y);
     }
 
     /**

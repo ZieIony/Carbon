@@ -200,7 +200,7 @@ public class AnimUtils {
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
             view.setTranslationY((Float) valueAnimator.getAnimatedValue());
-            Log.e("anim", "" + (Float) valueAnimator.getAnimatedValue());
+            Log.e("anim", "" + valueAnimator.getAnimatedValue());
         });
         return animator;
     }

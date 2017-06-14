@@ -44,9 +44,9 @@ public class Chip extends LinearLayout {
 
     private void initChip(AttributeSet attrs, int defStyleAttr) {
         inflate(getContext(), R.layout.carbon_chip, this);
-        title = (TextView) findViewById(R.id.carbon_chipText);
-        icon = (ImageView) findViewById(R.id.carbon_chipIcon);
-        close = (ImageView) findViewById(R.id.carbon_chipClose);
+        title = findViewById(R.id.carbon_chipText);
+        icon = findViewById(R.id.carbon_chipIcon);
+        close = findViewById(R.id.carbon_chipClose);
 
         close.setOnClickListener(v -> {
             if (onRemoveListener != null)

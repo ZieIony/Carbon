@@ -27,13 +27,14 @@ public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Ty
 
     protected RecyclerView.OnItemClickedListener<Type> getInternalListener() {
         return (view, item, position) -> {
-            RadioButton radio = (RadioButton) view.findViewById(R.id.carbon_radioButton);
+            RadioButton radio = view.findViewById(R.id.carbon_radioButton);
             radio.setChecked(true);
-            RadioButton prevRadio = (RadioButton) recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.carbon_radioButton);
+            RadioButton prevRadio = recyclerView.findViewHolderForAdapterPosition(items.indexOf(selectedItem)).itemView.findViewById(R.id.carbon_radioButton);
             prevRadio.setChecked(false);
-            selectedItem = items.get(position);
+            selectedItem = item;
             if (listener != null)
                 listener.onItemClicked(view, item, position);
+            dismiss();
         };
     }
 
@@ -53,7 +54,7 @@ public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Ty
             public void bind(Type data) {
                 super.bind(data);
                 if (selectedItem == data) {
-                    RadioButton radio = (RadioButton) getView().findViewById(R.id.carbon_radioButton);
+                    RadioButton radio = getView().findViewById(R.id.carbon_radioButton);
                     radio.setChecked(true);
                 }
             }
@@ -66,7 +67,7 @@ public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Ty
             public void bind(Type data) {
                 super.bind(data);
                 if (selectedItem == data) {
-                    RadioButton radio = (RadioButton) getView().findViewById(R.id.carbon_radioButton);
+                    RadioButton radio = getView().findViewById(R.id.carbon_radioButton);
                     radio.setChecked(true);
                 }
             }
@@ -77,4 +78,7 @@ public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Ty
         this.selectedItem = selectedItem;
     }
 
+    public Type getSelectedItem() {
+        return selectedItem;
+    }
 }

@@ -149,7 +149,7 @@ public class PowerMenuActivity extends SamplesActivity {
                 airplaneMode = !airplaneMode;
                 TextView amStatus = (TextView) findViewById(R.id.airplaneModeStatus);
                 amStatus.setText("Airplane Mode is " + (airplaneMode ? "on" : "off"));
-                ImageView airplaneModeIcon = (ImageView) view.findViewById(R.id.airplaneModeIcon);
+                ImageView airplaneModeIcon = view.findViewById(R.id.airplaneModeIcon);
                 airplaneModeIcon.setImageResource(airplaneMode ? R.raw.ic_airplanemode_on_24px : R.raw.ic_airplanemode_off_24px);
             }, 3000);
         });

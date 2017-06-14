@@ -25,12 +25,12 @@ import carbon.view.ValidStateView;
 public class InputLayout extends RelativeLayout {
 
     public enum LabelStyle {
-        Floating, Persistent, Hint, IfNotEmpty;
+        Floating, Persistent, Hint, IfNotEmpty
     }
 
 
     public enum ErrorMode {
-        WhenInvalid, Always, Never;
+        WhenInvalid, Always, Never
     }
 
     private boolean inDrawableStateChanged = false;
@@ -76,15 +76,15 @@ public class InputLayout extends RelativeLayout {
 
     private void initInputLayout(AttributeSet attrs, int defStyleAttr) {
         View.inflate(getContext(), R.layout.carbon_inputlayout, this);
-        errorTextView = (TextView) findViewById(R.id.carbon_error);
+        errorTextView = findViewById(R.id.carbon_error);
         errorTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         errorTextView.setValid(false);
-        counterTextView = (TextView) findViewById(R.id.carbon_counter);
+        counterTextView = findViewById(R.id.carbon_counter);
         counterTextView.setTextColor(new DefaultTextSecondaryColorStateList(getContext()));
-        labelTextView = (TextView) findViewById(R.id.carbon_label);
+        labelTextView = findViewById(R.id.carbon_label);
         labelTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
-        clearImageView = (ImageView) findViewById(R.id.carbon_clear);
-        showPasswordImageView = (ImageView) findViewById(R.id.carbon_showPassword);
+        clearImageView = findViewById(R.id.carbon_clear);
+        showPasswordImageView = findViewById(R.id.carbon_showPassword);
 
         setAddStatesFromChildren(true);
 

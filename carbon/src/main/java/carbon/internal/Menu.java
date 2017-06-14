@@ -146,14 +146,14 @@ public class Menu implements SupportMenu {
          * @param item The menu item that is selected
          * @return whether the menu item selection was handled
          */
-        public boolean onMenuItemSelected(Menu menu, android.view.MenuItem item);
+        boolean onMenuItemSelected(Menu menu, android.view.MenuItem item);
 
         /**
          * Called when the mode of the menu changes (for example, from icon to expanded).
          *
          * @param menu the menu that has changed modes
          */
-        public void onMenuModeChange(Menu menu);
+        void onMenuModeChange(Menu menu);
     }
 
     public Menu(Context context) {

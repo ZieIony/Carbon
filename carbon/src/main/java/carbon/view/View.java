@@ -511,13 +511,13 @@ public abstract class View extends android.view.View
 
         Matrix matrix = getMatrix();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
         ambientShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
         spotShadow.draw(canvas, this, paint, shadowColorFilter);

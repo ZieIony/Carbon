@@ -13,7 +13,7 @@ public class IconDropDownRow extends DataBindingComponent<IconDropDownItem> {
 
     public IconDropDownRow(ViewGroup parent) {
         super(parent, R.layout.carbon_row_icondropdown);
-        dropDown = (DropDown) getView().findViewById(R.id.carbon_dropDown);
+        dropDown = getView().findViewById(R.id.carbon_dropDown);
     }
 
     @Override

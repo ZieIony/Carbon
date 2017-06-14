@@ -29,7 +29,6 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.ViewParent;
-import android.view.animation.Animation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,7 +115,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.RecyclerView_carbon_overScroll) {
-                setOverScrollMode(a.getInt(attr, ViewCompat.OVER_SCROLL_ALWAYS));
+                setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
             } else if (attr == R.styleable.RecyclerView_android_divider) {
                 Drawable drawable = a.getDrawable(attr);
                 float height = a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0);
@@ -169,8 +168,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 if (drag) {
                     final int oldY = computeVerticalScrollOffset();
                     int range = computeVerticalScrollRange() - getHeight();
-                    boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
-                            (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+                    boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
+                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
                     if (canOverscroll) {
                         float pulledToY = oldY + deltaY;
@@ -211,8 +210,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         if (drag || topGlow == null)
             return;
         int range = computeVerticalScrollRange() - getHeight();
-        boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
-                (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+        boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
+                (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
         if (canOverscroll) {
             long t = System.currentTimeMillis();
@@ -260,7 +259,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         if (topGlow != null) {
             final int scrollY = computeVerticalScrollOffset();
             if (!topGlow.isFinished()) {
-                final int restoreCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                final int restoreCount = canvas.save();
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
 
                 canvas.translate(getPaddingLeft(), edgeEffectOffsetTop + Math.min(0, scrollY));
@@ -270,7 +269,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 canvas.restoreToCount(restoreCount);
             }
             if (!bottomGlow.isFinished()) {
-                final int restoreCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                final int restoreCount = canvas.save();
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
                 final int height = getHeight();
 
@@ -313,7 +312,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             RippleView rippleView = (RippleView) child;
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
-                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                int saveCount = canvas.save();
                 canvas.translate(child.getLeft(), child.getTop());
                 canvas.concat(child.getMatrix());
                 rippleDrawable.draw(canvas);
@@ -742,13 +741,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
         Matrix matrix = getMatrix();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
         ambientShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
         spotShadow.draw(canvas, this, paint, shadowColorFilter);

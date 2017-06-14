@@ -186,7 +186,7 @@ public class DropDown<Type> extends EditText {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.carbon_itemText);
+            tv = itemView.findViewById(R.id.carbon_itemText);
         }
     }
 
@@ -195,7 +195,7 @@ public class DropDown<Type> extends EditText {
         boolean result = super.setFrame(l, t, r, b);
 
         if (dropDownMenu != null) {
-            carbon.widget.FrameLayout container = (FrameLayout) dropDownMenu.getContentView().findViewById(R.id.carbon_popupContainer);
+            carbon.widget.FrameLayout container = dropDownMenu.getContentView().findViewById(R.id.carbon_popupContainer);
             if (container.getAnimator() == null)
                 dropDownMenu.update();
         }

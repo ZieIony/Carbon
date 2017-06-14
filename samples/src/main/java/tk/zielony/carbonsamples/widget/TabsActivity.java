@@ -54,7 +54,7 @@ public class TabsActivity extends SamplesActivity {
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object view) {
-                ((ViewPager) container).removeView((View) view);
+                container.removeView((View) view);
             }
 
         });

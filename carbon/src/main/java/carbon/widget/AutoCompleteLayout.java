@@ -44,8 +44,8 @@ public class AutoCompleteLayout extends LinearLayout {
     private void initAutoCompleteLayout() {
         View.inflate(getContext(), R.layout.carbon_autocompletelayout, this);
         setOrientation(VERTICAL);
-        search = (AutoCompleteEditText) findViewById(R.id.carbon_autoCompleteSearch);
-        results = (RecyclerView) findViewById(R.id.carbon_autoCompleteResults);
+        search = findViewById(R.id.carbon_autoCompleteSearch);
+        results = findViewById(R.id.carbon_autoCompleteResults);
         results.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         ColorDrawable colorDrawable = new ColorDrawable(Carbon.getThemeColor(getContext(), R.attr.carbon_dividerColor));
         int dividerWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
@@ -73,7 +73,7 @@ public class AutoCompleteLayout extends LinearLayout {
 
         public AutoCompleteRow(ViewGroup parent) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carbon_autocompletelayout_row, parent, false);
-            text = (carbon.widget.TextView) view.findViewById(R.id.carbon_autoCompleteLayoutRowText);
+            text = view.findViewById(R.id.carbon_autoCompleteLayoutRowText);
         }
 
         @Override

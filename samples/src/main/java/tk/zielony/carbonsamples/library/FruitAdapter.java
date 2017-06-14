@@ -47,7 +47,7 @@ public class FruitAdapter extends ListAdapter<FruitAdapter.ViewHolder, String> {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.text);
+            tv = itemView.findViewById(R.id.text);
             reorder = itemView.findViewById(R.id.reorder);
         }
     }

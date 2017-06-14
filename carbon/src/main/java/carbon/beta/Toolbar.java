@@ -1742,7 +1742,7 @@ public class Toolbar extends ViewGroup {
          * @param item {@link MenuItem} that was clicked
          * @return <code>true</code> if the event was handled, <code>false</code> otherwise.
          */
-        public boolean onMenuItemClick(MenuItem item);
+        boolean onMenuItemClick(MenuItem item);
     }
 
     /**

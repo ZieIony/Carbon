@@ -31,7 +31,7 @@ public class PopupMenu  extends PopupWindow {
         super(android.view.View.inflate(context, R.layout.carbon_popupmenu, null));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);
+        recycler = getContentView().findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         recycler.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_UP &&
@@ -57,7 +57,7 @@ public class PopupMenu  extends PopupWindow {
 
         update();
 
-        carbon.widget.FrameLayout content = (carbon.widget.FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
+        carbon.widget.FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
         content.animateVisibility(android.view.View.VISIBLE);
 
         return true;
@@ -70,7 +70,7 @@ public class PopupMenu  extends PopupWindow {
 
         update();
 
-        carbon.widget.FrameLayout content = (carbon.widget.FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
+        carbon.widget.FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
         content.setVisibility(android.view.View.VISIBLE);
 
         return true;
@@ -152,7 +152,7 @@ public class PopupMenu  extends PopupWindow {
 
     @Override
     public void dismiss() {
-        carbon.widget.FrameLayout content = (carbon.widget.FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
+        carbon.widget.FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
         content.animateVisibility(android.view.View.INVISIBLE).addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

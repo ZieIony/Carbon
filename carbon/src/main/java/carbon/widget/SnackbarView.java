@@ -27,8 +27,8 @@ class SnackbarView extends LinearLayout {
     private void initSnackbar() {
         View.inflate(getContext(), R.layout.carbon_snackbar, this);
 
-        message = (TextView) findViewById(R.id.carbon_messageText);
-        button = (Button) findViewById(R.id.carbon_actionButton);
+        message = findViewById(R.id.carbon_messageText);
+        button = findViewById(R.id.carbon_actionButton);
     }
 
 

@@ -59,8 +59,7 @@ public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<Expan
     @Override
     public void onBindGroupViewHolder(ExpandableRecyclerView.SimpleGroupViewHolder holder, int group) {
         super.onBindGroupViewHolder(holder, group);
-        ExpandableRecyclerView.SimpleGroupViewHolder h = holder;
-        h.setText(getGroupItem(group));
+        holder.setText(getGroupItem(group));
     }
 
     @Override
@@ -74,7 +73,7 @@ public class ExpandableFruitAdapter extends ExpandableRecyclerView.Adapter<Expan
 
         public ChildViewHolder(View itemView) {
             super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.text);
+            tv = itemView.findViewById(R.id.text);
         }
     }
 

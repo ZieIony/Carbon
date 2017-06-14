@@ -110,8 +110,8 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
                 if (drag) {
                     final int oldY = computeVerticalScrollOffset();
                     int range = computeVerticalScrollRange() - getHeight();
-                    boolean canOverscroll = overscrollMode == ViewCompat.OVER_SCROLL_ALWAYS ||
-                            (overscrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+                    boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
+                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
 
                     if (canOverscroll) {
                         float pulledToY = oldY + deltaY;
@@ -337,7 +337,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
         if (topGlow != null) {
             final int scrollY = getScrollY();
             if (!topGlow.isFinished()) {
-                final int restoreCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                final int restoreCount = canvas.save();
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
 
                 canvas.translate(getPaddingLeft(), Math.min(0, scrollY));
@@ -347,7 +347,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
                 canvas.restoreToCount(restoreCount);
             }
             if (!bottomGlow.isFinished()) {
-                final int restoreCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                final int restoreCount = canvas.save();
                 final int width = getWidth() - getPaddingLeft() - getPaddingRight();
                 final int height = getHeight();
 

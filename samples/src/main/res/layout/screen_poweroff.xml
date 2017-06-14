@@ -34,7 +34,6 @@
                 android:tag="animate"
                 app:carbon_inAnimation="fly"
                 android:id="@+id/powerOff"
-                android:layout_toRightOf="@id/progress"
                 android:text="Power Off"
                 android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
                 android:layout_width="wrap_content"
@@ -43,8 +42,6 @@
             <carbon.widget.TextView
                 android:tag="animate"
                 app:carbon_inAnimation="fly"
-                android:layout_toRightOf="@id/progress"
-                android:layout_below="@id/powerOff"
                 android:text="Shutting down..."
                 android:textAppearance="?attr/carbon_textAppearanceCaptionInverse"
                 android:layout_width="wrap_content"

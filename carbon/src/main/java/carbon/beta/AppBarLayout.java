@@ -32,7 +32,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,10 +58,10 @@ import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
+import carbon.view.TouchMarginView;
 import carbon.view.VisibleView;
 import carbon.widget.OnInsetsChangedListener;
 import carbon.widget.RenderingMode;
-import carbon.view.TouchMarginView;
 
 public class AppBarLayout extends android.support.design.widget.AppBarLayout
         implements
@@ -229,7 +228,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save();
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
                 dispatchDrawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -284,7 +283,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             RippleView rippleView = (RippleView) child;
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
-                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                int saveCount = canvas.save();
                 canvas.translate(child.getLeft(), child.getTop());
                 canvas.concat(child.getMatrix());
                 rippleDrawable.draw(canvas);
@@ -398,7 +397,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save();
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
                 drawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -644,13 +643,13 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
 
         Matrix matrix = getMatrix();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
         ambientShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
         spotShadow.draw(canvas, this, paint, shadowColorFilter);

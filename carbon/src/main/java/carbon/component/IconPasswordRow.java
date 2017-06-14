@@ -14,7 +14,7 @@ public class IconPasswordRow extends DataBindingComponent<IconPasswordItem> {
 
     public IconPasswordRow(ViewGroup parent) {
         super(parent, R.layout.carbon_row_iconpassword);
-        editText = (EditText) getView().findViewById(R.id.carbon_text);
+        editText = getView().findViewById(R.id.carbon_text);
         editText.setTransformationMethod(new PasswordTransformationMethod());
     }
 

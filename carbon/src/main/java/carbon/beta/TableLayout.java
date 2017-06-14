@@ -39,13 +39,13 @@ public class TableLayout extends LinearLayout {
         View.inflate(getContext(), R.layout.carbon_tablelayout, this);
         setOrientation(VERTICAL);
 
-        toolbar = (Toolbar) findViewById(R.id.carbon_tableToolbar);
-        header = (LinearLayout) findViewById(R.id.carbon_tableHeader);
-        table = (TableView) findViewById(R.id.carbon_table);
+        toolbar = findViewById(R.id.carbon_tableToolbar);
+        header = findViewById(R.id.carbon_tableHeader);
+        table = findViewById(R.id.carbon_table);
         footer = findViewById(R.id.carbon_tableFooter);
-        rowNumber = (DropDown) findViewById(R.id.carbon_tableRowNumber);
+        rowNumber = findViewById(R.id.carbon_tableRowNumber);
         rowNumber.setItems(new String[]{"10", "20", "50"});
-        pageNumbers = (TextView) findViewById(R.id.carbon_tablePageNumbers);
+        pageNumbers = findViewById(R.id.carbon_tablePageNumbers);
     }
 
     public TableView getTableView() {
@@ -69,7 +69,7 @@ public class TableLayout extends LinearLayout {
         header.removeAllViews();
         for (int i = 0; i < adapter.getColumnCount(); i++) {
             View headerCell = View.inflate(getContext(), R.layout.carbon_tablelayout_header, null);
-            TextView tv = (TextView) headerCell.findViewById(R.id.carbon_tableHeaderText);
+            TextView tv = headerCell.findViewById(R.id.carbon_tableHeaderText);
             tv.setText(adapter.getColumnName(i));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, adapter.getColumnWeight(i));
             header.addView(headerCell, params);

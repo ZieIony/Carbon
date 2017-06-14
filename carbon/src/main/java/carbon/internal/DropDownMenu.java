@@ -30,7 +30,7 @@ public class DropDownMenu extends PopupWindow {
         super(View.inflate(context, R.layout.carbon_popupmenu, null));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        recycler = (RecyclerView) getContentView().findViewById(R.id.recycler);
+        recycler = getContentView().findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         recycler.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_UP &&
@@ -56,7 +56,7 @@ public class DropDownMenu extends PopupWindow {
 
         update();
 
-        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
+        FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
         content.animateVisibility(View.VISIBLE);
 
         return true;
@@ -69,7 +69,7 @@ public class DropDownMenu extends PopupWindow {
 
         update();
 
-        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
+        FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
         content.setVisibility(View.VISIBLE);
 
         return true;
@@ -151,7 +151,7 @@ public class DropDownMenu extends PopupWindow {
 
     @Override
     public void dismiss() {
-        FrameLayout content = (FrameLayout) getContentView().findViewById(R.id.carbon_popupContainer);
+        FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
         content.animateVisibility(View.INVISIBLE).addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

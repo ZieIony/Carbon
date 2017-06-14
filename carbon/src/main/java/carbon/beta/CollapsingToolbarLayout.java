@@ -286,7 +286,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
             RippleView rippleView = (RippleView) child;
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
-                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                int saveCount = canvas.save();
                 canvas.translate(child.getLeft(), child.getTop());
                 canvas.concat(child.getMatrix());
                 rippleDrawable.draw(canvas);
@@ -645,13 +645,13 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
 
         Matrix matrix = getMatrix();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
         ambientShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
         spotShadow.draw(canvas, this, paint, shadowColorFilter);

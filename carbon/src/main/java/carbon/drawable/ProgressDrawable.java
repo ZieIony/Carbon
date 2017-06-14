@@ -46,8 +46,7 @@ public abstract class ProgressDrawable extends Drawable {
 
     @Override
     public boolean setState(@NonNull int[] stateSet) {
-        boolean result = super.setState(stateSet);
-        return result;
+        return super.setState(stateSet);
     }
 
     public void setProgress(float progress) {

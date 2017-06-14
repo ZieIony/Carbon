@@ -323,8 +323,8 @@ public class ExpandableRecyclerView extends RecyclerView {
         public SimpleGroupViewHolder(Context context) {
             super(View.inflate(context, R.layout.carbon_expandablerecyclerview_group, null));
             itemView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            expandedIndicator = (ImageView) itemView.findViewById(R.id.carbon_groupExpandedIndicator);
-            text = (TextView) itemView.findViewById(R.id.carbon_groupText);
+            expandedIndicator = itemView.findViewById(R.id.carbon_groupExpandedIndicator);
+            text = itemView.findViewById(R.id.carbon_groupText);
         }
 
         public void expand() {

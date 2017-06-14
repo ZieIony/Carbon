@@ -27,12 +27,17 @@ public class Samples {
     }
 
     public static void initToolbar(final Activity activity, String title) {
+        initToolbar(activity, title, true);
+    }
+
+    public static void initToolbar(final Activity activity, String title, boolean showBack) {
         final DebugOverlay overlay = new DebugOverlay(activity);
 
-        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setTitle(title);
+        toolbar.setIconVisible(showBack);
 
-        final ImageView debug = (ImageView) activity.findViewById(R.id.debug);
+        final ImageView debug = activity.findViewById(R.id.debug);
         if (debug != null) {
             debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_colorDisabled));
             debug.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +58,7 @@ public class Samples {
             });
         }
 
-        CheckBox checkBox = (CheckBox) activity.findViewById(R.id.enabled);
+        CheckBox checkBox = activity.findViewById(R.id.enabled);
         if (checkBox != null) {
             checkBox.setOnCheckedChangeListener((compoundButton, checked) -> {
                 List<View> views = findViewsWithTag((ViewGroup) activity.getWindow().getDecorView().getRootView(), "enable");

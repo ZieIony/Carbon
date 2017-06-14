@@ -192,26 +192,25 @@ public class MarshmallowEditText extends EditText {
     }
 
     private void initActionModeCallback() {
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+        setCustomSelectionActionModeCallback(new ActionMode.Callback() {
 
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    return false;
-                }
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
 
-                public void onDestroyActionMode(ActionMode mode) {
-                }
+            public void onDestroyActionMode(ActionMode mode) {
+            }
 
-                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    createMenu(menu);
-                    return true;
-                }
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                createMenu(menu);
+                return true;
+            }
 
-                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    return false;
-                }
-            });
-        }
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                return false;
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= 23) {
             setCustomInsertionActionModeCallback(new ActionMode.Callback() {
                 @Override

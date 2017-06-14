@@ -32,7 +32,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import com.annimon.stream.Stream;
 
@@ -300,7 +299,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout
             RippleView rippleView = (RippleView) child;
             RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
             if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
-                int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                int saveCount = canvas.save();
                 canvas.translate(child.getLeft(), child.getTop());
                 canvas.concat(child.getMatrix());
                 rippleDrawable.draw(canvas);
@@ -662,13 +661,13 @@ public class GridLayout extends android.support.v7.widget.GridLayout
 
         Matrix matrix = getMatrix();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
         ambientShadow.draw(canvas, this, paint, shadowColorFilter);
         canvas.restore();
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
         spotShadow.draw(canvas, this, paint, shadowColorFilter);
@@ -1256,7 +1255,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout
         }
 
         public LayoutParams(android.widget.FrameLayout.LayoutParams source) {
-            super((MarginLayoutParams) source);
+            super(source);
         }
 
         public LayoutParams(LayoutParams source) {

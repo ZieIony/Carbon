@@ -60,8 +60,8 @@ public class BottomSheetLayout extends LinearLayout {
     private void initBottomSheet() {
         View.inflate(getContext(), R.layout.carbon_bottomsheet, this);
         setOrientation(VERTICAL);
-        titleTv = (TextView) findViewById(R.id.carbon_bottomSheetTitle);
-        recycler = (RecyclerView) findViewById(R.id.carbon_bottomSheetRecycler);
+        titleTv = findViewById(R.id.carbon_bottomSheetTitle);
+        recycler = findViewById(R.id.carbon_bottomSheetRecycler);
     }
 
     public void setOnMenuItemClickListener(android.view.MenuItem.OnMenuItemClickListener listener) {

@@ -37,7 +37,7 @@ public class ExpansionPanel extends RelativeLayout {
     private void initExpansionPanel() {
         View.inflate(getContext(), R.layout.carbon_expansionpanel, this);
         setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        expandedIndicator = (ImageView) findViewById(R.id.carbon_groupExpandedIndicator);
+        expandedIndicator = findViewById(R.id.carbon_groupExpandedIndicator);
 
         setOnClickListener(v -> {
             if (isExpanded()) {

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 
-import com.annimon.stream.Stream;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +33,13 @@ public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Typ
 
     protected RecyclerView.OnItemClickedListener<Type> getInternalListener() {
         return (view, item, position) -> {
-            Type selectedItem = items.get(position);
-            if (selectedItems.contains(selectedItem)) {
-                selectedItems.remove(selectedItem);
+            CheckBox checkBox = recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.carbon_checkBox);
+            if (selectedItems.contains(item)) {
+                selectedItems.remove(item);
+                checkBox.setChecked(false);
             } else {
-                selectedItems.add(selectedItem);
+                selectedItems.add(item);
+                checkBox.setChecked(true);
             }
             if (listener != null)
                 listener.onItemClicked(view, item, position);
@@ -62,7 +62,7 @@ public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Typ
             public void bind(Type data) {
                 super.bind(data);
                 if (selectedItems.contains(data)) {
-                    CheckBox checkBox = (CheckBox) getView().findViewById(R.id.carbon_checkBox);
+                    CheckBox checkBox = getView().findViewById(R.id.carbon_checkBox);
                     checkBox.setChecked(true);
                 }
             }
@@ -75,16 +75,19 @@ public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Typ
             public void bind(Type data) {
                 super.bind(data);
                 if (selectedItems.contains(data)) {
-                    CheckBox checkBox = (CheckBox) getView().findViewById(R.id.carbon_checkBox);
+                    CheckBox checkBox = getView().findViewById(R.id.carbon_checkBox);
                     checkBox.setChecked(true);
                 }
             }
         });
     }
 
-    public void setSelectedItems(Type[] selectedItems) {
+    public void setSelectedItems(List<Type> selectedItems) {
         this.selectedItems.clear();
-        Stream.of(selectedItems).forEach(item -> this.selectedItems.add(item));
+        this.selectedItems.addAll(selectedItems);
     }
 
+    public List<Type> getSelectedItems() {
+        return selectedItems;
+    }
 }

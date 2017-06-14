@@ -12,7 +12,7 @@ public class MainActivity extends SampleListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this, getString(R.string.app_name));
+        Samples.initToolbar(this, getString(R.string.app_name), false);
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
