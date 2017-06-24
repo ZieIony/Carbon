@@ -112,7 +112,7 @@
                 android:background="?attr/colorPrimary"
                 android:padding="@dimen/carbon_padding"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher"
+                app:srcCompat="@drawable/ic_android_black_24dp"
                 android:tag="enable"/>
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>

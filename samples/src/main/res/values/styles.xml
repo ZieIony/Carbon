@@ -1,16 +1,16 @@
 <resources>
 
     <style name="DropDownTheme" parent="carbon_Theme.Light">
-        <item name="colorPrimary">@color/carbon_teal_400</item>
-        <item name="colorPrimaryDark">@color/carbon_teal_700</item>
+        <item name="colorPrimary">@color/carbon_cyan_500</item>
+        <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
         <item name="colorAccent">@color/carbon_orange_a200</item>
     </style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="carbon_Theme.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/carbon_teal_700</item>
-        <item name="colorPrimary">@color/carbon_teal_400</item>
-        <item name="colorPrimaryDark">@color/carbon_teal_700</item>
+        <item name="android:statusBarColor">@color/carbon_cyan_700</item>
+        <item name="colorPrimary">@color/carbon_cyan_500</item>
+        <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
         <item name="colorAccent">@color/carbon_orange_a200</item>
         <item name="carbon_dropDownPopupTheme">@style/DropDownTheme</item>
     </style>
@@ -23,8 +23,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme2" parent="carbon_Theme.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="colorPrimary">@color/carbon_teal_400</item>
-        <item name="colorPrimaryDark">@color/carbon_teal_700</item>
+        <item name="colorPrimary">@color/carbon_cyan_500</item>
+        <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
         <item name="colorAccent">@color/carbon_orange_a200</item>
     </style>
 
@@ -71,7 +71,7 @@
     </style>
 
     <style name="PrimaryRed">
-        <item name="colorPrimary">@color/carbon_red_400</item>
+        <item name="colorPrimary">@color/carbon_red_500</item>
         <item name="colorPrimaryDark">@color/carbon_red_700</item>
     </style>
 
@@ -80,7 +80,7 @@
     </style>
 
     <style name="PrimaryPink">
-        <item name="colorPrimary">@color/carbon_pink_400</item>
+        <item name="colorPrimary">@color/carbon_pink_500</item>
         <item name="colorPrimaryDark">@color/carbon_pink_700</item>
     </style>
 
@@ -89,7 +89,7 @@
     </style>
 
     <style name="PrimaryPurple">
-        <item name="colorPrimary">@color/carbon_purple_400</item>
+        <item name="colorPrimary">@color/carbon_purple_500</item>
         <item name="colorPrimaryDark">@color/carbon_purple_700</item>
     </style>
 
@@ -98,7 +98,7 @@
     </style>
 
     <style name="PrimaryDeepPurple">
-        <item name="colorPrimary">@color/carbon_deepPurple_400</item>
+        <item name="colorPrimary">@color/carbon_deepPurple_500</item>
         <item name="colorPrimaryDark">@color/carbon_deepPurple_700</item>
     </style>
 
@@ -107,7 +107,7 @@
     </style>
 
     <style name="PrimaryIndigo">
-        <item name="colorPrimary">@color/carbon_indigo_400</item>
+        <item name="colorPrimary">@color/carbon_indigo_500</item>
         <item name="colorPrimaryDark">@color/carbon_indigo_700</item>
     </style>
 
@@ -116,7 +116,7 @@
     </style>
 
     <style name="PrimaryBlue">
-        <item name="colorPrimary">@color/carbon_blue_400</item>
+        <item name="colorPrimary">@color/carbon_blue_500</item>
         <item name="colorPrimaryDark">@color/carbon_blue_700</item>
     </style>
 
@@ -125,7 +125,7 @@
     </style>
 
     <style name="PrimaryLightBlue">
-        <item name="colorPrimary">@color/carbon_lightBlue_400</item>
+        <item name="colorPrimary">@color/carbon_lightBlue_500</item>
         <item name="colorPrimaryDark">@color/carbon_lightBlue_700</item>
     </style>
 
@@ -134,7 +134,7 @@
     </style>
 
     <style name="PrimaryCyan">
-        <item name="colorPrimary">@color/carbon_cyan_400</item>
+        <item name="colorPrimary">@color/carbon_cyan_500</item>
         <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
     </style>
 
@@ -143,7 +143,7 @@
     </style>
 
     <style name="PrimaryTeal">
-        <item name="colorPrimary">@color/carbon_teal_400</item>
+        <item name="colorPrimary">@color/carbon_teal_500</item>
         <item name="colorPrimaryDark">@color/carbon_teal_700</item>
     </style>
 
@@ -152,7 +152,7 @@
     </style>
 
     <style name="PrimaryGreen">
-        <item name="colorPrimary">@color/carbon_green_400</item>
+        <item name="colorPrimary">@color/carbon_green_500</item>
         <item name="colorPrimaryDark">@color/carbon_green_700</item>
     </style>
 
@@ -161,7 +161,7 @@
     </style>
 
     <style name="PrimaryLightGreen">
-        <item name="colorPrimary">@color/carbon_lightGreen_400</item>
+        <item name="colorPrimary">@color/carbon_lightGreen_500</item>
         <item name="colorPrimaryDark">@color/carbon_lightGreen_700</item>
     </style>
 
@@ -170,7 +170,7 @@
     </style>
 
     <style name="PrimaryLime">
-        <item name="colorPrimary">@color/carbon_lime_400</item>
+        <item name="colorPrimary">@color/carbon_lime_500</item>
         <item name="colorPrimaryDark">@color/carbon_lime_700</item>
     </style>
 
@@ -179,7 +179,7 @@
     </style>
 
     <style name="PrimaryYellow">
-        <item name="colorPrimary">@color/carbon_yellow_400</item>
+        <item name="colorPrimary">@color/carbon_yellow_500</item>
         <item name="colorPrimaryDark">@color/carbon_yellow_700</item>
     </style>
 
@@ -188,7 +188,7 @@
     </style>
 
     <style name="PrimaryAmber">
-        <item name="colorPrimary">@color/carbon_amber_400</item>
+        <item name="colorPrimary">@color/carbon_amber_500</item>
         <item name="colorPrimaryDark">@color/carbon_amber_700</item>
     </style>
 
@@ -197,7 +197,7 @@
     </style>
 
     <style name="PrimaryOrange">
-        <item name="colorPrimary">@color/carbon_orange_400</item>
+        <item name="colorPrimary">@color/carbon_orange_500</item>
         <item name="colorPrimaryDark">@color/carbon_orange_700</item>
     </style>
 
@@ -206,7 +206,7 @@
     </style>
 
     <style name="PrimaryDeepOrange">
-        <item name="colorPrimary">@color/carbon_deepOrange_400</item>
+        <item name="colorPrimary">@color/carbon_deepOrange_500</item>
         <item name="colorPrimaryDark">@color/carbon_deepOrange_700</item>
     </style>
 
@@ -215,17 +215,17 @@
     </style>
 
     <style name="PrimaryBrown">
-        <item name="colorPrimary">@color/carbon_brown_400</item>
+        <item name="colorPrimary">@color/carbon_brown_500</item>
         <item name="colorPrimaryDark">@color/carbon_brown_700</item>
     </style>
 
     <style name="PrimaryGrey">
-        <item name="colorPrimary">@color/carbon_grey_400</item>
+        <item name="colorPrimary">@color/carbon_grey_500</item>
         <item name="colorPrimaryDark">@color/carbon_grey_700</item>
     </style>
 
     <style name="PrimaryBlueGrey">
-        <item name="colorPrimary">@color/carbon_blueGrey_400</item>
+        <item name="colorPrimary">@color/carbon_blueGrey_500</item>
         <item name="colorPrimaryDark">@color/carbon_blueGrey_700</item>
     </style>
 
