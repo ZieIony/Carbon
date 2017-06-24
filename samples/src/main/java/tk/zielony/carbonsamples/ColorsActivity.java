@@ -37,7 +37,9 @@ public class ColorsActivity extends SamplesActivity {
 
     static Item[] styles = new Item[]{
             new Item("Dark", R.style.ThemeDark, R.color.carbon_colorBackground_dark),
-            new Item("Light", R.style.ThemeLight, R.color.carbon_colorBackground_light)
+            new Item("Dark.Inverse", R.style.ThemeDark_Inverse, R.color.carbon_colorBackground_dark),
+            new Item("Light", R.style.ThemeLight, R.color.carbon_colorBackground_light),
+            new Item("Light.Inverse", R.style.ThemeLight_Inverse, R.color.carbon_colorBackground_light)
     };
 
     public static Item[] primary = new Item[]{
