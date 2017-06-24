@@ -50,6 +50,7 @@ public class Snackbar {
     private Snackbar.OnDismissedListener onDismissedListener;
     private boolean swipeToDismiss = true;
     private boolean tapOutsideToDismiss;
+    private int gravity = Gravity.START | Gravity.BOTTOM;
 
     private SnackbarLayout snackbarLayout;
 
@@ -86,11 +87,15 @@ public class Snackbar {
                 if (snackbarView.getInAnimator() == null)
                     snackbarView.setInAnimator(AnimUtils.getSlideInAnimator());
                 if (snackbarView.getOutAnimator() == null)
-                    snackbarView.setOutAnimator(AnimUtils.getSlideOutAnimator());
+                    snackbarView.setOutAnimator(AnimUtils.getSlideOutAnimator(gravity));
                 container.addView(snackbarLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 snackbarView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
                 ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
-                snackbarView.setTranslationY(snackbarView.getMeasuredHeight() + layoutParams.bottomMargin);
+                if ((gravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
+                    snackbarView.setTranslationY(snackbarView.getMeasuredHeight() + layoutParams.bottomMargin);
+                } else {
+                    snackbarView.setTranslationY(-snackbarView.getMeasuredHeight() - layoutParams.topMargin);
+                }
                 snackbarView.setVisibility(INVISIBLE);
                 snackbarView.animateVisibility(View.VISIBLE);
                 if (duration != INFINITE)
@@ -148,19 +153,21 @@ public class Snackbar {
         SnackbarView snackbarView = snackbarLayout.getView();
         if (style == Snackbar.Style.Auto)
             this.style = context.getResources().getBoolean(R.bool.carbon_isPhone) ? Snackbar.Style.Docked : Snackbar.Style.Floating;
-        FrameLayout.LayoutParams layoutParams = snackbarLayout.generateDefaultLayoutParams();
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
+        if (layoutParams == null)
+            layoutParams = snackbarLayout.generateDefaultLayoutParams();
         if (style == Snackbar.Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             int margin = (int) context.getResources().getDimension(R.dimen.carbon_margin);
-            layoutParams.setMargins(margin, 0, margin, margin);
-            layoutParams.gravity = Gravity.START | Gravity.BOTTOM;
+            layoutParams.setMargins(margin, margin, margin, margin);
+            layoutParams.gravity = gravity;
             snackbarView.setCornerRadius((int) context.getResources().getDimension(R.dimen.carbon_cornerRadiusButton));
         } else {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.setMargins(0, 0, 0, 0);
-            layoutParams.gravity = Gravity.BOTTOM;
+            layoutParams.gravity = gravity;
             snackbarView.setCornerRadius(0);
         }
         snackbarView.setLayoutParams(layoutParams);
@@ -217,6 +224,20 @@ public class Snackbar {
 
     public void setAction(String text, OnActionListener listener) {
         snackbarLayout.getView().setAction(text, listener);
+    }
+
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
+        SnackbarView snackbarView = snackbarLayout.getView();
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
+        if (layoutParams == null)
+            layoutParams = snackbarLayout.generateDefaultLayoutParams();
+        layoutParams.gravity = gravity;
+        snackbarView.setLayoutParams(layoutParams);
+    }
+
+    public int getGravity() {
+        return gravity;
     }
 
     class SnackbarLayout extends FrameLayout {

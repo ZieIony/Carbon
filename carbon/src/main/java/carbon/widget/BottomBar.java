@@ -38,7 +38,6 @@ public class BottomBar extends FrameLayout {
         super(context, attrs);
         inflate(context, R.layout.carbon_bottombar, this);
         content = findViewById(R.id.carbon_bottomBarContent);
-        setOnClickListener(v -> Log.e("dasd", "dsad"));
     }
 
     public BottomBar(Context context, AttributeSet attrs, int defStyleAttr) {

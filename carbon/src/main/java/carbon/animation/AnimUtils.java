@@ -9,7 +9,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -185,22 +185,26 @@ public class AnimUtils {
     }
 
     public static ValueAnimator getSlideOutAnimator() {
+        return getSlideOutAnimator(Gravity.BOTTOM);
+    }
+
+    public static ValueAnimator getSlideOutAnimator(int gravity) {
         ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new FastOutLinearInInterpolator());
         animator.setOnSetupValuesListener(() -> {
             View view = animator.getTarget();
             int height = view.getMeasuredHeight();
             ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            boolean top = (gravity & Gravity.BOTTOM) == Gravity.BOTTOM;
             if (layoutParams != null && layoutParams instanceof ViewGroup.MarginLayoutParams)
-                height += ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
-            animator.setFloatValues(view.getTranslationY(), height);
+                height += top ? ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin : ((ViewGroup.MarginLayoutParams) layoutParams).topMargin;
+            animator.setFloatValues(view.getTranslationY(), top ? height : -height);
             long duration = (long) (200 * (1 - Math.abs(view.getTranslationY() / height)));
             animator.setDuration(duration);
         });
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
             view.setTranslationY((Float) valueAnimator.getAnimatedValue());
-            Log.e("anim", "" + valueAnimator.getAnimatedValue());
         });
         return animator;
     }

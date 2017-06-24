@@ -1,6 +1,7 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,6 +28,7 @@ public class SnackbarActivity extends SamplesActivity {
         final CheckBox floatingCheckBox = findViewById(R.id.floating);
         final CheckBox infiniteCheckBox = findViewById(R.id.infinite);
         final CheckBox pushCheckBox = findViewById(R.id.push);
+        final CheckBox fromTopCheckBox = findViewById(R.id.fromTop);
         final FloatingActionButton fab = findViewById(R.id.fab);
         RelativeLayout root = findViewById(R.id.root);
 
@@ -37,20 +39,25 @@ public class SnackbarActivity extends SamplesActivity {
             snackbar.setStyle(floatingCheckBox.isChecked() ? Snackbar.Style.Floating : Snackbar.Style.Docked);
             snackbar.setTapOutsideToDismissEnabled(tapCheckBox.isChecked());
             snackbar.setSwipeToDismissEnabled(swipeCheckBox.isChecked());
-            if (pushCheckBox.isChecked()) {
-                Behavior<FloatingActionButton> behavior = new Behavior<FloatingActionButton>(fab) {
-                    @Override
-                    public void onDependencyChanged(View view) {
-                        if (snackbarView.getAlpha() < 1) {
-                            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
-                            fab.setTranslationY(-root.getHeight() + snackbarView.getTop() + (1 - snackbarView.getAlpha()) * (snackbarView.getHeight() + layoutParams.bottomMargin));
-                        } else {
-                            fab.setTranslationY(-root.getHeight() + snackbarView.getTop() + snackbarView.getTranslationY());
+            if (fromTopCheckBox.isChecked()) {
+                snackbar.setGravity(Gravity.START | Gravity.TOP);
+            } else {
+                snackbar.setGravity(Gravity.START | Gravity.BOTTOM);
+                if (pushCheckBox.isChecked()) {
+                    Behavior<FloatingActionButton> behavior = new Behavior<FloatingActionButton>(fab) {
+                        @Override
+                        public void onDependencyChanged(View view) {
+                            if (snackbarView.getAlpha() < 1) {
+                                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
+                                fab.setTranslationY(-root.getHeight() + snackbarView.getTop() + (1 - snackbarView.getAlpha()) * (snackbarView.getHeight() + layoutParams.bottomMargin));
+                            } else {
+                                fab.setTranslationY(-root.getHeight() + snackbarView.getTop() + snackbarView.getTranslationY());
+                            }
                         }
-                    }
-                };
-                behavior.setDependency(snackbarView);
-                root.addBehavior(behavior);
+                    };
+                    behavior.setDependency(snackbarView);
+                    root.addBehavior(behavior);
+                }
             }
             snackbar.show(root);
         });

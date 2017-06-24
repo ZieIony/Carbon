@@ -71,6 +71,14 @@
                     android:checked="false"
                     android:padding="@dimen/carbon_padding"
                     android:text="push fab"/>
+
+                <carbon.widget.CheckBox
+                    android:id="@+id/fromTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:padding="@dimen/carbon_padding"
+                    android:text="from top"/>
             </carbon.widget.LinearLayout>
         </carbon.widget.ScrollView>
     </carbon.widget.LinearLayout>
