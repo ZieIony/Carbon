@@ -46,6 +46,7 @@
     <dimen name="carbon_statusBarHeight">25dp</dimen>
 
     <dimen name="carbon_dialogPadding">24dp</dimen>
+    <dimen name="carbon_dialogMinimumWidth">280dp</dimen>
 
     <dimen name="carbon_timelineTextSize">14sp</dimen>
 

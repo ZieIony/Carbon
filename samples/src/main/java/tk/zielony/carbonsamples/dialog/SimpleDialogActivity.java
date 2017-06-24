@@ -1,12 +1,9 @@
 package tk.zielony.carbonsamples.dialog;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 
 import carbon.dialog.Dialog;
-import carbon.dialog.ProgressDialog;
 import carbon.widget.EditText;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
@@ -32,15 +29,6 @@ public class SimpleDialogActivity extends SamplesActivity {
             if (buttonText.length() > 0)
                 dialog.setPositiveButton(buttonText.getText().toString(), null);
             dialog.show();
-        });
-
-        findViewById(R.id.showProgressDialog).setOnClickListener(view -> {
-            ProgressDialog dialog = new ProgressDialog(this, R.style.AppTheme);
-            if (titleText.length() > 0)
-                dialog.setTitle(titleText.getText());
-            dialog.setText("Working...");
-            dialog.show();
-            new Handler(Looper.getMainLooper()).postDelayed(dialog::dismiss, 2000);
         });
     }
 }

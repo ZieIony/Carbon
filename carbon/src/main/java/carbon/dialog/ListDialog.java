@@ -53,23 +53,22 @@ public class ListDialog<Type extends Serializable> extends DialogBase {
         };
     }
 
-    protected void dividerCallback(int contentHeight) {
+    protected void onContentHeightChanged(int contentHeight) {
         int padding = getContext().getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf);
         int height = padding * 2;
-        for (int i = 0; i < recyclerView.getChildCount(); i++) {
+        for (int i = 0; i < recyclerView.getChildCount(); i++)
             height += recyclerView.getChildAt(i).getHeight();
-        }
         height += recyclerView.getAdapter().getItemCount() - recyclerView.getChildCount();
-        if (height <= contentHeight) {
-            if (topDivider != null)
-                topDivider.setVisibility(View.GONE);
-            if (bottomDivider != null)
-                bottomDivider.setVisibility(View.GONE);
-        } else {
+        if (height > contentHeight) {
             if (topDivider != null)
                 topDivider.setVisibility(View.VISIBLE);
             if (bottomDivider != null)
                 bottomDivider.setVisibility(View.VISIBLE);
+        } else {
+            if (topDivider != null)
+                topDivider.setVisibility(View.GONE);
+            if (bottomDivider != null)
+                bottomDivider.setVisibility(View.GONE);
         }
     }
 

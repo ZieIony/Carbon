@@ -61,9 +61,13 @@ public abstract class DialogBase extends android.app.Dialog {
     public void setContentView(@NonNull View view, ViewGroup.LayoutParams params) {
         contentView = view;
         contentView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            dividerCallback(contentView.getHeight());
+            onContentHeightChanged(contentView.getHeight());
         });
         container.addView(view);
+    }
+
+    public View getContentView() {
+        return contentView;
     }
 
     private void initLayout() {
@@ -79,18 +83,11 @@ public abstract class DialogBase extends android.app.Dialog {
         super.setContentView(dialogLayout);
     }
 
-    protected void dividerCallback(int contentHeight) {
-        if (container.getChildCount() == 0 || container.getChildAt(0).getHeight() < contentHeight) {
-            if (topDivider != null)
-                topDivider.setVisibility(View.GONE);
-            if (bottomDivider != null)
-                bottomDivider.setVisibility(View.GONE);
-        } else {
-            if (topDivider != null)
-                topDivider.setVisibility(View.VISIBLE);
-            if (bottomDivider != null)
-                bottomDivider.setVisibility(View.VISIBLE);
-        }
+    protected void onContentHeightChanged(int contentHeight) {
+        if (topDivider != null)
+            topDivider.setVisibility(View.GONE);
+        if (bottomDivider != null)
+            bottomDivider.setVisibility(View.GONE);
     }
 
     @Override
@@ -120,7 +117,7 @@ public abstract class DialogBase extends android.app.Dialog {
         setButton(text, listener, R.id.carbon_buttonPositive);
     }
 
-    private void setButton(String text, View.OnClickListener listener, int buttonId) {
+    protected void setButton(String text, View.OnClickListener listener, int buttonId) {
         if (buttonContainer == null) {
             container.addView(getLayoutInflater().inflate(R.layout.carbon_dialogfooter, null));
             buttonContainer = dialogLayout.findViewById(R.id.carbon_buttonContainer);
@@ -154,5 +151,21 @@ public abstract class DialogBase extends android.app.Dialog {
                 DialogBase.super.dismiss();
             }
         });
+    }
+
+    public boolean hasButtons() {
+        return buttonContainer != null;
+    }
+
+    public boolean hasTitle() {
+        return titleTextView != null;
+    }
+
+    public void setMinimumWidth(int minimumWidth) {
+        container.setMinimumWidth(minimumWidth);
+    }
+
+    public void setMinimumHeight(int minimumHeight) {
+        container.setMinimumHeight(minimumHeight);
     }
 }

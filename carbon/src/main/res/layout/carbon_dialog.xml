@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_margin="40dp"
         android:background="?android:attr/windowBackground"
-        android:minWidth="280dp"
+        android:minWidth="@dimen/carbon_dialogMinimumWidth"
         android:id="@+id/carbon_windowContent"
         app:carbon_inAnimation="fade"
         app:carbon_outAnimation="fade"

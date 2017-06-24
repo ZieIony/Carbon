@@ -4,9 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="@dimen/carbon_toolbarHeight"
               android:orientation="horizontal"
-              android:paddingBottom="@dimen/carbon_dialogPadding"
-              android:paddingLeft="@dimen/carbon_dialogPadding"
-              android:paddingRight="@dimen/carbon_dialogPadding">
+              android:padding="@dimen/carbon_dialogPadding">
 
     <carbon.widget.ProgressBar
         android:layout_width="@dimen/carbon_progressSize"
