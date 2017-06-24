@@ -40,7 +40,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -266,6 +265,21 @@ public class EditText extends android.widget.EditText
                     }
                 }
             });
+
+            Field mEditorField = android.widget.TextView.class.getDeclaredField("mEditor");
+            mEditorField.setAccessible(true);
+            Object mEditor = mEditorField.get(this);
+            Field mCursorDrawableField = mEditor.getClass().getDeclaredField("mCursorDrawable");
+            mCursorDrawableField.setAccessible(true);
+            Drawable[] mCursorDrawable = (Drawable[]) mCursorDrawableField.get(mEditor);
+
+            Drawable drawable = getResources().getDrawable(R.drawable.carbon_textcursor);
+            drawable.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.MULTIPLY));
+            mCursorDrawable[0] = drawable;
+
+            Drawable drawable2 = getResources().getDrawable(R.drawable.carbon_textcursor);
+            drawable2.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.MULTIPLY));
+            mCursorDrawable[1] = drawable2;
         } catch (Exception e) {
 
         }
@@ -939,6 +953,7 @@ public class EditText extends android.widget.EditText
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {
