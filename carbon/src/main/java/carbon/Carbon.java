@@ -242,10 +242,10 @@ public class Carbon {
         TypedArray a = context.obtainStyledAttributes(attributeSet, attrs, defStyleAttr, 0);
         if (a.hasValue(attr)) {
             int themeId = a.getResourceId(attr, 0);
-            context.getTheme().applyStyle(themeId, true);
+            a.recycle();
+            return new CarbonContextThemeWrapper(context, themeId);
         }
-        a.recycle();
-        return new CarbonContextWrapper(context);
+        return context;
     }
 
     public static int getDrawableAlpha(Drawable background) {

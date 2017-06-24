@@ -5,10 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.R;
-import carbon.recycler.RowFactory;
 
 public class PaddingRow implements Component<PaddingItem> {
-    public static final RowFactory FACTORY = PaddingRow::new;
 
     private View view;
 

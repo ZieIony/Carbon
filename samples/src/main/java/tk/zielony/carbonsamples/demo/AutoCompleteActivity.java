@@ -19,7 +19,7 @@ public class AutoCompleteActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.autoCompleteActivity_title));
 
-        AutoCompleteLayout autoCompleteLayout = (AutoCompleteLayout) findViewById(R.id.autoComplete);
+        AutoCompleteLayout autoCompleteLayout = findViewById(R.id.autoComplete);
         autoCompleteLayout.setDataProvider(new AutoCompleteEditText.AutoCompleteDataProvider() {
 
             @Override

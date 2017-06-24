@@ -19,7 +19,7 @@ public class ShareToolbarActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_toolbar);
 
-        final LinearLayout shareToolbar = (LinearLayout) findViewById(R.id.shareToolbar);
+        final LinearLayout shareToolbar = findViewById(R.id.shareToolbar);
         final View root = shareToolbar.getRootView();
         findViewById(R.id.shareIcon).setOnClickListener(view -> {
             view.setVisibility(View.GONE);

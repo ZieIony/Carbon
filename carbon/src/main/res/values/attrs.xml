@@ -1083,6 +1083,7 @@
     <attr name="carbon_editMenuTheme" format="reference"/>
     <attr name="carbon_snackbarTheme" format="reference"/>
     <attr name="carbon_dropDownPopupTheme" format="reference"/>
+    <attr name="carbon_toolbarTheme" format="reference"/>
 
     <attr name="carbon_autoCompleteLayoutStyle" format="reference"/>
     <declare-styleable name="AutoCompleteLayout">

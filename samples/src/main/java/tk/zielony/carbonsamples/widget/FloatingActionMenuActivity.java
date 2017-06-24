@@ -23,7 +23,7 @@ public class FloatingActionMenuActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.floatingActionMenuActivity_title));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setMenu(R.menu.menu_fab);
         FloatingActionMenu floatingActionMenu = fab.getFloatingActionMenu();
         floatingActionMenu.setFocusable(false);
@@ -37,21 +37,21 @@ public class FloatingActionMenuActivity extends SamplesActivity {
             item.setBackgroundDrawable(new ColorDrawable(getResources().getColor(ColorsActivity.primary[i].color)));
         }
 
-        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        FloatingActionButton fab2 = findViewById(R.id.fab2);
         Menu menu2 = fab2.getFloatingActionMenu().getMenu();
         for (int i = 0; i < menu2.size(); i++) {
             MenuItem item = (MenuItem) menu2.getItem(i);
             item.setEnabled(i % 2 == 0);
         }
 
-        FloatingActionButton fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+        FloatingActionButton fab3 = findViewById(R.id.fab3);
         Menu menu3 = fab3.getFloatingActionMenu().getMenu();
         for (int i = 0; i < menu3.size(); i++) {
             MenuItem item = (MenuItem) menu3.getItem(i);
             item.setVisible(i % 2 == 0);
         }
 
-        FloatingActionButton fab4 = (FloatingActionButton) findViewById(R.id.fab4);
+        FloatingActionButton fab4 = findViewById(R.id.fab4);
         Menu menu4 = fab4.getFloatingActionMenu().getMenu();
         for (int i = 0; i < menu4.size(); i++) {
             MenuItem item = (MenuItem) menu4.getItem(i);

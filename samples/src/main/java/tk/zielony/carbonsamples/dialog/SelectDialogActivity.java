@@ -29,8 +29,8 @@ public class SelectDialogActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.simpleDialogActivity_title));
 
-        EditText titleText = (EditText) findViewById(R.id.titleText);
-        DropDown<String> dropDown = (DropDown<String>) findViewById(R.id.dropDown);
+        EditText titleText = findViewById(R.id.titleText);
+        DropDown<String> dropDown = findViewById(R.id.dropDown);
         dropDown.setItems(new String[]{"Single select", "Multi select"});
 
         StringFruitGenerator generator = new StringFruitGenerator();

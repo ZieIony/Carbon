@@ -3,8 +3,8 @@ package tk.zielony.carbonsamples.dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import java.io.Serializable;
-import java.util.Arrays;
+import com.annimon.stream.Stream;
+
 import java.util.List;
 
 import carbon.component.DefaultImageTextSubtextDateItem;
@@ -30,18 +30,9 @@ public class ListDialogActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.listDialogActivity_title));
 
-        EditText titleText = (EditText) findViewById(R.id.titleText);
+        EditText titleText = findViewById(R.id.titleText);
 
-        List<Serializable> items = Arrays.asList(
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem());
+        List<DefaultImageTextSubtextDateItem> items = Stream.generate(DefaultImageTextSubtextDateItem::new).limit(9).toList();
 
         RandomData randomData = new RandomData();
         randomData.addGenerators(new Generator[]{
@@ -53,8 +44,8 @@ public class ListDialogActivity extends SamplesActivity {
         randomData.fill(items);
 
         findViewById(R.id.button).setOnClickListener(view -> {
-            ListDialog<Serializable> dialog = new ListDialog<>(this);
-            dialog.setItems(items, ImageTextSubtextDateRow.FACTORY);
+            ListDialog<DefaultImageTextSubtextDateItem> dialog = new ListDialog<>(this);
+            dialog.setItems(items, ImageTextSubtextDateRow::new);
             if (titleText.length() > 0)
                 dialog.setTitle(titleText.getText());
             dialog.show();

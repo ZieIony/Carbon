@@ -32,7 +32,7 @@ public class PopupMenu  extends PopupWindow {
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         recycler = getContentView().findViewById(R.id.recycler);
-        recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        recycler.setLayoutManager(new LinearLayoutManager(context));
         recycler.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_UP &&
                     (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK)) {

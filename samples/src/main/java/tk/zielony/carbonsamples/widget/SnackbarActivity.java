@@ -22,13 +22,13 @@ public class SnackbarActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.snackbarActivity_title));
 
-        final CheckBox tapCheckBox = (CheckBox) findViewById(R.id.tap);
-        final CheckBox swipeCheckBox = (CheckBox) findViewById(R.id.swipe);
-        final CheckBox floatingCheckBox = (CheckBox) findViewById(R.id.floating);
-        final CheckBox infiniteCheckBox = (CheckBox) findViewById(R.id.infinite);
-        final CheckBox pushCheckBox = (CheckBox) findViewById(R.id.push);
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        RelativeLayout root = (RelativeLayout) findViewById(R.id.root);
+        final CheckBox tapCheckBox = findViewById(R.id.tap);
+        final CheckBox swipeCheckBox = findViewById(R.id.swipe);
+        final CheckBox floatingCheckBox = findViewById(R.id.floating);
+        final CheckBox infiniteCheckBox = findViewById(R.id.infinite);
+        final CheckBox pushCheckBox = findViewById(R.id.push);
+        final FloatingActionButton fab = findViewById(R.id.fab);
+        RelativeLayout root = findViewById(R.id.root);
 
         findViewById(R.id.button).setOnClickListener(view -> {
             final Snackbar snackbar = new Snackbar(SnackbarActivity.this, "Hello world!", infiniteCheckBox.isChecked() ? Snackbar.INFINITE : getResources().getInteger(R.integer.carbon_snackbarDuration));

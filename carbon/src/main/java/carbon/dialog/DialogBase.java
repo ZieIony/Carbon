@@ -66,7 +66,7 @@ public abstract class DialogBase extends android.app.Dialog {
         container.addView(view);
     }
 
-    protected void initLayout() {
+    private void initLayout() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Window window = getWindow();
         if (window != null) {
@@ -80,7 +80,7 @@ public abstract class DialogBase extends android.app.Dialog {
     }
 
     protected void dividerCallback(int contentHeight) {
-        if (container.getChildCount() == 0 || container.getChildAt(0).getHeight() <= contentHeight) {
+        if (container.getChildCount() == 0 || container.getChildAt(0).getHeight() < contentHeight) {
             if (topDivider != null)
                 topDivider.setVisibility(View.GONE);
             if (bottomDivider != null)

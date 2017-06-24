@@ -109,10 +109,10 @@
     </style>
 
     <style name="carbon_TextAppearance.Button.Dark">
-        <item name="android:textColor">@color/carbon_text_primary_dark</item>
+        <item name="android:textColor">@color/carbon_text_primary_light</item>
     </style>
 
     <style name="carbon_TextAppearance.Button.Light">
-        <item name="android:textColor">@color/carbon_text_primary_light</item>
+        <item name="android:textColor">@color/carbon_text_primary_dark</item>
     </style>
 </resources>

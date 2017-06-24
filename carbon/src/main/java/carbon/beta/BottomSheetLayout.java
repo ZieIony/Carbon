@@ -105,7 +105,7 @@ public class BottomSheetLayout extends LinearLayout {
 
         ArrayList<Serializable> items = new ArrayList<>();
         items.addAll(menu.getVisibleItems());
-        if(style == Style.List) {
+        if (style == Style.List) {
             for (int i = 0; i < items.size() - 1; i++) {
                 if (((android.view.MenuItem) items.get(i)).getGroupId() != ((android.view.MenuItem) items.get(i + 1)).getGroupId())
                     items.add(++i, new DividerItem());
@@ -113,7 +113,7 @@ public class BottomSheetLayout extends LinearLayout {
             items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
         }
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<>(MenuItem.class, style == Style.List ? BottomSheetRow.FACTORY : BottomSheetCell.FACTORY);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(MenuItem.class, style == Style.List ? BottomSheetRow::new : BottomSheetCell::new);
         adapter.addFactory(PaddingItem.class, PaddingRow::new);
         adapter.addFactory(DividerItem.class, DividerRow::new);
         adapter.setItems(items);

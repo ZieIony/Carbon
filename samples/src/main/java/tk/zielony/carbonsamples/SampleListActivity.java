@@ -23,13 +23,13 @@ public class SampleListActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_samplelist);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
+        RecyclerView recyclerView = findViewById(R.id.list);
         recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
-                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false) :
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                new GridLayoutManager(this, 2) :
+                new LinearLayoutManager(this));
         adapter = new RowArrayAdapter<>(SampleActivityItem.class, parent -> new DataBindingComponent<>(recyclerView, R.layout.row_main));
-        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-        adapter.addFactory(String.class, parent -> new DataBindingComponent<String>(parent, R.layout.row_description));
+        adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.addFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));
         adapter.setOnItemClickedListener((view, item, position) -> {
             if (item instanceof SampleActivityItem) {
                 Class activityClass = ((SampleActivityItem) item).getActivityClass();

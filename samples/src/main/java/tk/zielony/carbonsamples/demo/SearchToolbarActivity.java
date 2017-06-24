@@ -17,7 +17,7 @@ public class SearchToolbarActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchtoolbar);
 
-        LinearLayout searchEditText = (LinearLayout) findViewById(R.id.searchbar);
+        LinearLayout searchEditText = findViewById(R.id.searchbar);
         View searchButton = findViewById(R.id.search);
         searchButton.setOnClickListener(v -> {
             searchEditText.setVisibility(View.VISIBLE);

@@ -17,7 +17,7 @@ public class NavigationViewActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.navigationViewActivity_title));
 
-        NavigationView drawerMenu = (NavigationView) findViewById(R.id.drawerMenu);
+        NavigationView drawerMenu = findViewById(R.id.drawerMenu);
         drawerMenu.setMenu(R.menu.menu_navigation);
     }
 

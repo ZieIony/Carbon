@@ -4,11 +4,9 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.ViewGroup;
 
 import carbon.R;
-import carbon.recycler.RowFactory;
 import carbon.widget.EditText;
 
-public class IconPasswordRow extends DataBindingComponent<IconPasswordItem> {
-    public static final RowFactory FACTORY = IconPasswordRow::new;
+public class IconPasswordRow<Type extends IconPasswordItem> extends DataBindingComponent<Type> {
 
     private EditText editText;
 

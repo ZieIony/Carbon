@@ -5,10 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import carbon.R;
-import carbon.recycler.RowFactory;
 
 public class DividerRow implements Component<DividerItem> {
-    public static final RowFactory FACTORY = DividerRow::new;
 
     private View view;
 

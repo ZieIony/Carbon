@@ -22,8 +22,8 @@ public class ExpandableRecyclerActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.expandableRecyclerActivity_title));
 
-        final ExpandableRecyclerView recyclerView = (ExpandableRecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        final ExpandableRecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         final ExpandableFruitAdapter fruitAdapter = new ExpandableFruitAdapter(fruits);
         recyclerView.setAdapter(fruitAdapter);
     }

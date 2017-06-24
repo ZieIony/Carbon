@@ -23,9 +23,15 @@
         android:text="cancel"/>
 
     <carbon.widget.Button
-        android:id="@+id/button"
+        android:id="@+id/showDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_margin"
         android:text="show dialog"/>
+    <carbon.widget.Button
+        android:id="@+id/showProgressDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/carbon_margin"
+        android:text="show progress dialog"/>
 </carbon.widget.LinearLayout>

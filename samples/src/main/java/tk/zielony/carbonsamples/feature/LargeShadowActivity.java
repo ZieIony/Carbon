@@ -27,7 +27,7 @@ public class LargeShadowActivity extends SamplesActivity {
         View parent = (View) view.getParent();
         int margin = getResources().getDimensionPixelSize(R.dimen.carbon_margin);
 
-        ImageView imageView = (ImageView) findViewById(R.id.image);
+        ImageView imageView = findViewById(R.id.image);
         imageView.setImageDrawable(new DrawableImageGenerator(this).next());
 
         animator = ValueAnimator.ofFloat(0.2f, 1);

@@ -16,8 +16,8 @@ public class AutoSizeTextActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.autoSizeTextActivity_title));
 
-        TextView autoSizeText = (TextView) findViewById(R.id.autoSizeText);
-        TextView textSize = (TextView) findViewById(R.id.textSize);
+        TextView autoSizeText = findViewById(R.id.autoSizeText);
+        TextView textSize = findViewById(R.id.textSize);
         autoSizeText.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             textSize.setTextSize(TypedValue.COMPLEX_UNIT_PX, autoSizeText.getTextSize());
             textSize.setText(autoSizeText.getTextSize() / getResources().getDisplayMetrics().scaledDensity + "sp");

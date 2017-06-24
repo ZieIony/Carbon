@@ -21,7 +21,7 @@ public class TabsActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.tabsActivity_title));
 
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        ViewPager pager = findViewById(R.id.pager);
         pager.setAdapter(new PagerAdapter() {
             @Override
             public CharSequence getPageTitle(int position) {
@@ -58,9 +58,9 @@ public class TabsActivity extends SamplesActivity {
             }
 
         });
-        PagerTabStrip tabs = (PagerTabStrip) findViewById(R.id.tabStrip);
+        PagerTabStrip tabs = findViewById(R.id.tabStrip);
         tabs.setViewPager(pager);
-        ViewPagerIndicator indicator = (ViewPagerIndicator) findViewById(R.id.indicator);
+        ViewPagerIndicator indicator = findViewById(R.id.indicator);
         indicator.setViewPager(pager);
     }
 }

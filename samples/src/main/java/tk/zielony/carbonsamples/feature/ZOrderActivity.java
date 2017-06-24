@@ -19,8 +19,8 @@ public class ZOrderActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.zOrderActivity_title));
 
-        final FrameLayout layout = (FrameLayout) findViewById(R.id.layout);
-        Button button = (Button) findViewById(R.id.button);
+        final FrameLayout layout = findViewById(R.id.layout);
+        Button button = findViewById(R.id.button);
         button.setOnClickListener(view -> {
             ((ShadowView) layout.getChildAt(0)).setElevation(getResources().getDimension(R.dimen.carbon_1dip) * (flag ? 2 : 3));
             ((ShadowView) layout.getChildAt(1)).setElevation(getResources().getDimension(R.dimen.carbon_1dip) * (flag ? 3 : 2));

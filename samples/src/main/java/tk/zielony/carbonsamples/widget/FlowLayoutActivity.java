@@ -27,7 +27,7 @@ public class FlowLayoutActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.flowLayoutActivity_title));
 
-        FlowLayout layout = (FlowLayout) findViewById(R.id.flowLayout);
+        FlowLayout layout = findViewById(R.id.flowLayout);
         Stream.of(layout.getViews()).filter(v -> v instanceof Chip).forEach(v -> {
             final Chip chip = (Chip) v;
             chip.setText(fruits.get((int) (Math.random() * fruits.size())));

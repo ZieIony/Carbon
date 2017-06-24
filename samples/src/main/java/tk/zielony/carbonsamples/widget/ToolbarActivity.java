@@ -14,7 +14,7 @@ public class ToolbarActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setIconVisible(true);
 
         setSupportActionBar(toolbar);

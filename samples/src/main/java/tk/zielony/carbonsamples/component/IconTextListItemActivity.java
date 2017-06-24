@@ -35,12 +35,12 @@ public class IconTextListItemActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.iconTextListItemActivity_title));
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<Serializable>(DefaultIconTextItem.class, IconTextRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-        adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow(parent, new ArraySearchDataProvider<>(new String[]{}), filterResults -> {
+        adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow<>(parent, new ArraySearchDataProvider<>(new String[]{}), filterResults -> {
         }));
         recycler.setAdapter(adapter);
 

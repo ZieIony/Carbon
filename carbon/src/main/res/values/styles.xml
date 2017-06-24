@@ -16,6 +16,7 @@
         <item name="android:dialogTheme">@style/carbon_Theme.Dark.Dialog</item>
 
         <item name="toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="carbon_toolbarTheme">@style/carbon_Theme.Light</item>
         <item name="checkedTextViewStyle">@style/carbon_CheckedTextView</item>
 
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
@@ -154,6 +155,7 @@
         <item name="android:dialogTheme">@style/carbon_Theme.Light.Dialog</item>
 
         <item name="toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="carbon_toolbarTheme">@style/carbon_Theme.Dark</item>
         <item name="checkedTextViewStyle">@style/carbon_CheckedTextView</item>
 
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
@@ -304,7 +306,7 @@
         <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
         <item name="android:background">@null</item>
         <item name="android:textColor">@null</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
     </style>
 
     <style name="carbon_ToggleButton" parent="@android:style/Widget.Button.Toggle">

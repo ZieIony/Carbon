@@ -12,7 +12,7 @@ public class BottomBarActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottombar);
 
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        BottomBar bottomBar = findViewById(R.id.bottomBar);
         bottomBar.setMenu(R.menu.menu_navigation);
     }
 }

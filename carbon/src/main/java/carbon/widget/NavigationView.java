@@ -62,7 +62,7 @@ public class NavigationView extends RecyclerView {
     }
 
     private void initNavigationView() {
-        setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
@@ -85,9 +85,9 @@ public class NavigationView extends RecyclerView {
     private void setMenuInternal(Menu menu) {
         this.menu = menu;
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<>(MenuItem.class, NavigationRow.FACTORY);
-        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-        adapter.addFactory(DividerItem.class, DividerRow.FACTORY);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(MenuItem.class, NavigationRow::new);
+        adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.addFactory(DividerItem.class, DividerRow::new);
         setAdapter(adapter);
 
         ArrayList<Serializable> items = new ArrayList<>();

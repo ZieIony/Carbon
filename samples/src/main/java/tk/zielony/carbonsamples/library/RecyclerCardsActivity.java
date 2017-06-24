@@ -22,8 +22,8 @@ public class RecyclerCardsActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.recyclerCardsActivity_title));
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         RandomData randomData = new RandomData();
         randomData.addGenerators(new Generator[]{

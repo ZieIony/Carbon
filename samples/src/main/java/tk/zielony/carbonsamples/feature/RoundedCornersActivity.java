@@ -17,7 +17,7 @@ public class RoundedCornersActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.roundedCornersActivity_title));
 
-        ImageView view = (ImageView) findViewById(R.id.image);
+        ImageView view = findViewById(R.id.image);
         view.setImageDrawable(new DrawableImageGenerator(this).next(null));
     }
 }

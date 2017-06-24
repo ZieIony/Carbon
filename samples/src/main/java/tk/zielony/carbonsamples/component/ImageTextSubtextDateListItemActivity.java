@@ -54,13 +54,13 @@ public class ImageTextSubtextDateListItemActivity extends SamplesActivity {
         });
         randomData.fill(items);
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<Serializable>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-        adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow.FACTORY);
+        adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow::new);
 
 
         recycler.setAdapter(adapter);

@@ -1,6 +1,7 @@
 package tk.zielony.carbonsamples.animation;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
@@ -20,6 +21,7 @@ public class PathAnimationActivity extends SamplesActivity {
 
     boolean expanded = false;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +29,10 @@ public class PathAnimationActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.pathAnimationActivity_title));
 
-        ImageView imageView = (ImageView) findViewById(R.id.image);
+        ImageView imageView = findViewById(R.id.image);
         imageView.setImageDrawable(new DrawableImageGenerator(this).next());
 
-        LinearLayout card = (LinearLayout) findViewById(R.id.card);
+        LinearLayout card = findViewById(R.id.card);
 
         View layout = findViewById(R.id.layout);
         layout.setOnTouchListener((v, event) -> {

@@ -31,7 +31,7 @@ public class BehaviorActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_behavior);
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter<DefaultAvatarTextItem> adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow::new);
         recycler.setAdapter(adapter);
@@ -46,8 +46,8 @@ public class BehaviorActivity extends SamplesActivity {
 
         adapter.setItems(items);
 
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
-        LandscapeView landscapeView = (LandscapeView) findViewById(R.id.rect);
+        RelativeLayout layout = findViewById(R.id.layout);
+        LandscapeView landscapeView = findViewById(R.id.rect);
 
         layout.addBehavior(new Behavior<RecyclerView>(recycler) {
             @Override

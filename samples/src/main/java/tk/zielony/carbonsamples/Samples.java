@@ -39,18 +39,18 @@ public class Samples {
 
         final ImageView debug = activity.findViewById(R.id.debug);
         if (debug != null) {
-            debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_colorDisabled));
+            debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_iconColor));
             debug.setOnClickListener(new View.OnClickListener() {
                 boolean debugEnabled = false;
 
                 @Override
                 public void onClick(View view) {
                     if (!debugEnabled) {
-                        debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_iconColor));
+                        debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_iconColorInverse));
                         overlay.show();
                         debugEnabled = true;
                     } else {
-                        debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_colorDisabled));
+                        debug.setTint(Carbon.getThemeColor(activity, R.attr.carbon_iconColor));
                         overlay.dismiss();
                         debugEnabled = false;
                     }

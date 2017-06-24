@@ -31,7 +31,7 @@ public class FloatingActionMenu extends PopupWindow {
     android.view.MenuItem.OnMenuItemClickListener listener;
     private View anchor;
 
-    private RowListAdapter adapter;
+    private RowListAdapter<MenuItem> adapter;
 
     public FloatingActionMenu(Context context) {
         super(new RecyclerView(new CarbonContextWrapper(context)), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -75,7 +75,7 @@ public class FloatingActionMenu extends PopupWindow {
         boolean left = location[0] < display.getWidth() + anchor.getWidth() - location[0];
         boolean top = location[1] < display.getHeight() + anchor.getHeight() - location[1];
 
-        adapter = new RowListAdapter<>(MenuItem.class, left ? FloatingActionMenuLeftRow.FACTORY : FloatingActionMenuRightRow.FACTORY);
+        adapter = new RowListAdapter<>(MenuItem.class, left ? FloatingActionMenuLeftRow::new : FloatingActionMenuRightRow::new);
         content.setAdapter(adapter);
         adapter.setItems(menu.getVisibleItems());
         adapter.notifyDataSetChanged();

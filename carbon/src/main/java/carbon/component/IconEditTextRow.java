@@ -3,11 +3,9 @@ package carbon.component;
 import android.view.ViewGroup;
 
 import carbon.R;
-import carbon.recycler.RowFactory;
 import carbon.widget.EditText;
 
-public class IconEditTextRow extends DataBindingComponent<IconEditTextItem> {
-    public static final RowFactory FACTORY = IconEditTextRow::new;
+public class IconEditTextRow<Type extends IconEditTextItem> extends DataBindingComponent<Type> {
 
     private EditText editText;
 

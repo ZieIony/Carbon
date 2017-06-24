@@ -67,17 +67,17 @@ public class QuickReturnActivity extends SamplesActivity {
         });
         randomData.fill(items);
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setEdgeEffectOffsetTop(getResources().getDimension(R.dimen.carbon_toolbarHeight));
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        RowListAdapter adapter = new RowListAdapter<>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-        adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow.FACTORY);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
+        adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(items);
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final FloatingActionButton fab = findViewById(R.id.fab);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.quickReturnActivity_title));
         recycler.addOnScrollListener(new android.support.v7.widget.RecyclerView.OnScrollListener() {
             int yScroll = 0;

@@ -13,10 +13,10 @@ public class ButtonsUsageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buttonsusage);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setIconVisible(true);
 
-        ProgressBar progress = (ProgressBar) findViewById(R.id.progress);
+        ProgressBar progress = findViewById(R.id.progress);
         progress.setProgress(0.8f);
     }
 }

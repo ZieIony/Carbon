@@ -49,12 +49,12 @@ public class AvatarTextListItemActivity extends SamplesActivity {
         });
         randomData.fill(items);
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        RowListAdapter adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow.FACTORY);
-        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-        adapter.addFactory(DividerItem.class, DividerRow.FACTORY);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<Serializable>(DefaultAvatarTextItem.class, AvatarTextRow::new);
+        adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.addFactory(DividerItem.class, DividerRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(items);
     }

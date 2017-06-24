@@ -4,11 +4,9 @@ import android.view.ViewGroup;
 
 import carbon.R;
 import carbon.databinding.CarbonFloatingactionmenuLeftBinding;
-import carbon.recycler.RowFactory;
 import carbon.widget.FloatingActionButton;
 
 public class FloatingActionMenuLeftRow extends DataBindingComponent<MenuItem> {
-    public static final RowFactory FACTORY = FloatingActionMenuLeftRow::new;
 
     public FloatingActionMenuLeftRow(ViewGroup parent) {
         super(parent, R.layout.carbon_floatingactionmenu_left);

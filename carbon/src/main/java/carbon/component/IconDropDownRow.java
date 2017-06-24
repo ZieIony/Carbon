@@ -3,11 +3,9 @@ package carbon.component;
 import android.view.ViewGroup;
 
 import carbon.R;
-import carbon.recycler.RowFactory;
 import carbon.widget.DropDown;
 
-public class IconDropDownRow extends DataBindingComponent<IconDropDownItem> {
-    public static final RowFactory FACTORY = IconDropDownRow::new;
+public class IconDropDownRow<Type extends IconDropDownItem> extends DataBindingComponent<Type> {
 
     private DropDown dropDown;
 
@@ -17,7 +15,7 @@ public class IconDropDownRow extends DataBindingComponent<IconDropDownItem> {
     }
 
     @Override
-    public void bind(IconDropDownItem data) {
+    public void bind(Type data) {
         super.bind(data);
         dropDown.getAdapter().setItems(data.getItems());
     }

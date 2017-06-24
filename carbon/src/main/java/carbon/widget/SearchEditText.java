@@ -19,12 +19,12 @@ import carbon.internal.SimpleTextWatcher;
  * This class can be used to create new material search fields with drop down menus separated by a
  * seam.
  */
-public class SearchEditText extends EditText {
+public class SearchEditText<Type> extends EditText {
 
     private OnFilterListener onFilterListener;
     private String prevText = "";
 
-    public void setDataProvider(SearchDataProvider dataProvider) {
+    public void setDataProvider(SearchDataProvider<Type> dataProvider) {
         this.dataProvider = dataProvider;
     }
 
@@ -38,7 +38,7 @@ public class SearchEditText extends EditText {
     }
 
     protected TextWatcher searchTextWatcher;
-    SearchDataProvider dataProvider;
+    SearchDataProvider<Type> dataProvider;
 
     public SearchEditText(Context context) {
         super(context, null, R.attr.carbon_searchEditTextStyle);
@@ -115,7 +115,7 @@ public class SearchEditText extends EditText {
         }
     }
 
-    List filteredItems = new ArrayList();
+    List<Type> filteredItems = new ArrayList<>();
 
     public void filter(String word) {
         filteredItems.clear();
@@ -129,8 +129,8 @@ public class SearchEditText extends EditText {
     }
 
     private void matchItem(String word, int i, String[] itemWords) {
-        for (int j = 0; j < itemWords.length; j++) {
-            String itemText = itemWords[j].toLowerCase();
+        for (String itemWord : itemWords) {
+            String itemText = itemWord.toLowerCase();
             if (itemText.indexOf(word) == 0) {
                 filteredItems.add(dataProvider.getItem(i));
                 return;

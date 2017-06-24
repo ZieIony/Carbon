@@ -46,7 +46,7 @@ public class AutoCompleteLayout extends LinearLayout {
         setOrientation(VERTICAL);
         search = findViewById(R.id.carbon_autoCompleteSearch);
         results = findViewById(R.id.carbon_autoCompleteResults);
-        results.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        results.setLayoutManager(new LinearLayoutManager(getContext()));
         ColorDrawable colorDrawable = new ColorDrawable(Carbon.getThemeColor(getContext(), R.attr.carbon_dividerColor));
         int dividerWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
         results.addItemDecoration(new DividerItemDecoration(colorDrawable, dividerWidth));

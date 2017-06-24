@@ -37,7 +37,7 @@ public class TableView extends RecyclerView {
     }
 
     private void initTableView(Context context) {
-        setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        setLayoutManager(new LinearLayoutManager(context));
         putCellRenderer(String.class, new StringRenderer());
         putCellRenderer(Integer.class, new IntegerRenderer());
         putCellRenderer(Float.class, new FloatRenderer());

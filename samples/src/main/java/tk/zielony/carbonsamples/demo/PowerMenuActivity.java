@@ -34,13 +34,13 @@ public class PowerMenuActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_powermenu);
 
-        button = (Button) findViewById(R.id.button);
-        powerMenu = (LinearLayout) findViewById(R.id.powerMenu);
-        transition = (FrameLayout) findViewById(R.id.transition);
-        screenPowerMenu = (LinearLayout) findViewById(R.id.screen_powerMenu);
-        screenPowerOff = (FrameLayout) findViewById(R.id.screen_powerOff);
-        screenReboot = (FrameLayout) findViewById(R.id.screen_reboot);
-        screenAirplaneMode = (FrameLayout) findViewById(R.id.screen_airplaneMode);
+        button = findViewById(R.id.button);
+        powerMenu = findViewById(R.id.powerMenu);
+        transition = findViewById(R.id.transition);
+        screenPowerMenu = findViewById(R.id.screen_powerMenu);
+        screenPowerOff = findViewById(R.id.screen_powerOff);
+        screenReboot = findViewById(R.id.screen_reboot);
+        screenAirplaneMode = findViewById(R.id.screen_airplaneMode);
 
         button.setOnClickListener(view -> {
             if (powerMenu.getVisibility() == View.VISIBLE)
@@ -147,7 +147,7 @@ public class PowerMenuActivity extends SamplesActivity {
                 });
                 circularReveal2.start();
                 airplaneMode = !airplaneMode;
-                TextView amStatus = (TextView) findViewById(R.id.airplaneModeStatus);
+                TextView amStatus = findViewById(R.id.airplaneModeStatus);
                 amStatus.setText("Airplane Mode is " + (airplaneMode ? "on" : "off"));
                 ImageView airplaneModeIcon = view.findViewById(R.id.airplaneModeIcon);
                 airplaneModeIcon.setImageResource(airplaneMode ? R.raw.ic_airplanemode_on_24px : R.raw.ic_airplanemode_off_24px);

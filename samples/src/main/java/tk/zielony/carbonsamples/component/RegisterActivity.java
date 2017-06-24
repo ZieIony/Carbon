@@ -33,15 +33,15 @@ public class RegisterActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.registerActivity_title));
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconEditTextItem.class, IconEditTextRow.FACTORY);
-        adapter.addFactory(PaddingItem.class, PaddingRow.FACTORY);
-        adapter.addFactory(String.class, parent -> new DataBindingComponent(parent, R.layout.row_description));
-        adapter.addFactory(DividerItem.class, DividerRow.FACTORY);
-        adapter.addFactory(DefaultIconPasswordItem.class, IconPasswordRow.FACTORY);
-        adapter.addFactory(DefaultIconDropDownItem.class, IconDropDownRow.FACTORY);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconEditTextItem.class, IconEditTextRow::new);
+        adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.addFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));
+        adapter.addFactory(DividerItem.class, DividerRow::new);
+        adapter.addFactory(DefaultIconPasswordItem.class, IconPasswordRow::new);
+        adapter.addFactory(DefaultIconDropDownItem.class, IconDropDownRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),

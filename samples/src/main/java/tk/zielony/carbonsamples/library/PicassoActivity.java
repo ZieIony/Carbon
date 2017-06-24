@@ -18,8 +18,8 @@ public class PicassoActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.picassoActivity_title));
 
-        final PicassoView image = (PicassoView) findViewById(R.id.image);
-        Button button = (Button) findViewById(R.id.button);
+        final PicassoView image = findViewById(R.id.image);
+        Button button = findViewById(R.id.button);
         button.clicks().subscribe(view -> {
             Picasso.with(PicassoActivity.this).load("http://lorempixel.com/" + image.getWidth() + "/" + image.getHeight() + "/people/#" + System.currentTimeMillis()).into((Target) image);
         });

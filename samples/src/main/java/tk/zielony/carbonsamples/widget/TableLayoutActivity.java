@@ -23,7 +23,7 @@ public class TableLayoutActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.tableLayoutActivity_title));
 
-        TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout);
+        TableLayout tableLayout = findViewById(R.id.tableLayout);
         List<List<Object>> items = new ArrayList<>();
         items.add(Arrays.asList(new Object[]{"Samsung", "GT-9001", 0.32f, false}));
         items.add(Arrays.asList(new Object[]{"Sony", "Z3c", 0.14f, false}));

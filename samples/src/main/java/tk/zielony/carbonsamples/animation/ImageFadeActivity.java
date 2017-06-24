@@ -21,7 +21,7 @@ public class ImageFadeActivity extends SamplesActivity {
 
         Samples.initToolbar(this, getString(R.string.imageFadeActivity_title));
 
-        FrameLayout grid = (FrameLayout) findViewById(R.id.grid);
+        FrameLayout grid = findViewById(R.id.grid);
 
         DrawableImageGenerator imageGenerator = new DrawableImageGenerator(this);
         DataContext dataContext = new DataContext();

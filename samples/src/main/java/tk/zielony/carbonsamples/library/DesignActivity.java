@@ -14,8 +14,7 @@ public class DesignActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design);
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("Design Support Library");
     }
 
