@@ -20,230 +20,95 @@
             android:name="com.samsung.android.icon_container.has_icon_container"
             android:value="true"/>
 
-        <activity
-            android:name="tk.zielony.carbonsamples.MainActivity"
-            android:label="@string/app_name">
+        <activity android:name="tk.zielony.carbonsamples.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".widget.ButtonsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.SVGActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.SnackbarActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.TextFieldsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.CircularProgressActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.ProgressBarsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.TabsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.CheckBoxRadioActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.ScrollViewActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.RecyclerActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.ExpandableRecyclerActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.DropDownActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".widget.ButtonsActivity"/>
+        <activity android:name=".widget.SVGActivity"/>
+        <activity android:name=".widget.SnackbarActivity"/>
+        <activity android:name=".widget.TextFieldsActivity"/>
+        <activity android:name=".widget.CircularProgressActivity"/>
+        <activity android:name=".widget.ProgressBarsActivity"/>
+        <activity android:name=".widget.TabsActivity"/>
+        <activity android:name=".widget.CheckBoxRadioActivity"/>
+        <activity android:name=".widget.ScrollViewActivity"/>
+        <activity android:name=".widget.RecyclerActivity"/>
+        <activity android:name=".widget.ExpandableRecyclerActivity"/>
+        <activity android:name=".widget.DropDownActivity"/>
         <activity
             android:name=".widget.NavigationViewActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.Translucent"/>
-        <activity
-            android:name=".widget.SeekBarActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.ToolbarActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.FlowLayoutActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.TableLayoutActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.FloatingActionMenuActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.BottomBarActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".widget.BottomSheetActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".widget.SeekBarActivity"/>
+        <activity android:name=".widget.ToolbarActivity"/>
+        <activity android:name=".widget.FlowLayoutActivity"/>
+        <activity android:name=".widget.TableLayoutActivity"/>
+        <activity android:name=".widget.FloatingActionMenuActivity"/>
+        <activity android:name=".widget.BottomBarActivity"/>
+        <activity android:name=".widget.BottomSheetActivity"/>
 
-        <activity
-            android:name=".animation.ImageFadeActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".animation.RippleActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".animation.WidgetAnimationsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".animation.PathAnimationActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".animation.ImageFadeActivity"/>
+        <activity android:name=".animation.RippleActivity"/>
+        <activity android:name=".animation.WidgetAnimationsActivity"/>
+        <activity android:name=".animation.PathAnimationActivity"/>
 
-        <activity
-            android:name=".feature.AutoSizeTextActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.BehaviorActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.HtmlActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.RoundedCornersActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.AnchorActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.ShadowActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.LargeShadowActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.RobotoActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.TextAppearanceActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.ZOrderActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.ContextWrapperActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.PercentLayoutActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.TextMarkerActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".feature.ThemeActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".feature.AutoSizeTextActivity"/>
+        <activity android:name=".feature.BehaviorActivity"/>
+        <activity android:name=".feature.HtmlActivity"/>
+        <activity android:name=".feature.RoundedCornersActivity"/>
+        <activity android:name=".feature.AnchorActivity"/>
+        <activity android:name=".feature.ShadowActivity"/>
+        <activity android:name=".feature.LargeShadowActivity"/>
+        <activity android:name=".feature.RobotoActivity"/>
+        <activity android:name=".feature.TextAppearanceActivity"/>
+        <activity android:name=".feature.ZOrderActivity"/>
+        <activity android:name=".feature.ContextWrapperActivity"/>
+        <activity android:name=".feature.PercentLayoutActivity"/>
+        <activity android:name=".feature.TextMarkerActivity"/>
+        <activity android:name=".feature.ThemeActivity"/>
 
-        <activity
-            android:name=".comparison.TextViewComparisonActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".comparison.CardViewComparisonActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".comparison.TextViewComparisonActivity"/>
+        <activity android:name=".comparison.CardViewComparisonActivity"/>
 
-        <activity
-            android:name=".library.PicassoActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".library.RecyclerCardsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".library.DesignActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".library.ConstraintLayoutActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".library.PicassoActivity"/>
+        <activity android:name=".library.RecyclerCardsActivity"/>
+        <activity android:name=".library.DesignActivity"/>
+        <activity android:name=".library.ConstraintLayoutActivity"/>
 
-        <activity
-            android:name=".demo.PowerMenuActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".demo.QuickReturnActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".demo.AutoCompleteActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".demo.SearchToolbarActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".demo.ShareToolbarActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".demo.PowerMenuActivity"/>
+        <activity android:name=".demo.QuickReturnActivity"/>
+        <activity android:name=".demo.AutoCompleteActivity"/>
+        <activity android:name=".demo.SearchToolbarActivity"/>
+        <activity android:name=".demo.ShareToolbarActivity"/>
 
         <activity
             android:name=".guidelines.ButtonsUsageActivity"
-            android:label="@string/app_name"
             android:theme="@style/RaisedButtonStyle"/>
 
-        <activity
-            android:name=".component.IconTextListItemActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".component.AvatarTextListItemActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".component.ImageTextSubtextDateListItemActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".component.RegisterActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".component.IconTextListItemActivity"/>
+        <activity android:name=".component.AvatarTextListItemActivity"/>
+        <activity android:name=".component.ImageTextSubtextDateListItemActivity"/>
+        <activity android:name=".component.AvatarTextRatingSubtextDateListItemActivity"/>
+        <activity android:name=".component.RegisterActivity"/>
 
-        <activity
-            android:name=".dialog.ListDialogActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".dialog.ProgressDialogActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".dialog.SelectDialogActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".dialog.SimpleDialogActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".dialog.ListDialogActivity"/>
+        <activity android:name=".dialog.ProgressDialogActivity"/>
+        <activity android:name=".dialog.SelectDialogActivity"/>
+        <activity android:name=".dialog.SimpleDialogActivity"/>
 
-        <activity
-            android:name=".AnimationsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".LibrariesActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".ColorsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".ComponentsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".DemosActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".FeaturesActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".ComparisonActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".GuidelinesActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".WidgetsActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".DialogsActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".AnimationsActivity"/>
+        <activity android:name=".LibrariesActivity"/>
+        <activity android:name=".ColorsActivity"/>
+        <activity android:name=".ComponentsActivity"/>
+        <activity android:name=".DemosActivity"/>
+        <activity android:name=".FeaturesActivity"/>
+        <activity android:name=".ComparisonActivity"/>
+        <activity android:name=".GuidelinesActivity"/>
+        <activity android:name=".WidgetsActivity"/>
+        <activity android:name=".DialogsActivity"/>
     </application>
 
 </manifest>

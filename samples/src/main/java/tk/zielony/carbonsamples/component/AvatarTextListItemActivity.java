@@ -52,7 +52,7 @@ public class AvatarTextListItemActivity extends SamplesActivity {
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<Serializable>(DefaultAvatarTextItem.class, AvatarTextRow::new);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow::new);
         adapter.addFactory(PaddingItem.class, PaddingRow::new);
         adapter.addFactory(DividerItem.class, DividerRow::new);
         recycler.setAdapter(adapter);

@@ -38,7 +38,7 @@ public class IconTextListItemActivity extends SamplesActivity {
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<Serializable>(DefaultIconTextItem.class, IconTextRow::new);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconTextItem.class, IconTextRow::new);
         adapter.addFactory(PaddingItem.class, PaddingRow::new);
         adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow<>(parent, new ArraySearchDataProvider<>(new String[]{}), filterResults -> {
         }));

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +14,10 @@ import android.view.ViewGroup;
 import carbon.R;
 
 public class TextMarker extends View {
-    Paint paint;
+    TextPaint paint;
     Rect rect = new Rect();
-    String text = "I";
+    Rect rect2 = new Rect();
+    CharSequence text = "I";
     private int id;
     private int baseline;
 
@@ -54,11 +58,11 @@ public class TextMarker extends View {
         return paint;
     }
 
-    public void setPaint(Paint paint) {
+    public void setPaint(TextPaint paint) {
         this.paint = paint;
     }
 
-    public String getText() {
+    public CharSequence getText() {
         return text;
     }
 
@@ -68,17 +72,31 @@ public class TextMarker extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (paint == null && id != 0) {
-            paint = ((android.widget.TextView) ((ViewGroup) getParent()).findViewById(id)).getPaint();
-            paint.getTextBounds(text, 0, text.length(), rect);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (id != 0) {
+            android.widget.TextView textView = ((ViewGroup) getParent()).findViewById(id);
+            if (text == null)
+                text = textView.getText();
+            paint = textView.getPaint();
+
+            StaticLayout layout = new StaticLayout(text, paint, getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+
+            String firstLine = text.subSequence(0, layout.getLineEnd(0)).toString();
+            paint.getTextBounds(firstLine, 0, firstLine.length(), rect);
             baseline = Math.abs(rect.top);
+            rect.top = -layout.getLineAscent(0) + rect.top;
+
+            String lastLine = text.subSequence(layout.getLineStart(layout.getLineCount() - 1), layout.getLineEnd(layout.getLineCount() - 1)).toString();
+            paint.getTextBounds(lastLine, 0, lastLine.length(), rect2);
+            rect.bottom = layout.getHeight() - layout.getLineDescent(layout.getLineCount() - 1) + rect2.bottom;
+
+            setMeasuredDimension(getMeasuredWidth(), rect.height() + getPaddingTop() + getPaddingBottom());
         }
-        super.onMeasure(MeasureSpec.makeMeasureSpec(rect.width(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(rect.height(), MeasureSpec.EXACTLY));
     }
 
     @Override
     public int getBaseline() {
-        return baseline;
+        return baseline + getPaddingTop();
     }
 
 }

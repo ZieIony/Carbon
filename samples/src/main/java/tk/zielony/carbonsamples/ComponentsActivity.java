@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.component.AvatarTextListItemActivity;
+import tk.zielony.carbonsamples.component.AvatarTextRatingSubtextDateListItemActivity;
 import tk.zielony.carbonsamples.component.IconTextListItemActivity;
 import tk.zielony.carbonsamples.component.ImageTextSubtextDateListItemActivity;
 import tk.zielony.carbonsamples.component.RegisterActivity;
@@ -25,6 +26,7 @@ public class ComponentsActivity extends SampleListActivity {
                 new SampleActivityItem(IconTextListItemActivity.class, getString(R.string.iconTextListItemActivity_title)),
                 new SampleActivityItem(AvatarTextListItemActivity.class, getString(R.string.avatarTextListItemActivity_title)),
                 new SampleActivityItem(ImageTextSubtextDateListItemActivity.class, getString(R.string.imageTextSubtextDateListItemActivity_title)),
+                new SampleActivityItem(AvatarTextRatingSubtextDateListItemActivity.class, getString(R.string.avatarTextRatingSubtextDateListItemActivity_title)),
                 new SampleActivityItem(RegisterActivity.class, getString(R.string.registerActivity_title)),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
