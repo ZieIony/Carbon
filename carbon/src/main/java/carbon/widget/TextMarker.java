@@ -20,6 +20,7 @@ public class TextMarker extends View {
     CharSequence text = "I";
     private int id;
     private int baseline;
+    private StaticLayout layout;
 
     public TextMarker(Context context) {
         super(context);
@@ -79,7 +80,8 @@ public class TextMarker extends View {
                 text = textView.getText();
             paint = textView.getPaint();
 
-            StaticLayout layout = new StaticLayout(text, paint, getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+            if (layout == null)
+                layout = new StaticLayout(text, paint, getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
 
             String firstLine = text.subSequence(0, layout.getLineEnd(0)).toString();
             paint.getTextBounds(firstLine, 0, firstLine.length(), rect);

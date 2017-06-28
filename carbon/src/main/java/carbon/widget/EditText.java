@@ -68,16 +68,16 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
+import carbon.view.InputView;
 import carbon.view.RevealView;
 import carbon.view.StateAnimatorView;
 import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
-import carbon.view.ValidStateView;
 import carbon.view.VisibleView;
 
 @SuppressLint("AppCompatCustomView")
 public class EditText extends android.widget.EditText
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, InputView, AutoSizeTextView, RevealView, VisibleView {
 
     private Field mIgnoreActionUpEventField;
     private Object editor;

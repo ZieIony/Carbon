@@ -38,6 +38,7 @@
         <activity android:name=".widget.ScrollViewActivity"/>
         <activity android:name=".widget.RecyclerActivity"/>
         <activity android:name=".widget.ExpandableRecyclerActivity"/>
+        <activity android:name=".widget.ExpansionPanelActivity"/>
         <activity android:name=".widget.DropDownActivity"/>
         <activity
             android:name=".widget.NavigationViewActivity"

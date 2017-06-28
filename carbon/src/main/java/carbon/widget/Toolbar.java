@@ -213,47 +213,11 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     }
 
     @Override
-    public void addView(@NonNull View child) {
-        if (content != null) {
-            content.addView(child);
-        } else {
-            super.addView(child);
-        }
-    }
-
-    @Override
-    public void addView(@NonNull View child, int index) {
-        if (content != null) {
-            content.addView(child, index);
-        } else {
-            super.addView(child, index);
-        }
-    }
-
-    @Override
     public void addView(@NonNull View child, int index, ViewGroup.LayoutParams params) {
         if (content != null) {
             content.addView(child, index, params);
         } else {
             super.addView(child, index, params);
-        }
-    }
-
-    @Override
-    public void addView(@NonNull View child, ViewGroup.LayoutParams params) {
-        if (content != null) {
-            content.addView(child, params);
-        } else {
-            super.addView(child, params);
-        }
-    }
-
-    @Override
-    public void addView(@NonNull View child, int width, int height) {
-        if (content != null) {
-            content.addView(child, width, height);
-        } else {
-            super.addView(child, width, height);
         }
     }
 

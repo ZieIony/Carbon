@@ -2,7 +2,7 @@ package carbon.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +10,11 @@ import android.view.animation.DecelerateInterpolator;
 
 import carbon.R;
 
-public class ExpansionPanel extends RelativeLayout {
+public class ExpansionPanel extends LinearLayout {
     ImageView expandedIndicator;
-    private boolean expanded;
+    private boolean expanded = true;
+    private FrameLayout content;
+    private View header;
 
     public ExpansionPanel(Context context) {
         super(context);
@@ -36,16 +38,27 @@ public class ExpansionPanel extends RelativeLayout {
 
     private void initExpansionPanel() {
         View.inflate(getContext(), R.layout.carbon_expansionpanel, this);
-        setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         expandedIndicator = findViewById(R.id.carbon_groupExpandedIndicator);
+        header = findViewById(R.id.carbon_expansionPanelHeader);
+        content = findViewById(R.id.carbon_expansionPanelContent);
+        setOrientation(VERTICAL);
 
-        setOnClickListener(v -> {
+        header.setOnClickListener(v -> {
             if (isExpanded()) {
                 collapse();
             } else {
                 expand();
             }
         });
+    }
+
+    @Override
+    public void addView(@NonNull View child, int index, ViewGroup.LayoutParams params) {
+        if (content != null) {
+            content.addView(child, index, params);
+        } else {
+            super.addView(child, index, params);
+        }
     }
 
     public void expand() {
@@ -57,6 +70,7 @@ public class ExpansionPanel extends RelativeLayout {
             expandedIndicator.postInvalidate();
         });
         animator.start();
+        content.setVisibility(VISIBLE);
         expanded = true;
     }
 
@@ -69,11 +83,13 @@ public class ExpansionPanel extends RelativeLayout {
             expandedIndicator.postInvalidate();
         });
         animator.start();
+        content.setVisibility(GONE);
         expanded = false;
     }
 
     public void setExpanded(boolean expanded) {
         expandedIndicator.setRotation(expanded ? 180 : 0);
+        content.setVisibility(expanded ? VISIBLE : GONE);
         this.expanded = expanded;
     }
 

@@ -11,6 +11,7 @@ import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.CircularProgressActivity;
+import tk.zielony.carbonsamples.widget.ExpansionPanelActivity;
 import tk.zielony.carbonsamples.widget.NavigationViewActivity;
 import tk.zielony.carbonsamples.widget.DropDownActivity;
 import tk.zielony.carbonsamples.widget.ExpandableRecyclerActivity;
@@ -48,6 +49,7 @@ public class WidgetsActivity extends SampleListActivity {
                 new SampleActivityItem(ScrollViewActivity.class, getString(R.string.scrollViewActivity_title)),
                 new SampleActivityItem(RecyclerActivity.class, getString(R.string.recyclerViewActivity_title)),
                 new SampleActivityItem(ExpandableRecyclerActivity.class, getString(R.string.expandableRecyclerActivity_title)),
+                new SampleActivityItem(ExpansionPanelActivity.class, getString(R.string.expansionPanelActivity_title)),
                 new SampleActivityItem(DropDownActivity.class, getString(R.string.dropDownActivityActivity_title)),
                 new SampleActivityItem(NavigationViewActivity.class, getString(R.string.navigationViewActivity_title)),
                 new SampleActivityItem(SeekBarActivity.class, getString(R.string.seekBarActivity_title)),

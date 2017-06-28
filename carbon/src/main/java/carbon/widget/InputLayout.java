@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -18,6 +19,7 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.drawable.DefaultAccentColorStateList;
 import carbon.drawable.DefaultTextSecondaryColorStateList;
+import carbon.internal.SimpleTextWatcher;
 import carbon.internal.TypefaceUtils;
 import carbon.view.InputView;
 import carbon.view.ValidStateView;
@@ -191,6 +193,12 @@ public class InputLayout extends RelativeLayout {
                     editText.setTransformationMethod(transformationMethod);
                 }
                 return true;
+            });
+            editText.addTextChangedListener(new SimpleTextWatcher() {
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    updateCounter(editText);
+                }
             });
             clearImageView.setOnClickListener(view -> editText.setText(""));
 
