@@ -45,6 +45,7 @@
         <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
         <item name="carbon_navigationViewStyle">@style/carbon_NavigationView</item>
         <item name="carbon_inputLayoutStyle">@style/carbon_InputLayout</item>
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
         <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
@@ -68,6 +69,8 @@
         <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_light</item>
         <item name="carbon_colorForeground">@color/carbon_colorForeground_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
+        <item name="carbon_inputLayoutBoxColor">@color/carbon_white_10</item>
+        <item name="carbon_inputLayoutBoxPadding">0dp</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_active_dark</item>
@@ -127,6 +130,7 @@
         <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_light</item>
         <item name="carbon_colorForeground">@color/carbon_colorForeground_dark</item>
         <item name="carbon_dividerColor">@color/carbon_divider_dark</item>
+        <item name="carbon_inputLayoutBoxColor">@color/carbon_white_10</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_dark</item>
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_light</item>
         <item name="carbon_iconColor">@color/carbon_icon_active_dark</item>
@@ -241,6 +245,7 @@
         <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
         <item name="carbon_navigationViewStyle">@style/carbon_NavigationView</item>
         <item name="carbon_inputLayoutStyle">@style/carbon_InputLayout</item>
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
         <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
@@ -264,6 +269,8 @@
         <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
         <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
+        <item name="carbon_inputLayoutBoxColor">@color/carbon_black_6</item>
+        <item name="carbon_inputLayoutBoxPadding">0dp</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_active_light</item>
@@ -322,6 +329,7 @@
         <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
         <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
         <item name="carbon_dividerColor">@color/carbon_divider_light</item>
+        <item name="carbon_inputLayoutBoxColor">@color/carbon_black_6</item>
         <item name="carbon_rippleColor">@color/carbon_ripple_light</item>
         <item name="carbon_rippleColorInverse">@color/carbon_ripple_dark</item>
         <item name="carbon_iconColor">@color/carbon_icon_active_light</item>
@@ -441,7 +449,7 @@
         <item name="android:layout_height">@dimen/carbon_fabSize</item>
         <item name="android:padding">@dimen/carbon_padding</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">@drawable/carbon_defaultaccentbackground</item>
+        <item name="android:background">@drawable/carbon_defaultbackground</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_tint">?attr/carbon_iconColor</item>
         <item name="carbon_inAnimation">pop</item>
@@ -640,21 +648,72 @@
         <item name="carbon_labelFontFamily">"sans-serif"</item>
 
         <item name="android:gravity">start|left</item>
+
+        <item name="carbon_theme">@style/carbon_InputLayoutContainerTheme</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainerTheme" parent="">
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainer" parent="carbon_RelativeLayout">
+    </style>
+
+    <style name="carbon_InputLayout.Box">
+        <item name="carbon_theme">@style/carbon_InputLayoutContainerTheme.Box</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainerTheme.Box" parent="">
+        <item name="android:editTextStyle">@style/carbon_EditText.Box</item>
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer.Box</item>
+        <item name="carbon_inputLayoutBoxPadding">@dimen/carbon_padding</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainer.Box" parent="carbon_RelativeLayout">
+        <item name="carbon_cornerRadius">4dp</item>
+        <item name="android:background">?attr/carbon_inputLayoutBoxColor</item>
+    </style>
+
+    <style name="carbon_InputLayout.Stroke">
+        <item name="carbon_theme">@style/carbon_InputLayoutContainerTheme.Stroke</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainerTheme.Stroke" parent="">
+        <item name="android:editTextStyle">@style/carbon_EditText.Stroke</item>
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer.Stroke
+        </item>
+    </style>
+
+    <style name="carbon_InputLayoutContainer.Stroke" parent="carbon_RelativeLayout">
+        <item name="carbon_cornerRadius">4dp</item>
+        <item name="carbon_strokeWidth">1dp</item>
+        <item name="carbon_stroke">?attr/colorAccent</item>
     </style>
 
     <style name="carbon_EditText" parent="@android:style/Widget.EditText">
         <item name="android:textColor">@null</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
-        <item name="android:background">@null</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="carbon_underline">true</item>
+        <item name="android:background">@drawable/carbon_defaultbackground</item>
+        <item name="android:paddingBottom">@dimen/carbon_padding</item>
         <item name="carbon_cursorColor">?attr/colorAccent</item>
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">#00000000</item>
         <item name="carbon_backgroundTint">#00000000</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
+    </style>
+
+    <style name="carbon_EditText.Box">
+        <item name="android:paddingBottom">@dimen/carbon_paddingHalf</item>
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingRight">@dimen/carbon_padding</item>
+    </style>
+
+    <style name="carbon_EditText.Stroke">
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingRight">@dimen/carbon_padding</item>
+        <item name="android:background">@null</item>
     </style>
 
     <style name="carbon_SearchEditText" parent="carbon_EditText">
@@ -670,7 +729,7 @@
         <item name="android:editable">false</item>
         <item name="android:maxLines">1</item>
         <item name="android:paddingBottom">0dp</item>
-        <item name="carbon_underline">false</item>
+        <item name="android:background">@null</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
         <item name="carbon_popupTheme">?attr/carbon_dropDownPopupTheme</item>

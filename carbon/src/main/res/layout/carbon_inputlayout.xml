@@ -4,21 +4,53 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content">
 
-    <carbon.widget.TextView
-        android:id="@+id/carbon_label"
+    <carbon.widget.RelativeLayout
+        android:id="@+id/carbon_inputLayoutContainer"
+        style="?attr/carbon_inputLayoutContainerStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:tag="inputLayout"
-        android:textAppearance="?attr/carbon_textAppearanceCaption"
-        app:carbon_inAnimation="fly"
-        app:carbon_outAnimation="fly"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:tag="inputLayout">
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?attr/carbon_inputLayoutBoxPadding"
+            android:paddingStart="?attr/carbon_inputLayoutBoxPadding"
+            android:tag="inputLayout"
+            android:textAppearance="?attr/carbon_textAppearanceCaption"
+            app:carbon_inAnimation="fly"
+            app:carbon_outAnimation="fly"/>
+
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_clear"
+            style="@style/carbon_ImageView.IconButton"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:baselineAlignBottom="true"
+            android:src="@raw/carbon_clear"
+            android:tag="inputLayout"/>
+
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_showPassword"
+            style="@style/carbon_ImageView.IconButton"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:baselineAlignBottom="true"
+            android:src="@raw/carbon_visibility"
+            android:tag="inputLayout"/>
+    </carbon.widget.RelativeLayout>
 
     <carbon.widget.TextView
         android:id="@+id/carbon_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/carbon_inputLayoutContainer"
         android:layout_toLeftOf="@+id/carbon_counter"
         android:layout_toStartOf="@+id/carbon_counter"
+        android:paddingLeft="?attr/carbon_inputLayoutBoxPadding"
+        android:paddingStart="?attr/carbon_inputLayoutBoxPadding"
         android:tag="inputLayout"
         android:textAppearance="?attr/carbon_textAppearanceCaption"
         app:carbon_inAnimation="fade"
@@ -28,24 +60,10 @@
         android:id="@+id/carbon_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/carbon_inputLayoutContainer"
+        android:paddingLeft="?attr/carbon_inputLayoutBoxPadding"
+        android:paddingStart="?attr/carbon_inputLayoutBoxPadding"
         android:tag="inputLayout"
         android:textAppearance="?attr/carbon_textAppearanceCaption"/>
 
-    <carbon.widget.ImageView
-        android:id="@+id/carbon_clear"
-        style="@style/carbon_ImageView.IconButton"
-        android:layout_width="@dimen/carbon_iconSize"
-        android:layout_height="@dimen/carbon_iconSize"
-        android:baselineAlignBottom="true"
-        android:tag="inputLayout"
-        android:src="@raw/carbon_clear"/>
-
-    <carbon.widget.ImageView
-        android:id="@+id/carbon_showPassword"
-        style="@style/carbon_ImageView.IconButton"
-        android:layout_width="@dimen/carbon_iconSize"
-        android:layout_height="@dimen/carbon_iconSize"
-        android:baselineAlignBottom="true"
-        android:tag="inputLayout"
-        android:src="@raw/carbon_visibility"/>
 </merge>

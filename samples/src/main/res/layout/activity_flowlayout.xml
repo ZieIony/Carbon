@@ -79,7 +79,7 @@
             android:layout_width="100dp"
             android:layout_height="@dimen/carbon_chipHeight"
             android:layout_margin="@dimen/carbon_marginHalf"
-            android:gravity="center_vertical"
-            app:carbon_underline="false"/>
+            android:background="@null"
+            android:gravity="center_vertical"/>
     </carbon.widget.FlowLayout>
 </carbon.widget.LinearLayout>

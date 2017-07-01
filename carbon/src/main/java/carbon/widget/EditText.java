@@ -8,8 +8,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -19,7 +17,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -56,6 +53,7 @@ import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.DefaultNormalColorStateList;
+import carbon.drawable.UnderlineDrawable;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
@@ -84,14 +82,11 @@ public class EditText extends android.widget.EditText
 
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
-    private int DIVIDER_PADDING;
     private int cursorColor;
 
     private Pattern pattern;
     private int matchingView;
 
-    private BitmapShader dashPathShader;
-    private boolean underline = true;
     private boolean valid = true;
 
     private List<OnValidateListener> validateListeners = new ArrayList<>();
@@ -178,10 +173,8 @@ public class EditText extends android.widget.EditText
         setCursorColor(a.getColor(R.styleable.EditText_carbon_cursorColor, 0));
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
-        DIVIDER_PADDING = (int) getResources().getDimension(R.dimen.carbon_paddingHalf);
 
         setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
-        setUnderline(a.getBoolean(R.styleable.EditText_carbon_underline, true));
 
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
@@ -194,13 +187,15 @@ public class EditText extends android.widget.EditText
 
         a.recycle();
 
-        int underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
-        Bitmap dashPathBitmap = Bitmap.createBitmap(underlineWidth * 4, underlineWidth, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(dashPathBitmap);
-        paint.setColor(0xffffffff);
-        paint.setAlpha(255);
-        c.drawCircle(dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, dashPathBitmap.getHeight() / 2.0f, paint);
-        dashPathShader = new BitmapShader(dashPathBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
+        TypedValue bg = new TypedValue();
+        a.getValue(R.styleable.EditText_android_background, bg);
+        if (bg.resourceId == R.drawable.carbon_defaultbackground) {
+            float underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
+            UnderlineDrawable underlineDrawable = new UnderlineDrawable();
+            underlineDrawable.setThickness(underlineWidth);
+            underlineDrawable.setPaddingBottom(getPaddingBottom() - getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf) + underlineWidth / 2);
+            setBackgroundDrawable(underlineDrawable);
+        }
 
         initSelectionHandle();
 
@@ -281,20 +276,12 @@ public class EditText extends android.widget.EditText
             drawable2.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.MULTIPLY));
             mCursorDrawable[1] = drawable2;
         } catch (Exception e) {
-
+            Carbon.throwReflectionError();
         }
     }
 
     public int getCursorColor() {
         return cursorColor;
-    }
-
-    public boolean hasUnderline() {
-        return underline;
-    }
-
-    public void setUnderline(boolean drawUnderline) {
-        this.underline = drawUnderline;
     }
 
     public void validate() {
@@ -337,11 +324,11 @@ public class EditText extends android.widget.EditText
         postInvalidate();
     }
 
-    public void addOnValidateListener(OnValidateListener listener) {
+    public void addOnValidateListener(@NonNull OnValidateListener listener) {
         validateListeners.add(listener);
     }
 
-    public void removeOnValidateListener(OnValidateListener listener) {
+    public void removeOnValidateListener(@NonNull OnValidateListener listener) {
         validateListeners.remove(listener);
     }
 
@@ -462,26 +449,10 @@ public class EditText extends android.widget.EditText
     public void drawInternal(@NonNull Canvas canvas) {
         super.draw(canvas);
 
-        int paddingBottom = getPaddingBottom();
-
         if (isFocused() && isEnabled()) {
             paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
         } else {
             paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
-        }
-        if (underline) {
-            //if (isEnabled()) {
-            //paint.setShader(null);
-            paint.setColor(backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor()));
-            canvas.drawLine(getScrollX() + getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING, getScrollX() + getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING, paint);
-         /*   } else {
-                Matrix matrix = new Matrix();
-                matrix.postTranslate(0, getHeight() - paddingBottom + DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f);
-                dashPathShader.setLocalMatrix(matrix);
-                //paint.setShader(dashPathShader);
-                canvas.drawRect(getPaddingLeft(), getHeight() - paddingBottom + DIVIDER_PADDING - paint.getStrokeWidth() / 2.0f,
-                        getWidth() - getPaddingRight(), getHeight() - paddingBottom + DIVIDER_PADDING + paint.getStrokeWidth() / 2.0f, paint);
-            }*/
         }
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
@@ -758,7 +729,7 @@ public class EditText extends android.widget.EditText
             rippleDrawable = null;
         }
         super.setBackgroundDrawable(background);
-        updateTint();
+        updateBackgroundTint();
     }
 
 
@@ -1116,7 +1087,7 @@ public class EditText extends android.widget.EditText
     @Override
     public void setTint(ColorStateList list) {
         if (list != null) {
-            tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+            tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         } else {
             tint = null;
         }

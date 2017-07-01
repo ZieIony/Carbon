@@ -37,7 +37,6 @@
     <string name="colorsActivity_title">Colors</string>
     <string name="demosActivity_title">Demos</string>
     <string name="guidelinesActivity_title">Guidelines</string>
-    <string name="buttonsUsageActivity_title">Buttons / Usage</string>
     <string name="toolbarsUsageActivity_title">Toolbars / Usage</string>
     <string name="behaviorActivity_title">Behavior</string>
     <string name="htmlActivity_title">HTML</string>
@@ -86,6 +85,9 @@
     <string name="simpleDialogActivity_title">Simple dialog</string>
 
     <string name="swatchTestActivity_title">Swatch test</string>
+
+    <string name="buttonsUsageActivity_title">Buttons/Usage</string>
+    <string name="menusBehaviorActivity_title">Menus/Behavior</string>
 
     <string name="samplehtml"><![CDATA[cdata tag makes it <i>very</i> easy to add <b>formatting</b>]]></string>
 

@@ -46,26 +46,26 @@ public class DropDown<Type> extends EditText {
 
     public DropDown(Context context) {
         super(context, null, R.attr.carbon_dropDownStyle);
-        initSpinner(context, null, R.attr.carbon_dropDownStyle);
+        initDropDown(context, null, R.attr.carbon_dropDownStyle);
     }
 
     public DropDown(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_dropDownStyle);
-        initSpinner(context, attrs, R.attr.carbon_dropDownStyle);
+        initDropDown(context, attrs, R.attr.carbon_dropDownStyle);
     }
 
     public DropDown(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initSpinner(context, attrs, defStyleAttr);
+        initDropDown(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public DropDown(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initSpinner(context, attrs, defStyleAttr);
+        initDropDown(context, attrs, defStyleAttr);
     }
 
-    private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void initDropDown(Context context, AttributeSet attrs, int defStyleAttr) {
         VectorDrawable drawable = new VectorDrawable(getResources(), R.raw.carbon_dropdown);
         int size = (int) (Carbon.getDip(getContext()) * 24);
         drawable.setBounds(0, 0, size, size);

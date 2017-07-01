@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'com.android.databinding:compiler:3.0.0-alpha4'
+    annotationProcessor 'com.android.databinding:compiler:3.0.0-alpha5'
     compile("com.android.support:appcompat-v7:$supportLibVersion") {
         force = true
     }

@@ -43,8 +43,8 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/carbon_toolbarHeight"
                 android:layout_weight="1"
-                android:padding="0dp"
-                app:carbon_underline="false"/>
+                android:background="@null"
+                android:padding="0dp"/>
 
             <carbon.widget.ImageView
                 style="@style/carbon_ImageView.IconButton"

@@ -9,6 +9,9 @@
 
         <attr name="carbon_dividerColor" format="reference|color"/>
 
+        <attr name="carbon_inputLayoutBoxColor" format="reference|color"/>
+        <attr name="carbon_inputLayoutBoxPadding" format="dimension"/>
+
         <attr name="carbon_iconColor" format="reference|color"/>
         <attr name="carbon_iconColorInverse" format="reference|color"/>
 
@@ -815,6 +818,7 @@
     <attr name="carbon_cardViewStyle" format="reference"/>
 
     <attr name="carbon_inputLayoutStyle" format="reference"/>
+    <attr name="carbon_inputLayoutContainerStyle" format="reference"/>
     <declare-styleable name="InputLayout">
         <attr name="carbon_theme"/>
 
@@ -857,6 +861,7 @@
 
     <declare-styleable name="EditText">
         <attr name="carbon_theme"/>
+        <attr name="android:background"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -886,7 +891,6 @@
         <attr name="carbon_fontFamily"/>
         <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
-        <attr name="carbon_underline" format="boolean"/>
         <attr name="carbon_pattern" format="string"/>
         <attr name="carbon_cursorColor" format="color"/>
         <attr name="android:textAppearance"/>

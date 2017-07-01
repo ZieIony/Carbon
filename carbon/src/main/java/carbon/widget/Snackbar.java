@@ -81,7 +81,7 @@ public class Snackbar {
                 container.getWindowVisibleDisplayFrame(windowFrame);
                 Rect drawingRect = new Rect();
                 container.getDrawingRect(drawingRect);
-                //setPadding(0, 0, 0, drawingRect.bottom - windowFrame.bottom);
+                //setPaddingBottom(0, 0, 0, drawingRect.bottom - windowFrame.bottom);
                 if (style == null)
                     setStyle(Style.Auto);
                 if (snackbarView.getInAnimator() == null)

@@ -24,12 +24,24 @@ import carbon.internal.TypefaceUtils;
 import carbon.view.InputView;
 import carbon.view.ValidStateView;
 
+import static android.widget.RelativeLayout.ALIGN_BASELINE;
+import static android.widget.RelativeLayout.ALIGN_END;
+import static android.widget.RelativeLayout.ALIGN_LEFT;
+import static android.widget.RelativeLayout.ALIGN_RIGHT;
+import static android.widget.RelativeLayout.ALIGN_START;
+import static android.widget.RelativeLayout.BELOW;
+
 public class InputLayout extends RelativeLayout {
+
+    private int gravity;
 
     public enum LabelStyle {
         Floating, Persistent, Hint, IfNotEmpty
     }
 
+    public enum InputStyle{
+
+    }
 
     public enum ErrorMode {
         WhenInvalid, Always, Never
@@ -52,6 +64,7 @@ public class InputLayout extends RelativeLayout {
     private ImageView clearImageView;
     private ImageView showPasswordImageView;
 
+    private ViewGroup container;
     private View child;
 
     TransformationMethod transformationMethod;
@@ -78,6 +91,7 @@ public class InputLayout extends RelativeLayout {
 
     private void initInputLayout(AttributeSet attrs, int defStyleAttr) {
         View.inflate(getContext(), R.layout.carbon_inputlayout, this);
+
         errorTextView = findViewById(R.id.carbon_error);
         errorTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         errorTextView.setValid(false);
@@ -85,8 +99,10 @@ public class InputLayout extends RelativeLayout {
         counterTextView.setTextColor(new DefaultTextSecondaryColorStateList(getContext()));
         labelTextView = findViewById(R.id.carbon_label);
         labelTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
+        labelTextView.setGravity(gravity);
         clearImageView = findViewById(R.id.carbon_clear);
         showPasswordImageView = findViewById(R.id.carbon_showPassword);
+        container = findViewById(R.id.carbon_inputLayoutContainer);
 
         setAddStatesFromChildren(true);
 
@@ -150,7 +166,7 @@ public class InputLayout extends RelativeLayout {
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (!"inputLayout".equals(child.getTag())) {
             params = setTextView(child, (android.widget.RelativeLayout.LayoutParams) params);
-            super.addView(child, 1, params);
+            container.addView(child, 1, params);
         } else {
             // Carry on adding the View...
             super.addView(child, index, params);
@@ -163,14 +179,6 @@ public class InputLayout extends RelativeLayout {
         if (child.getId() == NO_ID)
             child.setId(R.id.carbon_input);
         params.addRule(BELOW, R.id.carbon_label);
-
-        android.widget.RelativeLayout.LayoutParams errorTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) errorTextView.getLayoutParams();
-        errorTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_START : ALIGN_LEFT, child.getId());
-        errorTextViewLayoutParams.addRule(BELOW, child.getId());
-
-        android.widget.RelativeLayout.LayoutParams counterTextViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) counterTextView.getLayoutParams();
-        counterTextViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_END : ALIGN_RIGHT, child.getId());
-        counterTextViewLayoutParams.addRule(BELOW, child.getId());
 
         android.widget.RelativeLayout.LayoutParams clearImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) clearImageView.getLayoutParams();
         clearImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_END : ALIGN_RIGHT, child.getId());
@@ -442,7 +450,9 @@ public class InputLayout extends RelativeLayout {
 
     @Override
     public void setGravity(int gravity) {
+        this.gravity = gravity;
         super.setGravity(gravity);
-        labelTextView.setGravity(gravity);
+        if (labelTextView != null)
+            labelTextView.setGravity(gravity);
     }
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+    <include layout="@layout/view_debugtoolbar"/>
+
+    <carbon.widget.FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/carbon_colorBackground">
+
+        <carbon.widget.LinearLayout
+            style="@style/carbon_CardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/carbon_windowPadding"
+            android:background="?attr/carbon_colorForeground"
+            android:orientation="vertical"
+            android:padding="@dimen/carbon_padding">
+
+            <carbon.widget.TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:text="Edit shipping info"
+                android:textAppearance="?attr/carbon_textAppearanceTitle"/>
+
+            <carbon.widget.LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/carbon_margin">
+
+                <carbon.widget.ImageView
+                    style="@style/carbon_ImageView.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_person_black_24dp"/>
+
+                <carbon.widget.EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:text="Alex Nelson"/>
+            </carbon.widget.LinearLayout>
+
+            <carbon.widget.LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/carbon_margin">
+
+                <carbon.widget.ImageView
+                    style="@style/carbon_ImageView.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_location_on_black_24dp"/>
+
+                <carbon.widget.EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:hint="Address"
+                    android:text="100 Main Street"/>
+            </carbon.widget.LinearLayout>
+
+            <carbon.widget.LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/carbon_margin"
+                android:paddingLeft="56dp">
+
+                <carbon.widget.EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="City"
+                    android:text="New York"/>
+
+                <carbon.widget.DropDown
+                    android:id="@+id/dropDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/carbon_marginHalf"
+                    android:layout_marginRight="@dimen/carbon_marginHalf"
+                    android:background="@drawable/carbon_defaultbackground"
+                    android:paddingBottom="@dimen/carbon_padding"/>
+
+                <carbon.widget.EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10011"/>
+
+            </carbon.widget.LinearLayout>
+
+            <carbon.widget.LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/carbon_margin">
+
+                <carbon.widget.ImageView
+                    style="@style/carbon_ImageView.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_email_black_24dp"/>
+
+                <carbon.widget.EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:hint="Email"
+                    android:text="alexnelson@gmail.com"/>
+            </carbon.widget.LinearLayout>
+
+            <carbon.widget.LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="48dp">
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Flat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cancel"
+                    android:textColor="?attr/colorAccent"/>
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Flat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/carbon_paddingHalf"
+                    android:text="done"
+                    android:textColor="?attr/colorAccent"/>
+            </carbon.widget.LinearLayout>
+        </carbon.widget.LinearLayout>
+    </carbon.widget.FrameLayout>
+</carbon.widget.LinearLayout>

@@ -88,6 +88,7 @@
         <activity
             android:name=".guidelines.ButtonsUsageActivity"
             android:theme="@style/RaisedButtonStyle"/>
+        <activity android:name=".guidelines.MenusBehaviorActivity"/>
 
         <activity android:name=".component.IconTextListItemActivity"/>
         <activity android:name=".component.AvatarTextListItemActivity"/>

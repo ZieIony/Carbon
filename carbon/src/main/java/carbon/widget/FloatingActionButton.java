@@ -58,7 +58,7 @@ public class FloatingActionButton extends ImageView {
 
         TypedValue bg = new TypedValue();
         a.getValue(R.styleable.FloatingActionButton_android_background, bg);
-        if (bg.resourceId == R.drawable.carbon_defaultaccentbackground)
+        if (bg.resourceId == R.drawable.carbon_defaultbackground)
             setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultAccentColorStateList(getContext()), animation -> postInvalidate())));
 
         a.recycle();

@@ -331,4 +331,14 @@ public class Carbon {
         return (float) Math.sqrt(w * w + h * h);
     }
 
+    public static void throwReflectionError() {
+        StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[1];
+        throw new RuntimeException("This feature is implemented using reflection. " +
+                "If you see this exception, something in your setup is not standard. " +
+                "Please create an issue on https://github.com/ZieIony/Carbon/issues. " +
+                "Please provide at least the following information: \n" +
+                " - device: " + Build.MANUFACTURER + " " + Build.MODEL + ", API " + Build.VERSION.SDK_INT + "\n" +
+                " - method: " + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "(...)\n");
+    }
+
 }

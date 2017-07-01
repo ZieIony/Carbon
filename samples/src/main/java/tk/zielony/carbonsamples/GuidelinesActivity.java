@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.guidelines.ButtonsUsageActivity;
+import tk.zielony.carbonsamples.guidelines.MenusBehaviorActivity;
 
 public class GuidelinesActivity extends SampleListActivity {
 
@@ -19,6 +20,7 @@ public class GuidelinesActivity extends SampleListActivity {
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Sample screens taken from Material Design guidelines",
                 new SampleActivityItem(ButtonsUsageActivity.class, getString(R.string.buttonsUsageActivity_title)),
+                new SampleActivityItem(MenusBehaviorActivity.class, getString(R.string.menusBehaviorActivity_title)),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

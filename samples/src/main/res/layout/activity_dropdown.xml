@@ -17,28 +17,49 @@
         android:padding="@dimen/carbon_padding"
         app:carbon_insetColor="?attr/colorPrimary">
 
-
-        <carbon.widget.DropDown
-            android:id="@+id/day"
-            android:layout_width="0dp"
+        <carbon.widget.InputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="1"/>
+            app:carbon_label="Date"
+            app:carbon_labelStyle="persistent">
 
-        <carbon.widget.DropDown
-            android:id="@+id/month"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Jan"/>
+            <carbon.widget.LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <carbon.widget.DropDown
-            android:id="@+id/year"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="1987"/>
+                <carbon.widget.DropDown
+                    android:id="@+id/day"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingBottom="@dimen/carbon_paddingHalf"
+                    android:background="@drawable/carbon_defaultbackground"
+                    android:text="1"/>
+
+                <carbon.widget.DropDown
+                    android:id="@+id/month"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/carbon_marginHalf"
+                    android:layout_marginRight="@dimen/carbon_marginHalf"
+                    android:layout_weight="1"
+                    android:paddingBottom="@dimen/carbon_paddingHalf"
+                    android:background="@drawable/carbon_defaultbackground"
+                    android:text="Jan"/>
+
+                <carbon.widget.DropDown
+                    android:id="@+id/year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/carbon_defaultbackground"
+                    android:paddingBottom="@dimen/carbon_paddingHalf"
+                    android:text="1987"/>
+            </carbon.widget.LinearLayout>
+        </carbon.widget.InputLayout>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

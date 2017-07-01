@@ -36,11 +36,13 @@
             </carbon.widget.InputLayout>
 
             <carbon.widget.InputLayout
+                style="@style/carbon_InputLayout.Box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 app:carbon_label="email"
                 app:carbon_labelStyle="floating"
+                app:carbon_minCharacters="3"
                 app:carbon_showClear="true">
 
                 <carbon.widget.EditText
@@ -74,6 +76,7 @@
             </carbon.widget.InputLayout>
 
             <carbon.widget.InputLayout
+                style="@style/carbon_InputLayout.Stroke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
@@ -84,6 +87,7 @@
                 <carbon.widget.EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@null"
                     android:inputType="numberPassword"
                     android:tag="enable"
                     app:carbon_maxCharacters="10"
