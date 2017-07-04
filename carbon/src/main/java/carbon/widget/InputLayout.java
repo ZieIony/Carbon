@@ -3,9 +3,7 @@ package carbon.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.text.Editable;
 import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -19,17 +17,8 @@ import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.drawable.DefaultAccentColorStateList;
 import carbon.drawable.DefaultTextSecondaryColorStateList;
-import carbon.internal.SimpleTextWatcher;
 import carbon.internal.TypefaceUtils;
 import carbon.view.InputView;
-import carbon.view.ValidStateView;
-
-import static android.widget.RelativeLayout.ALIGN_BASELINE;
-import static android.widget.RelativeLayout.ALIGN_END;
-import static android.widget.RelativeLayout.ALIGN_LEFT;
-import static android.widget.RelativeLayout.ALIGN_RIGHT;
-import static android.widget.RelativeLayout.ALIGN_START;
-import static android.widget.RelativeLayout.BELOW;
 
 public class InputLayout extends RelativeLayout {
 
@@ -39,12 +28,12 @@ public class InputLayout extends RelativeLayout {
         Floating, Persistent, Hint, IfNotEmpty
     }
 
-    public enum InputStyle{
-
-    }
-
     public enum ErrorMode {
         WhenInvalid, Always, Never
+    }
+
+    public enum ActionButton {
+        None, Clear, ShowPassword, VoiceInput
     }
 
     private boolean inDrawableStateChanged = false;
@@ -52,17 +41,16 @@ public class InputLayout extends RelativeLayout {
     private TextView errorTextView;
     ErrorMode errorMode = ErrorMode.WhenInvalid;
 
-    boolean required = false;
     private String label;
-    private int minCharacters;
-    private int maxCharacters = Integer.MAX_VALUE;
     private TextView counterTextView;
 
     private LabelStyle labelStyle;
     private TextView labelTextView;
 
+    private ActionButton actionButton = ActionButton.None;
     private ImageView clearImageView;
     private ImageView showPasswordImageView;
+    private ImageView voiceInputImageView;
 
     private ViewGroup container;
     private View child;
@@ -102,6 +90,7 @@ public class InputLayout extends RelativeLayout {
         labelTextView.setGravity(gravity);
         clearImageView = findViewById(R.id.carbon_clear);
         showPasswordImageView = findViewById(R.id.carbon_showPassword);
+        voiceInputImageView = findViewById(R.id.carbon_voiceInput);
         container = findViewById(R.id.carbon_inputLayoutContainer);
 
         setAddStatesFromChildren(true);
@@ -150,13 +139,9 @@ public class InputLayout extends RelativeLayout {
         setError(error == null ? a.getString(R.styleable.InputLayout_carbon_errorMessage) : error);
         setErrorMode(ErrorMode.values()[a.getInt(R.styleable.InputLayout_carbon_errorMode, ErrorMode.WhenInvalid.ordinal())]);
 
-        setMinCharacters(a.getInt(R.styleable.InputLayout_carbon_minCharacters, 0));
-        setMaxCharacters(a.getInt(R.styleable.InputLayout_carbon_maxCharacters, Integer.MAX_VALUE));
         setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.InputLayout_carbon_labelStyle, LabelStyle.Floating.ordinal())]);
         setLabel(a.getString(R.styleable.InputLayout_carbon_label));
-        setRequired(a.getBoolean(R.styleable.InputLayout_carbon_required, false));
-        setShowPasswordButtonEnabled(a.getBoolean(R.styleable.InputLayout_carbon_showPassword, false));
-        setClearButtonEnabled(a.getBoolean(R.styleable.InputLayout_carbon_showClear, false));
+        setActionButton(ActionButton.values()[a.getInt(R.styleable.InputLayout_carbon_actionButton, 0)]);
         setGravity(a.getInt(R.styleable.InputLayout_android_gravity, Gravity.START));
 
         a.recycle();
@@ -165,7 +150,7 @@ public class InputLayout extends RelativeLayout {
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (!"inputLayout".equals(child.getTag())) {
-            params = setTextView(child, (android.widget.RelativeLayout.LayoutParams) params);
+            params = setInputChild(child, (android.widget.RelativeLayout.LayoutParams) params);
             container.addView(child, 1, params);
         } else {
             // Carry on adding the View...
@@ -173,48 +158,41 @@ public class InputLayout extends RelativeLayout {
         }
     }
 
-    private ViewGroup.LayoutParams setTextView(View child, android.widget.RelativeLayout.LayoutParams params) {
+    private ViewGroup.LayoutParams setInputChild(View child, android.widget.RelativeLayout.LayoutParams params) {
         this.child = child;
 
         if (child.getId() == NO_ID)
             child.setId(R.id.carbon_input);
         params.addRule(BELOW, R.id.carbon_label);
 
-        android.widget.RelativeLayout.LayoutParams clearImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) clearImageView.getLayoutParams();
-        clearImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_END : ALIGN_RIGHT, child.getId());
-        clearImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
-
-        android.widget.RelativeLayout.LayoutParams showPasswordImageViewLayoutParams = (android.widget.RelativeLayout.LayoutParams) showPasswordImageView.getLayoutParams();
-        showPasswordImageViewLayoutParams.addRule(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? ALIGN_END : ALIGN_RIGHT, child.getId());
-        showPasswordImageViewLayoutParams.addRule(ALIGN_BASELINE, child.getId());
-
         if (child instanceof EditText) {
             final EditText editText = (EditText) child;
             if (labelTextView.getText().length() == 0)
-                labelTextView.setText(editText.getHint());
-            editText.addOnValidateListener(valid -> updateError(editText, valid));
+                setLabel(editText.getHint());
+            editText.addOnValidateListener(valid -> {
+                updateError(valid);
+                updateCounter(editText);
+            });
             showPasswordImageView.setOnTouchListener((view, motionEvent) -> {
+                int selectionStart = editText.getSelectionStart();
+                int selectionEnd = editText.getSelectionEnd();
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     transformationMethod = editText.getTransformationMethod();
                     editText.setTransformationMethod(null);
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_CANCEL) {
                     editText.setTransformationMethod(transformationMethod);
                 }
-                return true;
-            });
-            editText.addTextChangedListener(new SimpleTextWatcher() {
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    updateCounter(editText);
-                }
+                editText.setSelection(selectionStart, selectionEnd);
+                return false;
             });
             clearImageView.setOnClickListener(view -> editText.setText(""));
 
             labelTextView.setInAnimator(null);
             labelTextView.setOutAnimator(null);
+            setLabel(label);
             errorTextView.setInAnimator(null);
             errorTextView.setOutAnimator(null);
-            updateError(editText, editText.isValid());
+            updateError(editText.isValid());
             updateHint(editText);
             updateCounter(editText);
             labelTextView.setInAnimator(AnimUtils.getFlyInAnimator());
@@ -223,18 +201,23 @@ public class InputLayout extends RelativeLayout {
             errorTextView.setOutAnimator(AnimUtils.getFadeOutAnimator());
         } else if (child instanceof InputView) {
             InputView inputView = (InputView) child;
-            inputView.addOnValidateListener(valid -> updateError(inputView, valid));
+            inputView.addOnValidateListener(this::updateError);
 
             labelTextView.setInAnimator(null);
             labelTextView.setOutAnimator(null);
             errorTextView.setInAnimator(null);
             errorTextView.setOutAnimator(null);
-            updateError(inputView, inputView.isValid());
+            updateError(inputView.isValid());
             updateHint(child);
             labelTextView.setInAnimator(AnimUtils.getFlyInAnimator());
             labelTextView.setOutAnimator(AnimUtils.getFadeOutAnimator());
             errorTextView.setInAnimator(AnimUtils.getFadeInAnimator());
             errorTextView.setOutAnimator(AnimUtils.getFadeOutAnimator());
+        }
+
+        if (actionButton != ActionButton.None) {
+            int buttonPadding = getResources().getDimensionPixelSize(R.dimen.carbon_padding) + getResources().getDimensionPixelSize(R.dimen.carbon_iconSize);
+            child.setPadding(child.getPaddingLeft(), child.getPaddingTop(), child.getPaddingRight() + buttonPadding, child.getPaddingBottom());
         }
 
         return params;
@@ -251,16 +234,17 @@ public class InputLayout extends RelativeLayout {
         inDrawableStateChanged = false;
     }
 
-    private void updateError(ValidStateView validStateView, boolean valid) {
-        boolean requiredError = required && validStateView.isEmpty();
-        labelTextView.setValid(!requiredError);
+    private void updateError(boolean valid) {
+        labelTextView.setValid(valid);
 
         errorTextView.animateVisibility(errorMode == ErrorMode.Always || errorMode == ErrorMode.WhenInvalid && !valid ? VISIBLE : errorMode == ErrorMode.Never ? GONE : INVISIBLE);
     }
 
     private void updateCounter(EditText editText) {
-        boolean counterError = (minCharacters > 0 && editText.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && editText.length() > maxCharacters);
-        counterTextView.setValid(!counterError);
+        int minCharacters = editText.getMinCharacters();
+        int maxCharacters = editText.getMaxCharacters();
+
+        counterTextView.setValid(!editText.isValid());
 
         if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
             counterTextView.setVisibility(VISIBLE);
@@ -289,25 +273,10 @@ public class InputLayout extends RelativeLayout {
         } else if (labelStyle != LabelStyle.Hint) {
             labelTextView.animateVisibility(INVISIBLE);
             if (child instanceof EditText)
-                ((EditText) child).setHint(label + (required ? "*" : ""));
+                ((EditText) child).setHint(label + (((EditText) child).isRequired() ? " *" : ""));
         } else {
             labelTextView.setVisibility(GONE);
         }
-    }
-
-    public boolean isRequired() {
-        return required;
-    }
-
-    /**
-     * Sets it the underlying InputView has to be not empty. Adds an asterisk to hint text and label
-     * text
-     *
-     * @param required
-     */
-    public void setRequired(boolean required) {
-        this.required = required;
-        updateHint(child);
     }
 
     public void setError(String text) {
@@ -388,9 +357,13 @@ public class InputLayout extends RelativeLayout {
         return labelTextView.getText().toString();
     }
 
+    public void setLabel(CharSequence label) {
+        setLabel(label.toString());
+    }
+
     public void setLabel(String label) {
         this.label = label;
-        labelTextView.setText(label + (required ? "*" : ""));
+        labelTextView.setText(label + (child instanceof EditText && ((EditText) child).isRequired() ? " *" : ""));
         if (child != null)
             updateHint(child);
     }
@@ -405,40 +378,27 @@ public class InputLayout extends RelativeLayout {
             updateHint(child);
     }
 
-    public int getMinCharacters() {
-        return minCharacters;
+    public ActionButton getActionButton() {
+        return actionButton;
     }
 
-    public void setMinCharacters(int minCharacters) {
-        this.minCharacters = minCharacters;
-    }
+    public void setActionButton(ActionButton actionButton) {
+        int paddingRight = 0;
+        if (child != null) {
+            paddingRight = child.getPaddingRight();
+            if (this.actionButton != ActionButton.None)
+                paddingRight -= getResources().getDimensionPixelSize(R.dimen.carbon_padding) + getResources().getDimensionPixelSize(R.dimen.carbon_iconSize);
+        }
 
-    public int getMaxCharacters() {
-        return maxCharacters;
-    }
+        this.actionButton = actionButton;
+        clearImageView.setVisibility(actionButton == ActionButton.Clear ? VISIBLE : GONE);
+        showPasswordImageView.setVisibility(actionButton == ActionButton.ShowPassword ? VISIBLE : GONE);
+        voiceInputImageView.setVisibility(actionButton == ActionButton.VoiceInput ? VISIBLE : GONE);
 
-    public void setMaxCharacters(int maxCharacters) {
-        this.maxCharacters = maxCharacters;
-    }
-
-    public boolean isShowPasswordButtonEnabled() {
-        return showPasswordImageView.getVisibility() == VISIBLE;
-    }
-
-    public void setShowPasswordButtonEnabled(boolean b) {
-        showPasswordImageView.setVisibility(b ? VISIBLE : GONE);
-        if (b)
-            setClearButtonEnabled(false);
-    }
-
-    public boolean isClearButtonEnabled() {
-        return clearImageView.getVisibility() == VISIBLE;
-    }
-
-    public void setClearButtonEnabled(boolean b) {
-        clearImageView.setVisibility(b ? VISIBLE : GONE);
-        if (b)
-            setShowPasswordButtonEnabled(false);
+        if (actionButton != null)
+            paddingRight += getResources().getDimensionPixelSize(R.dimen.carbon_padding) + getResources().getDimensionPixelSize(R.dimen.carbon_iconSize);
+        if (child != null)
+            child.setPadding(child.getPaddingLeft(), child.getPaddingTop(), paddingRight, child.getPaddingBottom());
     }
 
     @Override

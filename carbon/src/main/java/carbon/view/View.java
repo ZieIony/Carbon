@@ -30,7 +30,6 @@ import android.view.MotionEvent;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import carbon.Carbon;
 import carbon.R;
@@ -115,7 +114,7 @@ public abstract class View extends android.view.View
 
         TypedValue bg = new TypedValue();
         a.getValue(R.styleable.View_android_background, bg);
-        if (bg.resourceId == R.drawable.carbon_defaultprimarybackground)
+        if (bg.resourceId == R.drawable.carbon_defaultbackground)
             setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), animation -> postInvalidate())));
 
         Carbon.initRippleDrawable(this, a, rippleIds);

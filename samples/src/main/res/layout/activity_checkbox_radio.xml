@@ -139,7 +139,7 @@
 
                 <carbon.widget.CheckBox
                     android:id="@+id/checkBox"
-                    style="@style/carbon_CheckBox.IconButton.Inverse"
+                    style="@style/carbon_CheckBox.IconButton"
                     android:gravity="center_vertical"/>
 
                 <carbon.widget.LinearLayout

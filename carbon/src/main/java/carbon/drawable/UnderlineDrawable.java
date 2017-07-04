@@ -19,17 +19,23 @@ public class UnderlineDrawable extends Drawable {
     public void draw(@NonNull Canvas canvas) {
         Rect bounds = getBounds();
         int[] states = getState();
+        boolean focused = false, enabled = false;
         for (int state : states) {
             if (state == android.R.attr.state_focused) {
-                canvas.drawRect(0, bounds.height() - thickness * 2 - padding / 2, bounds.width(), bounds.height() - padding / 2, paint);
-                return;
+                focused = true;
             } else if (state == android.R.attr.state_enabled) {
-                canvas.drawRect(0, bounds.height() - thickness - padding / 2, bounds.width(), bounds.height() - padding / 2, paint);
-                return;
+                enabled = true;
             }
         }
-        //draw disabled dots
-        canvas.drawRect(0, bounds.height() - thickness - padding / 2, bounds.width(), bounds.height() - padding / 2, paint);
+
+        if (!enabled) {
+            for (int i = 0; i < bounds.width(); i += thickness * 3)
+                canvas.drawCircle(i + thickness / 2, bounds.height() - thickness / 2 - padding / 2, thickness / 2, paint);
+        } else if (focused) {
+            canvas.drawRect(0, bounds.height() - thickness * 2 - padding / 2, bounds.width(), bounds.height() - padding / 2, paint);
+        } else {
+            canvas.drawRect(0, bounds.height() - thickness - padding / 2, bounds.width(), bounds.height() - padding / 2, paint);
+        }
     }
 
     @Override

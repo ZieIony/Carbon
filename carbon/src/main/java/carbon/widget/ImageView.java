@@ -349,6 +349,8 @@ public class ImageView extends android.widget.ImageView
         if (newRipple != null) {
             newRipple.setCallback(this);
             newRipple.setBounds(0, 0, getWidth(), getHeight());
+            newRipple.setState(getDrawableState());
+            ((Drawable) newRipple).setVisible(getVisibility() == VISIBLE, false);
             if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
         }
@@ -631,6 +633,7 @@ public class ImageView extends android.widget.ImageView
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {

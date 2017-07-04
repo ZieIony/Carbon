@@ -20,11 +20,12 @@ import carbon.widget.DropDown;
 import carbon.widget.FrameLayout;
 import carbon.widget.RecyclerView;
 
-public class DropDownMenu extends PopupWindow {
+public class DropDownMenu<Type> extends PopupWindow {
 
     protected RecyclerView recycler;
     private View mAnchorView;
     private DropDown.Mode mode;
+    private DropDown.Adapter defaultAdapter;
 
     public DropDownMenu(Context context) {
         super(View.inflate(context, R.layout.carbon_popupmenu, null));
@@ -40,6 +41,9 @@ public class DropDownMenu extends PopupWindow {
             }
             return false;
         });
+
+        defaultAdapter = new DropDown.Adapter();
+        recycler.setAdapter(defaultAdapter);
 
         setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
 
@@ -196,7 +200,11 @@ public class DropDownMenu extends PopupWindow {
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {
-        recycler.setAdapter(adapter);
+        if (adapter == null) {
+            recycler.setAdapter(defaultAdapter);
+        } else {
+            recycler.setAdapter(adapter);
+        }
     }
 
     public ArrayAdapter getAdapter() {
@@ -209,6 +217,11 @@ public class DropDownMenu extends PopupWindow {
 
     public void setMode(DropDown.Mode mode) {
         this.mode = mode;
+    }
+
+    public void setItems(Type[] items) {
+        defaultAdapter.setItems(items);
+        defaultAdapter.notifyDataSetChanged();
     }
 
     /* @Override

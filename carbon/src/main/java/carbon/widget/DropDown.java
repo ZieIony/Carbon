@@ -33,11 +33,9 @@ public class DropDown<Type> extends EditText {
         void onSelectionChanged(Type item, int position);
     }
 
-    DropDownMenu dropDownMenu;
+    DropDownMenu<Type> dropDownMenu;
 
     private int selectedIndex;
-
-    Adapter defaultAdapter;
 
     OnItemSelectedListener<Type> onItemSelectedListener;
     OnSelectionChangedListener<Type> onSelectionChangedListener;
@@ -75,9 +73,7 @@ public class DropDown<Type> extends EditText {
 
         int theme = a.getResourceId(R.styleable.DropDown_carbon_popupTheme, -1);
 
-        defaultAdapter = new Adapter();
-        dropDownMenu = new DropDownMenu(new ContextThemeWrapper(context, theme));
-        dropDownMenu.setAdapter(defaultAdapter);
+        dropDownMenu = new DropDownMenu<Type>(new ContextThemeWrapper(context, theme));
         dropDownMenu.setOnItemClickedListener(onItemClickedListener);
         dropDownMenu.setOnDismissListener(() -> isShowingPopup = false);
         dropDownMenu.setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.Over.ordinal())]);
@@ -100,8 +96,7 @@ public class DropDown<Type> extends EditText {
 
     public void setSelectedIndex(int index) {
         selectedIndex = index;
-        if (getAdapter() != null)
-            setText(getAdapter().getItem(index).toString());
+        setText(getAdapter().getItem(index).toString());
     }
 
     public int getSelectedIndex() {
@@ -123,11 +118,7 @@ public class DropDown<Type> extends EditText {
     }
 
     public void setAdapter(final RecyclerView.Adapter adapter) {
-        if (adapter == null) {
-            dropDownMenu.setAdapter(defaultAdapter);
-        } else {
-            dropDownMenu.setAdapter(adapter);
-        }
+        dropDownMenu.setAdapter(adapter);
         setText(getAdapter().getItem(selectedIndex).toString());
     }
 
@@ -158,9 +149,7 @@ public class DropDown<Type> extends EditText {
     }
 
     public void setItems(Type[] items) {
-        dropDownMenu.setAdapter(defaultAdapter);
-        defaultAdapter.setItems(items);
-        defaultAdapter.notifyDataSetChanged();
+        dropDownMenu.setItems(items);
         setSelectedIndex(0);
     }
 

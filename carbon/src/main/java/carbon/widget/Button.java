@@ -35,7 +35,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import carbon.Carbon;
 import carbon.R;
@@ -169,7 +168,7 @@ public class Button extends android.widget.Button
 
         TypedValue bg = new TypedValue();
         a.getValue(R.styleable.Button_android_background, bg);
-        if (bg.resourceId == R.drawable.carbon_defaultprimarybackground)
+        if (bg.resourceId == R.drawable.carbon_defaultbackground)
             setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), animation -> postInvalidate())));
 
         Carbon.initRippleDrawable(this, a, rippleIds);

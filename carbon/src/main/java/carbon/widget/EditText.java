@@ -29,6 +29,7 @@ import android.text.Editable;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -80,6 +81,10 @@ public class EditText extends android.widget.EditText
     private Field mIgnoreActionUpEventField;
     private Object editor;
 
+    boolean required = false;
+    private int minCharacters;
+    private int maxCharacters = Integer.MAX_VALUE;
+
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     private int cursorColor;
@@ -88,6 +93,10 @@ public class EditText extends android.widget.EditText
     private int matchingView;
 
     private boolean valid = true;
+
+    private CharSequence prefix, suffix;
+    private StaticLayout prefixLayout, suffixLayout;
+    private int prefixPadding, prefixTextPadding, suffixPadding, suffixTextPadding;
 
     private List<OnValidateListener> validateListeners = new ArrayList<>();
     private boolean clearFocusOnTouchOutside = false;
@@ -173,6 +182,12 @@ public class EditText extends android.widget.EditText
         setCursorColor(a.getColor(R.styleable.EditText_carbon_cursorColor, 0));
 
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
+        setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
+        setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
+        setRequired(a.getBoolean(R.styleable.EditText_carbon_required, false));
+
+        setPrefix(a.getString(R.styleable.EditText_carbon_prefix));
+        setSuffix(a.getString(R.styleable.EditText_carbon_suffix));
 
         setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
 
@@ -284,6 +299,80 @@ public class EditText extends android.widget.EditText
         return cursorColor;
     }
 
+    public CharSequence getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(CharSequence prefix) {
+        this.prefix = prefix;
+        if (TextUtils.isEmpty(prefix)) {
+            prefixLayout = null;
+            return;
+        }
+
+        TextPaint textPaint = new TextPaint(getPaint());
+        textPaint.setColor(getHintTextColors().getDefaultColor());
+        prefixLayout = new StaticLayout(prefix, textPaint, Integer.MAX_VALUE, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true);
+        prefixPadding = (int) prefixLayout.getLineWidth(0);
+        prefixTextPadding = getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf);
+
+        super.setPadding(getPaddingLeft() + prefixPadding + prefixTextPadding, getPaddingTop(), getPaddingRight() + suffixPadding + suffixTextPadding, getPaddingBottom());
+    }
+
+    public CharSequence getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(CharSequence suffix) {
+        this.suffix = suffix;
+        if (TextUtils.isEmpty(suffix)) {
+            suffixLayout = null;
+            return;
+        }
+
+        int padLeft = getPaddingLeft() - prefixPadding - prefixTextPadding;
+        int padRight = getPaddingRight() - suffixPadding - suffixTextPadding;
+
+        TextPaint textPaint = new TextPaint(getPaint());
+        textPaint.setColor(getHintTextColors().getDefaultColor());
+        suffixLayout = new StaticLayout(suffix, textPaint, Integer.MAX_VALUE, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true);
+        suffixPadding = (int) suffixLayout.getLineWidth(0);
+        suffixTextPadding = getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf);
+
+        super.setPadding(padLeft + prefixPadding + prefixTextPadding, getPaddingTop(), padRight + suffixPadding + suffixTextPadding, getPaddingBottom());
+    }
+
+    public int getMinCharacters() {
+        return minCharacters;
+    }
+
+    public void setMinCharacters(int minCharacters) {
+        this.minCharacters = minCharacters;
+    }
+
+    public int getMaxCharacters() {
+        return maxCharacters;
+    }
+
+    public void setMaxCharacters(int maxCharacters) {
+        this.maxCharacters = maxCharacters;
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
+
+    /**
+     * Sets it the underlying InputView has to be not empty. Adds an asterisk to hint text and label
+     * text
+     *
+     * @param required
+     */
+    public void setRequired(boolean required) {
+        this.required = required;
+        validate();
+    }
+
     public void validate() {
         validateInternal();
         postInvalidate();
@@ -301,9 +390,11 @@ public class EditText extends android.widget.EditText
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }*/
-        boolean drawPatternError = false, drawMatchingViewError = false;
+        boolean drawPatternOk = true, drawMatchingViewError = false, requiredOk = !required || !s.isEmpty();
+        boolean counterError = (minCharacters > 0 && s.length() < minCharacters || maxCharacters < Integer.MAX_VALUE && s.length() > maxCharacters);
+
         if (pattern != null)
-            drawPatternError = !pattern.matcher(s).matches();
+            drawPatternOk = pattern.matcher(s).matches();
         if (matchingView != 0) {
             View view = getRootView().findViewById(matchingView);
             if (view instanceof TextView) {
@@ -313,7 +404,7 @@ public class EditText extends android.widget.EditText
             }
         }
 
-        valid = !drawMatchingViewError && !drawPatternError;
+        valid = requiredOk && !drawMatchingViewError && drawPatternOk && !counterError;
 
         refreshDrawableState();
     }
@@ -448,6 +539,16 @@ public class EditText extends android.widget.EditText
 
     public void drawInternal(@NonNull Canvas canvas) {
         super.draw(canvas);
+        if (prefixLayout != null) {
+            canvas.translate(getPaddingLeft() - prefixPadding - prefixTextPadding, 0);
+            prefixLayout.draw(canvas);
+            canvas.translate(-getPaddingLeft() + prefixPadding + prefixTextPadding, 0);
+        }
+        if (suffixLayout != null) {
+            canvas.translate(getWidth() - getPaddingLeft() - getPaddingRight() + suffixPadding + suffixTextPadding, 0);
+            suffixLayout.draw(canvas);
+            canvas.translate(-getWidth() + getPaddingLeft() + getPaddingRight() - suffixPadding - suffixTextPadding, 0);
+        }
 
         if (isFocused() && isEnabled()) {
             paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));

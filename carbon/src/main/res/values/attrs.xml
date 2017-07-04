@@ -819,11 +819,10 @@
 
     <attr name="carbon_inputLayoutStyle" format="reference"/>
     <attr name="carbon_inputLayoutContainerStyle" format="reference"/>
+    <attr name="carbon_inputLayoutButtonStyle" format="reference"/>
     <declare-styleable name="InputLayout">
         <attr name="carbon_theme"/>
 
-        <attr name="carbon_minCharacters" format="integer"/>
-        <attr name="carbon_maxCharacters" format="integer"/>
         <attr name="carbon_error" format="string"/>
 
         <!-- @Deprecated -->
@@ -841,9 +840,12 @@
             <enum name="ifNotEmpty" value="3"/>
         </attr>
         <attr name="carbon_label" format="string"/>
-        <attr name="carbon_required" format="boolean"/>
-        <attr name="carbon_showPassword" format="boolean"/>
-        <attr name="carbon_showClear" format="boolean"/>
+        <attr name="carbon_actionButton" format="enum">
+            <enum name="none" value="0"/>
+            <enum name="clear" value="1"/>
+            <enum name="showPassword" value="2"/>
+            <enum name="voiceInput" value="3"/>
+        </attr>
 
         <attr name="carbon_errorTextSize" format="dimension"/>
         <attr name="carbon_counterTextSize" format="dimension"/>
@@ -892,10 +894,15 @@
         <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_pattern" format="string"/>
+        <attr name="carbon_minCharacters" format="integer"/>
+        <attr name="carbon_maxCharacters" format="integer"/>
+        <attr name="carbon_required" format="boolean"/>
         <attr name="carbon_cursorColor" format="color"/>
         <attr name="android:textAppearance"/>
         <attr name="carbon_matchingView" format="reference"/>
         <attr name="android:textAllCaps"/>
+        <attr name="carbon_prefix" format="string|reference"/>
+        <attr name="carbon_suffix" format="string|reference"/>
 
         <attr name="carbon_htmlText"/>
 
