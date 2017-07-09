@@ -21,7 +21,6 @@ import android.view.animation.DecelerateInterpolator;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
-import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
@@ -171,11 +170,7 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -208,11 +203,7 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override

@@ -16,6 +16,6 @@ public class ContextWrapperActivity extends Activity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(new CarbonContextWrapper(newBase));
+        super.attachBaseContext(CarbonContextWrapper.wrap(newBase));
     }
 }

@@ -26,6 +26,6 @@
         android:layout_marginEnd="@dimen/carbon_margin"
         android:layout_marginRight="@dimen/carbon_margin"
         android:src="@raw/carbon_arrow_down"
-        app:carbon_tint="?attr/carbon_iconColor"/>
+        app:carbon_tint="@color/carbon_defaultIconColor"/>
 
 </carbon.widget.LinearLayout>

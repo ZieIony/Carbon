@@ -18,7 +18,7 @@
             android:layout_height="200dp"
             android:background="@color/carbon_grey_800"
             android:text="Apple pie donut fruitcake sugar plum jelly beans topping macaroon biscuit donut. Gingerbread sugar plum gummi bears soufflé brownie powder liquorice."
-            android:textColor="@color/carbon_text_primary_dark"
+            android:textColor="@color/carbon_textColorPrimary_dark"
             app:carbon_autoSizeMaxTextSize="30sp"
             app:carbon_autoSizeMinTextSize="15sp"
             app:carbon_autoSizeText="uniform"/>

@@ -28,12 +28,10 @@
 
     <carbon.widget.Button
         android:id="@+id/carbon_actionButton"
-        style="@style/carbon_Button.Flat"
+        style="@style/carbon_Button.Flat.Colored.Inverse"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
-        android:textColor="?attr/colorAccent"
-        android:visibility="invisible"
-        app:carbon_rippleColor="?attr/carbon_rippleColorInverse"/>
+        android:visibility="invisible"/>
 </merge>

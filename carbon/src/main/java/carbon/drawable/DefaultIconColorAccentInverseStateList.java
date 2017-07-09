@@ -6,8 +6,8 @@ import android.content.res.ColorStateList;
 import carbon.Carbon;
 import carbon.R;
 
-public class DefaultColorStateList extends ColorStateList {
-    public DefaultColorStateList(Context context) {
+public class DefaultIconColorAccentInverseStateList extends ColorStateList {
+    public DefaultIconColorAccentInverseStateList(Context context) {
         super(new int[][]{
                 new int[]{-android.R.attr.state_enabled},
                 new int[]{R.attr.carbon_state_invalid},
@@ -23,7 +23,7 @@ public class DefaultColorStateList extends ColorStateList {
                 Carbon.getThemeColor(context, R.attr.colorAccent),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorControlNormal)
+                Carbon.getThemeColor(context, R.attr.carbon_iconColorInverse)
         });
     }
 }

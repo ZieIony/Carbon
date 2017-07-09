@@ -25,19 +25,17 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.ColorStateListDrawable;
-import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.RevealAnimator;
@@ -56,7 +54,7 @@ public abstract class View extends android.view.View
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public View(Context context) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initView(null, 0);
     }
 
@@ -111,11 +109,6 @@ public abstract class View extends android.view.View
 
     private void initView(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.View, defStyleAttr, R.style.carbon_View);
-
-        TypedValue bg = new TypedValue();
-        a.getValue(R.styleable.View_android_background, bg);
-        if (bg.resourceId == R.drawable.carbon_defaultbackground)
-            setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), animation -> postInvalidate())));
 
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, elevationIds);
@@ -599,6 +592,7 @@ public abstract class View extends android.view.View
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {
@@ -757,11 +751,7 @@ public abstract class View extends android.view.View
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -791,11 +781,7 @@ public abstract class View extends android.view.View
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override

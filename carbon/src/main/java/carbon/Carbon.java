@@ -15,20 +15,32 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import java.security.InvalidParameterException;
 
 import carbon.animation.AnimUtils;
+import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.drawable.AlphaDrawable;
+import carbon.drawable.ColorStateListDrawable;
+import carbon.drawable.DefaultAccentColorStateList;
+import carbon.drawable.DefaultColorStateList;
+import carbon.drawable.DefaultIconColorAccentInverseStateList;
+import carbon.drawable.DefaultIconColorAccentStateList;
+import carbon.drawable.DefaultIconColorInverseStateList;
+import carbon.drawable.DefaultIconColorStateList;
+import carbon.drawable.DefaultPrimaryColorStateList;
+import carbon.drawable.DefaultTextColorAccentStateList;
+import carbon.drawable.DefaultTextColorPrimaryStateList;
+import carbon.drawable.DefaultTextPrimaryColorInverseStateList;
+import carbon.drawable.DefaultTextPrimaryColorStateList;
+import carbon.drawable.DefaultTextSecondaryColorInverseStateList;
+import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
-import carbon.drawable.ripple.RippleDrawableICS;
-import carbon.drawable.ripple.RippleDrawableLollipop;
-import carbon.drawable.ripple.RippleDrawableMarshmallow;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.Menu;
 import carbon.shadow.ShadowView;
-import carbon.widget.AutoSizeTextMode;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
@@ -36,6 +48,7 @@ import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
 import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
+import carbon.widget.AutoSizeTextMode;
 
 import static carbon.view.RevealView.MAX_RADIUS;
 
@@ -58,6 +71,66 @@ public class Carbon {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 1, context.getResources().getDisplayMetrics());
     }
 
+    public static ColorStateList getDefaultColorStateList(Context context, TypedArray a, int id) {
+        if (!a.hasValue(id))
+            return null;
+        TypedValue value = new TypedValue();
+        a.getValue(id, value);
+        if (value.data != 0x12345678)
+            return null;
+
+        if (value.resourceId == R.color.carbon_defaultColor) {
+            return new DefaultColorStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultColorPrimary) {
+            return new DefaultPrimaryColorStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultColorAccent) {
+            return new DefaultAccentColorStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultIconColor) {
+            return new DefaultIconColorStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultIconColorInverse) {
+            return new DefaultIconColorInverseStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultIconColorAccent) {
+            return new DefaultIconColorAccentStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultIconColorAccentInverse) {
+            return new DefaultIconColorAccentInverseStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultTextPrimaryColor) {
+            return new DefaultTextPrimaryColorStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultTextSecondaryColor) {
+            return new DefaultTextSecondaryColorStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultTextPrimaryColorInverse) {
+            return new DefaultTextPrimaryColorInverseStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultTextSecondaryColorInverse) {
+            return new DefaultTextSecondaryColorInverseStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultTextColorPrimary) {
+            return new DefaultTextColorPrimaryStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultTextColorAccent) {
+            return new DefaultTextColorAccentStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultRippleColor) {
+            int c = Carbon.getThemeColor(context, R.attr.carbon_rippleColor);
+            return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
+        } else if (value.resourceId == R.color.carbon_defaultRippleColorPrimary) {
+            int c = Carbon.getThemeColor(context, R.attr.colorPrimary);
+            return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
+        } else if (value.resourceId == R.color.carbon_defaultRippleColorAccent) {
+            int c = Carbon.getThemeColor(context, R.attr.colorAccent);
+            return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
+        }
+
+        return null;
+    }
+
+    public static void initDefaultBackground(View view, TypedArray a, int id) {
+        ColorStateList color = getDefaultColorStateList(view.getContext(), a, id);
+        if (color != null)
+            view.setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate())));
+    }
+
+    public static void initDefaultTextColor(TextView view, TypedArray a, int id) {
+        ColorStateList color = getDefaultColorStateList(view.getContext(), a, id);
+        if (color != null)
+            view.setTextColor(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate()));
+    }
+
     public static void initRippleDrawable(RippleView rippleView, TypedArray a, int[] ids) {
         int carbon_rippleColor = ids[0];
         int carbon_rippleStyle = ids[1];
@@ -68,45 +141,18 @@ public class Carbon {
         if (view.isInEditMode())
             return;
 
-        ColorStateList color = a.getColorStateList(carbon_rippleColor);
+        Context context = ((View) rippleView).getContext();
+        ColorStateList color = getDefaultColorStateList(context, a, carbon_rippleColor);
+        if (color == null)
+            color = a.getColorStateList(carbon_rippleColor);
 
         if (color != null) {
             RippleDrawable.Style style = RippleDrawable.Style.values()[a.getInt(carbon_rippleStyle, RippleDrawable.Style.Background.ordinal())];
             boolean useHotspot = a.getBoolean(carbon_rippleHotspot, true);
             int radius = (int) a.getDimension(carbon_rippleRadius, -1);
 
-            rippleView.setRippleDrawable(createRippleDrawable(color, style, view, useHotspot, radius));
+            rippleView.setRippleDrawable(RippleDrawable.create(color, style, view, useHotspot, radius));
         }
-    }
-
-    public static RippleDrawable createRippleDrawable(ColorStateList color, RippleDrawable.Style style, View view, boolean useHotspot, int radius) {
-        RippleDrawable rippleDrawable;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rippleDrawable = new RippleDrawableMarshmallow(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
-        } else if (Carbon.IS_LOLLIPOP) {
-            rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
-        } else {
-            rippleDrawable = new RippleDrawableICS(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
-        }
-        rippleDrawable.setCallback(view);
-        rippleDrawable.setHotspotEnabled(useHotspot);
-        rippleDrawable.setRadius(radius);
-        return rippleDrawable;
-    }
-
-    public static RippleDrawable createRippleDrawable(ColorStateList color, RippleDrawable.Style style, View view, Drawable background, boolean useHotspot, int radius) {
-        RippleDrawable rippleDrawable;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rippleDrawable = new RippleDrawableMarshmallow(color, background, style);
-        } else if (Carbon.IS_LOLLIPOP) {
-            rippleDrawable = new RippleDrawableLollipop(color, background, style);
-        } else {
-            rippleDrawable = new RippleDrawableICS(color, background, style);
-        }
-        rippleDrawable.setCallback(view);
-        rippleDrawable.setHotspotEnabled(useHotspot);
-        rippleDrawable.setRadius(radius);
-        return rippleDrawable;
     }
 
     public static void initTouchMargin(TouchMarginView view, TypedArray a, int[] ids) {
@@ -160,24 +206,22 @@ public class Carbon {
         int carbon_animateColorChanges = ids[4];
 
         if (a.hasValue(carbon_tint)) {
-            TypedValue value = new TypedValue();
-            a.getValue(carbon_tint, value);
-            if (value.type >= TypedValue.TYPE_FIRST_INT && value.type <= TypedValue.TYPE_LAST_INT) {
-                view.setTint(value.data);
-            } else {
-                view.setTint(a.getColorStateList(carbon_tint));
-            }
+            Context context = ((View) view).getContext();
+            ColorStateList color = getDefaultColorStateList(context, a, carbon_tint);
+            if (color == null)
+                color = a.getColorStateList(carbon_tint);
+            if (color != null)
+                view.setTint(AnimatedColorStateList.fromList(color, animation -> ((View) view).postInvalidate()));
         }
         view.setTintMode(TintedView.modes[a.getInt(carbon_tintMode, 1)]);
 
         if (a.hasValue(carbon_backgroundTint)) {
-            TypedValue value = new TypedValue();
-            a.getValue(carbon_backgroundTint, value);
-            if (value.type >= TypedValue.TYPE_FIRST_INT && value.type <= TypedValue.TYPE_LAST_INT) {
-                view.setBackgroundTint(value.data);
-            } else {
-                view.setBackgroundTint(a.getColorStateList(carbon_backgroundTint));
-            }
+            Context context = ((View) view).getContext();
+            ColorStateList color = getDefaultColorStateList(context, a, carbon_backgroundTint);
+            if (color == null)
+                color = a.getColorStateList(carbon_backgroundTint);
+            if (color != null)
+                view.setBackgroundTint(AnimatedColorStateList.fromList(color, animation -> ((View) view).postInvalidate()));
         }
         view.setBackgroundTintMode(TintedView.modes[a.getInt(carbon_backgroundTintMode, 1)]);
 
@@ -277,12 +321,18 @@ public class Carbon {
         Carbon.defaultRevealDuration = defaultRevealDuration;
     }
 
-    public static void initStroke(StrokeView view, TypedArray a, int[] ids) {
+    public static void initStroke(StrokeView strokeView, TypedArray a, int[] ids) {
         int carbon_stroke = ids[0];
         int carbon_strokeWidth = ids[1];
 
-        view.setStroke(a.getColorStateList(carbon_stroke));
-        view.setStrokeWidth(a.getDimension(carbon_strokeWidth, 0));
+        View view = (View) strokeView;
+        ColorStateList color = getDefaultColorStateList(view.getContext(), a, carbon_stroke);
+        if (color == null)
+            color = a.getColorStateList(carbon_stroke);
+
+        if (color != null)
+            strokeView.setStroke(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate()));
+        strokeView.setStrokeWidth(a.getDimension(carbon_strokeWidth, 0));
     }
 
     public static void initAutoSizeText(AutoSizeTextView view, TypedArray a, int[] ids) {
@@ -298,13 +348,13 @@ public class Carbon {
 
     public static int getThemeResId(Context context, int attr) {
         Resources.Theme theme = context.getTheme();
-        TypedValue typedvalueattr = new TypedValue();
-        theme.resolveAttribute(attr, typedvalueattr, true);
-        return typedvalueattr.resourceId;
+        TypedValue typedValueAttr = new TypedValue();
+        theme.resolveAttribute(attr, typedValueAttr, true);
+        return typedValueAttr.resourceId;
     }
 
     public static Menu getMenu(Context context, int resId) {
-        CarbonContextWrapper contextWrapper = new CarbonContextWrapper(context);
+        Context contextWrapper = CarbonContextWrapper.wrap(context);
         Menu menu = new Menu(contextWrapper);
         MenuInflater inflater = new MenuInflater(contextWrapper);
         inflater.inflate(resId, menu);
@@ -312,7 +362,7 @@ public class Carbon {
     }
 
     public static Menu getMenu(Context context, android.view.Menu baseMenu) {
-        CarbonContextWrapper contextWrapper = new CarbonContextWrapper(context);
+        Context contextWrapper = CarbonContextWrapper.wrap(context);
         Menu menu = new Menu(contextWrapper);
         for (int i = 0; i < baseMenu.size(); i++) {
             android.view.MenuItem menuItem = baseMenu.getItem(i);

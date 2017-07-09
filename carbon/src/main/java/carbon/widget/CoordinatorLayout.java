@@ -29,7 +29,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import com.annimon.stream.Stream;
 
@@ -38,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -82,7 +82,7 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     private OnTouchListener onDispatchTouchListener;
 
     public CoordinatorLayout(Context context) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initCoordinatorLayout(null, R.attr.carbon_coordinatorLayoutStyle);
     }
 
@@ -738,6 +738,7 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {

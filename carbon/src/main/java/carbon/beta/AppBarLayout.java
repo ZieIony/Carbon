@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -80,7 +81,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
     private OnTouchListener onDispatchTouchListener;
 
     public AppBarLayout(Context context) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initAppBarLayout(null, R.attr.carbon_appBarLayoutStyle);
     }
 

@@ -8,19 +8,7 @@
         android:orientation="vertical"
         app:carbon_insetColor="?attr/colorPrimary">
 
-        <carbon.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <carbon.widget.ImageView
-                android:id="@+id/debug"
-                style="@style/carbon_ImageView.Icon"
-                android:layout_width="@dimen/carbon_toolbarItemSize"
-                android:layout_height="@dimen/carbon_toolbarItemSize"
-                android:src="@raw/ic_bug_report_24px"
-                app:carbon_tint="?attr/colorControlNormal"/>
-        </carbon.widget.Toolbar>
+        <include layout="@layout/view_debugtoolbar"/>
 
         <carbon.widget.TextView
             style="@style/sectionDescription"

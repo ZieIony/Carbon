@@ -4,21 +4,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import carbon.widget.ProgressBar;
 
-/**
- * Created by Mbarin on 2015-02-08.
- */
 public class ProgressBarDrawable extends ProgressDrawable {
     private static final long DEFAULT_SWEEP_DURATION = 800;
     private static final long DEFAULT_SWEEP_OFFSET = 500;
     private long sweepDuration = DEFAULT_SWEEP_DURATION;
     private long sweepDelay = DEFAULT_SWEEP_OFFSET;
 
-    Interpolator interpolator = new AccelerateDecelerateInterpolator();
+    private Interpolator interpolator = new AccelerateDecelerateInterpolator();
 
     public ProgressBarDrawable() {
         forePaint.setStyle(Paint.Style.FILL);
@@ -26,7 +24,7 @@ public class ProgressBarDrawable extends ProgressDrawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         Rect bounds = getBounds();
 
         if (style == ProgressBar.Style.BarIndeterminate) {

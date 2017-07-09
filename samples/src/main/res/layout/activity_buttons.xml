@@ -36,7 +36,7 @@
                 android:background="@drawable/buttonshape"
                 android:tag="enable"
                 android:text="Shape"
-                android:textColor="@color/carbon_text_primary_dark"
+                android:textColor="@color/carbon_textColorPrimary_dark"
                 app:carbon_backgroundTint="@null"/>
 
             <carbon.widget.Button
@@ -106,10 +106,10 @@
                 android:tag="enable"/>
 
             <carbon.widget.FloatingActionButton
+                style="@style/carbon_FloatingActionButton.Primary"
                 android:layout_width="@dimen/carbon_fabSize"
                 android:layout_height="@dimen/carbon_fabSize"
                 android:layout_margin="@dimen/carbon_padding"
-                android:background="?attr/colorPrimary"
                 android:padding="@dimen/carbon_padding"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/ic_android_black_24dp"

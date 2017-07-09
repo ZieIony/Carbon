@@ -39,7 +39,6 @@ import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
@@ -830,6 +829,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {
@@ -988,11 +988,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -1033,11 +1029,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override

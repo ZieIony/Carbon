@@ -321,6 +321,9 @@ public class RangeSeekBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled())
+            return false;
+
         float v = (value - min) / (max - min);
         float v2 = (value2 - min) / (max - min);
 

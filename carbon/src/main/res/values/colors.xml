@@ -13,36 +13,38 @@
     <color name="carbon_black_87">#de000000</color>
 
     <!-- dark theme -->
-    <color name="carbon_divider_dark">@color/carbon_white_12</color>
-    <color name="carbon_ripple_dark">#f4ffffff</color>
-    <color name="carbon_icon_active_dark">@color/carbon_white</color>
-    <color name="carbon_icon_inactive_dark">@color/carbon_white_50</color>
-
+    <color name="carbon_dividerColor_dark">@color/carbon_white_12</color>
+    <color name="carbon_rippleColor_dark">#14ffffff</color>
+    <color name="carbon_iconColorActive_dark">@color/carbon_white</color>
+    <color name="carbon_iconColorInactive_dark">@color/carbon_white_50</color>
+    
     <color name="carbon_colorPrimaryDark_dark">@color/carbon_black</color>
     <color name="carbon_colorPrimary_dark">@color/carbon_grey_900</color>
+    <color name="carbon_colorControl_dark">#ff5a595b</color>
     <color name="carbon_colorBackground_dark">#ff303030</color>
     <color name="carbon_colorForeground_dark">@color/carbon_grey_800</color>
 
-    <color name="carbon_text_primary_dark">@color/carbon_white</color>
-    <color name="carbon_text_secondary_dark">@color/carbon_white_70</color>
-    <color name="carbon_text_hint_dark">@color/carbon_white_50</color>
-    <color name="carbon_text_disabled_dark">@color/carbon_white_50</color>
+    <color name="carbon_textColorPrimary_dark">@color/carbon_white</color>
+    <color name="carbon_textColorSecondary_dark">@color/carbon_white_70</color>
+    <color name="carbon_textColorHint_dark">@color/carbon_white_50</color>
+    <color name="carbon_textColorDisabled_dark">@color/carbon_white_50</color>
 
     <!-- light theme -->
-    <color name="carbon_divider_light">@color/carbon_black_12</color>
-    <color name="carbon_ripple_light">#fc000000</color>
-    <color name="carbon_icon_active_light">@color/carbon_black_54</color>
-    <color name="carbon_icon_inactive_light">@color/carbon_black_38</color>
+    <color name="carbon_dividerColor_light">@color/carbon_black_12</color>
+    <color name="carbon_rippleColor_light">#0c000000</color>
+    <color name="carbon_iconColorActive_light">@color/carbon_black_54</color>
+    <color name="carbon_iconColorInactive_light">@color/carbon_black_38</color>
 
     <color name="carbon_colorPrimaryDark_light">@color/carbon_grey_300</color>
     <color name="carbon_colorPrimary_light">@color/carbon_grey_100</color>
+    <color name="carbon_colorControl_light">#ffd6d7d7</color>
     <color name="carbon_colorBackground_light">@color/carbon_grey_50</color>
     <color name="carbon_colorForeground_light">@color/carbon_white</color>
 
-    <color name="carbon_text_primary_light">@color/carbon_black_87</color>
-    <color name="carbon_text_secondary_light">@color/carbon_black_54</color>
-    <color name="carbon_text_hint_light">@color/carbon_black_38</color>
-    <color name="carbon_text_disabled_light">@color/carbon_black_38</color>
+    <color name="carbon_textColorPrimary_light">@color/carbon_black_87</color>
+    <color name="carbon_textColorSecondary_light">@color/carbon_black_54</color>
+    <color name="carbon_textColorHint_light">@color/carbon_black_38</color>
+    <color name="carbon_textColorDisabled_light">@color/carbon_black_38</color>
 
 
     <color name="carbon_debug">#ffDE3226</color>
@@ -51,4 +53,24 @@
     <color name="carbon_tab_text_selected">#ff000000</color>
     <color name="carbon_tab_text_unselected">#8a000000</color>
 
+
+    <color name="carbon_defaultColor">#12345678</color>
+    <color name="carbon_defaultColorPrimary">#12345678</color>
+    <color name="carbon_defaultColorAccent">#12345678</color>
+
+    <color name="carbon_defaultIconColor">#12345678</color>
+    <color name="carbon_defaultIconColorInverse">#12345678</color>
+    <color name="carbon_defaultIconColorAccent">#12345678</color>
+    <color name="carbon_defaultIconColorAccentInverse">#12345678</color>
+
+    <color name="carbon_defaultTextPrimaryColor">#12345678</color>
+    <color name="carbon_defaultTextSecondaryColor">#12345678</color>
+    <color name="carbon_defaultTextPrimaryColorInverse">#12345678</color>
+    <color name="carbon_defaultTextSecondaryColorInverse">#12345678</color>
+    <color name="carbon_defaultTextColorPrimary">#12345678</color>
+    <color name="carbon_defaultTextColorAccent">#12345678</color>
+
+    <color name="carbon_defaultRippleColor">#12345678</color>
+    <color name="carbon_defaultRippleColorPrimary">#12345678</color>
+    <color name="carbon_defaultRippleColorAccent">#12345678</color>
 </resources>

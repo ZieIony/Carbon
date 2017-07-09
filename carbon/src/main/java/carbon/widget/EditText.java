@@ -52,8 +52,6 @@ import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.DefaultColorStateList;
-import carbon.drawable.DefaultNormalColorStateList;
 import carbon.drawable.UnderlineDrawable;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
@@ -191,6 +189,8 @@ public class EditText extends android.widget.EditText
 
         setMatchingView(a.getResourceId(R.styleable.EditText_carbon_matchingView, 0));
 
+        Carbon.initDefaultTextColor(this, a, R.styleable.EditText_android_textColor);
+
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
         Carbon.initElevation(this, a, elevationIds);
@@ -204,7 +204,7 @@ public class EditText extends android.widget.EditText
 
         TypedValue bg = new TypedValue();
         a.getValue(R.styleable.EditText_android_background, bg);
-        if (bg.resourceId == R.drawable.carbon_defaultbackground) {
+        if (bg.resourceId == R.color.carbon_defaultColor) {
             float underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
             UnderlineDrawable underlineDrawable = new UnderlineDrawable();
             underlineDrawable.setThickness(underlineWidth);
@@ -246,15 +246,15 @@ public class EditText extends android.widget.EditText
             fSelectHandleCenter.setAccessible(true);
 
             VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
-            leftHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+            leftHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.MULTIPLY);
             fSelectHandleLeft.set(editor, leftHandle);
 
             VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
-            rightHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+            rightHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.MULTIPLY);
             fSelectHandleRight.set(editor, rightHandle);
 
             VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
-            middleHandle.setTint(Carbon.getThemeColor(getContext(), R.attr.colorAccent));
+            middleHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.MULTIPLY);
             fSelectHandleCenter.set(editor, middleHandle);
         } catch (final Exception ignored) {
         }
@@ -533,6 +533,7 @@ public class EditText extends android.widget.EditText
                     setAllCaps(appearance.getBoolean(attr, true));
                 }
             }
+            Carbon.initDefaultTextColor(this, appearance, R.styleable.TextAppearance_android_textColor);
             appearance.recycle();
         }
     }
@@ -1197,11 +1198,7 @@ public class EditText extends android.widget.EditText
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultNormalColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -1242,11 +1239,7 @@ public class EditText extends android.widget.EditText
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override

@@ -297,6 +297,9 @@ public class SeekBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled())
+            return false;
+
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (radiusAnimator != null)
                 radiusAnimator.end();

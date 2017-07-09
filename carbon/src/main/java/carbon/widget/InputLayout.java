@@ -84,7 +84,6 @@ public class InputLayout extends RelativeLayout {
         errorTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         errorTextView.setValid(false);
         counterTextView = findViewById(R.id.carbon_counter);
-        counterTextView.setTextColor(new DefaultTextSecondaryColorStateList(getContext()));
         labelTextView = findViewById(R.id.carbon_label);
         labelTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         labelTextView.setGravity(gravity);

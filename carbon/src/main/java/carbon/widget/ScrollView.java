@@ -20,9 +20,9 @@ import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
-import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
@@ -41,7 +41,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
     public static final int OVER_SCROLL_NEVER = 2;
 
     public ScrollView(Context context) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initScrollView(null, android.R.attr.scrollViewStyle);
     }
 
@@ -226,11 +226,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -267,11 +263,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -333,7 +325,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
-            super.dispatchDraw(canvas);
+        super.dispatchDraw(canvas);
         if (topGlow != null) {
             final int scrollY = getScrollY();
             if (!topGlow.isFinished()) {

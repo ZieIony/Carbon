@@ -19,9 +19,9 @@ import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
-import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.EdgeEffect;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
@@ -40,7 +40,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
     public static final int OVER_SCROLL_NEVER = 2;
 
     public HorizontalScrollView(Context context) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initHorizontalScrollView(null, android.R.attr.horizontalScrollViewStyle);
     }
 
@@ -250,11 +250,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -291,11 +287,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -315,7 +307,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
     }
 
     @Override
-    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+    public void setBackgroundTintMode(PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
         updateBackgroundTint();
     }

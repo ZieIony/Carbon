@@ -54,7 +54,7 @@ public class BottomBar extends FrameLayout {
     }
 
     public void setMenu(int resId) {
-        Menu menu = new MenuBuilder(new CarbonContextWrapper(getContext()));
+        Menu menu = new MenuBuilder(CarbonContextWrapper.wrap(getContext()));
         MenuInflater inflater = new MenuInflater(getContext());
         inflater.inflate(resId, menu);
         setMenu(menu);

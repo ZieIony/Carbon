@@ -37,12 +37,11 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.ColorStateListDrawable;
-import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.AllCapsTransformationMethod;
@@ -77,7 +76,7 @@ public class Button extends android.widget.Button
     }
 
     public Button(Context context, String text, OnClickListener listener) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initButton(null, android.R.attr.buttonStyle);
         setText(text);
         setOnClickListener(listener);
@@ -149,7 +148,7 @@ public class Button extends android.widget.Button
 
         int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearanceInternal(ap);
+            setTextAppearanceInternal(ap, a.hasValue(R.styleable.Button_android_textColor));
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
@@ -166,10 +165,8 @@ public class Button extends android.widget.Button
             }
         }
 
-        TypedValue bg = new TypedValue();
-        a.getValue(R.styleable.Button_android_background, bg);
-        if (bg.resourceId == R.drawable.carbon_defaultbackground)
-            setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultPrimaryColorStateList(getContext()), animation -> postInvalidate())));
+        Carbon.initDefaultBackground(this, a, R.styleable.Button_android_background);
+        Carbon.initDefaultTextColor(this, a, R.styleable.Button_android_textColor);
 
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, elevationIds);
@@ -205,15 +202,15 @@ public class Button extends android.widget.Button
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearanceInternal(resid);
+        setTextAppearanceInternal(resid, false);
     }
 
     public void setTextAppearance(int resid) {
         super.setTextAppearance(getContext(), resid);
-        setTextAppearanceInternal(resid);
+        setTextAppearanceInternal(resid, false);
     }
 
-    private void setTextAppearanceInternal(int resid) {
+    private void setTextAppearanceInternal(int resid, boolean hasTextColor) {
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
@@ -228,10 +225,13 @@ public class Button extends android.widget.Button
                     setTypeface(typeface);
                 } else if (attr == R.styleable.TextAppearance_android_textAllCaps) {
                     setAllCaps(appearance.getBoolean(attr, true));
+                } else if (!hasTextColor && attr == R.styleable.TextAppearance_android_textColor) {
+                    Carbon.initDefaultTextColor(this, appearance, attr);
                 }
             }
             appearance.recycle();
         }
+
     }
 
     RevealAnimator revealAnimator;
@@ -706,6 +706,7 @@ public class Button extends android.widget.Button
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {
@@ -868,11 +869,7 @@ public class Button extends android.widget.Button
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -913,11 +910,7 @@ public class Button extends android.widget.Button
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override

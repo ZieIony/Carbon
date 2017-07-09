@@ -57,9 +57,6 @@ public class CheckableDrawable extends Drawable {
     private boolean enabled;
     private CheckedState checkedState = CheckedState.UNCHECKED;
 
-    private PorterDuffColorFilter checkedFilter;
-    private PorterDuffColorFilter uncheckedFilter;
-
     private BitmapShader checkedShader;
     private PointF offset;
     private ColorStateList tint;
@@ -143,6 +140,8 @@ public class CheckableDrawable extends Drawable {
 
         Rect bounds = getBounds();
 
+        paint.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getState(), tint.getDefaultColor()), tintMode));
+
         if (animator != null && animator.isRunning()) {
             if (currAnim == ANIMATION_FILL) {
                 drawUnchecked(canvas, currRadius);
@@ -151,13 +150,10 @@ public class CheckableDrawable extends Drawable {
             }
         } else {
             if (checkedState == CheckedState.CHECKED) {
-                paint.setColorFilter(checkedFilter);
                 canvas.drawBitmap(checkedBitmap, bounds.left, bounds.top, paint);
             } else if (checkedState == CheckedState.UNCHECKED) {
-                paint.setColorFilter(uncheckedFilter);
                 canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
             } else {
-                paint.setColorFilter(uncheckedFilter);
                 canvas.drawBitmap(filledBitmap, bounds.left, bounds.top, paint);
             }
         }
@@ -194,7 +190,6 @@ public class CheckableDrawable extends Drawable {
     private void drawUnchecked(@NonNull Canvas canvas, float radius) {
         Rect bounds = getBounds();
 
-        paint.setColorFilter(uncheckedFilter);
         canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
 
         maskCanvas.drawColor(0xffffffff);
@@ -209,7 +204,6 @@ public class CheckableDrawable extends Drawable {
         Rect bounds = getBounds();
 
         paint.setShader(null);
-        paint.setColorFilter(uncheckedFilter);
         canvas.drawBitmap(uncheckedBitmap, bounds.left, bounds.top, paint);
 
         maskCanvas.drawColor(0xffffffff);
@@ -220,7 +214,6 @@ public class CheckableDrawable extends Drawable {
         canvas.drawBitmap(maskBitmap, bounds.left, bounds.top, paint);
 
         paint.setShader(checkedShader);
-        paint.setColorFilter(checkedFilter);
         canvas.drawCircle(bounds.centerX() + bounds.width() * offset.x, bounds.centerY() + bounds.height() * offset.y, radius, paint);
     }
 
@@ -354,45 +347,26 @@ public class CheckableDrawable extends Drawable {
         return true;
     }
 
-    private boolean animateColorChanges = true;
-    private ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
-        updateTint();
-        invalidateSelf();
-    };
-
-    public boolean isAnimateColorChangesEnabled() {
-        return animateColorChanges;
-    }
-
-    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
-        this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-    }
-
-    public void setTint(ColorStateList list) {
-        this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
-        updateTint();
-    }
-
-    public ColorStateList getTint() {
-        return tint;
+    @Override
+    public void setTint(int tintColor) {
+        tint = AnimatedColorStateList.fromList(ColorStateList.valueOf(tintColor), __ -> invalidateSelf());
     }
 
     @Override
-    public void setTintMode(@NonNull PorterDuff.Mode mode) {
-        this.tintMode = mode;
-        updateTint();
+    public void setTintList(ColorStateList tint) {
+        this.tint = tint instanceof AnimatedColorStateList ? tint : AnimatedColorStateList.fromList(tint, __ -> invalidateSelf());
     }
 
-    private void updateTint() {
-        if (tint == null || tintMode == null) {
-            checkedFilter = null;
-            uncheckedFilter = null;
-        } else {
-            checkedFilter = new PorterDuffColorFilter(tint.getColorForState(new int[]{android.R.attr.state_checked, enabled ? android.R.attr.state_enabled : -android.R.attr.state_enabled}, tint.getDefaultColor()), tintMode);
-            uncheckedFilter = new PorterDuffColorFilter(tint.getColorForState(new int[]{-android.R.attr.state_checked, enabled ? android.R.attr.state_enabled : -android.R.attr.state_enabled}, tint.getDefaultColor()), tintMode);
-        }
-        invalidateSelf();
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode tintMode) {
+        this.tintMode = tintMode;
+    }
+
+    @Override
+    public boolean setState(@NonNull int[] stateSet) {
+        boolean changed = super.setState(stateSet);
+        if (changed)
+            invalidateSelf();
+        return changed;
     }
 }

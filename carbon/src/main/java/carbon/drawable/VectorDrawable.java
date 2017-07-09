@@ -1,11 +1,9 @@
 package carbon.drawable;
 
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
@@ -18,7 +16,6 @@ import com.caverock.androidsvg.SVGParseException;
 public class VectorDrawable extends Drawable implements AlphaDrawable {
     private VectorState state;
     private Bitmap bitmap;
-    private ColorStateList tint = ColorStateList.valueOf(0x00ffffff);   // TODO: maybe tint should be a part of VectorState?
 
     private static SparseArray<SVG> cache = new SparseArray<>();
 
@@ -151,23 +148,4 @@ public class VectorDrawable extends Drawable implements AlphaDrawable {
         }
     }
 
-    @Override
-    public void setTint(int tintColor) {
-        tint = ColorStateList.valueOf(tintColor);
-        state.paint.setColorFilter(new LightingColorFilter(0, tint.getColorForState(getState(), tint.getDefaultColor())));
-    }
-
-    @Override
-    public void setTintList(ColorStateList tint) {
-        this.tint = tint;
-        state.paint.setColorFilter(new LightingColorFilter(0, tint.getColorForState(getState(), tint.getDefaultColor())));
-    }
-
-    @Override
-    public boolean setState(@NonNull int[] stateSet) {
-        boolean changed = super.setState(stateSet);
-        if (changed)
-            state.paint.setColorFilter(new LightingColorFilter(0, tint.getColorForState(getState(), tint.getDefaultColor())));
-        return changed;
-    }
 }

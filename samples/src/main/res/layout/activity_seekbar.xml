@@ -10,6 +10,7 @@
     <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.TextView
+        style="@style/sectionDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_margin"
@@ -44,6 +45,7 @@
         android:layout_height="1dp"/>
 
     <carbon.widget.TextView
+        style="@style/sectionDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_margin"

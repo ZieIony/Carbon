@@ -25,7 +25,6 @@ import android.widget.CompoundButton;
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.CheckableDrawable;
-import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 
 public class CheckedTextView extends TextView implements Checkable {
@@ -213,11 +212,7 @@ public class CheckedTextView extends TextView implements Checkable {
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     public void setTintMode(@Nullable PorterDuff.Mode mode) {
@@ -229,7 +224,7 @@ public class CheckedTextView extends TextView implements Checkable {
         if (drawable != null && getTint() != null && getTintMode() != null) {
             drawable = (CheckableDrawable) drawable.mutate();
 
-            drawable.setTint(getTint());
+            drawable.setTintList(getTint());
             drawable.setTintMode(getTintMode());
 
             // The drawable (or one of its children) may not have been

@@ -25,7 +25,6 @@ import android.widget.CompoundButton;
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.CheckableDrawable;
-import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 
 public class RadioButton extends carbon.widget.TextView implements Checkable {
@@ -214,14 +213,10 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
-    public void setTintMode(@Nullable PorterDuff.Mode mode) {
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
         super.setTintMode(mode);
         applyButtonTint();
     }
@@ -231,7 +226,7 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
             drawable = drawable.mutate();
 
             if (!isInEditMode()) {
-                ((CheckableDrawable) drawable).setTint(getTint());
+                ((CheckableDrawable) drawable).setTintList(getTint());
                 ((CheckableDrawable) drawable).setTintMode(getTintMode());
             }
 

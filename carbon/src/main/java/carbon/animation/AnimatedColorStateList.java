@@ -18,26 +18,33 @@ public class AnimatedColorStateList extends ColorStateList {
     private ValueAnimator colorAnimation = null;
     private int animatedColor;
 
+    private static Field mStateSpecsField, mColorsField, mDefaultColorField;
+
+    static {
+        try {
+            mStateSpecsField = ColorStateList.class.getDeclaredField("mStateSpecs");
+            mStateSpecsField.setAccessible(true);
+            mColorsField = ColorStateList.class.getDeclaredField("mColors");
+            mColorsField.setAccessible(true);
+            mDefaultColorField = ColorStateList.class.getDeclaredField("mDefaultColor");
+            mDefaultColorField.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static AnimatedColorStateList fromList(ColorStateList list, ValueAnimator.AnimatorUpdateListener listener) {
         int[][] mStateSpecs; // must be parallel to mColors
         int[] mColors;      // must be parallel to mStateSpecs
         int mDefaultColor;
 
         try {
-            Field mStateSpecsField = ColorStateList.class.getDeclaredField("mStateSpecs");
-            mStateSpecsField.setAccessible(true);
             mStateSpecs = (int[][]) mStateSpecsField.get(list);
-            Field mColorsField = ColorStateList.class.getDeclaredField("mColors");
-            mColorsField.setAccessible(true);
             mColors = (int[]) mColorsField.get(list);
-            Field mDefaultColorField = ColorStateList.class.getDeclaredField("mDefaultColor");
-            mDefaultColorField.setAccessible(true);
             mDefaultColor = (int) mDefaultColorField.get(list);
             AnimatedColorStateList animatedColorStateList = new AnimatedColorStateList(mStateSpecs, mColors, listener);
             mDefaultColorField.set(animatedColorStateList, mDefaultColor);
             return animatedColorStateList;
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

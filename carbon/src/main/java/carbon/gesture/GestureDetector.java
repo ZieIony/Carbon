@@ -1,4 +1,4 @@
-package carbon;
+package carbon.gesture;
 
 import android.os.Handler;
 import android.view.MotionEvent;

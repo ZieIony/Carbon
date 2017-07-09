@@ -1,0 +1,200 @@
+<resources>
+
+    <style name="carbon_Theme.Light" parent="Theme.AppCompat.Light">
+        <item name="carbon_colorError">#ffF44336</item>
+        <item name="carbon_debugMode">false</item>
+
+        <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
+        <item name="android:textViewStyle">@style/carbon_TextView</item>
+        <item name="android:listViewStyle">@style/carbon_ListView</item>
+        <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
+        <item name="android:progressBarStyle">@style/carbon_ProgressBar</item>
+        <item name="android:editTextStyle">@style/carbon_EditText</item>
+        <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
+        <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
+        <item name="android:seekBarStyle">@style/carbon_SeekBar</item>
+        <item name="android:dialogTheme">@style/carbon_ThemeOverlay.Light.Dialog</item>
+
+        <item name="toolbarStyle">@style/carbon_Toolbar</item>
+        <item name="checkedTextViewStyle">@style/carbon_CheckedTextView</item>
+
+        <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
+        <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>
+        <item name="carbon_fabStyle">@style/carbon_FloatingActionButton</item>
+        <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
+        <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
+        <item name="carbon_constraintLayoutStyle">@style/carbon_ConstraintLayout</item>
+        <item name="carbon_flowLayoutStyle">@style/carbon_FlowLayout</item>
+        <item name="carbon_gridLayoutStyle">@style/carbon_GridLayout</item>
+        <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>
+        <item name="carbon_linearLayoutStyle">@style/carbon_LinearLayout</item>
+        <item name="carbon_drawerLayoutStyle">@style/carbon_DrawerLayout</item>
+        <item name="carbon_chipStyle">@style/carbon_Chip</item>
+        <item name="carbon_dividerStyle">@style/carbon_Divider</item>
+        <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
+        <item name="carbon_searchEditTextStyle">@style/carbon_SearchEditText</item>
+        <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
+        <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+        <item name="carbon_viewPagerIndicatorStyle">@style/carbon_ViewPagerIndicator</item>
+        <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
+        <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
+        <item name="carbon_appBarLayoutStyle">@style/carbon_AppBarLayout</item>
+        <item name="carbon_coordinatorLayoutStyle">@style/carbon_CoordinatorLayout</item>
+        <item name="carbon_collapsingToolbarLayoutStyle">@style/carbon_CollapsingToolbarLayout
+        </item>
+        <item name="carbon_rangeSeekBarStyle">@style/carbon_SeekBar</item>
+        <item name="carbon_navigationViewStyle">@style/carbon_NavigationView</item>
+        <item name="carbon_inputLayoutStyle">@style/carbon_InputLayout</item>
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
+        <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout</item>
+        <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
+
+        <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
+        <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Light.Snackbar</item>
+        <item name="carbon_dropDownPopupTheme">@style/carbon_ThemeOverlay.Light</item>
+        <item name="carbon_toolbarTheme">@style/carbon_ThemeOverlay.Dark</item>
+
+        <item name="colorPrimary">@color/carbon_colorPrimary_light</item>
+        <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_light</item>
+        <item name="colorAccent">@color/carbon_cyan_a700</item>
+
+        <item name="android:textColorPrimary">@color/carbon_textColorPrimary_light</item>
+        <item name="android:textColorSecondary">@color/carbon_textColorSecondary_light</item>
+        <item name="android:textColorTertiary">@color/carbon_textColorHint_light</item>
+
+        <item name="android:textColorPrimaryInverse">@color/carbon_textColorPrimary_dark</item>
+        <item name="android:textColorSecondaryInverse">@color/carbon_textColorSecondary_dark</item>
+        <item name="android:textColorTertiaryInverse">@color/carbon_textColorHint_dark</item>
+
+        <item name="carbon_colorBackground">@color/carbon_colorBackground_light</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
+        <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
+        <item name="carbon_dividerColor">@color/carbon_dividerColor_light</item>
+        <item name="carbon_inputLayoutBoxColor">@color/carbon_black_6</item>
+        <item name="carbon_inputLayoutBoxPadding">0dp</item>
+        <item name="carbon_rippleColor">@color/carbon_rippleColor_light</item>
+        <item name="carbon_rippleColorInverse">@color/carbon_rippleColor_dark</item>
+        <item name="carbon_iconColor">@color/carbon_iconColorActive_light</item>
+        <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_dark</item>
+        <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_light</item>
+        <item name="colorControlNormal">@color/carbon_colorControl_light</item>
+        <item name="android:colorControlHighlight">@color/carbon_rippleColor_light</item>
+        <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHint">@color/carbon_textColorHint_light</item>
+
+        <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline</item>
+        <item name="carbon_textAppearanceTitle">@style/carbon_TextAppearance.Title</item>
+        <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead</item>
+        <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2</item>
+        <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader</item>
+        <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption</item>
+        <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button</item>
+
+        <item name="carbon_textAppearanceHeadlineInverse">
+            @style/carbon_TextAppearance.Headline.Inverse
+        </item>
+        <item name="carbon_textAppearanceTitleInverse">@style/carbon_TextAppearance.Title.Inverse
+        </item>
+        <item name="carbon_textAppearanceSubheadInverse">
+            @style/carbon_TextAppearance.Subhead.Inverse
+        </item>
+        <item name="carbon_textAppearanceBody2Inverse">@style/carbon_TextAppearance.Body2.Inverse
+        </item>
+        <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Inverse
+        </item>
+        <item name="carbon_textAppearanceListHeaderInverse">
+            @style/carbon_TextAppearance.ListHeader.Inverse
+        </item>
+        <item name="carbon_textAppearanceCaptionInverse">
+            @style/carbon_TextAppearance.Caption.Inverse
+        </item>
+        <item name="carbon_textAppearanceButtonInverse">
+            @style/carbon_TextAppearance.Button.Inverse
+        </item>
+
+        <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
+    </style>
+
+    <style name="carbon_ThemeOverlay.Light" parent="ThemeOverlay.AppCompat">
+        <item name="android:textColorPrimary">@color/carbon_textColorPrimary_light</item>
+        <item name="android:textColorSecondary">@color/carbon_textColorSecondary_light</item>
+        <item name="android:textColorTertiary">@color/carbon_textColorHint_light</item>
+
+        <item name="android:textColorPrimaryInverse">@color/carbon_textColorPrimary_dark</item>
+        <item name="android:textColorSecondaryInverse">@color/carbon_textColorSecondary_dark</item>
+        <item name="android:textColorTertiaryInverse">@color/carbon_textColorHint_dark</item>
+
+        <item name="carbon_colorBackground">@color/carbon_colorBackground_light</item>
+        <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
+        <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
+        <item name="carbon_dividerColor">@color/carbon_dividerColor_light</item>
+        <item name="carbon_inputLayoutBoxColor">@color/carbon_black_6</item>
+        <item name="carbon_rippleColor">@color/carbon_rippleColor_light</item>
+        <item name="carbon_rippleColorInverse">@color/carbon_rippleColor_dark</item>
+        <item name="carbon_iconColor">@color/carbon_iconColorActive_light</item>
+        <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_dark</item>
+        <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_light</item>
+        <item name="colorControlNormal">@color/carbon_colorControl_light</item>
+        <item name="android:colorControlHighlight">@color/carbon_rippleColor_light</item>
+        <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHint">@color/carbon_textColorHint_light</item>
+
+        <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline</item>
+        <item name="carbon_textAppearanceTitle">@style/carbon_TextAppearance.Title</item>
+        <item name="carbon_textAppearanceSubhead">@style/carbon_TextAppearance.Subhead</item>
+        <item name="carbon_textAppearanceBody2">@style/carbon_TextAppearance.Body2</item>
+        <item name="carbon_textAppearanceBody1">@style/carbon_TextAppearance.Body1</item>
+        <item name="carbon_textAppearanceListHeader">@style/carbon_TextAppearance.ListHeader</item>
+        <item name="carbon_textAppearanceCaption">@style/carbon_TextAppearance.Caption</item>
+        <item name="carbon_textAppearanceButton">@style/carbon_TextAppearance.Button</item>
+
+        <item name="carbon_textAppearanceHeadlineInverse">
+            @style/carbon_TextAppearance.Headline.Inverse
+        </item>
+        <item name="carbon_textAppearanceTitleInverse">@style/carbon_TextAppearance.Title.Inverse
+        </item>
+        <item name="carbon_textAppearanceSubheadInverse">
+            @style/carbon_TextAppearance.Subhead.Inverse
+        </item>
+        <item name="carbon_textAppearanceBody2Inverse">@style/carbon_TextAppearance.Body2.Inverse
+        </item>
+        <item name="carbon_textAppearanceBody1Inverse">@style/carbon_TextAppearance.Body1.Inverse
+        </item>
+        <item name="carbon_textAppearanceListHeaderInverse">
+            @style/carbon_TextAppearance.ListHeader.Inverse
+        </item>
+        <item name="carbon_textAppearanceCaptionInverse">
+            @style/carbon_TextAppearance.Caption.Inverse
+        </item>
+        <item name="carbon_textAppearanceButtonInverse">
+            @style/carbon_TextAppearance.Button.Inverse
+        </item>
+
+        <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
+    </style>
+
+    <style name="carbon_Theme.Light.LightPrimaryColor">
+        <item name="carbon_toolbarTheme">@style/carbon_ThemeOverlay.Light</item>
+        <item name="android:buttonStyle">@style/carbon_Button.Colored.Inverse</item>
+    </style>
+
+    <style name="carbon_Theme.Light.LightPrimaryColor.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="carbon_Theme.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="carbon_ThemeOverlay.Light.Snackbar">
+        <item name="android:buttonStyle">@style/carbon_Button.Flat.Colored</item>
+    </style>
+
+    <style name="carbon_ThemeOverlay.Light.Dialog">
+        <item name="android:windowBackground">?attr/carbon_colorForeground</item>
+    </style>
+
+</resources>

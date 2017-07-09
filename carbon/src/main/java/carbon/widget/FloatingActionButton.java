@@ -6,15 +6,12 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.animation.AnimatedColorStateList;
-import carbon.drawable.ColorStateListDrawable;
-import carbon.drawable.DefaultAccentColorStateList;
 
 /**
  * FAB implementation using an ImageView and rounded corners. Supports SVGs, animated shadows,
@@ -29,18 +26,18 @@ public class FloatingActionButton extends ImageView {
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_fabStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, R.attr.carbon_fabStyle, R.styleable.FloatingActionButton_carbon_theme), attrs, R.attr.carbon_fabStyle);
         initFloatingActionButton(attrs, R.attr.carbon_fabStyle);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, defStyleAttr, R.styleable.FloatingActionButton_carbon_theme), attrs, defStyleAttr);
         initFloatingActionButton(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, defStyleAttr, R.styleable.FloatingActionButton_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initFloatingActionButton(attrs, defStyleAttr);
     }
 
@@ -55,11 +52,6 @@ public class FloatingActionButton extends ImageView {
             if (resId != 0)
                 setMenu(resId);
         }
-
-        TypedValue bg = new TypedValue();
-        a.getValue(R.styleable.FloatingActionButton_android_background, bg);
-        if (bg.resourceId == R.drawable.carbon_defaultbackground)
-            setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(new DefaultAccentColorStateList(getContext()), animation -> postInvalidate())));
 
         a.recycle();
     }
@@ -108,11 +100,7 @@ public class FloatingActionButton extends ImageView {
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultAccentColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
 }

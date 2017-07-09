@@ -34,7 +34,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import com.annimon.stream.Stream;
 
@@ -43,6 +42,7 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -94,7 +94,7 @@ public class LinearLayout extends android.widget.LinearLayout
     private OnTouchListener onDispatchTouchListener;
 
     public LinearLayout(Context context) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initLinearLayout(null, R.attr.carbon_linearLayoutStyle);
     }
 
@@ -760,6 +760,7 @@ public class LinearLayout extends android.widget.LinearLayout
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {

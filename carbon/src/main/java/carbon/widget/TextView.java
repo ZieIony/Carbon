@@ -37,7 +37,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import java.lang.reflect.Field;
 
@@ -47,7 +46,6 @@ import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.AllCapsTransformationMethod;
@@ -197,6 +195,9 @@ public class TextView extends android.widget.TextView
             }
         }
 
+        Carbon.initDefaultBackground(this, a, R.styleable.TextView_android_background);
+        Carbon.initDefaultTextColor(this, a, R.styleable.TextView_android_textColor);
+
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initTint(this, a, tintIds);
@@ -275,6 +276,7 @@ public class TextView extends android.widget.TextView
                     setAllCaps(appearance.getBoolean(attr, true));
                 }
             }
+            Carbon.initDefaultTextColor(this, appearance, R.styleable.TextAppearance_android_textColor);
             appearance.recycle();
         }
     }
@@ -810,6 +812,7 @@ public class TextView extends android.widget.TextView
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {
@@ -984,11 +987,7 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -1029,11 +1028,7 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override

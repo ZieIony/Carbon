@@ -36,7 +36,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:paddingBottom="@dimen/carbon_paddingHalf"
-                    android:background="@drawable/carbon_defaultbackground"
+                    android:background="@color/carbon_defaultColor"
                     android:text="1"/>
 
                 <carbon.widget.DropDown
@@ -47,7 +47,7 @@
                     android:layout_marginRight="@dimen/carbon_marginHalf"
                     android:layout_weight="1"
                     android:paddingBottom="@dimen/carbon_paddingHalf"
-                    android:background="@drawable/carbon_defaultbackground"
+                    android:background="@color/carbon_defaultColor"
                     android:text="Jan"/>
 
                 <carbon.widget.DropDown
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/carbon_defaultbackground"
+                    android:background="@color/carbon_defaultColor"
                     android:paddingBottom="@dimen/carbon_paddingHalf"
                     android:text="1987"/>
             </carbon.widget.LinearLayout>

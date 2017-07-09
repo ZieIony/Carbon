@@ -34,7 +34,7 @@ public class FloatingActionMenu extends PopupWindow {
     private RowListAdapter<MenuItem> adapter;
 
     public FloatingActionMenu(Context context) {
-        super(new RecyclerView(new CarbonContextWrapper(context)), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        super(new RecyclerView(CarbonContextWrapper.wrap(context)), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         content = (RecyclerView) getContentView();
         content.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         content.setLayoutManager(new LinearLayoutManager(context));

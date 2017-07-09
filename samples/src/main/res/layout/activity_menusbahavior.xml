@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
-                    android:background="@drawable/carbon_defaultbackground"
+                    android:background="@color/carbon_defaultColor"
                     android:paddingBottom="@dimen/carbon_padding"/>
 
                 <carbon.widget.EditText
@@ -123,19 +123,17 @@
                 android:layout_marginTop="48dp">
 
                 <carbon.widget.Button
-                    style="@style/carbon_Button.Flat"
+                    style="@style/carbon_Button.Flat.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="cancel"
-                    android:textColor="?attr/colorAccent"/>
+                    android:text="cancel"/>
 
                 <carbon.widget.Button
-                    style="@style/carbon_Button.Flat"
+                    style="@style/carbon_Button.Flat.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/carbon_paddingHalf"
-                    android:text="done"
-                    android:textColor="?attr/colorAccent"/>
+                    android:text="done"/>
             </carbon.widget.LinearLayout>
         </carbon.widget.LinearLayout>
     </carbon.widget.FrameLayout>

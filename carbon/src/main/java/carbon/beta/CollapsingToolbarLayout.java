@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -78,7 +79,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     private OnTouchListener onDispatchTouchListener;
 
     public CollapsingToolbarLayout(Context context) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initCollapsingToolbarLayout(null, R.attr.carbon_collapsingToolbarLayoutStyle);
     }
 
@@ -734,6 +735,7 @@ public class CollapsingToolbarLayout extends android.support.design.widget.Colla
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {

@@ -7,98 +7,77 @@
     <style name="carbon_TextAppearance.Headline">
         <item name="android:textSize">@dimen/carbon_textSizeHeadline</item>
         <item name="carbon_fontFamily">"sans-serif"</item>
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
-    <style name="carbon_TextAppearance.Headline.Dark">
-        <item name="android:textColor">@color/carbon_text_primary_dark</item>
-    </style>
-
-    <style name="carbon_TextAppearance.Headline.Light">
-        <item name="android:textColor">@color/carbon_text_primary_light</item>
+    <style name="carbon_TextAppearance.Headline.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColorInverse</item>
     </style>
 
 
     <style name="carbon_TextAppearance.Title">
         <item name="android:textSize">@dimen/carbon_textSizeTitle</item>
         <item name="carbon_fontFamily">"sans-serif-medium"</item>
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
-    <style name="carbon_TextAppearance.Title.Dark">
-        <item name="android:textColor">@color/carbon_text_primary_dark</item>
-    </style>
-
-    <style name="carbon_TextAppearance.Title.Light">
-        <item name="android:textColor">@color/carbon_text_primary_light</item>
+    <style name="carbon_TextAppearance.Title.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColorInverse</item>
     </style>
 
 
     <style name="carbon_TextAppearance.Subhead">
         <item name="android:textSize">@dimen/carbon_textSizeSubhead</item>
         <item name="carbon_fontFamily">"sans-serif"</item>
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
-    <style name="carbon_TextAppearance.Subhead.Dark">
-        <item name="android:textColor">@color/carbon_text_primary_dark</item>
-    </style>
-
-    <style name="carbon_TextAppearance.Subhead.Light">
-        <item name="android:textColor">@color/carbon_text_primary_light</item>
+    <style name="carbon_TextAppearance.Subhead.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColorInverse</item>
     </style>
 
 
     <style name="carbon_TextAppearance.Body2">
         <item name="android:textSize">@dimen/carbon_textSizeBody</item>
         <item name="carbon_fontFamily">"sans-serif-medium"</item>
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
-    <style name="carbon_TextAppearance.Body2.Dark">
-        <item name="android:textColor">@color/carbon_text_primary_dark</item>
-    </style>
-
-    <style name="carbon_TextAppearance.Body2.Light">
-        <item name="android:textColor">@color/carbon_text_primary_light</item>
+    <style name="carbon_TextAppearance.Body2.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColorInverse</item>
     </style>
 
 
     <style name="carbon_TextAppearance.Body1">
         <item name="android:textSize">@dimen/carbon_textSizeBody</item>
         <item name="carbon_fontFamily">"sans-serif"</item>
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
-    <style name="carbon_TextAppearance.Body1.Dark">
-        <item name="android:textColor">@color/carbon_text_primary_dark</item>
-    </style>
-
-    <style name="carbon_TextAppearance.Body1.Light">
-        <item name="android:textColor">@color/carbon_text_primary_light</item>
+    <style name="carbon_TextAppearance.Body1.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColorInverse</item>
     </style>
 
 
     <style name="carbon_TextAppearance.ListHeader">
         <item name="android:textSize">@dimen/carbon_textSizeListHeader</item>
         <item name="carbon_fontFamily">"sans-serif-medium"</item>
+        <item name="android:textColor">@color/carbon_defaultTextSecondaryColor</item>
     </style>
 
-    <style name="carbon_TextAppearance.ListHeader.Dark">
-        <item name="android:textColor">@color/carbon_text_secondary_dark</item>
-    </style>
-
-    <style name="carbon_TextAppearance.ListHeader.Light">
-        <item name="android:textColor">@color/carbon_text_secondary_light</item>
+    <style name="carbon_TextAppearance.ListHeader.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextSecondaryColorInverse</item>
     </style>
 
 
     <style name="carbon_TextAppearance.Caption">
         <item name="android:textSize">@dimen/carbon_textSizeCaption</item>
         <item name="carbon_fontFamily">"sans-serif"</item>
+        <item name="android:textColor">@color/carbon_defaultTextSecondaryColor</item>
     </style>
 
-    <style name="carbon_TextAppearance.Caption.Dark">
-        <item name="android:textColor">@color/carbon_text_secondary_dark</item>
-    </style>
-
-    <style name="carbon_TextAppearance.Caption.Light">
-        <item name="android:textColor">@color/carbon_text_secondary_light</item>
+    <style name="carbon_TextAppearance.Caption.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextSecondaryColorInverse</item>
     </style>
 
 
@@ -106,13 +85,11 @@
         <item name="android:textSize">@dimen/carbon_textSizeButton</item>
         <item name="carbon_fontFamily">"sans-serif-medium"</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
-    <style name="carbon_TextAppearance.Button.Dark">
-        <item name="android:textColor">@color/carbon_text_primary_light</item>
+    <style name="carbon_TextAppearance.Button.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextPrimaryColorInverse</item>
     </style>
 
-    <style name="carbon_TextAppearance.Button.Light">
-        <item name="android:textColor">@color/carbon_text_primary_dark</item>
-    </style>
 </resources>

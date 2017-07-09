@@ -232,6 +232,7 @@
     <declare-styleable name="Button">
         <attr name="carbon_theme"/>
         <attr name="android:background"/>
+        <attr name="android:textColor"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -281,6 +282,8 @@
     <!-- TextView -->
     <declare-styleable name="TextView">
         <attr name="carbon_theme"/>
+        <attr name="android:background"/>
+        <attr name="android:textColor"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -754,6 +757,7 @@
     <attr name="carbon_imageViewStyle" format="reference"/>
     <declare-styleable name="ImageView">
         <attr name="carbon_theme"/>
+        <attr name="android:background"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -864,6 +868,7 @@
     <declare-styleable name="EditText">
         <attr name="carbon_theme"/>
         <attr name="android:background"/>
+        <attr name="android:textColor"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -957,6 +962,7 @@
         <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="android:textAllCaps"/>
+        <attr name="android:textColor"/>
     </declare-styleable>
 
     <declare-styleable name="ScrollView">

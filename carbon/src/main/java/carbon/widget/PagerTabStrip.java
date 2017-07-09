@@ -26,7 +26,6 @@ import android.widget.LinearLayout;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
-import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
@@ -345,11 +344,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
 
     @Override
     public void setTint(int color) {
-        if (color == 0) {
-            setTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setTint(ColorStateList.valueOf(color));
-        }
+        setTint(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -358,10 +353,10 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
     }
 
     private void updateTint() {
-        if (tint == null)
+        /*if (tint == null)
             return;
         int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
-        /*if (leftGlow != null)
+        if (leftGlow != null)
             leftGlow.setColor(color);
         if (rightGlow != null)
             rightGlow.setColor(color);
@@ -391,11 +386,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
 
     @Override
     public void setBackgroundTint(int color) {
-        if (color == 0) {
-            setBackgroundTint(new DefaultPrimaryColorStateList(getContext()));
-        } else {
-            setBackgroundTint(ColorStateList.valueOf(color));
-        }
+        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
     @Override
