@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="carbon_Theme.Light" parent="Theme.AppCompat.Light">
         <item name="carbon_colorError">#ffF44336</item>
@@ -77,8 +77,9 @@
         <item name="carbon_iconColor">@color/carbon_iconColorActive_light</item>
         <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_dark</item>
         <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_light</item>
+        <item name="carbon_colorDisabledInverse">@color/carbon_iconColorInactive_dark</item>
         <item name="colorControlNormal">@color/carbon_colorControl_light</item>
-        <item name="android:colorControlHighlight">@color/carbon_rippleColor_light</item>
+        <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/carbon_rippleColor_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
         <item name="android:textColorHint">@color/carbon_textColorHint_light</item>
 
@@ -135,8 +136,9 @@
         <item name="carbon_iconColor">@color/carbon_iconColorActive_light</item>
         <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_dark</item>
         <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_light</item>
+        <item name="carbon_colorDisabledInverse">@color/carbon_iconColorInactive_dark</item>
         <item name="colorControlNormal">@color/carbon_colorControl_light</item>
-        <item name="android:colorControlHighlight">@color/carbon_rippleColor_light</item>
+        <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/carbon_rippleColor_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
         <item name="android:textColorHint">@color/carbon_textColorHint_light</item>
 

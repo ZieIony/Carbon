@@ -40,7 +40,7 @@
                     android:minWidth="100dp"
                     android:scaleType="centerCrop"/>
 
-                <TextView
+                <carbon.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/carbon_padding"

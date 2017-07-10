@@ -24,6 +24,7 @@ import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.Layout;
@@ -200,8 +201,6 @@ public class EditText extends android.widget.EditText
         Carbon.initHtmlText(this, a, R.styleable.EditText_carbon_htmlText);
         Carbon.initAutoSizeText(this, a, autoSizeTextIds);
 
-        a.recycle();
-
         TypedValue bg = new TypedValue();
         a.getValue(R.styleable.EditText_android_background, bg);
         if (bg.resourceId == R.color.carbon_defaultColor) {
@@ -211,6 +210,8 @@ public class EditText extends android.widget.EditText
             underlineDrawable.setPaddingBottom(getPaddingBottom() - getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf) + underlineWidth / 2);
             setBackgroundDrawable(underlineDrawable);
         }
+
+        a.recycle();
 
         initSelectionHandle();
 
@@ -834,6 +835,12 @@ public class EditText extends android.widget.EditText
         updateBackgroundTint();
     }
 
+    @Override
+    public void setCompoundDrawables(@Nullable Drawable left, @Nullable Drawable top, @Nullable Drawable right, @Nullable Drawable bottom) {
+        super.setCompoundDrawables(left, top, right, bottom);
+        updateTint();
+    }
+
 
     // -------------------------------
     // elevation
@@ -1248,14 +1255,12 @@ public class EditText extends android.widget.EditText
     }
 
     private void updateBackgroundTint() {
-        if (getBackground() == null)
+        Drawable background = getBackground();
+        if (background == null)
             return;
-        if (backgroundTint != null && backgroundTintMode != null) {
-            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            getBackground().setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
-        } else {
-            getBackground().setColorFilter(null);
-        }
+
+        DrawableCompat.setTintList(background, tint);
+        DrawableCompat.setTintMode(background, backgroundTintMode);
     }
 
     @Override

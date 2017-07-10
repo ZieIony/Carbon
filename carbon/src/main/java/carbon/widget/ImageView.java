@@ -23,6 +23,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageHelper;
 import android.util.AttributeSet;
@@ -159,6 +161,12 @@ public class ImageView extends android.widget.ImageView
         } else {
             super.setImageResource(resId);
         }
+    }
+
+    @Override
+    public void setImageDrawable(@Nullable Drawable drawable) {
+        super.setImageDrawable(drawable);
+        updateTint();
     }
 
     RevealAnimator revealAnimator;
@@ -800,12 +808,12 @@ public class ImageView extends android.widget.ImageView
     }
 
     private void updateTint() {
-        if (tint != null && tintMode != null) {
-            int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
-            setColorFilter(new PorterDuffColorFilter(color, tintMode));
-        } else {
-            setColorFilter(null);
-        }
+        Drawable drawable = getDrawable();
+        if (drawable == null)
+            return;
+
+        DrawableCompat.setTintList(drawable, tint);
+        DrawableCompat.setTintMode(drawable, tintMode);
     }
 
     @Override
@@ -836,18 +844,16 @@ public class ImageView extends android.widget.ImageView
     }
 
     private void updateBackgroundTint() {
-        if (getBackground() == null)
+        Drawable background = getBackground();
+        if (background == null)
             return;
-        if (backgroundTint != null && backgroundTintMode != null) {
-            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            getBackground().setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
-        } else {
-            getBackground().setColorFilter(null);
-        }
+
+        DrawableCompat.setTintList(background, tint);
+        DrawableCompat.setTintMode(background, backgroundTintMode);
     }
 
     @Override
-    public void setBackgroundTintMode(@NonNull PorterDuff.Mode mode) {
+    public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
         updateBackgroundTint();
     }

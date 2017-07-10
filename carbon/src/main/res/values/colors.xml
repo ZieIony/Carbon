@@ -62,6 +62,8 @@
     <color name="carbon_defaultIconColorInverse">#12345678</color>
     <color name="carbon_defaultIconColorAccent">#12345678</color>
     <color name="carbon_defaultIconColorAccentInverse">#12345678</color>
+    <color name="carbon_defaultIconColorPrimary">#12345678</color>
+    <color name="carbon_defaultIconColorPrimaryInverse">#12345678</color>
 
     <color name="carbon_defaultTextPrimaryColor">#12345678</color>
     <color name="carbon_defaultTextSecondaryColor">#12345678</color>

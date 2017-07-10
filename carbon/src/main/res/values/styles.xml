@@ -75,6 +75,7 @@
         <item name="android:background">@color/carbon_defaultColorAccent</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+        <item name="carbon_tintMode">multiply</item>
         <item name="carbon_inAnimation">pop</item>
         <item name="carbon_outAnimation">pop</item>
         <item name="carbon_elevation">@dimen/carbon_elevationFAB</item>
@@ -376,6 +377,7 @@
     </style>
 
     <style name="carbon_DropDown" parent="carbon_EditText">
+        <item name="android:focusableInTouchMode">false</item>
         <item name="android:longClickable">false</item>
         <item name="android:cursorVisible">false</item>
         <item name="android:focusable">false</item>
@@ -428,7 +430,7 @@
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:drawablePadding">12dp</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -455,7 +457,7 @@
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:drawablePadding">12dp</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -484,7 +486,7 @@
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:drawablePadding">12dp</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
         <item name="android:background">@null</item>
     </style>
 

@@ -1,19 +1,24 @@
 package carbon.drawable;
 
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.util.SparseArray;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
-public class VectorDrawable extends Drawable implements AlphaDrawable {
+public class VectorDrawable extends Drawable implements AlphaDrawable, TintAwareDrawable {
     private VectorState state;
     private Bitmap bitmap;
 
@@ -74,6 +79,9 @@ public class VectorDrawable extends Drawable implements AlphaDrawable {
             bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             state.svg.renderToCanvas(new Canvas(bitmap));
         }
+
+        updateTint();
+
         canvas.drawBitmap(bitmap, getBounds().left, getBounds().top, state.paint);
     }
 
@@ -88,8 +96,37 @@ public class VectorDrawable extends Drawable implements AlphaDrawable {
     }
 
     @Override
-    public void setColorFilter(ColorFilter cf) {
-        state.paint.setColorFilter(cf);
+    public void setColorFilter(@Nullable ColorFilter colorFilter) {
+        state.colorFilter = colorFilter;
+        state.tint = null;
+        state.tintMode = null;
+    }
+
+    @Override
+    public void setTint(int tintColor) {
+        setTintList(ColorStateList.valueOf(tintColor));
+    }
+
+    @Override
+    public void setTintList(@Nullable ColorStateList tint) {
+        state.colorFilter = null;
+        state.tint = tint;
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode tintMode) {
+        state.colorFilter = null;
+        state.tintMode = tintMode;
+    }
+
+    public void updateTint() {
+        if (state.colorFilter != null) {
+            state.paint.setColorFilter(state.colorFilter);
+        } else if (state.tint != null && state.tintMode != null) {
+            state.paint.setColorFilter(new PorterDuffColorFilter(state.tint.getColorForState(getState(), state.tint.getDefaultColor()), state.tintMode));
+        } else {
+            state.paint.setColorFilter(null);
+        }
     }
 
     @Override
@@ -122,6 +159,9 @@ public class VectorDrawable extends Drawable implements AlphaDrawable {
         SVG svg;
         private Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
         int intWidth, intHeight;
+        public ColorFilter colorFilter;
+        public ColorStateList tint;
+        public PorterDuff.Mode tintMode = PorterDuff.Mode.MULTIPLY;
 
         public VectorState(SVG svg, int intWidth, int intHeight) {
             this.svg = svg;
@@ -134,6 +174,9 @@ public class VectorDrawable extends Drawable implements AlphaDrawable {
             intWidth = state.intWidth;
             intHeight = state.intHeight;
             paint = state.paint;
+            colorFilter = state.colorFilter;
+            tint = state.tint;
+            tintMode = state.tintMode;
         }
 
         @NonNull

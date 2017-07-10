@@ -6,6 +6,7 @@
         <attr name="carbon_colorForeground" format="reference|color"/>
         <attr name="carbon_colorError" format="reference|color"/>
         <attr name="carbon_colorDisabled" format="reference|color"/>
+        <attr name="carbon_colorDisabledInverse" format="reference|color"/>
 
         <attr name="carbon_dividerColor" format="reference|color"/>
 

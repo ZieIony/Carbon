@@ -29,6 +29,8 @@ import carbon.drawable.DefaultColorStateList;
 import carbon.drawable.DefaultIconColorAccentInverseStateList;
 import carbon.drawable.DefaultIconColorAccentStateList;
 import carbon.drawable.DefaultIconColorInverseStateList;
+import carbon.drawable.DefaultIconColorPrimaryInverseStateList;
+import carbon.drawable.DefaultIconColorPrimaryStateList;
 import carbon.drawable.DefaultIconColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
 import carbon.drawable.DefaultTextColorAccentStateList;
@@ -93,6 +95,10 @@ public class Carbon {
             return new DefaultIconColorAccentStateList(context);
         } else if (value.resourceId == R.color.carbon_defaultIconColorAccentInverse) {
             return new DefaultIconColorAccentInverseStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultIconColorPrimary) {
+            return new DefaultIconColorPrimaryStateList(context);
+        } else if (value.resourceId == R.color.carbon_defaultIconColorPrimaryInverse) {
+            return new DefaultIconColorPrimaryInverseStateList(context);
         } else if (value.resourceId == R.color.carbon_defaultTextPrimaryColor) {
             return new DefaultTextPrimaryColorStateList(context);
         } else if (value.resourceId == R.color.carbon_defaultTextSecondaryColor) {

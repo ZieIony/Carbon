@@ -77,6 +77,7 @@
         <item name="carbon_iconColor">@color/carbon_iconColorActive_dark</item>
         <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_light</item>
         <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_dark</item>
+        <item name="carbon_colorDisabledInverse">@color/carbon_iconColorInactive_light</item>
         <item name="colorControlNormal">@color/carbon_colorControl_dark</item>
         <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/carbon_rippleColor_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
@@ -135,6 +136,7 @@
         <item name="carbon_iconColor">@color/carbon_iconColorActive_dark</item>
         <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_light</item>
         <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_dark</item>
+        <item name="carbon_colorDisabledInverse">@color/carbon_iconColorInactive_light</item>
         <item name="colorControlNormal">@color/carbon_colorControl_dark</item>
         <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/carbon_rippleColor_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>

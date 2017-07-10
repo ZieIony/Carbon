@@ -243,7 +243,7 @@ public class InputLayout extends RelativeLayout {
         int minCharacters = editText.getMinCharacters();
         int maxCharacters = editText.getMaxCharacters();
 
-        counterTextView.setValid(!editText.isValid());
+        counterTextView.setValid(editText.isValid());
 
         if (minCharacters > 0 && maxCharacters < Integer.MAX_VALUE) {
             counterTextView.setVisibility(VISIBLE);

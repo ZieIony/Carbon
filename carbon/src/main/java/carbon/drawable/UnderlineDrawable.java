@@ -1,19 +1,33 @@
 package carbon.drawable;
 
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.TintAwareDrawable;
 
-public class UnderlineDrawable extends Drawable {
+public class UnderlineDrawable extends Drawable implements TintAwareDrawable {
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float thickness = 1;
     private float padding = 0;
+    @Nullable
+    private ColorFilter colorFilter;
+    @Nullable
+    private ColorStateList tint;
+    private PorterDuff.Mode tintMode;
+
+    public UnderlineDrawable() {
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+    }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
@@ -27,6 +41,8 @@ public class UnderlineDrawable extends Drawable {
                 enabled = true;
             }
         }
+
+        updateTint();
 
         if (!enabled) {
             for (int i = 0; i < bounds.width(); i += thickness * 3)
@@ -55,9 +71,36 @@ public class UnderlineDrawable extends Drawable {
 
     @Override
     public void setColorFilter(@Nullable ColorFilter colorFilter) {
-        paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColorFilter(colorFilter);
+        this.colorFilter = colorFilter;
+        tint = null;
+        tintMode = null;
+    }
+
+    @Override
+    public void setTint(int tintColor) {
+        setTintList(ColorStateList.valueOf(tintColor));
+    }
+
+    @Override
+    public void setTintList(@Nullable ColorStateList tint) {
+        colorFilter = null;
+        this.tint = tint;
+    }
+
+    @Override
+    public void setTintMode(@NonNull PorterDuff.Mode tintMode) {
+        colorFilter = null;
+        this.tintMode = tintMode;
+    }
+
+    public void updateTint() {
+        if (colorFilter != null) {
+            paint.setColorFilter(colorFilter);
+        } else if (tint != null && tintMode != null) {
+            paint.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getState(), tint.getDefaultColor()), tintMode));
+        } else {
+            paint.setColorFilter(null);
+        }
     }
 
     @Override
