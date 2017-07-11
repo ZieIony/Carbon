@@ -1340,27 +1340,27 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     // dependency
     // -------------------------------
 
-    private List<carbon.beta.Behavior> behaviors = new ArrayList<>();
+    private List<carbon.behavior.Behavior> behaviors = new ArrayList<>();
 
     @Override
-    public void addBehavior(carbon.beta.Behavior behavior) {
+    public void addBehavior(carbon.behavior.Behavior behavior) {
         behaviors.add(behavior);
     }
 
     @Override
-    public void removeBehavior(carbon.beta.Behavior behavior) {
+    public void removeBehavior(carbon.behavior.Behavior behavior) {
         behaviors.remove(behavior);
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Stream.of(behaviors).forEach(carbon.beta.Behavior::onDetachedFromWindow);
+        Stream.of(behaviors).forEach(carbon.behavior.Behavior::onDetachedFromWindow);
     }
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Stream.of(behaviors).forEach(carbon.beta.Behavior::onAttachedToWindow);
+        Stream.of(behaviors).forEach(carbon.behavior.Behavior::onAttachedToWindow);
     }
 }

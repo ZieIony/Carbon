@@ -5,7 +5,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import carbon.beta.Behavior;
+import carbon.behavior.Behavior;
 import carbon.widget.CheckBox;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.RelativeLayout;

@@ -1,6 +1,8 @@
 package tk.zielony.carbonsamples.component;
 
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,8 +46,12 @@ public class IconTextListItemActivity extends SamplesActivity {
         }));
         recycler.setAdapter(adapter);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_dividerColor)), getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
-        dividerItemDecoration.setDrawRules(position -> position == 1);
+        LayerDrawable dividerDrawable = new LayerDrawable(new Drawable[]{
+                new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_colorForeground)),
+                new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_dividerColor))
+        });
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable, getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
+        dividerItemDecoration.setDrawAfter(position -> adapter.getItem(position) instanceof DefaultIconSearchItem);
         recycler.addItemDecoration(dividerItemDecoration);
 
         VectorDrawable drawable = new VectorDrawable(getResources(), R.raw.ic_face_24px);

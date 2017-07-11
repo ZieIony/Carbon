@@ -29,7 +29,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.Animation;
 
 import com.annimon.stream.Stream;
 
@@ -41,7 +40,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.beta.Behavior;
+import carbon.behavior.Behavior;
 import carbon.component.Component;
 import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;

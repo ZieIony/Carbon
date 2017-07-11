@@ -81,6 +81,9 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     long prevScroll = 0;
     private boolean childDrawingOrderCallbackSet = false;
 
+    private int scrollX = 0;
+    private int scrollY = 0;
+
     public RecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
         initRecycler(null, R.attr.carbon_recyclerViewStyle);
@@ -145,6 +148,50 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     public void setClipToPadding(boolean clipToPadding) {
         super.setClipToPadding(clipToPadding);
         this.clipToPadding = clipToPadding;
+    }
+
+    @Override
+    public void offsetChildrenHorizontal(int dx) {
+        super.offsetChildrenHorizontal(dx);
+        scrollX -= dx;
+    }
+
+    public int getListScrollX() {
+        return scrollX;
+    }
+
+    public int getMaxScrollX() {
+        Adapter adapter = getAdapter();
+        LayoutManager layoutManager = getLayoutManager();
+        if (adapter == null || layoutManager == null || getChildCount() == 0 || adapter.getItemCount() == 0)
+            return 0;
+        View view = getChildAt(getChildCount() - 1);
+        int position = getChildAdapterPosition(view);
+        if (position == adapter.getItemCount())
+            return Math.max(0, view.getRight() - getWidth());
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public void offsetChildrenVertical(int dy) {
+        super.offsetChildrenVertical(dy);
+        scrollY -= dy;
+    }
+
+    public int getListScrollY() {
+        return scrollY;
+    }
+
+    public int getMaxScrollY() {
+        Adapter adapter = getAdapter();
+        LayoutManager layoutManager = getLayoutManager();
+        if (adapter == null || layoutManager == null || getChildCount() == 0 || adapter.getItemCount() == 0)
+            return 0;
+        View view = getChildAt(getChildCount() - 1);
+        int position = getChildAdapterPosition(view);
+        if (position == adapter.getItemCount())
+            return Math.max(0, view.getBottom() - getHeight());
+        return Integer.MAX_VALUE;
     }
 
     private boolean dispatchTouchEvent2(@NonNull MotionEvent ev) {

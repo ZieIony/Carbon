@@ -46,7 +46,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.beta.Behavior;
+import carbon.behavior.Behavior;
 import carbon.component.Component;
 import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
@@ -457,9 +457,11 @@ public class RelativeLayout extends android.widget.RelativeLayout
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             float scrollLeftX = distanceX, scrollLeftY = distanceY;
             for (Behavior b : behaviors) {
-                PointF scrollLeft = b.onNestedScroll(scrollLeftX, scrollLeftY);
+                PointF scrollLeft = b.onScroll(scrollLeftX, scrollLeftY);
                 scrollLeftX = scrollLeft.x;
                 scrollLeftY = scrollLeft.y;
+                if (scrollLeftX == 0 && scrollLeftY == 0)
+                    break;
             }
             return distanceX != scrollLeftX || distanceY != scrollLeftY;
         }
@@ -471,7 +473,7 @@ public class RelativeLayout extends android.widget.RelativeLayout
                 View v = getChildAt(i);
                 if (v instanceof ExtendedScrollView) {
                     ExtendedScrollView scrollView = (ExtendedScrollView) v;
-                    PointF scrollLeft = scrollView.onNestedScroll(scrollLeftX, scrollLeftY);
+                    PointF scrollLeft = scrollView.onScroll(scrollLeftX, scrollLeftY);
                     scrollLeftX = scrollLeft.x;
                     scrollLeftY = scrollLeft.y;
                 }
@@ -788,6 +790,7 @@ public class RelativeLayout extends android.widget.RelativeLayout
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {

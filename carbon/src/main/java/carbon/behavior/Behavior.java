@@ -1,4 +1,4 @@
-package carbon.beta;
+package carbon.behavior;
 
 import android.graphics.PointF;
 import android.view.View;
@@ -30,7 +30,7 @@ public abstract class Behavior<Type extends View> {
         addListeners();
     }
 
-    public PointF onNestedScroll(float scrollX, float scrollY) {
+    public PointF onScroll(float scrollX, float scrollY) {
         return new PointF(scrollX, scrollY);
     }
 

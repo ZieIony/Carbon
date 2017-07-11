@@ -1,6 +1,6 @@
 package carbon.view;
 
-import carbon.beta.Behavior;
+import carbon.behavior.Behavior;
 
 public interface BehaviorView {
     void addBehavior(Behavior behavior);

@@ -11,12 +11,12 @@ import carbon.widget.RecyclerView;
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     public interface DrawRules {
-        boolean drawAfter(int position);
+        boolean draw(int position);
     }
 
     private Drawable drawable;
     private int height;
-    private DrawRules drawRules;
+    private DrawRules drawBeforeRules, drawAfterRules;
 
     public DividerItemDecoration(Drawable drawable, int height) {
         this.drawable = drawable;
@@ -28,15 +28,17 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
         if (drawable == null)
             return;
-        if (parent.getChildAdapterPosition(view) == parent.getAdapter().getItemCount() - 1)
+        int position = parent.getChildAdapterPosition(view);
+        if (position == parent.getAdapter().getItemCount() - 1)
             return;
 
-        if (drawRules == null || !drawRules.drawAfter(parent.getChildAdapterPosition(view)))
-            return;
-        if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
-            outRect.top = height;
-        } else {
-            outRect.left = height;
+        if (position > 0 && drawAfterRules != null && drawAfterRules.draw(position - 1) ||
+                drawBeforeRules != null && drawBeforeRules.draw(position)) {
+            if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
+                outRect.top = height;
+            } else {
+                outRect.left = height;
+            }
         }
     }
 
@@ -61,24 +63,25 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         }
 
         for (int i = 0; i < childCount - 1; i++) {
-            if (drawRules == null || !drawRules.drawAfter(i))
-                continue;
+            int position = parent.getChildAdapterPosition(parent.getChildAt(i));
+            if (position > 0 && drawAfterRules != null && drawAfterRules.draw(position - 1) ||
+                    drawBeforeRules != null && drawBeforeRules.draw(position)) {
+                View child = parent.getChildAt(i);
 
-            View child = parent.getChildAt(i);
-
-            if (orientation == LinearLayoutManager.VERTICAL) {
-                bottom = (int) (child.getBottom() + child.getTranslationY());
-                top = bottom - height;
-            } else { //horizontal
-                right = (int) (child.getRight() + child.getTranslationX());
-                left = right - height;
+                if (orientation == LinearLayoutManager.VERTICAL) {
+                    bottom = (int) (child.getTop() + child.getTranslationY());
+                    top = bottom - height;
+                } else { //horizontal
+                    right = (int) (child.getLeft() + child.getTranslationX());
+                    left = right - height;
+                }
+                c.save(Canvas.CLIP_SAVE_FLAG);
+                c.clipRect(left, top, right, bottom);
+                drawable.setAlpha((int) (child.getAlpha() * 255));
+                drawable.setBounds(left, top, right, bottom);
+                drawable.draw(c);
+                c.restore();
             }
-            c.save(Canvas.CLIP_SAVE_FLAG);
-            c.clipRect(left, top, right, bottom);
-            drawable.setAlpha((int) (child.getAlpha() * 255));
-            drawable.setBounds(left, top, right, bottom);
-            drawable.draw(c);
-            c.restore();
         }
     }
 
@@ -92,8 +95,17 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
+    @Deprecated
     public void setDrawRules(DrawRules drawRules) {
-        this.drawRules = drawRules;
+        setDrawAfter(drawRules);
+    }
+
+    public void setDrawAfter(DrawRules drawRules) {
+        this.drawAfterRules = drawRules;
+    }
+
+    public void setDrawBefore(DrawRules drawRules) {
+        this.drawBeforeRules = drawRules;
     }
 
 }

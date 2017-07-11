@@ -46,7 +46,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
-import carbon.beta.Behavior;
+import carbon.behavior.Behavior;
 import carbon.component.Component;
 import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
@@ -457,7 +457,7 @@ public class FrameLayout extends android.widget.FrameLayout
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             float scrollLeftX = distanceX, scrollLeftY = distanceY;
             for (Behavior b : behaviors) {
-                PointF scrollLeft = b.onNestedScroll(scrollLeftX, scrollLeftY);
+                PointF scrollLeft = b.onScroll(scrollLeftX, scrollLeftY);
                 scrollLeftX = scrollLeft.x;
                 scrollLeftY = scrollLeft.y;
             }

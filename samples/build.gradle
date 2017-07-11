@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'com.android.databinding:compiler:3.0.0-alpha5'
+    annotationProcessor 'com.android.databinding:compiler:3.0.0-alpha6'
     implementation project(':carbon')
     implementation project(':rxcarbon')
     implementation 'com.squareup.picasso:picasso:2.5.2'

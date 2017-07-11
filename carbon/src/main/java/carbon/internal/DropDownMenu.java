@@ -117,7 +117,7 @@ public class DropDownMenu<Type> extends PopupWindow {
             int maxHeightAbove = location[1] - windowRect.top - marginHalf * 2;
             int maxItemsAbove = maxHeightAbove / itemHeight;
             int maxHeightBelow = hWindow - location[1] - marginHalf * 2;
-            int maxItemsBelow = maxHeightBelow / itemHeight;
+            int maxItemsBelow = Math.max(1, maxHeightBelow / itemHeight);
 
             int itemsBelow = Math.min(adapter.getItemCount() - selectedItem, maxItemsBelow);
             int itemsAbove = Math.min(selectedItem, maxItemsAbove);
@@ -129,8 +129,17 @@ public class DropDownMenu<Type> extends PopupWindow {
             int popupHeight = marginHalf * 4 + Math.max(1, itemsAbove + itemsBelow) * itemHeight;
 
             popupWidth = Math.min(popupWidth, wWindow - marginHalf * 2);
-            popupX = Math.max(popupX, 0);
-            popupX = Math.min(popupX, wWindow - popupWidth);
+            if (popupX < 0) {
+                popupWidth -= Math.min(-popupX, margin);
+                popupX = 0;
+            }
+            if (popupX + popupWidth > wWindow) {
+                int diff = popupX + popupWidth - wWindow;
+                diff = Math.min(margin, diff);
+                popupWidth -= diff;
+                popupX = wWindow - popupWidth;
+            }
+            popupY = MathUtils.constrain(popupY, 0, hWindow - popupHeight);
 
             LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
             manager.scrollToPositionWithOffset(selectedItem - itemsAbove, 0);

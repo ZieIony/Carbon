@@ -6,7 +6,7 @@
                                                           android:layout_height="match_parent">
 
     <tk.zielony.landscapeview.LandscapeView
-        android:id="@+id/rect"
+        android:id="@+id/landscape"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:minHeight="64dp"
@@ -16,5 +16,6 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rect"/>
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/landscape"/>
 </carbon.widget.RelativeLayout>
