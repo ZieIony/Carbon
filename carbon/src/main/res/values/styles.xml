@@ -424,7 +424,10 @@
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
-    <style name="carbon_CheckedTextView" parent="Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="carbon_CheckedTextView" parent="carbon_TextView">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center_vertical|start</item>
         <item name="android:paddingRight">12dp</item>
         <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">12dp</item>
         <item name="carbon_rippleColor">@null</item>
@@ -451,7 +454,10 @@
         <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
     </style>
 
-    <style name="carbon_CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="carbon_CheckBox" parent="carbon_TextView">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center_vertical|start</item>
         <item name="android:paddingLeft">12dp</item>
         <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">12dp</item>
         <item name="carbon_rippleColor">@null</item>
@@ -480,7 +486,10 @@
         <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
     </style>
 
-    <style name="carbon_RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+    <style name="carbon_RadioButton" parent="carbon_TextView">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center_vertical|start</item>
         <item name="android:paddingLeft">12dp</item>
         <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">12dp</item>
         <item name="carbon_rippleColor">@null</item>
@@ -552,7 +561,6 @@
 
     <style name="carbon_AutoCompleteLayout" parent="carbon_LinearLayout">
         <item name="android:background">?attr/carbon_colorForeground</item>
-        <item name="android:orientation">vertical</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
     </style>

@@ -696,7 +696,7 @@ public class EditText extends android.widget.EditText
     @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && !Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             drawInternal(canvas);

@@ -481,7 +481,7 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && !Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software) {
+        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             super.draw(canvas);
