@@ -1040,11 +1040,19 @@
         <attr name="carbon_htmlText"/>
     </declare-styleable>
 
+    <attr name="carbon_buttonGravity" format="enum">
+        <enum name="left" value="0"/>
+        <enum name="start" value="1"/>
+        <enum name="right" value="2"/>
+        <enum name="end" value="3"/>
+    </attr>
+
     <declare-styleable name="CheckBox">
         <attr name="carbon_theme"/>
 
         <attr name="android:drawablePadding"/>
         <attr name="android:checked"/>
+        <attr name="carbon_buttonGravity"/>
 
         <attr name="carbon_htmlText"/>
     </declare-styleable>
@@ -1054,6 +1062,7 @@
 
         <attr name="android:drawablePadding"/>
         <attr name="android:checked"/>
+        <attr name="carbon_buttonGravity"/>
 
         <attr name="carbon_htmlText"/>
     </declare-styleable>

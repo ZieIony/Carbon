@@ -458,11 +458,12 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">12dp</item>
+        <item name="carbon_buttonGravity">start</item>
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingRight">@dimen/carbon_padding</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
-        <item name="android:drawablePadding">12dp</item>
+        <item name="android:drawablePadding">@dimen/carbon_padding</item>
         <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
         <item name="android:background">@null</item>
     </style>
@@ -475,7 +476,7 @@
         <item name="android:layout_width">@dimen/carbon_toolbarItemSize</item>
         <item name="android:layout_height">@dimen/carbon_toolbarItemSize</item>
         <item name="android:paddingLeft">@null</item>
-        <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">@null</item>
+        <item name="android:paddingRight">@null</item>
         <item name="android:padding">@dimen/carbon_toolbarItemPadding</item>
         <item name="android:drawablePadding">0dp</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
@@ -490,11 +491,12 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">12dp</item>
+        <item name="carbon_buttonGravity">start</item>
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingRight">@dimen/carbon_padding</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
-        <item name="android:drawablePadding">12dp</item>
+        <item name="android:drawablePadding">@dimen/carbon_padding</item>
         <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
         <item name="android:background">@null</item>
     </style>
@@ -507,7 +509,7 @@
         <item name="android:layout_width">@dimen/carbon_toolbarItemSize</item>
         <item name="android:layout_height">@dimen/carbon_toolbarItemSize</item>
         <item name="android:paddingLeft">@null</item>
-        <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">@null</item>
+        <item name="android:paddingRight">@null</item>
         <item name="android:padding">@dimen/carbon_toolbarItemPadding</item>
         <item name="android:drawablePadding">0dp</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>

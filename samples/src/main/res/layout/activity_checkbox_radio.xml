@@ -44,25 +44,8 @@
                     android:layout_height="@dimen/carbon_listItemHeight"
                     android:gravity="center_vertical"
                     android:layoutDirection="locale"
-                    android:text="check me!"/>
-
-                <carbon.widget.Divider
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/carbon_margin"/>
-
-                <carbon.widget.TextView
-                    style="@style/sectionDescription"
-                    android:text="CheckedTextView"/>
-
-                <carbon.widget.CheckedTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/carbon_listItemHeight"
-                    android:layout_marginLeft="@dimen/carbon_margin"
-                    android:layout_marginStart="@dimen/carbon_margin"
-                    android:gravity="center_vertical"
-                    android:layoutDirection="locale"
-                    android:text="checked text view"/>
+                    android:text="check me!"
+                    app:carbon_buttonGravity="end"/>
 
                 <carbon.widget.Divider
                     android:layout_width="match_parent"
@@ -140,6 +123,7 @@
                 <carbon.widget.CheckBox
                     android:id="@+id/checkBox"
                     style="@style/carbon_CheckBox.IconButton"
+                    android:layout_margin="@dimen/carbon_toolbarItemMargin"
                     android:gravity="center_vertical"/>
 
                 <carbon.widget.LinearLayout

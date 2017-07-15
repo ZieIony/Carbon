@@ -24,12 +24,14 @@ import android.widget.CompoundButton;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.drawable.ButtonGravity;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 
-public class RadioButton extends carbon.widget.TextView implements Checkable {
+public class RadioButton extends TextView implements Checkable {
     private Drawable drawable;
     private float drawablePadding;
+    private ButtonGravity buttonGravity;
 
     public RadioButton(Context context) {
         super(context, null, android.R.attr.radioButtonStyle);
@@ -69,6 +71,8 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
                 drawablePadding = a.getDimension(attr, 0);
             } else if (attr == R.styleable.RadioButton_android_checked) {
                 setChecked(a.getBoolean(attr, false));
+            } else if (attr == R.styleable.RadioButton_carbon_buttonGravity) {
+                buttonGravity = ButtonGravity.values()[a.getInt(attr, 0)];
             }
         }
 
@@ -80,6 +84,13 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
     private boolean isLayoutRtl() {
         return ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
     }
+
+    private boolean isButtonOnTheLeft() {
+        return buttonGravity == ButtonGravity.LEFT ||
+                !isLayoutRtl() && buttonGravity == ButtonGravity.START ||
+                isLayoutRtl() && buttonGravity == ButtonGravity.END;
+    }
+
 
     private boolean mChecked;
     private boolean mBroadcasting;
@@ -206,6 +217,14 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
         }
     }
 
+    public ButtonGravity getButtonGravity() {
+        return buttonGravity;
+    }
+
+    public void setButtonGravity(ButtonGravity buttonGravity) {
+        this.buttonGravity = buttonGravity;
+    }
+
     public void setTint(@Nullable ColorStateList list) {
         super.setTint(list);
         applyButtonTint();
@@ -256,7 +275,7 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
     @Override
     public int getCompoundPaddingLeft() {
         int padding = super.getCompoundPaddingLeft();
-        if (!isLayoutRtl()) {
+        if (isButtonOnTheLeft()) {
             final Drawable buttonDrawable = drawable;
             if (buttonDrawable != null) {
                 padding += buttonDrawable.getIntrinsicWidth() + drawablePadding;
@@ -268,7 +287,7 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
     @Override
     public int getCompoundPaddingRight() {
         int padding = super.getCompoundPaddingRight();
-        if (isLayoutRtl()) {
+        if (!isButtonOnTheLeft()) {
             final Drawable buttonDrawable = drawable;
             if (buttonDrawable != null) {
                 padding += buttonDrawable.getIntrinsicWidth() + drawablePadding;
@@ -297,8 +316,8 @@ public class RadioButton extends carbon.widget.TextView implements Checkable {
                     top = 0;
             }
             final int bottom = top + drawableHeight;
-            final int left = isLayoutRtl() ? getWidth() - drawableWidth - getPaddingRight() : getPaddingLeft();
-            final int right = isLayoutRtl() ? getWidth() - getPaddingRight() : drawableWidth + getPaddingLeft();
+            final int left = isButtonOnTheLeft() ? getPaddingLeft() : getWidth() - drawableWidth - getPaddingRight();
+            final int right = isButtonOnTheLeft() ? drawableWidth + getPaddingLeft() : getWidth() - getPaddingRight();
 
             buttonDrawable.setBounds(left, top, right, bottom);
 

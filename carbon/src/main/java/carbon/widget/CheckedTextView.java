@@ -27,6 +27,7 @@ import carbon.R;
 import carbon.drawable.CheckableDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 
+@Deprecated
 public class CheckedTextView extends TextView implements Checkable {
     private CheckableDrawable drawable;
     private float drawablePadding;
@@ -151,17 +152,6 @@ public class CheckedTextView extends TextView implements Checkable {
      */
     public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
         mOnCheckedChangeListener = listener;
-    }
-
-    /**
-     * Register a callback to be invoked when the checked state of this button
-     * changes. This callback is used for internal purpose only.
-     *
-     * @param listener the callback to call on checked state change
-     * @hide
-     */
-    void setOnCheckedChangeWidgetListener(OnCheckedChangeListener listener) {
-        mOnCheckedChangeWidgetListener = listener;
     }
 
     /**
