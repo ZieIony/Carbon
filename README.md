@@ -30,7 +30,7 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
 
  - simple to use xml attributes for corners and ripples
  - colored shadows
- - brightness/saturadion fade
+ - brightness/saturation fade
  - SVG support (with transformations, text, gradients, etc.)
  
 ###### Useful extensions and bugfixes

@@ -10,8 +10,6 @@ android {
         targetSdkVersion 26
         versionCode 42
         versionName "0.14.0"
-        renderscriptTargetApi 20
-        renderscriptSupportModeEnabled true
     }
     buildTypes {
         release {

@@ -10,7 +10,7 @@ To correctly submit a bug go through these steps:
  - Add stacktrace.
  - Add a sample code used to reproduce the issue.
 
-Of course not always you'll be able to get all of those information. Sometimes it's not neccessary. In all other cases try to be precise and provide as much info as possible.
+Of course not always you'll be able to get all of those information. Sometimes it's not necessary. In all other cases try to be precise and provide as much info as possible.
 
 ### Feature requests
 
