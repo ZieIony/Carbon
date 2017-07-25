@@ -2,7 +2,9 @@ package carbon.component;
 
 import android.graphics.drawable.Drawable;
 
-public class DefaultIconDropDownItem<Type> implements IconDropDownItem<Type> {
+import java.io.Serializable;
+
+public class DefaultIconDropDownItem<Type extends Serializable> implements IconDropDownItem<Type> {
     private Drawable icon;
     private String hint;
     private Type[] items;

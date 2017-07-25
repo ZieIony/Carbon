@@ -6,16 +6,23 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import carbon.Carbon;
 import carbon.R;
-import carbon.recycler.ArrayAdapter;
+import carbon.recycler.ListAdapter;
 import carbon.widget.DropDown;
 import carbon.widget.FrameLayout;
 import carbon.widget.RecyclerView;
@@ -23,9 +30,12 @@ import carbon.widget.RecyclerView;
 public class DropDownMenu<Type> extends PopupWindow {
 
     protected RecyclerView recycler;
-    private View mAnchorView;
+    private View anchorView;
     private DropDown.Mode mode;
-    private DropDown.Adapter defaultAdapter;
+    private ListAdapter<?, Type> defaultAdapter;
+    private DropDown.Style style;
+    private List<Integer> selectedIndices = new ArrayList<>();
+    private RecyclerView.OnItemClickedListener<Type> onItemClickedListener;
 
     public DropDownMenu(Context context) {
         super(View.inflate(context, R.layout.carbon_popupmenu, null));
@@ -42,7 +52,7 @@ public class DropDownMenu<Type> extends PopupWindow {
             return false;
         });
 
-        defaultAdapter = new DropDown.Adapter();
+        defaultAdapter = new DropDown.Adapter<>();
         recycler.setAdapter(defaultAdapter);
 
         setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
@@ -54,7 +64,7 @@ public class DropDownMenu<Type> extends PopupWindow {
     }
 
     public boolean show(View anchor) {
-        mAnchorView = anchor;
+        anchorView = anchor;
 
         super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
 
@@ -67,7 +77,7 @@ public class DropDownMenu<Type> extends PopupWindow {
     }
 
     public boolean showImmediate(View anchor) {
-        mAnchorView = anchor;
+        anchorView = anchor;
 
         super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
 
@@ -80,7 +90,7 @@ public class DropDownMenu<Type> extends PopupWindow {
     }
 
     public void update() {
-        if (mAnchorView == null)
+        if (anchorView == null)
             return;
 
         setClippingEnabled(mode == DropDown.Mode.Fit);
@@ -92,10 +102,10 @@ public class DropDownMenu<Type> extends PopupWindow {
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
         int selectedItem = 0;
-        ArrayAdapter adapter = getAdapter();
+        ListAdapter adapter = getAdapter();
 
-        if (mAnchorView instanceof android.widget.TextView) {
-            TextView textView = (TextView) mAnchorView;
+        if (anchorView instanceof android.widget.TextView) {
+            TextView textView = (TextView) anchorView;
             String text = textView.getText().toString();
             for (int i = 0; i < adapter.getItemCount(); i++) {
                 if (adapter.getItem(i).toString().equals(text)) {
@@ -106,12 +116,12 @@ public class DropDownMenu<Type> extends PopupWindow {
         }
 
         Rect windowRect = new Rect();
-        mAnchorView.getWindowVisibleDisplayFrame(windowRect);
+        anchorView.getWindowVisibleDisplayFrame(windowRect);
         int hWindow = windowRect.bottom - windowRect.top;
         int wWindow = windowRect.right - windowRect.left;
 
         int[] location = new int[2];
-        mAnchorView.getLocationInWindow(location);
+        anchorView.getLocationInWindow(location);
 
         if (mode == DropDown.Mode.Over) {
             int maxHeightAbove = location[1] - windowRect.top - marginHalf * 2;
@@ -123,9 +133,9 @@ public class DropDownMenu<Type> extends PopupWindow {
             int itemsAbove = Math.min(selectedItem, maxItemsAbove);
 
             int popupX = location[0] - margin - marginHalf;
-            int popupY = location[1] - marginHalf * 2 - itemsAbove * itemHeight - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() -
-                    mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
-            int popupWidth = mAnchorView.getWidth() + margin * 2 + marginHalf * 2 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
+            int popupY = location[1] - marginHalf * 2 - itemsAbove * itemHeight - (itemHeight - (anchorView.getHeight() - anchorView.getPaddingTop() -
+                    anchorView.getPaddingBottom())) / 2 + anchorView.getPaddingTop();
+            int popupWidth = anchorView.getWidth() + margin * 2 + marginHalf * 2 - anchorView.getPaddingLeft() - anchorView.getPaddingRight();
             int popupHeight = marginHalf * 4 + Math.max(1, itemsAbove + itemsBelow) * itemHeight;
 
             popupWidth = Math.min(popupWidth, wWindow - marginHalf * 2);
@@ -149,8 +159,8 @@ public class DropDownMenu<Type> extends PopupWindow {
             int maxItems = (hWindow - marginHalf * 2 - margin * 2) / itemHeight;
 
             int popupX = location[0] - margin - marginHalf;
-            int popupY = location[1] - marginHalf * 2 - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() - mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
-            int popupWidth = mAnchorView.getWidth() + margin * 2 + marginHalf * 2 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
+            int popupY = location[1] - marginHalf * 2 - (itemHeight - (anchorView.getHeight() - anchorView.getPaddingTop() - anchorView.getPaddingBottom())) / 2 + anchorView.getPaddingTop();
+            int popupWidth = anchorView.getWidth() + margin * 2 + marginHalf * 2 - anchorView.getPaddingLeft() - anchorView.getPaddingRight();
             int popupHeight = marginHalf * 4 + Math.min(recycler.getAdapter().getItemCount(), maxItems) * itemHeight;
 
             LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
@@ -204,7 +214,8 @@ public class DropDownMenu<Type> extends PopupWindow {
         return width;
     }*/
 
-    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener listener) {
+    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener<Type> listener) {
+        this.onItemClickedListener = listener;
         getAdapter().setOnItemClickedListener(listener);
     }
 
@@ -216,8 +227,77 @@ public class DropDownMenu<Type> extends PopupWindow {
         }
     }
 
-    public ArrayAdapter getAdapter() {
-        return (ArrayAdapter) recycler.getAdapter();
+    public ListAdapter<?, Type> getAdapter() {
+        return (ListAdapter<?, Type>) recycler.getAdapter();
+    }
+
+    public void setSelectedIndex(int index) {
+        selectedIndices.clear();
+        selectedIndices.add(index);
+    }
+
+    public void setSelectedIndices(int[] indices) {
+        selectedIndices.clear();
+        for (int i : indices)
+            selectedIndices.add(i);
+    }
+
+    public int getSelectedIndex() {
+        return selectedIndices.isEmpty() ? Carbon.INVALID_INDEX : selectedIndices.get(0);
+    }
+
+    public int[] getSelectedIndices() {
+        int[] result = new int[selectedIndices.size()];
+        for (int i = 0; i < selectedIndices.size(); i++)
+            result[i] = selectedIndices.get(i);
+        return result;
+    }
+
+    public void setSelectedItems(List<Type> items) {
+        List<Type> adapterItems = getAdapter().getItems();
+        selectedIndices.clear();
+        for (Type item : items) {
+            for (int i = 0; i < adapterItems.size(); i++) {
+                if (adapterItems.get(i).equals(item)) {
+                    selectedIndices.add(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    public Type getSelectedItem() {
+        return selectedIndices.isEmpty() ? null : getAdapter().getItem(selectedIndices.get(0));
+    }
+
+    public List<Type> getSelectedItems() {
+        List<Type> result = new ArrayList<>();
+        for (int i : selectedIndices)
+            result.add(getAdapter().getItem(i));
+        return result;
+    }
+
+    public String getSelectedText() {
+        if (selectedIndices.isEmpty())
+            return "";
+        StringBuilder builder = new StringBuilder();
+        Collections.sort(selectedIndices);
+        for (int i : selectedIndices) {
+            builder.append(getAdapter().getItem(i).toString());
+            builder.append(", ");
+        }
+        return builder.substring(0, builder.length() - 2);
+    }
+
+    public void toggle(int position) {
+        if (selectedIndices.contains(position)) {
+            selectedIndices.remove(selectedIndices.indexOf(position));
+        } else {
+            selectedIndices.add(position);
+        }
+        android.support.v7.widget.RecyclerView.ViewHolder viewHolder = recycler.findViewHolderForAdapterPosition(position);
+        if (viewHolder instanceof Checkable)
+            ((Checkable) viewHolder).toggle();
     }
 
     public DropDown.Mode getMode() {
@@ -228,7 +308,25 @@ public class DropDownMenu<Type> extends PopupWindow {
         this.mode = mode;
     }
 
-    public void setItems(Type[] items) {
+    public DropDown.Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(@NonNull DropDown.Style style) {
+        this.style = style;
+        ListAdapter<?, Type> newAdapter;
+        if (style == DropDown.Style.MultiSelect) {
+            newAdapter = new DropDown.CheckableAdapter<>(selectedIndices);
+        } else {
+            newAdapter = new DropDown.Adapter<>();
+        }
+        if (recycler.getAdapter() == defaultAdapter)
+            recycler.setAdapter(newAdapter);
+        defaultAdapter = newAdapter;
+        newAdapter.setOnItemClickedListener(onItemClickedListener);
+    }
+
+    public void setItems(List<Type> items) {
         defaultAdapter.setItems(items);
         defaultAdapter.notifyDataSetChanged();
     }
@@ -249,7 +347,7 @@ public class DropDownMenu<Type> extends PopupWindow {
                 }
             }
 
-            if (subPopup.show(mAnchorView)) {
+            if (subPopup.show(anchorView)) {
                 if (mPresenterCallback != null) {
                     mPresenterCallback.onOpenSubMenu(subMenu);
                 }

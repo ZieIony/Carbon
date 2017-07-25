@@ -1,5 +1,6 @@
 package carbon.widget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,20 +10,35 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Checkable;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.VectorDrawable;
 import carbon.internal.DropDownMenu;
-import carbon.recycler.ArrayAdapter;
+import carbon.recycler.ListAdapter;
+import carbon.recycler.RowListAdapter;
 
-public class DropDown<Type> extends EditText {
+public class DropDown<Type extends Serializable> extends EditText {
+
+    private VectorDrawable arrowDrawable;
 
     public enum Mode {
-        Over, Fit
+        Over, Fit;
+    }
+
+    public enum Style {
+        SingleSelect, MultiSelect, Editable;
     }
 
     public interface OnItemSelectedListener<Type> {
@@ -33,9 +49,10 @@ public class DropDown<Type> extends EditText {
         void onSelectionChanged(Type item, int position);
     }
 
-    DropDownMenu<Type> dropDownMenu;
+    private List<Type> items = new ArrayList<>();
+    private Type editedItem;
 
-    private int selectedIndex;
+    DropDownMenu<Type> dropDownMenu;
 
     OnItemSelectedListener<Type> onItemSelectedListener;
     OnSelectionChangedListener<Type> onSelectionChangedListener;
@@ -64,24 +81,20 @@ public class DropDown<Type> extends EditText {
     }
 
     private void initDropDown(Context context, AttributeSet attrs, int defStyleAttr) {
-        VectorDrawable drawable = new VectorDrawable(getResources(), R.raw.carbon_dropdown);
+        arrowDrawable = new VectorDrawable(getResources(), R.raw.carbon_dropdown);
         int size = (int) (Carbon.getDip(getContext()) * 24);
-        drawable.setBounds(0, 0, size, size);
-        setCompoundDrawables(null, null, drawable, null);
+        arrowDrawable.setBounds(0, 0, size, size);
+        setCompoundDrawables(null, null, arrowDrawable, null);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DropDown, defStyleAttr, R.style.carbon_DropDown);
 
         int theme = a.getResourceId(R.styleable.DropDown_carbon_popupTheme, -1);
 
         dropDownMenu = new DropDownMenu<Type>(new ContextThemeWrapper(context, theme));
-        dropDownMenu.setOnItemClickedListener(onItemClickedListener);
         dropDownMenu.setOnDismissListener(() -> isShowingPopup = false);
         dropDownMenu.setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.Over.ordinal())]);
-
-        setOnClickListener(view -> {
-            dropDownMenu.show(DropDown.this);
-            isShowingPopup = true;
-        });
+        setStyle(Style.values()[a.getInt(R.styleable.DropDown_carbon_style, Style.SingleSelect.ordinal())]);
+        dropDownMenu.setOnItemClickedListener(onItemClickedListener);
 
         a.recycle();
     }
@@ -94,49 +107,129 @@ public class DropDown<Type> extends EditText {
         dropDownMenu.setMode(mode);
     }
 
+    public Style getStyle() {
+        return dropDownMenu.getStyle();
+    }
+
+    public void setStyle(@NonNull Style style) {
+        dropDownMenu.setStyle(style);
+        if (style == DropDown.Style.Editable) {
+            setFocusableInTouchMode(true);
+            setCursorVisible(true);
+            setLongClickable(true);
+        } else {
+            setFocusableInTouchMode(false);
+            setCursorVisible(false);
+            setLongClickable(false);
+        }
+    }
+
     public void setSelectedIndex(int index) {
-        selectedIndex = index;
+        dropDownMenu.setSelectedIndex(index);
         setText(getAdapter().getItem(index).toString());
     }
 
+    public void setSelectedIndices(int[] indices) {
+        dropDownMenu.setSelectedIndices(indices);
+    }
+
     public int getSelectedIndex() {
-        return selectedIndex;
+        return dropDownMenu.getSelectedIndex();
+    }
+
+    public int[] getSelectedIndices() {
+        return dropDownMenu.getSelectedIndices();
     }
 
     public void setSelectedItem(Type item) {
-        Object[] items = getAdapter().getItems();
-        for (int i = 0; i < items.length; i++) {
-            if (items[i].equals(item)) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).equals(item)) {
                 setSelectedIndex(i);
                 return;
             }
         }
+        if (dropDownMenu.getStyle() == Style.Editable) {
+            if (editedItem != null)
+                items.remove(editedItem);
+            editedItem = item;
+            items.add(0, editedItem);
+        }
+    }
+
+    public void setSelectedItems(List<Type> items) {
+        dropDownMenu.setSelectedItems(items);
     }
 
     public Type getSelectedItem() {
-        return (Type) getAdapter().getItem(selectedIndex);
+        return dropDownMenu.getSelectedItem();
     }
 
-    public void setAdapter(final RecyclerView.Adapter adapter) {
+    public List<Type> getSelectedItems() {
+        return dropDownMenu.getSelectedItems();
+    }
+
+    public void setAdapter(final RowListAdapter<Type> adapter) {
         dropDownMenu.setAdapter(adapter);
-        setText(getAdapter().getItem(selectedIndex).toString());
+        setText(dropDownMenu.getSelectedText());
     }
 
-    public ArrayAdapter getAdapter() {
+    public ListAdapter<?, Type> getAdapter() {
         return dropDownMenu.getAdapter();
+    }
+
+    GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            if (dropDownMenu.getStyle() == Style.Editable &&
+                    e.getX() >= getWidth() - getPaddingRight() - arrowDrawable.getBounds().width() ||
+                    dropDownMenu.getStyle() != Style.Editable) {
+                showMenu();
+                return true;
+            }
+            return performClick();
+        }
+    });
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return true;
+    }
+
+    public void showMenu() {
+        dropDownMenu.show(DropDown.this);
+        isShowingPopup = true;
     }
 
     RecyclerView.OnItemClickedListener<Type> onItemClickedListener = new RecyclerView.OnItemClickedListener<Type>() {
         @Override
         public void onItemClicked(View view, Type item, int position) {
-            setText(item.toString());
-            int prevSelectedIndex = selectedIndex;
-            selectedIndex = position;
-            if (onItemSelectedListener != null)
-                onItemSelectedListener.onItemSelected(item, selectedIndex);
-            if (onSelectionChangedListener != null && prevSelectedIndex != selectedIndex)
-                onSelectionChangedListener.onSelectionChanged(item, position);
-            dropDownMenu.dismiss();
+            Style style = dropDownMenu.getStyle();
+            if (style == Style.MultiSelect) {
+                dropDownMenu.toggle(position);
+                if (onItemSelectedListener != null)
+                    onItemSelectedListener.onItemSelected(item, position);
+                if (onSelectionChangedListener != null)
+                    onSelectionChangedListener.onSelectionChanged(item, position);
+            } else {
+                int prevSelectedIndex = getSelectedIndex();
+                setSelectedIndex(position);
+                if (onItemSelectedListener != null)
+                    onItemSelectedListener.onItemSelected(item, position);
+                if (onSelectionChangedListener != null && prevSelectedIndex != position)
+                    onSelectionChangedListener.onSelectionChanged(item, position);
+                if (style == Style.Editable && position != 0)
+                    getAdapter().getItems().remove(0);
+            }
+
+            setText(dropDownMenu.getSelectedText());
+            if (editedItem != null && position != 0) {
+                items.remove(editedItem);
+                editedItem = null;
+            }
+            if (style != Style.MultiSelect)
+                dropDownMenu.dismiss();
         }
     };
 
@@ -149,11 +242,19 @@ public class DropDown<Type> extends EditText {
     }
 
     public void setItems(Type[] items) {
+        this.items.clear();
+        this.items.addAll(Arrays.asList(items));
+        dropDownMenu.setItems(this.items);
+        setSelectedIndex(0);
+    }
+
+    public void setItems(List<Type> items) {
+        this.items = items;
         dropDownMenu.setItems(items);
         setSelectedIndex(0);
     }
 
-    public static class Adapter extends ArrayAdapter<ViewHolder, Object> {
+    public static class Adapter<Type> extends ListAdapter<ViewHolder, Type> {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -164,7 +265,7 @@ public class DropDown<Type> extends EditText {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            holder.tv.setText(items[position].toString());
+            holder.tv.setText(items.get(position).toString());
             holder.itemView.setOnClickListener(view -> fireOnItemClickedEvent(holder.itemView, holder.getAdapterPosition()));
         }
     }
@@ -179,17 +280,62 @@ public class DropDown<Type> extends EditText {
         }
     }
 
-    @Override
-    protected boolean setFrame(int l, int t, int r, int b) {
-        boolean result = super.setFrame(l, t, r, b);
+    public static class CheckableAdapter<Type> extends ListAdapter<CheckableViewHolder, Type> {
+        private List<Integer> selectedIndices;
 
-        if (dropDownMenu != null) {
-            carbon.widget.FrameLayout container = dropDownMenu.getContentView().findViewById(R.id.carbon_popupContainer);
-            if (container.getAnimator() == null)
-                dropDownMenu.update();
+        public CheckableAdapter(List<Integer> selectedIndices) {
+            this.selectedIndices = selectedIndices;
         }
 
-        return result;
+        @Override
+        public CheckableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.carbon_popupmenu_checkableitem, parent, false);
+            return new CheckableViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(CheckableViewHolder holder, final int position) {
+            holder.checkBox.setText(items.get(position).toString());
+            holder.checkBox.setChecked(selectedIndices.contains(position));
+            holder.itemView.setOnClickListener(view -> fireOnItemClickedEvent(holder.itemView, holder.getAdapterPosition()));
+        }
+    }
+
+    public static class CheckableViewHolder extends RecyclerView.ViewHolder implements Checkable {
+
+        CheckBox checkBox;
+
+        public CheckableViewHolder(View itemView) {
+            super(itemView);
+            checkBox = itemView.findViewById(R.id.carbon_itemCheckText);
+        }
+
+        @Override
+        public void setChecked(boolean b) {
+            checkBox.setChecked(b);
+        }
+
+        @Override
+        public boolean isChecked() {
+            return checkBox.isChecked();
+        }
+
+        @Override
+        public void toggle() {
+            checkBox.toggle();
+        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        if (changed && dropDownMenu != null) {
+            carbon.widget.FrameLayout container = dropDownMenu.getContentView().findViewById(R.id.carbon_popupContainer);
+            if (container.getAnimator() == null)    // TODO: check this check
+                dropDownMenu.update();
+        }
     }
 
     @Override

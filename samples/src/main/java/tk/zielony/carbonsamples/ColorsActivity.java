@@ -7,6 +7,8 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import java.io.Serializable;
+
 import carbon.widget.DropDown;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
@@ -18,7 +20,7 @@ public class ColorsActivity extends SamplesActivity {
     public static final String STYLE = "style";
     public static final String THEME = "theme";
 
-    public static class Item {
+    public static class Item implements Serializable {
         String name;
         int value;
         public int color;

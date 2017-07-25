@@ -161,7 +161,7 @@ public class EditText extends android.widget.EditText
 
         int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearanceInternal(ap);
+            setTextAppearanceInternal(ap, a.hasValue(R.styleable.EditText_android_textColor));
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
@@ -509,15 +509,15 @@ public class EditText extends android.widget.EditText
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearanceInternal(resid);
+        setTextAppearanceInternal(resid, false);
     }
 
     public void setTextAppearance(int resid) {
         super.setTextAppearance(getContext(), resid);
-        setTextAppearanceInternal(resid);
+        setTextAppearanceInternal(resid, false);
     }
 
-    private void setTextAppearanceInternal(int resid) {
+    private void setTextAppearanceInternal(int resid, boolean hasTextColor) {
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
         if (appearance != null) {
             for (int i = 0; i < appearance.getIndexCount(); i++) {
@@ -532,9 +532,10 @@ public class EditText extends android.widget.EditText
                     setTypeface(typeface);
                 } else if (attr == R.styleable.TextAppearance_android_textAllCaps) {
                     setAllCaps(appearance.getBoolean(attr, true));
+                } else if (!hasTextColor && attr == R.styleable.TextAppearance_android_textColor) {
+                    Carbon.initDefaultTextColor(this, appearance, attr);
                 }
             }
-            Carbon.initDefaultTextColor(this, appearance, R.styleable.TextAppearance_android_textColor);
             appearance.recycle();
         }
     }

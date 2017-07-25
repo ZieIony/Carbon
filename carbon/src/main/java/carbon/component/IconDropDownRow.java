@@ -7,7 +7,7 @@ import carbon.widget.DropDown;
 
 public class IconDropDownRow<Type extends IconDropDownItem> extends DataBindingComponent<Type> {
 
-    private DropDown dropDown;
+    private DropDown<Type> dropDown;
 
     public IconDropDownRow(ViewGroup parent) {
         super(parent, R.layout.carbon_row_icondropdown);
@@ -17,7 +17,7 @@ public class IconDropDownRow<Type extends IconDropDownItem> extends DataBindingC
     @Override
     public void bind(Type data) {
         super.bind(data);
-        dropDown.getAdapter().setItems(data.getItems());
+        dropDown.setItems((Type[]) data.getItems());
     }
 
     public DropDown getDropDown() {
@@ -28,7 +28,7 @@ public class IconDropDownRow<Type extends IconDropDownItem> extends DataBindingC
         return dropDown.getSelectedItem();
     }
 
-    public void setSelectedItem(Object item) {
+    public void setSelectedItem(Type item) {
         dropDown.setSelectedItem(item);
     }
 }

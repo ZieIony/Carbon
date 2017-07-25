@@ -3,6 +3,7 @@ package carbon.widget.rx;
 import android.content.Context;
 import android.util.AttributeSet;
 
+@Deprecated
 public class CheckedTextView extends carbon.widget.CheckedTextView implements RxViewInterface, RxTextViewInterface, RxCheckableInterface {
 
     public CheckedTextView(Context context) {

@@ -62,6 +62,8 @@ public class Carbon {
 
     public static PorterDuffXfermode CLEAR_MODE = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
+    public static final int INVALID_INDEX = -1;
+
     private Carbon() {
     }
 

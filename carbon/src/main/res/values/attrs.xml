@@ -931,6 +931,12 @@
             <enum name="over" value="0"/>
             <enum name="fit" value="1"/>
         </attr>
+
+        <attr name="carbon_style" format="enum">
+            <enum name="singleSelect" value="0"/>
+            <enum name="multiSelect" value="1"/>
+            <enum name="editable" value="1"/>
+        </attr>
     </declare-styleable>
 
     <attr name="carbon_pagerTabStripStyle" format="reference"/>
@@ -1031,6 +1037,7 @@
         <attr name="edgeEffectOffsetBottom" format="dimension"/>
     </declare-styleable>
 
+    <!-- {@deprecated Use CheckBox instead.} -->
     <declare-styleable name="CheckedTextView">
         <attr name="carbon_theme"/>
 

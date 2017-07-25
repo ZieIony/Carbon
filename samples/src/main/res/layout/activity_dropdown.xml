@@ -35,9 +35,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:paddingBottom="@dimen/carbon_paddingHalf"
                     android:background="@color/carbon_defaultColor"
-                    android:text="1"/>
+                    android:paddingBottom="@dimen/carbon_paddingHalf"
+                    android:text="1"
+                    app:carbon_style="multiSelect"/>
 
                 <carbon.widget.DropDown
                     android:id="@+id/month"
@@ -46,8 +47,8 @@
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
                     android:layout_weight="1"
-                    android:paddingBottom="@dimen/carbon_paddingHalf"
                     android:background="@color/carbon_defaultColor"
+                    android:paddingBottom="@dimen/carbon_paddingHalf"
                     android:text="Jan"/>
 
                 <carbon.widget.DropDown
@@ -58,7 +59,8 @@
                     android:layout_weight="1"
                     android:background="@color/carbon_defaultColor"
                     android:paddingBottom="@dimen/carbon_paddingHalf"
-                    android:text="1987"/>
+                    android:text="1987"
+                    app:carbon_style="editable"/>
             </carbon.widget.LinearLayout>
         </carbon.widget.InputLayout>
     </carbon.widget.LinearLayout>

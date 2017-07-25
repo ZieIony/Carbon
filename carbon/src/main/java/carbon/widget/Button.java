@@ -231,7 +231,6 @@ public class Button extends android.widget.Button
             }
             appearance.recycle();
         }
-
     }
 
     RevealAnimator revealAnimator;

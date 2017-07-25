@@ -380,7 +380,6 @@
         <item name="android:focusableInTouchMode">false</item>
         <item name="android:longClickable">false</item>
         <item name="android:cursorVisible">false</item>
-        <item name="android:focusable">false</item>
         <item name="android:editable">false</item>
         <item name="android:maxLines">1</item>
         <item name="android:paddingBottom">0dp</item>
