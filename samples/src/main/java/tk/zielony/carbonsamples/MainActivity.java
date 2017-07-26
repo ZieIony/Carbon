@@ -18,7 +18,6 @@ public class MainActivity extends SampleListActivity {
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new SampleActivityItem(AnimationsActivity.class, getString(R.string.animationsActivity_title)),
                 new SampleActivityItem(ColorsActivity.class, getString(R.string.colorsActivity_title)),
-                new SampleActivityItem(ComparisonActivity.class, getString(R.string.comparisonActivity_title)),
                 new SampleActivityItem(ComponentsActivity.class, getString(R.string.componentsActivity_title)),
                 new SampleActivityItem(DemosActivity.class, getString(R.string.demosActivity_title)),
                 new SampleActivityItem(DialogsActivity.class, getString(R.string.dialogsActivity_title)),

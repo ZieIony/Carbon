@@ -92,6 +92,7 @@ public class EditText extends android.widget.EditText
     private int matchingView;
 
     private boolean valid = true;
+    private boolean skipValidate = false;
 
     private CharSequence prefix, suffix;
     private StaticLayout prefixLayout, suffixLayout;
@@ -229,7 +230,8 @@ public class EditText extends android.widget.EditText
         addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
-                validateInternalEvent();
+                if (!skipValidate)
+                    validateInternalEvent();
             }
         });
 
@@ -381,7 +383,6 @@ public class EditText extends android.widget.EditText
      */
     public void setRequired(boolean required) {
         this.required = required;
-        validate();
     }
 
     public void validate() {
@@ -1338,7 +1339,9 @@ public class EditText extends android.widget.EditText
 
     @Override
     public void setText(final CharSequence text, BufferType type) {
+        skipValidate = true;
         super.setText(text, type);
+        skipValidate = false;
         adjustTextSize();
     }
 

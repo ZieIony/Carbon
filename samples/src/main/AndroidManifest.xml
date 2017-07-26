@@ -71,9 +71,6 @@
         <activity android:name=".feature.TextMarkerActivity"/>
         <activity android:name=".feature.ThemeActivity"/>
 
-        <activity android:name=".comparison.TextViewComparisonActivity"/>
-        <activity android:name=".comparison.CardViewComparisonActivity"/>
-
         <activity android:name=".library.PicassoActivity"/>
         <activity android:name=".library.RecyclerCardsActivity"/>
         <activity android:name=".library.DesignActivity"/>
@@ -107,7 +104,6 @@
         <activity android:name=".ComponentsActivity"/>
         <activity android:name=".DemosActivity"/>
         <activity android:name=".FeaturesActivity"/>
-        <activity android:name=".ComparisonActivity"/>
         <activity android:name=".GuidelinesActivity"/>
         <activity android:name=".WidgetsActivity"/>
         <activity android:name=".DialogsActivity"/>
