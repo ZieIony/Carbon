@@ -1228,6 +1228,8 @@ public class DrawerLayout extends android.support.v4.widget.DrawerLayout
     }
 
     private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
         for (OnTransformationChangedListener listener : transformationChangedListeners)
             listener.onTransformationChanged();
     }

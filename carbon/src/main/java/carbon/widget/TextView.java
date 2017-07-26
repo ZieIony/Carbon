@@ -39,6 +39,8 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
@@ -182,6 +184,9 @@ public class TextView extends android.widget.TextView
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
+                int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
+                getPaint().setFakeBoldText((textStyle & Typeface.BOLD) != 0);
+                getPaint().setTextSkewX((textStyle & Typeface.ITALIC) != 0 ? -0.25f : 0);
             } else if (attr == R.styleable.TextView_carbon_fontFamily) {
                 int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
@@ -268,6 +273,9 @@ public class TextView extends android.widget.TextView
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);
+                    int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
+                    getPaint().setFakeBoldText((textStyle & Typeface.BOLD) != 0);
+                    getPaint().setTextSkewX((textStyle & Typeface.ITALIC) != 0 ? -0.25f : 0);
                 } else if (attr == R.styleable.TextAppearance_carbon_fontFamily) {
                     int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
@@ -1295,64 +1303,95 @@ public class TextView extends android.widget.TextView
     // transformations
     // -------------------------------
 
+    List<OnTransformationChangedListener> transformationChangedListeners = new ArrayList<>();
+
+    public void addOnTransformationChangedListener(OnTransformationChangedListener listener) {
+        transformationChangedListeners.add(listener);
+    }
+
+    public void removeOnTransformationChangedListener(OnTransformationChangedListener listener) {
+        transformationChangedListeners.remove(listener);
+    }
+
+    public void clearOnTransformationChangedListeners() {
+        transformationChangedListeners.clear();
+    }
+
+    private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
+        for (OnTransformationChangedListener listener : transformationChangedListeners)
+            listener.onTransformationChanged();
+    }
+
     @Override
     public void setRotation(float rotation) {
         super.setRotation(rotation);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setRotationY(float rotationY) {
         super.setRotationY(rotationY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setRotationX(float rotationX) {
         super.setRotationX(rotationX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setScaleX(float scaleX) {
         super.setScaleX(scaleX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setScaleY(float scaleY) {
         super.setScaleY(scaleY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setPivotX(float pivotX) {
         super.setPivotX(pivotX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setPivotY(float pivotY) {
         super.setPivotY(pivotY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setAlpha(@FloatRange(from = 0.0, to = 1.0) float alpha) {
         super.setAlpha(alpha);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setTranslationX(float translationX) {
         super.setTranslationX(translationX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setTranslationY(float translationY) {
         super.setTranslationY(translationY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     public void setWidth(int width) {

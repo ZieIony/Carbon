@@ -1227,6 +1227,8 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     }
 
     private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
         for (OnTransformationChangedListener listener : transformationChangedListeners)
             listener.onTransformationChanged();
     }

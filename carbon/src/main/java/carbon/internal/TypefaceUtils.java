@@ -6,15 +6,14 @@ import android.graphics.Typeface;
 import java.util.HashMap;
 
 public class TypefaceUtils {
-    private static HashMap<Roboto, Typeface> robotoCache = new HashMap<>();
     private static HashMap<String, Typeface> pathCache = new HashMap<>();
-    private static HashMap[] familyStyleCache = new HashMap[4];
+    private static HashMap<String, Typeface>[] familyStyleCache = new HashMap[4];
 
     static {
-        familyStyleCache[Typeface.NORMAL] = new HashMap();
-        familyStyleCache[Typeface.ITALIC] = new HashMap();
-        familyStyleCache[Typeface.BOLD] = new HashMap();
-        familyStyleCache[Typeface.BOLD_ITALIC] = new HashMap();
+        familyStyleCache[Typeface.NORMAL] = new HashMap<>();
+        familyStyleCache[Typeface.ITALIC] = new HashMap<>();
+        familyStyleCache[Typeface.BOLD] = new HashMap<>();
+        familyStyleCache[Typeface.BOLD_ITALIC] = new HashMap<>();
     }
 
     public static Typeface getTypeface(Context context, String path) {
@@ -29,6 +28,7 @@ public class TypefaceUtils {
                 t = loadRoboto(context, style);
                 if (t != null)
                     return t;
+                break;
             }
         }
 
@@ -44,7 +44,7 @@ public class TypefaceUtils {
 
     public static Typeface getTypeface(Context context, String fontFamily, int textStyle) {
         // get from cache
-        Typeface t = (Typeface) familyStyleCache[textStyle].get(fontFamily);
+        Typeface t = familyStyleCache[textStyle].get(fontFamily);
         if (t != null)
             return t;
 
@@ -67,9 +67,10 @@ public class TypefaceUtils {
         return Typeface.DEFAULT;
     }
 
+    @Deprecated
     public static Typeface getTypeface(Context context, Roboto roboto) {
         // get from cache
-        Typeface t = robotoCache.get(roboto);
+        Typeface t = pathCache.get(roboto.getPath());
         if (t != null)
             return t;
 
@@ -84,7 +85,6 @@ public class TypefaceUtils {
         // try to load asset
         try {
             Typeface t = Typeface.createFromAsset(context.getAssets(), roboto.getPath());
-            robotoCache.put(roboto, t);
             pathCache.put(roboto.getPath(), t);
             familyStyleCache[roboto.getTextStyle()].put(roboto.getFontFamily(), t);
             return t;
@@ -94,7 +94,6 @@ public class TypefaceUtils {
         // try system font
         Typeface t = Typeface.create(roboto.getFontFamily(), roboto.getTextStyle());
         if (t != null) {
-            robotoCache.put(roboto, t);
             pathCache.put(roboto.getPath(), t);
             familyStyleCache[roboto.getTextStyle()].put(roboto.getFontFamily(), t);
             return t;

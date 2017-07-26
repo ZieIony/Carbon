@@ -1397,6 +1397,8 @@ public class LinearLayout extends android.widget.LinearLayout
     }
 
     private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
         for (OnTransformationChangedListener listener : transformationChangedListeners)
             listener.onTransformationChanged();
     }

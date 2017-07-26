@@ -1224,6 +1224,8 @@ public class CoordinatorLayout extends android.support.design.widget.Coordinator
     }
 
     private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
         for (OnTransformationChangedListener listener : transformationChangedListeners)
             listener.onTransformationChanged();
     }

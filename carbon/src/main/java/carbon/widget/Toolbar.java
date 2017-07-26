@@ -1226,6 +1226,8 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     }
 
     private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
         for (OnTransformationChangedListener listener : transformationChangedListeners)
             listener.onTransformationChanged();
     }

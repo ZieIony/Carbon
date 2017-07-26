@@ -1347,6 +1347,8 @@ public class FlowLayout extends android.widget.FrameLayout
     }
 
     private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
         for (OnTransformationChangedListener listener : transformationChangedListeners)
             listener.onTransformationChanged();
     }

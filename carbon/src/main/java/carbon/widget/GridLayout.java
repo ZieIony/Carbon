@@ -1385,6 +1385,8 @@ public class GridLayout extends android.support.v7.widget.GridLayout
     }
 
     private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
         for (OnTransformationChangedListener listener : transformationChangedListeners)
             listener.onTransformationChanged();
     }

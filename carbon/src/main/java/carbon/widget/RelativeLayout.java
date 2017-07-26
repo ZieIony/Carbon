@@ -1422,6 +1422,8 @@ public class RelativeLayout extends android.widget.RelativeLayout
     }
 
     private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
         for (OnTransformationChangedListener listener : transformationChangedListeners)
             listener.onTransformationChanged();
     }

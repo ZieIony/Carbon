@@ -1197,64 +1197,95 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     // transformations
     // -------------------------------
 
+    List<OnTransformationChangedListener> transformationChangedListeners = new ArrayList<>();
+
+    public void addOnTransformationChangedListener(OnTransformationChangedListener listener) {
+        transformationChangedListeners.add(listener);
+    }
+
+    public void removeOnTransformationChangedListener(OnTransformationChangedListener listener) {
+        transformationChangedListeners.remove(listener);
+    }
+
+    public void clearOnTransformationChangedListeners() {
+        transformationChangedListeners.clear();
+    }
+
+    private void fireOnTransformationChangedListener() {
+        if (transformationChangedListeners == null)
+            return;
+        for (OnTransformationChangedListener listener : transformationChangedListeners)
+            listener.onTransformationChanged();
+    }
+
     @Override
     public void setRotation(float rotation) {
         super.setRotation(rotation);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setRotationY(float rotationY) {
         super.setRotationY(rotationY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setRotationX(float rotationX) {
         super.setRotationX(rotationX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setScaleX(float scaleX) {
         super.setScaleX(scaleX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setScaleY(float scaleY) {
         super.setScaleY(scaleY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setPivotX(float pivotX) {
         super.setPivotX(pivotX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setPivotY(float pivotY) {
         super.setPivotY(pivotY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setAlpha(@FloatRange(from = 0.0, to = 1.0) float alpha) {
         super.setAlpha(alpha);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setTranslationX(float translationX) {
         super.setTranslationX(translationX);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     @Override
     public void setTranslationY(float translationY) {
         super.setTranslationY(translationY);
         invalidateParentIfNeeded();
+        fireOnTransformationChangedListener();
     }
 
     public void setWidth(int width) {
