@@ -153,23 +153,31 @@ public class Button extends android.widget.Button
         if (ap != -1)
             setTextAppearanceInternal(ap, a.hasValue(R.styleable.Button_android_textColor));
 
+        int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
+        boolean bold = (textStyle & Typeface.BOLD) != 0;
+        boolean italic = (textStyle & Typeface.ITALIC) != 0;
+
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (!isInEditMode() && attr == R.styleable.Button_carbon_fontPath) {
                 String path = a.getString(attr);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                 setTypeface(typeface);
-                int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
-                getPaint().setFakeBoldText((textStyle & Typeface.BOLD) != 0);
-                getPaint().setTextSkewX((textStyle & Typeface.ITALIC) != 0 ? -0.25f : 0);
             } else if (attr == R.styleable.Button_carbon_fontFamily) {
-                int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
                 Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
                 setTypeface(typeface);
+                bold = false;
+                italic = false;
             } else if (attr == R.styleable.Button_android_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, true));
             }
         }
+
+        TextPaint paint = getPaint();
+        if (bold)
+            paint.setFakeBoldText(true);
+        if (italic)
+            paint.setTextSkewX(-0.25f);
 
         Carbon.initDefaultBackground(this, a, R.styleable.Button_android_background);
         Carbon.initDefaultTextColor(this, a, R.styleable.Button_android_textColor);
@@ -218,20 +226,23 @@ public class Button extends android.widget.Button
 
     private void setTextAppearanceInternal(int resid, boolean hasTextColor) {
         TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
+
         if (appearance != null) {
+            int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
+            boolean bold = (textStyle & Typeface.BOLD) != 0;
+            boolean italic = (textStyle & Typeface.ITALIC) != 0;
+
             for (int i = 0; i < appearance.getIndexCount(); i++) {
                 int attr = appearance.getIndex(i);
                 if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
                     String path = appearance.getString(attr);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
                     setTypeface(typeface);
-                    int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
-                    getPaint().setFakeBoldText((textStyle & Typeface.BOLD) != 0);
-                    getPaint().setTextSkewX((textStyle & Typeface.ITALIC) != 0 ? -0.25f : 0);
                 } else if (attr == R.styleable.TextAppearance_carbon_fontFamily) {
-                    int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
                     Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
                     setTypeface(typeface);
+                    bold = false;
+                    italic = false;
                 } else if (attr == R.styleable.TextAppearance_android_textAllCaps) {
                     setAllCaps(appearance.getBoolean(attr, true));
                 } else if (!hasTextColor && attr == R.styleable.TextAppearance_android_textColor) {
@@ -239,6 +250,12 @@ public class Button extends android.widget.Button
                 }
             }
             appearance.recycle();
+
+            TextPaint paint = getPaint();
+            if (bold)
+                paint.setFakeBoldText(true);
+            if (italic)
+                paint.setTextSkewX(-0.25f);
         }
     }
 
