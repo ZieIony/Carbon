@@ -58,6 +58,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@color/carbon_defaultColor"
+                    android:inputType="number"
+                    android:maxLength="4"
                     android:paddingBottom="@dimen/carbon_paddingHalf"
                     android:text="1987"
                     app:carbon_style="editable"/>

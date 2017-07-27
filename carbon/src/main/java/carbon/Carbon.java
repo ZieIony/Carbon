@@ -6,10 +6,12 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -387,6 +389,27 @@ public class Carbon {
         int w = Math.max(view.getWidth() - x, x);
         int h = Math.max(view.getHeight() - y, y);
         return (float) Math.sqrt(w * w + h * h);
+    }
+
+    public static void setTint(Drawable drawable, int tint) {
+        if (drawable instanceof TintAwareDrawable) {
+            ((TintAwareDrawable) drawable).setTint(tint);
+        } else {
+            drawable.setColorFilter(new PorterDuffColorFilter(tint, PorterDuff.Mode.MULTIPLY));
+        }
+    }
+
+    public static void setTintList(Drawable drawable, ColorStateList tint) {
+        if (drawable instanceof TintAwareDrawable) {
+            ((TintAwareDrawable) drawable).setTintList(tint);
+        } else {
+            drawable.setColorFilter(tint == null ? null : new PorterDuffColorFilter(tint.getColorForState(drawable.getState(), tint.getDefaultColor()), PorterDuff.Mode.MULTIPLY));
+        }
+    }
+
+    public static void setTintMode(Drawable drawable, PorterDuff.Mode mode) {
+        if (drawable instanceof TintAwareDrawable)
+            ((TintAwareDrawable) drawable).setTintMode(mode);
     }
 
     public static void throwReflectionError() {

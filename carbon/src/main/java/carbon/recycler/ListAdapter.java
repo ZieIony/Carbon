@@ -79,9 +79,8 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
     protected void fireOnItemClickedEvent(View view, int position) {
         I item = items.get(position);
         carbon.widget.RecyclerView.OnItemClickedListener<I> typeSpecificListener = (carbon.widget.RecyclerView.OnItemClickedListener<I>) onItemClickedListeners.get(item.getClass());
-        if (typeSpecificListener != null) {
+        if (typeSpecificListener != null)
             typeSpecificListener.onItemClicked(view, item, position);
-        }
         if (onItemClickedListener != null)
             onItemClickedListener.onItemClicked(view, item, position);
     }

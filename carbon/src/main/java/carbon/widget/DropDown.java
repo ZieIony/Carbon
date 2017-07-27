@@ -32,6 +32,7 @@ import carbon.recycler.RowListAdapter;
 public class DropDown<Type extends Serializable> extends EditText {
 
     private VectorDrawable arrowDrawable;
+    private CustomItemFactory<Type> customItemFactory = text -> (Type) text;
 
     public enum Mode {
         Over, Fit;
@@ -50,7 +51,6 @@ public class DropDown<Type extends Serializable> extends EditText {
     }
 
     private List<Type> items = new ArrayList<>();
-    private Type editedItem;
 
     DropDownMenu<Type> dropDownMenu;
 
@@ -148,12 +148,6 @@ public class DropDown<Type extends Serializable> extends EditText {
                 return;
             }
         }
-        if (dropDownMenu.getStyle() == Style.Editable) {
-            if (editedItem != null)
-                items.remove(editedItem);
-            editedItem = item;
-            items.add(0, editedItem);
-        }
     }
 
     public void setSelectedItems(List<Type> items) {
@@ -180,26 +174,35 @@ public class DropDown<Type extends Serializable> extends EditText {
     GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            if (dropDownMenu.getStyle() == Style.Editable &&
-                    e.getX() >= getWidth() - getPaddingRight() - arrowDrawable.getBounds().width() ||
-                    dropDownMenu.getStyle() != Style.Editable) {
-                showMenu();
-                return true;
-            }
-            return performClick();
+            showMenu();
+            return true;
         }
     });
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        gestureDetector.onTouchEvent(event);
-        return true;
+        if (dropDownMenu.getStyle() == Style.Editable &&
+                event.getX() >= getWidth() - getPaddingRight() - arrowDrawable.getBounds().width() ||
+                dropDownMenu.getStyle() != Style.Editable) {
+            gestureDetector.onTouchEvent(event);
+            return true;
+        }
+        return super.onTouchEvent(event);
     }
 
     public void showMenu() {
+        dropDownMenu.setCustomItem(customItemFactory.makeItem(getText().toString()));
         dropDownMenu.show(DropDown.this);
         isShowingPopup = true;
+    }
+
+    public interface CustomItemFactory<Type>{
+        Type makeItem(String text);
+    }
+
+    public void setCustomItemFactory(CustomItemFactory<Type> factory){
+        customItemFactory = factory;
     }
 
     RecyclerView.OnItemClickedListener<Type> onItemClickedListener = new RecyclerView.OnItemClickedListener<Type>() {
@@ -219,15 +222,9 @@ public class DropDown<Type extends Serializable> extends EditText {
                     onItemSelectedListener.onItemSelected(item, position);
                 if (onSelectionChangedListener != null && prevSelectedIndex != position)
                     onSelectionChangedListener.onSelectionChanged(item, position);
-                if (style == Style.Editable && position != 0)
-                    getAdapter().getItems().remove(0);
             }
 
             setText(dropDownMenu.getSelectedText());
-            if (editedItem != null && position != 0) {
-                items.remove(editedItem);
-                editedItem = null;
-            }
             if (style != Style.MultiSelect)
                 dropDownMenu.dismiss();
         }

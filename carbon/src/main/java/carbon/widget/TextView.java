@@ -1024,14 +1024,17 @@ public class TextView extends android.widget.TextView
     private void updateTint() {
         Drawable[] drawables = getCompoundDrawables();
         if (tint != null && tintMode != null) {
-            int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
-            for (Drawable d : drawables)
-                if (d != null)
-                    d.setColorFilter(new PorterDuffColorFilter(color, tintMode));
+            for (Drawable d : drawables) {
+                if (d != null) {
+                    Carbon.setTintList(d, tint);
+                    Carbon.setTintMode(d, tintMode);
+                }
+            }
         } else {
-            for (Drawable d : drawables)
+            for (Drawable d : drawables) {
                 if (d != null)
-                    d.setColorFilter(null);
+                    Carbon.setTintList(d, null);
+            }
         }
     }
 

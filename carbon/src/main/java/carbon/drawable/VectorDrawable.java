@@ -96,6 +96,13 @@ public class VectorDrawable extends Drawable implements AlphaDrawable, TintAware
     }
 
     @Override
+    public boolean setState(@NonNull int[] stateSet) {
+        boolean result = super.setState(stateSet);
+        updateTint();
+        return result;
+    }
+
+    @Override
     public void setColorFilter(@Nullable ColorFilter colorFilter) {
         state.colorFilter = colorFilter;
         state.tint = null;

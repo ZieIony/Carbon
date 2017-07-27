@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.ListAdapter;
 import carbon.widget.DropDown;
 import carbon.widget.FrameLayout;
@@ -36,6 +39,7 @@ public class DropDownMenu<Type> extends PopupWindow {
     private DropDown.Style style;
     private List<Integer> selectedIndices = new ArrayList<>();
     private RecyclerView.OnItemClickedListener<Type> onItemClickedListener;
+    private Type customItem;
 
     public DropDownMenu(Context context) {
         super(View.inflate(context, R.layout.carbon_popupmenu, null));
@@ -51,6 +55,13 @@ public class DropDownMenu<Type> extends PopupWindow {
             }
             return false;
         });
+        LayerDrawable dividerDrawable = new LayerDrawable(new Drawable[]{
+                new ColorDrawable(Carbon.getThemeColor(context, R.attr.carbon_colorForeground)),
+                new ColorDrawable(Carbon.getThemeColor(context, R.attr.carbon_dividerColor))
+        });
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable, context.getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
+        dividerItemDecoration.setDrawAfter(position -> getAdapter().getItem(position) == customItem);
+        recycler.addItemDecoration(dividerItemDecoration);
 
         defaultAdapter = new DropDown.Adapter<>();
         recycler.setAdapter(defaultAdapter);
@@ -324,6 +335,20 @@ public class DropDownMenu<Type> extends PopupWindow {
             recycler.setAdapter(newAdapter);
         defaultAdapter = newAdapter;
         newAdapter.setOnItemClickedListener(onItemClickedListener);
+    }
+
+    public void setCustomItem(Type item) {
+        if (getAdapter().getItems().get(0) == customItem) {
+            getAdapter().getItems().remove(0);
+            getAdapter().notifyItemRemoved(0);
+        }
+        if (getAdapter().getItems().contains(item))
+            return;
+        customItem = item;
+        if (item != null) {
+            getAdapter().getItems().add(0, customItem);
+            getAdapter().notifyItemInserted(0);
+        }
     }
 
     public void setItems(List<Type> items) {
