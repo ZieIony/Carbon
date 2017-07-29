@@ -1032,14 +1032,14 @@ public class TextView extends android.widget.TextView
         if (tint != null && tintMode != null) {
             for (Drawable d : drawables) {
                 if (d != null) {
-                    DrawableCompat.setTintList(d, tint);
-                    DrawableCompat.setTintMode(d, tintMode);
+                    Carbon.setTintList(d, tint);
+                    Carbon.setTintMode(d, tintMode);
                 }
             }
         } else {
             for (Drawable d : drawables) {
                 if (d != null)
-                    DrawableCompat.setTintList(d, null);
+                    Carbon.setTintList(d, null);
             }
         }
     }

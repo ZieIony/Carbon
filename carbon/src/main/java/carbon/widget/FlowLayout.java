@@ -25,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;

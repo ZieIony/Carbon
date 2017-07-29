@@ -22,6 +22,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;

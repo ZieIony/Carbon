@@ -1247,14 +1247,14 @@ public class EditText extends android.widget.EditText
         if (tint != null && tintMode != null) {
             for (Drawable d : drawables) {
                 if (d != null) {
-                    DrawableCompat.setTintList(d, tint);
-                    DrawableCompat.setTintMode(d, tintMode);
+                    Carbon.setTintList(d, tint);
+                    Carbon.setTintMode(d, tintMode);
                 }
             }
         } else {
             for (Drawable d : drawables) {
                 if (d != null)
-                    DrawableCompat.setTintList(d, null);
+                    Carbon.setTintList(d, null);
             }
         }
     }
@@ -1296,8 +1296,8 @@ public class EditText extends android.widget.EditText
         if (background == null)
             return;
 
-        DrawableCompat.setTintList(background, backgroundTint);
-        DrawableCompat.setTintMode(background, backgroundTintMode);
+        Carbon.setTintList(background, backgroundTint);
+        Carbon.setTintMode(background, backgroundTintMode);
     }
 
     @Override

@@ -6,12 +6,13 @@ import android.graphics.ColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.view.View;
 
 import carbon.Carbon;
 import carbon.drawable.AlphaDrawable;
 
-public interface RippleDrawable extends AlphaDrawable {
+public interface RippleDrawable extends AlphaDrawable, TintAwareDrawable {
 
     Drawable getBackground();
 

@@ -817,8 +817,8 @@ public class ImageView extends android.widget.ImageView
         if (drawable == null)
             return;
 
-        DrawableCompat.setTintList(drawable, tint);
-        DrawableCompat.setTintMode(drawable, tintMode);
+        Carbon.setTintList(drawable, tint);
+        Carbon.setTintMode(drawable, tintMode);
     }
 
     @Override
@@ -858,8 +858,8 @@ public class ImageView extends android.widget.ImageView
         if (background == null)
             return;
 
-        DrawableCompat.setTintList(background, backgroundTint);
-        DrawableCompat.setTintMode(background, backgroundTintMode);
+        Carbon.setTintList(background, backgroundTint);
+        Carbon.setTintMode(background, backgroundTintMode);
     }
 
     @Override
