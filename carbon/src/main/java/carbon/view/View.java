@@ -747,9 +747,14 @@ public abstract class View extends android.view.View
         ViewCompat.postInvalidateOnAnimation(this);
     };
 
-    @Override
+    @Deprecated
     public void setTint(ColorStateList list) {
-        this.tint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        setTintList(list);
+    }
+
+    @Override
+    public void setTintList(ColorStateList list) {
+        this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
 
@@ -777,8 +782,13 @@ public abstract class View extends android.view.View
         return tintMode;
     }
 
-    @Override
+    @Deprecated
     public void setBackgroundTint(ColorStateList list) {
+        setBackgroundTintList(list);
+    }
+
+    @Override
+    public void setBackgroundTintList(ColorStateList list) {
         this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }

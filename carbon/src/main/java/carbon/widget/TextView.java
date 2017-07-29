@@ -23,6 +23,7 @@ import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.DynamicLayout;
 import android.text.Layout;
@@ -1005,8 +1006,13 @@ public class TextView extends android.widget.TextView
     };
     ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = animation -> setHintTextColor(getHintTextColors());
 
-    @Override
+    @Deprecated
     public void setTint(ColorStateList list) {
+        setTintList(list);
+    }
+
+    @Override
+    public void setTintList(ColorStateList list) {
         this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
@@ -1026,14 +1032,14 @@ public class TextView extends android.widget.TextView
         if (tint != null && tintMode != null) {
             for (Drawable d : drawables) {
                 if (d != null) {
-                    Carbon.setTintList(d, tint);
-                    Carbon.setTintMode(d, tintMode);
+                    DrawableCompat.setTintList(d, tint);
+                    DrawableCompat.setTintMode(d, tintMode);
                 }
             }
         } else {
             for (Drawable d : drawables) {
                 if (d != null)
-                    Carbon.setTintList(d, null);
+                    DrawableCompat.setTintList(d, null);
             }
         }
     }
@@ -1049,8 +1055,13 @@ public class TextView extends android.widget.TextView
         return tintMode;
     }
 
-    @Override
+    @Deprecated
     public void setBackgroundTint(ColorStateList list) {
+        setBackgroundTintList(list);
+    }
+
+    @Override
+    public void setBackgroundTintList(ColorStateList list) {
         this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }

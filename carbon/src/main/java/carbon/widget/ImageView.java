@@ -791,8 +791,13 @@ public class ImageView extends android.widget.ImageView
         ViewCompat.postInvalidateOnAnimation(this);
     };
 
-    @Override
+    @Deprecated
     public void setTint(ColorStateList list) {
+        setTintList(list);
+    }
+
+    @Override
+    public void setTintList(ColorStateList list) {
         this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
@@ -827,8 +832,13 @@ public class ImageView extends android.widget.ImageView
         return tintMode;
     }
 
-    @Override
+    @Deprecated
     public void setBackgroundTint(ColorStateList list) {
+        setBackgroundTintList(list);
+    }
+
+    @Override
+    public void setBackgroundTintList(ColorStateList list) {
         this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
@@ -848,7 +858,7 @@ public class ImageView extends android.widget.ImageView
         if (background == null)
             return;
 
-        DrawableCompat.setTintList(background, tint);
+        DrawableCompat.setTintList(background, backgroundTint);
         DrawableCompat.setTintMode(background, backgroundTintMode);
     }
 

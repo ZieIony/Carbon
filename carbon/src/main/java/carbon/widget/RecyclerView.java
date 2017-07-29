@@ -1027,8 +1027,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         ViewCompat.postInvalidateOnAnimation(this);
     };
 
-    @Override
+    @Deprecated
     public void setTint(ColorStateList list) {
+        setTintList(list);
+    }
+
+    @Override
+    public void setTintList(ColorStateList list) {
         this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
         updateTint();
     }
@@ -1068,8 +1073,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         return tintMode;
     }
 
-    @Override
+    @Deprecated
     public void setBackgroundTint(ColorStateList list) {
+        setBackgroundTintList(list);
+    }
+
+    @Override
+    public void setBackgroundTintList(ColorStateList list) {
         this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }

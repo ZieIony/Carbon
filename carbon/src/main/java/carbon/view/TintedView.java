@@ -22,7 +22,7 @@ public interface TintedView {
      *
      * @param list a tint color state list
      */
-    void setTint(ColorStateList list);
+    void setTintList(ColorStateList list);
 
     /**
      * Sets the tint of foreground parts like checkbox or icon
@@ -57,7 +57,7 @@ public interface TintedView {
      *
      * @param list a tint color state list
      */
-    void setBackgroundTint(ColorStateList list);
+    void setBackgroundTintList(ColorStateList list);
 
     /**
      * Sets the tint of background Drawable

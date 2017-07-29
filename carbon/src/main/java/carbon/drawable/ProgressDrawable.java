@@ -97,8 +97,14 @@ public abstract class ProgressDrawable extends Drawable {
         this.barPadding = barPadding;
     }
 
+    @Deprecated
     public void setTint(ColorStateList list) {
-        tint = list;
+        setTintList(list);
+    }
+
+    @Override
+    public void setTintList(ColorStateList list) {
+        this.tint = list;
         updateTint();
     }
 
