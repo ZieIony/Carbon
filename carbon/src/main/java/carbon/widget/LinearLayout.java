@@ -322,14 +322,10 @@ public class LinearLayout extends android.widget.LinearLayout
     }
 
     @Override
-    public boolean gatherTransparentRegion(Region region) {
-        getViews();
-        return super.gatherTransparentRegion(region);
-    }
-
-    @Override
     protected int getChildDrawingOrder(int childCount, int child) {
-        return views.size() > child ? indexOfChild(views.get(child)) : child;
+        if (views.size() != childCount)
+            getViews();
+        return indexOfChild(views.get(child));
     }
 
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {

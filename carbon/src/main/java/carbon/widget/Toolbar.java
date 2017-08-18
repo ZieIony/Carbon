@@ -28,7 +28,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -141,7 +140,8 @@ public class Toolbar extends android.support.v7.widget.Toolbar
         setTitle(a.getString(R.styleable.Toolbar_android_text));
         int iconRes = a.getResourceId(R.styleable.Toolbar_carbon_icon, 0);
         if (iconRes != 0) {
-            setIcon(iconRes);
+            if (!isInEditMode())
+                setIcon(iconRes);
         } else {
             setIconVisible(false);
         }
@@ -365,14 +365,10 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     }
 
     @Override
-    public boolean gatherTransparentRegion(Region region) {
-        getViews();
-        return super.gatherTransparentRegion(region);
-    }
-
-    @Override
     protected int getChildDrawingOrder(int childCount, int child) {
-        return views.size() > child ? indexOfChild(views.get(child)) : child;
+        if (views.size() != childCount)
+            getViews();
+        return indexOfChild(views.get(child));
     }
 
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {
@@ -792,6 +788,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {

@@ -19,11 +19,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -307,14 +305,10 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     }
 
     @Override
-    public boolean gatherTransparentRegion(Region region) {
-        getViews();
-        return super.gatherTransparentRegion(region);
-    }
-
-    @Override
     protected int getChildDrawingOrder(int childCount, int child) {
-        return views.size() > child ? indexOfChild(views.get(child)) : child;
+        if (views.size() != childCount)
+            getViews();
+        return indexOfChild(views.get(child));
     }
 
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {

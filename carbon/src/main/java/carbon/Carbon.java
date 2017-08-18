@@ -77,13 +77,17 @@ public class Carbon {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 1, context.getResources().getDisplayMetrics());
     }
 
-    public static ColorStateList getDefaultColorStateList(Context context, TypedArray a, int id) {
+    public static ColorStateList getDefaultColorStateList(View view, TypedArray a, int id) {
         if (!a.hasValue(id))
             return null;
         TypedValue value = new TypedValue();
         a.getValue(id, value);
         if (value.data != 0x12345678)
             return null;
+
+        Context context = view.getContext();
+        if (view.isInEditMode())
+            return context.getResources().getColorStateList(R.drawable.carbon_defaultcolorstatelist);
 
         if (value.resourceId == R.color.carbon_defaultColor) {
             return new DefaultColorStateList(context);
@@ -130,13 +134,13 @@ public class Carbon {
     }
 
     public static void initDefaultBackground(View view, TypedArray a, int id) {
-        ColorStateList color = getDefaultColorStateList(view.getContext(), a, id);
+        ColorStateList color = getDefaultColorStateList(view, a, id);
         if (color != null)
             view.setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate())));
     }
 
     public static void initDefaultTextColor(TextView view, TypedArray a, int id) {
-        ColorStateList color = getDefaultColorStateList(view.getContext(), a, id);
+        ColorStateList color = getDefaultColorStateList(view, a, id);
         if (color != null)
             view.setTextColor(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate()));
     }
@@ -151,8 +155,7 @@ public class Carbon {
         if (view.isInEditMode())
             return;
 
-        Context context = ((View) rippleView).getContext();
-        ColorStateList color = getDefaultColorStateList(context, a, carbon_rippleColor);
+        ColorStateList color = getDefaultColorStateList(view, a, carbon_rippleColor);
         if (color == null)
             color = a.getColorStateList(carbon_rippleColor);
 
@@ -216,8 +219,7 @@ public class Carbon {
         int carbon_animateColorChanges = ids[4];
 
         if (a.hasValue(carbon_tint)) {
-            Context context = ((View) view).getContext();
-            ColorStateList color = getDefaultColorStateList(context, a, carbon_tint);
+            ColorStateList color = getDefaultColorStateList((View) view, a, carbon_tint);
             if (color == null)
                 color = a.getColorStateList(carbon_tint);
             if (color != null)
@@ -226,8 +228,7 @@ public class Carbon {
         view.setTintMode(TintedView.modes[a.getInt(carbon_tintMode, 1)]);
 
         if (a.hasValue(carbon_backgroundTint)) {
-            Context context = ((View) view).getContext();
-            ColorStateList color = getDefaultColorStateList(context, a, carbon_backgroundTint);
+            ColorStateList color = getDefaultColorStateList((View) view, a, carbon_backgroundTint);
             if (color == null)
                 color = a.getColorStateList(carbon_backgroundTint);
             if (color != null)
@@ -240,6 +241,9 @@ public class Carbon {
     }
 
     public static void initAnimations(AnimatedView view, TypedArray a, int[] ids) {
+        if (((View) view).isInEditMode())
+            return;
+
         int carbon_inAnimation = ids[0];
         if (a.hasValue(carbon_inAnimation)) {
             TypedValue typedValue = new TypedValue();
@@ -336,7 +340,7 @@ public class Carbon {
         int carbon_strokeWidth = ids[1];
 
         View view = (View) strokeView;
-        ColorStateList color = getDefaultColorStateList(view.getContext(), a, carbon_stroke);
+        ColorStateList color = getDefaultColorStateList(view, a, carbon_stroke);
         if (color == null)
             color = a.getColorStateList(carbon_stroke);
 
