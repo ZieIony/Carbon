@@ -115,7 +115,7 @@ public class ColorsActivity extends SamplesActivity {
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-            binding.primary.setSelectedIndex(preferences.getInt(PRIMARY, 0));
+            binding.primary.setSelectedIndex(preferences.getInt(PRIMARY, 8));
             Item item = primary[preferences.getInt(PRIMARY, 8)];
             binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }
@@ -128,7 +128,7 @@ public class ColorsActivity extends SamplesActivity {
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-            binding.accent.setSelectedIndex(preferences.getInt(ACCENT, 0));
+            binding.accent.setSelectedIndex(preferences.getInt(ACCENT, 14));
             Item item = accents[preferences.getInt(ACCENT, 14)];
             binding.accentbg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }

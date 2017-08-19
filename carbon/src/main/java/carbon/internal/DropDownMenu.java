@@ -342,7 +342,7 @@ public class DropDownMenu<Type> extends PopupWindow {
             getAdapter().getItems().remove(0);
             getAdapter().notifyItemRemoved(0);
         }
-        if (getAdapter().getItems().contains(item))
+        if (getAdapter().getItems().contains(item) || style != DropDown.Style.Editable)
             return;
         customItem = item;
         if (item != null) {
