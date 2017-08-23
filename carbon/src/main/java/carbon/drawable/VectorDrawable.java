@@ -96,6 +96,11 @@ public class VectorDrawable extends Drawable implements AlphaDrawable, TintAware
     }
 
     @Override
+    public boolean isStateful() {
+        return true;
+    }
+
+    @Override
     public boolean setState(@NonNull int[] stateSet) {
         boolean result = super.setState(stateSet);
         updateTint();
