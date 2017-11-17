@@ -13,8 +13,6 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="?attr/carbon_dividerColor"
-        android:dividerHeight="1dp"
         app:carbon_headerMinHeight="@dimen/carbon_toolbarHeight"
         app:carbon_headerParallax="0.5"
         app:carbon_headerTint="?attr/colorPrimary"

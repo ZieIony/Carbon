@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 ext {
-    supportLibVersion = '26.0.1'
+    supportLibVersion = '26.1.0'
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.0'
+    buildToolsVersion '26.0.2'
 
     dataBinding {
         enabled = true
@@ -37,7 +39,7 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'com.android.databinding:compiler:3.0.0-beta2'
+    annotationProcessor 'com.android.databinding:compiler:3.0.0'
     implementation project(':carbon')
     implementation project(':rxcarbon')
     implementation 'com.squareup.picasso:picasso:2.5.2'
@@ -50,4 +52,5 @@ dependencies {
     implementation 'com.github.ZieIony:randomdata:05c14279e1'
     implementation 'com.github.ZieIony.RandomData:person:05c14279e1'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }

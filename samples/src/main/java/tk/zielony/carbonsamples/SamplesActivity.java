@@ -11,6 +11,14 @@ public abstract class SamplesActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         applyTheme();
         super.onCreate(savedInstanceState);
+
+        ActivityAnnotation annotation = getClass().getAnnotation(ActivityAnnotation.class);
+        if (annotation != null) {
+            if (annotation.layout() != 0)
+                setContentView(annotation.layout());
+            if (annotation.title() != 0)
+                Samples.initToolbar(this, getString(annotation.title()));
+        }
     }
 
     public void applyTheme() {

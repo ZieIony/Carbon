@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 // apply from: 'maven-push.gradle'
 
 ext {
-    supportLibVersion = '26.0.1'
+    supportLibVersion = '26.1.0'
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.0'
+    buildToolsVersion '26.0.2'
 
     dataBinding {
         enabled = true
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'com.android.databinding:compiler:3.0.0-beta2'
+    annotationProcessor 'com.android.databinding:compiler:3.0.0'
     compile("com.android.support:appcompat-v7:$supportLibVersion") {
         force = true
     }

@@ -29,11 +29,17 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         if (drawable == null)
             return;
         int position = parent.getChildAdapterPosition(view);
-        if (position == parent.getAdapter().getItemCount() - 1)
+        if (position == -1)
             return;
 
-        if (position > 0 && drawAfterRules != null && drawAfterRules.draw(position - 1) ||
-                drawBeforeRules != null && drawBeforeRules.draw(position)) {
+        if (drawAfterRules != null && drawAfterRules.draw(position)) {
+            if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
+                outRect.bottom = height;
+            } else {
+                outRect.right = height;
+            }
+        }
+        if (drawBeforeRules != null && drawBeforeRules.draw(position) || drawAfterRules == null && drawBeforeRules == null && position > 0) {
             if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
                 outRect.top = height;
             } else {
@@ -62,10 +68,28 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             bottom = parent.getHeight() - parent.getPaddingBottom();
         }
 
-        for (int i = 0; i < childCount - 1; i++) {
+        for (int i = 0; i < childCount; i++) {
             int position = parent.getChildAdapterPosition(parent.getChildAt(i));
-            if (position > 0 && drawAfterRules != null && drawAfterRules.draw(position - 1) ||
-                    drawBeforeRules != null && drawBeforeRules.draw(position)) {
+            if (position == -1)
+                continue;
+            if (drawAfterRules != null && drawAfterRules.draw(position)) {
+                View child = parent.getChildAt(i);
+
+                if (orientation == LinearLayoutManager.VERTICAL) {
+                    top = (int) (child.getBottom() + child.getTranslationY());
+                    bottom = top + height;
+                } else { //horizontal
+                    left = (int) (child.getRight() + child.getTranslationX());
+                    right = left + height;
+                }
+                c.save(Canvas.CLIP_SAVE_FLAG);
+                c.clipRect(left, top, right, bottom);
+                drawable.setAlpha((int) (child.getAlpha() * 255));
+                drawable.setBounds(left, top, right, bottom);
+                drawable.draw(c);
+                c.restore();
+            }
+            if (drawBeforeRules != null && drawBeforeRules.draw(position) || drawAfterRules == null && drawBeforeRules == null && position > 0) {
                 View child = parent.getChildAt(i);
 
                 if (orientation == LinearLayoutManager.VERTICAL) {
