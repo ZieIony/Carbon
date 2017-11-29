@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 // apply from: 'maven-push.gradle'
 
 ext {
-    supportLibVersion = '26.1.0'
+    supportLibVersion = '27.0.1'
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '26.0.2'
 
     dataBinding {
@@ -14,7 +14,7 @@ android {
     }
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 44
         versionName "0.15.0.1"
         renderscriptTargetApi 20
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'com.android.databinding:compiler:3.0.0'
+    annotationProcessor 'com.android.databinding:compiler:3.0.1'
     compile("com.android.support:appcompat-v7:$supportLibVersion") {
         force = true
     }

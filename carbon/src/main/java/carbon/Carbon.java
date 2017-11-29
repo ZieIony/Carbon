@@ -14,6 +14,7 @@ import android.os.Build;
 import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.text.Html;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuInflater;
 import android.view.View;
@@ -416,14 +417,16 @@ public class Carbon {
             ((TintAwareDrawable) drawable).setTintMode(mode);
     }
 
-    public static void throwReflectionError() {
-        StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[1];
-        throw new RuntimeException("This feature is implemented using reflection. " +
+    public static void logReflectionError(Exception e) {
+        StackTraceElement cause = e.getStackTrace()[0];
+        StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
+        Log.e("Carbon", "This feature is implemented using reflection. " +
                 "If you see this exception, something in your setup is not standard. " +
                 "Please create an issue on https://github.com/ZieIony/Carbon/issues. " +
                 "Please provide at least the following information: \n" +
                 " - device: " + Build.MANUFACTURER + " " + Build.MODEL + ", API " + Build.VERSION.SDK_INT + "\n" +
-                " - method: " + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "(...)\n");
+                " - method: " + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "(...)\n" +
+                " - cause: " + e.getClass().getName() + ": " + e.getMessage() + " at " + cause.getMethodName() + "(" + cause.getFileName() + ":" + cause.getLineNumber() + ")\n", e);
     }
 
 }

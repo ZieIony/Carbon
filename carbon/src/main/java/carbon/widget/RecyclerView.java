@@ -140,7 +140,9 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     }
 
     public void setDivider(Drawable divider, int height) {
-        addItemDecoration(new DividerItemDecoration(divider, height));
+        DividerItemDecoration decoration = new DividerItemDecoration(divider, height);
+        decoration.setDrawBefore(position -> position > 0);
+        addItemDecoration(decoration);
     }
 
     @Override

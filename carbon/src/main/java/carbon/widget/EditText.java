@@ -24,7 +24,6 @@ import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.Layout;
@@ -68,6 +67,7 @@ import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InputView;
 import carbon.view.RevealView;
+import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
@@ -75,7 +75,7 @@ import carbon.view.VisibleView;
 
 @SuppressLint("AppCompatCustomView")
 public class EditText extends android.widget.EditText
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, InputView, AutoSizeTextView, RevealView, VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, TintedView, RoundedCornersView, InputView, AutoSizeTextView, RevealView, VisibleView {
 
     private Field mIgnoreActionUpEventField;
     private Object editor;
@@ -304,7 +304,7 @@ public class EditText extends android.widget.EditText
             drawable2.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.MULTIPLY));
             mCursorDrawable[1] = drawable2;
         } catch (Exception e) {
-            Carbon.throwReflectionError();
+            Carbon.logReflectionError(e);
         }
     }
 

@@ -8,7 +8,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -23,7 +25,6 @@ import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.DynamicLayout;
 import android.text.Layout;
@@ -62,6 +63,7 @@ import carbon.view.AutoSizeTextView;
 import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
+import carbon.view.StrokeView;
 import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
 import carbon.view.ValidStateView;
@@ -102,7 +104,7 @@ import carbon.view.VisibleView;
  */
 @SuppressLint("AppCompatCustomView")
 public class TextView extends android.widget.TextView
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
+        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
 
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -161,6 +163,10 @@ public class TextView extends android.widget.TextView
             R.styleable.TextView_carbon_backgroundTintMode,
             R.styleable.TextView_carbon_animateColorChanges
     };
+    private static int[] strokeIds = new int[]{
+            R.styleable.TextView_carbon_stroke,
+            R.styleable.TextView_carbon_strokeWidth
+    };
     private static int[] elevationIds = new int[]{
             R.styleable.TextView_carbon_elevation,
             R.styleable.TextView_carbon_elevationShadowColor
@@ -218,6 +224,7 @@ public class TextView extends android.widget.TextView
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initHtmlText(this, a, R.styleable.TextView_carbon_htmlText);
+        Carbon.initStroke(this, a, strokeIds);
         setCornerRadius(a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
         Carbon.initAutoSizeText(this, a, autoSizeTextIds);
 
@@ -506,14 +513,38 @@ public class TextView extends android.widget.TextView
         }
     }
 
+    public void drawInternal(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
+    @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
-        if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
+        if (isInEditMode() && cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
+            Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas layerCanvas = new Canvas(layer);
+            drawInternal(layerCanvas);
+
+            Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas maskCanvas = new Canvas(mask);
+            Paint maskPaint = new Paint(0xffffffff);
+            maskCanvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, maskPaint);
+
+            for (int x = 0; x < getWidth(); x++) {
+                for (int y = 0; y < getHeight(); y++) {
+                    int maskPixel = mask.getPixel(x, y);
+                    layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
+                }
+            }
+            canvas.drawBitmap(layer, 0, 0, paint);
+        } else if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
-            super.draw(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
+            drawInternal(canvas);
 
             paint.setXfermode(Carbon.CLEAR_MODE);
             canvas.drawPath(cornersMask, paint);
@@ -521,9 +552,7 @@ public class TextView extends android.widget.TextView
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
         } else {
-            super.draw(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
+            drawInternal(canvas);
         }
     }
 
@@ -1110,6 +1139,57 @@ public class TextView extends android.widget.TextView
             setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
         if (!(getTextColors() instanceof AnimatedColorStateList))
             setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
+    }
+
+
+    // -------------------------------
+    // stroke
+    // -------------------------------
+
+    private ColorStateList stroke;
+    private float strokeWidth;
+    private Paint strokePaint;
+    private RectF strokeRect;
+
+    private void drawStroke(Canvas canvas) {
+        strokePaint.setStrokeWidth(strokeWidth * 2);
+        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
+        strokeRect.set(0, 0, getWidth(), getHeight());
+        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+    }
+
+    @Override
+    public void setStroke(ColorStateList colorStateList) {
+        stroke = colorStateList;
+
+        if (stroke == null)
+            return;
+
+        if (strokePaint == null) {
+            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            strokePaint.setStyle(Paint.Style.STROKE);
+            strokeRect = new RectF();
+        }
+    }
+
+    @Override
+    public void setStroke(int color) {
+        setStroke(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public float getStrokeWidth() {
+        return strokeWidth;
     }
 
 
