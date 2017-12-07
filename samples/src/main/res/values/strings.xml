@@ -18,7 +18,6 @@
     <string name="expansionPanelActivity_title">ExpansionPanel</string>
     <string name="recyclerViewActivity_title">RecyclerView</string>
     <string name="scrollViewActivity_title">ScrollView</string>
-    <string name="recentsActivity_title">Recents</string>
     <string name="tabsActivity_title">Tabs</string>
     <string name="textFieldsActivity_title">Text fields</string>
     <string name="autoSizeTextActivity_title">Auto size text</string>
@@ -44,6 +43,7 @@
     <string name="shadowActivity_title">Shadow</string>
     <string name="largeShadowActivity_title">Large shadow</string>
     <string name="textappearanceActivity_title">Text appearance</string>
+    <string name="paginationActivity_title">Pagination</string>
     <string name="zOrderActivity_title">Z order</string>
     <string name="roundedCornersActivity_title">Rounded corners</string>
     <string name="anchorsActivity_title">Anchors</string>

@@ -5,6 +5,8 @@ import android.view.View;
 
 import com.annimon.stream.Stream;
 
+import java.util.Random;
+
 import carbon.widget.Chip;
 import carbon.widget.FlowLayout;
 import tk.zielony.carbonsamples.R;
@@ -27,13 +29,15 @@ public class FlowLayoutActivity extends SamplesActivity {
         DrawableAvatarGenerator avatarGenerator = new DrawableAvatarGenerator(this);
         StringFirstNameGenerator nameGenerator = new StringFirstNameGenerator(Gender.Both, false, false);
 
+        Random random = new Random();
         FlowLayout layout = findViewById(R.id.flowLayout);
         Stream.of(layout.getViews()).filter(v -> v instanceof Chip).forEach(v -> {
             final Chip chip = (Chip) v;
             DataContext dataContext = new DataContext();
             chip.setText(nameGenerator.next(dataContext));
-            chip.setIcon(avatarGenerator.next(dataContext));
-            chip.setRemovable(true);
+            if (random.nextBoolean())
+                chip.setIcon(avatarGenerator.next(dataContext));
+            chip.setRemovable(random.nextBoolean());
             chip.setOnRemoveListener(() -> {
                 chip.setVisibility(View.GONE);
             });

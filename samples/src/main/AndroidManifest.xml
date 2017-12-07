@@ -63,6 +63,7 @@
         <activity android:name=".feature.AnchorActivity"/>
         <activity android:name=".feature.ShadowActivity"/>
         <activity android:name=".feature.LargeShadowActivity"/>
+        <activity android:name=".feature.PaginationActivity"/>
         <activity android:name=".feature.RobotoActivity"/>
         <activity android:name=".feature.TextAppearanceActivity"/>
         <activity android:name=".feature.ZOrderActivity"/>

@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="Object"/>
+            type="String"/>
 
     </data>
 
@@ -17,16 +17,6 @@
         android:clickable="true"
         android:focusable="true"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
-
-        <carbon.widget.CheckBox
-            android:id="@+id/carbon_checkBox"
-            android:layout_width="@dimen/carbon_iconSize"
-            android:layout_height="@dimen/carbon_iconSize"
-            android:layout_marginLeft="@dimen/carbon_dialogPadding"
-            android:layout_marginStart="@dimen/carbon_dialogPadding"
-            android:layout_marginTop="@dimen/carbon_toolbarItemPadding"
-            android:paddingLeft="@null"
-            android:paddingStart="@null"/>
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
@@ -42,10 +32,10 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/carbon_marker"
             android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:layout_marginStart="@dimen/carbon_contentPadding"
-            android:text="@{String.valueOf(data)}"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
+            android:text="@{data}"
             android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
 
     </carbon.widget.RelativeLayout>

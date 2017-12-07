@@ -21,6 +21,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -276,6 +277,40 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             }
             prevScroll = t;
         }
+    }
+
+    public static abstract class Pagination extends OnScrollListener {
+        private LinearLayoutManager layoutManager;
+
+        public Pagination(LinearLayoutManager layoutManager) {
+            this.layoutManager = layoutManager;
+        }
+
+        @Override
+        public void onScrolled(android.support.v7.widget.RecyclerView recyclerView, int dx, int dy) {
+            int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+            if (!isLoading() && !isLastPage()) {
+                if (layoutManager.getChildCount() + firstVisibleItemPosition >= layoutManager.getItemCount())
+                    loadNextPage();
+            }
+        }
+
+        protected abstract boolean isLoading();
+
+        protected abstract boolean isLastPage();
+
+        protected abstract void loadNextPage();
+    }
+
+    Pagination pagination;
+
+    public void setPagination(Pagination pagination) {
+        if (this.pagination != null)
+            removeOnScrollListener(this.pagination);
+        this.pagination = pagination;
+        if (pagination != null)
+            addOnScrollListener(pagination);
     }
 
     public void setEdgeEffectOffsetTop(float edgeEffectOffsetTop) {

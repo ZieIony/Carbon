@@ -24,7 +24,7 @@ public class RecyclerActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler);
 
-        Samples.initToolbar(this, getString(R.string.recentsActivity_title));
+        Samples.initToolbar(this, getString(R.string.recyclerViewActivity_title));
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

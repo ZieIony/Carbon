@@ -10,6 +10,7 @@ import tk.zielony.carbonsamples.feature.AutoSizeTextActivity;
 import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
 import tk.zielony.carbonsamples.feature.HtmlActivity;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
+import tk.zielony.carbonsamples.feature.PaginationActivity;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
 import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
 import tk.zielony.carbonsamples.feature.BehaviorActivity;
@@ -39,6 +40,7 @@ public class FeaturesActivity extends SampleListActivity {
                 new SampleActivityItem(RobotoActivity.class, getString(R.string.robotoActivity_title)),
                 new SampleActivityItem(ShadowActivity.class, getString(R.string.shadowActivity_title)),
                 new SampleActivityItem(LargeShadowActivity.class, getString(R.string.largeShadowActivity_title)),
+                new SampleActivityItem(PaginationActivity.class, getString(R.string.paginationActivity_title)),
                 new SampleActivityItem(TextAppearanceActivity.class, getString(R.string.textappearanceActivity_title)),
                 new SampleActivityItem(SVGActivity.class, getString(R.string.svgActivity_title)),
                 new SampleActivityItem(ZOrderActivity.class, getString(R.string.zOrderActivity_title)),

@@ -15,6 +15,7 @@
         android:layout_height="56dp"
         android:background="?attr/carbon_colorForeground"
         android:clickable="true"
+        android:focusable="true"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
         <carbon.widget.ImageView

@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 ext {
-    supportLibVersion = '27.0.1'
+    supportLibVersion = '27.0.2'
 }
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.0'
 
     dataBinding {
         enabled = true
@@ -43,7 +43,7 @@ dependencies {
     implementation project(':carbon')
     implementation project(':rxcarbon')
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.annimon:stream:1.1.8'
+    implementation 'com.annimon:stream:1.1.9'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"

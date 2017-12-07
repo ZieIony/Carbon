@@ -15,17 +15,18 @@
         android:layout_height="@dimen/carbon_listItemHeight"
         android:background="?attr/carbon_colorForeground"
         android:clickable="true"
+        android:focusable="true"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
         <carbon.widget.RadioButton
             android:id="@+id/carbon_radioButton"
             android:layout_width="@dimen/carbon_iconSize"
             android:layout_height="@dimen/carbon_iconSize"
-            android:paddingLeft="@null"
-            android:paddingStart="@null"
             android:layout_marginLeft="@dimen/carbon_dialogPadding"
             android:layout_marginStart="@dimen/carbon_dialogPadding"
-            android:layout_marginTop="@dimen/carbon_toolbarItemPadding"/>
+            android:layout_marginTop="@dimen/carbon_toolbarItemPadding"
+            android:paddingLeft="@null"
+            android:paddingStart="@null"/>
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
