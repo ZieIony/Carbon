@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import carbon.dialog.MultiSelectDialog;
 import carbon.internal.DebugOverlay;
 import carbon.widget.CheckBox;
 import carbon.widget.ImageView;
@@ -30,26 +31,61 @@ public class Samples {
     }
 
     public static void initToolbar(final Activity activity, String title, boolean showBack) {
-        final DebugOverlay overlay = new DebugOverlay(activity);
-
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setTitle(title);
         toolbar.setIconVisible(showBack);
+
+        final DebugOverlay overlay = new DebugOverlay(activity);
+        overlay.setDrawBoundsEnabled(false);
+        overlay.setDrawGridEnabled(false);
+        overlay.setDrawHitRectsEnabled(false);
+        overlay.setDrawMarginsEnabled(false);
+        overlay.setDrawPaddingsEnabled(false);
+        overlay.setDrawRulersEnabled(false);
 
         final ImageView debug = activity.findViewById(R.id.debug);
         if (debug != null) {
             debug.setOnClickListener(new View.OnClickListener() {
                 boolean debugEnabled = false;
+                String[] debugOptions = new String[]{"rulers", "margins", "paddings", "grid", "bounds", "hit rects"};
 
                 @Override
                 public void onClick(View view) {
-                    if (!debugEnabled) {
-                        overlay.show();
-                        debugEnabled = true;
-                    } else {
-                        overlay.dismiss();
-                        debugEnabled = false;
-                    }
+                    MultiSelectDialog<String> listDialog = new MultiSelectDialog<>(activity);
+                    listDialog.setItems(debugOptions);
+                    listDialog.setTitle("Debug options");
+                    List<String> initialItems = new ArrayList<>();
+                    if (overlay.isDrawBoundsEnabled())
+                        initialItems.add("bounds");
+                    if (overlay.isDrawGridEnabled())
+                        initialItems.add("grid");
+                    if (overlay.isDrawHitRectsEnabled())
+                        initialItems.add("hit rects");
+                    if (overlay.isDrawMarginsEnabled())
+                        initialItems.add("margins");
+                    if (overlay.isDrawPaddingsEnabled())
+                        initialItems.add("paddings");
+                    if (overlay.isDrawRulersEnabled())
+                        initialItems.add("rulers");
+                    listDialog.setSelectedItems(initialItems);
+                    listDialog.show();
+                    listDialog.setOnDismissListener(dialogInterface -> {
+                        List<String> selectedItems = listDialog.getSelectedItems();
+                        overlay.setDrawBoundsEnabled(selectedItems.contains("bounds"));
+                        overlay.setDrawGridEnabled(selectedItems.contains("grid"));
+                        overlay.setDrawHitRectsEnabled(selectedItems.contains("hit rects"));
+                        overlay.setDrawMarginsEnabled(selectedItems.contains("margins"));
+                        overlay.setDrawPaddingsEnabled(selectedItems.contains("paddings"));
+                        overlay.setDrawRulersEnabled(selectedItems.contains("rulers"));
+
+                        if (!debugEnabled && !selectedItems.isEmpty()) {
+                            overlay.show();
+                            debugEnabled = true;
+                        } else if (debugEnabled && selectedItems.isEmpty()) {
+                            overlay.dismiss();
+                            debugEnabled = false;
+                        }
+                    });
                 }
             });
         }

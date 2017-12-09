@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,15 @@ import carbon.R;
 
 public class DebugOverlay extends PopupWindow {
     private boolean drawBounds = true;
-    private boolean drawGrid = true;
-    private boolean drawRulers = true;
+    private boolean drawMargins = true;
+    private boolean drawPaddings = true;
+    private boolean drawGrid = false;
+    private boolean drawRulers = false;
+    private boolean drawHitRects = true;
     private Activity context;
+    private static SparseIntArray marginColors = new SparseIntArray();
 
+    private static List<Integer> colors = new ArrayList<>();
     private ViewTreeObserver.OnPreDrawListener listener = () -> {
         getContentView().postInvalidate();
         return true;
@@ -34,6 +40,28 @@ public class DebugOverlay extends PopupWindow {
     public DebugOverlay(Activity context) {
         super(context);
         this.context = context;
+
+        if (colors.isEmpty()) {
+            colors.add(context.getResources().getColor(R.color.carbon_red_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_pink_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_purple_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_deepPurple_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_indigo_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_blue_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_lightBlue_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_cyan_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_teal_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_green_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_lightGreen_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_lime_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_yellow_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_amber_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_orange_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_deepOrange_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_brown_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_grey_400) & 0xffffff | 0x7f000000);
+            colors.add(context.getResources().getColor(R.color.carbon_blueGrey_400) & 0xffffff | 0x7f000000);
+        }
     }
 
     public void show() {
@@ -81,6 +109,30 @@ public class DebugOverlay extends PopupWindow {
         this.drawRulers = drawRulers;
     }
 
+    public boolean isDrawMarginsEnabled() {
+        return drawMargins;
+    }
+
+    public void setDrawMarginsEnabled(boolean drawMargins) {
+        this.drawMargins = drawMargins;
+    }
+
+    public boolean isDrawPaddingsEnabled() {
+        return drawPaddings;
+    }
+
+    public void setDrawPaddingsEnabled(boolean drawPaddings) {
+        this.drawPaddings = drawPaddings;
+    }
+
+    public boolean isDrawHitRectsEnabled() {
+        return drawHitRects;
+    }
+
+    public void setDrawHitRectsEnabled(boolean drawHitRects) {
+        this.drawHitRects = drawHitRects;
+    }
+
     private class DebugLayout extends View {
         private final View view;
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -124,10 +176,10 @@ public class DebugOverlay extends PopupWindow {
                 }
             }
 
-            if (drawBounds) {
-                List<View> views = findViews();
-                for (View v : views)
-                    drawView(canvas, v);
+            if (view instanceof ViewGroup) {
+                drawViewGroup(canvas, (ViewGroup) view);
+            } else {
+                drawView(canvas, view);
             }
 
             if (drawRulers) {
@@ -143,17 +195,35 @@ public class DebugOverlay extends PopupWindow {
         }
 
         private void drawView(Canvas canvas, View v) {
-            float vertLine = Math.min(step, v.getWidth() / 3);
-            float horzLine = Math.min(step, v.getHeight() / 3);
-
             int[] l = new int[2];
             v.getLocationOnScreen(l);
 
-            v.getDrawingRect(rect);
-            v.getHitRect(rect2);
-
+            rect.set(0, 0, v.getWidth(), v.getHeight());
             rect.offset(l[0] - location[0], l[1] - location[1]);
-            rect2.offset(l[0] - location[0] - v.getLeft(), l[1] - location[1] - v.getTop());
+
+            if (drawMargins)
+                drawMargins(canvas, v);
+
+            if (drawPaddings)
+                drawPaddings(canvas, v);
+
+            if (drawBounds)
+                drawBounds(canvas, v);
+
+            if (drawHitRects) {
+                v.getHitRect(rect2);
+                rect2.offset(l[0] - location[0] - v.getLeft(), l[1] - location[1] - v.getTop());
+
+                if (!rect.equals(rect2)) {
+                    paint.setColor(0x7fff0000);
+                    canvas.drawRect(rect2, paint);
+                }
+            }
+        }
+
+        private void drawBounds(Canvas canvas, View v) {
+            float vertLine = Math.min(step, v.getWidth() / 3);
+            float horzLine = Math.min(step, v.getHeight() / 3);
 
             paint.setStyle(Paint.Style.STROKE);
             paint.setColor(0x3f00ff00);
@@ -171,31 +241,108 @@ public class DebugOverlay extends PopupWindow {
 
             canvas.drawLine(rect.right, rect.bottom, rect.right - vertLine, rect.bottom, paint);
             canvas.drawLine(rect.right, rect.bottom, rect.right, rect.bottom - horzLine, paint);
+        }
 
-            if (!rect.equals(rect2)) {
-                paint.setColor(0x7fff0000);
-                canvas.drawRect(rect2, paint);
+        private void drawPaddings(Canvas canvas, View v) {
+            paint.setStyle(Paint.Style.FILL);
+
+            if (v.getPaddingTop() > 0) {
+                paint.setColor(getColor(v.getPaddingTop()));
+                canvas.drawRect(rect.left, rect.top + v.getPaddingTop(), rect.right, rect.top, paint);
+            }
+
+            if (v.getPaddingBottom() > 0) {
+                paint.setColor(getColor(v.getPaddingBottom()));
+                canvas.drawRect(rect.left, rect.bottom, rect.right, rect.bottom - v.getPaddingBottom(), paint);
+            }
+
+            if (v.getPaddingLeft() > 0) {
+                paint.setColor(getColor(v.getPaddingLeft()));
+                canvas.drawRect(rect.left + v.getPaddingLeft(), rect.top, rect.left, rect.bottom, paint);
+            }
+
+            if (v.getPaddingRight() > 0) {
+                paint.setColor(getColor(v.getPaddingRight()));
+                canvas.drawRect(rect.right, rect.top, rect.right - v.getPaddingRight(), rect.bottom, paint);
             }
         }
 
-        private List<View> findViews() {
-            List<View> result = new ArrayList<>();
-            List<ViewGroup> groups = new ArrayList<>();
-            if (!(view instanceof ViewGroup)) {
-                result.add(view);
-                return result;
-            }
-            groups.add((ViewGroup) view);
-            while (!groups.isEmpty()) {
-                ViewGroup group = groups.remove(0);
-                for (int i = 0; i < group.getChildCount(); i++) {
-                    View child = group.getChildAt(i);
-                    result.add(child);
-                    if (child instanceof ViewGroup)
-                        groups.add((ViewGroup) child);
+        private void drawMargins(Canvas canvas, View v) {
+            paint.setStyle(Paint.Style.FILL);
+
+            ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
+            if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+                ViewGroup.MarginLayoutParams marginLp = (ViewGroup.MarginLayoutParams) layoutParams;
+
+                if (marginLp.topMargin > 0) {
+                    paint.setColor(getColor(marginLp.topMargin));
+                    canvas.drawRect(
+                            rect.left - marginLp.leftMargin,
+                            rect.top - marginLp.topMargin,
+                            rect.right + marginLp.rightMargin,
+                            rect.top,
+                            paint);
+                }
+
+                if (marginLp.bottomMargin > 0) {
+                    paint.setColor(getColor(marginLp.bottomMargin));
+                    canvas.drawRect(
+                            rect.left - marginLp.leftMargin,
+                            rect.bottom,
+                            rect.right + marginLp.rightMargin,
+                            rect.bottom + marginLp.bottomMargin,
+                            paint);
+                }
+
+                if (marginLp.leftMargin > 0) {
+                    paint.setColor(getColor(marginLp.leftMargin));
+                    canvas.drawRect(
+                            rect.left - marginLp.leftMargin,
+                            rect.top - marginLp.topMargin,
+                            rect.left,
+                            rect.bottom + marginLp.bottomMargin,
+                            paint);
+                }
+
+                if (marginLp.rightMargin > 0) {
+                    paint.setColor(getColor(marginLp.rightMargin));
+                    canvas.drawRect(
+                            rect.right,
+                            rect.top - marginLp.topMargin,
+                            rect.right + marginLp.rightMargin,
+                            rect.bottom + marginLp.bottomMargin,
+                            paint);
                 }
             }
-            return result;
         }
+
+        void drawViewGroup(Canvas canvas, ViewGroup viewGroup) {
+            drawView(canvas, viewGroup);
+            canvas.save(Canvas.CLIP_SAVE_FLAG);
+
+            int[] l = new int[2];
+            viewGroup.getLocationOnScreen(l);
+            rect.set(0, 0, viewGroup.getWidth(), viewGroup.getHeight());
+            rect.offset(l[0] - location[0], l[1] - location[1]);
+
+            canvas.clipRect(rect);
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View v = viewGroup.getChildAt(i);
+                if (v instanceof ViewGroup) {
+                    drawViewGroup(canvas, (ViewGroup) v);
+                } else {
+                    drawView(canvas, v);
+                }
+            }
+            canvas.restore();
+        }
+    }
+
+    private int getColor(int index) {
+        int color = marginColors.get(index);
+        if (color == 0)
+            color = colors.get(marginColors.size() % colors.size());
+        marginColors.put(index, color);
+        return color;
     }
 }
