@@ -139,8 +139,8 @@ public class FrameLayout extends android.widget.FrameLayout
             R.styleable.FrameLayout_carbon_insetColor
     };
     private static int[] strokeIds = new int[]{
-            R.styleable.CoordinatorLayout_carbon_stroke,
-            R.styleable.CoordinatorLayout_carbon_strokeWidth
+            R.styleable.FrameLayout_carbon_stroke,
+            R.styleable.FrameLayout_carbon_strokeWidth
     };
     private static int[] maxSizeIds = new int[]{
             R.styleable.FrameLayout_carbon_maxWidth,
@@ -773,6 +773,7 @@ public class FrameLayout extends android.widget.FrameLayout
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {
