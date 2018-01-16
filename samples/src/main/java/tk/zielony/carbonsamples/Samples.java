@@ -42,12 +42,13 @@ public class Samples {
         overlay.setDrawMarginsEnabled(false);
         overlay.setDrawPaddingsEnabled(false);
         overlay.setDrawRulersEnabled(false);
+        overlay.setDrawTextSizesEnabled(false);
 
         final ImageView debug = activity.findViewById(R.id.debug);
         if (debug != null) {
             debug.setOnClickListener(new View.OnClickListener() {
                 boolean debugEnabled = false;
-                String[] debugOptions = new String[]{"rulers", "margins", "paddings", "grid", "bounds", "hit rects"};
+                String[] debugOptions = new String[]{"bounds", "grid", "hit rects", "margins", "paddings", "rulers", "text sizes"};
 
                 @Override
                 public void onClick(View view) {
@@ -67,6 +68,8 @@ public class Samples {
                         initialItems.add("paddings");
                     if (overlay.isDrawRulersEnabled())
                         initialItems.add("rulers");
+                    if (overlay.isDrawTextSizesEnabled())
+                        initialItems.add("text sizes");
                     listDialog.setSelectedItems(initialItems);
                     listDialog.show();
                     listDialog.setOnDismissListener(dialogInterface -> {
@@ -77,6 +80,7 @@ public class Samples {
                         overlay.setDrawMarginsEnabled(selectedItems.contains("margins"));
                         overlay.setDrawPaddingsEnabled(selectedItems.contains("paddings"));
                         overlay.setDrawRulersEnabled(selectedItems.contains("rulers"));
+                        overlay.setDrawTextSizesEnabled(selectedItems.contains("text sizes"));
 
                         if (!debugEnabled && !selectedItems.isEmpty()) {
                             overlay.show();

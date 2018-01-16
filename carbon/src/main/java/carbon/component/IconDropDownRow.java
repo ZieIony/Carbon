@@ -2,12 +2,14 @@ package carbon.component;
 
 import android.view.ViewGroup;
 
+import java.io.Serializable;
+
 import carbon.R;
 import carbon.widget.DropDown;
 
-public class IconDropDownRow<Type extends IconDropDownItem> extends DataBindingComponent<Type> {
+public class IconDropDownRow<Type extends IconDropDownItem<ItemType>,ItemType extends Serializable> extends DataBindingComponent<Type> {
 
-    private DropDown<Type> dropDown;
+    private DropDown<ItemType> dropDown;
 
     public IconDropDownRow(ViewGroup parent) {
         super(parent, R.layout.carbon_row_icondropdown);
@@ -17,7 +19,7 @@ public class IconDropDownRow<Type extends IconDropDownItem> extends DataBindingC
     @Override
     public void bind(Type data) {
         super.bind(data);
-        dropDown.setItems((Type[]) data.getItems());
+        dropDown.setItems(data.getItems());
     }
 
     public DropDown getDropDown() {
@@ -28,7 +30,7 @@ public class IconDropDownRow<Type extends IconDropDownItem> extends DataBindingC
         return dropDown.getSelectedItem();
     }
 
-    public void setSelectedItem(Type item) {
+    public void setSelectedItem(ItemType item) {
         dropDown.setSelectedItem(item);
     }
 }

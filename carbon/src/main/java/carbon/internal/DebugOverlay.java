@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class DebugOverlay extends PopupWindow {
     private boolean drawGrid = false;
     private boolean drawRulers = false;
     private boolean drawHitRects = true;
+    private boolean drawTextSizes = false;
     private Activity context;
     private static SparseIntArray marginColors = new SparseIntArray();
 
@@ -133,6 +136,14 @@ public class DebugOverlay extends PopupWindow {
         this.drawHitRects = drawHitRects;
     }
 
+    public boolean isDrawTextSizesEnabled() {
+        return drawTextSizes;
+    }
+
+    public void setDrawTextSizesEnabled(boolean drawTextSizes) {
+        this.drawTextSizes = drawTextSizes;
+    }
+
     private class DebugLayout extends View {
         private final View view;
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -219,9 +230,20 @@ public class DebugOverlay extends PopupWindow {
                     canvas.drawRect(rect2, paint);
                 }
             }
+
+            if (drawTextSizes && v instanceof TextView) {
+                TextView tv = (TextView) v;
+                paint.setTextSize(12);
+                float textSize = tv.getTextSize() / getResources().getDisplayMetrics().scaledDensity;
+                paint.setColor(Color.WHITE);
+                paint.setShadowLayer(2, 0, 0, 0xff000000);
+                canvas.drawText(textSize + "sp", rect.left, rect.top + paint.getTextSize(), paint);
+            }
         }
 
         private void drawBounds(Canvas canvas, View v) {
+            paint.setStyle(Paint.Style.STROKE);
+
             float vertLine = Math.min(step, v.getWidth() / 3);
             float horzLine = Math.min(step, v.getHeight() / 3);
 

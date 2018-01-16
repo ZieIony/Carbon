@@ -49,8 +49,8 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation "com.android.support:cardview-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
-    implementation 'com.github.ZieIony:randomdata:2b5b2d0fea'
-    implementation 'com.github.ZieIony.RandomData:person:2b5b2d0fea'
+    implementation 'com.github.ZieIony:randomdata:db21077582'
+    compileOnly 'com.github.ZieIony.RandomData:person:db21077582'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
