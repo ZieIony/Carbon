@@ -31,7 +31,7 @@ import carbon.shadow.ShadowView;
  * public API, which is not desired in this case.
  */
 class ItemTouchUIUtilImpl {
-    static class Carbon implements ItemTouchUIUtil {
+    static class Carbon extends BaseImpl {
         @Override
         public void onDraw(Canvas c, RecyclerView recyclerView, View view,
                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -48,8 +48,7 @@ class ItemTouchUIUtilImpl {
                     view.setTag(R.id.item_touch_helper_previous_elevation, originalElevation);
                 }
             }
-            view.setTranslationX(dX);
-            view.setTranslationY(dY);
+            super.onDraw(c, recyclerView, view, dX, dY, actionState, isCurrentlyActive);
         }
 
         private float findMaxElevation(RecyclerView recyclerView, View itemView) {
@@ -79,20 +78,31 @@ class ItemTouchUIUtilImpl {
                 }
             }
             view.setTag(R.id.item_touch_helper_previous_elevation, null);
+            super.clearView(view);
+        }
+    }
+
+    static class BaseImpl implements ItemTouchUIUtil {
+        @Override
+        public void clearView(View view) {
             view.setTranslationX(0f);
             view.setTranslationY(0f);
         }
 
         @Override
         public void onSelected(View view) {
+        }
 
+        @Override
+        public void onDraw(Canvas c, RecyclerView recyclerView, View view,
+                           float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            view.setTranslationX(dX);
+            view.setTranslationY(dY);
         }
 
         @Override
         public void onDrawOver(Canvas c, RecyclerView recyclerView,
                                View view, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-
         }
     }
-
 }
