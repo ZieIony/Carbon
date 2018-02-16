@@ -17,6 +17,7 @@
 package carbon.recycler;
 
 import android.animation.Animator;
+import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -2330,6 +2331,12 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
 
         public void start() {
             mViewHolder.setIsRecyclable(false);
+            if (mValueAnimator.getValues() == null){
+                PropertyValuesHolder anim = PropertyValuesHolder.ofInt("paintAlpha",255,0);
+                PropertyValuesHolder[] anims = new PropertyValuesHolder[1];
+                anims[0] = anim;
+                mValueAnimator.setValues(anims);
+            }
             mValueAnimator.start();
         }
 
