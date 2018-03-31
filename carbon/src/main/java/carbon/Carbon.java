@@ -81,52 +81,53 @@ public class Carbon {
     public static ColorStateList getDefaultColorStateList(View view, TypedArray a, int id) {
         if (!a.hasValue(id))
             return null;
-        TypedValue value = new TypedValue();
-        a.getValue(id, value);
-        if (value.data != 0x12345678)
+        try {
+            if (a.getColor(id, 0) != view.getResources().getColor(R.color.carbon_defaultColor))
+                return null;
+        }catch (Resources.NotFoundException e){
             return null;
+        }
 
         Context context = view.getContext();
-        if (view.isInEditMode())
-            return context.getResources().getColorStateList(R.drawable.carbon_defaultcolorstatelist);
+        int resourceId = a.getResourceId(id, 0);
 
-        if (value.resourceId == R.color.carbon_defaultColor) {
+        if (resourceId == R.color.carbon_defaultColor) {
             return new DefaultColorStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultColorPrimary) {
+        } else if (resourceId == R.color.carbon_defaultColorPrimary) {
             return new DefaultPrimaryColorStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultColorAccent) {
+        } else if (resourceId == R.color.carbon_defaultColorAccent) {
             return new DefaultAccentColorStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultIconColor) {
+        } else if (resourceId == R.color.carbon_defaultIconColor) {
             return new DefaultIconColorStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultIconColorInverse) {
+        } else if (resourceId == R.color.carbon_defaultIconColorInverse) {
             return new DefaultIconColorInverseStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultIconColorAccent) {
+        } else if (resourceId == R.color.carbon_defaultIconColorAccent) {
             return new DefaultIconColorAccentStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultIconColorAccentInverse) {
+        } else if (resourceId == R.color.carbon_defaultIconColorAccentInverse) {
             return new DefaultIconColorAccentInverseStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultIconColorPrimary) {
+        } else if (resourceId == R.color.carbon_defaultIconColorPrimary) {
             return new DefaultIconColorPrimaryStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultIconColorPrimaryInverse) {
+        } else if (resourceId == R.color.carbon_defaultIconColorPrimaryInverse) {
             return new DefaultIconColorPrimaryInverseStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultTextPrimaryColor) {
+        } else if (resourceId == R.color.carbon_defaultTextPrimaryColor) {
             return new DefaultTextPrimaryColorStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultTextSecondaryColor) {
+        } else if (resourceId == R.color.carbon_defaultTextSecondaryColor) {
             return new DefaultTextSecondaryColorStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultTextPrimaryColorInverse) {
+        } else if (resourceId == R.color.carbon_defaultTextPrimaryColorInverse) {
             return new DefaultTextPrimaryColorInverseStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultTextSecondaryColorInverse) {
+        } else if (resourceId == R.color.carbon_defaultTextSecondaryColorInverse) {
             return new DefaultTextSecondaryColorInverseStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultTextColorPrimary) {
+        } else if (resourceId == R.color.carbon_defaultTextColorPrimary) {
             return new DefaultTextColorPrimaryStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultTextColorAccent) {
+        } else if (resourceId == R.color.carbon_defaultTextColorAccent) {
             return new DefaultTextColorAccentStateList(context);
-        } else if (value.resourceId == R.color.carbon_defaultRippleColor) {
+        } else if (resourceId == R.color.carbon_defaultRippleColor) {
             int c = Carbon.getThemeColor(context, R.attr.carbon_rippleColor);
             return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
-        } else if (value.resourceId == R.color.carbon_defaultRippleColorPrimary) {
+        } else if (resourceId == R.color.carbon_defaultRippleColorPrimary) {
             int c = Carbon.getThemeColor(context, R.attr.colorPrimary);
             return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
-        } else if (value.resourceId == R.color.carbon_defaultRippleColorAccent) {
+        } else if (resourceId == R.color.carbon_defaultRippleColorAccent) {
             int c = Carbon.getThemeColor(context, R.attr.colorAccent);
             return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
         }

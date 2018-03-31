@@ -1,5 +1,6 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                            xmlns:tools="http://schemas.android.com/tools"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="?attr/carbon_colorBackground"
@@ -14,7 +15,8 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding"
-        android:textAppearance="?attr/carbon_textAppearanceBody2"/>
+        android:textAppearance="?attr/carbon_textAppearanceBody2"
+        tools:text="item name"/>
 
     <carbon.widget.ImageView
         android:id="@+id/reorder"

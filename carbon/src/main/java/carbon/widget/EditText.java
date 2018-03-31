@@ -213,9 +213,7 @@ public class EditText extends android.widget.EditText
         Carbon.initHtmlText(this, a, R.styleable.EditText_carbon_htmlText);
         Carbon.initAutoSizeText(this, a, autoSizeTextIds);
 
-        TypedValue bg = new TypedValue();
-        a.getValue(R.styleable.EditText_android_background, bg);
-        if (bg.resourceId == R.color.carbon_defaultColor) {
+        if (a.getResourceId(R.styleable.EditText_android_background, 0) == R.color.carbon_defaultColor) {
             float underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
             UnderlineDrawable underlineDrawable = new UnderlineDrawable();
             underlineDrawable.setThickness(underlineWidth);
@@ -225,7 +223,8 @@ public class EditText extends android.widget.EditText
 
         a.recycle();
 
-        initSelectionHandle();
+        if (!isInEditMode())
+            initSelectionHandle();
 
         addTextChangedListener(new SimpleTextWatcher() {
             @Override

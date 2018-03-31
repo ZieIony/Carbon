@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,13 +10,14 @@
     </data>
 
     <carbon.widget.TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/carbon_colorForeground"
-        android:textAppearance="?attr/carbon_textAppearanceCaption"
+        android:paddingBottom="@dimen/carbon_padding"
         android:paddingLeft="@dimen/carbon_windowPadding"
         android:paddingRight="@dimen/carbon_windowPadding"
         android:paddingTop="@dimen/carbon_padding"
-        android:paddingBottom="@dimen/carbon_padding"
         android:text="@{data}"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textAppearance="?attr/carbon_textAppearanceCaption"
+        tools:text="description"/>
 </layout>

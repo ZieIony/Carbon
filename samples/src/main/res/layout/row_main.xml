@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,11 +15,11 @@
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/carbon_colorForeground"
         android:layoutDirection="locale"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/carbon_windowPadding"
         android:paddingRight="@dimen/carbon_windowPadding"
-        android:background="?attr/carbon_colorForeground"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
         <carbon.widget.TextView
@@ -27,7 +28,8 @@
             android:layout_height="@dimen/carbon_listItemHeight"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@{data.name}"/>
+            android:text="@{data.name}"
+            tools:text="item name"/>
 
         <carbon.widget.TextView
             android:id="@+id/beta"
@@ -36,8 +38,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/carbon_padding"
             android:text="beta"
-            android:visibility="@{data.beta?View.VISIBLE:View.GONE}"
             android:textColor="#ffcf0000"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:visibility="@{data.beta?View.VISIBLE:View.GONE}"/>
     </carbon.widget.LinearLayout>
 </layout>

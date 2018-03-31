@@ -81,10 +81,12 @@ public class DropDown<Type extends Serializable> extends EditText {
     }
 
     private void initDropDown(Context context, AttributeSet attrs, int defStyleAttr) {
-        arrowDrawable = new VectorDrawable(getResources(), R.raw.carbon_dropdown);
-        int size = (int) (Carbon.getDip(getContext()) * 24);
-        arrowDrawable.setBounds(0, 0, size, size);
-        setCompoundDrawables(null, null, arrowDrawable, null);
+        if(!isInEditMode()) {
+            arrowDrawable = new VectorDrawable(getResources(), R.raw.carbon_dropdown);
+            int size = (int) (Carbon.getDip(getContext()) * 24);
+            arrowDrawable.setBounds(0, 0, size, size);
+            setCompoundDrawables(null, null, arrowDrawable, null);
+        }
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DropDown, defStyleAttr, R.style.carbon_DropDown);
 
