@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 // apply from: 'maven-push.gradle'
 
 ext {
-    supportLibVersion = '27.1.0'
+    supportLibVersion = '27.1.1'
 }
 
 android {
@@ -36,12 +36,12 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'com.android.databinding:compiler:3.1.0'
+    annotationProcessor 'com.android.databinding:compiler:3.1.2'
     api "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:gridlayout-v7:$supportLibVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation 'de.greenrobot:androidsvg:1.2.2-beta-1-tweaked-2'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.annimon:stream:1.1.9'
 }
