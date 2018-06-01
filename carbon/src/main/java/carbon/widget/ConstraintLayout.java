@@ -213,7 +213,7 @@ public class ConstraintLayout extends android.support.constraint.ConstraintLayou
     }
 
     @Override
-    protected void dispatchDraw(@NonNull Canvas canvas) {
+    public void dispatchDraw(@NonNull Canvas canvas) {
         boolean r = revealAnimator != null && revealAnimator.isRunning();
         boolean c = cornerRadius > 0;
         // draw not called, we have to handle corners here
