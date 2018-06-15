@@ -966,10 +966,8 @@
 
     <declare-styleable name="TextAppearance">
         <attr name="carbon_fontFamily"/>
-        <attr name="android:textStyle"/>
         <attr name="carbon_fontPath"/>
         <attr name="android:textAllCaps"/>
-        <attr name="android:textColor"/>
     </declare-styleable>
 
     <declare-styleable name="ScrollView">
