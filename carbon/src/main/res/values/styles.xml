@@ -480,6 +480,10 @@
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
     </style>
 
+    <style name="carbon_CheckBox.IconButton.Colored">
+        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
+    </style>
+
     <style name="carbon_CheckBox.IconButton.Inverse">
         <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
         <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
@@ -511,6 +515,10 @@
         <item name="android:padding">@dimen/carbon_toolbarItemPadding</item>
         <item name="android:drawablePadding">0dp</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+    </style>
+
+    <style name="carbon_RadioButton.IconButton.Colored">
+        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
     </style>
 
     <style name="carbon_RadioButton.IconButton.Inverse">

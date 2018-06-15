@@ -20,7 +20,7 @@
     
     <color name="carbon_colorPrimaryDark_dark">@color/carbon_black</color>
     <color name="carbon_colorPrimary_dark">@color/carbon_grey_900</color>
-    <color name="carbon_colorControl_dark">@color/carbon_white_70</color>
+    <color name="carbon_colorControl_dark">#ffe4e4e4</color>
     <color name="carbon_colorBackground_dark">#ff303030</color>
     <color name="carbon_colorForeground_dark">@color/carbon_grey_800</color>
 
@@ -37,7 +37,7 @@
 
     <color name="carbon_colorPrimaryDark_light">@color/carbon_grey_300</color>
     <color name="carbon_colorPrimary_light">@color/carbon_grey_100</color>
-    <color name="carbon_colorControl_light">@color/carbon_black_54</color>
+    <color name="carbon_colorControl_light">@color/carbon_grey_600</color>
     <color name="carbon_colorBackground_light">@color/carbon_grey_50</color>
     <color name="carbon_colorForeground_light">@color/carbon_white</color>
 

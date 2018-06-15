@@ -122,7 +122,7 @@
 
                 <carbon.widget.CheckBox
                     android:id="@+id/checkBox"
-                    style="@style/carbon_CheckBox.IconButton"
+                    style="@style/carbon_CheckBox.IconButton.Colored"
                     android:layout_margin="@dimen/carbon_toolbarItemMargin"
                     android:gravity="center_vertical"/>
 
