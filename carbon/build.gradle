@@ -15,8 +15,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 45
-        versionName "0.15.1"
+        versionCode 46
+        versionName "0.15.2"
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
     }
@@ -41,6 +41,6 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation 'de.greenrobot:androidsvg:1.2.2-beta-1-tweaked-2'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.annimon:stream:1.1.9'
 }
