@@ -693,7 +693,7 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
         // Clip to the dirty bounds, which will be the drawable bounds if we
         // have a mask or content and the ripple bounds if we're projecting.
         final Rect bounds = getDirtyBounds();
-        final int saveCount = canvas.save(Canvas.CLIP_SAVE_FLAG);
+        final int saveCount = canvas.save();
         canvas.clipRect(bounds);
 
         drawContent(canvas);

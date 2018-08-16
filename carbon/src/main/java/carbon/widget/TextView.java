@@ -60,6 +60,7 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
+import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
@@ -104,7 +105,20 @@ import carbon.view.VisibleView;
  */
 @SuppressLint("AppCompatCustomView")
 public class TextView extends android.widget.TextView
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, ValidStateView, AutoSizeTextView, RevealView, VisibleView {
+        implements
+        ShadowView,
+        RippleView,
+        TouchMarginView,
+        StateAnimatorView,
+        AnimatedView,
+        RoundedCornersView,
+        TintedView,
+        StrokeView,
+        MaxSizeView,
+        ValidStateView,
+        AutoSizeTextView,
+        RevealView,
+        VisibleView {
 
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -167,9 +181,15 @@ public class TextView extends android.widget.TextView
             R.styleable.TextView_carbon_stroke,
             R.styleable.TextView_carbon_strokeWidth
     };
+    private static int[] maxSizeIds = new int[]{
+            R.styleable.TextView_carbon_maxWidth,
+            R.styleable.TextView_carbon_maxHeight,
+    };
     private static int[] elevationIds = new int[]{
             R.styleable.TextView_carbon_elevation,
-            R.styleable.TextView_carbon_elevationShadowColor
+            R.styleable.TextView_carbon_elevationShadowColor,
+            R.styleable.TextView_carbon_elevationAmbientShadowColor,
+            R.styleable.TextView_carbon_elevationSpotShadowColor
     };
     private static int[] autoSizeTextIds = new int[]{
             R.styleable.TextView_carbon_autoSizeText,
@@ -218,11 +238,12 @@ public class TextView extends android.widget.TextView
         Carbon.initDefaultBackground(this, a, R.styleable.TextView_android_background);
         Carbon.initDefaultTextColor(this, a, R.styleable.TextView_android_textColor);
 
-        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, elevationIds);
-        Carbon.initTint(this, a, tintIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initMaxSize(this, a, maxSizeIds);
+        Carbon.initTint(this, a, tintIds);
         Carbon.initHtmlText(this, a, R.styleable.TextView_carbon_htmlText);
         Carbon.initStroke(this, a, strokeIds);
         setCornerRadius(a.getDimension(R.styleable.TextView_carbon_cornerRadius, 0));
@@ -358,7 +379,7 @@ public class TextView extends android.widget.TextView
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
         finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
-        if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.setDuration(Carbon.getDefaultRevealDuration());
             return circularReveal;
@@ -443,7 +464,7 @@ public class TextView extends android.widget.TextView
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        onMeasure2(widthMeasureSpec, heightMeasureSpec);
 
             /*super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             if (layout != null && field != null) {
@@ -500,7 +521,7 @@ public class TextView extends android.widget.TextView
     private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+            if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
@@ -508,7 +529,7 @@ public class TextView extends android.widget.TextView
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else if (Carbon.IS_LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
@@ -524,7 +545,9 @@ public class TextView extends android.widget.TextView
     @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
-        if (isInEditMode() && cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
+        boolean r = revealAnimator != null;
+        boolean c = cornerRadius > 0;
+        if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
             drawInternal(layerCanvas);
@@ -541,13 +564,24 @@ public class TextView extends android.widget.TextView
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
-            drawInternal(canvas);
+            if (r) {
+                int saveCount2 = canvas.save();
+                canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
+                drawInternal(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                drawInternal(canvas);
+            }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            canvas.drawPath(cornersMask, paint);
+            if (c)
+                canvas.drawPath(cornersMask, paint);
+            if (r)
+                canvas.drawPath(revealAnimator.mask, paint);
+            paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -586,6 +620,8 @@ public class TextView extends android.widget.TextView
         if (newRipple != null) {
             newRipple.setCallback(this);
             newRipple.setBounds(0, 0, getWidth(), getHeight());
+            newRipple.setState(getDrawableState());
+            ((Drawable) newRipple).setVisible(getVisibility() == VISIBLE, false);
             if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
         }
@@ -684,8 +720,8 @@ public class TextView extends android.widget.TextView
     private float elevation = 0;
     private float translationZ = 0;
     private Shadow ambientShadow, spotShadow;
-    private ColorStateList shadowColor;
-    private PorterDuffColorFilter shadowColorFilter;
+    private ColorStateList ambientShadowColor, spotShadowColor;
+    private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
     private RectF shadowMaskRect = new RectF();
 
     @Override
@@ -695,8 +731,11 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void setElevation(float elevation) {
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setElevation(elevation);
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
             } else {
@@ -717,8 +756,10 @@ public class TextView extends android.widget.TextView
     public void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setTranslationZ(translationZ);
             } else {
                 super.setTranslationZ(0);
@@ -782,13 +823,13 @@ public class TextView extends android.widget.TextView
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
-        ambientShadow.draw(canvas, this, paint, shadowColorFilter);
+        ambientShadow.draw(canvas, this, paint, ambientShadowColorFilter);
         canvas.restore();
 
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
-        spotShadow.draw(canvas, this, paint, shadowColorFilter);
+        spotShadow.draw(canvas, this, paint, spotShadowColorFilter);
         canvas.restore();
 
         if (saveCount != 0) {
@@ -811,23 +852,67 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
-        this.shadowColor = shadowColor;
-        shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
+        ambientShadowColor = spotShadowColor = shadowColor;
+        ambientShadowColorFilter = spotShadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public void setElevationShadowColor(int color) {
-        shadowColor = ColorStateList.valueOf(color);
-        shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        ambientShadowColor = spotShadowColor = ColorStateList.valueOf(color);
+        ambientShadowColorFilter = spotShadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public ColorStateList getElevationShadowColor() {
-        return shadowColor;
+        return ambientShadowColor;
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(int color) {
+        setOutlineAmbientShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(ColorStateList color) {
+        ambientShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineAmbientShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            ambientShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineAmbientShadowColor() {
+        return ambientShadowColor.getDefaultColor();
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(int color) {
+        setOutlineSpotShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(ColorStateList color) {
+        spotShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineSpotShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            spotShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineSpotShadowColor() {
+        return spotShadowColor.getDefaultColor();
     }
 
 
@@ -835,11 +920,11 @@ public class TextView extends android.widget.TextView
     // touch margin
     // -------------------------------
 
-    private Rect touchMargin;
+    private Rect touchMargin = new Rect();
 
     @Override
     public void setTouchMargin(int left, int top, int right, int bottom) {
-        touchMargin = new Rect(left, top, right, bottom);
+        touchMargin.set(left, top, right, bottom);
     }
 
     @Override
@@ -911,6 +996,10 @@ public class TextView extends android.widget.TextView
             ((AnimatedColorStateList) tint).setState(getDrawableState());
         if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
             ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
+        if (ambientShadow != null && ambientShadowColor != null)
+            ambientShadowColorFilter = new PorterDuffColorFilter(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+        if (spotShadow != null && spotShadowColor != null)
+            spotShadowColorFilter = new PorterDuffColorFilter(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
     }
 
     private static final int[] INVALID_STATE_SET = {
@@ -1106,14 +1195,14 @@ public class TextView extends android.widget.TextView
     }
 
     private void updateBackgroundTint() {
-        if (getBackground() == null)
+        Drawable background = getBackground();
+        if (background instanceof RippleDrawable)
+            background = ((RippleDrawable) background).getBackground();
+        if (background == null)
             return;
-        if (backgroundTint != null && backgroundTintMode != null) {
-            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            getBackground().setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
-        } else {
-            getBackground().setColorFilter(null);
-        }
+
+        Carbon.setTintList(background, backgroundTint);
+        Carbon.setTintMode(background, backgroundTintMode);
     }
 
     @Override
@@ -1190,6 +1279,46 @@ public class TextView extends android.widget.TextView
     @Override
     public float getStrokeWidth() {
         return strokeWidth;
+    }
+
+
+    // -------------------------------
+    // maximum width & height
+    // -------------------------------
+
+    int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
+
+    @Override
+    public int getMaximumWidth() {
+        return maxWidth;
+    }
+
+    @Override
+    public void setMaximumWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+        requestLayout();
+    }
+
+    @Override
+    public int getMaximumHeight() {
+        return maxHeight;
+    }
+
+    @Override
+    public void setMaximumHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+        requestLayout();
+    }
+
+    protected void onMeasure2(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
+            if (getMeasuredWidth() > maxWidth)
+                widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
+            if (getMeasuredHeight() > maxHeight)
+                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
 

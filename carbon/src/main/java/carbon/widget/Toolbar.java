@@ -3,6 +3,7 @@ package carbon.widget;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -20,7 +21,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
@@ -63,6 +63,7 @@ import carbon.view.RenderingModeView;
 import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
+import carbon.view.StrokeView;
 import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
@@ -76,6 +77,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
         AnimatedView,
         InsetView,
         RoundedCornersView,
+        StrokeView,
         MaxSizeView,
         RevealView,
         VisibleView,
@@ -106,13 +108,19 @@ public class Toolbar extends android.support.v7.widget.Toolbar
             R.styleable.Toolbar_carbon_inAnimation,
             R.styleable.Toolbar_carbon_outAnimation
     };
+    private static int[] strokeIds = new int[]{
+            R.styleable.Toolbar_carbon_stroke,
+            R.styleable.Toolbar_carbon_strokeWidth
+    };
     private static int[] maxSizeIds = new int[]{
             R.styleable.Toolbar_carbon_maxWidth,
             R.styleable.Toolbar_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.Toolbar_carbon_elevation,
-            R.styleable.Toolbar_carbon_elevationShadowColor
+            R.styleable.Toolbar_carbon_elevationShadowColor,
+            R.styleable.Toolbar_carbon_elevationAmbientShadowColor,
+            R.styleable.Toolbar_carbon_elevationSpotShadowColor
     };
 
     private void initToolbar(AttributeSet attrs, int defStyleAttr) {
@@ -148,6 +156,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
+        Carbon.initStroke(this, a, strokeIds);
         setCornerRadius(a.getDimension(R.styleable.Toolbar_carbon_cornerRadius, 0));
 
         a.recycle();
@@ -184,7 +193,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
         finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
-        if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.setDuration(Carbon.getDefaultRevealDuration());
             return circularReveal;
@@ -296,11 +305,11 @@ public class Toolbar extends android.support.v7.widget.Toolbar
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
+        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save();
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
                 dispatchDrawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -344,7 +353,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -414,7 +423,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+            if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
@@ -422,11 +431,20 @@ public class Toolbar extends android.support.v7.widget.Toolbar
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else if (Carbon.IS_LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
 
+    public void drawInternal(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
+    @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
@@ -435,7 +453,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar
         if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
-            super.draw(layerCanvas);
+            drawInternal(layerCanvas);
 
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
@@ -449,16 +467,16 @@ public class Toolbar extends android.support.v7.widget.Toolbar
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save();
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
-                super.draw(canvas);
+                drawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
             } else {
-                super.draw(canvas);
+                drawInternal(canvas);
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
@@ -469,8 +487,9 @@ public class Toolbar extends android.support.v7.widget.Toolbar
             paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
         } else {
-            super.draw(canvas);
+            drawInternal(canvas);
         }
     }
 
@@ -507,6 +526,8 @@ public class Toolbar extends android.support.v7.widget.Toolbar
         if (newRipple != null) {
             newRipple.setCallback(this);
             newRipple.setBounds(0, 0, getWidth(), getHeight());
+            newRipple.setState(getDrawableState());
+            ((Drawable) newRipple).setVisible(getVisibility() == VISIBLE, false);
             if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
         }
@@ -604,8 +625,8 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     private float elevation = 0;
     private float translationZ = 0;
     private Shadow ambientShadow, spotShadow;
-    private ColorStateList shadowColor;
-    private PorterDuffColorFilter shadowColorFilter;
+    private ColorStateList ambientShadowColor, spotShadowColor;
+    private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
     private RectF shadowMaskRect = new RectF();
 
     @Override
@@ -615,8 +636,11 @@ public class Toolbar extends android.support.v7.widget.Toolbar
 
     @Override
     public void setElevation(float elevation) {
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setElevation(elevation);
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
             } else {
@@ -637,8 +661,10 @@ public class Toolbar extends android.support.v7.widget.Toolbar
     public void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setTranslationZ(translationZ);
             } else {
                 super.setTranslationZ(0);
@@ -702,13 +728,13 @@ public class Toolbar extends android.support.v7.widget.Toolbar
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
-        ambientShadow.draw(canvas, this, paint, shadowColorFilter);
+        ambientShadow.draw(canvas, this, paint, ambientShadowColorFilter);
         canvas.restore();
 
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
-        spotShadow.draw(canvas, this, paint, shadowColorFilter);
+        spotShadow.draw(canvas, this, paint, spotShadowColorFilter);
         canvas.restore();
 
         if (saveCount != 0) {
@@ -731,23 +757,67 @@ public class Toolbar extends android.support.v7.widget.Toolbar
 
     @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
-        this.shadowColor = shadowColor;
-        shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
+        ambientShadowColor = spotShadowColor = shadowColor;
+        ambientShadowColorFilter = spotShadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public void setElevationShadowColor(int color) {
-        shadowColor = ColorStateList.valueOf(color);
-        shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        ambientShadowColor = spotShadowColor = ColorStateList.valueOf(color);
+        ambientShadowColorFilter = spotShadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public ColorStateList getElevationShadowColor() {
-        return shadowColor;
+        return ambientShadowColor;
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(int color) {
+        setOutlineAmbientShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(ColorStateList color) {
+        ambientShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineAmbientShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            ambientShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineAmbientShadowColor() {
+        return ambientShadowColor.getDefaultColor();
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(int color) {
+        setOutlineSpotShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(ColorStateList color) {
+        spotShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineSpotShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            spotShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineSpotShadowColor() {
+        return spotShadowColor.getDefaultColor();
     }
 
 
@@ -824,6 +894,10 @@ public class Toolbar extends android.support.v7.widget.Toolbar
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
+        if (ambientShadow != null && ambientShadowColor != null)
+            ambientShadowColorFilter = new PorterDuffColorFilter(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+        if (spotShadow != null && spotShadowColor != null)
+            spotShadowColorFilter = new PorterDuffColorFilter(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
     }
 
 
@@ -1144,6 +1218,57 @@ public class Toolbar extends android.support.v7.widget.Toolbar
 
 
     // -------------------------------
+    // stroke
+    // -------------------------------
+
+    private ColorStateList stroke;
+    private float strokeWidth;
+    private Paint strokePaint;
+    private RectF strokeRect;
+
+    private void drawStroke(Canvas canvas) {
+        strokePaint.setStrokeWidth(strokeWidth * 2);
+        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
+        strokeRect.set(0, 0, getWidth(), getHeight());
+        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+    }
+
+    @Override
+    public void setStroke(ColorStateList colorStateList) {
+        stroke = colorStateList;
+
+        if (stroke == null)
+            return;
+
+        if (strokePaint == null) {
+            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            strokePaint.setStyle(Paint.Style.STROKE);
+            strokeRect = new RectF();
+        }
+    }
+
+    @Override
+    public void setStroke(int color) {
+        setStroke(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public float getStrokeWidth() {
+        return strokeWidth;
+    }
+
+
+    // -------------------------------
     // maximum width & height
     // -------------------------------
 
@@ -1173,7 +1298,6 @@ public class Toolbar extends android.support.v7.widget.Toolbar
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
             if (getMeasuredWidth() > maxWidth)

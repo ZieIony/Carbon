@@ -14,7 +14,7 @@ public enum ShadowShape {
     public static ViewOutlineProvider viewOutlineProvider;
 
     static {
-        if (Carbon.IS_LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             viewOutlineProvider = new ViewOutlineProvider() {
                 @SuppressLint("NewApi")
                 @Override

@@ -60,7 +60,7 @@ public interface RippleDrawable extends AlphaDrawable, TintAwareDrawable {
         RippleDrawable rippleDrawable;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rippleDrawable = new RippleDrawableMarshmallow(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
-        } else if (Carbon.IS_LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             rippleDrawable = new RippleDrawableLollipop(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
         } else {
             rippleDrawable = new RippleDrawableICS(color, style == RippleDrawable.Style.Background ? view.getBackground() : null, style);
@@ -75,7 +75,7 @@ public interface RippleDrawable extends AlphaDrawable, TintAwareDrawable {
         RippleDrawable rippleDrawable;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rippleDrawable = new RippleDrawableMarshmallow(color, background, style);
-        } else if (Carbon.IS_LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             rippleDrawable = new RippleDrawableLollipop(color, background, style);
         } else {
             rippleDrawable = new RippleDrawableICS(color, background, style);

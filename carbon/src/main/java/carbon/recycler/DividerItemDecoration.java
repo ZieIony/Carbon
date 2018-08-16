@@ -82,7 +82,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                     left = (int) (child.getRight() + child.getTranslationX());
                     right = left + height;
                 }
-                c.save(Canvas.CLIP_SAVE_FLAG);
+                c.save();
                 c.clipRect(left, top, right, bottom);
                 drawable.setAlpha((int) (child.getAlpha() * 255));
                 drawable.setBounds(left, top, right, bottom);
@@ -99,7 +99,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                     right = (int) (child.getLeft() + child.getTranslationX());
                     left = right - height;
                 }
-                c.save(Canvas.CLIP_SAVE_FLAG);
+                c.save();
                 c.clipRect(left, top, right, bottom);
                 drawable.setAlpha((int) (child.getAlpha() * 255));
                 drawable.setBounds(left, top, right, bottom);

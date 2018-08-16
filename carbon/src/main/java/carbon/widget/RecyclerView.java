@@ -3,6 +3,7 @@ package carbon.widget;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -20,6 +21,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
@@ -49,6 +51,7 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
+import carbon.view.MaxSizeView;
 import carbon.view.RenderingModeView;
 import carbon.view.RevealView;
 import carbon.view.RoundedCornersView;
@@ -59,7 +62,18 @@ import carbon.view.TouchMarginView;
 import carbon.view.VisibleView;
 
 public class RecyclerView extends android.support.v7.widget.RecyclerView
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, RevealView, VisibleView {
+        implements
+        ShadowView,
+        RippleView,
+        TouchMarginView,
+        StateAnimatorView,
+        AnimatedView,
+        RoundedCornersView,
+        TintedView,
+        StrokeView,
+        MaxSizeView,
+        RevealView,
+        VisibleView {
 
     public interface OnItemClickedListener<Type> {
         void onItemClicked(View view, Type type, int position);
@@ -110,6 +124,20 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             R.styleable.RecyclerView_carbon_backgroundTintMode,
             R.styleable.RecyclerView_carbon_animateColorChanges
     };
+    private static int[] strokeIds = new int[]{
+            R.styleable.RecyclerView_carbon_stroke,
+            R.styleable.RecyclerView_carbon_strokeWidth
+    };
+    private static int[] maxSizeIds = new int[]{
+            R.styleable.RecyclerView_carbon_maxWidth,
+            R.styleable.RecyclerView_carbon_maxHeight,
+    };
+    private static int[] elevationIds = new int[]{
+            R.styleable.RecyclerView_carbon_elevation,
+            R.styleable.RecyclerView_carbon_elevationShadowColor,
+            R.styleable.RecyclerView_carbon_elevationAmbientShadowColor,
+            R.styleable.RecyclerView_carbon_elevationSpotShadowColor
+    };
 
     private void initRecycler(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, R.style.carbon_RecyclerView);
@@ -131,8 +159,11 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             }
         }
 
+        Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
+        Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initTint(this, a, tintIds);
+        Carbon.initStroke(this, a, strokeIds);
 
         a.recycle();
 
@@ -385,7 +416,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     @Override
     public boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
         // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -464,7 +495,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
         finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
-        if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.setDuration(Carbon.getDefaultRevealDuration());
             return circularReveal;
@@ -540,7 +571,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+            if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
@@ -548,19 +579,28 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else if (Carbon.IS_LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
 
+    public void drawInternal(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
+    @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
-        if (isInEditMode() && cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
+        boolean r = revealAnimator != null;
+        boolean c = cornerRadius > 0;
+        if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
-            super.draw(layerCanvas);
-            if (stroke != null)
-                drawStroke(layerCanvas);
+            drawInternal(layerCanvas);
 
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
@@ -574,26 +614,29 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
-            super.draw(canvas);
-            if (stroke != null)
-                drawStroke(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
+            if (r) {
+                int saveCount2 = canvas.save();
+                canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
+                drawInternal(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                drawInternal(canvas);
+            }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            canvas.drawPath(cornersMask, paint);
+            if (c)
+                canvas.drawPath(cornersMask, paint);
+            if (r)
+                canvas.drawPath(revealAnimator.mask, paint);
+            paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
         } else {
-            super.draw(canvas);
-            if (stroke != null)
-                drawStroke(canvas);
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-                rippleDrawable.draw(canvas);
+            drawInternal(canvas);
         }
     }
 
@@ -602,7 +645,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     // ripple
     // -------------------------------
 
-    protected RippleDrawable rippleDrawable;
+    private RippleDrawable rippleDrawable;
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
@@ -620,12 +663,15 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     public void setRippleDrawable(RippleDrawable newRipple) {
         if (rippleDrawable != null) {
             rippleDrawable.setCallback(null);
-            super.setBackgroundDrawable(rippleDrawable.getBackground());
+            if (rippleDrawable.getStyle() == RippleDrawable.Style.Background)
+                super.setBackgroundDrawable(rippleDrawable.getBackground());
         }
 
         if (newRipple != null) {
             newRipple.setCallback(this);
             newRipple.setBounds(0, 0, getWidth(), getHeight());
+            newRipple.setState(getDrawableState());
+            ((Drawable) newRipple).setVisible(getVisibility() == VISIBLE, false);
             if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
         }
@@ -663,14 +709,14 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     }
 
     private void invalidateParentIfNeeded() {
-        if (getParent() == null || !(getParent() instanceof android.view.View))
+        if (getParent() == null || !(getParent() instanceof View))
             return;
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((android.view.View) getParent()).invalidate();
+            ((View) getParent()).invalidate();
 
         if (getElevation() > 0 || getCornerRadius() > 0)
-            ((android.view.View) getParent()).invalidate();
+            ((View) getParent()).invalidate();
     }
 
     @Override
@@ -686,14 +732,14 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     }
 
     private void postInvalidateParentIfNeededDelayed(long delayMilliseconds) {
-        if (getParent() == null || !(getParent() instanceof android.view.View))
+        if (getParent() == null || !(getParent() instanceof View))
             return;
 
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
-            ((android.view.View) getParent()).postInvalidateDelayed(delayMilliseconds);
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
         if (getElevation() > 0 || getCornerRadius() > 0)
-            ((android.view.View) getParent()).postInvalidateDelayed(delayMilliseconds);
+            ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
     @Override
@@ -724,8 +770,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     private float elevation = 0;
     private float translationZ = 0;
     private Shadow ambientShadow, spotShadow;
-    private ColorStateList shadowColor;
-    private PorterDuffColorFilter shadowColorFilter;
+    private ColorStateList ambientShadowColor, spotShadowColor;
+    private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
     private RectF shadowMaskRect = new RectF();
 
     @Override
@@ -735,8 +781,11 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     @Override
     public void setElevation(float elevation) {
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setElevation(elevation);
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
             } else {
@@ -744,7 +793,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 super.setTranslationZ(0);
             }
         } else if (elevation != this.elevation && getParent() != null) {
-            ((android.view.View) getParent()).postInvalidate();
+            ((View) getParent()).postInvalidate();
         }
         this.elevation = elevation;
     }
@@ -757,14 +806,16 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     public void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setTranslationZ(translationZ);
             } else {
                 super.setTranslationZ(0);
             }
         } else if (translationZ != this.translationZ && getParent() != null) {
-            ((android.view.View) getParent()).postInvalidate();
+            ((View) getParent()).postInvalidate();
         }
         this.translationZ = translationZ;
     }
@@ -822,13 +873,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
-        ambientShadow.draw(canvas, this, paint, shadowColorFilter);
+        ambientShadow.draw(canvas, this, paint, ambientShadowColorFilter);
         canvas.restore();
 
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
-        spotShadow.draw(canvas, this, paint, shadowColorFilter);
+        spotShadow.draw(canvas, this, paint, spotShadowColorFilter);
         canvas.restore();
 
         if (saveCount != 0) {
@@ -851,23 +902,67 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
-        this.shadowColor = shadowColor;
-        shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
+        ambientShadowColor = spotShadowColor = shadowColor;
+        ambientShadowColorFilter = spotShadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public void setElevationShadowColor(int color) {
-        shadowColor = ColorStateList.valueOf(color);
-        shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        ambientShadowColor = spotShadowColor = ColorStateList.valueOf(color);
+        ambientShadowColorFilter = spotShadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public ColorStateList getElevationShadowColor() {
-        return shadowColor;
+        return ambientShadowColor;
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(int color) {
+        setOutlineAmbientShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(ColorStateList color) {
+        ambientShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineAmbientShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            ambientShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineAmbientShadowColor() {
+        return ambientShadowColor.getDefaultColor();
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(int color) {
+        setOutlineSpotShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(ColorStateList color) {
+        spotShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineSpotShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            spotShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineSpotShadowColor() {
+        return spotShadowColor.getDefaultColor();
     }
 
 
@@ -948,8 +1043,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             ((AnimatedColorStateList) tint).setState(getDrawableState());
         if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
             ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
-        if (ambientShadow != null && shadowColor != null)
-            shadowColorFilter = new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+        if (ambientShadow != null && ambientShadowColor != null)
+            ambientShadowColorFilter = new PorterDuffColorFilter(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+        if (spotShadow != null && spotShadowColor != null)
+            spotShadowColorFilter = new PorterDuffColorFilter(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
     }
 
 
@@ -1132,16 +1229,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             background = ((RippleDrawable) background).getBackground();
         if (background == null)
             return;
-        if (backgroundTint != null && backgroundTintMode != null) {
-            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            background.setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
-        } else {
-            background.setColorFilter(null);
-        }
+
+        Carbon.setTintList(background, backgroundTint);
+        Carbon.setTintMode(background, backgroundTintMode);
     }
 
     @Override
-    public void setBackgroundTintMode(PorterDuff.Mode mode) {
+    public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
         updateBackgroundTint();
     }
@@ -1212,6 +1306,47 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     @Override
     public float getStrokeWidth() {
         return strokeWidth;
+    }
+
+
+    // -------------------------------
+    // maximum width & height
+    // -------------------------------
+
+    int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
+
+    @Override
+    public int getMaximumWidth() {
+        return maxWidth;
+    }
+
+    @Override
+    public void setMaximumWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+        requestLayout();
+    }
+
+    @Override
+    public int getMaximumHeight() {
+        return maxHeight;
+    }
+
+    @Override
+    public void setMaximumHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+        requestLayout();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
+            if (getMeasuredWidth() > maxWidth)
+                widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
+            if (getMeasuredHeight() > maxHeight)
+                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
 

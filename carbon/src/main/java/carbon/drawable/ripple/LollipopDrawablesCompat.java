@@ -38,7 +38,7 @@ public class LollipopDrawablesCompat {
     static {
         registerDrawable(RippleDrawableICS.class, "ripple");
 
-        if (Carbon.IS_LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             IMPL = new LollipopDrawableImpl();
         } else {
             IMPL = new BaseDrawableImpl();
@@ -147,7 +147,7 @@ public class LollipopDrawablesCompat {
             throw new XmlPullParserException("Error while inflating drawable resource", parser, e);
         }
         if (drawable == null) {
-            if (Carbon.IS_LOLLIPOP) {
+            if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
                 return Drawable.createFromXmlInner(r, parser, attrs, theme);
             } else {
                 return Drawable.createFromXmlInner(r, parser, attrs);

@@ -61,7 +61,9 @@ public class Carbon {
     private static final long DEFAULT_REVEAL_DURATION = 200;
     private static long defaultRevealDuration = DEFAULT_REVEAL_DURATION;
 
-    public static final boolean IS_LOLLIPOP = Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH;
+    public static final boolean IS_LOLLIPOP_OR_HIGHER = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+
+    public static final boolean IS_PIE_OR_HIGHER = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
 
     public static PorterDuffXfermode CLEAR_MODE = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
@@ -84,7 +86,7 @@ public class Carbon {
         try {
             if (a.getColor(id, 0) != view.getResources().getColor(R.color.carbon_defaultColor))
                 return null;
-        }catch (Resources.NotFoundException e){
+        } catch (Resources.NotFoundException e) {
             return null;
         }
 
@@ -272,12 +274,18 @@ public class Carbon {
     public static void initElevation(ShadowView view, TypedArray a, int[] ids) {
         int carbon_elevation = ids[0];
         int carbon_shadowColor = ids[1];
+        int carbon_ambientShadowColor = ids[2];
+        int carbon_spotShadowColor = ids[3];
 
         float elevation = a.getDimension(carbon_elevation, 0);
         view.setElevation(elevation);
         if (elevation > 0)
             AnimUtils.setupElevationAnimator(((StateAnimatorView) view).getStateAnimator(), view);
         view.setElevationShadowColor(a.getColorStateList(carbon_shadowColor));
+        if (a.hasValue(carbon_ambientShadowColor))
+            view.setOutlineAmbientShadowColor(a.getColorStateList(carbon_ambientShadowColor));
+        if (a.hasValue(carbon_spotShadowColor))
+            view.setOutlineSpotShadowColor(a.getColorStateList(carbon_spotShadowColor));
     }
 
     public static void initHtmlText(android.widget.TextView textView, TypedArray a, int id) {

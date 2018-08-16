@@ -1196,7 +1196,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
     }
 
     private void addChildDrawingOrderCallback() {
-        if (Carbon.IS_LOLLIPOP)
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER)
             return; // we use elevation on Lollipop
 
         if (mChildDrawingOrderCallback == null) {

@@ -38,4 +38,16 @@ public interface ShadowView extends RenderingModeView {
 
     ColorStateList getElevationShadowColor();
 
+    void setOutlineAmbientShadowColor(int color);
+
+    void setOutlineAmbientShadowColor(ColorStateList color);
+
+    int getOutlineAmbientShadowColor();
+
+    void setOutlineSpotShadowColor(int color);
+
+    void setOutlineSpotShadowColor(ColorStateList color);
+
+    int getOutlineSpotShadowColor();
+
 }

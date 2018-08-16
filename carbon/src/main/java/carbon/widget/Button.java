@@ -24,7 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -138,7 +138,9 @@ public class Button extends android.widget.Button
     };
     private static int[] elevationIds = new int[]{
             R.styleable.Button_carbon_elevation,
-            R.styleable.Button_carbon_elevationShadowColor
+            R.styleable.Button_carbon_elevationShadowColor,
+            R.styleable.Button_carbon_elevationAmbientShadowColor,
+            R.styleable.Button_carbon_elevationSpotShadowColor
     };
     private static int[] autoSizeTextIds = new int[]{
             R.styleable.Button_carbon_autoSizeText,
@@ -286,7 +288,7 @@ public class Button extends android.widget.Button
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
         finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
-        if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.setDuration(Carbon.getDefaultRevealDuration());
             return circularReveal;
@@ -339,7 +341,8 @@ public class Button extends android.widget.Button
      */
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
-        updateCorners();
+        if (getWidth() > 0 && getHeight() > 0)
+            updateCorners();
     }
 
     @Override
@@ -360,19 +363,16 @@ public class Button extends android.widget.Button
 
     private void updateCorners() {
         if (cornerRadius > 0) {
-            if (getWidth() > 0 && getHeight() > 0)
-                cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+            cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
+            if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
-                if (Carbon.IS_LOLLIPOP)
-                    setClipToOutline(false);
                 cornersMask = new Path();
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else if (Carbon.IS_LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
@@ -388,7 +388,9 @@ public class Button extends android.widget.Button
     @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
-        if (isInEditMode() && cornerRadius > 0 && getWidth() > 0 && getHeight() > 0) {
+        boolean r = revealAnimator != null;
+        boolean c = cornerRadius > 0;
+        if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
             drawInternal(layerCanvas);
@@ -405,13 +407,24 @@ public class Button extends android.widget.Button
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (cornerRadius > 0 && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
-            drawInternal(canvas);
+            if (r) {
+                int saveCount2 = canvas.save();
+                canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
+                drawInternal(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                drawInternal(canvas);
+            }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            canvas.drawPath(cornersMask, paint);
+            if (c)
+                canvas.drawPath(cornersMask, paint);
+            if (r)
+                canvas.drawPath(revealAnimator.mask, paint);
+            paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -450,6 +463,8 @@ public class Button extends android.widget.Button
         if (newRipple != null) {
             newRipple.setCallback(this);
             newRipple.setBounds(0, 0, getWidth(), getHeight());
+            newRipple.setState(getDrawableState());
+            ((Drawable) newRipple).setVisible(getVisibility() == VISIBLE, false);
             if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
         }
@@ -548,8 +563,8 @@ public class Button extends android.widget.Button
     private float elevation = 0;
     private float translationZ = 0;
     private Shadow ambientShadow, spotShadow;
-    private ColorStateList shadowColor;
-    private PorterDuffColorFilter shadowColorFilter;
+    private ColorStateList ambientShadowColor, spotShadowColor;
+    private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
     private RectF shadowMaskRect = new RectF();
 
     @Override
@@ -559,8 +574,11 @@ public class Button extends android.widget.Button
 
     @Override
     public void setElevation(float elevation) {
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setElevation(elevation);
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
             } else {
@@ -581,8 +599,10 @@ public class Button extends android.widget.Button
     public void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setTranslationZ(translationZ);
             } else {
                 super.setTranslationZ(0);
@@ -646,13 +666,13 @@ public class Button extends android.widget.Button
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
-        ambientShadow.draw(canvas, this, paint, shadowColorFilter);
+        ambientShadow.draw(canvas, this, paint, ambientShadowColorFilter);
         canvas.restore();
 
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
-        spotShadow.draw(canvas, this, paint, shadowColorFilter);
+        spotShadow.draw(canvas, this, paint, spotShadowColorFilter);
         canvas.restore();
 
         if (saveCount != 0) {
@@ -675,23 +695,67 @@ public class Button extends android.widget.Button
 
     @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
-        this.shadowColor = shadowColor;
-        shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
+        ambientShadowColor = spotShadowColor = shadowColor;
+        ambientShadowColorFilter = spotShadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public void setElevationShadowColor(int color) {
-        shadowColor = ColorStateList.valueOf(color);
-        shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        ambientShadowColor = spotShadowColor = ColorStateList.valueOf(color);
+        ambientShadowColorFilter = spotShadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public ColorStateList getElevationShadowColor() {
-        return shadowColor;
+        return ambientShadowColor;
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(int color) {
+        setOutlineAmbientShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(ColorStateList color) {
+        ambientShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineAmbientShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            ambientShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineAmbientShadowColor() {
+        return ambientShadowColor.getDefaultColor();
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(int color) {
+        setOutlineSpotShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(ColorStateList color) {
+        spotShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineSpotShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            spotShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineSpotShadowColor() {
+        return spotShadowColor.getDefaultColor();
     }
 
 
@@ -699,11 +763,11 @@ public class Button extends android.widget.Button
     // touch margin
     // -------------------------------
 
-    private Rect touchMargin;
+    private Rect touchMargin = new Rect();
 
     @Override
     public void setTouchMargin(int left, int top, int right, int bottom) {
-        touchMargin = new Rect(left, top, right, bottom);
+        touchMargin.set(left, top, right, bottom);
     }
 
     @Override
@@ -775,8 +839,10 @@ public class Button extends android.widget.Button
             ((AnimatedColorStateList) tint).setState(getDrawableState());
         if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
             ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
-        if (ambientShadow != null && shadowColor != null)
-            shadowColorFilter = new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+        if (ambientShadow != null && ambientShadowColor != null)
+            ambientShadowColorFilter = new PorterDuffColorFilter(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+        if (spotShadow != null && spotShadowColor != null)
+            spotShadowColorFilter = new PorterDuffColorFilter(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
     }
 
 
@@ -963,16 +1029,13 @@ public class Button extends android.widget.Button
             background = ((RippleDrawable) background).getBackground();
         if (background == null)
             return;
-        if (backgroundTint != null && backgroundTintMode != null) {
-            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            background.setColorFilter(new PorterDuffColorFilter(color, backgroundTintMode));
-        } else {
-            background.setColorFilter(null);
-        }
+
+        Carbon.setTintList(background, backgroundTint);
+        Carbon.setTintMode(background, backgroundTintMode);
     }
 
     @Override
-    public void setBackgroundTintMode(PorterDuff.Mode mode) {
+    public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
         updateBackgroundTint();
     }

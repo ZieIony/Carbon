@@ -33,15 +33,15 @@ public class Shadow {
 
         e = (int) (Math.ceil(elevation));
         this.cornerRadius = cornerRadius;
-        xDiv = new int[]{0, e + this.cornerRadius, bitmap.getWidth() - e - this.cornerRadius, bitmap.getWidth()};
-        yDiv = new int[]{0, e + this.cornerRadius, bitmap.getHeight() - e - this.cornerRadius, bitmap.getHeight()};
-        xDivDst = new int[]{(int) (-e * scale), (int) (this.cornerRadius * scale), 0, 0};
-        yDivDst = new int[]{(int) (-e * scale), (int) (this.cornerRadius * scale), 0, 0};
+        xDiv = new int[]{0, e + cornerRadius, bitmap.getWidth() - e - cornerRadius, bitmap.getWidth()};
+        yDiv = new int[]{0, e + cornerRadius, bitmap.getHeight() - e - cornerRadius, bitmap.getHeight()};
+        xDivDst = new int[]{(int) (-e * scale), (int) (cornerRadius * scale), 0, 0};
+        yDivDst = new int[]{(int) (-e * scale), (int) (cornerRadius * scale), 0, 0};
     }
 
     public void draw(Canvas canvas, View view, Paint paint, ColorFilter colorFilter) {
-        xDivDst[1] = (int) Math.min(this.cornerRadius * scale, view.getWidth() / 2);
-        yDivDst[1] = (int) Math.min(this.cornerRadius * scale, view.getHeight() / 2);
+        xDivDst[1] = (int) Math.min(cornerRadius * scale, view.getWidth() / 2);
+        yDivDst[1] = (int) Math.min(cornerRadius * scale, view.getHeight() / 2);
         xDivDst[2] = (int) Math.max(view.getWidth() - cornerRadius * scale, view.getWidth() / 2);
         yDivDst[2] = (int) Math.max(view.getHeight() - cornerRadius * scale, view.getHeight() / 2);
         xDivDst[3] = (int) (view.getWidth() + e * scale);

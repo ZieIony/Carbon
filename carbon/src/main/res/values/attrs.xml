@@ -119,6 +119,8 @@
 
     <attr name="carbon_elevation" format="dimension"/>
     <attr name="carbon_elevationShadowColor" format="reference|color"/>
+    <attr name="carbon_elevationAmbientShadowColor" format="reference|color"/>
+    <attr name="carbon_elevationSpotShadowColor" format="reference|color"/>
 
     <attr name="carbon_stroke" format="reference|color"/>
     <attr name="carbon_strokeWidth" format="dimension"/>
@@ -204,6 +206,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_touchMargin"/>
         <attr name="carbon_touchMarginLeft"/>
@@ -242,6 +246,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_touchMargin"/>
         <attr name="carbon_touchMarginLeft"/>
@@ -293,6 +299,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_touchMargin"/>
         <attr name="carbon_touchMarginLeft"/>
@@ -302,6 +310,9 @@
 
         <attr name="carbon_inAnimation"/>
         <attr name="carbon_outAnimation"/>
+
+        <attr name="carbon_maxWidth"/>
+        <attr name="carbon_maxHeight"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -365,6 +376,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -382,6 +395,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_touchMargin"/>
         <attr name="carbon_touchMarginLeft"/>
@@ -425,6 +440,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_touchMargin"/>
         <attr name="carbon_touchMarginLeft"/>
@@ -487,6 +504,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -528,6 +547,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -564,6 +585,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -600,6 +623,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -636,6 +661,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -677,6 +704,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -718,6 +747,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -727,6 +758,9 @@
     <declare-styleable name="Toolbar">
         <attr name="carbon_theme"/>
 
+        <attr name="carbon_stroke"/>
+        <attr name="carbon_strokeWidth"/>
+
         <attr name="carbon_inAnimation"/>
         <attr name="carbon_outAnimation"/>
 
@@ -735,6 +769,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="android:background"/>
         <attr name="android:text"/>
@@ -748,7 +784,6 @@
         <attr name="carbon_theme"/>
 
         <attr name="android:background"/>
-        <attr name="android:text"/>
         <attr name="carbon_icon"/>
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
@@ -767,6 +802,8 @@
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
 
         <attr name="carbon_touchMargin"/>
         <attr name="carbon_touchMarginLeft"/>
@@ -776,6 +813,9 @@
 
         <attr name="carbon_inAnimation"/>
         <attr name="carbon_outAnimation"/>
+
+        <attr name="carbon_maxWidth"/>
+        <attr name="carbon_maxHeight"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -877,6 +917,10 @@
         <attr name="carbon_rippleRadius"/>
 
         <attr name="carbon_elevation"/>
+        <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
+
         <attr name="carbon_cornerRadius"/>
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
@@ -889,6 +933,9 @@
 
         <attr name="carbon_inAnimation"/>
         <attr name="carbon_outAnimation"/>
+
+        <attr name="carbon_maxWidth"/>
+        <attr name="carbon_maxHeight"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -1015,8 +1062,16 @@
     <declare-styleable name="RecyclerView">
         <attr name="carbon_theme"/>
 
+        <attr name="carbon_elevation"/>
+        <attr name="carbon_elevationShadowColor"/>
+        <attr name="carbon_elevationAmbientShadowColor"/>
+        <attr name="carbon_elevationSpotShadowColor"/>
+
         <attr name="carbon_inAnimation"/>
         <attr name="carbon_outAnimation"/>
+
+        <attr name="carbon_maxWidth"/>
+        <attr name="carbon_maxHeight"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -1030,6 +1085,9 @@
         <attr name="carbon_headerParallax"/>
         <attr name="android:divider"/>
         <attr name="android:dividerHeight"/>
+
+        <attr name="carbon_stroke"/>
+        <attr name="carbon_strokeWidth"/>
 
         <attr name="edgeEffectOffsetTop" format="dimension"/>
         <attr name="edgeEffectOffsetBottom" format="dimension"/>

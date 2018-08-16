@@ -29,7 +29,6 @@ import android.os.Parcelable;
 import android.support.v4.internal.view.SupportMenu;
 import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.appcompat.R;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.view.menu.MenuPresenter;
 import android.util.SparseArray;
@@ -131,6 +130,11 @@ public class Menu implements SupportMenu {
     private boolean mOptionalIconsVisible = false;
 
     private ArrayList<MenuItem> mTempShortcutItemList = new ArrayList<>();
+
+    @Override
+    public void setGroupDividerEnabled(boolean b) {
+
+    }
 
     /**
      * Called by menu to notify of close and selection changes.
@@ -557,8 +561,7 @@ public class Menu implements SupportMenu {
 
     private void setShortcutsVisibleInner(boolean shortcutsVisible) {
         mShortcutsVisible = shortcutsVisible
-                && mResources.getConfiguration().keyboard != Configuration.KEYBOARD_NOKEYS
-                && mResources.getBoolean(R.bool.abc_config_showMenuShortcutsWhenKeyboardPresent);
+                && mResources.getConfiguration().keyboard != Configuration.KEYBOARD_NOKEYS;
     }
 
     /**

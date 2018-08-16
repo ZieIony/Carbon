@@ -388,7 +388,7 @@ public class CheckBox extends TextView implements Checkable {
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
-            out.writeValue(checked);
+            out.writeInt(checked.ordinal());
         }
 
         @Override

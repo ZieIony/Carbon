@@ -19,7 +19,7 @@ class TypedArrayCompat {
     private final static ITypedArray IMPL;
 
     static {
-        if (Carbon.IS_LOLLIPOP) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             IMPL = new TypedArrayLollipop();
         } else {
             IMPL = new BaseTypedArray();

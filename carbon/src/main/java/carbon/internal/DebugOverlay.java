@@ -340,7 +340,7 @@ public class DebugOverlay extends PopupWindow {
 
         void drawViewGroup(Canvas canvas, ViewGroup viewGroup) {
             drawView(canvas, viewGroup);
-            canvas.save(Canvas.CLIP_SAVE_FLAG);
+            canvas.save();
 
             int[] l = new int[2];
             viewGroup.getLocationOnScreen(l);

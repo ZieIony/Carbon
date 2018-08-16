@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -90,7 +91,7 @@ public class FlowLayout extends android.widget.FrameLayout
     private OnTouchListener onDispatchTouchListener;
 
     public FlowLayout(Context context) {
-        super(context, null, R.attr.carbon_flowLayoutStyle);
+        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_flowLayoutStyle);
         initFlowLayout(null, R.attr.carbon_flowLayoutStyle);
     }
 
@@ -145,7 +146,9 @@ public class FlowLayout extends android.widget.FrameLayout
     };
     private static int[] elevationIds = new int[]{
             R.styleable.FlowLayout_carbon_elevation,
-            R.styleable.FlowLayout_carbon_elevationShadowColor
+            R.styleable.FlowLayout_carbon_elevationShadowColor,
+            R.styleable.FlowLayout_carbon_elevationAmbientShadowColor,
+            R.styleable.FlowLayout_carbon_elevationSpotShadowColor
     };
 
     private void initFlowLayout(AttributeSet attrs, int defStyleAttr) {
@@ -194,7 +197,7 @@ public class FlowLayout extends android.widget.FrameLayout
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
         finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
-        if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.setDuration(Carbon.getDefaultRevealDuration());
             return circularReveal;
@@ -245,11 +248,11 @@ public class FlowLayout extends android.widget.FrameLayout
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
+        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save();
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
                 dispatchDrawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -295,7 +298,7 @@ public class FlowLayout extends android.widget.FrameLayout
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -387,7 +390,7 @@ public class FlowLayout extends android.widget.FrameLayout
     private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Carbon.IS_LOLLIPOP && renderingMode == RenderingMode.Auto) {
+            if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
@@ -395,7 +398,7 @@ public class FlowLayout extends android.widget.FrameLayout
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else if (Carbon.IS_LOLLIPOP) {
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
@@ -431,11 +434,11 @@ public class FlowLayout extends android.widget.FrameLayout
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
-                int saveCount2 = canvas.save(Canvas.CLIP_SAVE_FLAG);
+                int saveCount2 = canvas.save();
                 canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
                 drawInternal(canvas);
                 canvas.restoreToCount(saveCount2);
@@ -451,6 +454,7 @@ public class FlowLayout extends android.widget.FrameLayout
             paint.setXfermode(null);
 
             canvas.restoreToCount(saveCount);
+            paint.setXfermode(null);
         } else {
             drawInternal(canvas);
         }
@@ -489,6 +493,8 @@ public class FlowLayout extends android.widget.FrameLayout
         if (newRipple != null) {
             newRipple.setCallback(this);
             newRipple.setBounds(0, 0, getWidth(), getHeight());
+            newRipple.setState(getDrawableState());
+            ((Drawable) newRipple).setVisible(getVisibility() == VISIBLE, false);
             if (newRipple.getStyle() == RippleDrawable.Style.Background)
                 super.setBackgroundDrawable((Drawable) newRipple);
         }
@@ -586,8 +592,8 @@ public class FlowLayout extends android.widget.FrameLayout
     private float elevation = 0;
     private float translationZ = 0;
     private Shadow ambientShadow, spotShadow;
-    private ColorStateList shadowColor;
-    private PorterDuffColorFilter shadowColorFilter;
+    private ColorStateList ambientShadowColor, spotShadowColor;
+    private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
     private RectF shadowMaskRect = new RectF();
 
     @Override
@@ -597,8 +603,11 @@ public class FlowLayout extends android.widget.FrameLayout
 
     @Override
     public void setElevation(float elevation) {
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setElevation(elevation);
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
             } else {
@@ -619,8 +628,10 @@ public class FlowLayout extends android.widget.FrameLayout
     public void setTranslationZ(float translationZ) {
         if (translationZ == this.translationZ)
             return;
-        if (Carbon.IS_LOLLIPOP) {
-            if (shadowColor == null && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setTranslationZ(translationZ);
+        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
                 super.setTranslationZ(translationZ);
             } else {
                 super.setTranslationZ(0);
@@ -684,13 +695,13 @@ public class FlowLayout extends android.widget.FrameLayout
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop());
         canvas.concat(matrix);
-        ambientShadow.draw(canvas, this, paint, shadowColorFilter);
+        ambientShadow.draw(canvas, this, paint, ambientShadowColorFilter);
         canvas.restore();
 
         canvas.save();
         canvas.translate(this.getLeft(), this.getTop() + z / 2);
         canvas.concat(matrix);
-        spotShadow.draw(canvas, this, paint, shadowColorFilter);
+        spotShadow.draw(canvas, this, paint, spotShadowColorFilter);
         canvas.restore();
 
         if (saveCount != 0) {
@@ -713,23 +724,67 @@ public class FlowLayout extends android.widget.FrameLayout
 
     @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
-        this.shadowColor = shadowColor;
-        shadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
+        ambientShadowColor = spotShadowColor = shadowColor;
+        ambientShadowColorFilter = spotShadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public void setElevationShadowColor(int color) {
-        shadowColor = ColorStateList.valueOf(color);
-        shadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        ambientShadowColor = spotShadowColor = ColorStateList.valueOf(color);
+        ambientShadowColorFilter = spotShadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
 
     @Override
     public ColorStateList getElevationShadowColor() {
-        return shadowColor;
+        return ambientShadowColor;
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(int color) {
+        setOutlineAmbientShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineAmbientShadowColor(ColorStateList color) {
+        ambientShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineAmbientShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            ambientShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineAmbientShadowColor() {
+        return ambientShadowColor.getDefaultColor();
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(int color) {
+        setOutlineSpotShadowColor(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public void setOutlineSpotShadowColor(ColorStateList color) {
+        spotShadowColor = color;
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            super.setOutlineSpotShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
+        } else {
+            spotShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+            setElevation(elevation);
+            setTranslationZ(translationZ);
+        }
+    }
+
+    @Override
+    public int getOutlineSpotShadowColor() {
+        return spotShadowColor.getDefaultColor();
     }
 
 
@@ -770,6 +825,7 @@ public class FlowLayout extends android.widget.FrameLayout
     }
 
     final RectF tmpHitRect = new RectF();
+
     public void getHitRect(@NonNull Rect outRect) {
         Matrix matrix = getMatrix();
         if (matrix.isIdentity()) {
@@ -805,6 +861,10 @@ public class FlowLayout extends android.widget.FrameLayout
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
+        if (ambientShadow != null && ambientShadowColor != null)
+            ambientShadowColorFilter = new PorterDuffColorFilter(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
+        if (spotShadow != null && spotShadowColor != null)
+            spotShadowColorFilter = new PorterDuffColorFilter(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
     }
 
 
