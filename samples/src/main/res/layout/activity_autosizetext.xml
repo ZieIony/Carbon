@@ -7,27 +7,31 @@
 
     <include layout="@layout/view_debugtoolbar"/>
 
-    <tk.zielony.carbonsamples.feature.ResizeLayout
+    <carbon.widget.FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
+
+        <tk.zielony.carbonsamples.feature.ResizeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <carbon.widget.TextView
+                android:id="@+id/autoSizeText"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/carbon_grey_800"
+                android:text="Apple pie donut fruitcake sugar plum jelly beans topping macaroon biscuit donut. Gingerbread sugar plum gummi bears soufflé brownie powder liquorice."
+                android:textColor="@color/carbon_textColorPrimary_dark"
+                app:carbon_autoSizeMaxTextSize="30sp"
+                app:carbon_autoSizeMinTextSize="15sp"
+                app:carbon_autoSizeText="uniform"/>
+
+        </tk.zielony.carbonsamples.feature.ResizeLayout>
 
         <carbon.widget.TextView
-            android:id="@+id/autoSizeText"
+            android:id="@+id/textSize"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/carbon_grey_800"
-            android:text="Apple pie donut fruitcake sugar plum jelly beans topping macaroon biscuit donut. Gingerbread sugar plum gummi bears soufflé brownie powder liquorice."
-            android:textColor="@color/carbon_textColorPrimary_dark"
-            app:carbon_autoSizeMaxTextSize="30sp"
-            app:carbon_autoSizeMinTextSize="15sp"
-            app:carbon_autoSizeText="uniform"/>
-
-    </tk.zielony.carbonsamples.feature.ResizeLayout>
-
-    <carbon.widget.TextView
-        android:id="@+id/textSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"/>
+    </carbon.widget.FrameLayout>
 </carbon.widget.LinearLayout>

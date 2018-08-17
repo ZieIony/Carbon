@@ -364,7 +364,7 @@ public class Button extends android.widget.Button
     private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
+            if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
             } else {
@@ -1307,7 +1307,8 @@ public class Button extends android.widget.Button
         this.renderingMode = mode;
         setElevation(elevation);
         setTranslationZ(translationZ);
-        updateCorners();
+        if (getWidth() > 0 && getHeight() > 0)
+            updateCorners();
     }
 
     @Override

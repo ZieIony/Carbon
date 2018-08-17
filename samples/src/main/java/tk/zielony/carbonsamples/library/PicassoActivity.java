@@ -1,5 +1,6 @@
 package tk.zielony.carbonsamples.library;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.squareup.picasso.Picasso;
@@ -20,8 +21,12 @@ public class PicassoActivity extends SamplesActivity {
 
         final PicassoView image = findViewById(R.id.image);
         Button button = findViewById(R.id.button);
-        button.clicks().subscribe(view -> {
-            Picasso.with(PicassoActivity.this).load("http://lorempixel.com/" + image.getWidth() + "/" + image.getHeight() + "/people/#" + System.currentTimeMillis()).into((Target) image);
+        button.setOnClickListener(view -> {
+            Picasso.with(PicassoActivity.this)
+                    .load("http://lorempixel.com/" + image.getWidth() + "/" + image.getHeight() + "/people/#" + System.currentTimeMillis())
+                    .placeholder(new ColorDrawable(0x00000000))
+                    .error(new ColorDrawable(0x00000000))
+                    .into((Target) image);
         });
     }
 }

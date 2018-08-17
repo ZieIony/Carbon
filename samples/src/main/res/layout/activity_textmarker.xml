@@ -30,7 +30,7 @@
             app:carbon_text="I"
             app:carbon_textView="@+id/textView1"/>
 
-        <TextView
+        <carbon.widget.TextView
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             app:carbon_text="I"
             app:carbon_textView="@+id/textView2"/>
 
-        <TextView
+        <carbon.widget.TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
