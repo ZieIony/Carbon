@@ -31,7 +31,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -266,6 +265,8 @@ public class ImageView extends android.widget.ImageView
      * @param cornerRadius
      */
     public void setCornerRadius(float cornerRadius) {
+        if (!Carbon.IS_LOLLIPOP_OR_HIGHER && cornerRadius != this.cornerRadius)
+            postInvalidate();
         this.cornerRadius = cornerRadius;
         if (getWidth() > 0 && getHeight() > 0)
             updateCorners();
@@ -290,6 +291,8 @@ public class ImageView extends android.widget.ImageView
     private void updateCorners() {
         if (cornerRadius > 0) {
             cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
+            if (cornerRadius < 1)
+                cornerRadius = 0;
             if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
                 setClipToOutline(true);
                 setOutlineProvider(ShadowShape.viewOutlineProvider);
@@ -298,8 +301,6 @@ public class ImageView extends android.widget.ImageView
                 cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
                 cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
             }
-        } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
-            setOutlineProvider(ViewOutlineProvider.BOUNDS);
         }
     }
 
@@ -434,7 +435,7 @@ public class ImageView extends android.widget.ImageView
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).invalidate();
 
-        if (getElevation() > 0 || getCornerRadius() > 0)
+        if (elevation > 0 || cornerRadius > 0)
             ((View) getParent()).invalidate();
     }
 
@@ -457,7 +458,7 @@ public class ImageView extends android.widget.ImageView
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
-        if (getElevation() > 0 || getCornerRadius() > 0)
+        if (elevation > 0 || cornerRadius > 0)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
