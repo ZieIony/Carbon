@@ -121,19 +121,26 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
             pages = 5;
         }
         paint.setStyle(Paint.Style.STROKE);
-        int color = getTint().getColorForState(getDrawableState(), getTint().getDefaultColor());
-        paint.setColor(color);
         float radius = getHeight() / 2.0f - 1;
         if (pages > 1) {
+            int color = getTint().getColorForState(new int[]{isEnabled() ? android.R.attr.state_enabled : -android.R.attr.state_enabled}, getTint().getDefaultColor());
+            paint.setColor(color);
             for (int i = 0; i < pages; i++)
                 canvas.drawCircle(getHeight() / 2.0f + (getWidth() - getHeight()) * i / (pages - 1), getHeight() / 2.0f, radius, paint);
             paint.setStyle(Paint.Style.FILL);
+
+            color = getTint().getColorForState(isEnabled() ?
+                    new int[]{android.R.attr.state_selected, android.R.attr.state_enabled} :
+                    new int[]{-android.R.attr.state_selected}, getTint().getDefaultColor());
+            paint.setColor(color);
             float frac = (float) (indicatorPos - Math.floor(indicatorPos));
             paint.setAlpha((int) ((1 - frac) * Color.alpha(color)));
             canvas.drawCircle((float) (getHeight() / 2.0f + (getWidth() - getHeight()) * Math.floor(indicatorPos) / (pages - 1)), getHeight() / 2.0f, radius, paint);
             paint.setAlpha((int) (frac * Color.alpha(color)));
             canvas.drawCircle((float) (getHeight() / 2.0f + (getWidth() - getHeight()) * Math.ceil(indicatorPos) / (pages - 1)), getHeight() / 2.0f, radius, paint);
         } else {
+            int color = getTint().getColorForState(new int[android.R.attr.state_selected], getTint().getDefaultColor());
+            paint.setColor(color);
             paint.setStyle(Paint.Style.FILL);
             canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, radius, paint);
         }

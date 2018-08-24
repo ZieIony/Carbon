@@ -395,7 +395,7 @@
     </style>
 
     <style name="carbon_ViewPagerIndicator">
-        <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
     </style>
 
     <style name="carbon_ScrollView">
