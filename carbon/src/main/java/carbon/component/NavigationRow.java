@@ -18,6 +18,6 @@ public class NavigationRow extends DataBindingComponent<MenuItem> {
         ImageView itemIcon = ((CarbonNavigationRowBinding) this.getBinding()).carbonItemIcon;
         itemIcon.setImageDrawable(data.getIcon(getView().getContext()));
         if (data.getIconTint() != null)
-            itemIcon.setTint(data.getIconTint());
+            itemIcon.setTintList(data.getIconTint());
     }
 }

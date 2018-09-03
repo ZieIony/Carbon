@@ -1157,11 +1157,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         ViewCompat.postInvalidateOnAnimation(this);
     };
 
-    @Deprecated
-    public void setTint(ColorStateList list) {
-        setTintList(list);
-    }
-
     @Override
     public void setTintList(ColorStateList list) {
         this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
@@ -1170,7 +1165,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     @Override
     public void setTint(int color) {
-        setTint(ColorStateList.valueOf(color));
+        setTintList(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -1203,11 +1198,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         return tintMode;
     }
 
-    @Deprecated
-    public void setBackgroundTint(ColorStateList list) {
-        setBackgroundTintList(list);
-    }
-
     @Override
     public void setBackgroundTintList(ColorStateList list) {
         this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
@@ -1216,7 +1206,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     @Override
     public void setBackgroundTint(int color) {
-        setBackgroundTint(ColorStateList.valueOf(color));
+        setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
     @Override
@@ -1253,9 +1243,9 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
         this.animateColorChanges = animateColorChanges;
         if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTint(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
+            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
         if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTint(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
     }
 
 

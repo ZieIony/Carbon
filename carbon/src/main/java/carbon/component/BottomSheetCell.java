@@ -18,6 +18,6 @@ public class BottomSheetCell extends DataBindingComponent<MenuItem> {
         ImageView itemIcon = ((CarbonBottomsheetCellBinding) this.getBinding()).carbonItemIcon;
         itemIcon.setImageDrawable(data.getIcon(getView().getContext()));
         if (data.getIconTint() != null)
-            itemIcon.setTint(data.getIconTint());
+            itemIcon.setTintList(data.getIconTint());
     }
 }

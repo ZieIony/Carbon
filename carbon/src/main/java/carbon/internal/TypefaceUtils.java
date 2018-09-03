@@ -67,20 +67,6 @@ public class TypefaceUtils {
         return Typeface.DEFAULT;
     }
 
-    @Deprecated
-    public static Typeface getTypeface(Context context, Roboto roboto) {
-        // get from cache
-        Typeface t = pathCache.get(roboto.getPath());
-        if (t != null)
-            return t;
-
-        t = loadRoboto(context, roboto);
-        if (t != null)
-            return t;
-
-        return Typeface.DEFAULT;
-    }
-
     private static Typeface loadRoboto(Context context, Roboto roboto) {
         // try to load asset
         try {

@@ -16,9 +16,6 @@
         <attr name="carbon_iconColor" format="reference|color"/>
         <attr name="carbon_iconColorInverse" format="reference|color"/>
 
-        <!-- {@deprecated Use DebugLayout instead.} -->
-        <attr name="carbon_debugMode" format="boolean"/>
-
         <attr name="carbon_widthPercent" format="fraction|reference"/>
         <attr name="carbon_heightPercent" format="fraction|reference"/>
         <attr name="carbon_marginPercent" format="fraction|reference"/>
@@ -870,9 +867,6 @@
 
         <attr name="carbon_error" format="string"/>
 
-        <!-- @Deprecated -->
-        <attr name="carbon_errorMessage" format="string"/>
-
         <attr name="carbon_errorMode" format="enum">
             <enum name="whenInvalid" value="0"/>
             <enum name="always" value="1"/>
@@ -1091,16 +1085,6 @@
 
         <attr name="edgeEffectOffsetTop" format="dimension"/>
         <attr name="edgeEffectOffsetBottom" format="dimension"/>
-    </declare-styleable>
-
-    <!-- {@deprecated Use CheckBox instead.} -->
-    <declare-styleable name="CheckedTextView">
-        <attr name="carbon_theme"/>
-
-        <attr name="android:drawablePadding"/>
-        <attr name="android:checked"/>
-
-        <attr name="carbon_htmlText"/>
     </declare-styleable>
 
     <attr name="carbon_buttonGravity" format="enum">

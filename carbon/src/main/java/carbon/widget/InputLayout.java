@@ -16,7 +16,6 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.drawable.DefaultAccentColorStateList;
-import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.internal.TypefaceUtils;
 import carbon.view.InputView;
 
@@ -134,8 +133,7 @@ public class InputLayout extends RelativeLayout {
             }
         }
 
-        String error = a.getString(R.styleable.InputLayout_carbon_error);
-        setError(error == null ? a.getString(R.styleable.InputLayout_carbon_errorMessage) : error);
+        setError(a.getString(R.styleable.InputLayout_carbon_error));
         setErrorMode(ErrorMode.values()[a.getInt(R.styleable.InputLayout_carbon_errorMode, ErrorMode.WhenInvalid.ordinal())]);
 
         setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.InputLayout_carbon_labelStyle, LabelStyle.Floating.ordinal())]);
@@ -291,17 +289,6 @@ public class InputLayout extends RelativeLayout {
     public void setErrorMode(@NonNull ErrorMode errorMode) {
         this.errorMode = errorMode;
         errorTextView.setVisibility(errorMode == ErrorMode.WhenInvalid ? INVISIBLE : errorMode == ErrorMode.Always ? VISIBLE : GONE);
-    }
-
-    /**
-     * Deprecated use {@link carbon.widget.InputLayout.setErrorMode} instead.
-     *
-     * @param errorVisible true to make error messages show when the underlying InputView is
-     *                     invalid
-     */
-    @Deprecated
-    public void setErrorEnabled(boolean errorVisible) {
-        setErrorMode(errorVisible ? ErrorMode.WhenInvalid : ErrorMode.Never);
     }
 
     public float getErrorTextSize() {

@@ -2,7 +2,6 @@
 
     <style name="carbon_Theme.Light" parent="Theme.AppCompat.Light">
         <item name="carbon_colorError">#ffF44336</item>
-        <item name="carbon_debugMode">false</item>
 
         <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>

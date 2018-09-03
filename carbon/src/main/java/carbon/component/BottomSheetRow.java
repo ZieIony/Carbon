@@ -18,7 +18,7 @@ public class BottomSheetRow extends DataBindingComponent<MenuItem> {
         ImageView itemIcon = ((CarbonBottomsheetRowBinding) this.getBinding()).carbonItemIcon;
         itemIcon.setImageDrawable(data.getIcon(getView().getContext()));
         if (data.getIconTint() != null)
-            itemIcon.setTint(data.getIconTint());
+            itemIcon.setTintList(data.getIconTint());
     }
 
 }

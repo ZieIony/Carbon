@@ -45,7 +45,7 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:gravity="right"
                 app:carbon_actionButton="clear"
-                app:carbon_errorMessage="it's not an email"
+                app:carbon_error="it's not an email"
                 app:carbon_errorMode="whenInvalid"
                 app:carbon_label="email"
                 app:carbon_labelStyle="persistent">

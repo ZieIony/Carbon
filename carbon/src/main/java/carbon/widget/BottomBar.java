@@ -78,7 +78,7 @@ public class BottomBar extends FrameLayout {
                     listener.onMenuItemClick(item);
             });
             ImageView icon = view.findViewById(R.id.carbon_bottomIcon);
-            icon.setTint(new DefaultColorStateList(getContext()));
+            icon.setTintList(new DefaultColorStateList(getContext()));
             icon.setImageDrawable(item.getIcon());
             TextView text = view.findViewById(R.id.carbon_bottomText);
             text.setTextColor(new DefaultColorStateList(getContext()));

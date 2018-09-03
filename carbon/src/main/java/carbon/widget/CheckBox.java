@@ -212,14 +212,21 @@ public class CheckBox extends TextView implements Checkable {
         this.buttonGravity = buttonGravity;
     }
 
+    @Override
+    public void setTintList(ColorStateList list) {
+        super.setTintList(list);
+        applyButtonTint();
+    }
+
+    @Deprecated
     public void setTint(@Nullable ColorStateList list) {
-        super.setTint(list);
+        super.setTintList(list);
         applyButtonTint();
     }
 
     @Override
     public void setTint(int color) {
-        setTint(ColorStateList.valueOf(color));
+        setTintList(ColorStateList.valueOf(color));
     }
 
     public void setTintMode(@NonNull PorterDuff.Mode mode) {

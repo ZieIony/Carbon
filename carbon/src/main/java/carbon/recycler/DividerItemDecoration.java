@@ -119,11 +119,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    @Deprecated
-    public void setDrawRules(DrawRules drawRules) {
-        setDrawAfter(drawRules);
-    }
-
     public void setDrawAfter(DrawRules drawRules) {
         this.drawAfterRules = drawRules;
     }

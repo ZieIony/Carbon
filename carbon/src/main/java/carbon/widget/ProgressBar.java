@@ -141,7 +141,7 @@ public class ProgressBar extends View {
             }
         } else {
             if (drawable != null)
-                drawable.setTint(null);
+                drawable.setTintList(null);
         }
     }
 }

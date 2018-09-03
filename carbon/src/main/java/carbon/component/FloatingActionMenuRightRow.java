@@ -18,7 +18,7 @@ public class FloatingActionMenuRightRow extends DataBindingComponent<MenuItem> {
         FloatingActionButton fab = ((CarbonFloatingactionmenuRightBinding) this.getBinding()).carbonFab;
         fab.setImageDrawable(data.getIcon(getView().getContext()));
         if (data.getIconTint() != null)
-            fab.setTint(data.getIconTint());
+            fab.setTintList(data.getIconTint());
         if (data.getBackgroundDrawable() != null)
             fab.setBackgroundDrawable(data.getBackgroundDrawable());
     }

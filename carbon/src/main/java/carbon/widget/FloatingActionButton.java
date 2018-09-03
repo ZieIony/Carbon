@@ -2,7 +2,6 @@ package carbon.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -96,11 +95,6 @@ public class FloatingActionButton extends ImageView {
     public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener) {
         if (floatingActionMenu != null)
             floatingActionMenu.setOnMenuItemClickListener(listener);
-    }
-
-    @Override
-    public void setBackgroundTint(int color) {
-        setBackgroundTint(ColorStateList.valueOf(color));
     }
 
 }
