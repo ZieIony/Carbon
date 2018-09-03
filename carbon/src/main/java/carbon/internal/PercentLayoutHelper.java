@@ -19,7 +19,6 @@ package carbon.internal;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.MarginLayoutParamsCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -270,14 +269,14 @@ public class PercentLayoutHelper {
     }
 
     private static boolean shouldHandleMeasuredWidthTooSmall(View view, PercentLayoutInfo info) {
-        int state = ViewCompat.getMeasuredWidthAndState(view) & ViewCompat.MEASURED_STATE_MASK;
-        return state == ViewCompat.MEASURED_STATE_TOO_SMALL && info.widthPercent >= 0 &&
+        int state = view.getMeasuredWidthAndState() & View.MEASURED_STATE_MASK;
+        return state == View.MEASURED_STATE_TOO_SMALL && info.widthPercent >= 0 &&
                 info.mPreservedParams.width == ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 
     private static boolean shouldHandleMeasuredHeightTooSmall(View view, PercentLayoutInfo info) {
-        int state = ViewCompat.getMeasuredHeightAndState(view) & ViewCompat.MEASURED_STATE_MASK;
-        return state == ViewCompat.MEASURED_STATE_TOO_SMALL && info.heightPercent >= 0 &&
+        int state = view.getMeasuredHeightAndState() & View.MEASURED_STATE_MASK;
+        return state == View.MEASURED_STATE_TOO_SMALL && info.heightPercent >= 0 &&
                 info.mPreservedParams.height == ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 

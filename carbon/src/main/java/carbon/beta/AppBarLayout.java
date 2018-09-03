@@ -30,7 +30,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
