@@ -6,10 +6,11 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 
 import carbon.Carbon;
+import carbon.view.CornersView;
 import carbon.view.RoundedCornersView;
 
 public enum ShadowShape {
-    RECT, ROUND_RECT, CIRCLE;
+    RECT, ROUND_RECT, CIRCLE, CONVEX_PATH;
 
     public static ViewOutlineProvider viewOutlineProvider;
 
@@ -26,6 +27,8 @@ public enum ShadowShape {
                         outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), ((RoundedCornersView) view).getCornerRadius());
                     } else if (shadowShape == CIRCLE) {
                         outline.setOval(0, 0, view.getWidth(), view.getHeight());
+                    }else{
+                        outline.setConvexPath(((CornersView) view).getCorners().getPath(view.getWidth(), view.getHeight()));
                     }
                 }
             };

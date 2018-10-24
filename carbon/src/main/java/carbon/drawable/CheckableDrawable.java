@@ -20,6 +20,7 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.util.Log;
 
 import com.caverock.androidsvg.SVG;
@@ -28,7 +29,7 @@ import com.caverock.androidsvg.SVGParseException;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 
-public class CheckableDrawable extends Drawable {
+public class CheckableDrawable extends Drawable implements TintAwareDrawable {
 
     private float currRadius;
     private int currAnim;

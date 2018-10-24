@@ -47,6 +47,8 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.Menu;
 import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
+import carbon.view.Corners;
+import carbon.view.CornersView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
 import carbon.view.StateAnimatorView;
@@ -357,6 +359,36 @@ public class Carbon {
         if (color != null)
             strokeView.setStroke(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate()));
         strokeView.setStrokeWidth(a.getDimension(carbon_strokeWidth, 0));
+    }
+
+    public static void initCornerCutRadius(CornersView roundedCornersView, TypedArray a, int[] ids) {
+        int carbon_cornerRadiusTopStart = ids[0];
+        int carbon_cornerRadiusTopEnd = ids[1];
+        int carbon_cornerRadiusBottomStart = ids[2];
+        int carbon_cornerRadiusBottomEnd = ids[3];
+        int carbon_cornerRadius = ids[4];
+        int carbon_cornerCutTopStart = ids[5];
+        int carbon_cornerCutTopEnd = ids[6];
+        int carbon_cornerCutBottomStart = ids[7];
+        int carbon_cornerCutBottomEnd = ids[8];
+        int carbon_cornerCut = ids[9];
+
+        Corners corners = new Corners();
+        float cornerRadius = a.getDimension(carbon_cornerRadius, 0);
+        float cornerRadiusTopStart = a.getDimension(carbon_cornerRadiusTopStart, cornerRadius);
+        float cornerRadiusTopEnd = a.getDimension(carbon_cornerRadiusTopEnd, cornerRadius);
+        float cornerRadiusBottomStart = a.getDimension(carbon_cornerRadiusBottomStart, cornerRadius);
+        float cornerRadiusBottomEnd = a.getDimension(carbon_cornerRadiusBottomEnd, cornerRadius);
+        float cornerCut = a.getDimension(carbon_cornerCut, 0);
+        float cornerCutTopStart = a.getDimension(carbon_cornerCutTopStart, cornerCut);
+        float cornerCutTopEnd = a.getDimension(carbon_cornerCutTopEnd, cornerCut);
+        float cornerCutBottomStart = a.getDimension(carbon_cornerCutBottomStart, cornerCut);
+        float cornerCutBottomEnd = a.getDimension(carbon_cornerCutBottomEnd, cornerCut);
+        corners.setTopStart(Math.max(cornerCutTopStart, cornerRadiusTopStart), cornerCutTopStart >= cornerRadiusTopStart);
+        corners.setTopEnd(Math.max(cornerCutTopEnd, cornerRadiusTopEnd), cornerCutTopEnd >= cornerRadiusTopEnd);
+        corners.setBottomStart(Math.max(cornerCutBottomStart, cornerRadiusBottomStart), cornerCutBottomStart >= cornerRadiusBottomStart);
+        corners.setBottomEnd(Math.max(cornerCutBottomEnd, cornerRadiusBottomEnd), cornerCutBottomEnd >= cornerRadiusBottomEnd);
+        roundedCornersView.setCorners(corners);
     }
 
     public static void initAutoSizeText(AutoSizeTextView view, TypedArray a, int[] ids) {

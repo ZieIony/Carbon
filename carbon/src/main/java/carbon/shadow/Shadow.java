@@ -9,6 +9,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.view.View;
 
+import carbon.view.Corners;
+
 public class Shadow {
     public static final int ALPHA = 47;
 
@@ -21,18 +23,18 @@ public class Shadow {
     private int[] xDivDst;
     private int[] yDivDst;
     public float elevation;
-    public int cornerRadius;
+    public Corners corners;
     private float scale;
 
     public static final PorterDuffColorFilter DEFAULT_FILTER = new PorterDuffColorFilter(0xff000000, PorterDuff.Mode.MULTIPLY);
 
-    public Shadow(Bitmap bitmap, float elevation, int cornerRadius, float scale) {
+    public Shadow(Bitmap bitmap, float elevation, Corners corners, float scale) {
         this.scale = scale;
         this.bitmap = bitmap;
         this.elevation = elevation;
 
         e = (int) (Math.ceil(elevation));
-        this.cornerRadius = cornerRadius;
+        this.corners = corners;
         xDiv = new int[]{0, e + cornerRadius, bitmap.getWidth() - e - cornerRadius, bitmap.getWidth()};
         yDiv = new int[]{0, e + cornerRadius, bitmap.getHeight() - e - cornerRadius, bitmap.getHeight()};
         xDivDst = new int[]{(int) (-e * scale), (int) (cornerRadius * scale), 0, 0};
@@ -62,6 +64,6 @@ public class Shadow {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Shadow && elevation == ((Shadow) o).elevation && cornerRadius == ((Shadow) o).cornerRadius;
+        return o instanceof Shadow && elevation == ((Shadow) o).elevation && corners.equals(((Shadow) o).corners);
     }
 }

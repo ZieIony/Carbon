@@ -13,6 +13,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -33,39 +34,44 @@ public class CheckBox extends TextView implements Checkable {
     private float drawablePadding;
     private ButtonGravity buttonGravity;
 
-    CheckableDrawable.CheckedState checkedState;
+    CheckableDrawable.CheckedState checkedState = CheckableDrawable.CheckedState.UNCHECKED;
 
     public CheckBox(Context context) {
         super(context, null, android.R.attr.checkboxStyle);
-        initCheckBox(null, android.R.attr.checkboxStyle);
+        initCheckBox(null, android.R.attr.checkboxStyle, R.style.carbon_CheckBox);
     }
 
     public CheckBox(Context context, AttributeSet attrs) {
         super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, android.R.attr.checkboxStyle, R.styleable.CheckBox_carbon_theme), attrs, android.R.attr.checkboxStyle);
-        initCheckBox(attrs, android.R.attr.checkboxStyle);
+        initCheckBox(attrs, android.R.attr.checkboxStyle, R.style.carbon_CheckBox);
     }
 
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_carbon_theme), attrs, defStyleAttr);
-        initCheckBox(attrs, defStyleAttr);
+        initCheckBox(attrs, defStyleAttr, R.style.carbon_CheckBox);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_carbon_theme), attrs, defStyleAttr, defStyleRes);
-        initCheckBox(attrs, defStyleAttr);
+        initCheckBox(attrs, defStyleAttr, defStyleRes);
     }
 
-    public void initCheckBox(AttributeSet attrs, int defStyleAttr) {
+    public void initCheckBox(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, defStyleRes);
+
+        int drawableId = a.getResourceId(R.styleable.CheckBox_android_button, R.drawable.carbon_defaultdrawable);
         Drawable d;
-        if (!isInEditMode()) {
-            d = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
+        if (drawableId == R.drawable.carbon_defaultdrawable) {
+            if (!isInEditMode()) {
+                d = new CheckableDrawable(getContext(), R.raw.carbon_checkbox_checked, R.raw.carbon_checkbox_unchecked, R.raw.carbon_checkbox_filled, new PointF(-0.09f, 0.11f));
+            } else {
+                d = getResources().getDrawable(android.R.drawable.checkbox_on_background);
+            }
         } else {
-            d = getResources().getDrawable(android.R.drawable.checkbox_on_background);
+            d = ContextCompat.getDrawable(getContext(), drawableId);
         }
         setButtonDrawable(d);
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, R.style.carbon_CheckBox);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
@@ -199,7 +205,7 @@ public class CheckBox extends TextView implements Checkable {
                 }
                 d.setVisible(getVisibility() == VISIBLE, false);
                 setMinHeight(d.getIntrinsicHeight());
-                applyButtonTint();
+                updateButtonTint();
             }
         }
     }
@@ -215,13 +221,13 @@ public class CheckBox extends TextView implements Checkable {
     @Override
     public void setTintList(ColorStateList list) {
         super.setTintList(list);
-        applyButtonTint();
+        updateButtonTint();
     }
 
     @Deprecated
     public void setTint(@Nullable ColorStateList list) {
         super.setTintList(list);
-        applyButtonTint();
+        updateButtonTint();
     }
 
     @Override
@@ -231,23 +237,24 @@ public class CheckBox extends TextView implements Checkable {
 
     public void setTintMode(@NonNull PorterDuff.Mode mode) {
         super.setTintMode(mode);
-        applyButtonTint();
+        updateButtonTint();
     }
 
-    private void applyButtonTint() {
-        if (drawable != null && getTint() != null && getTintMode() != null) {
+    private void updateButtonTint() {
+        if (drawable != null) {
             drawable = drawable.mutate();
 
-            if (!isInEditMode()) {
-                ((CheckableDrawable) drawable).setTintList(getTint());
-                ((CheckableDrawable) drawable).setTintMode(getTintMode());
+            if (tint != null && tintMode != null) {
+                Carbon.setTintList(drawable, tint);
+                Carbon.setTintMode(drawable, tintMode);
+            } else {
+                Carbon.setTintList(drawable, null);
             }
 
             // The drawable (or one of its children) may not have been
             // stateful before applying the tint, so let's try again.
-            if (drawable.isStateful()) {
+            if (drawable.isStateful())
                 drawable.setState(getDrawableState());
-            }
         }
     }
 
@@ -358,8 +365,6 @@ public class CheckBox extends TextView implements Checkable {
 
             // Set the state of the Drawable
             drawable.setState(myDrawableState);
-
-            invalidate();
         }
     }
 

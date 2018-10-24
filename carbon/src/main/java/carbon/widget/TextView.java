@@ -1181,16 +1181,23 @@ public class TextView extends android.widget.TextView
     private void updateTint() {
         Drawable[] drawables = getCompoundDrawables();
         if (tint != null && tintMode != null) {
-            for (Drawable d : drawables) {
-                if (d != null) {
-                    Carbon.setTintList(d, tint);
-                    Carbon.setTintMode(d, tintMode);
+            for (Drawable drawable : drawables) {
+                if (drawable != null) {
+                    Carbon.setTintList(drawable, tint);
+                    Carbon.setTintMode(drawable, tintMode);
+
+                    if (drawable.isStateful())
+                        drawable.setState(getDrawableState());
                 }
             }
         } else {
-            for (Drawable d : drawables) {
-                if (d != null)
-                    Carbon.setTintList(d, null);
+            for (Drawable drawable : drawables) {
+                if (drawable != null) {
+                    Carbon.setTintList(drawable, null);
+
+                    if (drawable.isStateful())
+                        drawable.setState(getDrawableState());
+                }
             }
         }
     }
@@ -1231,6 +1238,9 @@ public class TextView extends android.widget.TextView
 
         Carbon.setTintList(background, backgroundTint);
         Carbon.setTintMode(background, backgroundTintMode);
+
+        if (background.isStateful())
+            background.setState(getDrawableState());
     }
 
     @Override

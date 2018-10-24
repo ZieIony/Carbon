@@ -59,8 +59,9 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
+import carbon.view.Corners;
+import carbon.view.CornersView;
 import carbon.view.RevealView;
-import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
 import carbon.view.TintedView;
@@ -73,7 +74,18 @@ import carbon.view.VisibleView;
  */
 @SuppressLint("AppCompatCustomView")
 public class Button extends android.widget.Button
-        implements ShadowView, RippleView, TouchMarginView, StateAnimatorView, AnimatedView, RoundedCornersView, TintedView, StrokeView, AutoSizeTextView, RevealView, VisibleView {
+        implements
+        ShadowView,
+        RippleView,
+        TouchMarginView,
+        StateAnimatorView,
+        AnimatedView,
+        CornersView,
+        TintedView,
+        StrokeView,
+        AutoSizeTextView,
+        RevealView,
+        VisibleView {
 
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -139,6 +151,18 @@ public class Button extends android.widget.Button
             R.styleable.Button_carbon_stroke,
             R.styleable.Button_carbon_strokeWidth
     };
+    private static int[] cornerCutRadiusIds = new int[]{
+            R.styleable.Button_carbon_cornerRadiusTopStart,
+            R.styleable.Button_carbon_cornerRadiusTopEnd,
+            R.styleable.Button_carbon_cornerRadiusBottomStart,
+            R.styleable.Button_carbon_cornerRadiusBottomEnd,
+            R.styleable.Button_carbon_cornerRadius,
+            R.styleable.Button_carbon_cornerCutTopStart,
+            R.styleable.Button_carbon_cornerCutTopEnd,
+            R.styleable.Button_carbon_cornerCutBottomStart,
+            R.styleable.Button_carbon_cornerCutBottomEnd,
+            R.styleable.Button_carbon_cornerCut
+    };
     private static int[] elevationIds = new int[]{
             R.styleable.Button_carbon_elevation,
             R.styleable.Button_carbon_elevationShadowColor,
@@ -197,7 +221,7 @@ public class Button extends android.widget.Button
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initHtmlText(this, a, R.styleable.Button_carbon_htmlText);
         Carbon.initStroke(this, a, strokeIds);
-        setCornerRadius(a.getDimension(R.styleable.Button_carbon_cornerRadius, 0));
+        Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
         Carbon.initAutoSizeText(this, a, autoSizeTextIds);
 
         a.recycle();
@@ -358,7 +382,7 @@ public class Button extends android.widget.Button
     // corners
     // -------------------------------
 
-    private float cornerRadius;
+    private Corners corners;
     private Path cornersMask;
 
     /**
@@ -366,19 +390,39 @@ public class Button extends android.widget.Button
      *
      * @return corner radius, equal to or greater than 0.
      */
+    @Deprecated
+    @Override
     public float getCornerRadius() {
-        return cornerRadius;
+        return corners.getTopStart();
     }
+
+    public Corners getCorners() {
+        return corners;
+    }
+
 
     /**
      * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
      *
      * @param cornerRadius
      */
+    @Override
     public void setCornerRadius(float cornerRadius) {
-        if (!Carbon.IS_LOLLIPOP_OR_HIGHER && cornerRadius != this.cornerRadius)
+        setCorners(new Corners(cornerRadius, false));
+    }
+
+    @Override
+    public void setCornerCut(float cornerCut) {
+        setCorners(new Corners(cornerCut, true));
+    }
+
+    @Override
+    public void setCorners(Corners corners) {
+        if (this.corners != null && this.corners.equals(corners))
+            return;
+        if (!Carbon.IS_LOLLIPOP_OR_HIGHER)
             postInvalidate();
-        this.cornerRadius = cornerRadius;
+        this.corners = corners;
         if (getWidth() > 0 && getHeight() > 0)
             updateCorners();
     }
@@ -400,19 +444,12 @@ public class Button extends android.widget.Button
     }
 
     private void updateCorners() {
-        if (cornerRadius > 0) {
-            cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (cornerRadius < 1)
-                cornerRadius = 0;
-            if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
-                setClipToOutline(true);
-                setOutlineProvider(ShadowShape.viewOutlineProvider);
-            } else {
-                cornersMask = new Path();
-                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
-                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            }
+        if (!corners.isZero() && Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+            setClipToOutline(true);
+            setOutlineProvider(ShadowShape.viewOutlineProvider);
         }
+
+        cornersMask = corners.getPath(getWidth(), getHeight());
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
@@ -427,7 +464,7 @@ public class Button extends android.widget.Button
     @Override
     public void draw(@NonNull Canvas canvas) {
         boolean r = revealAnimator != null;
-        boolean c = cornerRadius > 0;
+        boolean c = !corners.isZero();
         if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
@@ -436,7 +473,7 @@ public class Button extends android.widget.Button
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
             Paint maskPaint = new Paint(0xffffffff);
-            maskCanvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, maskPaint);
+            maskCanvas.drawPath(cornersMask, maskPaint);
 
             for (int x = 0; x < getWidth(); x++) {
                 for (int y = 0; y < getHeight(); y++) {
@@ -445,7 +482,7 @@ public class Button extends android.widget.Button
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software || corners.getShape() == ShadowShape.CONVEX_PATH)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -458,11 +495,13 @@ public class Button extends android.widget.Button
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
-            paint.setXfermode(null);
+            paint.setXfermode(null);    // TODO check if this is needed
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -546,7 +585,7 @@ public class Button extends android.widget.Button
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).invalidate();
 
-        if (elevation > 0 || cornerRadius > 0)
+        if (elevation > 0 || corners != null)
             ((View) getParent()).invalidate();
     }
 
@@ -569,7 +608,7 @@ public class Button extends android.widget.Button
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
-        if (elevation > 0 || cornerRadius > 0)
+        if (elevation > 0 || corners != null)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
@@ -603,7 +642,6 @@ public class Button extends android.widget.Button
     private Shadow ambientShadow, spotShadow;
     private ColorStateList ambientShadowColor, spotShadowColor;
     private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
-    private RectF shadowMaskRect = new RectF();
 
     @Override
     public float getElevation() {
@@ -653,11 +691,7 @@ public class Button extends android.widget.Button
 
     @Override
     public ShadowShape getShadowShape() {
-        if (cornerRadius == getWidth() / 2 && getWidth() == getHeight())
-            return ShadowShape.CIRCLE;
-        if (cornerRadius > 0)
-            return ShadowShape.ROUND_RECT;
-        return ShadowShape.RECT;
+        return corners.getShape();
     }
 
     @Override
@@ -680,7 +714,7 @@ public class Button extends android.widget.Button
             return;
 
         float z = getElevation() + getTranslationZ();
-        if (ambientShadow == null || ambientShadow.elevation != z || ambientShadow.cornerRadius != cornerRadius) {
+        if (ambientShadow == null || ambientShadow.elevation != z || !ambientShadow.corners.equals(corners)) {
             ambientShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density / 4);
             spotShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
         }
@@ -719,8 +753,8 @@ public class Button extends android.widget.Button
             paint.setXfermode(Carbon.CLEAR_MODE);
         }
         if (maskShadow) {
-            shadowMaskRect.set(0, 0, getWidth(), getHeight());
-            canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
+            cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+            canvas.drawPath(cornersMask, paint);
         }
         if (r) {
             canvas.drawPath(revealAnimator.mask, paint);
@@ -1010,16 +1044,23 @@ public class Button extends android.widget.Button
     private void updateTint() {
         Drawable[] drawables = getCompoundDrawables();
         if (tint != null && tintMode != null) {
-            for (Drawable d : drawables) {
-                if (d != null) {
-                    Carbon.setTintList(d, tint);
-                    Carbon.setTintMode(d, tintMode);
+            for (Drawable drawable : drawables) {
+                if (drawable != null) {
+                    Carbon.setTintList(drawable, tint);
+                    Carbon.setTintMode(drawable, tintMode);
+
+                    if (drawable.isStateful())
+                        drawable.setState(getDrawableState());
                 }
             }
         } else {
-            for (Drawable d : drawables) {
-                if (d != null)
-                    Carbon.setTintList(d, null);
+            for (Drawable drawable : drawables) {
+                if (drawable != null) {
+                    Carbon.setTintList(drawable, null);
+
+                    if (drawable.isStateful())
+                        drawable.setState(getDrawableState());
+                }
             }
         }
     }
@@ -1060,6 +1101,9 @@ public class Button extends android.widget.Button
 
         Carbon.setTintList(background, backgroundTint);
         Carbon.setTintMode(background, backgroundTintMode);
+
+        if (background.isStateful())
+            background.setState(getDrawableState());
     }
 
     @Override
@@ -1095,13 +1139,12 @@ public class Button extends android.widget.Button
     private ColorStateList stroke;
     private float strokeWidth;
     private Paint strokePaint;
-    private RectF strokeRect;
 
     private void drawStroke(Canvas canvas) {
         strokePaint.setStrokeWidth(strokeWidth * 2);
         strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
-        strokeRect.set(0, 0, getWidth(), getHeight());
-        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+        cornersMask.setFillType(Path.FillType.WINDING);
+        canvas.drawPath(cornersMask, strokePaint);
     }
 
     @Override
@@ -1114,7 +1157,6 @@ public class Button extends android.widget.Button
         if (strokePaint == null) {
             strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             strokePaint.setStyle(Paint.Style.STROKE);
-            strokeRect = new RectF();
         }
     }
 

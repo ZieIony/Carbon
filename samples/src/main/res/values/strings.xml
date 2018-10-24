@@ -53,6 +53,7 @@
     <string name="powerMenuActivity_title">Power Menu</string>
     <string name="searchToolbarActivity_title">Search Toolbar</string>
     <string name="shareToolbarActivity_title">Share Toolbar</string>
+    <string name="backdropActivity_title">Backdrop</string>
     <string name="autoCompleteActivity_title">Auto Complete</string>
     <string name="quickReturnActivity_title">Quick Return</string>
     <string name="calculatorActivity_title">Calculator</string>

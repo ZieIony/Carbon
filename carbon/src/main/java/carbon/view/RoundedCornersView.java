@@ -21,4 +21,7 @@ public interface RoundedCornersView extends RenderingModeView {
      */
     void setCornerRadius(float cornerRadius);
 
+    /*void setCornerRadius(float topStart, float topEnd, float bottomStart, float bottomEnd);
+*/
+
 }

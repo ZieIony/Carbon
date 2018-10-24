@@ -37,7 +37,9 @@
                 android:tag="enable"
                 android:text="Shape"
                 android:textColor="@color/carbon_textColorPrimary_dark"
-                app:carbon_backgroundTint="@null"/>
+                app:carbon_backgroundTint="@null"
+                app:carbon_cornerRadius="0dp"
+                app:carbon_cornerRadiusTopStart="24dp"/>
 
             <carbon.widget.Button
                 style="@style/carbon_Button"
@@ -53,7 +55,7 @@
                 android:text="Inline Style"
                 android:textColor="#ff0000ff"
                 app:carbon_backgroundTint="@null"
-                app:carbon_cornerRadius="2dp"
+                app:carbon_cornerCut="4dp"
                 app:carbon_elevation="@dimen/carbon_elevationLow"
                 app:carbon_rippleColor="#40ff0000"
                 app:carbon_touchMarginBottom="6dp"
@@ -71,15 +73,32 @@
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_margin="@dimen/carbon_padding"
                 android:background="@color/carbon_white"
                 android:tag="enable"
                 android:text="Rounded with ripple"
                 android:textColor="@color/carbon_amber_700"
-                app:carbon_cornerRadius="100dp"
+                app:carbon_cornerRadius="18dp"
                 app:carbon_rippleColor="#40ff0000"
                 app:carbon_stroke="@color/carbon_amber_700"
+                app:carbon_strokeWidth="2dp"/>
+
+            <carbon.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_margin="@dimen/carbon_padding"
+                android:background="@drawable/randomdata_background0"
+                android:tag="enable"
+                android:text="Custom"
+                android:textColor="@color/carbon_white"
+                android:textSize="@dimen/carbon_textSizeHeadline"
+                app:carbon_cornerCutBottomStart="16dp"
+                app:carbon_cornerCutTopEnd="16dp"
+                app:carbon_cornerRadiusBottomEnd="8dp"
+                app:carbon_cornerRadiusTopStart="8dp"
+                app:carbon_rippleColor="#4000ff00"
+                app:carbon_stroke="@color/carbon_green_700"
                 app:carbon_strokeWidth="2dp"/>
 
             <carbon.widget.Divider
@@ -112,8 +131,8 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:padding="@dimen/carbon_padding"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_android_black_24dp"
-                android:tag="enable"/>
+                android:tag="enable"
+                app:srcCompat="@drawable/ic_android_black_24dp"/>
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>
 

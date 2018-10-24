@@ -3,11 +3,13 @@ package tk.zielony.carbonsamples
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
 
 abstract class SamplesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         applyTheme()
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         javaClass.getAnnotation(ActivityAnnotation::class.java)?.let {
             if (it.layout != 0)

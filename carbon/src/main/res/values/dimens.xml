@@ -114,6 +114,7 @@
     <dimen name="carbon_textSizeCaption">12sp</dimen>
     <dimen name="carbon_textSizeButton">14sp</dimen>
 
+    <dimen name="carbon_dividerWidth">1dp</dimen>
     <dimen name="carbon_dividerHeight">1dp</dimen>
 
     <dimen name="carbon_progressSize">40dp</dimen>

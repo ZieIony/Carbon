@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -14,7 +15,7 @@ import carbon.widget.ProgressBar;
 /**
  * Created by Mbarin on 2015-02-08.
  */
-public class CircularProgressDrawable extends ProgressDrawable {
+public class CircularProgressDrawable extends ProgressDrawable implements TintAwareDrawable {
     private static final long DEFAULT_SWEEP_DURATION = 3000;
     private static final long DEFAULT_ANGLE_DURATION = 1000;
     private long sweepDuration = DEFAULT_SWEEP_DURATION;

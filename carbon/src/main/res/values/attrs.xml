@@ -125,7 +125,18 @@
     <attr name="carbon_state_invalid" format="boolean"/>
     <attr name="carbon_state_indeterminate" format="boolean"/>
 
+    <attr name="carbon_cornerRadiusTopStart" format="dimension"/>
+    <attr name="carbon_cornerRadiusTopEnd" format="dimension"/>
+    <attr name="carbon_cornerRadiusBottomStart" format="dimension"/>
+    <attr name="carbon_cornerRadiusBottomEnd" format="dimension"/>
     <attr name="carbon_cornerRadius" format="dimension"/>
+
+    <attr name="carbon_cornerCutTopStart" format="dimension"/>
+    <attr name="carbon_cornerCutTopEnd" format="dimension"/>
+    <attr name="carbon_cornerCutBottomStart" format="dimension"/>
+    <attr name="carbon_cornerCutBottomEnd" format="dimension"/>
+    <attr name="carbon_cornerCut" format="dimension"/>
+
     <attr name="carbon_overScroll" format="enum">
         <enum name="always" value="0"/>
         <enum name="ifContentScrolls" value="1"/>
@@ -274,7 +285,18 @@
         <attr name="android:textAppearance"/>
         <attr name="android:textAllCaps"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
 
@@ -834,6 +856,9 @@
     </declare-styleable>
 
     <attr name="carbon_dividerStyle" format="reference"/>
+    <declare-styleable name="Divider">
+        <attr name="android:orientation"/>
+    </declare-styleable>
 
     <declare-styleable name="ProgressBar">
         <attr name="carbon_theme"/>
@@ -1107,6 +1132,7 @@
         <attr name="android:drawablePadding"/>
         <attr name="android:checked"/>
         <attr name="carbon_buttonGravity"/>
+        <attr name="android:button"/>
 
         <attr name="carbon_htmlText"/>
     </declare-styleable>
@@ -1117,6 +1143,7 @@
         <attr name="android:drawablePadding"/>
         <attr name="android:checked"/>
         <attr name="carbon_buttonGravity"/>
+        <attr name="android:button"/>
 
         <attr name="carbon_htmlText"/>
     </declare-styleable>

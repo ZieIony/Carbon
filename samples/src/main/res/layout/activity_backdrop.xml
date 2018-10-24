@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:background="?attr/colorPrimary">
+
+    <carbon.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/backdropActivity_title"
+        app:carbon_elevation="0dp"
+        app:carbon_icon="@raw/carbon_uparrow"/>
+
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/carbon_toolbarHeight"
+        android:background="?attr/carbon_colorBackground"
+        android:orientation="vertical"
+        app:carbon_cornerRadiusTopEnd="@dimen/carbon_margin"
+        app:carbon_cornerRadiusTopStart="@dimen/carbon_margin">
+
+        <carbon.widget.ExpansionPanel
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_listItemHeight"/>
+
+        <carbon.widget.Divider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginStart="@dimen/carbon_contentPadding"/>
+    </carbon.widget.LinearLayout>
+</carbon.widget.FrameLayout>

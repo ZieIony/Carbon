@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 ext {
-    supportLibVersion = '28.0.0-rc01'
+    supportLibVersion = '28.0.0-rc02'
 }
 
 android {

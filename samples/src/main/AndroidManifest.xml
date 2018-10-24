@@ -83,6 +83,7 @@
         <activity android:name=".demo.AutoCompleteActivity"/>
         <activity android:name=".demo.SearchToolbarActivity"/>
         <activity android:name=".demo.ShareToolbarActivity"/>
+        <activity android:name=".demo.BackdropActivity"/>
 
         <activity
             android:name=".guidelines.ButtonsUsageActivity"

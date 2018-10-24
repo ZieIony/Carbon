@@ -13,6 +13,8 @@ import android.view.View;
 
 import carbon.internal.MathUtils;
 import carbon.internal.WeakHashSet;
+import carbon.view.Corners;
+import carbon.view.CornersView;
 import carbon.view.RoundedCornersView;
 
 public class ShadowGenerator {
@@ -93,14 +95,14 @@ public class ShadowGenerator {
             }
         }
 
-        RoundedCornersView roundedCornersView = (RoundedCornersView) view;
+        CornersView roundedCornersView = (CornersView) view;
 
         int e = (int) Math.ceil(elevation);
-        int c = (int) Math.max(e, roundedCornersView.getCornerRadius());
+        Corners corners = roundedCornersView.getCorners();
 
         for (Object o : shadowSet) {
             Shadow s = (Shadow) o;
-            if (s != null && s.elevation == elevation && s.cornerRadius == c)
+            if (s != null && s.elevation == elevation && s.corners.equals(corners))
                 return s;
         }
 
@@ -117,7 +119,7 @@ public class ShadowGenerator {
 
         blur(bitmap, elevation);
 
-        Shadow shadow = new Shadow(bitmap, elevation, c, view.getContext().getResources().getDisplayMetrics().density);
+        Shadow shadow = new Shadow(bitmap, elevation, corners, view.getContext().getResources().getDisplayMetrics().density);
         shadowSet.add(shadow);
         return shadow;
     }

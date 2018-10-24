@@ -85,6 +85,57 @@
 
                 <carbon.widget.TextView
                     style="@style/sectionDescription"
+                    android:text="It's easy to combine RadioButtons, border and other features into a toggle group"/>
+
+                <carbon.widget.RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_margin"
+                    android:orientation="horizontal"
+                    app:carbon_cornerRadius="2dp"
+                    app:carbon_stroke="?attr/carbon_dividerColor"
+                    app:carbon_strokeWidth="@dimen/carbon_dividerHeight">
+
+                    <carbon.widget.RadioButton
+                        style="@style/carbon_CheckBox.IconButton.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/ic_email_black_24dp"
+                        app:carbon_rippleStyle="background"/>
+
+                    <carbon.widget.Divider
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <carbon.widget.RadioButton
+                        style="@style/carbon_CheckBox.IconButton.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/ic_android_black_24dp"
+                        app:carbon_rippleStyle="background"/>
+
+                    <carbon.widget.Divider
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <carbon.widget.RadioButton
+                        style="@style/carbon_CheckBox.IconButton.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/ic_person_black_24dp"
+                        app:carbon_rippleStyle="background"/>
+                </carbon.widget.RadioGroup>
+
+
+                <carbon.widget.Divider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/carbon_margin"/>
+
+                <carbon.widget.TextView
+                    style="@style/sectionDescription"
                     android:text="CheckBox supports indeterminate state as well"/>
 
                 <carbon.widget.CheckBox
