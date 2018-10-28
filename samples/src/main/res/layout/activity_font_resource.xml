@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fitsSystemWindows="true"
+                            android:orientation="vertical"
+                            app:carbon_insetColor="?attr/colorPrimary">
+
+    <include layout="@layout/view_debugtoolbar"/>
+
+    <carbon.widget.TextView
+        android:id="@+id/headline"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:text="Lobster font loaded from font resource"
+        app:carbon_font="@font/lobster"/>
+
+</carbon.widget.LinearLayout>

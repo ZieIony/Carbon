@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -25,6 +26,7 @@ import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -36,8 +38,10 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
@@ -170,6 +174,8 @@ public class Button extends android.widget.Button
                 setTypeface(typeface);
                 bold = false;
                 italic = false;
+            } else if (attr == R.styleable.Button_carbon_font) {
+                handleFontAttribute(a, textStyle, attr);
             } else if (attr == R.styleable.Button_android_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, true));
             }
@@ -245,6 +251,8 @@ public class Button extends android.widget.Button
                     setTypeface(typeface);
                     bold = false;
                     italic = false;
+                } else if (attr == R.styleable.TextAppearance_carbon_font) {
+                    handleFontAttribute(appearance, textStyle, attr);
                 } else if (attr == R.styleable.TextAppearance_android_textAllCaps) {
                     setAllCaps(appearance.getBoolean(attr, true));
                 } else if (!hasTextColor && attr == R.styleable.TextAppearance_android_textColor) {
@@ -258,6 +266,35 @@ public class Button extends android.widget.Button
                 paint.setFakeBoldText(true);
             if (italic)
                 paint.setTextSkewX(-0.25f);
+        }
+    }
+
+    private void handleFontAttribute(TypedArray appearance, int textStyle, int attributeId) {
+        WeakReference<android.widget.TextView> textViewWeak = new WeakReference<>(this);
+        AtomicBoolean asyncFontPending = new AtomicBoolean();
+        ResourcesCompat.FontCallback replyCallback = new ResourcesCompat.FontCallback() {
+            @Override
+            public void onFontRetrieved(@NonNull Typeface typeface) {
+                if (asyncFontPending.get()) {
+                    android.widget.TextView textView = textViewWeak.get();
+                    if (textView != null)
+                        textView.setTypeface(typeface, textStyle);
+                }
+            }
+
+            @Override
+            public void onFontRetrievalFailed(int reason) {
+            }
+        };
+        try {
+            int resourceId = appearance.getResourceId(attributeId, 0);
+            TypedValue mTypedValue = new TypedValue();
+            Typeface typeface = ResourcesCompat.getFont(getContext(), resourceId, mTypedValue, textStyle, replyCallback);
+            if (typeface != null) {
+                asyncFontPending.set(true);
+                setTypeface(typeface, textStyle);
+            }
+        } catch (UnsupportedOperationException | Resources.NotFoundException ignored) {
         }
     }
 

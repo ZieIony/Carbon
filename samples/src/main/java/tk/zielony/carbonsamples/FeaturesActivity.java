@@ -8,6 +8,7 @@ import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.feature.AnchorActivity;
 import tk.zielony.carbonsamples.feature.AutoSizeTextActivity;
 import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
+import tk.zielony.carbonsamples.feature.FontResourceActivity;
 import tk.zielony.carbonsamples.feature.HtmlActivity;
 import tk.zielony.carbonsamples.feature.LargeShadowActivity;
 import tk.zielony.carbonsamples.feature.PaginationActivity;
@@ -34,6 +35,7 @@ public class FeaturesActivity extends SampleListActivity {
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Carbon adds tons of useful features to all popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
                         "others",
+                new SampleActivityItem(FontResourceActivity.class, getString(R.string.fontResourceActivity_title)),
                 new SampleActivityItem(AutoSizeTextActivity.class, getString(R.string.autoSizeTextActivity_title)),
                 new SampleActivityItem(BehaviorActivity.class, getString(R.string.behaviorActivity_title)),
                 new SampleActivityItem(HtmlActivity.class, getString(R.string.htmlActivity_title)),

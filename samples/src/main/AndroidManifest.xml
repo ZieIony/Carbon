@@ -56,6 +56,7 @@
         <activity android:name=".animation.WidgetAnimationsActivity"/>
         <activity android:name=".animation.PathAnimationActivity"/>
 
+        <activity android:name=".feature.FontResourceActivity"/>
         <activity android:name=".feature.AutoSizeTextActivity"/>
         <activity android:name=".feature.BehaviorActivity"/>
         <activity android:name=".feature.HtmlActivity"/>

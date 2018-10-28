@@ -39,6 +39,7 @@
     <string name="toolbarsUsageActivity_title">Toolbars / Usage</string>
     <string name="behaviorActivity_title">Behavior</string>
     <string name="htmlActivity_title">HTML</string>
+    <string name="fontResourceActivity_title">Font resource</string>
     <string name="robotoActivity_title">Roboto</string>
     <string name="shadowActivity_title">Shadow</string>
     <string name="largeShadowActivity_title">Large shadow</string>

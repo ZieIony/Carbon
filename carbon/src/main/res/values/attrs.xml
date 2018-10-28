@@ -137,6 +137,9 @@
     <attr name="carbon_headerMinHeight" format="dimension"/>
     <attr name="carbon_headerParallax" format="float"/>
 
+    <attr name="carbon_font" format="reference"/>
+
+    <!-- @Deprecated -->
     <attr name="carbon_fontPath" format="string"/>
     <attr name="carbon_fontFamily" format="string"/>
 
@@ -266,6 +269,7 @@
 
         <attr name="carbon_fontFamily"/>
         <attr name="android:textStyle"/>
+        <attr name="carbon_font"/>
         <attr name="carbon_fontPath"/>
         <attr name="android:textAppearance"/>
         <attr name="android:textAllCaps"/>
@@ -319,6 +323,7 @@
 
         <attr name="carbon_fontFamily"/>
         <attr name="android:textStyle"/>
+        <attr name="carbon_font"/>
         <attr name="carbon_fontPath"/>
         <attr name="android:textAppearance"/>
         <attr name="android:singleLine"/>
@@ -939,6 +944,7 @@
 
         <attr name="carbon_fontFamily"/>
         <attr name="android:textStyle"/>
+        <attr name="carbon_font"/>
         <attr name="carbon_fontPath"/>
         <attr name="carbon_pattern" format="string"/>
         <attr name="carbon_minCharacters" format="integer"/>
@@ -1007,6 +1013,7 @@
 
     <declare-styleable name="TextAppearance">
         <attr name="carbon_fontFamily"/>
+        <attr name="carbon_font"/>
         <attr name="carbon_fontPath"/>
         <attr name="android:textAllCaps"/>
     </declare-styleable>
