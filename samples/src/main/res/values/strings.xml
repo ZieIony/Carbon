@@ -31,6 +31,8 @@
     <string name="dialogsActivity_title">Dialogs</string>
     <string name="featuresActivity_title">Features</string>
     <string name="componentsActivity_title">Components</string>
+    <string name="newSamplesActivity_title">What\'s new</string>
+    <string name="favouritesActivity_title">Favourites</string>
     <string name="animationsActivity_title">Animations</string>
     <string name="librariesActivity_title">Libraries</string>
     <string name="colorsActivity_title">Colors</string>
@@ -90,6 +92,9 @@
 
     <string name="buttonsUsageActivity_title">Buttons/Usage</string>
     <string name="menusBehaviorActivity_title">Menus/Behavior</string>
+    <string name="shrineActivity_title">Studies/Shrine</string>
+    <string name="craneActivity_title">Studies/Crane</string>
+    <string name="basilActivity_title">Studies/Basil</string>
 
     <string name="samplehtml"><![CDATA[cdata tag makes it <i>very</i> easy to add <b>formatting</b>]]></string>
 

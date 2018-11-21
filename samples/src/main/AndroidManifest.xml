@@ -50,6 +50,7 @@
         <activity android:name=".widget.FloatingActionMenuActivity"/>
         <activity android:name=".widget.BottomBarActivity"/>
         <activity android:name=".widget.BottomSheetActivity"/>
+        <activity android:name=".widget.BackdropActivity"/>
 
         <activity android:name=".animation.ImageFadeActivity"/>
         <activity android:name=".animation.RippleActivity"/>
@@ -83,12 +84,20 @@
         <activity android:name=".demo.AutoCompleteActivity"/>
         <activity android:name=".demo.SearchToolbarActivity"/>
         <activity android:name=".demo.ShareToolbarActivity"/>
-        <activity android:name=".demo.BackdropActivity"/>
 
         <activity
             android:name=".guidelines.ButtonsUsageActivity"
             android:theme="@style/RaisedButtonStyle"/>
         <activity android:name=".guidelines.MenusBehaviorActivity"/>
+        <activity
+            android:name=".guidelines.ShrineActivity"
+            android:theme="@style/AppTheme.Shrine"/>
+        <activity
+            android:name=".guidelines.CraneActivity"
+            android:theme="@style/AppTheme.Crane"/>
+        <activity
+            android:name=".guidelines.BasilActivity"
+            android:theme="@style/AppTheme.Basil"/>
 
         <activity android:name=".component.IconTextListItemActivity"/>
         <activity android:name=".component.AvatarTextListItemActivity"/>
@@ -101,6 +110,8 @@
         <activity android:name=".dialog.SelectDialogActivity"/>
         <activity android:name=".dialog.SimpleDialogActivity"/>
 
+        <activity android:name=".NewSamplesActivity"/>
+        <activity android:name=".FavouritesActivity"/>
         <activity android:name=".AnimationsActivity"/>
         <activity android:name=".LibrariesActivity"/>
         <activity android:name=".ColorsActivity"/>

@@ -4,12 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 ext {
-    supportLibVersion = '28.0.0-rc02'
+    supportLibVersion = '28.0.0'
 }
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
 
     dataBinding {
         enabled = true
@@ -53,4 +52,5 @@ dependencies {
     compileOnly 'com.github.ZieIony.RandomData:person:db21077582'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:multidex:1.0.3'
 }

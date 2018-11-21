@@ -33,14 +33,14 @@ public class FeaturesActivity extends SampleListActivity {
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
-                "Carbon adds tons of useful features to all popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
+                "Carbon adds tons of useful features to allPreferences popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
                         "others",
                 new SampleActivityItem(FontResourceActivity.class, getString(R.string.fontResourceActivity_title)),
                 new SampleActivityItem(AutoSizeTextActivity.class, getString(R.string.autoSizeTextActivity_title)),
                 new SampleActivityItem(BehaviorActivity.class, getString(R.string.behaviorActivity_title)),
                 new SampleActivityItem(HtmlActivity.class, getString(R.string.htmlActivity_title)),
                 new SampleActivityItem(RobotoActivity.class, getString(R.string.robotoActivity_title)),
-                new SampleActivityItem(ShadowActivity.class, getString(R.string.shadowActivity_title)),
+                new SampleActivityItem(ShadowActivity.class, getString(R.string.shadowActivity_title), true),
                 new SampleActivityItem(LargeShadowActivity.class, getString(R.string.largeShadowActivity_title)),
                 new SampleActivityItem(PaginationActivity.class, getString(R.string.paginationActivity_title)),
                 new SampleActivityItem(TextAppearanceActivity.class, getString(R.string.textappearanceActivity_title)),

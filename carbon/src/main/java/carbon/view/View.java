@@ -60,7 +60,7 @@ public abstract class View extends android.view.View
         TouchMarginView,
         StateAnimatorView,
         AnimatedView,
-        RoundedCornersView,
+        CornersView,
         TintedView,
         StrokeView,
         MaxSizeView,
@@ -119,6 +119,18 @@ public abstract class View extends android.view.View
             R.styleable.View_carbon_stroke,
             R.styleable.View_carbon_strokeWidth
     };
+    private static int[] cornerCutRadiusIds = new int[]{
+            R.styleable.View_carbon_cornerRadiusTopStart,
+            R.styleable.View_carbon_cornerRadiusTopEnd,
+            R.styleable.View_carbon_cornerRadiusBottomStart,
+            R.styleable.View_carbon_cornerRadiusBottomEnd,
+            R.styleable.View_carbon_cornerRadius,
+            R.styleable.View_carbon_cornerCutTopStart,
+            R.styleable.View_carbon_cornerCutTopEnd,
+            R.styleable.View_carbon_cornerCutBottomStart,
+            R.styleable.View_carbon_cornerCutBottomEnd,
+            R.styleable.View_carbon_cornerCut
+    };
     private static int[] maxSizeIds = new int[]{
             R.styleable.View_carbon_maxWidth,
             R.styleable.View_carbon_maxHeight,
@@ -133,14 +145,14 @@ public abstract class View extends android.view.View
     private void initView(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.View, defStyleAttr, R.style.carbon_View);
 
-        Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initElevation(this, a, elevationIds);
+        Carbon.initTint(this, a, tintIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
-        Carbon.initTint(this, a, tintIds);
         Carbon.initStroke(this, a, strokeIds);
-        setCornerRadius(a.getDimension(R.styleable.View_carbon_cornerRadius, 0));
+        Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
 
         a.recycle();
     }
@@ -205,7 +217,7 @@ public abstract class View extends android.view.View
     // corners
     // -------------------------------
 
-    private float cornerRadius;
+    private Corners corners;
     private Path cornersMask;
 
     /**
@@ -213,19 +225,39 @@ public abstract class View extends android.view.View
      *
      * @return corner radius, equal to or greater than 0.
      */
+    @Deprecated
+    @Override
     public float getCornerRadius() {
-        return cornerRadius;
+        return corners.getTopStart();
     }
+
+    public Corners getCorners() {
+        return corners;
+    }
+
 
     /**
      * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
      *
      * @param cornerRadius
      */
+    @Override
     public void setCornerRadius(float cornerRadius) {
-        if (!Carbon.IS_LOLLIPOP_OR_HIGHER && cornerRadius != this.cornerRadius)
+        setCorners(new Corners(cornerRadius, false));
+    }
+
+    @Override
+    public void setCornerCut(float cornerCut) {
+        setCorners(new Corners(cornerCut, true));
+    }
+
+    @Override
+    public void setCorners(Corners corners) {
+        if (this.corners != null && this.corners.equals(corners))
+            return;
+        if (!Carbon.IS_LOLLIPOP_OR_HIGHER)
             postInvalidate();
-        this.cornerRadius = cornerRadius;
+        this.corners = corners;
         if (getWidth() > 0 && getHeight() > 0)
             updateCorners();
     }
@@ -247,19 +279,12 @@ public abstract class View extends android.view.View
     }
 
     private void updateCorners() {
-        if (cornerRadius > 0) {
-            cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (cornerRadius < 1)
-                cornerRadius = 0;
-            if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
-                setClipToOutline(true);
-                setOutlineProvider(ShadowShape.viewOutlineProvider);
-            } else {
-                cornersMask = new Path();
-                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
-                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            }
+        if (!corners.isZero() && Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+            setClipToOutline(true);
+            setOutlineProvider(ShadowShape.viewOutlineProvider);
         }
+
+        cornersMask = corners.getPath(getWidth(), getHeight());
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
@@ -274,7 +299,7 @@ public abstract class View extends android.view.View
     @Override
     public void draw(@NonNull Canvas canvas) {
         boolean r = revealAnimator != null;
-        boolean c = cornerRadius > 0;
+        boolean c = !corners.isZero();
         if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
@@ -283,7 +308,7 @@ public abstract class View extends android.view.View
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
             Paint maskPaint = new Paint(0xffffffff);
-            maskCanvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, maskPaint);
+            maskCanvas.drawPath(cornersMask, maskPaint);
 
             for (int x = 0; x < getWidth(); x++) {
                 for (int y = 0; y < getHeight(); y++) {
@@ -292,7 +317,7 @@ public abstract class View extends android.view.View
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software || corners.getShape() == ShadowShape.CONVEX_PATH)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -305,11 +330,13 @@ public abstract class View extends android.view.View
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
-            paint.setXfermode(null);
+            paint.setXfermode(null);    // TODO check if this is needed
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -393,7 +420,7 @@ public abstract class View extends android.view.View
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((android.view.View) getParent()).invalidate();
 
-        if (elevation > 0 || cornerRadius > 0)
+        if (elevation > 0 || corners != null)
             ((android.view.View) getParent()).invalidate();
     }
 
@@ -416,7 +443,7 @@ public abstract class View extends android.view.View
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((android.view.View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
-        if (elevation > 0 || cornerRadius > 0)
+        if (elevation > 0 || corners != null)
             ((android.view.View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
@@ -450,7 +477,6 @@ public abstract class View extends android.view.View
     private Shadow ambientShadow, spotShadow;
     private ColorStateList ambientShadowColor, spotShadowColor;
     private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
-    private RectF shadowMaskRect = new RectF();
 
     @Override
     public float getElevation() {
@@ -500,11 +526,7 @@ public abstract class View extends android.view.View
 
     @Override
     public ShadowShape getShadowShape() {
-        if (cornerRadius == getWidth() / 2 && getWidth() == getHeight())
-            return ShadowShape.CIRCLE;
-        if (cornerRadius > 0)
-            return ShadowShape.ROUND_RECT;
-        return ShadowShape.RECT;
+        return corners.getShape();
     }
 
     @Override
@@ -527,9 +549,10 @@ public abstract class View extends android.view.View
             return;
 
         float z = getElevation() + getTranslationZ();
-        if (ambientShadow == null || ambientShadow.elevation != z || ambientShadow.cornerRadius != cornerRadius) {
-            ambientShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density / 4);
-            spotShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
+        float e = z / getResources().getDisplayMetrics().density;
+        if (spotShadow == null || spotShadow.elevation != e || !spotShadow.corners.equals(corners)) {
+            ambientShadow = ShadowGenerator.generateShadow(this, e / 4);
+            spotShadow = ShadowGenerator.generateShadow(this, e);
         }
 
         int saveCount = 0;
@@ -566,8 +589,8 @@ public abstract class View extends android.view.View
             paint.setXfermode(Carbon.CLEAR_MODE);
         }
         if (maskShadow) {
-            shadowMaskRect.set(0, 0, getWidth(), getHeight());
-            canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
+            cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+            canvas.drawPath(cornersMask, paint);
         }
         if (r) {
             canvas.drawPath(revealAnimator.mask, paint);
@@ -889,6 +912,9 @@ public abstract class View extends android.view.View
 
         Carbon.setTintList(background, backgroundTint);
         Carbon.setTintMode(background, backgroundTintMode);
+
+        if (background.isStateful())
+            background.setState(getDrawableState());
     }
 
     @Override
@@ -922,13 +948,12 @@ public abstract class View extends android.view.View
     private ColorStateList stroke;
     private float strokeWidth;
     private Paint strokePaint;
-    private RectF strokeRect;
 
     private void drawStroke(Canvas canvas) {
         strokePaint.setStrokeWidth(strokeWidth * 2);
         strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
-        strokeRect.set(0, 0, getWidth(), getHeight());
-        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+        cornersMask.setFillType(Path.FillType.WINDING);
+        canvas.drawPath(cornersMask, strokePaint);
     }
 
     @Override
@@ -941,7 +966,6 @@ public abstract class View extends android.view.View
         if (strokePaint == null) {
             strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             strokePaint.setStyle(Paint.Style.STROKE);
-            strokeRect = new RectF();
         }
     }
 

@@ -26,6 +26,7 @@
             android:layout_marginStart="@dimen/carbon_windowPadding"
             android:scaleType="centerCrop"
             android:src="@{data.getImage()}"
+            app:carbon_cornerRadius="@dimen/carbon_cornerRadiusImage"
             app:carbon_tint="@null"/>
 
         <carbon.widget.TextMarker

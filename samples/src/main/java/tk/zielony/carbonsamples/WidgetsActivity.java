@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.feature.PercentLayoutActivity;
+import tk.zielony.carbonsamples.widget.BackdropActivity;
 import tk.zielony.carbonsamples.widget.BottomBarActivity;
 import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
@@ -59,6 +60,7 @@ public class WidgetsActivity extends SampleListActivity {
                 new SampleActivityItem(FloatingActionMenuActivity.class, getString(R.string.floatingActionMenuActivity_title)),
                 new SampleActivityItem(BottomBarActivity.class, getString(R.string.bottomBarActivity_title), true),
                 new SampleActivityItem(BottomSheetActivity.class, getString(R.string.bottomSheetActivity_title), true),
+                new SampleActivityItem(BackdropActivity.class, getString(R.string.backdropActivity_title)),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

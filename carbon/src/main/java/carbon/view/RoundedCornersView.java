@@ -4,6 +4,7 @@ package carbon.view;
  * Interface of a view with rounded corners. In case of a layout rounded corners also clip the
  * content.
  */
+@Deprecated
 public interface RoundedCornersView extends RenderingModeView {
     /**
      * Gets the corner radius

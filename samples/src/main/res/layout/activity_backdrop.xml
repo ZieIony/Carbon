@@ -2,33 +2,44 @@
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                            xmlns:app="http://schemas.android.com/apk/res-auto"
                            android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:background="?attr/colorPrimary">
+                           android:layout_height="match_parent">
 
-    <carbon.widget.Toolbar
+    <carbon.widget.BackdropLayout
+        android:id="@+id/backdrop_backdropLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/backdropActivity_title"
-        app:carbon_elevation="0dp"
-        app:carbon_icon="@raw/carbon_uparrow"/>
+        android:layout_height="match_parent">
 
-    <carbon.widget.LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/carbon_toolbarHeight"
-        android:background="?attr/carbon_colorBackground"
-        android:orientation="vertical"
-        app:carbon_cornerRadiusTopEnd="@dimen/carbon_margin"
-        app:carbon_cornerRadiusTopStart="@dimen/carbon_margin">
+        <carbon.widget.BackdropLayout_Back
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <carbon.widget.ExpansionPanel
+            <carbon.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:carbon_elevation="0dp"
+                app:carbon_icon="@drawable/ic_menu_black_24dp"/>
+
+            <carbon.widget.RecyclerView
+                android:id="@+id/backdrop_recycler"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"/>
+        </carbon.widget.BackdropLayout_Back>
+
+        <carbon.widget.BackdropLayout_Front
             android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_listItemHeight"/>
-
-        <carbon.widget.Divider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:layout_marginStart="@dimen/carbon_contentPadding"/>
-    </carbon.widget.LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/carbon_toolbarHeight"
+            android:layout_marginLeft="@dimen/carbon_toolbarHeight"
+            android:background="@color/carbon_white"
+            android:orientation="vertical"
+            app:carbon_elevation="@dimen/carbon_elevationDrawer">
+            <carbon.widget.RecyclerView
+                android:id="@+id/backdrop_contentRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </carbon.widget.BackdropLayout_Front>
+    </carbon.widget.BackdropLayout>
 </carbon.widget.FrameLayout>

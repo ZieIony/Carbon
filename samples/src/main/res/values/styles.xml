@@ -229,6 +229,16 @@
         <item name="colorPrimaryDark">@color/carbon_blueGrey_700</item>
     </style>
 
+    <style name="PrimaryWhite">
+        <item name="colorPrimary">@color/carbon_white</item>
+        <item name="colorPrimaryDark">@color/carbon_white</item>
+    </style>
+
+    <style name="PrimaryBlack">
+        <item name="colorPrimary">@color/carbon_black</item>
+        <item name="colorPrimaryDark">@color/carbon_black</item>
+    </style>
+
     <style name="AccentWhite">
         <item name="colorAccent">@color/carbon_white</item>
     </style>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical">
+
+    <carbon.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="SHRINE"
+        app:carbon_elevation="0dp">
+
+        <carbon.widget.ImageView
+            style="@style/carbon_ImageView.IconButton"
+            android:src="@raw/carbon_search"/>
+    </carbon.widget.Toolbar>
+
+    <carbon.widget.RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/carbon_white"
+        app:carbon_cornerCutTopStart="56dp"
+        app:carbon_elevation="@dimen/carbon_elevationCard">
+
+        <carbon.widget.ImageView
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="?attr/colorPrimary"
+            android:scaleType="center"
+            android:src="@raw/ic_shopping_cart_24px"
+            app:carbon_cornerCutTopStart="16dp"
+            app:carbon_elevation="@dimen/carbon_elevationButton"/>
+    </carbon.widget.RelativeLayout>
+
+</carbon.widget.LinearLayout>

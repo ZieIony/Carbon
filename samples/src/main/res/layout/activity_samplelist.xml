@@ -9,8 +9,7 @@
     <include layout="@layout/view_debugtoolbar"/>
 
     <carbon.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </carbon.widget.LinearLayout>

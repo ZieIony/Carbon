@@ -9,16 +9,48 @@
 
     <include layout="@layout/view_debugtoolbar"/>
 
-    <carbon.widget.TextView
-        android:id="@+id/headline"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:maxLines="2"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:text="Lobster font loaded from font resource"
-        app:carbon_font="@font/lobster"/>
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <carbon.widget.TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/carbon_padding"
+                android:paddingTop="@dimen/carbon_padding"
+                android:paddingRight="@dimen/carbon_padding"
+                app:carbon_font="@font/lobster"/>
+
+            <carbon.widget.TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/carbon_padding"
+                android:paddingTop="@dimen/carbon_padding"
+                android:paddingRight="@dimen/carbon_padding"
+                app:carbon_font="@font/lekton_regular"/>
+
+            <carbon.widget.TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/carbon_padding"
+                android:paddingTop="@dimen/carbon_padding"
+                android:paddingRight="@dimen/carbon_padding"
+                app:carbon_font="@font/raleway_regular"/>
+
+            <carbon.widget.TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/carbon_padding"
+                app:carbon_font="@font/rubik_regular"/>
+        </carbon.widget.LinearLayout>
+    </carbon.widget.ScrollView>
 </carbon.widget.LinearLayout>

@@ -14,6 +14,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
@@ -36,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
@@ -50,10 +52,11 @@ import carbon.shadow.Shadow;
 import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
+import carbon.view.Corners;
+import carbon.view.CornersView;
 import carbon.view.MaxSizeView;
 import carbon.view.RenderingModeView;
 import carbon.view.RevealView;
-import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
 import carbon.view.TintedView;
@@ -67,7 +70,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         TouchMarginView,
         StateAnimatorView,
         AnimatedView,
-        RoundedCornersView,
+        CornersView,
         TintedView,
         StrokeView,
         MaxSizeView,
@@ -97,8 +100,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     private int scrollX = 0;
     private int scrollY = 0;
 
+    private OnTouchListener onDispatchTouchListener;
+
     public RecyclerView(Context context) {
-        super(context, null, R.attr.carbon_recyclerViewStyle);
+        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_recyclerViewStyle);
         initRecycler(null, R.attr.carbon_recyclerViewStyle);
     }
 
@@ -126,6 +131,18 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     private static int[] strokeIds = new int[]{
             R.styleable.RecyclerView_carbon_stroke,
             R.styleable.RecyclerView_carbon_strokeWidth
+    };
+    private static int[] cornerCutRadiusIds = new int[]{
+            R.styleable.RecyclerView_carbon_cornerRadiusTopStart,
+            R.styleable.RecyclerView_carbon_cornerRadiusTopEnd,
+            R.styleable.RecyclerView_carbon_cornerRadiusBottomStart,
+            R.styleable.RecyclerView_carbon_cornerRadiusBottomEnd,
+            R.styleable.RecyclerView_carbon_cornerRadius,
+            R.styleable.RecyclerView_carbon_cornerCutTopStart,
+            R.styleable.RecyclerView_carbon_cornerCutTopEnd,
+            R.styleable.RecyclerView_carbon_cornerCutBottomStart,
+            R.styleable.RecyclerView_carbon_cornerCutBottomEnd,
+            R.styleable.RecyclerView_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
             R.styleable.RecyclerView_carbon_maxWidth,
@@ -163,6 +180,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initTint(this, a, tintIds);
         Carbon.initStroke(this, a, strokeIds);
+        Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
 
         a.recycle();
 
@@ -351,104 +369,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         this.edgeEffectOffsetBottom = edgeEffectOffsetBottom;
     }
 
-    List<View> views = new ArrayList<>();
-
-    public List<View> getViews() {
-        views.clear();
-        for (int i = 0; i < getChildCount(); i++)
-            views.add(getChildAt(i));
-        return views;
-    }
-
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-
-    @Override
-    protected void dispatchDraw(@NonNull Canvas canvas) {
-        Collections.sort(getViews(), new ElevationComparator());
-
-        super.dispatchDraw(canvas);
-
-        if (topGlow != null) {
-            final int scrollY = computeVerticalScrollOffset();
-            if (!topGlow.isFinished()) {
-                final int restoreCount = canvas.save();
-                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
-
-                canvas.translate(getPaddingLeft(), edgeEffectOffsetTop + Math.min(0, scrollY));
-                topGlow.setSize(width, getHeight());
-                if (topGlow.draw(canvas))
-                    invalidate();
-                canvas.restoreToCount(restoreCount);
-            }
-            if (!bottomGlow.isFinished()) {
-                final int restoreCount = canvas.save();
-                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
-                final int height = getHeight();
-
-                canvas.translate(-width + getPaddingLeft(), -edgeEffectOffsetBottom + height);
-                canvas.rotate(180, width, 0);
-                bottomGlow.setSize(width, height);
-                if (bottomGlow.draw(canvas))
-                    invalidate();
-                canvas.restoreToCount(restoreCount);
-            }
-        }
-    }
-
-    @Override
-    public void setOverScrollMode(int mode) {
-        if (mode != OVER_SCROLL_NEVER) {
-            if (topGlow == null) {
-                Context context = getContext();
-                topGlow = new EdgeEffect(context);
-                bottomGlow = new EdgeEffect(context);
-                updateTint();
-            }
-        } else {
-            topGlow = null;
-            bottomGlow = null;
-        }
-        super.setOverScrollMode(OVER_SCROLL_NEVER);
-        this.overscrollMode = mode;
-    }
-
-    @Override
-    public boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
-            ShadowView shadowView = (ShadowView) child;
-            shadowView.drawShadow(canvas);
-        }
-
-        if (child instanceof RippleView) {
-            RippleView rippleView = (RippleView) child;
-            RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
-            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
-                int saveCount = canvas.save();
-                canvas.translate(child.getLeft(), child.getTop());
-                canvas.concat(child.getMatrix());
-                rippleDrawable.draw(canvas);
-                canvas.restoreToCount(saveCount);
-            }
-        }
-
-        return super.drawChild(canvas, child, drawingTime);
-    }
-
-    @Override
-    protected int getChildDrawingOrder(int childCount, int child) {
-        if (childDrawingOrderCallbackSet)
-            return super.getChildDrawingOrder(childCount, child);
-        if (views.size() != childCount)
-            getViews();
-        return indexOfChild(views.get(child));
-    }
-
-    @Override
-    public void setChildDrawingOrderCallback(ChildDrawingOrderCallback childDrawingOrderCallback) {
-        super.setChildDrawingOrderCallback(childDrawingOrderCallback);
-        childDrawingOrderCallbackSet = childDrawingOrderCallback != null;
-    }
+    private boolean drawCalled = false;
 
 
     // -------------------------------
@@ -523,12 +445,158 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         }
     }
 
+    @Override
+    protected void dispatchDraw(@NonNull Canvas canvas) {
+        boolean r = revealAnimator != null && revealAnimator.isRunning();
+        boolean c = !corners.isZero();
+        // draw not called, we have to handle corners here
+        if (isInEditMode() && !drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0) {
+            Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas layerCanvas = new Canvas(layer);
+            dispatchDrawInternal(layerCanvas);
+
+            Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas maskCanvas = new Canvas(mask);
+            Paint maskPaint = new Paint(0xffffffff);
+            maskCanvas.drawPath(cornersMask, maskPaint);
+
+            for (int x = 0; x < getWidth(); x++) {
+                for (int y = 0; y < getHeight(); y++) {
+                    int maskPixel = mask.getPixel(x, y);
+                    layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
+                }
+            }
+            canvas.drawBitmap(layer, 0, 0, paint);
+        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
+            int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+            if (r) {
+                int saveCount2 = canvas.save();
+                canvas.clipRect(revealAnimator.x - revealAnimator.radius, revealAnimator.y - revealAnimator.radius, revealAnimator.x + revealAnimator.radius, revealAnimator.y + revealAnimator.radius);
+                dispatchDrawInternal(canvas);
+                canvas.restoreToCount(saveCount2);
+            } else {
+                dispatchDrawInternal(canvas);
+            }
+
+            paint.setXfermode(Carbon.CLEAR_MODE);
+            if (c)
+                canvas.drawPath(cornersMask, paint);
+            if (r)
+                canvas.drawPath(revealAnimator.mask, paint);
+            paint.setXfermode(null);
+
+            canvas.restoreToCount(saveCount);
+        } else {
+            dispatchDrawInternal(canvas);
+        }
+        drawCalled = false;
+
+        if (topGlow != null) {
+            final int scrollY = computeVerticalScrollOffset();
+            if (!topGlow.isFinished()) {
+                final int restoreCount = canvas.save();
+                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
+
+                canvas.translate(getPaddingLeft(), edgeEffectOffsetTop + Math.min(0, scrollY));
+                topGlow.setSize(width, getHeight());
+                if (topGlow.draw(canvas))
+                    invalidate();
+                canvas.restoreToCount(restoreCount);
+            }
+            if (!bottomGlow.isFinished()) {
+                final int restoreCount = canvas.save();
+                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
+                final int height = getHeight();
+
+                canvas.translate(-width + getPaddingLeft(), -edgeEffectOffsetBottom + height);
+                canvas.rotate(180, width, 0);
+                bottomGlow.setSize(width, height);
+                if (bottomGlow.draw(canvas))
+                    invalidate();
+                canvas.restoreToCount(restoreCount);
+            }
+        }
+
+    }
+
+    private void dispatchDrawInternal(@NonNull Canvas canvas) {
+        Collections.sort(getViews(), new ElevationComparator());
+
+        super.dispatchDraw(canvas);
+        if (stroke != null)
+            drawStroke(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
+    }
+
+    @Override
+    public void setOverScrollMode(int mode) {
+        if (mode != OVER_SCROLL_NEVER) {
+            if (topGlow == null) {
+                Context context = getContext();
+                topGlow = new EdgeEffect(context);
+                bottomGlow = new EdgeEffect(context);
+                updateTint();
+            }
+        } else {
+            topGlow = null;
+            bottomGlow = null;
+        }
+        super.setOverScrollMode(OVER_SCROLL_NEVER);
+        this.overscrollMode = mode;
+    }
+
+    @Override
+    public boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
+        // TODO: why isShown() returns false after being reattached?
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
+            ShadowView shadowView = (ShadowView) child;
+            shadowView.drawShadow(canvas);
+        }
+
+        if (child instanceof RippleView) {
+            RippleView rippleView = (RippleView) child;
+            RippleDrawable rippleDrawable = rippleView.getRippleDrawable();
+            if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless) {
+                int saveCount = canvas.save();
+                canvas.translate(child.getLeft(), child.getTop());
+                canvas.concat(child.getMatrix());
+                rippleDrawable.draw(canvas);
+                canvas.restoreToCount(saveCount);
+            }
+        }
+
+        return super.drawChild(canvas, child, drawingTime);
+    }
+
+    @Override
+    protected int getChildDrawingOrder(int childCount, int child) {
+        if (childDrawingOrderCallbackSet)
+            return super.getChildDrawingOrder(childCount, child);
+        if (views.size() != childCount)
+            getViews();
+        return indexOfChild(views.get(child));
+    }
+
+    @Override
+    public void setChildDrawingOrderCallback(ChildDrawingOrderCallback childDrawingOrderCallback) {
+        super.setChildDrawingOrderCallback(childDrawingOrderCallback);
+        childDrawingOrderCallbackSet = childDrawingOrderCallback != null;
+    }
+
+    protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {
+        final Rect frame = new Rect();
+        child.getHitRect(frame);
+        return frame.contains((int) x, (int) y);
+    }
+
 
     // -------------------------------
     // corners
     // -------------------------------
 
-    private float cornerRadius;
+    private Corners corners;
     private Path cornersMask;
 
     /**
@@ -536,19 +604,39 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
      *
      * @return corner radius, equal to or greater than 0.
      */
+    @Deprecated
+    @Override
     public float getCornerRadius() {
-        return cornerRadius;
+        return corners.getTopStart();
     }
+
+    public Corners getCorners() {
+        return corners;
+    }
+
 
     /**
      * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
      *
      * @param cornerRadius
      */
+    @Override
     public void setCornerRadius(float cornerRadius) {
-        if (!Carbon.IS_LOLLIPOP_OR_HIGHER && cornerRadius != this.cornerRadius)
+        setCorners(new Corners(cornerRadius, false));
+    }
+
+    @Override
+    public void setCornerCut(float cornerCut) {
+        setCorners(new Corners(cornerCut, true));
+    }
+
+    @Override
+    public void setCorners(Corners corners) {
+        if (this.corners != null && this.corners.equals(corners))
+            return;
+        if (!Carbon.IS_LOLLIPOP_OR_HIGHER)
             postInvalidate();
-        this.cornerRadius = cornerRadius;
+        this.corners = corners;
         if (getWidth() > 0 && getHeight() > 0)
             updateCorners();
     }
@@ -570,19 +658,12 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     }
 
     private void updateCorners() {
-        if (cornerRadius > 0) {
-            cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (cornerRadius < 1)
-                cornerRadius = 0;
-            if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
-                setClipToOutline(true);
-                setOutlineProvider(ShadowShape.viewOutlineProvider);
-            } else {
-                cornersMask = new Path();
-                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
-                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            }
+        if (!corners.isZero() && Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+            setClipToOutline(true);
+            setOutlineProvider(ShadowShape.viewOutlineProvider);
         }
+
+        cornersMask = corners.getPath(getWidth(), getHeight());
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
@@ -596,8 +677,9 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
+        drawCalled = true;
         boolean r = revealAnimator != null;
-        boolean c = cornerRadius > 0;
+        boolean c = !corners.isZero();
         if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
@@ -606,7 +688,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
             Paint maskPaint = new Paint(0xffffffff);
-            maskCanvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, maskPaint);
+            maskCanvas.drawPath(cornersMask, maskPaint);
 
             for (int x = 0; x < getWidth(); x++) {
                 for (int y = 0; y < getHeight(); y++) {
@@ -615,7 +697,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software || corners.getShape() == ShadowShape.CONVEX_PATH)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -628,8 +710,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
@@ -650,6 +734,9 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
+            return true;
+
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return dispatchTouchEvent2(event);
@@ -716,7 +803,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).invalidate();
 
-        if (elevation > 0 || cornerRadius > 0)
+        if (elevation > 0 || corners != null)
             ((View) getParent()).invalidate();
     }
 
@@ -739,7 +826,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
-        if (elevation > 0 || cornerRadius > 0)
+        if (elevation > 0 || corners != null)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
@@ -773,7 +860,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     private Shadow ambientShadow, spotShadow;
     private ColorStateList ambientShadowColor, spotShadowColor;
     private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
-    private RectF shadowMaskRect = new RectF();
 
     @Override
     public float getElevation() {
@@ -823,11 +909,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     @Override
     public ShadowShape getShadowShape() {
-        if (cornerRadius == getWidth() / 2 && getWidth() == getHeight())
-            return ShadowShape.CIRCLE;
-        if (cornerRadius > 0)
-            return ShadowShape.ROUND_RECT;
-        return ShadowShape.RECT;
+        return corners.getShape();
     }
 
     @Override
@@ -850,9 +932,10 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             return;
 
         float z = getElevation() + getTranslationZ();
-        if (ambientShadow == null || ambientShadow.elevation != z || ambientShadow.cornerRadius != cornerRadius) {
-            ambientShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density / 4);
-            spotShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
+        float e = z / getResources().getDisplayMetrics().density;
+        if (spotShadow == null || spotShadow.elevation != e || !spotShadow.corners.equals(corners)) {
+            ambientShadow = ShadowGenerator.generateShadow(this, e / 4);
+            spotShadow = ShadowGenerator.generateShadow(this, e);
         }
 
         int saveCount = 0;
@@ -889,8 +972,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
             paint.setXfermode(Carbon.CLEAR_MODE);
         }
         if (maskShadow) {
-            shadowMaskRect.set(0, 0, getWidth(), getHeight());
-            canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
+            cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+            canvas.drawPath(cornersMask, paint);
         }
         if (r) {
             canvas.drawPath(revealAnimator.mask, paint);
@@ -1140,6 +1223,24 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
 
     // -------------------------------
+    // ViewGroup utils
+    // -------------------------------
+
+    List<View> views = new ArrayList<>();
+
+    public List<View> getViews() {
+        views.clear();
+        for (int i = 0; i < getChildCount(); i++)
+            views.add(getChildAt(i));
+        return views;
+    }
+
+    public void setOnDispatchTouchListener(OnTouchListener onDispatchTouchListener) {
+        this.onDispatchTouchListener = onDispatchTouchListener;
+    }
+
+
+    // -------------------------------
     // tint
     // -------------------------------
 
@@ -1261,8 +1362,8 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
     private void drawStroke(Canvas canvas) {
         strokePaint.setStrokeWidth(strokeWidth * 2);
         strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
-        strokeRect.set(0, 0, getWidth(), getHeight());
-        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
+        cornersMask.setFillType(Path.FillType.WINDING);
+        canvas.drawPath(cornersMask, strokePaint);
     }
 
     @Override
@@ -1275,7 +1376,6 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         if (strokePaint == null) {
             strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             strokePaint.setStyle(Paint.Style.STROKE);
-            strokeRect = new RectF();
         }
     }
 

@@ -52,8 +52,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
-import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -70,10 +70,11 @@ import carbon.shadow.ShadowGenerator;
 import carbon.shadow.ShadowShape;
 import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
+import carbon.view.Corners;
+import carbon.view.CornersView;
 import carbon.view.InputView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
-import carbon.view.RoundedCornersView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
 import carbon.view.TintedView;
@@ -88,12 +89,12 @@ public class EditText extends android.widget.EditText
         TouchMarginView,
         StateAnimatorView,
         AnimatedView,
+        CornersView,
         TintedView,
-        RoundedCornersView,
         InputView,
-        AutoSizeTextView,
         StrokeView,
         MaxSizeView,
+        AutoSizeTextView,
         RevealView,
         VisibleView {
 
@@ -122,7 +123,7 @@ public class EditText extends android.widget.EditText
     private boolean clearFocusOnTouchOutside = false;
 
     public EditText(Context context) {
-        super(context, null);
+        super(CarbonContextWrapper.wrap(context), null);
         initEditText(null, android.R.attr.editTextStyle);
     }
 
@@ -169,6 +170,18 @@ public class EditText extends android.widget.EditText
     private static int[] strokeIds = new int[]{
             R.styleable.EditText_carbon_stroke,
             R.styleable.EditText_carbon_strokeWidth
+    };
+    private static int[] cornerCutRadiusIds = new int[]{
+            R.styleable.EditText_carbon_cornerRadiusTopStart,
+            R.styleable.EditText_carbon_cornerRadiusTopEnd,
+            R.styleable.EditText_carbon_cornerRadiusBottomStart,
+            R.styleable.EditText_carbon_cornerRadiusBottomEnd,
+            R.styleable.EditText_carbon_cornerRadius,
+            R.styleable.EditText_carbon_cornerCutTopStart,
+            R.styleable.EditText_carbon_cornerCutTopEnd,
+            R.styleable.EditText_carbon_cornerCutBottomStart,
+            R.styleable.EditText_carbon_cornerCutBottomEnd,
+            R.styleable.EditText_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
             R.styleable.EditText_carbon_maxWidth,
@@ -236,16 +249,16 @@ public class EditText extends android.widget.EditText
 
         Carbon.initDefaultTextColor(this, a, R.styleable.EditText_android_textColor);
 
-        Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
+        Carbon.initElevation(this, a, elevationIds);
+        Carbon.initTint(this, a, tintIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
-        setCornerRadius(a.getDimension(R.styleable.EditText_carbon_cornerRadius, 0));
-        Carbon.initHtmlText(this, a, R.styleable.EditText_carbon_htmlText);
-        Carbon.initAutoSizeText(this, a, autoSizeTextIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
-        Carbon.initTint(this, a, tintIds);
+        Carbon.initHtmlText(this, a, R.styleable.EditText_carbon_htmlText);
         Carbon.initStroke(this, a, strokeIds);
+        Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+        Carbon.initAutoSizeText(this, a, autoSizeTextIds);
 
         if (a.getResourceId(R.styleable.EditText_android_background, 0) == R.color.carbon_defaultColor) {
             float underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
@@ -267,9 +280,6 @@ public class EditText extends android.widget.EditText
                     validateInternalEvent();
             }
         });
-
-        if (getElevation() > 0)
-            AnimUtils.setupElevationAnimator(stateAnimator, this);
 
         setSelection(length());
     }
@@ -477,61 +487,6 @@ public class EditText extends android.widget.EditText
             validateListener.onValidate(valid);
     }
 
-    RevealAnimator revealAnimator;
-
-    public Point getLocationOnScreen() {
-        int[] outLocation = new int[2];
-        super.getLocationOnScreen(outLocation);
-        return new Point(outLocation[0], outLocation[1]);
-    }
-
-    public Point getLocationInWindow() {
-        int[] outLocation = new int[2];
-        super.getLocationInWindow(outLocation);
-        return new Point(outLocation[0], outLocation[1]);
-    }
-
-    public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
-        int[] location = new int[2];
-        hotspot.getLocationOnScreen(location);
-        int[] myLocation = new int[2];
-        getLocationOnScreen(myLocation);
-        return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
-    }
-
-    @Override
-    public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
-        startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
-        finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
-        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
-            Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
-            circularReveal.setDuration(Carbon.getDefaultRevealDuration());
-            return circularReveal;
-        } else {
-            revealAnimator = new RevealAnimator(x, y, startRadius, finishRadius);
-            revealAnimator.setDuration(Carbon.getDefaultRevealDuration());
-            revealAnimator.addUpdateListener(animation -> {
-                RevealAnimator reveal = ((RevealAnimator) animation);
-                reveal.radius = (float) reveal.getAnimatedValue();
-                reveal.mask.reset();
-                reveal.mask.addCircle(reveal.x, reveal.y, Math.max((Float) reveal.getAnimatedValue(), 1), Path.Direction.CW);
-                postInvalidate();
-            });
-            revealAnimator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                    revealAnimator = null;
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    revealAnimator = null;
-                }
-            });
-            return revealAnimator;
-        }
-    }
-
     /**
      * Changes text transformation method to caps.
      *
@@ -627,27 +582,59 @@ public class EditText extends android.widget.EditText
         }
     }
 
-    public void drawInternal(@NonNull Canvas canvas) {
-        super.draw(canvas);
-        if (prefixLayout != null) {
-            canvas.translate(getPaddingLeft() - prefixPadding - prefixTextPadding, 0);
-            prefixLayout.draw(canvas);
-            canvas.translate(-getPaddingLeft() + prefixPadding + prefixTextPadding, 0);
-        }
-        if (suffixLayout != null) {
-            canvas.translate(getWidth() - getPaddingLeft() - getPaddingRight() + suffixPadding + suffixTextPadding, 0);
-            suffixLayout.draw(canvas);
-            canvas.translate(-getWidth() + getPaddingLeft() + getPaddingRight() - suffixPadding - suffixTextPadding, 0);
-        }
+    RevealAnimator revealAnimator;
 
-        if (isFocused() && isEnabled()) {
-            paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
+    public Point getLocationOnScreen() {
+        int[] outLocation = new int[2];
+        super.getLocationOnScreen(outLocation);
+        return new Point(outLocation[0], outLocation[1]);
+    }
+
+    public Point getLocationInWindow() {
+        int[] outLocation = new int[2];
+        super.getLocationInWindow(outLocation);
+        return new Point(outLocation[0], outLocation[1]);
+    }
+
+    public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
+        int[] location = new int[2];
+        hotspot.getLocationOnScreen(location);
+        int[] myLocation = new int[2];
+        getLocationOnScreen(myLocation);
+        return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
+    }
+
+    @Override
+    public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
+        startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
+        finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
+            circularReveal.setDuration(Carbon.getDefaultRevealDuration());
+            return circularReveal;
         } else {
-            paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
-        }
+            revealAnimator = new RevealAnimator(x, y, startRadius, finishRadius);
+            revealAnimator.setDuration(Carbon.getDefaultRevealDuration());
+            revealAnimator.addUpdateListener(animation -> {
+                RevealAnimator reveal = ((RevealAnimator) animation);
+                reveal.radius = (float) reveal.getAnimatedValue();
+                reveal.mask.reset();
+                reveal.mask.addCircle(reveal.x, reveal.y, Math.max((Float) reveal.getAnimatedValue(), 1), Path.Direction.CW);
+                postInvalidate();
+            });
+            revealAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    revealAnimator = null;
+                }
 
-        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
-            rippleDrawable.draw(canvas);
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    revealAnimator = null;
+                }
+            });
+            return revealAnimator;
+        }
     }
 
     @Override
@@ -726,7 +713,7 @@ public class EditText extends android.widget.EditText
     // corners
     // -------------------------------
 
-    private float cornerRadius;
+    private Corners corners;
     private Path cornersMask;
 
     /**
@@ -734,19 +721,39 @@ public class EditText extends android.widget.EditText
      *
      * @return corner radius, equal to or greater than 0.
      */
+    @Deprecated
+    @Override
     public float getCornerRadius() {
-        return cornerRadius;
+        return corners.getTopStart();
     }
+
+    public Corners getCorners() {
+        return corners;
+    }
+
 
     /**
      * Sets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
      *
      * @param cornerRadius
      */
+    @Override
     public void setCornerRadius(float cornerRadius) {
-        if (!Carbon.IS_LOLLIPOP_OR_HIGHER && cornerRadius != this.cornerRadius)
+        setCorners(new Corners(cornerRadius, false));
+    }
+
+    @Override
+    public void setCornerCut(float cornerCut) {
+        setCorners(new Corners(cornerCut, true));
+    }
+
+    @Override
+    public void setCorners(Corners corners) {
+        if (this.corners != null && this.corners.equals(corners))
+            return;
+        if (!Carbon.IS_LOLLIPOP_OR_HIGHER)
             postInvalidate();
-        this.cornerRadius = cornerRadius;
+        this.corners = corners;
         if (getWidth() > 0 && getHeight() > 0)
             updateCorners();
     }
@@ -768,26 +775,44 @@ public class EditText extends android.widget.EditText
     }
 
     private void updateCorners() {
-        if (cornerRadius > 0) {
-            cornerRadius = Math.min(cornerRadius, Math.min(getWidth(), getHeight()) / 2.0f);
-            if (cornerRadius < 1)
-                cornerRadius = 0;
-            if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
-                setClipToOutline(true);
-                setOutlineProvider(ShadowShape.viewOutlineProvider);
-            } else {
-                cornersMask = new Path();
-                cornersMask.addRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
-                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
-            }
+        if (!corners.isZero() && Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+            setClipToOutline(true);
+            setOutlineProvider(ShadowShape.viewOutlineProvider);
         }
+
+        cornersMask = corners.getPath(getWidth(), getHeight());
+    }
+
+    public void drawInternal(@NonNull Canvas canvas) {
+        super.draw(canvas);
+        if (prefixLayout != null) {
+            canvas.translate(getPaddingLeft() - prefixPadding - prefixTextPadding, 0);
+            prefixLayout.draw(canvas);
+            canvas.translate(-getPaddingLeft() + prefixPadding + prefixTextPadding, 0);
+        }
+        if (suffixLayout != null) {
+            canvas.translate(getWidth() - getPaddingLeft() - getPaddingRight() + suffixPadding + suffixTextPadding, 0);
+            suffixLayout.draw(canvas);
+            canvas.translate(-getWidth() + getPaddingLeft() + getPaddingRight() - suffixPadding - suffixTextPadding, 0);
+        }
+
+        if (isFocused() && isEnabled()) {
+            paint.setStrokeWidth(2 * getResources().getDimension(R.dimen.carbon_1dip));
+        } else {
+            paint.setStrokeWidth(getResources().getDimension(R.dimen.carbon_1dip));
+        }
+
+        if (stroke != null)
+            drawStroke(canvas);
+        if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
+            rippleDrawable.draw(canvas);
     }
 
     @SuppressLint("MissingSuperCall")
     @Override
     public void draw(@NonNull Canvas canvas) {
         boolean r = revealAnimator != null;
-        boolean c = cornerRadius > 0;
+        boolean c = !corners.isZero();
         if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
@@ -796,7 +821,7 @@ public class EditText extends android.widget.EditText
             Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas maskCanvas = new Canvas(mask);
             Paint maskPaint = new Paint(0xffffffff);
-            maskCanvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), cornerRadius, cornerRadius, maskPaint);
+            maskCanvas.drawPath(cornersMask, maskPaint);
 
             for (int x = 0; x < getWidth(); x++) {
                 for (int y = 0; y < getHeight(); y++) {
@@ -805,7 +830,7 @@ public class EditText extends android.widget.EditText
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
+        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software || corners.getShape() == ShadowShape.CONVEX_PATH)) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -818,11 +843,13 @@ public class EditText extends android.widget.EditText
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
-            paint.setXfermode(null);
+            paint.setXfermode(null);    // TODO check if this is needed
 
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
@@ -906,7 +933,7 @@ public class EditText extends android.widget.EditText
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).invalidate();
 
-        if (elevation > 0 || cornerRadius > 0)
+        if (elevation > 0 || corners != null)
             ((View) getParent()).invalidate();
     }
 
@@ -929,7 +956,7 @@ public class EditText extends android.widget.EditText
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
-        if (elevation > 0 || cornerRadius > 0)
+        if (elevation > 0 || corners != null)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
@@ -969,7 +996,6 @@ public class EditText extends android.widget.EditText
     private Shadow ambientShadow, spotShadow;
     private ColorStateList ambientShadowColor, spotShadowColor;
     private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
-    private RectF shadowMaskRect = new RectF();
 
     @Override
     public float getElevation() {
@@ -1019,11 +1045,7 @@ public class EditText extends android.widget.EditText
 
     @Override
     public ShadowShape getShadowShape() {
-        if (cornerRadius == getWidth() / 2 && getWidth() == getHeight())
-            return ShadowShape.CIRCLE;
-        if (cornerRadius > 0)
-            return ShadowShape.ROUND_RECT;
-        return ShadowShape.RECT;
+        return corners.getShape();
     }
 
     @Override
@@ -1046,9 +1068,10 @@ public class EditText extends android.widget.EditText
             return;
 
         float z = getElevation() + getTranslationZ();
-        if (ambientShadow == null || ambientShadow.elevation != z || ambientShadow.cornerRadius != cornerRadius) {
-            ambientShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density / 4);
-            spotShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
+        float e = z / getResources().getDisplayMetrics().density;
+        if (spotShadow == null || spotShadow.elevation != e || !spotShadow.corners.equals(corners)) {
+            ambientShadow = ShadowGenerator.generateShadow(this, e / 4);
+            spotShadow = ShadowGenerator.generateShadow(this, e);
         }
 
         int saveCount = 0;
@@ -1085,8 +1108,8 @@ public class EditText extends android.widget.EditText
             paint.setXfermode(Carbon.CLEAR_MODE);
         }
         if (maskShadow) {
-            shadowMaskRect.set(0, 0, getWidth(), getHeight());
-            canvas.drawRoundRect(shadowMaskRect, cornerRadius, cornerRadius, paint);
+            cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+            canvas.drawPath(cornersMask, paint);
         }
         if (r) {
             canvas.drawPath(revealAnimator.mask, paint);
@@ -1387,16 +1410,23 @@ public class EditText extends android.widget.EditText
     private void updateTint() {
         Drawable[] drawables = getCompoundDrawables();
         if (tint != null && tintMode != null) {
-            for (Drawable d : drawables) {
-                if (d != null) {
-                    Carbon.setTintList(d, tint);
-                    Carbon.setTintMode(d, tintMode);
+            for (Drawable drawable : drawables) {
+                if (drawable != null) {
+                    Carbon.setTintList(drawable, tint);
+                    Carbon.setTintMode(drawable, tintMode);
+
+                    if (drawable.isStateful())
+                        drawable.setState(getDrawableState());
                 }
             }
         } else {
-            for (Drawable d : drawables) {
-                if (d != null)
-                    Carbon.setTintList(d, null);
+            for (Drawable drawable : drawables) {
+                if (drawable != null) {
+                    Carbon.setTintList(drawable, null);
+
+                    if (drawable.isStateful())
+                        drawable.setState(getDrawableState());
+                }
             }
         }
     }
@@ -1437,6 +1467,9 @@ public class EditText extends android.widget.EditText
 
         Carbon.setTintList(background, backgroundTint);
         Carbon.setTintMode(background, backgroundTintMode);
+
+        if (background.isStateful())
+            background.setState(getDrawableState());
     }
 
     @Override
@@ -1462,6 +1495,95 @@ public class EditText extends android.widget.EditText
             setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
         if (!(getTextColors() instanceof AnimatedColorStateList))
             setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
+    }
+
+
+    // -------------------------------
+    // stroke
+    // -------------------------------
+
+    private ColorStateList stroke;
+    private float strokeWidth;
+    private Paint strokePaint;
+
+    private void drawStroke(Canvas canvas) {
+        strokePaint.setStrokeWidth(strokeWidth * 2);
+        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
+        cornersMask.setFillType(Path.FillType.WINDING);
+        canvas.drawPath(cornersMask, strokePaint);
+    }
+
+    @Override
+    public void setStroke(ColorStateList colorStateList) {
+        stroke = colorStateList;
+
+        if (stroke == null)
+            return;
+
+        if (strokePaint == null) {
+            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            strokePaint.setStyle(Paint.Style.STROKE);
+        }
+    }
+
+    @Override
+    public void setStroke(int color) {
+        setStroke(ColorStateList.valueOf(color));
+    }
+
+    @Override
+    public ColorStateList getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public float getStrokeWidth() {
+        return strokeWidth;
+    }
+
+
+    // -------------------------------
+    // maximum width & height
+    // -------------------------------
+
+    int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
+
+    @Override
+    public int getMaximumWidth() {
+        return maxWidth;
+    }
+
+    @Override
+    public void setMaximumWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+        requestLayout();
+    }
+
+    @Override
+    public int getMaximumHeight() {
+        return maxHeight;
+    }
+
+    @Override
+    public void setMaximumHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+        requestLayout();
+    }
+
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
+            if (getMeasuredWidth() > maxWidth)
+                widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
+            if (getMeasuredHeight() > maxHeight)
+                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
 
@@ -1649,98 +1771,6 @@ public class EditText extends android.widget.EditText
         super.onSizeChanged(width, height, oldwidth, oldheight);
         if (width != oldwidth || height != oldheight)
             adjustTextSize();
-    }
-
-
-    // -------------------------------
-    // stroke
-    // -------------------------------
-
-    private ColorStateList stroke;
-    private float strokeWidth;
-    private Paint strokePaint;
-    private RectF strokeRect;
-
-    private void drawStroke(Canvas canvas) {
-        strokePaint.setStrokeWidth(strokeWidth * 2);
-        strokePaint.setColor(stroke.getColorForState(getDrawableState(), stroke.getDefaultColor()));
-        strokeRect.set(0, 0, getWidth(), getHeight());
-        canvas.drawRoundRect(strokeRect, cornerRadius, cornerRadius, strokePaint);
-    }
-
-    @Override
-    public void setStroke(ColorStateList colorStateList) {
-        stroke = colorStateList;
-
-        if (stroke == null)
-            return;
-
-        if (strokePaint == null) {
-            strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            strokePaint.setStyle(Paint.Style.STROKE);
-            strokeRect = new RectF();
-        }
-    }
-
-    @Override
-    public void setStroke(int color) {
-        setStroke(ColorStateList.valueOf(color));
-    }
-
-    @Override
-    public ColorStateList getStroke() {
-        return stroke;
-    }
-
-    @Override
-    public void setStrokeWidth(float strokeWidth) {
-        this.strokeWidth = strokeWidth;
-    }
-
-    @Override
-    public float getStrokeWidth() {
-        return strokeWidth;
-    }
-
-
-    // -------------------------------
-    // maximum width & height
-    // -------------------------------
-
-    int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
-
-    @Override
-    public int getMaximumWidth() {
-        return maxWidth;
-    }
-
-    @Override
-    public void setMaximumWidth(int maxWidth) {
-        this.maxWidth = maxWidth;
-        requestLayout();
-    }
-
-    @Override
-    public int getMaximumHeight() {
-        return maxHeight;
-    }
-
-    @Override
-    public void setMaximumHeight(int maxHeight) {
-        this.maxHeight = maxHeight;
-        requestLayout();
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
-            if (getMeasuredWidth() > maxWidth)
-                widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
-            if (getMeasuredHeight() > maxHeight)
-                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        }
     }
 
 

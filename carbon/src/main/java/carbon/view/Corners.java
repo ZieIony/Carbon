@@ -11,7 +11,6 @@ public class Corners {
     private ShadowShape shape;
     private float topStart, topEnd, bottomStart, bottomEnd;
     private boolean cutTopStart, cutTopEnd, cutBottomStart, cutBottomEnd;
-    private Path path = new Path();
     private RectF rect = new RectF();
 
     public Corners() {
@@ -105,7 +104,7 @@ public class Corners {
     }
 
     public Path getPath(float width, float height) {
-        path.reset();
+        Path path = new Path();
 
         float size = Math.min(width, height);
         float ts = Math.min(size, topStart);
@@ -143,9 +142,6 @@ public class Corners {
         }
         path.close();
 
-        if (!path.isConvex()) {
-            int a = 0;
-        }
         return path;
     }
 }

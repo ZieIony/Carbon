@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import carbon.Carbon;
 import carbon.beta.TableLayout;
 import carbon.widget.TableView;
 import tk.zielony.carbonsamples.R;
@@ -31,8 +30,6 @@ public class TableLayoutActivity extends SamplesActivity {
         List<String> names = Arrays.asList("Manufacturer", "Model", "Percentage", "Emulator");
         List<Class> classes = Arrays.asList(new Class[]{String.class, String.class, Float.class, Boolean.class});
         tableLayout.setAdapter(new MyTableAdapter(tableLayout.getTableView(), items, names, classes));
-        tableLayout.getToolbar().setTitle("Devices");
-        tableLayout.getToolbar().getTitleView().setTextColor(Carbon.getThemeColor(this, android.R.attr.textColorSecondary));
     }
 
     public static class MyTableAdapter extends TableView.Adapter {

@@ -197,7 +197,18 @@
         <attr name="carbon_theme"/>
         <attr name="android:background"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
 
@@ -238,7 +249,18 @@
         <attr name="carbon_backgroundTintMode"/>
         <attr name="carbon_animateColorChanges"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -352,7 +374,18 @@
         <attr name="android:maxLines"/>
         <attr name="android:textAllCaps"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
 
@@ -403,7 +436,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -441,7 +485,18 @@
         <attr name="carbon_maxWidth"/>
         <attr name="carbon_maxHeight"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -486,7 +541,18 @@
         <attr name="carbon_maxWidth"/>
         <attr name="carbon_maxHeight"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -531,7 +597,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -574,7 +651,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -612,7 +700,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -650,7 +749,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -688,7 +798,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -731,7 +852,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -774,7 +906,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -800,7 +943,17 @@
         <attr name="android:text"/>
         <attr name="carbon_icon"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
     </declare-styleable>
 
     <attr name="carbon_chipStyle" format="reference"/>
@@ -809,7 +962,19 @@
 
         <attr name="android:background"/>
         <attr name="carbon_icon"/>
+
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
     </declare-styleable>
@@ -848,7 +1013,19 @@
         <attr name="carbon_animateColorChanges"/>
 
         <attr name="android:src"/>
+
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
 
@@ -945,7 +1122,18 @@
         <attr name="carbon_elevationAmbientShadowColor"/>
         <attr name="carbon_elevationSpotShadowColor"/>
 
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
         <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
+
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
 
@@ -1111,6 +1299,18 @@
         <attr name="carbon_headerParallax"/>
         <attr name="android:divider"/>
         <attr name="android:dividerHeight"/>
+
+        <attr name="carbon_cornerRadiusTopStart"/>
+        <attr name="carbon_cornerRadiusTopEnd"/>
+        <attr name="carbon_cornerRadiusBottomStart"/>
+        <attr name="carbon_cornerRadiusBottomEnd"/>
+        <attr name="carbon_cornerRadius"/>
+
+        <attr name="carbon_cornerCutTopStart"/>
+        <attr name="carbon_cornerCutTopEnd"/>
+        <attr name="carbon_cornerCutBottomStart"/>
+        <attr name="carbon_cornerCutBottomEnd"/>
+        <attr name="carbon_cornerCut"/>
 
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>

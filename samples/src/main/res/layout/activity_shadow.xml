@@ -143,4 +143,37 @@
 
     </carbon.widget.LinearLayout>
 
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <carbon.widget.Button
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="@dimen/carbon_padding"
+            android:background="#ffffff"
+            app:carbon_cornerCut="12dp"
+            app:carbon_elevation="2dp"/>
+
+        <carbon.widget.Button
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="@dimen/carbon_padding"
+            android:background="#ffffff"
+            app:carbon_cornerCut="12dp"
+            app:carbon_elevation="4dp"
+            app:carbon_elevationShadowColor="@color/carbon_black"/>
+
+        <carbon.widget.Button
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="@dimen/carbon_padding"
+            android:background="#ffffff"
+            app:carbon_cornerCut="12dp"
+            app:carbon_elevation="8dp"
+            app:carbon_elevationShadowColor="@color/carbon_deepPurple_700"/>
+
+    </carbon.widget.LinearLayout>
+
 </carbon.widget.LinearLayout>

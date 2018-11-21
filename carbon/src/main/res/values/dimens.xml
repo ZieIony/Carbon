@@ -51,6 +51,7 @@
     <dimen name="carbon_timelineTextSize">14sp</dimen>
 
     <dimen name="carbon_avatarSize">40dp</dimen>
+    <dimen name="carbon_avatarSizeHalf">20dp</dimen>
 
     <dimen name="carbon_elevationFlat">0dp</dimen>
     <dimen name="carbon_elevationLow">4dp</dimen>
@@ -76,12 +77,15 @@
     <dimen name="carbon_elevationDialog">24dp</dimen>
     <dimen name="carbon_elevationPicker">24dp</dimen>
 
+    <dimen name="carbon_cornerRadiusImage">2dp</dimen>
     <dimen name="carbon_cornerRadiusButton">2dp</dimen>
     <dimen name="carbon_cornerRadiusCard">2dp</dimen>
     <dimen name="carbon_cornerRadiusSnackbar">2dp</dimen>
 
     <dimen name="carbon_fabSize">56dp</dimen>
+    <dimen name="carbon_fabSizeHalf">28dp</dimen>
     <dimen name="carbon_smallFabSize">40dp</dimen>
+    <dimen name="carbon_smallFabSizeHalf">20dp</dimen>
 
     <dimen name="carbon_1dip">1dp</dimen>
 

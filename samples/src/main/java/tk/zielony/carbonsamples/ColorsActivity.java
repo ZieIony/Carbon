@@ -63,7 +63,9 @@ public class ColorsActivity extends SamplesActivity {
             new Item("Deep orange", R.style.PrimaryDeepOrange, R.color.carbon_deepOrange_400),
             new Item("Brown", R.style.PrimaryBrown, R.color.carbon_brown_400),
             new Item("Grey", R.style.PrimaryGrey, R.color.carbon_grey_400),
-            new Item("Blue grey", R.style.PrimaryBlueGrey, R.color.carbon_blueGrey_400)
+            new Item("Blue grey", R.style.PrimaryBlueGrey, R.color.carbon_blueGrey_400),
+            new Item("White", R.style.PrimaryWhite, R.color.carbon_white),
+            new Item("Black", R.style.PrimaryBlack, R.color.carbon_black)
     };
 
     static Item[] accents = new Item[]{

@@ -22,25 +22,22 @@
             android:id="@+id/carbon_tooltip"
             style="@style/carbon_TextView.Tooltip"
             android:layout_width="wrap_content"
-            android:text="@{data.title}"
             android:layout_height="wrap_content"
-            android:enabled="@{data.enabled}"
             android:layout_gravity="center_vertical"
             android:duplicateParentState="true"
-            android:maxLines="1"/>
+            android:enabled="@{data.enabled}"
+            android:maxLines="1"
+            android:text="@{data.title}"/>
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/carbon_fab"
-            android:layout_width="@dimen/carbon_smallFabSize"
-            android:enabled="@{data.enabled}"
-            android:layout_height="@dimen/carbon_smallFabSize"
+            style="@style/carbon_FloatingActionButton.Small"
             android:layout_gravity="center_vertical"
-            android:clickable="false"
-            android:focusable="false"
             android:layout_marginLeft="@dimen/carbon_paddingHalf"
             android:layout_marginRight="@dimen/carbon_paddingHalf"
+            android:clickable="false"
             android:duplicateParentState="true"
-            android:padding="@dimen/carbon_paddingHalf"
-            android:scaleType="fitXY"/>
+            android:enabled="@{data.enabled}"
+            android:focusable="false"/>
     </carbon.widget.LinearLayout>
 </layout>

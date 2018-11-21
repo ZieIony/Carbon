@@ -5,14 +5,6 @@
        android:layout_height="match_parent"
        android:orientation="vertical">
 
-    <carbon.widget.Toolbar
-        android:id="@+id/carbon_tableToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        android:background="@null"
-        app:carbon_elevation="@dimen/carbon_elevationFlat"
-        app:carbon_icon="@null"/>
-
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_tableHeader"
         android:layout_width="match_parent"

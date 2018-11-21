@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.demo.AutoCompleteActivity;
-import tk.zielony.carbonsamples.demo.BackdropActivity;
 import tk.zielony.carbonsamples.demo.PowerMenuActivity;
 import tk.zielony.carbonsamples.demo.QuickReturnActivity;
 import tk.zielony.carbonsamples.demo.SearchToolbarActivity;
@@ -29,7 +28,6 @@ public class DemosActivity extends SampleListActivity {
                 new SampleActivityItem(QuickReturnActivity.class, getString(R.string.quickReturnActivity_title), false),
                 new SampleActivityItem(SearchToolbarActivity.class, getString(R.string.searchToolbarActivity_title), false),
                 new SampleActivityItem(ShareToolbarActivity.class, getString(R.string.shareToolbarActivity_title), true),
-                new SampleActivityItem(BackdropActivity.class, getString(R.string.backdropActivity_title), true),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

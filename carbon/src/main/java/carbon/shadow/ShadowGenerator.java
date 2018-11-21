@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
+import android.graphics.Path;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
@@ -15,14 +15,12 @@ import carbon.internal.MathUtils;
 import carbon.internal.WeakHashSet;
 import carbon.view.Corners;
 import carbon.view.CornersView;
-import carbon.view.RoundedCornersView;
 
 public class ShadowGenerator {
     private static Object renderScript;
     private static Object blurShader;
     private static Paint paint = new Paint();
     private static boolean software = false;
-    private static RectF roundRect = new RectF();
 
     private static WeakHashSet shadowSet = new WeakHashSet();
 
@@ -95,10 +93,10 @@ public class ShadowGenerator {
             }
         }
 
-        CornersView roundedCornersView = (CornersView) view;
+        CornersView cornersView = (CornersView) view;
 
         int e = (int) Math.ceil(elevation);
-        Corners corners = roundedCornersView.getCorners();
+        Corners corners = cornersView.getCorners();
 
         for (Object o : shadowSet) {
             Shadow s = (Shadow) o;
@@ -106,20 +104,27 @@ public class ShadowGenerator {
                 return s;
         }
 
+        float scale = view.getContext().getResources().getDisplayMetrics().density;
+
         Bitmap bitmap;
-        int bitmapSize = e * 2 + 2 * c + 1;
-        bitmap = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
+        int minWidth = (int) (Math.max(corners.getTopStart(), corners.getBottomStart()) + Math.max(corners.getTopEnd(), corners.getBottomEnd()) + e);
+        int minHeight = (int) (Math.max(corners.getTopStart(), corners.getTopEnd()) + Math.max(corners.getBottomStart(), corners.getBottomEnd()) + e);
+        int width = e * 2 + minWidth;
+        int height = e * 2 + minHeight;
+        bitmap = Bitmap.createBitmap((int) (width / scale), (int) (height / scale), Bitmap.Config.ARGB_8888);
 
         Canvas shadowCanvas = new Canvas(bitmap);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(0xffffffff);
 
-        roundRect.set(e, e, bitmapSize - e, bitmapSize - e);
-        shadowCanvas.drawRoundRect(roundRect, c, c, paint);
+        Path path = corners.getPath(minWidth, minHeight);
+        path.offset(e, e);
+        shadowCanvas.scale(1 / scale, 1 / scale);
+        shadowCanvas.drawPath(path, paint);
 
         blur(bitmap, elevation);
 
-        Shadow shadow = new Shadow(bitmap, elevation, corners, view.getContext().getResources().getDisplayMetrics().density);
+        Shadow shadow = new Shadow(Bitmap.createScaledBitmap(bitmap, width, height, true), elevation, corners);
         shadowSet.add(shadow);
         return shadow;
     }

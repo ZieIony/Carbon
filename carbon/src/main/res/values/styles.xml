@@ -24,6 +24,8 @@
         <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
+
+        <item name="font">?attr/carbon_font</item>
     </style>
 
     <style name="carbon_Button.Colored">
@@ -81,7 +83,7 @@
         <item name="carbon_elevation">@dimen/carbon_elevationFAB</item>
         <item name="android:minWidth">@dimen/carbon_fabSize</item>
         <item name="android:minHeight">@dimen/carbon_fabSize</item>
-        <item name="carbon_cornerRadius">@dimen/carbon_fabSize</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_fabSizeHalf</item>
         <item name="android:scaleType">center</item>
     </style>
 
@@ -95,6 +97,7 @@
         <item name="android:layout_height">@dimen/carbon_smallFabSize</item>
         <item name="android:minWidth">@dimen/carbon_smallFabSize</item>
         <item name="android:minHeight">@dimen/carbon_smallFabSize</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_smallFabSizeHalf</item>
         <item name="android:padding">@dimen/carbon_paddingHalf</item>
     </style>
 
@@ -126,6 +129,8 @@
         <item name="carbon_labelFontFamily">"sans-serif"</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
+
+        <item name="font">?attr/carbon_font</item>
     </style>
 
     <style name="carbon_CollapsingToolbarLayout">
@@ -229,7 +234,7 @@
         <item name="android:scaleType">centerCrop</item>
         <item name="android:layout_width">@dimen/carbon_avatarSize</item>
         <item name="android:layout_height">@dimen/carbon_avatarSize</item>
-        <item name="carbon_cornerRadius">@dimen/carbon_avatarSize</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_avatarSizeHalf</item>
         <item name="carbon_stroke">?attr/carbon_dividerColor</item>
         <item name="carbon_strokeWidth">0.5dp</item>
     </style>
@@ -371,6 +376,8 @@
         <item name="carbon_backgroundTint">@color/carbon_defaultColor</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
+
+        <item name="font">?attr/carbon_font</item>
     </style>
 
     <style name="carbon_SearchEditText" parent="carbon_EditText">

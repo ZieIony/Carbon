@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="tk.zielony.carbonsamples.SampleActivityItem"/>
+            type="tk.zielony.carbonsamples.SampleActivityGroup"/>
 
         <import type="android.view.View"/>
     </data>
@@ -31,15 +31,5 @@
             android:text="@{data.name}"
             tools:text="item name"/>
 
-        <carbon.widget.TextView
-            android:id="@+id/beta"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_listItemHeight"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/carbon_padding"
-            android:text="beta"
-            android:textColor="#ffcf0000"
-            android:textSize="16sp"
-            android:visibility="@{data.beta?View.VISIBLE:View.GONE}"/>
     </carbon.widget.LinearLayout>
 </layout>

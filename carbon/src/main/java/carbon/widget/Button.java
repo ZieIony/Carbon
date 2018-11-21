@@ -61,11 +61,13 @@ import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
 import carbon.view.Corners;
 import carbon.view.CornersView;
+import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
 import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
+import carbon.view.TransformationView;
 import carbon.view.VisibleView;
 
 /**
@@ -83,14 +85,16 @@ public class Button extends android.widget.Button
         CornersView,
         TintedView,
         StrokeView,
+        MaxSizeView,
         AutoSizeTextView,
         RevealView,
-        VisibleView {
+        VisibleView,
+        TransformationView {
 
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
-        super(context);
+        super(CarbonContextWrapper.wrap(context));
         initButton(null, android.R.attr.buttonStyle);
     }
 
@@ -163,6 +167,10 @@ public class Button extends android.widget.Button
             R.styleable.Button_carbon_cornerCutBottomEnd,
             R.styleable.Button_carbon_cornerCut
     };
+    private static int[] maxSizeIds = new int[]{
+            R.styleable.Button_carbon_maxWidth,
+            R.styleable.Button_carbon_maxHeight,
+    };
     private static int[] elevationIds = new int[]{
             R.styleable.Button_carbon_elevation,
             R.styleable.Button_carbon_elevationShadowColor,
@@ -219,6 +227,7 @@ public class Button extends android.widget.Button
         Carbon.initTint(this, a, tintIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
+        Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initHtmlText(this, a, R.styleable.Button_carbon_htmlText);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
@@ -632,6 +641,12 @@ public class Button extends android.widget.Button
         updateBackgroundTint();
     }
 
+    @Override
+    public void setCompoundDrawables(@Nullable Drawable left, @Nullable Drawable top, @Nullable Drawable right, @Nullable Drawable bottom) {
+        super.setCompoundDrawables(left, top, right, bottom);
+        updateTint();
+    }
+
 
     // -------------------------------
     // elevation
@@ -714,9 +729,10 @@ public class Button extends android.widget.Button
             return;
 
         float z = getElevation() + getTranslationZ();
-        if (ambientShadow == null || ambientShadow.elevation != z || !ambientShadow.corners.equals(corners)) {
-            ambientShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density / 4);
-            spotShadow = ShadowGenerator.generateShadow(this, z / getResources().getDisplayMetrics().density);
+        float e = z / getResources().getDisplayMetrics().density;
+        if (spotShadow == null || spotShadow.elevation != e || !spotShadow.corners.equals(corners)) {
+            ambientShadow = ShadowGenerator.generateShadow(this, e / 4);
+            spotShadow = ShadowGenerator.generateShadow(this, e);
         }
 
         int saveCount = 0;
@@ -1178,6 +1194,47 @@ public class Button extends android.widget.Button
     @Override
     public float getStrokeWidth() {
         return strokeWidth;
+    }
+
+
+    // -------------------------------
+    // maximum width & height
+    // -------------------------------
+
+    int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
+
+    @Override
+    public int getMaximumWidth() {
+        return maxWidth;
+    }
+
+    @Override
+    public void setMaximumWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+        requestLayout();
+    }
+
+    @Override
+    public int getMaximumHeight() {
+        return maxHeight;
+    }
+
+    @Override
+    public void setMaximumHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+        requestLayout();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
+            if (getMeasuredWidth() > maxWidth)
+                widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
+            if (getMeasuredHeight() > maxHeight)
+                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
 

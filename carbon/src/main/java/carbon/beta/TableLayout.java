@@ -10,11 +10,9 @@ import carbon.widget.DropDown;
 import carbon.widget.LinearLayout;
 import carbon.widget.TableView;
 import carbon.widget.TextView;
-import carbon.widget.Toolbar;
 
 public class TableLayout extends LinearLayout {
     private TableView table;
-    Toolbar toolbar;
     LinearLayout header;
     View footer;
     DropDown rowNumber;
@@ -39,7 +37,6 @@ public class TableLayout extends LinearLayout {
         View.inflate(getContext(), R.layout.carbon_tablelayout, this);
         setOrientation(VERTICAL);
 
-        toolbar = findViewById(R.id.carbon_tableToolbar);
         header = findViewById(R.id.carbon_tableHeader);
         table = findViewById(R.id.carbon_table);
         footer = findViewById(R.id.carbon_tableFooter);
@@ -50,10 +47,6 @@ public class TableLayout extends LinearLayout {
 
     public TableView getTableView() {
         return table;
-    }
-
-    public Toolbar getToolbar() {
-        return toolbar;
     }
 
     public View getHeader() {
