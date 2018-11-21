@@ -8,7 +8,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="carbon_Theme.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/carbon_cyan_700</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
         <item name="colorPrimary">@color/carbon_cyan_500</item>
         <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
         <item name="colorAccent">@color/carbon_orange_a200</item>
@@ -55,19 +55,19 @@
     </style>
 
     <style name="ThemeLight" parent="carbon_Theme.Light.NoActionBar">
-        <item name="colorAccent">@color/carbon_black</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="ThemeLight.Inverse" parent="carbon_Theme.Light.LightPrimaryColor.NoActionBar">
-        <item name="colorAccent">@color/carbon_black</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="ThemeDark" parent="carbon_Theme.Dark.NoActionBar">
-        <item name="colorAccent">@color/carbon_white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="ThemeDark.Inverse" parent="carbon_Theme.Dark.DarkPrimaryColor.NoActionBar">
-        <item name="colorAccent">@color/carbon_white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="PrimaryRed">
