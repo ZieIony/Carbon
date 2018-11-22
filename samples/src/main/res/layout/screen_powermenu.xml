@@ -27,12 +27,12 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:padding="@dimen/carbon_paddingHalf"
-            android:src="@raw/ic_settings_power_24px"
+            app:srcCompat="@drawable/ic_power_settings_new_black_24dp"
             android:tag="animate"
-            android:tint="?attr/carbon_iconColor"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
-            app:carbon_outAnimation="none"/>
+            app:carbon_outAnimation="none"
+            app:carbon_tint="@color/carbon_iconColorActive_dark"/>
 
         <carbon.widget.TextView
             android:layout_width="wrap_content"
@@ -66,10 +66,10 @@
             android:padding="@dimen/carbon_paddingHalf"
             android:src="@raw/ic_refresh_24px"
             android:tag="animate"
-            android:tint="?attr/carbon_iconColor"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
-            app:carbon_outAnimation="none"/>
+            app:carbon_outAnimation="none"
+            app:carbon_tint="@color/carbon_iconColorActive_dark"/>
 
         <carbon.widget.TextView
             android:layout_width="wrap_content"
@@ -103,10 +103,10 @@
             android:padding="@dimen/carbon_paddingHalf"
             android:src="@raw/ic_airplanemode_off_24px"
             android:tag="animate"
-            android:tint="?attr/carbon_iconColorInverse"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
-            app:carbon_outAnimation="none"/>
+            app:carbon_outAnimation="none"
+            app:carbon_tint="@color/carbon_iconColorActive_dark"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -155,26 +155,26 @@
             style="@style/carbon_FloatingActionButton.Small"
             android:layout_marginLeft="@dimen/carbon_padding"
             android:layout_marginRight="@dimen/carbon_padding"
-            android:background="#ffffffff"
+            android:background="?attr/carbon_colorBackground"
             android:padding="@dimen/carbon_paddingHalf"
             android:src="@raw/ic_vibration_24px"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_tint="@color/carbon_black_54"/>
+            app:carbon_tint="?attr/carbon_iconColor"/>
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/volume"
             style="@style/carbon_FloatingActionButton.Small"
             android:layout_marginRight="@dimen/carbon_padding"
-            android:background="#00695D"
+            android:background="?attr/carbon_colorBackgroundInverse"
             android:padding="@dimen/carbon_paddingHalf"
             android:src="@raw/ic_volume_up_24px"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_tint="#ffffff"/>
+            app:carbon_tint="?attr/carbon_iconColorInverse"/>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

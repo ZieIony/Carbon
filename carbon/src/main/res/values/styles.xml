@@ -59,6 +59,21 @@
         <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
     </style>
 
+    <style name="carbon_Button.Outlined" parent="carbon_Button.Flat">
+        <item name="carbon_stroke">?attr/colorControlNormal</item>
+        <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+    </style>
+
+    <style name="carbon_Button.Outlined.Colored" parent="carbon_Button.Flat.Colored">
+        <item name="carbon_stroke">?attr/colorControlNormal</item>
+        <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+    </style>
+
+    <style name="carbon_Button.Outlined.Colored.Inverse" parent="carbon_Button.Flat.Colored.Inverse">
+        <item name="carbon_stroke">?attr/colorControlNormal</item>
+        <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+    </style>
+
     <style name="carbon_ToggleButton" parent="@android:style/Widget.Button.Toggle">
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:textSize">14sp</item>
@@ -77,7 +92,7 @@
         <item name="android:background">@color/carbon_defaultColorAccent</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
-        <item name="carbon_tintMode">multiply</item>
+        <item name="carbon_tintMode">src_in</item>
         <item name="carbon_inAnimation">pop</item>
         <item name="carbon_outAnimation">pop</item>
         <item name="carbon_elevation">@dimen/carbon_elevationFAB</item>

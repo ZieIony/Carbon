@@ -443,7 +443,7 @@ public class Carbon {
         } else if (drawable instanceof TintAwareDrawable) {
             ((TintAwareDrawable) drawable).setTint(tint);
         } else {
-            drawable.setColorFilter(new PorterDuffColorFilter(tint, PorterDuff.Mode.MULTIPLY));
+            drawable.setColorFilter(new PorterDuffColorFilter(tint, PorterDuff.Mode.SRC_IN));
         }
     }
 

@@ -48,8 +48,8 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation "com.android.support:cardview-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
-    implementation 'com.github.ZieIony:randomdata:db21077582'
-    compileOnly 'com.github.ZieIony.RandomData:person:db21077582'
+    implementation 'com.github.ZieIony:randomdata:4e90951628'
+    compileOnly 'com.github.ZieIony.RandomData:person:4e90951628'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'

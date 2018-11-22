@@ -173,7 +173,7 @@ public class VectorDrawable extends Drawable implements AlphaDrawable, TintAware
         int intWidth, intHeight;
         public ColorFilter colorFilter;
         public ColorStateList tint;
-        public PorterDuff.Mode tintMode = PorterDuff.Mode.MULTIPLY;
+        public PorterDuff.Mode tintMode = PorterDuff.Mode.SRC_IN;
 
         public VectorState(SVG svg, int intWidth, int intHeight) {
             this.svg = svg;

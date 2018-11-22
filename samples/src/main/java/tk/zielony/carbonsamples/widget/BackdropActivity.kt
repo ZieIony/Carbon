@@ -36,7 +36,7 @@ class BackdropActivity : SamplesActivity() {
                 setOnItemClickedListener { view, type, position -> backdrop_backdropLayout.closeLayout() }
             }
 
-            toolbar.iconView.setOnClickListener { backdrop_backdropLayout.toggleLayout(BackdropLayout.Side.START) }
+            backdrop_menuIcon.setOnClickListener { backdrop_backdropLayout.toggleLayout(BackdropLayout.Side.START) }
         }
 
         run {
@@ -45,7 +45,16 @@ class BackdropActivity : SamplesActivity() {
                     DefaultHeaderItem("Header"),
                     DefaultAvatarTextRatingSubtextDateItem(),
                     DefaultAvatarTextRatingSubtextDateItem(),
+                    DefaultAvatarTextRatingSubtextDateItem(),
                     DefaultHeaderItem("Header"),
+                    DefaultAvatarTextRatingSubtextDateItem(),
+                    DefaultAvatarTextRatingSubtextDateItem(),
+                    DefaultAvatarTextRatingSubtextDateItem(),
+                    DefaultHeaderItem("Header"),
+                    DefaultAvatarTextRatingSubtextDateItem(),
+                    DefaultAvatarTextRatingSubtextDateItem(),
+                    DefaultHeaderItem("Header"),
+                    DefaultAvatarTextRatingSubtextDateItem(),
                     DefaultAvatarTextRatingSubtextDateItem(),
                     DefaultAvatarTextRatingSubtextDateItem(),
                     PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)))

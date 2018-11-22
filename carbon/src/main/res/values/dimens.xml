@@ -61,6 +61,8 @@
 
     <dimen name="carbon_translationButton">6dp</dimen>
 
+    <dimen name="carbon_strokeWidthButton">1dp</dimen>
+
     <dimen name="carbon_elevationSwitch">1dp</dimen>
     <dimen name="carbon_elevationButton">2dp</dimen>
     <dimen name="carbon_elevationCard">2dp</dimen>

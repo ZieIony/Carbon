@@ -35,7 +35,6 @@
         <activity android:name=".widget.ProgressBarsActivity"/>
         <activity android:name=".widget.TabsActivity"/>
         <activity android:name=".widget.CheckBoxRadioActivity"/>
-        <activity android:name=".widget.ScrollViewActivity"/>
         <activity android:name=".widget.RecyclerActivity"/>
         <activity android:name=".widget.ExpandableRecyclerActivity"/>
         <activity android:name=".widget.ExpansionPanelActivity"/>
@@ -44,7 +43,6 @@
             android:name=".widget.NavigationViewActivity"
             android:theme="@style/AppTheme.Translucent"/>
         <activity android:name=".widget.SeekBarActivity"/>
-        <activity android:name=".widget.ToolbarActivity"/>
         <activity android:name=".widget.FlowLayoutActivity"/>
         <activity android:name=".widget.TableLayoutActivity"/>
         <activity android:name=".widget.FloatingActionMenuActivity"/>

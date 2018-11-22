@@ -2,50 +2,52 @@
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                            xmlns:app="http://schemas.android.com/apk/res-auto"
                            android:layout_width="match_parent"
-                           android:background="#D32F2F"
+                           android:layout_height="match_parent"
                            android:layout_gravity="center"
-                           android:orientation="vertical"
-                           android:layout_height="match_parent">
+                           android:background="#D32F2F"
+                           android:orientation="vertical">
 
     <LinearLayout
-        android:gravity="center"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
 
         <carbon.widget.ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="@dimen/carbon_smallFabSize"
+            android:layout_height="@dimen/carbon_smallFabSize"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/carbon_padding"
             android:tag="animate"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_tint="#ffffffff"
             app:carbon_progressStyle="circular_indeterminate"
-            android:layout_marginRight="@dimen/carbon_padding"
-            android:id="@+id/progress"
-            android:layout_width="@dimen/carbon_smallFabSize"
-            android:layout_height="@dimen/carbon_smallFabSize"/>
+            app:carbon_tint="#ffffffff"/>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <carbon.widget.TextView
-                android:tag="animate"
-                app:carbon_inAnimation="fly"
                 android:id="@+id/powerOff"
-                android:text="Power Off"
-                android:textAppearance="?attr/carbon_textAppearanceTitleInverse"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:tag="animate"
+                android:text="Power Off"
+                android:textAppearance="@style/carbon_TextAppearance.Title.Inverse"
+                android:textColor="@color/carbon_textColorPrimary_dark"
+                app:carbon_inAnimation="fly"/>
 
             <carbon.widget.TextView
-                android:tag="animate"
-                app:carbon_inAnimation="fly"
-                android:text="Shutting down..."
-                android:textAppearance="?attr/carbon_textAppearanceCaptionInverse"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:tag="animate"
+                android:text="Shutting down..."
+                android:textAppearance="@style/carbon_TextAppearance.Caption.Inverse"
+                android:textColor="@color/carbon_textColorSecondary_dark"
+                app:carbon_inAnimation="fly"/>
         </LinearLayout>
     </LinearLayout>
 </carbon.widget.FrameLayout>

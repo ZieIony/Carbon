@@ -12,12 +12,13 @@ import com.annimon.stream.Stream;
 
 import java.util.List;
 
+import carbon.Carbon;
 import carbon.animation.AnimatedView;
+import carbon.view.RevealView;
 import carbon.widget.Button;
 import carbon.widget.FrameLayout;
 import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
-import carbon.view.RevealView;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
@@ -157,12 +158,12 @@ public class PowerMenuActivity extends SamplesActivity {
         findViewById(R.id.vibration).setOnClickListener(view -> {
             if (vibration) {
                 vibration = false;
-                view.setBackgroundColor(0xffffffff);
-                ((ImageView) view).setTint(getResources().getColor(R.color.carbon_black_54));
+                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_colorBackground));
+                ((ImageView) view).setTint(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_iconColor));
             } else {
                 vibration = true;
-                view.setBackgroundColor(0xff00695D);
-                ((ImageView) view).setTint(0xffffffff);
+                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_colorBackgroundInverse));
+                ((ImageView) view).setTint(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_iconColorInverse));
                 Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(500);
             }
@@ -172,12 +173,12 @@ public class PowerMenuActivity extends SamplesActivity {
         findViewById(R.id.volume).setOnClickListener(view -> {
             if (volume) {
                 volume = false;
-                view.setBackgroundColor(0xffffffff);
-                ((ImageView) view).setTint(getResources().getColor(R.color.carbon_black_54));
+                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_colorBackground));
+                ((ImageView) view).setTint(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_iconColor));
             } else {
                 volume = true;
-                view.setBackgroundColor(0xff00695D);
-                ((ImageView) view).setTint(0xffffffff);
+                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_colorBackgroundInverse));
+                ((ImageView) view).setTint(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_iconColorInverse));
                 view.playSoundEffect(SoundEffectConstants.CLICK);
             }
             powerMenu.postInvalidate();

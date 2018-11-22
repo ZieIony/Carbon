@@ -14,13 +14,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <carbon.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                app:carbon_elevation="0dp"
-                app:carbon_icon="@drawable/ic_menu_black_24dp"/>
+            <carbon.widget.ImageView
+                android:id="@+id/backdrop_menuIcon"
+                style="@style/carbon_ImageView.IconButton"
+                android:layout_height="@dimen/carbon_toolbarHeight"
+                android:layout_marginStart="@dimen/carbon_toolbarItemMargin"
+                android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
+                android:src="@drawable/ic_menu_black_24dp"/>
 
             <carbon.widget.RecyclerView
                 android:id="@+id/backdrop_recycler"
@@ -33,9 +33,10 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/carbon_toolbarHeight"
             android:layout_marginLeft="@dimen/carbon_toolbarHeight"
-            android:background="@color/carbon_white"
+            android:background="?attr/carbon_colorBackground"
             android:orientation="vertical"
             app:carbon_elevation="@dimen/carbon_elevationDrawer">
+
             <carbon.widget.RecyclerView
                 android:id="@+id/backdrop_contentRecycler"
                 android:layout_width="match_parent"

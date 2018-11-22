@@ -302,15 +302,15 @@ public class EditText extends android.widget.EditText
             fSelectHandleCenter.setAccessible(true);
 
             VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
-            leftHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.MULTIPLY);
+            leftHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.SRC_IN);
             fSelectHandleLeft.set(editor, leftHandle);
 
             VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
-            rightHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.MULTIPLY);
+            rightHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.SRC_IN);
             fSelectHandleRight.set(editor, rightHandle);
 
             VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
-            middleHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.MULTIPLY);
+            middleHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.SRC_IN);
             fSelectHandleCenter.set(editor, middleHandle);
         } catch (final Exception ignored) {
         }
@@ -340,11 +340,11 @@ public class EditText extends android.widget.EditText
             Drawable[] mCursorDrawable = (Drawable[]) mCursorDrawableField.get(mEditor);
 
             Drawable drawable = getResources().getDrawable(R.drawable.carbon_textcursor);
-            drawable.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.MULTIPLY));
+            drawable.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.SRC_IN));
             mCursorDrawable[0] = drawable;
 
             Drawable drawable2 = getResources().getDrawable(R.drawable.carbon_textcursor);
-            drawable2.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.MULTIPLY));
+            drawable2.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.SRC_IN));
             mCursorDrawable[1] = drawable2;
         } catch (Exception e) {
             Carbon.logReflectionError(e);

@@ -22,12 +22,34 @@
                 style="@style/sectionDescription"
                 android:text="Plain buttons with different styles"/>
 
-            <carbon.widget.Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/carbon_padding"
-                android:tag="enable"
-                android:text="Theme style"/>
+            <carbon.widget.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <carbon.widget.Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:tag="enable"
+                    android:text="Contained Button"/>
+
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Outlined.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:tag="enable"
+                    android:text="Outlined button"/>
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Flat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:tag="enable"
+                    android:text="flat button"/>
+            </carbon.widget.FlowLayout>
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
@@ -35,7 +57,7 @@
                 android:layout_margin="@dimen/carbon_padding"
                 android:background="@drawable/buttonshape"
                 android:tag="enable"
-                android:text="Shape"
+                android:text="Custom shape"
                 android:textColor="@color/carbon_textColorPrimary_dark"
                 app:carbon_backgroundTint="@null"
                 app:carbon_cornerRadius="0dp"
@@ -47,10 +69,10 @@
                 android:layout_height="36dp"
                 android:layout_margin="@dimen/carbon_padding"
                 android:background="#ffffffff"
-                android:paddingBottom="0dp"
                 android:paddingLeft="@dimen/carbon_padding"
-                android:paddingRight="@dimen/carbon_padding"
                 android:paddingTop="0dp"
+                android:paddingRight="@dimen/carbon_padding"
+                android:paddingBottom="0dp"
                 android:tag="enable"
                 android:text="Inline Style"
                 android:textColor="#ff0000ff"
@@ -62,14 +84,6 @@
                 app:carbon_touchMarginLeft="100dp"
                 app:carbon_touchMarginRight="100dp"
                 app:carbon_touchMarginTop="6dp"/>
-
-            <carbon.widget.Button
-                style="@style/carbon_Button.Flat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/carbon_padding"
-                android:tag="enable"
-                android:text="flat button"/>
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
@@ -109,30 +123,35 @@
                 style="@style/sectionDescription"
                 android:text="Floating action buttons with vector graphics and proper sizes"/>
 
-            <carbon.widget.FloatingActionButton
-                style="@style/carbon_FloatingActionButton"
-                android:layout_margin="@dimen/carbon_padding"
-                android:padding="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/mazda"
-                android:tag="enable"
-                app:carbon_tint="@null"/>
+            <carbon.widget.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <carbon.widget.FloatingActionButton
-                style="@style/carbon_FloatingActionButton.Small"
-                android:layout_margin="@dimen/carbon_padding"
-                android:src="@raw/ic_data_usage_24px"
-                android:tag="enable"/>
+                <carbon.widget.FloatingActionButton
+                    style="@style/carbon_FloatingActionButton"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:padding="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/mazda"
+                    android:tag="enable"
+                    app:carbon_tint="@null"/>
 
-            <carbon.widget.FloatingActionButton
-                style="@style/carbon_FloatingActionButton.Primary"
-                android:layout_width="@dimen/carbon_fabSize"
-                android:layout_height="@dimen/carbon_fabSize"
-                android:layout_margin="@dimen/carbon_padding"
-                android:padding="@dimen/carbon_padding"
-                android:scaleType="fitXY"
-                android:tag="enable"
-                app:srcCompat="@drawable/ic_android_black_24dp"/>
+                <carbon.widget.FloatingActionButton
+                    style="@style/carbon_FloatingActionButton.Small"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:src="@raw/ic_data_usage_24px"
+                    android:tag="enable"/>
+
+                <carbon.widget.FloatingActionButton
+                    style="@style/carbon_FloatingActionButton.Primary"
+                    android:layout_width="@dimen/carbon_fabSize"
+                    android:layout_height="@dimen/carbon_fabSize"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:padding="@dimen/carbon_padding"
+                    android:scaleType="fitXY"
+                    android:tag="enable"
+                    app:srcCompat="@drawable/ic_android_black_24dp"/>
+            </carbon.widget.FlowLayout>
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>
 

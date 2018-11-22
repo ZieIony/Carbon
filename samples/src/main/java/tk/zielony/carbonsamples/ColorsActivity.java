@@ -104,8 +104,8 @@ public class ColorsActivity extends SamplesActivity {
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-            binding.style.setSelectedIndex(preferences.getInt(STYLE, 1));
-            Item item = styles[preferences.getInt(STYLE, 1)];
+            binding.style.setSelectedIndex(preferences.getInt(STYLE, 2));
+            Item item = styles[preferences.getInt(STYLE, 2)];
             binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }
 

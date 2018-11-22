@@ -11,13 +11,11 @@
     <string name="floatingActionMenuActivity_title">FloatingActionMenu</string>
     <string name="tableLayoutActivity_title">TableLayout</string>
     <string name="flowLayoutActivity_title"><![CDATA[FlowLayout & Chips]]></string>
-    <string name="toolbarActivity_title">Toolbar</string>
     <string name="seekBarActivity_title">SeekBar</string>
     <string name="dropDownActivityActivity_title">DropDown</string>
     <string name="expandableRecyclerActivity_title">ExpandableRecyclerView</string>
     <string name="expansionPanelActivity_title">ExpansionPanel</string>
     <string name="recyclerViewActivity_title">RecyclerView</string>
-    <string name="scrollViewActivity_title">ScrollView</string>
     <string name="tabsActivity_title">Tabs</string>
     <string name="textFieldsActivity_title">Text fields</string>
     <string name="autoSizeTextActivity_title">Auto size text</string>
