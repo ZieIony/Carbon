@@ -22,7 +22,7 @@ public class PicassoActivity extends SamplesActivity {
         final PicassoView image = findViewById(R.id.image);
         Button button = findViewById(R.id.button);
         button.setOnClickListener(view -> {
-            Picasso.with(PicassoActivity.this)
+            Picasso.get()
                     .load("http://lorempixel.com/" + image.getWidth() + "/" + image.getHeight() + "/people/#" + System.currentTimeMillis())
                     .placeholder(new ColorDrawable(0x00000000))
                     .error(new ColorDrawable(0x00000000))

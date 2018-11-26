@@ -24,6 +24,7 @@
     <string name="progressBarsActivity_title">Progress bars</string>
     <string name="circularProgressActivity_title">Circular progress</string>
     <string name="buttonsActivity_title">Buttons</string>
+    <string name="bannerActivity_title">Banner</string>
     <string name="checkBoxRadioActivity_title"><![CDATA[CheckBoxes & RadioButtons]]></string>
     <string name="widgetsActivity_title">Widgets</string>
     <string name="dialogsActivity_title">Dialogs</string>

@@ -24,7 +24,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -174,6 +177,8 @@ public class FlowLayout extends android.widget.FrameLayout
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+
+        gravity = a.getInt(R.styleable.FlowLayout_android_gravity, Gravity.START);
 
         a.recycle();
 
@@ -343,23 +348,102 @@ public class FlowLayout extends android.widget.FrameLayout
         return frame.contains((int) x, (int) y);
     }
 
+    private int gravity;
+
+    public int getGravity() {
+        return gravity;
+    }
+
+    public void setGravity(int gravity) {
+        if (this.gravity != gravity) {
+            this.gravity = gravity;
+            requestLayout();
+        }
+    }
+
     private int layoutFlowingViews(int width) {
-        int currentX = getPaddingLeft();
+        int gravity = GravityCompat.getAbsoluteGravity(this.gravity, ViewCompat.getLayoutDirection(this));
+        if ((gravity & Gravity.RIGHT) == Gravity.RIGHT) {
+            return layoutFlowingViewsRight(width);
+        } else {
+            return layoutFlowingViewsLeft(width);
+        }
+    }
+
+    private void relayoutLine(List<View> currentLine) {
+        if (currentLine.size() < 2)
+            return;
+
+        int maxY = Integer.MIN_VALUE, minY = currentLine.get(0).getTop() - ((LayoutParams) currentLine.get(0).getLayoutParams()).topMargin;
+        //int minX = currentLine.get(0).getLeft() - ((LayoutParams) currentLine.get(0).getLayoutParams()).leftMargin;
+        //int maxX = currentLine.get(currentLine.size() - 1).getRight() + ((LayoutParams) currentLine.get(0).getLayoutParams()).rightMargin;
+        for (View view : currentLine) {
+            LayoutParams params = (LayoutParams) view.getLayoutParams();
+            maxY = Math.max(maxY, view.getBottom() + params.bottomMargin);
+        }
+        for (View view : currentLine) {
+            LayoutParams params = (LayoutParams) view.getLayoutParams();
+            if ((params.gravity & Gravity.TOP) == Gravity.TOP) {
+                view.layout(view.getLeft(), minY + params.topMargin, view.getRight(), minY + view.getHeight() + params.topMargin);
+            } else if ((params.gravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
+                view.layout(view.getLeft(), maxY - view.getHeight() - params.bottomMargin, view.getRight(), maxY - params.bottomMargin);
+            } else if ((params.gravity & Gravity.CENTER_VERTICAL) == Gravity.CENTER_VERTICAL) {
+                int top = Math.max((maxY + minY) / 2 - view.getHeight() / 2, minY + params.topMargin);
+                int bottom = top + view.getHeight();
+                view.layout(view.getLeft(), top, view.getRight(), bottom);
+            }
+        }
+    }
+
+    private int layoutFlowingViewsRight(int width) {
+        int currentX = width - getPaddingRight();
         int currentY = getPaddingTop();
         int nextY = getPaddingTop();
+        List<View> currentLine = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             LayoutParams params = (LayoutParams) child.getLayoutParams();
             if (child.getVisibility() != GONE) {
-                if (currentX != 0 && currentX + params.leftMargin + child.getMeasuredWidth() + params.rightMargin > width - getPaddingLeft() - getPaddingRight()) {
+                if (currentX != width - getPaddingRight() && currentX - params.leftMargin - child.getMeasuredWidth() - params.rightMargin < getPaddingLeft()) {
+                    currentX = width - getPaddingRight();
+                    currentY = nextY;
+                    relayoutLine(currentLine);
+                    currentLine.clear();
+                }
+
+                currentLine.add(0, child);
+                child.layout(currentX - params.rightMargin - child.getMeasuredWidth(), currentY + params.topMargin, currentX - params.rightMargin, currentY + params.topMargin + child.getMeasuredHeight());
+                currentX -= params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
+                nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+            }
+        }
+        relayoutLine(currentLine);
+        return nextY + getPaddingBottom();
+    }
+
+    private int layoutFlowingViewsLeft(int width) {
+        int currentX = getPaddingLeft();
+        int currentY = getPaddingTop();
+        int nextY = getPaddingTop();
+        List<View> currentLine = new ArrayList<>();
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            LayoutParams params = (LayoutParams) child.getLayoutParams();
+            if (child.getVisibility() != GONE) {
+                if (currentX != getPaddingLeft() && currentX + params.leftMargin + child.getMeasuredWidth() + params.rightMargin > width - getPaddingRight()) {
                     currentX = getPaddingLeft();
                     currentY = nextY;
+                    relayoutLine(currentLine);
+                    currentLine.clear();
                 }
+
+                currentLine.add(child);
                 child.layout(currentX + params.leftMargin, currentY + params.topMargin, currentX + params.leftMargin + child.getMeasuredWidth(), currentY + params.topMargin + child.getMeasuredHeight());
                 currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
                 nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
             }
         }
+        relayoutLine(currentLine);
         return nextY + getPaddingBottom();
     }
 

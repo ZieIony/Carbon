@@ -7,6 +7,7 @@ import java.io.Serializable;
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.feature.PercentLayoutActivity;
 import tk.zielony.carbonsamples.widget.BackdropActivity;
+import tk.zielony.carbonsamples.widget.BannerActivity;
 import tk.zielony.carbonsamples.widget.BottomBarActivity;
 import tk.zielony.carbonsamples.widget.BottomSheetActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
@@ -37,6 +38,7 @@ public class WidgetsActivity extends SampleListActivity {
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Widgets with sample styles, data and applications",
+                new SampleActivityItem(BannerActivity.class, getString(R.string.bannerActivity_title)),
                 new SampleActivityItem(CheckBoxRadioActivity.class, getString(R.string.checkBoxRadioActivity_title)),
                 new SampleActivityItem(ButtonsActivity.class, getString(R.string.buttonsActivity_title)),
                 new SampleActivityItem(CircularProgressActivity.class, getString(R.string.circularProgressActivity_title)),

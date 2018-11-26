@@ -49,6 +49,7 @@
         <activity android:name=".widget.BottomBarActivity"/>
         <activity android:name=".widget.BottomSheetActivity"/>
         <activity android:name=".widget.BackdropActivity"/>
+        <activity android:name=".widget.BannerActivity"/>
 
         <activity android:name=".animation.ImageFadeActivity"/>
         <activity android:name=".animation.RippleActivity"/>

@@ -2,12 +2,12 @@ package carbon.widget
 
 import android.content.Context
 import android.support.v4.view.ViewCompat
-import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 
-class BackdropLayout : FrameLayout {
+open class BackdropLayout : FrameLayout {
 
     enum class Side {
         LEFT, RIGHT, BOTTOM, TOP, START, END
@@ -30,18 +30,6 @@ class BackdropLayout : FrameLayout {
             frontLayout = child
             super.addView(child, index, params)
         }
-    }
-
-    override fun addViewInLayout(child: View?, index: Int, params: ViewGroup.LayoutParams?, preventRequestLayout: Boolean): Boolean {
-        if (child is BackdropLayout_Back && backLayout == null) {
-            backLayout = child
-            return super.addViewInLayout(child, index, params, preventRequestLayout)
-        }
-        if (child is BackdropLayout_Front && frontLayout == null) {
-            frontLayout = child
-            return super.addViewInLayout(child, index, params, preventRequestLayout)
-        }
-        return false
     }
 
     private var opened: Boolean = false
@@ -73,30 +61,30 @@ class BackdropLayout : FrameLayout {
 
         val params = frontLayout!!.layoutParams as MarginLayoutParams
         when (s) {
-            Side.LEFT -> frontLayout!!.animate().translationX(backLayout!!.width.toFloat() - params.leftMargin).setInterpolator(LinearOutSlowInInterpolator()).setDuration(200).start()
-            Side.TOP -> frontLayout!!.animate().translationY(backLayout!!.height.toFloat() - params.topMargin).setInterpolator(LinearOutSlowInInterpolator()).setDuration(200).start()
-            Side.RIGHT -> frontLayout!!.animate().translationX(-backLayout!!.width.toFloat() - params.rightMargin).setInterpolator(LinearOutSlowInInterpolator()).setDuration(200).start()
-            else -> frontLayout!!.animate().translationY(-backLayout!!.height.toFloat() - params.bottomMargin).setInterpolator(LinearOutSlowInInterpolator()).setDuration(200).start()
+            Side.LEFT -> frontLayout!!.animate().translationX(backLayout!!.width.toFloat() - params.leftMargin).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
+            Side.TOP -> frontLayout!!.animate().translationY(backLayout!!.height.toFloat() - params.topMargin).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
+            Side.RIGHT -> frontLayout!!.animate().translationX(-backLayout!!.width.toFloat() - params.rightMargin).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
+            else -> frontLayout!!.animate().translationY(-backLayout!!.height.toFloat() - params.bottomMargin).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
         }
         opened = true
         this.side = side
     }
 
     fun closeLayout() {
-        frontLayout!!.animate().translationY(0.0f).setInterpolator(LinearOutSlowInInterpolator()).setDuration(200).start()
-        frontLayout!!.animate().translationX(0.0f).setInterpolator(LinearOutSlowInInterpolator()).setDuration(200).start()
+        frontLayout!!.animate().translationY(0.0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
+        frontLayout!!.animate().translationX(0.0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
         opened = false
     }
 }
 
-class BackdropLayout_Back : LinearLayout {
+open class BackdropLayout_Back : LinearLayout {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 }
 
-class BackdropLayout_Front : LinearLayout {
+open class BackdropLayout_Front : LinearLayout {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)

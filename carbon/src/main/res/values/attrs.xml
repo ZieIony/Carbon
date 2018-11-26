@@ -714,6 +714,8 @@
 
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
+
+        <attr name="android:gravity"/>
     </declare-styleable>
 
     <attr name="carbon_gridLayoutStyle" format="reference"/>
@@ -1396,6 +1398,12 @@
     <attr name="carbon_autoCompleteLayoutStyle" format="reference"/>
     <declare-styleable name="AutoCompleteLayout">
         <attr name="carbon_theme"/>
+    </declare-styleable>
+
+    <attr name="carbon_bannerStyle" format="reference"/>
+    <declare-styleable name="Banner">
+        <attr name="carbon_icon"/>
+        <attr name="android:text"/>
     </declare-styleable>
 
     <!-- Drawable used to show animated touch feedback. -->

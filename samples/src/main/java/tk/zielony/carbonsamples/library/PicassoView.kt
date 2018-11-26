@@ -8,6 +8,7 @@ import android.view.View
 import carbon.widget.ImageView
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import java.lang.Exception
 
 class PicassoView : ImageView, Target {
     constructor(context: Context) : super(context)
@@ -21,7 +22,7 @@ class PicassoView : ImageView, Target {
         animateVisibility(View.VISIBLE)
     }
 
-    override fun onBitmapFailed(errorDrawable: Drawable) {}
+    override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
 
     override fun onPrepareLoad(placeHolderDrawable: Drawable) {
         animateVisibility(View.INVISIBLE)

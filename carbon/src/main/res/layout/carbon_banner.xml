@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/carbon_colorBackground"
+                            android:orientation="vertical">
+
+    <carbon.widget.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start">
+
+        <carbon.widget.LinearLayout
+            android:id="@+id/carbon_banner_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/carbon_windowPadding"
+            android:paddingTop="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_windowPadding"
+            android:paddingBottom="@dimen/carbon_padding">
+
+            <carbon.widget.ImageView
+                android:id="@+id/carbon_bannerIcon"
+                android:layout_width="@dimen/carbon_toolbarHeight"
+                android:layout_height="@dimen/carbon_toolbarHeight"
+                android:layout_marginEnd="@dimen/carbon_margin"
+                android:layout_marginRight="@dimen/carbon_margin"
+                android:src="@drawable/carbon_iconplaceholder"/>
+
+            <carbon.widget.TextView
+                android:id="@+id/carbon_bannerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/carbon_paddingHalf"
+                android:text="You sample started and is doing fine."/>
+        </carbon.widget.LinearLayout>
+
+        <carbon.widget.LinearLayout
+            android:id="@+id/carbon_banner_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="end"
+            android:paddingLeft="@dimen/carbon_paddingHalf"
+            android:paddingRight="@dimen/carbon_paddingHalf"
+            android:paddingBottom="@dimen/carbon_paddingHalf"/>
+    </carbon.widget.FlowLayout>
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</carbon.widget.LinearLayout>
