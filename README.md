@@ -25,10 +25,12 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
  - circular reveal
  - theme xml attribute
  - widget and drawable tinting
+ - font resources
+ - edge effects
 
 ##### All APIs
 
- - simple to use xml attributes for corners and ripples
+ - simple to use xml attributes for stroke, cut corners, rounded corners and ripples
  - colored shadows
  - brightness/saturation fade
  - SVG support (with transformations, text, gradients, etc.)
@@ -47,22 +49,10 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
 
  - colors, dimensions, typography
  - ready-to-use rows and adapters for RecyclerView
- - DropDown, FloatingActionMenu, RangeSeekBar, ExpandableRecyclerView, FlowLayout, TableView
+ - DropDown, FloatingActionMenu, RangeSeekBar, ExpandableRecyclerView, FlowLayout, TableView, BackdropLayout, Banner
 
 ### Samples
-![Sample app](https://github.com/ZieIony/Carbon/blob/master/images/sampleapp.png)
-![Buttons / Usage sample](https://github.com/ZieIony/Carbon/blob/master/images/buttonsusage.png)
-![CheckBoxes](https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png)
-![Colored shadows](https://github.com/ZieIony/Carbon/blob/master/images/coloredshadows.png)
-![Component](https://github.com/ZieIony/Carbon/blob/master/images/component.png)
-![HTML](https://github.com/ZieIony/Carbon/blob/master/images/html.png)
-![PagerTabStrip](https://github.com/ZieIony/Carbon/blob/master/images/pagertabstrip.png)
-![Registration form](https://github.com/ZieIony/Carbon/blob/master/images/registrationform.png)
-![Rounded corners](https://github.com/ZieIony/Carbon/blob/master/images/roundedcorners.png)
-![SeekBar and RangeSeekBar](https://github.com/ZieIony/Carbon/blob/master/images/seekbar.png)
-![Spinner](https://github.com/ZieIony/Carbon/blob/master/images/spinner.png)
-![Table layout](https://github.com/ZieIony/Carbon/blob/master/images/tablelayout.png)
-![Theme](https://github.com/ZieIony/Carbon/blob/master/images/theme.png)
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/backdrop.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/components.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/dropdown.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/fontresource.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/guidelinesbuttons.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/guidelinesmenus.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/listdialog.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/buttons.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/textfields.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/tablelayout.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/multiselect.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/powermenu.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/studiescrane.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/tabs.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/themes.png" width="135px" height="240px"/> 
 
 ### [Installation](https://github.com/ZieIony/Carbon/wiki/Installation)
 
