@@ -26,7 +26,7 @@ public enum ShadowShape {
                         outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), ((CornersView) view).getCorners().getTopStart());
                     } else if (shadowShape == CIRCLE) {
                         outline.setOval(0, 0, view.getWidth(), view.getHeight());
-                    }else{
+                    } else {
                         outline.setConvexPath(((CornersView) view).getCorners().getPath(view.getWidth(), view.getHeight()));
                     }
                 }

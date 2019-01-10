@@ -8,8 +8,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.R;
 import carbon.recycler.DividerItemDecoration;
@@ -306,7 +306,7 @@ public class DropDownMenu<Type> extends PopupWindow {
         } else {
             selectedIndices.add(position);
         }
-        android.support.v7.widget.RecyclerView.ViewHolder viewHolder = recycler.findViewHolderForAdapterPosition(position);
+        androidx.recyclerview.widget.RecyclerView.ViewHolder viewHolder = recycler.findViewHolderForAdapterPosition(position);
         if (viewHolder instanceof Checkable)
             ((Checkable) viewHolder).toggle();
     }

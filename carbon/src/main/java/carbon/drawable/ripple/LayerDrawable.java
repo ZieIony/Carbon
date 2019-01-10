@@ -12,10 +12,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.view.GravityCompat;
 import android.util.AttributeSet;
 import android.util.LayoutDirection;
 import android.view.Gravity;
@@ -26,14 +22,18 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.GravityCompat;
 import carbon.R;
 
 /**
- * A Drawable that manages an array of other Drawables. These are drawn in array
- * order, so the element with the largest index will be drawn on top.
+ * A Drawable that manages an array of other Drawables. These are drawn in array order, so the
+ * element with the largest index will be drawn on top.
  * <p/>
- * It can be defined in an XML file with the <code>&lt;layer-list></code> element.
- * Each Drawable in the layer is defined in a nested <code>&lt;item></code>.
+ * It can be defined in an XML file with the <code>&lt;layer-list></code> element. Each Drawable in
+ * the layer is defined in a nested <code>&lt;item></code>.
  * <p/>
  * For more information, see the guide to
  * <a href="{@docRoot}guide/topics/resources/drawable-resource.html">Drawable Resources</a>.
@@ -53,8 +53,7 @@ import carbon.R;
  */
 public class LayerDrawable extends LollipopDrawable implements Drawable.Callback {
     /**
-     * Padding mode used to nest each layer inside the padding of the previous
-     * layer.
+     * Padding mode used to nest each layer inside the padding of the previous layer.
      *
      * @see #setPaddingMode(int)
      */
@@ -95,8 +94,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     }
 
     /**
-     * Creates a new layer drawable with the specified list of layers and the
-     * specified constant state.
+     * Creates a new layer drawable with the specified list of layers and the specified constant
+     * state.
      *
      * @param layers The list of layers to add to this drawable.
      * @param state  The constant drawable state.
@@ -401,8 +400,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     }
 
     /**
-     * Adds a new layer containing the specified {@code drawable} to the end of
-     * the layer list and returns its index.
+     * Adds a new layer containing the specified {@code drawable} to the end of the layer list and
+     * returns its index.
      *
      * @param dr The drawable to add as a new layer.
      * @return The index of the new layer.
@@ -418,8 +417,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Looks for a layer with the given ID and returns its {@link Drawable}.
      * <p/>
-     * If multiple layers are found for the given ID, returns the
-     * {@link Drawable} for the matching layer at the highest index.
+     * If multiple layers are found for the given ID, returns the {@link Drawable} for the matching
+     * layer at the highest index.
      *
      * @param id The layer ID to search for.
      * @return The {@link Drawable} for the highest-indexed layer that has the given ID, or null if
@@ -494,8 +493,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the layer with the specified {@code id}.
      * <p/>
-     * If multiple layers have the same ID, returns the layer with the lowest
-     * index.
+     * If multiple layers have the same ID, returns the layer with the lowest index.
      *
      * @param id The ID of the layer to return.
      * @return The index of the layer with the specified ID.
@@ -567,8 +565,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
      * Sets an explicit size for the specified layer.
      * <p/>
      * <strong>Note:</strong> Setting an explicit layer size changes the
-     * default layer gravity behavior. See {@link #setLayerGravity(int, int)}
-     * for more information.
+     * default layer gravity behavior. See {@link #setLayerGravity(int, int)} for more information.
      *
      * @param index the index of the layer to adjust
      * @param w     width in pixels, or -1 to use the intrinsic width
@@ -627,17 +624,15 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     }
 
     /**
-     * Sets the gravity used to position or stretch the specified layer within
-     * its container. Gravity is applied after any layer insets (see
-     * {@link #setLayerInset(int, int, int, int, int)}) or padding (see
-     * {@link #setPaddingMode(int)}).
+     * Sets the gravity used to position or stretch the specified layer within its container.
+     * Gravity is applied after any layer insets (see {@link #setLayerInset(int, int, int, int,
+     * int)}) or padding (see {@link #setPaddingMode(int)}).
      * <p/>
-     * If gravity is specified as {@link Gravity#NO_GRAVITY}, the default
-     * behavior depends on whether an explicit width or height has been set
-     * (see {@link #setLayerSize(int, int, int)}), If a dimension is not set,
-     * gravity in that direction defaults to {@link Gravity#FILL_HORIZONTAL} or
-     * {@link Gravity#FILL_VERTICAL}; otherwise, gravity in that direction
-     * defaults to {@link Gravity#LEFT} or {@link Gravity#TOP}.
+     * If gravity is specified as {@link Gravity#NO_GRAVITY}, the default behavior depends on
+     * whether an explicit width or height has been set (see {@link #setLayerSize(int, int, int)}),
+     * If a dimension is not set, gravity in that direction defaults to {@link
+     * Gravity#FILL_HORIZONTAL} or {@link Gravity#FILL_VERTICAL}; otherwise, gravity in that
+     * direction defaults to {@link Gravity#LEFT} or {@link Gravity#TOP}.
      *
      * @param index   the index of the drawable to adjust
      * @param gravity the gravity to set for the layer
@@ -678,8 +673,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     }
 
     /**
-     * Specifies the relative insets in pixels for the drawable at the
-     * specified index.
+     * Specifies the relative insets in pixels for the drawable at the specified index.
      *
      * @param index the index of the layer to adjust
      * @param s     number of pixels to inset from the start bound
@@ -826,8 +820,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     }
 
     /**
-     * Specifies how layer padding should affect the bounds of subsequent
-     * layers. The default value is {@link #PADDING_MODE_NEST}.
+     * Specifies how layer padding should affect the bounds of subsequent layers. The default value
+     * is {@link #PADDING_MODE_NEST}.
      *
      * @param mode padding mode, one of: <ul> <li>{@link #PADDING_MODE_NEST} to nest each layer
      *             inside the padding of the previous layer <li>{@link #PADDING_MODE_STACK} to stack
@@ -927,12 +921,11 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Sets the absolute padding.
      * <p/>
-     * If padding in a dimension is specified as {@code -1}, the resolved
-     * padding will use the value computed according to the padding mode (see
-     * {@link #setPaddingMode(int)}).
+     * If padding in a dimension is specified as {@code -1}, the resolved padding will use the value
+     * computed according to the padding mode (see {@link #setPaddingMode(int)}).
      * <p/>
-     * Calling this method clears any relative padding values previously set
-     * using {@link #setPaddingRelative(int, int, int, int)}.
+     * Calling this method clears any relative padding values previously set using {@link
+     * #setPaddingRelative(int, int, int, int)}.
      *
      * @param left   the left padding in pixels, or -1 to use computed padding
      * @param top    the top padding in pixels, or -1 to use computed padding
@@ -959,12 +952,11 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Sets the relative padding.
      * <p/>
-     * If padding in a dimension is specified as {@code -1}, the resolved
-     * padding will use the value computed according to the padding mode (see
-     * {@link #setPaddingMode(int)}).
+     * If padding in a dimension is specified as {@code -1}, the resolved padding will use the value
+     * computed according to the padding mode (see {@link #setPaddingMode(int)}).
      * <p/>
-     * Calling this method clears any absolute padding values previously set
-     * using {@link #setPadding(int, int, int, int)}.
+     * Calling this method clears any absolute padding values previously set using {@link
+     * #setPadding(int, int, int, int)}.
      *
      * @param start  the start padding in pixels, or -1 to use computed padding
      * @param top    the top padding in pixels, or -1 to use computed padding
@@ -991,10 +983,9 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the left padding in pixels.
      * <p/>
-     * A return value of {@code -1} means there is no explicit padding set for
-     * this dimension. As a result, the value for this dimension returned by
-     * {@link #getPadding(Rect)} will be computed from the child layers
-     * according to the padding mode (see {@link #getPaddingMode()}.
+     * A return value of {@code -1} means there is no explicit padding set for this dimension. As a
+     * result, the value for this dimension returned by {@link #getPadding(Rect)} will be computed
+     * from the child layers according to the padding mode (see {@link #getPaddingMode()}.
      *
      * @return the left padding in pixels, or -1 if not explicitly specified
      * @see #setPadding(int, int, int, int)
@@ -1007,10 +998,9 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the right padding in pixels.
      * <p/>
-     * A return value of {@code -1} means there is no explicit padding set for
-     * this dimension. As a result, the value for this dimension returned by
-     * {@link #getPadding(Rect)} will be computed from the child layers
-     * according to the padding mode (see {@link #getPaddingMode()}.
+     * A return value of {@code -1} means there is no explicit padding set for this dimension. As a
+     * result, the value for this dimension returned by {@link #getPadding(Rect)} will be computed
+     * from the child layers according to the padding mode (see {@link #getPaddingMode()}.
      *
      * @return the right padding in pixels, or -1 if not explicitly specified
      * @see #setPadding(int, int, int, int)
@@ -1023,10 +1013,9 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the start padding in pixels.
      * <p/>
-     * A return value of {@code -1} means there is no explicit padding set for
-     * this dimension. As a result, the value for this dimension returned by
-     * {@link #getPadding(Rect)} will be computed from the child layers
-     * according to the padding mode (see {@link #getPaddingMode()}.
+     * A return value of {@code -1} means there is no explicit padding set for this dimension. As a
+     * result, the value for this dimension returned by {@link #getPadding(Rect)} will be computed
+     * from the child layers according to the padding mode (see {@link #getPaddingMode()}.
      *
      * @return the start padding in pixels, or -1 if not explicitly specified
      * @see #setPaddingRelative(int, int, int, int)
@@ -1039,10 +1028,9 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the end padding in pixels.
      * <p/>
-     * A return value of {@code -1} means there is no explicit padding set for
-     * this dimension. As a result, the value for this dimension returned by
-     * {@link #getPadding(Rect)} will be computed from the child layers
-     * according to the padding mode (see {@link #getPaddingMode()}.
+     * A return value of {@code -1} means there is no explicit padding set for this dimension. As a
+     * result, the value for this dimension returned by {@link #getPadding(Rect)} will be computed
+     * from the child layers according to the padding mode (see {@link #getPaddingMode()}.
      *
      * @return the end padding in pixels, or -1 if not explicitly specified
      * @see #setPaddingRelative(int, int, int, int)
@@ -1055,10 +1043,9 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the top padding in pixels.
      * <p/>
-     * A return value of {@code -1} means there is no explicit padding set for
-     * this dimension. As a result, the value for this dimension returned by
-     * {@link #getPadding(Rect)} will be computed from the child layers
-     * according to the padding mode (see {@link #getPaddingMode()}.
+     * A return value of {@code -1} means there is no explicit padding set for this dimension. As a
+     * result, the value for this dimension returned by {@link #getPadding(Rect)} will be computed
+     * from the child layers according to the padding mode (see {@link #getPaddingMode()}.
      *
      * @return the top padding in pixels, or -1 if not explicitly specified
      * @see #setPadding(int, int, int, int)
@@ -1072,10 +1059,9 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Returns the bottom padding in pixels.
      * <p/>
-     * A return value of {@code -1} means there is no explicit padding set for
-     * this dimension. As a result, the value for this dimension returned by
-     * {@link #getPadding(Rect)} will be computed from the child layers
-     * according to the padding mode (see {@link #getPaddingMode()}.
+     * A return value of {@code -1} means there is no explicit padding set for this dimension. As a
+     * result, the value for this dimension returned by {@link #getPadding(Rect)} will be computed
+     * from the child layers according to the padding mode (see {@link #getPaddingMode()}.
      *
      * @return the bottom padding in pixels, or -1 if not explicitly specified
      * @see #setPadding(int, int, int, int)
@@ -1285,8 +1271,7 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     }
 
     /**
-     * Sets the opacity of this drawable directly instead of collecting the
-     * states from the layers.
+     * Sets the opacity of this drawable directly instead of collecting the states from the layers.
      *
      * @param opacity The opacity to use, or {@link PixelFormat#UNKNOWN PixelFormat.UNKNOWN} for the
      *                default behavior
@@ -1441,9 +1426,8 @@ public class LayerDrawable extends LollipopDrawable implements Drawable.Callback
     /**
      * Resolves layer gravity given explicit gravity and dimensions.
      * <p/>
-     * If the client hasn't specified a gravity but has specified an explicit
-     * dimension, defaults to START or TOP. Otherwise, defaults to FILL to
-     * preserve legacy behavior.
+     * If the client hasn't specified a gravity but has specified an explicit dimension, defaults to
+     * START or TOP. Otherwise, defaults to FILL to preserve legacy behavior.
      *
      * @param gravity layer gravity
      * @param width   width of the layer if set, -1 otherwise

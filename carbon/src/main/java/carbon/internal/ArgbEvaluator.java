@@ -5,10 +5,10 @@ import android.animation.TypeEvaluator;
 public class ArgbEvaluator implements TypeEvaluator {
 
     /**
-     * This function returns the calculated in-between value for a color
-     * given integers that represent the start and end values in the four
-     * bytes of the 32-bit int. Each channel is separately linearly interpolated
-     * and the resulting calculated values are recombined into the return value.
+     * This function returns the calculated in-between value for a color given integers that
+     * represent the start and end values in the four bytes of the 32-bit int. Each channel is
+     * separately linearly interpolated and the resulting calculated values are recombined into the
+     * return value.
      *
      * @param fraction   The fraction from the starting to the ending values
      * @param startValue A 32-bit int value representing colors in the separate bytes of the

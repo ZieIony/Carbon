@@ -5,11 +5,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
+import androidx.core.graphics.drawable.TintAwareDrawable;
 import carbon.widget.ProgressBar;
 
 /**

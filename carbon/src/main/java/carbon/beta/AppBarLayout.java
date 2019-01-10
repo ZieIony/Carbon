@@ -20,10 +20,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -35,6 +31,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -64,7 +64,7 @@ import carbon.widget.OnInsetsChangedListener;
 import carbon.widget.OnTransformationChangedListener;
 import carbon.widget.RenderingMode;
 
-public class AppBarLayout extends android.support.design.widget.AppBarLayout
+public class AppBarLayout extends com.google.android.material.appbar.AppBarLayout
         implements
         ShadowView,
         RippleView,
@@ -1280,7 +1280,7 @@ public class AppBarLayout extends android.support.design.widget.AppBarLayout
         }
     }
 
-    public static class LayoutParams extends android.support.design.widget.AppBarLayout.LayoutParams {
+    public static class LayoutParams extends com.google.android.material.appbar.AppBarLayout.LayoutParams {
         public int anchorView;
         private int anchorGravity;
 

@@ -10,13 +10,14 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.util.SparseArray;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.TintAwareDrawable;
 
 public class VectorDrawable extends Drawable implements AlphaDrawable, TintAwareDrawable {
     private VectorState state;

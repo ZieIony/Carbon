@@ -4,12 +4,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.component.DefaultIconSearchItem;
 import carbon.component.DefaultIconTextItem;

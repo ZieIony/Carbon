@@ -4,13 +4,13 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.annotation.NonNull;
 import carbon.R;
 import carbon.recycler.ArrayAdapter;
 
@@ -111,7 +111,7 @@ public class ExpandableRecyclerView extends RecyclerView {
 
 
     @Override
-    public void setAdapter(android.support.v7.widget.RecyclerView.Adapter adapter) {
+    public void setAdapter(androidx.recyclerview.widget.RecyclerView.Adapter adapter) {
         if (!(adapter instanceof ExpandableRecyclerView.Adapter))
             throw new IllegalArgumentException("adapter has to be of type ExpandableRecyclerView.Adapter");
         super.setAdapter(adapter);

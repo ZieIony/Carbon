@@ -1,13 +1,13 @@
 package tk.zielony.carbonsamples.component;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.component.AvatarTextRatingSubtextDateRow;
 import carbon.component.DefaultAvatarTextRatingSubtextDateItem;
 import carbon.component.DefaultHeaderItem;

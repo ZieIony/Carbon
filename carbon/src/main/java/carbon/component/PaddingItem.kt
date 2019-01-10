@@ -8,7 +8,7 @@ import java.io.Serializable
 
 open class PaddingItem(val padding: Int) : Serializable
 
-open class PaddingRow<Type:PaddingItem>(parent: ViewGroup) : Component<Type> {
+open class PaddingRow<Type : PaddingItem>(parent: ViewGroup) : Component<Type> {
 
     private val view: View
 

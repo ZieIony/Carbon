@@ -1,12 +1,12 @@
 package tk.zielony.carbonsamples.dialog;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.annimon.stream.Stream;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
 import carbon.dialog.ListDialog;

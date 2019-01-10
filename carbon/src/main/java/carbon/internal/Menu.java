@@ -26,11 +26,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.internal.view.SupportMenu;
-import android.support.v4.internal.view.SupportMenuItem;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.view.menu.MenuPresenter;
 import android.util.SparseArray;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -40,11 +35,16 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.view.menu.MenuPresenter;
+import androidx.core.internal.view.SupportMenu;
+import androidx.core.internal.view.SupportMenuItem;
+import androidx.core.view.MenuItemCompat;
 import carbon.component.MenuItem;
 
 /**
- * Implementation of the {@link android.support.v4.internal.view.SupportMenu} interface for creating
- * a menu for {@link carbon.widget.FloatingActionButton} and {@link carbon.widget.NavigationView}.
+ * Implementation of the {@link androidx.core.internal.view.SupportMenu} interface for creating a
+ * menu for {@link carbon.widget.FloatingActionButton} and {@link carbon.widget.NavigationView}.
  */
 public class Menu implements SupportMenu {
 
@@ -120,8 +120,8 @@ public class Menu implements SupportMenu {
     View mHeaderView;
 
     /**
-     * Prevents onItemsChanged from doing its junk, useful for batching commands
-     * that may individually call onItemsChanged.
+     * Prevents onItemsChanged from doing its junk, useful for batching commands that may
+     * individually call onItemsChanged.
      */
     private boolean mPreventDispatchingItemsChanged = false;
 
@@ -352,8 +352,7 @@ public class Menu implements SupportMenu {
     }
 
     /**
-     * Remove the item at the given index and optionally forces menu views to
-     * update.
+     * Remove the item at the given index and optionally forces menu views to update.
      *
      * @param index                     The index of the item to be removed. If this index is
      *                                  invalid an exception is thrown.
@@ -517,9 +516,9 @@ public class Menu implements SupportMenu {
     }
 
     /**
-     * Returns the ordering across all items. This will grab the category from
-     * the upper bits, find out how to order the category with respect to other
-     * categories, and combine it with the lower bits.
+     * Returns the ordering across all items. This will grab the category from the upper bits, find
+     * out how to order the category with respect to other categories, and combine it with the lower
+     * bits.
      *
      * @param categoryOrder The category order for a particular item (if it has not been or/add with
      *                      a category, the default category is assumed).
@@ -751,9 +750,9 @@ public class Menu implements SupportMenu {
     }
 
     /**
-     * Stop dispatching item changed events to presenters until
-     * {@link #startDispatchingItemsChanged()} is called. Useful when
-     * many menu operations are going to be performed as a batch.
+     * Stop dispatching item changed events to presenters until {@link
+     * #startDispatchingItemsChanged()} is called. Useful when many menu operations are going to be
+     * performed as a batch.
      */
     public void stopDispatchingItemsChanged() {
         if (!mPreventDispatchingItemsChanged) {
@@ -848,8 +847,8 @@ public class Menu implements SupportMenu {
     }
 
     /**
-     * Sets the header's title. This replaces the header view. Called by the
-     * builder-style methods of subclasses.
+     * Sets the header's title. This replaces the header view. Called by the builder-style methods
+     * of subclasses.
      *
      * @param title The new title.
      * @return This Menu so additional setters can be called.
@@ -860,8 +859,8 @@ public class Menu implements SupportMenu {
     }
 
     /**
-     * Sets the header's title. This replaces the header view. Called by the
-     * builder-style methods of subclasses.
+     * Sets the header's title. This replaces the header view. Called by the builder-style methods
+     * of subclasses.
      *
      * @param titleRes The new title (as a resource ID).
      * @return This Menu so additional setters can be called.
@@ -872,8 +871,8 @@ public class Menu implements SupportMenu {
     }
 
     /**
-     * Sets the header's icon. This replaces the header view. Called by the
-     * builder-style methods of subclasses.
+     * Sets the header's icon. This replaces the header view. Called by the builder-style methods of
+     * subclasses.
      *
      * @param icon The new icon.
      * @return This Menu so additional setters can be called.
@@ -884,8 +883,8 @@ public class Menu implements SupportMenu {
     }
 
     /**
-     * Sets the header's icon. This replaces the header view. Called by the
-     * builder-style methods of subclasses.
+     * Sets the header's icon. This replaces the header view. Called by the builder-style methods of
+     * subclasses.
      *
      * @param iconRes The new icon (as a resource ID).
      * @return This Menu so additional setters can be called.
@@ -896,8 +895,8 @@ public class Menu implements SupportMenu {
     }
 
     /**
-     * Sets the header's view. This replaces the title and icon. Called by the
-     * builder-style methods of subclasses.
+     * Sets the header's view. This replaces the title and icon. Called by the builder-style methods
+     * of subclasses.
      *
      * @param view The new view.
      * @return This Menu so additional setters can be called.

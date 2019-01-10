@@ -1,11 +1,11 @@
 package carbon.widget;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import carbon.R;
 
 class SnackbarView extends LinearLayout {

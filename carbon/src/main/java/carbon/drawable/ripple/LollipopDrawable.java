@@ -51,11 +51,10 @@ public abstract class LollipopDrawable extends Drawable {
     }
 
     /**
-     * Gets the current alpha value for the drawable. 0 means fully transparent,
-     * 255 means fully opaque. This method is implemented by
-     * Drawable subclasses and the value returned is specific to how that class treats alpha.
-     * The default return value is 255 if the class does not override this method to return a value
-     * specific to its use of alpha.
+     * Gets the current alpha value for the drawable. 0 means fully transparent, 255 means fully
+     * opaque. This method is implemented by Drawable subclasses and the value returned is specific
+     * to how that class treats alpha. The default return value is 255 if the class does not
+     * override this method to return a value specific to its use of alpha.
      */
     public int getAlpha() {
         return 0xFF;
@@ -74,8 +73,7 @@ public abstract class LollipopDrawable extends Drawable {
     /**
      * Specifies a tint for this drawable.
      * <p/>
-     * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides
-     * tint.
+     * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides tint.
      *
      * @param tint Color to use for tinting this drawable
      * @see #setTintMode(PorterDuff.Mode)
@@ -87,8 +85,7 @@ public abstract class LollipopDrawable extends Drawable {
     /**
      * Specifies a tint for this drawable as a color state list.
      * <p/>
-     * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides
-     * tint.
+     * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides tint.
      *
      * @param tint Color state list to use for tinting this drawable, or null to clear the tint
      * @see #setTintMode(PorterDuff.Mode)
@@ -99,8 +96,7 @@ public abstract class LollipopDrawable extends Drawable {
     /**
      * Specifies a tint blending mode for this drawable.
      * <p/>
-     * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides
-     * tint.
+     * Setting a color filter via {@link #setColorFilter(ColorFilter)} overrides tint.
      *
      * @param tintMode Color state list to use for tinting this drawable, or null to clear the tint
      * @param tintMode A Porter-Duff blending mode
@@ -118,8 +114,8 @@ public abstract class LollipopDrawable extends Drawable {
     }
 
     /**
-     * Sets the bounds to which the hotspot is constrained, if they should be
-     * different from the drawable bounds.
+     * Sets the bounds to which the hotspot is constrained, if they should be different from the
+     * drawable bounds.
      *
      * @param left
      * @param top

@@ -2,12 +2,12 @@ package tk.zielony.carbonsamples.widget;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.recycler.DividerItemDecoration;
 import carbon.widget.ExpandableRecyclerView;

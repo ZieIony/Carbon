@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples.library
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_recycler_cards.*
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.Samples
@@ -18,7 +17,7 @@ class RecyclerCardsActivity : SamplesActivity() {
 
         Samples.initToolbar(this, getString(R.string.recyclerCardsActivity_title))
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
         val randomData = RandomData()
         randomData.addGenerators(arrayOf(StringDateGenerator(), DrawableImageGenerator(this)))

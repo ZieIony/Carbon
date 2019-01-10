@@ -11,10 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.SoundEffectConstants;
@@ -23,6 +19,10 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.ButtonGravity;
@@ -162,8 +162,7 @@ public class RadioButton extends TextView implements Checkable {
     }
 
     /**
-     * Register a callback to be invoked when the checked state of this button
-     * changes.
+     * Register a callback to be invoked when the checked state of this button changes.
      *
      * @param listener the callback to call on checked state change
      */
@@ -172,8 +171,8 @@ public class RadioButton extends TextView implements Checkable {
     }
 
     /**
-     * Register a callback to be invoked when the checked state of this button
-     * changes. This callback is used for internal purpose only.
+     * Register a callback to be invoked when the checked state of this button changes. This
+     * callback is used for internal purpose only.
      *
      * @param listener the callback to call on checked state change
      * @hide
@@ -183,8 +182,8 @@ public class RadioButton extends TextView implements Checkable {
     }
 
     /**
-     * Interface definition for a callback to be invoked when the checked state
-     * of a compound button changed.
+     * Interface definition for a callback to be invoked when the checked state of a compound button
+     * changed.
      */
     public interface OnCheckedChangeListener {
         /**

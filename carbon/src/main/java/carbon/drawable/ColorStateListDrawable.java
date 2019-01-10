@@ -4,8 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 
+import androidx.annotation.NonNull;
 import carbon.animation.AnimatedColorStateList;
 
 public class ColorStateListDrawable extends Drawable implements AlphaDrawable {

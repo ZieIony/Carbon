@@ -1,13 +1,13 @@
 package tk.zielony.carbonsamples.demo;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.component.DefaultHeaderItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
@@ -79,11 +79,11 @@ public class QuickReturnActivity extends SamplesActivity {
         final FloatingActionButton fab = findViewById(R.id.fab);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.quickReturnActivity_title));
-        recycler.addOnScrollListener(new android.support.v7.widget.RecyclerView.OnScrollListener() {
+        recycler.addOnScrollListener(new androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             int yScroll = 0;
 
             @Override
-            public void onScrolled(android.support.v7.widget.RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(androidx.recyclerview.widget.RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (fab.getVisibility() == View.VISIBLE && fab.getAnimator() == null && yScroll > 50 * Carbon.getDip(getApplicationContext())) {
                     yScroll = 0;

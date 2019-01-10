@@ -20,10 +20,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -37,6 +33,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -71,7 +71,7 @@ import carbon.view.VisibleView;
  * A GridLayout implementation with support for material features including shadows, ripples,
  * rounded corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class GridLayout extends android.support.v7.widget.GridLayout
+public class GridLayout extends androidx.gridlayout.widget.GridLayout
         implements
         ShadowView,
         RippleView,
@@ -1297,7 +1297,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout
         }
     }
 
-    public static class LayoutParams extends android.support.v7.widget.GridLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
+    public static class LayoutParams extends androidx.gridlayout.widget.GridLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
         private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
         private int anchorView;
         private int anchorGravity;
@@ -1324,7 +1324,7 @@ public class GridLayout extends android.support.v7.widget.GridLayout
             super(rowSpec, columnSpec);
         }
 
-        public LayoutParams(android.support.v7.widget.GridLayout.LayoutParams source) {
+        public LayoutParams(androidx.gridlayout.widget.GridLayout.LayoutParams source) {
             super(source);
         }
 

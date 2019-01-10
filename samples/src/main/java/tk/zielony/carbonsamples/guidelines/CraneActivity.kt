@@ -1,8 +1,7 @@
 package tk.zielony.carbonsamples.guidelines
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import carbon.component.DefaultImageTextSubtextItem
 import carbon.component.ImageTextSubtextRow
 import carbon.recycler.RowFactory
@@ -25,7 +24,7 @@ class CraneActivity : AppCompatActivity() {
         randomData.addGenerators(arrayOf(DrawableImageGenerator(this), StringCityGenerator().withMatcher { f -> f.name == "text" }, TextGenerator().withMatcher { f -> f.name == "subtext" }))
         val items = randomData.generateList(DefaultImageTextSubtextItem::class.java, 4)
 
-        crane_recycler.layoutManager = LinearLayoutManager(this)
+        crane_recycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
         val adapter = RowListAdapter(DefaultImageTextSubtextItem::class.java, RowFactory<DefaultImageTextSubtextItem> { ImageTextSubtextRow(it) })
         crane_recycler.adapter = adapter

@@ -11,9 +11,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.util.LongSparseArray;
-import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,6 +26,9 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.collection.LongSparseArray;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.LollipopDrawable;
 import carbon.drawable.ripple.RippleDrawableICS;
@@ -45,8 +45,7 @@ public class CarbonResources extends Resources {
     private final Context context;
 
     /**
-     * Create a new Resources object on top of an existing set of assets in an
-     * AssetManager.
+     * Create a new Resources object on top of an existing set of assets in an AssetManager.
      *
      * @param assets  Previously created AssetManager.
      * @param metrics Current display metrics to consider when selecting/computing resource values.
@@ -94,16 +93,16 @@ public class CarbonResources extends Resources {
     }
 
     /**
-     * Create a drawable from an inputstream, using the given resources and
-     * value to determine density information.
+     * Create a drawable from an inputstream, using the given resources and value to determine
+     * density information.
      */
     public Drawable createFromResourceStream(TypedValue value, InputStream is, String srcName) {
         return createFromResourceStream(value, is, srcName, null);
     }
 
     /**
-     * Create a drawable from an inputstream, using the given resources and
-     * value to determine density information.
+     * Create a drawable from an inputstream, using the given resources and value to determine
+     * density information.
      */
     public Drawable createFromResourceStream(TypedValue value, InputStream is, String srcName, BitmapFactory.Options opts) {
         return Drawable.createFromResourceStream(this, value, is, srcName, opts);
@@ -111,8 +110,8 @@ public class CarbonResources extends Resources {
 
 
     /**
-     * Create a drawable from an XML document. For more information on how to
-     * create resources in XML, see
+     * Create a drawable from an XML document. For more information on how to create resources in
+     * XML, see
      * <a href="{@docRoot}guide/topics/resources/drawable-resource.html">Drawable Resources</a>.
      */
     public Drawable createFromXml(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -120,8 +119,8 @@ public class CarbonResources extends Resources {
     }
 
     /**
-     * Create a drawable from an XML document using an optional {@link Resources.Theme}.
-     * For more information on how to create resources in XML, see
+     * Create a drawable from an XML document using an optional {@link Resources.Theme}. For more
+     * information on how to create resources in XML, see
      * <a href="{@docRoot}guide/topics/resources/drawable-resource.html">Drawable Resources</a>.
      */
     public Drawable createFromXml(XmlPullParser parser, Resources.Theme theme) throws XmlPullParserException, IOException {
@@ -147,10 +146,9 @@ public class CarbonResources extends Resources {
 
 
     /**
-     * Create a drawable from inside an XML document using an optional
-     * {@link Resources.Theme}. Called on a parser positioned at a tag in an XML
-     * document, tries to create a Drawable from that tag. Returns {@code null}
-     * if the tag is not a valid drawable.
+     * Create a drawable from inside an XML document using an optional {@link Resources.Theme}.
+     * Called on a parser positioned at a tag in an XML document, tries to create a Drawable from
+     * that tag. Returns {@code null} if the tag is not a valid drawable.
      */
     public Drawable createFromXmlInner(XmlPullParser parser, AttributeSet attrs, Resources.Theme theme) throws XmlPullParserException, IOException {
         Drawable drawable = null;

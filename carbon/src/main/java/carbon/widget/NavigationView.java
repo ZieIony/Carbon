@@ -1,13 +1,13 @@
 package carbon.widget;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.R;
 import carbon.component.Component;

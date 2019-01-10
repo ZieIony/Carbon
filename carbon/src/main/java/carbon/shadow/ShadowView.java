@@ -26,7 +26,10 @@ public interface ShadowView extends RenderingModeView {
 
     void setTranslationZ(float translationZ);
 
-    ShadowShape getShadowShape();
+    @Deprecated
+    default ShadowShape getShadowShape() {
+        return ShadowShape.CONVEX_PATH;
+    }
 
     boolean hasShadow();
 

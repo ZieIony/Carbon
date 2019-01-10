@@ -1,8 +1,8 @@
 package carbon.recycler;
 
-import android.support.v7.util.DiffUtil;
-
 import java.util.List;
+
+import androidx.recyclerview.widget.DiffUtil;
 
 public class DiffListCallback<T> extends DiffUtil.Callback {
     protected List<T> items, newItems;

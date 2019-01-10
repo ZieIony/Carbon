@@ -1,9 +1,6 @@
 package carbon.widget.rx;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -17,6 +14,9 @@ import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;
 
 import java.util.concurrent.Callable;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import carbon.animation.AnimatedView;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;

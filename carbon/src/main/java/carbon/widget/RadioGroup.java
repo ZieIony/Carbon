@@ -29,24 +29,24 @@ import carbon.R;
 
 /**
  * <p>This class is used to create a multiple-exclusion scope for a set of radio
- * buttons. Checking one radio button that belongs to a radio group unchecks
- * any previously checked radio button within the same group.</p>
+ * buttons. Checking one radio button that belongs to a radio group unchecks any previously checked
+ * radio button within the same group.</p>
  * <p>
  * <p>Intially, all of the radio buttons are unchecked. While it is not possible
- * to uncheck a particular radio button, the radio group can be cleared to
- * remove the checked state.</p>
+ * to uncheck a particular radio button, the radio group can be cleared to remove the checked
+ * state.</p>
  * <p>
  * <p>The selection is identified by the unique id of the radio button as defined
  * in the XML layout file.</p>
  * <p>
  * <p><strong>XML Attributes</strong></p>
  * <p>See {@link android.R.styleable#RadioGroup RadioGroup Attributes},
- * {@link android.R.styleable#LinearLayout LinearLayout Attributes},
- * {@link android.R.styleable#ViewGroup ViewGroup Attributes},
- * {@link android.R.styleable#View View Attributes}</p>
+ * {@link android.R.styleable#LinearLayout LinearLayout Attributes}, {@link
+ * android.R.styleable#ViewGroup ViewGroup Attributes}, {@link android.R.styleable#View View
+ * Attributes}</p>
  * <p>Also see
- * {@link android.widget.LinearLayout.LayoutParams LinearLayout.LayoutParams}
- * for layout attributes.</p>
+ * {@link android.widget.LinearLayout.LayoutParams LinearLayout.LayoutParams} for layout
+ * attributes.</p>
  *
  * @see RadioButton
  */
@@ -138,8 +138,8 @@ public class RadioGroup extends LinearLayout {
 
     /**
      * <p>Sets the selection to the radio button whose identifier is passed in
-     * parameter. Using -1 as the selection identifier clears the selection;
-     * such an operation is equivalent to invoking {@link #clearCheck()}.</p>
+     * parameter. Using -1 as the selection identifier clears the selection; such an operation is
+     * equivalent to invoking {@link #clearCheck()}.</p>
      *
      * @param id the unique id of the radio button to select in this group
      * @see #getCheckedRadioButtonId()
@@ -191,8 +191,7 @@ public class RadioGroup extends LinearLayout {
 
     /**
      * <p>Clears the selection. When the selection is cleared, no radio button
-     * in this group is selected and {@link #getCheckedRadioButtonId()} returns
-     * null.</p>
+     * in this group is selected and {@link #getCheckedRadioButtonId()} returns null.</p>
      *
      * @see #check(int)
      * @see #getCheckedRadioButtonId()
@@ -246,12 +245,12 @@ public class RadioGroup extends LinearLayout {
 
     /**
      * <p>This set of layout parameters defaults the width and the height of
-     * the children to {@link #WRAP_CONTENT} when they are not specified in the
-     * XML file. Otherwise, this class ussed the value read from the XML file.</p>
+     * the children to {@link #WRAP_CONTENT} when they are not specified in the XML file. Otherwise,
+     * this class ussed the value read from the XML file.</p>
      * <p>
      * <p>See
-     * {@link android.R.styleable#LinearLayout_Layout LinearLayout Attributes}
-     * for a list of all child view attributes that this class supports.</p>
+     * {@link android.R.styleable#LinearLayout_Layout LinearLayout Attributes} for a list of all
+     * child view attributes that this class supports.</p>
      */
     public static class LayoutParams extends LinearLayout.LayoutParams {
         /**
@@ -291,9 +290,9 @@ public class RadioGroup extends LinearLayout {
 
         /**
          * <p>Fixes the child's width to
-         * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT} and the child's
-         * height to  {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT}
-         * when not specified in the XML file.</p>
+         * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT} and the child's height to
+         * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT} when not specified in the XML
+         * file.</p>
          *
          * @param a          the styled attributes set
          * @param widthAttr  the width attribute to fetch
@@ -352,8 +351,8 @@ public class RadioGroup extends LinearLayout {
 
     /**
      * <p>A pass-through listener acts upon the events and dispatches them
-     * to another listener. This allows the table layout to set its own internal
-     * hierarchy change listener without preventing the user to setup his.</p>
+     * to another listener. This allows the table layout to set its own internal hierarchy change
+     * listener without preventing the user to setup his.</p>
      */
     private class PassThroughHierarchyChangeListener implements
             ViewGroup.OnHierarchyChangeListener {

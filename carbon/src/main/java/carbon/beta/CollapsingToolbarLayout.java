@@ -20,8 +20,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -62,7 +62,7 @@ import carbon.widget.OnInsetsChangedListener;
 import carbon.widget.OnTransformationChangedListener;
 import carbon.widget.RenderingMode;
 
-public class CollapsingToolbarLayout extends android.support.design.widget.CollapsingToolbarLayout
+public class CollapsingToolbarLayout extends com.google.android.material.appbar.CollapsingToolbarLayout
         implements
         ShadowView,
         RippleView,

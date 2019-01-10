@@ -48,9 +48,9 @@ public class Divider extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if(orientation==HORIZONTAL) {
+        if (orientation == HORIZONTAL) {
             setMeasuredDimension(getMeasuredWidth(), getContext().getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
-        }else{
+        } else {
             setMeasuredDimension(getContext().getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight), getMeasuredHeight());
         }
     }

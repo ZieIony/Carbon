@@ -1,7 +1,7 @@
 package tk.zielony.carbonsamples.guidelines
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import tk.zielony.carbonsamples.R
 
 class ShrineActivity : AppCompatActivity() {

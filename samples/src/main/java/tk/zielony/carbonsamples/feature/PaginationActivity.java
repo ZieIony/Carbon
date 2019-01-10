@@ -1,8 +1,6 @@
 package tk.zielony.carbonsamples.feature;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.annimon.stream.Stream;
 
@@ -10,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import carbon.component.TextRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;

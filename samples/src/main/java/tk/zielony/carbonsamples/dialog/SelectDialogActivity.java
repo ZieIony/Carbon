@@ -1,13 +1,13 @@
 package tk.zielony.carbonsamples.dialog;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import carbon.dialog.MultiSelectDialog;
 import carbon.dialog.SingleSelectDialog;
 import carbon.widget.DropDown;

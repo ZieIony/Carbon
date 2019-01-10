@@ -27,9 +27,8 @@ class TypedArrayCompat {
     }
 
     /**
-     * Retrieve the ColorStateList for the attribute at <var>index</var>.
-     * The value may be either a single solid color or a reference to
-     * a color or complex {@link ColorStateList} description.
+     * Retrieve the ColorStateList for the attribute at <var>index</var>. The value may be either a
+     * single solid color or a reference to a color or complex {@link ColorStateList} description.
      *
      * @param index Index of attribute to retrieve.
      * @return ColorStateList for the attribute, or null if not defined.
@@ -58,8 +57,8 @@ class TypedArrayCompat {
     }
 
     /**
-     * Return a mask of the configuration parameters for which the values in
-     * this typed array may change.
+     * Return a mask of the configuration parameters for which the values in this typed array may
+     * change.
      *
      * @return Returns a mask of the changing configuration parameters, as defined by {@link
      * android.content.pm.ActivityInfo}.
@@ -101,10 +100,9 @@ class TypedArrayCompat {
     /**
      * Retrieve the resource identifier for the attribute at
      * <var>index</var>.  Note that attribute resource as resolved when
-     * the overall {@link TypedArray} object is retrieved.  As a
-     * result, this function will return the resource identifier of the
-     * final resource value that was found, <em>not</em> necessarily the
-     * original resource that was specified by the attribute.
+     * the overall {@link TypedArray} object is retrieved.  As a result, this function will return
+     * the resource identifier of the final resource value that was found, <em>not</em> necessarily
+     * the original resource that was specified by the attribute.
      *
      * @param index Index of attribute to retrieve.
      * @param def   Value to return if the attribute is not defined or not a resource.
@@ -132,11 +130,10 @@ class TypedArrayCompat {
     }
 
     /**
-     * Retrieve a dimensional unit attribute at <var>index</var> for use
-     * as an offset in raw pixels.  This is the same as
-     * {@link TypedArray#getDimension}, except the returned value is converted to
-     * integer pixels for you.  An offset conversion involves simply
-     * truncating the base value to an integer.
+     * Retrieve a dimensional unit attribute at <var>index</var> for use as an offset in raw pixels.
+     *  This is the same as {@link TypedArray#getDimension}, except the returned value is converted
+     * to integer pixels for you.  An offset conversion involves simply truncating the base value to
+     * an integer.
      * <p/>
      * Retrieve from extracted first if no value than tries from {@link TypedArray}
      *
@@ -179,10 +176,9 @@ class TypedArrayCompat {
     /*package*/ static final int STYLE_DENSITY = 5;
 
     /**
-     * Extracts theme attributes from a typed array for later resolution using
-     * {@link Resources.Theme#resolveAttributes(int[], int[])}.
-     * Removes the entries from the typed array so that subsequent calls to typed
-     * getters will return the default value without crashing.
+     * Extracts theme attributes from a typed array for later resolution using {@link
+     * Resources.Theme#resolveAttributes(int[], int[])}. Removes the entries from the typed array so
+     * that subsequent calls to typed getters will return the default value without crashing.
      *
      * @return an array of length {@link TypedArray#getIndexCount()} populated with theme
      * attributes, or null if there are no theme attributes in the typed array

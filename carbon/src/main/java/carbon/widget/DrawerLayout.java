@@ -20,8 +20,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -67,7 +67,7 @@ import carbon.view.VisibleView;
  * Carbon version of a drawer layout with support for shadows, ripples and other material features.
  * Not really useful, but added for sake of completeness.
  */
-public class DrawerLayout extends android.support.v4.widget.DrawerLayout
+public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
         implements
         ShadowView,
         RippleView,

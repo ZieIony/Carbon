@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples.widget
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import carbon.component.*
 import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
@@ -31,7 +30,7 @@ class BackdropActivity : SamplesActivity() {
                     DefaultIconTextItem(resources.getDrawable(R.drawable.ic_email_black_24dp), "Email"),
                     DefaultIconTextItem(resources.getDrawable(R.drawable.ic_comment_black_24dp), "Comment")
             )
-            backdrop_recycler.layoutManager = LinearLayoutManager(this)
+            backdrop_recycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
             backdrop_recycler.adapter = RowListAdapter(items, RowFactory<IconTextItem> { parent -> IconTextRow(parent) }).apply {
                 setOnItemClickedListener { view, type, position -> backdrop_backdropLayout.closeLayout() }
             }
@@ -69,7 +68,7 @@ class BackdropActivity : SamplesActivity() {
             adapter.addFactory(DefaultHeaderItem::class.java, { PaddedHeaderRow(it) })
 
 
-            backdrop_contentRecycler.layoutManager = LinearLayoutManager(this)
+            backdrop_contentRecycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
             backdrop_contentRecycler.adapter = adapter
             adapter.items = items
         }

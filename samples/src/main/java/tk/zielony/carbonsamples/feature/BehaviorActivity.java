@@ -1,13 +1,13 @@
 package tk.zielony.carbonsamples.feature;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.behavior.HeightBehavior;
 import carbon.behavior.RecyclerScrollBehavior;
 import carbon.component.AvatarTextRow;

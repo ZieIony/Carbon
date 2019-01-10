@@ -118,8 +118,8 @@ class RippleForeground extends RippleComponent {
     }
 
     /**
-     * Specifies the starting position relative to the drawable bounds. No-op if
-     * the ripple has already entered.
+     * Specifies the starting position relative to the drawable bounds. No-op if the ripple has
+     * already entered.
      */
     public void move(float x, float y) {
         mStartingX = x;

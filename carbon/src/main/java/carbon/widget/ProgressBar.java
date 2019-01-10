@@ -6,9 +6,9 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
+import androidx.annotation.NonNull;
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.CircularProgressDrawable;

@@ -9,8 +9,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +18,8 @@ import android.view.ViewParent;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
@@ -27,7 +27,7 @@ import carbon.drawable.EdgeEffect;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
-public class ViewPager extends android.support.v4.view.ViewPager implements TintedView, VisibleView {
+public class ViewPager extends androidx.viewpager.widget.ViewPager implements TintedView, VisibleView {
     private int mTouchSlop;
     EdgeEffect leftGlow;
     EdgeEffect rightGlow;

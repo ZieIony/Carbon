@@ -59,8 +59,7 @@ public class StateAnimator {
     }
 
     /**
-     * Returns the current {@link Animation} which is started because of a state
-     * change.
+     * Returns the current {@link Animation} which is started because of a state change.
      *
      * @return The currently running Animation or null if no Animation is running
      */

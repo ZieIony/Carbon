@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -23,6 +22,7 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.collection.LongSparseArray;
 import carbon.Carbon;
 
 public class LollipopDrawablesCompat {
@@ -75,16 +75,16 @@ public class LollipopDrawablesCompat {
     }
 
     /**
-     * Create a drawable from an inputstream, using the given resources and
-     * value to determine density information.
+     * Create a drawable from an inputstream, using the given resources and value to determine
+     * density information.
      */
     public static Drawable createFromResourceStream(Resources res, TypedValue value, InputStream is, String srcName) {
         return createFromResourceStream(res, value, is, srcName, null);
     }
 
     /**
-     * Create a drawable from an inputstream, using the given resources and
-     * value to determine density information.
+     * Create a drawable from an inputstream, using the given resources and value to determine
+     * density information.
      */
     public static Drawable createFromResourceStream(Resources res, TypedValue value, InputStream is, String srcName, BitmapFactory.Options opts) {
         return Drawable.createFromResourceStream(res, value, is, srcName, opts);
@@ -92,8 +92,8 @@ public class LollipopDrawablesCompat {
 
 
     /**
-     * Create a drawable from an XML document. For more information on how to
-     * create resources in XML, see
+     * Create a drawable from an XML document. For more information on how to create resources in
+     * XML, see
      * <a href="{@docRoot}guide/topics/resources/drawable-resource.html">Drawable Resources</a>.
      */
     public static Drawable createFromXml(Resources r, XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -101,8 +101,8 @@ public class LollipopDrawablesCompat {
     }
 
     /**
-     * Create a drawable from an XML document using an optional {@link Resources.Theme}.
-     * For more information on how to create resources in XML, see
+     * Create a drawable from an XML document using an optional {@link Resources.Theme}. For more
+     * information on how to create resources in XML, see
      * <a href="{@docRoot}guide/topics/resources/drawable-resource.html">Drawable Resources</a>.
      */
     public static Drawable createFromXml(Resources r, XmlPullParser parser, Resources.Theme theme) throws XmlPullParserException, IOException {
@@ -128,10 +128,9 @@ public class LollipopDrawablesCompat {
 
 
     /**
-     * Create a drawable from inside an XML document using an optional
-     * {@link Resources.Theme}. Called on a parser positioned at a tag in an XML
-     * document, tries to create a Drawable from that tag. Returns {@code null}
-     * if the tag is not a valid drawable.
+     * Create a drawable from inside an XML document using an optional {@link Resources.Theme}.
+     * Called on a parser positioned at a tag in an XML document, tries to create a Drawable from
+     * that tag. Returns {@code null} if the tag is not a valid drawable.
      */
     public static Drawable createFromXmlInner(Resources r, XmlPullParser parser, AttributeSet attrs, Resources.Theme theme) throws XmlPullParserException, IOException {
         Drawable drawable = null;

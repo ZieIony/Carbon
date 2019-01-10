@@ -6,20 +6,20 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.R;
 import carbon.internal.Menu;
 import carbon.widget.DropDown;
 import carbon.widget.RecyclerView;
 
-public class PopupMenu  extends PopupWindow {
+public class PopupMenu extends PopupWindow {
 
     protected RecyclerView recycler;
     private android.view.View mAnchorView;
@@ -134,18 +134,18 @@ public class PopupMenu  extends PopupWindow {
 
             update(popupX, popupY, popupWidth, popupHeight);
         } else {*/
-            int maxItems = (hWindow - marginHalf * 2 - margin * 2) / itemHeight;
+        int maxItems = (hWindow - marginHalf * 2 - margin * 2) / itemHeight;
 
-            int popupX = location[0] - margin - marginHalf;
-            int popupY = location[1] - marginHalf * 2 - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() - mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
-            int popupWidth = mAnchorView.getWidth() + margin * 2 + marginHalf * 2 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
-            int popupHeight = marginHalf * 4 + Math.min(recycler.getAdapter().getItemCount(), maxItems) * itemHeight;
+        int popupX = location[0] - margin - marginHalf;
+        int popupY = location[1] - marginHalf * 2 - (itemHeight - (mAnchorView.getHeight() - mAnchorView.getPaddingTop() - mAnchorView.getPaddingBottom())) / 2 + mAnchorView.getPaddingTop();
+        int popupWidth = mAnchorView.getWidth() + margin * 2 + marginHalf * 2 - mAnchorView.getPaddingLeft() - mAnchorView.getPaddingRight();
+        int popupHeight = marginHalf * 4 + Math.min(recycler.getAdapter().getItemCount(), maxItems) * itemHeight;
 
-            //LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
-            //manager.scrollToPosition(selectedItem);
+        //LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
+        //manager.scrollToPosition(selectedItem);
 
-            update(popupX, popupY, popupWidth, popupHeight);
-       // }
+        update(popupX, popupY, popupWidth, popupHeight);
+        // }
 
         super.update();
     }

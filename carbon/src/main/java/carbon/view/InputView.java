@@ -1,11 +1,11 @@
 package carbon.view;
 
-import android.support.annotation.NonNull;
-
+import androidx.annotation.NonNull;
 import carbon.widget.OnValidateListener;
 
 /**
- * Interface of a view with input, which can be validated. Used by {@link carbon.widget.InputLayout}
+ * Interface of a view with input, which can be validated. Used by {@link
+ * carbon.widget.InputLayout}
  */
 public interface InputView extends ValidStateView {
     /**

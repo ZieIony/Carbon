@@ -18,12 +18,12 @@ package carbon.internal;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.view.MarginLayoutParamsCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.core.view.MarginLayoutParamsCompat;
 import carbon.R;
 
 /**
@@ -198,8 +198,8 @@ public class PercentLayoutHelper {
 
     /**
      * Iterates over children and restores their original dimensions that were changed for
-     * percentage values. Calling this method only makes sense if you previously called
-     * {@link PercentLayoutHelper#adjustChildren(int, int)}.
+     * percentage values. Calling this method only makes sense if you previously called {@link
+     * PercentLayoutHelper#adjustChildren(int, int)}.
      */
     public void restoreOriginalParams() {
         for (int i = 0, N = mHost.getChildCount(); i < N; i++) {
@@ -232,9 +232,9 @@ public class PercentLayoutHelper {
      * If you are building a layout that supports percentage dimensions you are encouraged to take
      * advantage of this method. The developer should be able to specify that a child should be
      * remeasured by adding normal dimension attribute with {@code wrap_content} value. For example
-     * he might specify child's attributes as {@code app:layout_widthPercent="60%p"} and
-     * {@code android:layout_width="wrap_content"}. In this case if the child receives too little
-     * space, it will be remeasured with width set to {@code WRAP_CONTENT}.
+     * he might specify child's attributes as {@code app:layout_widthPercent="60%p"} and {@code
+     * android:layout_width="wrap_content"}. In this case if the child receives too little space, it
+     * will be remeasured with width set to {@code WRAP_CONTENT}.
      *
      * @return True if the measure phase needs to be rerun because one of the children would like to
      * receive more space.
@@ -410,8 +410,8 @@ public class PercentLayoutHelper {
 
         /**
          * Restores original dimensions and margins after they were changed for percentage based
-         * values. Calling this method only makes sense if you previously called
-         * {@link PercentLayoutHelper.PercentLayoutInfo#fillMarginLayoutParams}.
+         * values. Calling this method only makes sense if you previously called {@link
+         * PercentLayoutHelper.PercentLayoutInfo#fillMarginLayoutParams}.
          */
         public void restoreMarginLayoutParams(ViewGroup.MarginLayoutParams params) {
             restoreLayoutParams(params);
@@ -427,8 +427,8 @@ public class PercentLayoutHelper {
 
         /**
          * Restores original dimensions after they were changed for percentage based values. Calling
-         * this method only makes sense if you previously called
-         * {@link PercentLayoutHelper.PercentLayoutInfo#fillLayoutParams}.
+         * this method only makes sense if you previously called {@link
+         * PercentLayoutHelper.PercentLayoutInfo#fillLayoutParams}.
          */
         public void restoreLayoutParams(ViewGroup.LayoutParams params) {
             params.width = mPreservedParams.width;

@@ -45,7 +45,7 @@
 
     </carbon.beta.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -116,7 +116,7 @@
 
         </carbon.widget.LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <carbon.widget.FloatingActionButton
         android:layout_width="wrap_content"

@@ -20,8 +20,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -67,7 +67,7 @@ import carbon.view.VisibleView;
  * A ConstraintLayout implementation with support for material features including shadows, ripples,
  * rounded corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class ConstraintLayout extends android.support.constraint.ConstraintLayout
+public class ConstraintLayout extends androidx.constraintlayout.widget.ConstraintLayout
         implements
         ShadowView,
         RippleView,

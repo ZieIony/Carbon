@@ -8,7 +8,6 @@ import android.view.View
 import carbon.widget.ImageView
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
-import java.lang.Exception
 
 class PicassoView : ImageView, Target {
     constructor(context: Context) : super(context)

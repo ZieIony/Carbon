@@ -19,8 +19,6 @@ import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 
@@ -30,21 +28,21 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import carbon.Carbon;
 import carbon.R;
 
 /**
- * Drawable that shows a ripple effect in response to state changes. The
- * anchoring position of the ripple for a given state may be specified by
- * calling {@link #setHotspot(float, float)} with the corresponding state
- * attribute identifier.
+ * Drawable that shows a ripple effect in response to state changes. The anchoring position of the
+ * ripple for a given state may be specified by calling {@link #setHotspot(float, float)} with the
+ * corresponding state attribute identifier.
  * <p/>
- * A touch feedback drawable may contain multiple child layers, including a
- * special mask layer that is not drawn to the screen. A single layer may be
- * set as the mask from XML by specifying its {@code android:id} value as
- * {@link android.R.id#mask}. At run time, a single layer may be set as the
- * mask using {@code setId(..., R.id.carbon_mask)} or an existing mask layer
- * may be replaced using {@code setDrawableByLayerId(R.id.carbon_mask, ...)}.
+ * A touch feedback drawable may contain multiple child layers, including a special mask layer that
+ * is not drawn to the screen. A single layer may be set as the mask from XML by specifying its
+ * {@code android:id} value as {@link android.R.id#mask}. At run time, a single layer may be set as
+ * the mask using {@code setId(..., R.id.carbon_mask)} or an existing mask layer may be replaced
+ * using {@code setDrawableByLayerId(R.id.carbon_mask, ...)}.
  * <pre>
  * <code>&lt!-- A red ripple masked against an opaque rectangle. --/>
  * &ltripple android:color="#ffff0000">
@@ -53,11 +51,10 @@ import carbon.R;
  * &lt/ripple></code>
  * </pre>
  * <p/>
- * If a mask layer is set, the ripple effect will be masked against that layer
- * before it is drawn over the composite of the remaining child layers.
+ * If a mask layer is set, the ripple effect will be masked against that layer before it is drawn
+ * over the composite of the remaining child layers.
  * <p/>
- * If no mask layer is set, the ripple effect is masked against the composite
- * of the child layers.
+ * If no mask layer is set, the ripple effect is masked against the composite of the child layers.
  * <pre>
  * <code>&lt!-- A green ripple drawn atop a black rectangle. --/>
  * &ltripple android:color="#ff00ff00">
@@ -70,10 +67,9 @@ import carbon.R;
  * &lt/ripple></code>
  * </pre>
  * <p/>
- * If no child layers or mask is specified and the ripple is set as a View
- * background, the ripple will be drawn atop the first available parent
- * background within the View's hierarchy. In this case, the drawing region
- * may extend outside of the Drawable bounds.
+ * If no child layers or mask is specified and the ripple is set as a View background, the ripple
+ * will be drawn atop the first available parent background within the View's hierarchy. In this
+ * case, the drawing region may extend outside of the Drawable bounds.
  * <pre>
  * <code>&lt!-- An unbounded red ripple. --/>
  * &ltripple android:color="#ffff0000" /></code>
@@ -83,8 +79,8 @@ import carbon.R;
  */
 public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     /**
-     * Radius value that specifies the ripple radius should be computed based
-     * on the size of the ripple's container.
+     * Radius value that specifies the ripple radius should be computed based on the size of the
+     * ripple's container.
      */
     public static final int RADIUS_AUTO = -1;
 
@@ -158,8 +154,8 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     private boolean mHasPending;
 
     /**
-     * Lazily-created array of actively animating ripples. Inactive ripples are
-     * pruned during draw(). The locations of these will not change.
+     * Lazily-created array of actively animating ripples. Inactive ripples are pruned during
+     * draw(). The locations of these will not change.
      */
     private RippleForeground[] mExitingRipples;
     private int mExitingRipplesCount = 0;
@@ -196,8 +192,8 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     }
 
     /**
-     * Creates a new ripple drawable with the specified ripple color and
-     * optional content and mask drawables.
+     * Creates a new ripple drawable with the specified ripple color and optional content and mask
+     * drawables.
      *
      * @param color   The ripple color
      * @param content The content drawable, may be {@code null}
@@ -443,9 +439,8 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     }
 
     /**
-     * Specifies how layer padding should affect the bounds of subsequent
-     * layers. The default and recommended value for RippleDrawable is
-     * {@link #PADDING_MODE_STACK}.
+     * Specifies how layer padding should affect the bounds of subsequent layers. The default and
+     * recommended value for RippleDrawable is {@link #PADDING_MODE_STACK}.
      *
      * @param mode padding mode, one of: <ul> <li>{@link #PADDING_MODE_NEST} to nest each layer
      *             inside the padding of the previous layer <li>{@link #PADDING_MODE_STACK} to stack
@@ -566,8 +561,8 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     }
 
     /**
-     * Attempts to start an enter animation for the active hotspot. Fails if
-     * there are too many animating ripples.
+     * Attempts to start an enter animation for the active hotspot. Fails if there are too many
+     * animating ripples.
      */
     private void tryRippleEnter() {
         if (mExitingRipplesCount >= MAX_RIPPLES) {
@@ -597,8 +592,8 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     }
 
     /**
-     * Attempts to start an exit animation for the active hotspot. Fails if
-     * there is no active hotspot.
+     * Attempts to start an exit animation for the active hotspot. Fails if there is no active
+     * hotspot.
      */
     private void tryRippleExit() {
         if (mRipple != null) {
@@ -612,8 +607,8 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     }
 
     /**
-     * Cancels and removes the active ripple, all exiting ripples, and the
-     * background. Nothing will be drawn after this method is called.
+     * Cancels and removes the active ripple, all exiting ripples, and the background. Nothing will
+     * be drawn after this method is called.
      */
     private void clearHotspots() {
         if (mRipple != null) {
@@ -664,8 +659,8 @@ public class RippleDrawableICS extends LayerDrawable implements RippleDrawable {
     }
 
     /**
-     * Populates <code>outline</code> with the first available layer outline,
-     * excluding the mask layer.
+     * Populates <code>outline</code> with the first available layer outline, excluding the mask
+     * layer.
      *
      * @param outline Outline in which to place the first available layer outline
      */

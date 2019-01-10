@@ -1,13 +1,13 @@
 package carbon.widget.rx;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
 import android.widget.CompoundButton;
 
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxCompoundButton;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import io.reactivex.functions.Consumer;
 
 @SuppressLint("NewApi")

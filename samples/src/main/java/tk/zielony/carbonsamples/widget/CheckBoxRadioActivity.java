@@ -1,10 +1,10 @@
 package tk.zielony.carbonsamples.widget;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import carbon.drawable.CheckableDrawable;
 import carbon.widget.CheckBox;
 import tk.zielony.carbonsamples.R;

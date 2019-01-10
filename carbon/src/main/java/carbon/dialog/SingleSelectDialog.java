@@ -1,13 +1,13 @@
 package carbon.dialog;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.StyleRes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import carbon.R;
 import carbon.component.DataBindingComponent;
 import carbon.recycler.RowFactory;

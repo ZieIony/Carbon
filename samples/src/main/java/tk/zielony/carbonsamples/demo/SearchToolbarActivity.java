@@ -3,9 +3,9 @@ package tk.zielony.carbonsamples.demo;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.View;
 
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;

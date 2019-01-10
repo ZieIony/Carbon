@@ -44,8 +44,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 /**
- * A weak HashSet. An element stored in the WeakHashSet might be
- * garbage collected, if there is no strong reference to this element.
+ * A weak HashSet. An element stored in the WeakHashSet might be garbage collected, if there is no
+ * strong reference to this element.
  */
 
 public class WeakHashSet extends HashSet {
@@ -55,8 +55,8 @@ public class WeakHashSet extends HashSet {
     ReferenceQueue queue = new ReferenceQueue();
 
     /**
-     * Returns an iterator over the elements in this set.  The elements
-     * are returned in no particular order.
+     * Returns an iterator over the elements in this set.  The elements are returned in no
+     * particular order.
      *
      * @return an Iterator over the elements in this set.
      */
@@ -95,8 +95,7 @@ public class WeakHashSet extends HashSet {
     }
 
     /**
-     * Adds the specified element to this set if it is not already
-     * present.
+     * Adds the specified element to this set if it is not already present.
      *
      * @param o element to be added to this set.
      * @return <code>true</code> if the set did not already contain the specified element.
@@ -119,17 +118,16 @@ public class WeakHashSet extends HashSet {
     }
 
     /**
-     * A convenience method to return the object held by the
-     * weak reference or <code>null</code> if it does not exist.
+     * A convenience method to return the object held by the weak reference or <code>null</code> if
+     * it does not exist.
      */
     private final Object getReferenceObject(WeakReference ref) {
         return (ref == null) ? null : ref.get();
     }
 
     /**
-     * Removes all garbage collected values with their keys from the map.
-     * Since we don't know how much the ReferenceQueue.poll() operation
-     * costs, we should call it only in the add() method.
+     * Removes all garbage collected values with their keys from the map. Since we don't know how
+     * much the ReferenceQueue.poll() operation costs, we should call it only in the add() method.
      */
     private final void processQueue() {
         WeakElement wv = null;
@@ -140,11 +138,10 @@ public class WeakHashSet extends HashSet {
     }
 
     /**
-     * A WeakHashSet stores objects of class WeakElement.
-     * A WeakElement wraps the element that should be stored in the WeakHashSet.
-     * WeakElement inherits from java.lang.ref.WeakReference.
-     * It redefines equals and hashCode which delegate to the corresponding methods
-     * of the wrapped element.
+     * A WeakHashSet stores objects of class WeakElement. A WeakElement wraps the element that
+     * should be stored in the WeakHashSet. WeakElement inherits from java.lang.ref.WeakReference.
+     * It redefines equals and hashCode which delegate to the corresponding methods of the wrapped
+     * element.
      */
     static private class WeakElement extends WeakReference {
         private int hash; /* Hashcode of key, stored here since the key

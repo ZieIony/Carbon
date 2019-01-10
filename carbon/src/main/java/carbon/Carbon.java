@@ -11,7 +11,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,8 +19,13 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.shape.CutCornerTreatment;
+import com.google.android.material.shape.RoundedCornerTreatment;
+import com.google.android.material.shape.ShapeAppearanceModel;
+
 import java.security.InvalidParameterException;
 
+import androidx.core.graphics.drawable.TintAwareDrawable;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
@@ -47,10 +51,10 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.Menu;
 import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
-import carbon.view.Corners;
-import carbon.view.CornersView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
+import carbon.view.RoundedCornersView;
+import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
 import carbon.view.TintedView;
@@ -361,7 +365,11 @@ public class Carbon {
         strokeView.setStrokeWidth(a.getDimension(carbon_strokeWidth, 0));
     }
 
-    public static void initCornerCutRadius(CornersView roundedCornersView, TypedArray a, int[] ids) {
+    public static void initCornerCutRadius(RoundedCornersView roundedCornersView, TypedArray a, int[] ids) {
+        roundedCornersView.setCornerRadius(0);
+    }
+
+    public static void initCornerCutRadius(ShapeModelView shapeModelView, TypedArray a, int[] ids) {
         int carbon_cornerRadiusTopStart = ids[0];
         int carbon_cornerRadiusTopEnd = ids[1];
         int carbon_cornerRadiusBottomStart = ids[2];
@@ -373,8 +381,8 @@ public class Carbon {
         int carbon_cornerCutBottomEnd = ids[8];
         int carbon_cornerCut = ids[9];
 
-        Corners corners = new Corners();
-        float cornerRadius = a.getDimension(carbon_cornerRadius, 0);
+        ShapeAppearanceModel model = shapeModelView.getShapeModel();
+        float cornerRadius = Math.max(a.getDimension(carbon_cornerRadius, 0), 0.1f);
         float cornerRadiusTopStart = a.getDimension(carbon_cornerRadiusTopStart, cornerRadius);
         float cornerRadiusTopEnd = a.getDimension(carbon_cornerRadiusTopEnd, cornerRadius);
         float cornerRadiusBottomStart = a.getDimension(carbon_cornerRadiusBottomStart, cornerRadius);
@@ -384,11 +392,11 @@ public class Carbon {
         float cornerCutTopEnd = a.getDimension(carbon_cornerCutTopEnd, cornerCut);
         float cornerCutBottomStart = a.getDimension(carbon_cornerCutBottomStart, cornerCut);
         float cornerCutBottomEnd = a.getDimension(carbon_cornerCutBottomEnd, cornerCut);
-        corners.setTopStart(Math.max(cornerCutTopStart, cornerRadiusTopStart), cornerCutTopStart >= cornerRadiusTopStart);
-        corners.setTopEnd(Math.max(cornerCutTopEnd, cornerRadiusTopEnd), cornerCutTopEnd >= cornerRadiusTopEnd);
-        corners.setBottomStart(Math.max(cornerCutBottomStart, cornerRadiusBottomStart), cornerCutBottomStart >= cornerRadiusBottomStart);
-        corners.setBottomEnd(Math.max(cornerCutBottomEnd, cornerRadiusBottomEnd), cornerCutBottomEnd >= cornerRadiusBottomEnd);
-        roundedCornersView.setCorners(corners);
+        model.setTopLeftCorner(cornerCutTopStart >= cornerRadiusTopStart ? new CutCornerTreatment(cornerCutTopStart) : new RoundedCornerTreatment(cornerRadiusTopStart));
+        model.setTopRightCorner(cornerCutTopEnd >= cornerRadiusTopEnd ? new CutCornerTreatment(cornerCutTopEnd) : new RoundedCornerTreatment(cornerRadiusTopEnd));
+        model.setBottomLeftCorner(cornerCutBottomStart >= cornerRadiusBottomStart ? new CutCornerTreatment(cornerCutBottomStart) : new RoundedCornerTreatment(cornerRadiusBottomStart));
+        model.setBottomRightCorner(cornerCutBottomEnd >= cornerRadiusBottomEnd ? new CutCornerTreatment(cornerCutBottomEnd) : new RoundedCornerTreatment(cornerRadiusBottomEnd));
+        shapeModelView.setShapeModel(model);
     }
 
     public static void initAutoSizeText(AutoSizeTextView view, TypedArray a, int[] ids) {
@@ -463,6 +471,13 @@ public class Carbon {
         } else if (drawable instanceof TintAwareDrawable) {
             ((TintAwareDrawable) drawable).setTintMode(mode);
         }
+    }
+
+    public static boolean isShapeRect(ShapeAppearanceModel model) {
+        return model.getTopLeftCorner().getCornerSize() <= 0.2f &&
+                model.getTopRightCorner().getCornerSize() <= 0.2f &&
+                model.getBottomLeftCorner().getCornerSize() <= 0.2f &&
+                model.getBottomRightCorner().getCornerSize() <= 0.2f;
     }
 
     public static void logReflectionError(Exception e) {

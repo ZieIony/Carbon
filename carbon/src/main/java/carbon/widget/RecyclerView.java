@@ -20,11 +20,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +31,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -63,7 +63,7 @@ import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
 import carbon.view.VisibleView;
 
-public class RecyclerView extends android.support.v7.widget.RecyclerView
+public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         implements
         ShadowView,
         RippleView,
@@ -335,7 +335,7 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         }
 
         @Override
-        public void onScrolled(android.support.v7.widget.RecyclerView recyclerView, int dx, int dy) {
+        public void onScrolled(androidx.recyclerview.widget.RecyclerView recyclerView, int dx, int dy) {
             int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
             if (!isLoading() && !isLastPage()) {

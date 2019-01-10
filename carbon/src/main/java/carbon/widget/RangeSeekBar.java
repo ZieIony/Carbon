@@ -10,12 +10,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.annotation.NonNull;
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.ripple.RippleDrawable;

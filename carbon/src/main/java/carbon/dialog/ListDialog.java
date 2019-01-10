@@ -1,10 +1,6 @@
 package carbon.dialog;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.StyleRes;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,6 +8,10 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.R;
 import carbon.recycler.RowFactory;
 import carbon.recycler.RowListAdapter;

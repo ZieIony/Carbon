@@ -5,10 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.v8.renderscript.Allocation;
-import android.support.v8.renderscript.Element;
-import android.support.v8.renderscript.RenderScript;
-import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 
 import carbon.internal.MathUtils;
@@ -27,8 +23,6 @@ public class ShadowGenerator {
     private static void blur(Bitmap bitmap, float radius) {
         if (software) {
             blurSoftware(bitmap, radius);
-        } else {
-            blurRenderScript(bitmap, radius);
         }
     }
 
@@ -69,28 +63,11 @@ public class ShadowGenerator {
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
     }
 
-    private static void blurRenderScript(Bitmap bitmap, float radius) {
-        Allocation inAllocation = Allocation.createFromBitmap((RenderScript) renderScript, bitmap,
-                Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
-        Allocation outAllocation = Allocation.createTyped((RenderScript) renderScript, inAllocation.getType());
-
-        ((ScriptIntrinsicBlur) blurShader).setRadius(radius);
-        ((ScriptIntrinsicBlur) blurShader).setInput(inAllocation);
-        ((ScriptIntrinsicBlur) blurShader).forEach(outAllocation);
-
-        outAllocation.copyTo(bitmap);
-    }
-
     public static Shadow generateShadow(View view, float elevation) {
         elevation = MathUtils.constrain(elevation, 0, 25);
 
         if (!software && renderScript == null) {
-            try {
-                renderScript = RenderScript.create(view.getContext());
-                blurShader = ScriptIntrinsicBlur.create((RenderScript) renderScript, Element.U8_4((RenderScript) renderScript));
-            } catch (Error ignore) {
-                software = true;
-            }
+            software = true;
         }
 
         CornersView cornersView = (CornersView) view;

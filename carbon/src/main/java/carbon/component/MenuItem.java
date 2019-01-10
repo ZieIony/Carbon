@@ -4,15 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.StringRes;
 import android.view.ActionProvider;
 import android.view.ContextMenu;
 import android.view.SubMenu;
 import android.view.View;
 
 import java.io.Serializable;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.StringRes;
 
 public class MenuItem implements android.view.MenuItem, Serializable {
     private Drawable background;

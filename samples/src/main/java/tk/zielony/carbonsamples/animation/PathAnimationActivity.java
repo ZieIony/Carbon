@@ -4,10 +4,10 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import carbon.internal.MathUtils;
 import carbon.internal.NURBS;
 import carbon.widget.ImageView;

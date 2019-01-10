@@ -7,7 +7,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.VectorDrawable;
@@ -81,7 +81,7 @@ public class DropDown<Type extends Serializable> extends EditText {
     }
 
     private void initDropDown(Context context, AttributeSet attrs, int defStyleAttr) {
-        if(!isInEditMode()) {
+        if (!isInEditMode()) {
             arrowDrawable = new VectorDrawable(getResources(), R.raw.carbon_dropdown);
             int size = (int) (Carbon.getDip(getContext()) * 24);
             arrowDrawable.setBounds(0, 0, size, size);
@@ -199,11 +199,11 @@ public class DropDown<Type extends Serializable> extends EditText {
         isShowingPopup = true;
     }
 
-    public interface CustomItemFactory<Type>{
+    public interface CustomItemFactory<Type> {
         Type makeItem(String text);
     }
 
-    public void setCustomItemFactory(CustomItemFactory<Type> factory){
+    public void setCustomItemFactory(CustomItemFactory<Type> factory) {
         customItemFactory = factory;
     }
 

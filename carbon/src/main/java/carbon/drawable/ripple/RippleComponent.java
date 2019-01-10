@@ -6,8 +6,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 /**
- * Abstract class that handles hardware/software hand-off and lifecycle for
- * animated ripple foreground and background components.
+ * Abstract class that handles hardware/software hand-off and lifecycle for animated ripple
+ * foreground and background components.
  */
 abstract class RippleComponent {
     private final RippleDrawableICS mOwner;
@@ -91,8 +91,8 @@ abstract class RippleComponent {
     }
 
     /**
-     * Cancels all animations. Software animation values are left in the
-     * current state, while hardware animation values jump to the end state.
+     * Cancels all animations. Software animation values are left in the current state, while
+     * hardware animation values jump to the end state.
      */
     public void cancel() {
         cancelSoftwareAnimations();
@@ -106,8 +106,7 @@ abstract class RippleComponent {
     }
 
     /**
-     * Draws the ripple to the canvas, inheriting the paint's color and alpha
-     * properties.
+     * Draws the ripple to the canvas, inheriting the paint's color and alpha properties.
      *
      * @param c the canvas to which the ripple should be drawn
      * @param p the paint used to draw the ripple
@@ -118,9 +117,9 @@ abstract class RippleComponent {
     }
 
     /**
-     * Populates {@code bounds} with the maximum drawing bounds of the ripple
-     * relative to its center. The resulting bounds should be translated into
-     * parent drawable coordinates before use.
+     * Populates {@code bounds} with the maximum drawing bounds of the ripple relative to its
+     * center. The resulting bounds should be translated into parent drawable coordinates before
+     * use.
      *
      * @param bounds the rect to populate with drawing bounds
      */
@@ -130,8 +129,7 @@ abstract class RippleComponent {
     }
 
     /**
-     * Cancels any current software animations, leaving the values in their
-     * current state.
+     * Cancels any current software animations, leaving the values in their current state.
      */
     private void cancelSoftwareAnimations() {
         if (mSoftwareAnimator != null) {
@@ -141,8 +139,7 @@ abstract class RippleComponent {
     }
 
     /**
-     * Ends any current software animations, jumping the values to their end
-     * state.
+     * Ends any current software animations, jumping the values to their end state.
      */
     private void endSoftwareAnimations() {
         if (mSoftwareAnimator != null) {
@@ -182,8 +179,8 @@ abstract class RippleComponent {
     protected abstract boolean drawSoftware(Canvas c, Paint p);
 
     /**
-     * Called when the hardware exit is cancelled. Jumps software values to end
-     * state to ensure that software and hardware values are synchronized.
+     * Called when the hardware exit is cancelled. Jumps software values to end state to ensure that
+     * software and hardware values are synchronized.
      */
     protected abstract void jumpValuesToExit();
 

@@ -19,7 +19,9 @@
         android:layoutDirection="locale"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/carbon_windowPadding"
-        android:paddingRight="@dimen/carbon_windowPadding"
+        android:paddingStart="@dimen/carbon_windowPadding"
+        android:paddingRight="@dimen/carbon_toolbarItemMargin"
+        android:paddingEnd="@dimen/carbon_toolbarItemMargin"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
         <carbon.widget.TextView

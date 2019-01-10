@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.ActionMode;
@@ -20,6 +18,8 @@ import android.widget.PopupWindow;
 
 import java.lang.reflect.Field;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.view.ContextThemeWrapper;
 import carbon.R;
 import carbon.internal.EditTextMenu;
 import carbon.widget.EditText;

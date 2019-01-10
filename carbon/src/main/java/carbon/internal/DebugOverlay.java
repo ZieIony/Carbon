@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
 import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import carbon.R;
 
 public class DebugOverlay extends PopupWindow {

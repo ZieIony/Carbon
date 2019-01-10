@@ -1,11 +1,11 @@
 package carbon.component;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import carbon.BR;
 
 public class DataBindingComponent<DataType> implements Component<DataType> {

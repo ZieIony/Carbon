@@ -9,8 +9,8 @@ public abstract class FloatProperty<T> extends Property<T, Float> {
     }
 
     /**
-     * A type-specific variant of {@link #set(Object, Float)} that is faster when dealing
-     * with fields of type <code>float</code>.
+     * A type-specific variant of {@link #set(Object, Float)} that is faster when dealing with
+     * fields of type <code>float</code>.
      */
     public abstract void setValue(T object, float value);
 

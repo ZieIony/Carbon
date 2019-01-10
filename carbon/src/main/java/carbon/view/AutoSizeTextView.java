@@ -1,7 +1,6 @@
 package carbon.view;
 
-import android.support.annotation.NonNull;
-
+import androidx.annotation.NonNull;
 import carbon.widget.AutoSizeTextMode;
 
 /**

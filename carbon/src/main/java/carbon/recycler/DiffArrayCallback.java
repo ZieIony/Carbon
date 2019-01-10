@@ -1,6 +1,6 @@
 package carbon.recycler;
 
-import android.support.v7.util.DiffUtil;
+import androidx.recyclerview.widget.DiffUtil;
 
 public class DiffArrayCallback<T> extends DiffUtil.Callback {
     protected T[] items, newItems;
