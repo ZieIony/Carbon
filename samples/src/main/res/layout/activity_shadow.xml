@@ -86,7 +86,6 @@
             android:layout_height="56dp"
             android:layout_margin="@dimen/carbon_padding"
             android:background="#ffffff"
-            app:carbon_backgroundTint="#ffffffff"
             app:carbon_cornerRadius="10dp"
             app:carbon_elevation="2dp"/>
 
