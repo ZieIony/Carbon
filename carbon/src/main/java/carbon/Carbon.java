@@ -19,9 +19,9 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.material.shape.CutCornerTreatment;
-import com.google.android.material.shape.RoundedCornerTreatment;
-import com.google.android.material.shape.ShapeAppearanceModel;
+import carbon.shadow2.CutCornerTreatment;
+import carbon.shadow2.RoundedCornerTreatment;
+import carbon.shadow2.ShapeAppearanceModel;
 
 import java.security.InvalidParameterException;
 

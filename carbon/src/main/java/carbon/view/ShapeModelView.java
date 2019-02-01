@@ -1,6 +1,6 @@
 package carbon.view;
 
-import com.google.android.material.shape.ShapeAppearanceModel;
+import carbon.shadow2.ShapeAppearanceModel;
 
 public interface ShapeModelView extends RoundedCornersView {
     ShapeAppearanceModel getShapeModel();

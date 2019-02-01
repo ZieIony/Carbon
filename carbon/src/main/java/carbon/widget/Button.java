@@ -34,10 +34,10 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
-import com.google.android.material.shape.CutCornerTreatment;
-import com.google.android.material.shape.MaterialShapeDrawable;
-import com.google.android.material.shape.RoundedCornerTreatment;
-import com.google.android.material.shape.ShapeAppearanceModel;
+import carbon.shadow2.CutCornerTreatment;
+import carbon.shadow2.MaterialShapeDrawable;
+import carbon.shadow2.RoundedCornerTreatment;
+import carbon.shadow2.ShapeAppearanceModel;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -462,7 +462,6 @@ public class Button extends android.widget.Button
                     if (Carbon.isShapeRect(shapeModel)) {
                         outline.setRect(0, 0, getWidth(), getHeight());
                     } else {
-                        shadowDrawable.setShadowCompatibilityMode(MaterialShapeDrawable.SHADOW_COMPAT_MODE_NEVER);
                         shadowDrawable.setBounds(0, 0, getWidth(), getHeight());
                         shadowDrawable.getOutline(outline);
                     }
@@ -771,7 +770,6 @@ public class Button extends android.widget.Button
         Matrix matrix = getMatrix();
 
         int shadowColor = spotShadowColor != null ? spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()) : Color.BLACK;
-        shadowDrawable.setShadowCompatibilityMode(MaterialShapeDrawable.SHADOW_COMPAT_MODE_ALWAYS);
         shadowDrawable.setShadowColor(shadowColor);
         shadowDrawable.setFillColor(spotShadowColor);
         shadowDrawable.setAlpha(0x44);
