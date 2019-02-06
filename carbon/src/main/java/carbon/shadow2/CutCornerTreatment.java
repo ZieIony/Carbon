@@ -42,9 +42,7 @@ public class CutCornerTreatment extends CornerTreatment implements Cloneable {
     public void getCornerPath(float angle, float interpolation, ShapePath shapePath) {
         shapePath.reset(0, cornerSize * interpolation, ShapePath.ANGLE_LEFT, 180 - angle);
         shapePath.lineTo(
-                (float) (Math.sin(Math.toRadians(angle)) * cornerSize * interpolation),
-                // Something about using cos() is causing rounding which prevents the path from being convex
-                // on api levels 21 and 22. Using sin() with 90 - angle is helping for now.
-                (float) (Math.sin(Math.toRadians(90 - angle)) * cornerSize * interpolation));
+                Math.round(Math.sin(Math.toRadians(angle))) * cornerSize * interpolation,
+                Math.round(Math.cos(Math.toRadians(angle))) * cornerSize * interpolation);
     }
 }

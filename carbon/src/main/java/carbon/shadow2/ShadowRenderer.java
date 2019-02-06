@@ -24,7 +24,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
-import android.graphics.Region.Op;
 import android.graphics.Shader;
 
 import androidx.annotation.RestrictTo;
@@ -80,7 +79,7 @@ public class ShadowRenderer {
     public ShadowRenderer(int color) {
         setShadowColor(color);
 
-        cornerShadowPaint = new Paint(Paint.DITHER_FLAG);
+        cornerShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         cornerShadowPaint.setStyle(Paint.Style.FILL);
 
         shadowPaint = new Paint();
@@ -133,28 +132,19 @@ public class ShadowRenderer {
             float startAngle,
             float sweepAngle) {
 
-        boolean drawShadowInsideBounds = sweepAngle < 0;
-
         Path arcBounds = scratch;
 
-        if (drawShadowInsideBounds) {
-            cornerColors[0] = 0;
-            cornerColors[1] = shadowEndColor;
-            cornerColors[2] = shadowMiddleColor;
-            cornerColors[3] = shadowStartColor;
-        } else {
-            // Calculate the arc bounds to prevent drawing shadow in the same part of the arc.
-            arcBounds.rewind();
-            arcBounds.moveTo(bounds.centerX(), bounds.centerY());
-            arcBounds.arcTo(bounds, startAngle, sweepAngle);
-            arcBounds.close();
+        // Calculate the arc bounds to prevent drawing shadow in the same part of the arc.
+        arcBounds.rewind();
+        arcBounds.moveTo(bounds.centerX(), bounds.centerY());
+        arcBounds.arcTo(bounds, startAngle, sweepAngle);
+        arcBounds.close();
 
-            bounds.inset(-elevation, -elevation);
-            cornerColors[0] = 0;
-            cornerColors[1] = shadowStartColor;
-            cornerColors[2] = shadowMiddleColor;
-            cornerColors[3] = shadowEndColor;
-        }
+        bounds.inset(-elevation, -elevation);
+        cornerColors[0] = 0;
+        cornerColors[1] = shadowStartColor;
+        cornerColors[2] = shadowMiddleColor;
+        cornerColors[3] = shadowEndColor;
 
         float startRatio = 1f - (elevation / (bounds.width() / 2f));
         float midRatio = startRatio + ((1f - startRatio) / 2f);
@@ -174,12 +164,9 @@ public class ShadowRenderer {
 
         canvas.save();
         canvas.concat(matrix);
-
-        if (!drawShadowInsideBounds) {
-            canvas.clipPath(arcBounds, Op.DIFFERENCE);
-        }
-
-        canvas.drawArc(bounds, startAngle, sweepAngle, true, cornerShadowPaint);
+        cornerShadowPaint.setStyle(Paint.Style.STROKE);
+        cornerShadowPaint.setStrokeWidth(elevation * 2);
+        canvas.drawArc(bounds, startAngle, sweepAngle, false, cornerShadowPaint);
         canvas.restore();
     }
 
