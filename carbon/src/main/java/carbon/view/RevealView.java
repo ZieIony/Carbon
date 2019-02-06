@@ -2,7 +2,7 @@ package carbon.view;
 
 import android.animation.Animator;
 
-public interface RevealView extends RenderingModeView {
+public interface RevealView {
     float MAX_RADIUS = -1;
 
     Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius);

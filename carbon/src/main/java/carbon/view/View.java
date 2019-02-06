@@ -12,11 +12,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -26,6 +26,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +44,12 @@ import carbon.animation.StateAnimator;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.RevealAnimator;
-import carbon.shadow.Shadow;
-import carbon.shadow.ShadowGenerator;
-import carbon.shadow.ShadowShape;
+import carbon.shadow.CutCornerTreatment;
+import carbon.shadow.MaterialShapeDrawable;
+import carbon.shadow.RoundedCornerTreatment;
 import carbon.shadow.ShadowView;
+import carbon.shadow.ShapeAppearanceModel;
 import carbon.widget.OnTransformationChangedListener;
-import carbon.widget.RenderingMode;
 
 /**
  * Basic View class for making views from scratch
@@ -60,7 +61,7 @@ public abstract class View extends android.view.View
         TouchMarginView,
         StateAnimatorView,
         AnimatedView,
-        CornersView,
+        ShapeModelView,
         TintedView,
         StrokeView,
         MaxSizeView,
@@ -183,7 +184,7 @@ public abstract class View extends android.view.View
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
         finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
-        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.setDuration(Carbon.getDefaultRevealDuration());
             return circularReveal;
@@ -217,22 +218,11 @@ public abstract class View extends android.view.View
     // corners
     // -------------------------------
 
-    private Corners corners;
-    private Path cornersMask;
+    private Rect boundsRect = new Rect();
+    private Path cornersMask = new Path();
 
-    /**
-     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
-     *
-     * @return corner radius, equal to or greater than 0.
-     */
-    @Deprecated
-    @Override
-    public float getCornerRadius() {
-        return corners.getTopStart();
-    }
-
-    public Corners getCorners() {
-        return corners;
+    public ShapeAppearanceModel getShapeModel() {
+        return shapeModel;
     }
 
 
@@ -243,21 +233,21 @@ public abstract class View extends android.view.View
      */
     @Override
     public void setCornerRadius(float cornerRadius) {
-        setCorners(new Corners(cornerRadius, false));
+        shapeModel.setAllCorners(new RoundedCornerTreatment(cornerRadius));
+        setShapeModel(shapeModel);
     }
 
     @Override
     public void setCornerCut(float cornerCut) {
-        setCorners(new Corners(cornerCut, true));
+        shapeModel.setAllCorners(new CutCornerTreatment(cornerCut));
+        setShapeModel(shapeModel);
     }
 
     @Override
-    public void setCorners(Corners corners) {
-        if (this.corners != null && this.corners.equals(corners))
-            return;
+    public void setShapeModel(ShapeAppearanceModel model) {
         if (!Carbon.IS_LOLLIPOP_OR_HIGHER)
             postInvalidate();
-        this.corners = corners;
+        this.shapeModel = model;
         if (getWidth() > 0 && getHeight() > 0)
             updateCorners();
     }
@@ -279,12 +269,23 @@ public abstract class View extends android.view.View
     }
 
     private void updateCorners() {
-        if (!corners.isZero() && Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             setClipToOutline(true);
-            setOutlineProvider(ShadowShape.viewOutlineProvider);
+            setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                public void getOutline(android.view.View view, Outline outline) {
+                    if (Carbon.isShapeRect(shapeModel)) {
+                        outline.setRect(0, 0, getWidth(), getHeight());
+                    } else {
+                        shadowDrawable.setBounds(0, 0, getWidth(), getHeight());
+                        shadowDrawable.getOutline(outline);
+                    }
+                }
+            });
         }
 
-        cornersMask = corners.getPath(getWidth(), getHeight());
+        boundsRect.set(0, 0, getWidth(), getHeight());
+        shadowDrawable.getPathForSize(boundsRect, cornersMask);
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
@@ -299,25 +300,37 @@ public abstract class View extends android.view.View
     @Override
     public void draw(@NonNull Canvas canvas) {
         boolean r = revealAnimator != null;
-        boolean c = !corners.isZero();
-        if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
-            Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas layerCanvas = new Canvas(layer);
-            drawInternal(layerCanvas);
+        boolean c = !Carbon.isShapeRect(shapeModel);
 
-            Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas maskCanvas = new Canvas(mask);
-            Paint maskPaint = new Paint(0xffffffff);
-            maskCanvas.drawPath(cornersMask, maskPaint);
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            if (spotShadowColor != null)
+                super.setOutlineSpotShadowColor(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()));
+            if (ambientShadowColor != null)
+                super.setOutlineAmbientShadowColor(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()));
+        }
 
-            for (int x = 0; x < getWidth(); x++) {
-                for (int y = 0; y < getHeight(); y++) {
-                    int maskPixel = mask.getPixel(x, y);
-                    layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
+        if (isInEditMode()) {
+            if ((r || c) && getWidth() > 0 && getHeight() > 0) {
+                Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas layerCanvas = new Canvas(layer);
+                drawInternal(layerCanvas);
+
+                Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas maskCanvas = new Canvas(mask);
+                Paint maskPaint = new Paint(0xffffffff);
+                maskCanvas.drawPath(cornersMask, maskPaint);
+
+                for (int x = 0; x < getWidth(); x++) {
+                    for (int y = 0; y < getHeight(); y++) {
+                        int maskPixel = mask.getPixel(x, y);
+                        layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
+                    }
                 }
+                canvas.drawBitmap(layer, 0, 0, paint);
+            } else {
+                drawInternal(canvas);
             }
-            canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software || corners.getShape() == ShadowShape.CONVEX_PATH)) {
+        } else if (getWidth() > 0 && getHeight() > 0 && (((r || c) && !Carbon.IS_LOLLIPOP_OR_HIGHER) || !shapeModel.isRoundRect())) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -420,7 +433,7 @@ public abstract class View extends android.view.View
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((android.view.View) getParent()).invalidate();
 
-        if (elevation > 0 || corners != null)
+        if (elevation > 0 || !Carbon.isShapeRect(shapeModel))
             ((android.view.View) getParent()).invalidate();
     }
 
@@ -443,7 +456,7 @@ public abstract class View extends android.view.View
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((android.view.View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
-        if (elevation > 0 || corners != null)
+        if (elevation > 0 || !Carbon.isShapeRect(shapeModel))
             ((android.view.View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
@@ -474,9 +487,9 @@ public abstract class View extends android.view.View
 
     private float elevation = 0;
     private float translationZ = 0;
-    private Shadow ambientShadow, spotShadow;
+    private ShapeAppearanceModel shapeModel = new ShapeAppearanceModel();
+    private MaterialShapeDrawable shadowDrawable = new MaterialShapeDrawable(shapeModel);
     private ColorStateList ambientShadowColor, spotShadowColor;
-    private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
 
     @Override
     public float getElevation() {
@@ -489,7 +502,7 @@ public abstract class View extends android.view.View
             super.setElevation(elevation);
             super.setTranslationZ(translationZ);
         } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
-            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
+            if (ambientShadowColor == null || spotShadowColor == null) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
             } else {
@@ -513,7 +526,7 @@ public abstract class View extends android.view.View
         if (Carbon.IS_PIE_OR_HIGHER) {
             super.setTranslationZ(translationZ);
         } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
-            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
+            if (ambientShadowColor == null || spotShadowColor == null) {
                 super.setTranslationZ(translationZ);
             } else {
                 super.setTranslationZ(0);
@@ -522,11 +535,6 @@ public abstract class View extends android.view.View
             ((android.view.View) getParent()).postInvalidate();
         }
         this.translationZ = translationZ;
-    }
-
-    @Override
-    public ShadowShape getShadowShape() {
-        return corners.getShape();
     }
 
     @Override
@@ -549,39 +557,27 @@ public abstract class View extends android.view.View
             return;
 
         float z = getElevation() + getTranslationZ();
-        float e = z / getResources().getDisplayMetrics().density;
-        if (spotShadow == null || spotShadow.elevation != e || !spotShadow.corners.equals(corners)) {
-            ambientShadow = ShadowGenerator.generateShadow(this, e / 4);
-            spotShadow = ShadowGenerator.generateShadow(this, e);
-        }
 
-        int saveCount = 0;
+        int saveCount;
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
-        if (maskShadow) {
-            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
-        } else if (r) {
-            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+        paint.setAlpha((int) (127 * alpha));
+        saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+
+        if (r) {
             canvas.clipRect(
                     getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius,
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
 
-        paint.setAlpha((int) (Shadow.ALPHA * alpha));
-
         Matrix matrix = getMatrix();
 
-        canvas.save();
-        canvas.translate(this.getLeft(), this.getTop());
-        canvas.concat(matrix);
-        ambientShadow.draw(canvas, this, paint, ambientShadowColorFilter);
-        canvas.restore();
-
-        canvas.save();
-        canvas.translate(this.getLeft(), this.getTop() + z / 2);
-        canvas.concat(matrix);
-        spotShadow.draw(canvas, this, paint, spotShadowColorFilter);
-        canvas.restore();
+        shadowDrawable.setTintList(spotShadowColor);
+        shadowDrawable.setAlpha(0x44);
+        shadowDrawable.setElevation(z);
+        shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 2), getRight(), (int) (getBottom() + z / 2));
+        shadowDrawable.draw(canvas);
 
         if (saveCount != 0) {
             canvas.translate(this.getLeft(), this.getTop());
@@ -589,7 +585,7 @@ public abstract class View extends android.view.View
             paint.setXfermode(Carbon.CLEAR_MODE);
         }
         if (maskShadow) {
-            cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+            cornersMask.setFillType(Path.FillType.WINDING);
             canvas.drawPath(cornersMask, paint);
         }
         if (r) {
@@ -598,13 +594,13 @@ public abstract class View extends android.view.View
         if (saveCount != 0) {
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
+            paint.setAlpha(255);
         }
     }
 
     @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
         ambientShadowColor = spotShadowColor = shadowColor;
-        ambientShadowColorFilter = spotShadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
@@ -612,7 +608,6 @@ public abstract class View extends android.view.View
     @Override
     public void setElevationShadowColor(int color) {
         ambientShadowColor = spotShadowColor = ColorStateList.valueOf(color);
-        ambientShadowColorFilter = spotShadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
@@ -633,7 +628,6 @@ public abstract class View extends android.view.View
         if (Carbon.IS_PIE_OR_HIGHER) {
             super.setOutlineAmbientShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
         } else {
-            ambientShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
             setElevation(elevation);
             setTranslationZ(translationZ);
         }
@@ -655,7 +649,6 @@ public abstract class View extends android.view.View
         if (Carbon.IS_PIE_OR_HIGHER) {
             super.setOutlineSpotShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
         } else {
-            spotShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
             setElevation(elevation);
             setTranslationZ(translationZ);
         }
@@ -744,10 +737,6 @@ public abstract class View extends android.view.View
             ((AnimatedColorStateList) tint).setState(getDrawableState());
         if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
             ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
-        if (ambientShadow != null && ambientShadowColor != null)
-            ambientShadowColorFilter = new PorterDuffColorFilter(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
-        if (spotShadow != null && spotShadowColor != null)
-            spotShadowColorFilter = new PorterDuffColorFilter(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
     }
 
 
@@ -910,8 +899,11 @@ public abstract class View extends android.view.View
         if (background == null)
             return;
 
-        Carbon.setTintList(background, backgroundTint);
-        Carbon.setTintMode(background, backgroundTintMode);
+        if (backgroundTint != null && backgroundTintMode != null) {
+            Carbon.setTintListMode(background, backgroundTint, backgroundTintMode);
+        } else {
+            Carbon.setTintList(background, null);
+        }
 
         if (background.isStateful())
             background.setState(getDrawableState());
@@ -1028,27 +1020,6 @@ public abstract class View extends android.view.View
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
-    }
-
-
-    // -------------------------------
-    // rendering mode
-    // -------------------------------
-
-    private RenderingMode renderingMode = RenderingMode.Auto;
-
-    @Override
-    public void setRenderingMode(RenderingMode mode) {
-        this.renderingMode = mode;
-        setElevation(elevation);
-        setTranslationZ(translationZ);
-        if (getWidth() > 0 && getHeight() > 0)
-            updateCorners();
-    }
-
-    @Override
-    public RenderingMode getRenderingMode() {
-        return renderingMode;
     }
 
 

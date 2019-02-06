@@ -305,6 +305,8 @@
         <attr name="carbon_font"/>
         <attr name="carbon_fontPath"/>
         <attr name="android:textAppearance"/>
+        <attr name="android:singleLine"/>
+        <attr name="android:maxLines"/>
         <attr name="android:textAllCaps"/>
 
         <attr name="carbon_cornerRadiusTopStart"/>
@@ -1168,6 +1170,8 @@
         <attr name="carbon_cursorColor" format="color"/>
         <attr name="android:textAppearance"/>
         <attr name="carbon_matchingView" format="reference"/>
+        <attr name="android:singleLine"/>
+        <attr name="android:maxLines"/>
         <attr name="android:textAllCaps"/>
         <attr name="carbon_prefix" format="string|reference"/>
         <attr name="carbon_suffix" format="string|reference"/>

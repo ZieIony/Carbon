@@ -22,6 +22,7 @@
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
+        <item name="android:inset">0dp</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
 

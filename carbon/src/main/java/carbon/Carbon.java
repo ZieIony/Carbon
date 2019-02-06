@@ -19,9 +19,9 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import carbon.shadow2.CutCornerTreatment;
-import carbon.shadow2.RoundedCornerTreatment;
-import carbon.shadow2.ShapeAppearanceModel;
+import carbon.shadow.CutCornerTreatment;
+import carbon.shadow.RoundedCornerTreatment;
+import carbon.shadow.ShapeAppearanceModel;
 
 import java.security.InvalidParameterException;
 
@@ -53,7 +53,6 @@ import carbon.shadow.ShadowView;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
-import carbon.view.RoundedCornersView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -363,10 +362,6 @@ public class Carbon {
         if (color != null)
             strokeView.setStroke(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate()));
         strokeView.setStrokeWidth(a.getDimension(carbon_strokeWidth, 0));
-    }
-
-    public static void initCornerCutRadius(RoundedCornersView roundedCornersView, TypedArray a, int[] ids) {
-        roundedCornersView.setCornerRadius(0);
     }
 
     public static void initCornerCutRadius(ShapeModelView shapeModelView, TypedArray a, int[] ids) {

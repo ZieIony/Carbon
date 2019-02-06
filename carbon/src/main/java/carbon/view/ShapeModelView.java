@@ -1,8 +1,8 @@
 package carbon.view;
 
-import carbon.shadow2.ShapeAppearanceModel;
+import carbon.shadow.ShapeAppearanceModel;
 
-public interface ShapeModelView extends RoundedCornersView {
+public interface ShapeModelView {
     ShapeAppearanceModel getShapeModel();
 
     void setShapeModel(ShapeAppearanceModel model);

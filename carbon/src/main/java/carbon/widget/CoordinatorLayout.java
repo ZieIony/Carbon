@@ -11,12 +11,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -25,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 
 import com.annimon.stream.Stream;
 
@@ -45,17 +45,16 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.shadow.Shadow;
-import carbon.shadow.ShadowGenerator;
-import carbon.shadow.ShadowShape;
+import carbon.shadow.CutCornerTreatment;
+import carbon.shadow.MaterialShapeDrawable;
+import carbon.shadow.RoundedCornerTreatment;
 import carbon.shadow.ShadowView;
+import carbon.shadow.ShapeAppearanceModel;
 import carbon.view.BehaviorView;
-import carbon.view.Corners;
-import carbon.view.CornersView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
-import carbon.view.RenderingModeView;
 import carbon.view.RevealView;
+import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
 import carbon.view.TouchMarginView;
@@ -69,8 +68,8 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         TouchMarginView,
         StateAnimatorView,
         AnimatedView,
+        ShapeModelView,
         InsetView,
-        CornersView,
         StrokeView,
         MaxSizeView,
         RevealView,
@@ -193,7 +192,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
         finishRadius = Carbon.getRevealRadius(this, x, y, finishRadius);
-        if (Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             Animator circularReveal = ViewAnimationUtils.createCircularReveal(this, x, y, startRadius, finishRadius);
             circularReveal.setDuration(Carbon.getDefaultRevealDuration());
             return circularReveal;
@@ -225,7 +224,15 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
         boolean r = revealAnimator != null && revealAnimator.isRunning();
-        boolean c = !corners.isZero();
+        boolean c = !Carbon.isShapeRect(shapeModel);
+
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            if (spotShadowColor != null)
+                super.setOutlineSpotShadowColor(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()));
+            if (ambientShadowColor != null)
+                super.setOutlineAmbientShadowColor(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()));
+        }
+
         // draw not called, we have to handle corners here
         if (isInEditMode() && !drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
@@ -244,7 +251,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software)) {
+        } else if (!drawCalled && (r || c) && getWidth() > 0 && getHeight() > 0 && !Carbon.IS_LOLLIPOP_OR_HIGHER) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -294,7 +301,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((RenderingModeView) child).getRenderingMode() == RenderingMode.Software || ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || !Carbon.IS_PIE_OR_HIGHER && ((ShadowView) child).getElevationShadowColor() != null)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -332,22 +339,11 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     // corners
     // -------------------------------
 
-    private Corners corners;
-    private Path cornersMask;
+    private Rect boundsRect = new Rect();
+    private Path cornersMask = new Path();
 
-    /**
-     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
-     *
-     * @return corner radius, equal to or greater than 0.
-     */
-    @Deprecated
-    @Override
-    public float getCornerRadius() {
-        return corners.getTopStart();
-    }
-
-    public Corners getCorners() {
-        return corners;
+    public ShapeAppearanceModel getShapeModel() {
+        return shapeModel;
     }
 
 
@@ -358,21 +354,21 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
      */
     @Override
     public void setCornerRadius(float cornerRadius) {
-        setCorners(new Corners(cornerRadius, false));
+        shapeModel.setAllCorners(new RoundedCornerTreatment(cornerRadius));
+        setShapeModel(shapeModel);
     }
 
     @Override
     public void setCornerCut(float cornerCut) {
-        setCorners(new Corners(cornerCut, true));
+        shapeModel.setAllCorners(new CutCornerTreatment(cornerCut));
+        setShapeModel(shapeModel);
     }
 
     @Override
-    public void setCorners(Corners corners) {
-        if (this.corners != null && this.corners.equals(corners))
-            return;
+    public void setShapeModel(ShapeAppearanceModel model) {
         if (!Carbon.IS_LOLLIPOP_OR_HIGHER)
             postInvalidate();
-        this.corners = corners;
+        this.shapeModel = model;
         if (getWidth() > 0 && getHeight() > 0)
             updateCorners();
     }
@@ -394,12 +390,23 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     }
 
     private void updateCorners() {
-        if (!corners.isZero() && Carbon.IS_LOLLIPOP_OR_HIGHER && renderingMode == RenderingMode.Auto) {
+        if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             setClipToOutline(true);
-            setOutlineProvider(ShadowShape.viewOutlineProvider);
+            setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                public void getOutline(View view, Outline outline) {
+                    if (Carbon.isShapeRect(shapeModel)) {
+                        outline.setRect(0, 0, getWidth(), getHeight());
+                    } else {
+                        shadowDrawable.setBounds(0, 0, getWidth(), getHeight());
+                        shadowDrawable.getOutline(outline);
+                    }
+                }
+            });
         }
 
-        cornersMask = corners.getPath(getWidth(), getHeight());
+        boundsRect.set(0, 0, getWidth(), getHeight());
+        shadowDrawable.getPathForSize(boundsRect, cornersMask);
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
@@ -415,7 +422,15 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
         boolean r = revealAnimator != null;
-        boolean c = !corners.isZero();
+        boolean c = !Carbon.isShapeRect(shapeModel);
+
+        if (Carbon.IS_PIE_OR_HIGHER) {
+            if (spotShadowColor != null)
+                super.setOutlineSpotShadowColor(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()));
+            if (ambientShadowColor != null)
+                super.setOutlineAmbientShadowColor(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()));
+        }
+
         if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
             Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas layerCanvas = new Canvas(layer);
@@ -433,7 +448,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if ((r || c) && getWidth() > 0 && getHeight() > 0 && (!Carbon.IS_LOLLIPOP_OR_HIGHER || renderingMode == RenderingMode.Software || corners.getShape() == ShadowShape.CONVEX_PATH)) {
+        } else if (getWidth() > 0 && getHeight() > 0 && (((r || c) && !Carbon.IS_LOLLIPOP_OR_HIGHER) || !shapeModel.isRoundRect())) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -539,7 +554,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).invalidate();
 
-        if (elevation > 0 || corners != null)
+        if (elevation > 0 || !Carbon.isShapeRect(shapeModel))
             ((View) getParent()).invalidate();
     }
 
@@ -562,7 +577,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
-        if (elevation > 0 || corners != null)
+        if (elevation > 0 || !Carbon.isShapeRect(shapeModel))
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
@@ -592,9 +607,9 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
 
     private float elevation = 0;
     private float translationZ = 0;
-    private Shadow ambientShadow, spotShadow;
+    private ShapeAppearanceModel shapeModel = new ShapeAppearanceModel();
+    private MaterialShapeDrawable shadowDrawable = new MaterialShapeDrawable(shapeModel);
     private ColorStateList ambientShadowColor, spotShadowColor;
-    private PorterDuffColorFilter ambientShadowColorFilter, spotShadowColorFilter;
 
     @Override
     public float getElevation() {
@@ -607,7 +622,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
             super.setElevation(elevation);
             super.setTranslationZ(translationZ);
         } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
-            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
+            if (ambientShadowColor == null || spotShadowColor == null) {
                 super.setElevation(elevation);
                 super.setTranslationZ(translationZ);
             } else {
@@ -631,7 +646,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         if (Carbon.IS_PIE_OR_HIGHER) {
             super.setTranslationZ(translationZ);
         } else if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
-            if ((ambientShadowColor == null || spotShadowColor == null) && renderingMode == RenderingMode.Auto) {
+            if (ambientShadowColor == null || spotShadowColor == null) {
                 super.setTranslationZ(translationZ);
             } else {
                 super.setTranslationZ(0);
@@ -640,11 +655,6 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
             ((View) getParent()).postInvalidate();
         }
         this.translationZ = translationZ;
-    }
-
-    @Override
-    public ShadowShape getShadowShape() {
-        return corners.getShape();
     }
 
     @Override
@@ -667,39 +677,27 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
             return;
 
         float z = getElevation() + getTranslationZ();
-        float e = z / getResources().getDisplayMetrics().density;
-        if (spotShadow == null || spotShadow.elevation != e || !spotShadow.corners.equals(corners)) {
-            ambientShadow = ShadowGenerator.generateShadow(this, e / 4);
-            spotShadow = ShadowGenerator.generateShadow(this, e);
-        }
 
-        int saveCount = 0;
+        int saveCount;
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
-        if (maskShadow) {
-            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
-        } else if (r) {
-            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
+
+        paint.setAlpha((int) (127 * alpha));
+        saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+
+        if (r) {
             canvas.clipRect(
                     getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius,
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
 
-        paint.setAlpha((int) (Shadow.ALPHA * alpha));
-
         Matrix matrix = getMatrix();
 
-        canvas.save();
-        canvas.translate(this.getLeft(), this.getTop());
-        canvas.concat(matrix);
-        ambientShadow.draw(canvas, this, paint, ambientShadowColorFilter);
-        canvas.restore();
-
-        canvas.save();
-        canvas.translate(this.getLeft(), this.getTop() + z / 2);
-        canvas.concat(matrix);
-        spotShadow.draw(canvas, this, paint, spotShadowColorFilter);
-        canvas.restore();
+        shadowDrawable.setTintList(spotShadowColor);
+        shadowDrawable.setAlpha(0x44);
+        shadowDrawable.setElevation(z);
+        shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 2), getRight(), (int) (getBottom() + z / 2));
+        shadowDrawable.draw(canvas);
 
         if (saveCount != 0) {
             canvas.translate(this.getLeft(), this.getTop());
@@ -707,7 +705,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
             paint.setXfermode(Carbon.CLEAR_MODE);
         }
         if (maskShadow) {
-            cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
+            cornersMask.setFillType(Path.FillType.WINDING);
             canvas.drawPath(cornersMask, paint);
         }
         if (r) {
@@ -716,13 +714,13 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         if (saveCount != 0) {
             canvas.restoreToCount(saveCount);
             paint.setXfermode(null);
+            paint.setAlpha(255);
         }
     }
 
     @Override
     public void setElevationShadowColor(ColorStateList shadowColor) {
         ambientShadowColor = spotShadowColor = shadowColor;
-        ambientShadowColorFilter = spotShadowColorFilter = shadowColor != null ? new PorterDuffColorFilter(shadowColor.getColorForState(getDrawableState(), shadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY) : Shadow.DEFAULT_FILTER;
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
@@ -730,7 +728,6 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     @Override
     public void setElevationShadowColor(int color) {
         ambientShadowColor = spotShadowColor = ColorStateList.valueOf(color);
-        ambientShadowColorFilter = spotShadowColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY);
         setElevation(elevation);
         setTranslationZ(translationZ);
     }
@@ -751,7 +748,6 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         if (Carbon.IS_PIE_OR_HIGHER) {
             super.setOutlineAmbientShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
         } else {
-            ambientShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
             setElevation(elevation);
             setTranslationZ(translationZ);
         }
@@ -773,7 +769,6 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         if (Carbon.IS_PIE_OR_HIGHER) {
             super.setOutlineSpotShadowColor(color.getColorForState(getDrawableState(), color.getDefaultColor()));
         } else {
-            spotShadowColorFilter = new PorterDuffColorFilter(color.getColorForState(getDrawableState(), color.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
             setElevation(elevation);
             setTranslationZ(translationZ);
         }
@@ -858,10 +853,6 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
             rippleDrawable.setState(getDrawableState());
         if (stateAnimator != null)
             stateAnimator.setState(getDrawableState());
-        if (ambientShadow != null && ambientShadowColor != null)
-            ambientShadowColorFilter = new PorterDuffColorFilter(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
-        if (spotShadow != null && spotShadowColor != null)
-            spotShadowColorFilter = new PorterDuffColorFilter(spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()), PorterDuff.Mode.MULTIPLY);
     }
 
 
@@ -1268,27 +1259,6 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
-    }
-
-
-    // -------------------------------
-    // rendering mode
-    // -------------------------------
-
-    private RenderingMode renderingMode = RenderingMode.Auto;
-
-    @Override
-    public void setRenderingMode(RenderingMode mode) {
-        this.renderingMode = mode;
-        setElevation(elevation);
-        setTranslationZ(translationZ);
-        if (getWidth() > 0 && getHeight() > 0)
-            updateCorners();
-    }
-
-    @Override
-    public RenderingMode getRenderingMode() {
-        return renderingMode;
     }
 
 

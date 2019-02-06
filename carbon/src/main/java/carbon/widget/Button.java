@@ -56,10 +56,10 @@ import carbon.internal.AllCapsTransformationMethod;
 import carbon.internal.RevealAnimator;
 import carbon.internal.TypefaceUtils;
 import carbon.shadow.ShadowView;
-import carbon.shadow2.CutCornerTreatment;
-import carbon.shadow2.MaterialShapeDrawable;
-import carbon.shadow2.RoundedCornerTreatment;
-import carbon.shadow2.ShapeAppearanceModel;
+import carbon.shadow.CutCornerTreatment;
+import carbon.shadow.MaterialShapeDrawable;
+import carbon.shadow.RoundedCornerTreatment;
+import carbon.shadow.ShapeAppearanceModel;
 import carbon.view.AutoSizeTextView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
@@ -94,8 +94,6 @@ public class Button extends android.widget.Button
 
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
-    // region constructors
-
     public Button(Context context) {
         super(CarbonContextWrapper.wrap(context));
         initButton(null, android.R.attr.buttonStyle);
@@ -123,10 +121,6 @@ public class Button extends android.widget.Button
         super(Carbon.getThemedContext(context, attrs, R.styleable.Button, defStyleAttr, R.styleable.Button_carbon_theme), attrs, defStyleAttr, defStyleRes);
         initButton(attrs, defStyleAttr);
     }
-
-    // endregion
-
-    // region attr
 
     private static int[] rippleIds = new int[]{
             R.styleable.Button_carbon_rippleColor,
@@ -211,6 +205,10 @@ public class Button extends android.widget.Button
                 handleFontAttribute(a, textStyle, attr);
             } else if (attr == R.styleable.Button_android_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, true));
+            } else if (attr == R.styleable.Button_android_singleLine) {
+                setSingleLine(a.getBoolean(attr, false));
+            } else if (attr == R.styleable.Button_android_maxLines) {
+                setMaxLines(a.getInt(attr, Integer.MAX_VALUE));
             }
         }
 
@@ -236,10 +234,6 @@ public class Button extends android.widget.Button
 
         a.recycle();
     }
-
-    // endregion
-
-    // region text
 
     /**
      * Changes text transformation method to caps.
@@ -336,10 +330,6 @@ public class Button extends android.widget.Button
         }
     }
 
-    // endregion
-
-    // region reveal animator
-
     RevealAnimator revealAnimator;
 
     public Point getLocationOnScreen() {
@@ -395,22 +385,13 @@ public class Button extends android.widget.Button
         }
     }
 
-    // endregion
 
-    // region corners
+    // -------------------------------
+    // corners
+    // -------------------------------
 
     private Rect boundsRect = new Rect();
     private Path cornersMask = new Path();
-
-    /**
-     * Gets the corner radius. If corner radius is equal to 0, rounded corners are turned off.
-     *
-     * @return corner radius, equal to or greater than 0.
-     */
-    @Override
-    public float getCornerRadius() {
-        return shapeModel.getTopLeftCorner().getCornerSize();
-    }
 
     public ShapeAppearanceModel getShapeModel() {
         return shapeModel;
@@ -521,8 +502,7 @@ public class Button extends android.widget.Button
             } else {
                 drawInternal(canvas);
             }
-        } else if (getWidth() > 0 && getHeight() > 0 &&
-                (((r || c) && !Carbon.IS_LOLLIPOP_OR_HIGHER) || !shapeModel.isRoundRect())) {
+        } else if (getWidth() > 0 && getHeight() > 0 && (((r || c) && !Carbon.IS_LOLLIPOP_OR_HIGHER) || !shapeModel.isRoundRect())) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -550,9 +530,10 @@ public class Button extends android.widget.Button
         }
     }
 
-    // endregion
 
-    // region ripple
+    // -------------------------------
+    // ripple
+    // -------------------------------
 
     private RippleDrawable rippleDrawable;
 
@@ -677,9 +658,10 @@ public class Button extends android.widget.Button
         updateTint();
     }
 
-    // endregion
 
-    // region elevation
+    // -------------------------------
+    // elevation
+    // -------------------------------
 
     private float elevation = 0;
     private float translationZ = 0;
@@ -754,18 +736,14 @@ public class Button extends android.widget.Button
 
         float z = getElevation() + getTranslationZ();
 
-        int saveCount = 0;
+        int saveCount;
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
 
         paint.setAlpha((int) (127 * alpha));
         saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
 
-        if (maskShadow) {
-            paint.setAlpha((int) (127 * alpha));
-            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
-        } else if (r) {
-            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        if (r) {
             canvas.clipRect(
                     getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius,
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
@@ -859,9 +837,10 @@ public class Button extends android.widget.Button
         return spotShadowColor.getDefaultColor();
     }
 
-    // endregion
 
-    // region touch margin
+    // -------------------------------
+    // touch margin
+    // -------------------------------
 
     private Rect touchMargin = new Rect();
 
@@ -913,9 +892,10 @@ public class Button extends android.widget.Button
         outRect.bottom += touchMargin.bottom;
     }
 
-    // endregion
 
-    // region state animators
+    // -------------------------------
+    // state animators
+    // -------------------------------
 
     private StateAnimator stateAnimator = new StateAnimator(this);
 
@@ -940,9 +920,10 @@ public class Button extends android.widget.Button
             ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
     }
 
-    // endregion
 
-    // region animations
+    // -------------------------------
+    // animations
+    // -------------------------------
 
     private Animator inAnim = null, outAnim = null;
     private Animator animator;
@@ -1027,9 +1008,10 @@ public class Button extends android.widget.Button
             inAnim.setTarget(this);
     }
 
-    // endregion
 
-    // region tint
+    // -------------------------------
+    // tint
+    // -------------------------------
 
     ColorStateList tint;
     PorterDuff.Mode tintMode;
@@ -1154,9 +1136,10 @@ public class Button extends android.widget.Button
             setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
     }
 
-    // endregion
 
-    // region stroke
+    // -------------------------------
+    // stroke
+    // -------------------------------
 
     private ColorStateList stroke;
     private float strokeWidth;
@@ -1202,9 +1185,10 @@ public class Button extends android.widget.Button
         return strokeWidth;
     }
 
-    // endregion
 
-    // region maximum width & height
+    // -------------------------------
+    // maximum width & height
+    // -------------------------------
 
     int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
 
@@ -1242,9 +1226,10 @@ public class Button extends android.widget.Button
         }
     }
 
-    // endregion
 
-    // region auto size
+    // -------------------------------
+    // auto size
+    // -------------------------------
 
     private AutoSizeTextMode autoSizeText = AutoSizeTextMode.None;
     private float minTextSize, maxTextSize, autoSizeStepGranularity;
@@ -1426,22 +1411,10 @@ public class Button extends android.widget.Button
             adjustTextSize();
     }
 
-    // endregion
 
-    // region rendering
-
-    @Override
-    public void setRenderingMode(RenderingMode mode) {
-    }
-
-    @Override
-    public RenderingMode getRenderingMode() {
-        return RenderingMode.Auto;
-    }
-
-    // endregion
-
-    // region transformations
+    // -------------------------------
+    // transformations
+    // -------------------------------
 
     List<OnTransformationChangedListener> transformationChangedListeners = new ArrayList<>();
 
@@ -1570,6 +1543,4 @@ public class Button extends android.widget.Button
         setTranslationX(x);
         setTranslationY(y);
     }
-
-    // endregion
 }

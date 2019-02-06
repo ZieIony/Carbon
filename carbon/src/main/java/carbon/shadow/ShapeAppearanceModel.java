@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package carbon.shadow2;
+package carbon.shadow;
 
 import android.content.Context;
 import android.content.res.TypedArray;

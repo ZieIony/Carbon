@@ -3,9 +3,7 @@ package carbon.shadow;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 
-import carbon.view.RenderingModeView;
-
-public interface ShadowView extends RenderingModeView {
+public interface ShadowView {
     /**
      * Gets the elevation.
      *
@@ -25,11 +23,6 @@ public interface ShadowView extends RenderingModeView {
     float getTranslationZ();
 
     void setTranslationZ(float translationZ);
-
-    @Deprecated
-    default ShadowShape getShadowShape() {
-        return ShadowShape.CONVEX_PATH;
-    }
 
     boolean hasShadow();
 

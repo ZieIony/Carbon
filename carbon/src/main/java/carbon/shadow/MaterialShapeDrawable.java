@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package carbon.shadow2;
+package carbon.shadow;
 
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
@@ -34,7 +34,6 @@ import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.Region.Op;
 import android.graphics.drawable.Drawable;
-import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 
 import com.google.android.material.internal.Experimental;
@@ -44,8 +43,8 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.TintAwareDrawable;
-import carbon.shadow2.ShapeAppearancePathProvider.PathListener;
-import carbon.shadow2.ShapePath.ShadowCompatOperation;
+import carbon.shadow.ShapeAppearancePathProvider.PathListener;
+import carbon.shadow.ShapePath.ShadowCompatOperation;
 
 /**
  * Base drawable class for Material Shapes that handles shadows, elevation, scale and color for a
