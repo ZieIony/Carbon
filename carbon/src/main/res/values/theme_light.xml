@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="carbon_Theme.Light" parent="Theme.AppCompat.Light">
+    <style name="carbon_Theme.Light" parent="Theme.MaterialComponents.Light">
         <item name="carbon_colorError">#ffF44336</item>
 
         <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
@@ -117,7 +117,7 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="carbon_ThemeOverlay.Light" parent="ThemeOverlay.AppCompat">
+    <style name="carbon_ThemeOverlay.Light" parent="ThemeOverlay.MaterialComponents">
         <item name="android:textColorPrimary">@color/carbon_textColorPrimary_light</item>
         <item name="android:textColorSecondary">@color/carbon_textColorSecondary_light</item>
         <item name="android:textColorTertiary">@color/carbon_textColorHint_light</item>

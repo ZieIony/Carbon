@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:tag="enable"
-                    android:text="hello text"
+                    android:text="75"
                     app:carbon_required="true"
                     app:carbon_suffix="kg"/>
             </carbon.widget.InputLayout>

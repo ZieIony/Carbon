@@ -1,9 +1,8 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
 [![Maven Central](https://img.shields.io/badge/Maven%20Central-0.15.3-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.15.3/)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.16.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.16.0/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/wllgpan9cl01mh3/samples.apk?raw=1)
 
-[![Google+](https://img.shields.io/badge/Google+-Zielony-red.svg)](https://plus.google.com/u/2/109054799904873578131)&nbsp;&nbsp;
-[![Google+](https://img.shields.io/badge/Google+-Carbon-red.svg)](https://plus.google.com/u/1/communities/111973718340428039040)&nbsp;&nbsp;
 [![Twitter](https://img.shields.io/badge/Twitter-GreenMakesApps-blue.svg)](https://twitter.com/GreenMakesApps)
 
 Carbon
@@ -14,6 +13,14 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
  - make it all work and look the same on all APIs (like CheckBox's left padding)
  - really backport features (don't use gradients for shadows!)
  - fix Android's everlasting bugs (FrameLayout ignores child's padding when no gravity is set)
+ 
+### What's new
+
+ - Carbon 0.16.0 moves to androidx. There's no corresponding support version. Use 0.15.3 if needed
+ - backdrop layout, banner layout
+ - full support for font resources back to api 14
+ - new approach to colored shadows using MaterialShapeDrawable
+ - cut and rounded corners for all views
 
 ### Features
 

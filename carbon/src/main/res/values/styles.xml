@@ -346,7 +346,8 @@
 
     <style name="carbon_InputLayoutContainer.Box" parent="carbon_RelativeLayout">
         <item name="android:paddingTop">@dimen/carbon_paddingHalf</item>
-        <item name="carbon_cornerRadius">4dp</item>
+        <item name="carbon_cornerRadiusTopStart">4dp</item>
+        <item name="carbon_cornerRadiusTopEnd">4dp</item>
         <item name="android:background">?attr/carbon_inputLayoutBoxColor</item>
     </style>
 
