@@ -17,7 +17,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -28,10 +27,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,6 +56,8 @@ import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("AppCompatCustomView")
 public class ImageView extends android.widget.ImageView
@@ -589,10 +586,7 @@ public class ImageView extends android.widget.ImageView
     @Override
     public void drawShadow(Canvas canvas) {
         float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
-        if (alpha == 0)
-            return;
-
-        if (!hasShadow())
+        if (alpha == 0 || !hasShadow())
             return;
 
         float z = getElevation() + getTranslationZ();

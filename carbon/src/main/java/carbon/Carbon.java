@@ -19,13 +19,10 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import carbon.shadow.CutCornerTreatment;
-import carbon.shadow.RoundedCornerTreatment;
-import carbon.shadow.ShapeAppearanceModel;
+import androidx.core.graphics.drawable.TintAwareDrawable;
 
 import java.security.InvalidParameterException;
 
-import androidx.core.graphics.drawable.TintAwareDrawable;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
@@ -49,7 +46,10 @@ import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.Menu;
+import carbon.shadow.CutCornerTreatment;
+import carbon.shadow.RoundedCornerTreatment;
 import carbon.shadow.ShadowView;
+import carbon.shadow.ShapeAppearanceModel;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
@@ -286,11 +286,16 @@ public class Carbon {
         view.setElevation(elevation);
         if (elevation > 0)
             AnimUtils.setupElevationAnimator(((StateAnimatorView) view).getStateAnimator(), view);
-        view.setElevationShadowColor(a.getColorStateList(carbon_shadowColor));
-        if (a.hasValue(carbon_ambientShadowColor))
-            view.setOutlineAmbientShadowColor(a.getColorStateList(carbon_ambientShadowColor));
-        if (a.hasValue(carbon_spotShadowColor))
-            view.setOutlineSpotShadowColor(a.getColorStateList(carbon_spotShadowColor));
+        ColorStateList shadowColor = a.getColorStateList(carbon_shadowColor);
+        view.setElevationShadowColor(shadowColor != null ? shadowColor.withAlpha(255) : null);
+        if (a.hasValue(carbon_ambientShadowColor)) {
+            ColorStateList ambientShadowColor = a.getColorStateList(carbon_ambientShadowColor);
+            view.setOutlineAmbientShadowColor(ambientShadowColor != null ? ambientShadowColor.withAlpha(255) : null);
+        }
+        if (a.hasValue(carbon_spotShadowColor)) {
+            ColorStateList spotShadowColor = a.getColorStateList(carbon_spotShadowColor);
+            view.setOutlineSpotShadowColor(spotShadowColor != null ? spotShadowColor.withAlpha(255) : null);
+        }
     }
 
     public static void initHtmlText(android.widget.TextView textView, TypedArray a, int id) {

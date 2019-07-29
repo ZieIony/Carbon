@@ -550,10 +550,7 @@ public abstract class View extends android.view.View
     @Override
     public void drawShadow(Canvas canvas) {
         float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
-        if (alpha == 0)
-            return;
-
-        if (!hasShadow())
+        if (alpha == 0 || !hasShadow())
             return;
 
         float z = getElevation() + getTranslationZ();

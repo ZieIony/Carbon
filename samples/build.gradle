@@ -9,6 +9,7 @@ ext {
 
 android {
     compileSdkVersion 28
+    buildToolsVersion = '28.0.3'
 
     dataBinding {
         enabled = true
@@ -45,7 +46,7 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha05'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
     implementation 'com.github.ZieIony:randomdata:4e90951628'
     compileOnly 'com.github.ZieIony.RandomData:person:4e90951628'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'

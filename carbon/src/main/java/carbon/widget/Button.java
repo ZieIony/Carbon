@@ -34,16 +34,17 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -55,10 +56,10 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.AllCapsTransformationMethod;
 import carbon.internal.RevealAnimator;
 import carbon.internal.TypefaceUtils;
-import carbon.shadow.ShadowView;
 import carbon.shadow.CutCornerTreatment;
 import carbon.shadow.MaterialShapeDrawable;
 import carbon.shadow.RoundedCornerTreatment;
+import carbon.shadow.ShadowView;
 import carbon.shadow.ShapeAppearanceModel;
 import carbon.view.AutoSizeTextView;
 import carbon.view.MaxSizeView;
@@ -728,10 +729,7 @@ public class Button extends android.widget.Button
     @Override
     public void drawShadow(Canvas canvas) {
         float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
-        if (alpha == 0)
-            return;
-
-        if (!hasShadow())
+        if (alpha == 0 || !hasShadow())
             return;
 
         float z = getElevation() + getTranslationZ();

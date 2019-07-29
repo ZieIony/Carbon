@@ -18,8 +18,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -30,18 +28,19 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
-import com.annimon.stream.Stream;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
+
+import com.annimon.stream.Stream;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -765,10 +764,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
     @Override
     public void drawShadow(Canvas canvas) {
         float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
-        if (alpha == 0)
-            return;
-
-        if (!hasShadow())
+        if (alpha == 0 || !hasShadow())
             return;
 
         float z = getElevation() + getTranslationZ();
