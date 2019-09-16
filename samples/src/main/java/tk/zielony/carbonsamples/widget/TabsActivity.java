@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.viewpager.widget.PagerAdapter;
+
 import carbon.widget.PagerTabStrip;
 import carbon.widget.RelativeLayout;
 import carbon.widget.ViewPager;
@@ -14,6 +15,7 @@ import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
 public class TabsActivity extends SamplesActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

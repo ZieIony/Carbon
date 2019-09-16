@@ -12,6 +12,8 @@
     <dimen name="carbon_contentSpace">72dp</dimen>
     <dimen name="carbon_contentPadding">72dp</dimen>
 
+    <dimen name="carbon_tabsPadding">60dp</dimen>
+
     <dimen name="carbon_subtitleHeight">48dp</dimen>
 
     <dimen name="carbon_toolbarHeight">56dp</dimen>

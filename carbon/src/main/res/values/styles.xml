@@ -103,8 +103,15 @@
         <item name="android:scaleType">center</item>
     </style>
 
+    <style name="carbon_FloatingActionButton.Inverse">
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+    </style>
+
     <style name="carbon_FloatingActionButton.Primary">
         <item name="android:background">@color/carbon_defaultColorPrimary</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Primary.Inverse">
         <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
     </style>
 
@@ -117,8 +124,16 @@
         <item name="android:padding">@dimen/carbon_paddingHalf</item>
     </style>
 
+    <style name="carbon_FloatingActionButton.Small.Inverse">
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+    </style>
+
     <style name="carbon_FloatingActionButton.Small.Primary">
         <item name="android:background">@color/carbon_defaultColorPrimary</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Small.Primary.Inverse">
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
     </style>
 
     <style name="carbon_Snackbar" parent="carbon_LinearLayout">
@@ -417,6 +432,7 @@
         <item name="carbon_tint">?attr/colorAccent</item>
         <item name="carbon_indicatorWidth">2dp</item>
         <item name="carbon_fixedTabs">true</item>
+        <item name="android:clipToPadding">false</item>
     </style>
 
     <style name="carbon_ViewPagerIndicator">

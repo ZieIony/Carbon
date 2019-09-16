@@ -61,7 +61,7 @@
         android:layout_weight="1"
         android:background="?attr/carbon_colorBackground"
         android:orientation="vertical"
-        app:carbon_theme="@style/carbon_Theme.Light.LightPrimaryColor">
+        app:carbon_theme="@style/carbon_Theme.Light">
 
         <carbon.widget.Toolbar
             android:layout_width="match_parent"

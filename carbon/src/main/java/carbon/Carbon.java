@@ -500,8 +500,8 @@ public class Carbon {
         StackTraceElement cause = e.getStackTrace()[0];
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
         Log.e("Carbon", "This feature is implemented using reflection. " +
-                "If you see this exception, something in your setup is not standard. " +
-                "Please create an issue on https://github.com/ZieIony/Carbon/issues. " +
+                "If you see this exception, something in your setup may be nonstandard. " +
+                "If you believe so, please create an issue on https://github.com/ZieIony/Carbon/issues. " +
                 "Please provide at least the following information: \n" +
                 " - device: " + Build.MANUFACTURER + " " + Build.MODEL + ", API " + Build.VERSION.SDK_INT + "\n" +
                 " - method: " + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "(...)\n" +

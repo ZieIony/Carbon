@@ -16,6 +16,10 @@ import tk.zielony.carbonsamples.R;
 public class FruitAdapter extends ListAdapter<FruitAdapter.ViewHolder, String> {
     private ItemTouchHelper helper;
 
+    public FruitAdapter(List<String> fruits) {
+        super(fruits);
+    }
+
     public FruitAdapter(List<String> fruits, ItemTouchHelper helper) {
         super(fruits);
         this.helper = helper;

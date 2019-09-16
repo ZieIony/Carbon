@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_toolbarIcon"
         style="@style/carbon_ImageView.IconButton"
         android:layout_width="@dimen/carbon_toolbarItemSize"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:layout_marginEnd="@dimen/carbon_toolbarUpTitleMargin"
-        android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
-        android:layout_marginRight="@dimen/carbon_toolbarUpTitleMargin"
         android:layout_marginStart="@dimen/carbon_toolbarItemMargin"
+        android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
+        android:layout_marginEnd="@dimen/carbon_toolbarUpTitleMargin"
+        android:layout_marginRight="@dimen/carbon_toolbarUpTitleMargin"
         app:carbon_inAnimation="none"
-        app:carbon_outAnimation="none"/>
+        app:carbon_outAnimation="none"
+        tools:src="?attr/homeAsUpIndicator" />
 
     <carbon.widget.TextView
         android:id="@+id/carbon_toolbarTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/carbon_windowPadding"
         android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="1"
         android:text=""
-        android:textAppearance="?attr/carbon_textAppearanceTitle"/>
+        tools:text="Toolbar"
+        android:textAppearance="?attr/carbon_textAppearanceTitle" />
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_toolbarContent"
@@ -39,9 +42,9 @@
         android:layoutDirection="locale"
         android:minHeight="@dimen/carbon_toolbarHeight"
         android:orientation="horizontal"
-        android:paddingEnd="@dimen/carbon_toolbarItemMargin"
+        android:paddingStart="@dimen/carbon_padding"
         android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_toolbarItemMargin"
-        android:paddingStart="@dimen/carbon_padding"/>
+        android:paddingEnd="@dimen/carbon_toolbarItemMargin"
+        android:paddingRight="@dimen/carbon_toolbarItemMargin" />
 
 </carbon.widget.LinearLayout>

@@ -26,17 +26,17 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.ViewParent;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -81,24 +81,32 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         void onItemClicked(View view, Type type, int position);
     }
 
-    private EdgeEffect leftGlow;
-    private EdgeEffect rightGlow;
-    private int mTouchSlop;
-    EdgeEffect topGlow;
-    EdgeEffect bottomGlow;
+    public class EdgeEffectFactory extends androidx.recyclerview.widget.RecyclerView.EdgeEffectFactory {
+        @NonNull
+        @Override
+        protected android.widget.EdgeEffect createEdgeEffect(@NonNull androidx.recyclerview.widget.RecyclerView view, int direction) {
+            EdgeEffect edgeEffect = new EdgeEffect(getContext());
+            if (direction == DIRECTION_TOP) {
+                topGlow = edgeEffect;
+            } else if (direction == DIRECTION_BOTTOM) {
+                bottomGlow = edgeEffect;
+            } else if (direction == DIRECTION_LEFT) {
+                leftGlow = edgeEffect;
+            } else if (direction == DIRECTION_RIGHT) {
+                rightGlow = edgeEffect;
+            }
+            int color = tint.getColorForState(getDrawableState(), tint.getDefaultColor());
+            edgeEffect.setColor(color);
+            return edgeEffect;
+        }
+    }
 
-    private float edgeEffectOffsetTop;
-    private float edgeEffectOffsetBottom;
-
-    private boolean drag = true;
-    private float prevY;
-    private int overscrollMode;
-    private boolean clipToPadding;
-    long prevScroll = 0;
     private boolean childDrawingOrderCallbackSet = false;
 
     private int scrollX = 0;
     private int scrollY = 0;
+
+    private EdgeEffect leftGlow, rightGlow, topGlow, bottomGlow;
 
     private OnTouchListener onDispatchTouchListener;
 
@@ -168,10 +176,6 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
                 if (drawable != null && height > 0) {
                     setDivider(drawable, (int) height);
                 }
-            } else if (attr == R.styleable.RecyclerView_edgeEffectOffsetTop) {
-                setEdgeEffectOffsetTop(a.getDimension(attr, 0));
-            } else if (attr == R.styleable.RecyclerView_edgeEffectOffsetBottom) {
-                setEdgeEffectOffsetBottom(a.getDimension(attr, 0));
             }
         }
 
@@ -186,18 +190,13 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 
         setClipToPadding(false);
         setWillNotDraw(false);
+        setEdgeEffectFactory(new EdgeEffectFactory());
     }
 
     public void setDivider(Drawable divider, int height) {
         DividerItemDecoration decoration = new DividerItemDecoration(divider, height);
         decoration.setDrawBefore(position -> position > 0);
         addItemDecoration(decoration);
-    }
-
-    @Override
-    public void setClipToPadding(boolean clipToPadding) {
-        super.setClipToPadding(clipToPadding);
-        this.clipToPadding = clipToPadding;
     }
 
     @Override
@@ -244,89 +243,6 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         return Integer.MAX_VALUE;
     }
 
-    private boolean dispatchTouchEvent2(@NonNull MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_MOVE:
-                float deltaY = prevY - ev.getY();
-
-                if (!drag && Math.abs(deltaY) > mTouchSlop) {
-                    final ViewParent parent = getParent();
-                    if (parent != null) {
-                        parent.requestDisallowInterceptTouchEvent(true);
-                    }
-                    drag = true;
-                    if (deltaY > 0) {
-                        deltaY -= mTouchSlop;
-                    } else {
-                        deltaY += mTouchSlop;
-                    }
-                }
-                if (drag) {
-                    final int oldY = computeVerticalScrollOffset();
-                    int range = computeVerticalScrollRange() - getHeight();
-                    boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
-
-                    if (canOverscroll) {
-                        float pulledToY = oldY + deltaY;
-                        if (pulledToY < 0) {
-                            topGlow.onPull(deltaY / getHeight(), ev.getX() / getWidth());
-                            if (!bottomGlow.isFinished())
-                                bottomGlow.onRelease();
-                        } else if (pulledToY > range) {
-                            bottomGlow.onPull(deltaY / getHeight(), 1.f - ev.getX() / getWidth());
-                            if (!topGlow.isFinished())
-                                topGlow.onRelease();
-                        }
-                        if (topGlow != null && (!topGlow.isFinished() || !bottomGlow.isFinished()))
-                            postInvalidate();
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                if (drag) {
-                    drag = false;
-
-                    if (topGlow != null) {
-                        topGlow.onRelease();
-                        bottomGlow.onRelease();
-                    }
-                }
-                break;
-        }
-        prevY = ev.getY();
-
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public void onScrolled(int dx, int dy) {
-        super.onScrolled(dx, dy);
-        if (drag || topGlow == null)
-            return;
-        int range = computeVerticalScrollRange() - getHeight();
-        boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
-
-        if (canOverscroll) {
-            long t = System.currentTimeMillis();
-            /*int velx = (int) (dx * 1000.0f / (t - prevScroll));
-            if (computeHorizontalScrollOffset() == 0 && dx < 0) {
-                leftGlow.onAbsorb(-velx);
-            } else if (computeHorizontalScrollOffset() == computeHorizontalScrollRange() - getWidth() && dx > 0) {
-                rightGlow.onAbsorb(velx);
-            }*/
-            int vely = (int) (dy * 1000.0f / (t - prevScroll));
-            if (computeVerticalScrollOffset() == 0 && dy < 0) {
-                topGlow.onAbsorb(-vely);
-            } else if (computeVerticalScrollOffset() == range && dy > 0) {
-                bottomGlow.onAbsorb(vely);
-            }
-            prevScroll = t;
-        }
-    }
-
     public static abstract class Pagination extends OnScrollListener {
         private LinearLayoutManager layoutManager;
 
@@ -359,14 +275,6 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         this.pagination = pagination;
         if (pagination != null)
             addOnScrollListener(pagination);
-    }
-
-    public void setEdgeEffectOffsetTop(float edgeEffectOffsetTop) {
-        this.edgeEffectOffsetTop = edgeEffectOffsetTop;
-    }
-
-    public void setEdgeEffectOffsetBottom(float edgeEffectOffsetBottom) {
-        this.edgeEffectOffsetBottom = edgeEffectOffsetBottom;
     }
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
@@ -499,33 +407,6 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             dispatchDrawInternal(canvas);
         }
         drawCalled = false;
-
-        if (topGlow != null) {
-            final int scrollY = computeVerticalScrollOffset();
-            if (!topGlow.isFinished()) {
-                final int restoreCount = canvas.save();
-                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
-
-                canvas.translate(getPaddingLeft(), edgeEffectOffsetTop + Math.min(0, scrollY));
-                topGlow.setSize(width, getHeight());
-                if (topGlow.draw(canvas))
-                    invalidate();
-                canvas.restoreToCount(restoreCount);
-            }
-            if (!bottomGlow.isFinished()) {
-                final int restoreCount = canvas.save();
-                final int width = getWidth() - getPaddingLeft() - getPaddingRight();
-                final int height = getHeight();
-
-                canvas.translate(-width + getPaddingLeft(), -edgeEffectOffsetBottom + height);
-                canvas.rotate(180, width, 0);
-                bottomGlow.setSize(width, height);
-                if (bottomGlow.draw(canvas))
-                    invalidate();
-                canvas.restoreToCount(restoreCount);
-            }
-        }
-
     }
 
     private void dispatchDrawInternal(@NonNull Canvas canvas) {
@@ -536,23 +417,6 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             drawStroke(canvas);
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Over)
             rippleDrawable.draw(canvas);
-    }
-
-    @Override
-    public void setOverScrollMode(int mode) {
-        if (mode != OVER_SCROLL_NEVER) {
-            if (topGlow == null) {
-                Context context = getContext();
-                topGlow = new EdgeEffect(context);
-                bottomGlow = new EdgeEffect(context);
-                updateTint();
-            }
-        } else {
-            topGlow = null;
-            bottomGlow = null;
-        }
-        super.setOverScrollMode(OVER_SCROLL_NEVER);
-        this.overscrollMode = mode;
     }
 
     @Override
@@ -755,7 +619,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
-        return dispatchTouchEvent2(event);
+        return super.dispatchTouchEvent(event);
     }
 
     @Override

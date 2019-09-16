@@ -3,7 +3,7 @@
     <style name="carbon_Theme.Light" parent="Theme.MaterialComponents.Light">
         <item name="carbon_colorError">#ffF44336</item>
 
-        <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
+        <item name="android:buttonStyle">@style/carbon_Button.Colored.Inverse</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:listViewStyle">@style/carbon_ListView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
@@ -51,7 +51,7 @@
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Light.Snackbar</item>
         <item name="carbon_dropDownPopupTheme">@style/carbon_ThemeOverlay.Light</item>
-        <item name="carbon_toolbarTheme">@style/carbon_ThemeOverlay.Dark</item>
+        <item name="carbon_toolbarTheme">@style/carbon_ThemeOverlay.Light</item>
 
         <item name="colorPrimary">@color/carbon_colorPrimary_light</item>
         <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_light</item>
@@ -176,17 +176,17 @@
         <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
     </style>
 
-    <style name="carbon_Theme.Light.LightPrimaryColor">
-        <item name="carbon_toolbarTheme">@style/carbon_ThemeOverlay.Light</item>
-        <item name="android:buttonStyle">@style/carbon_Button.Colored.Inverse</item>
-    </style>
-
-    <style name="carbon_Theme.Light.LightPrimaryColor.NoActionBar">
+    <style name="carbon_Theme.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="carbon_Theme.Light.NoActionBar">
+    <style name="carbon_Theme.Light.DarkPrimaryColor">
+        <item name="carbon_toolbarTheme">@style/carbon_ThemeOverlay.Dark</item>
+        <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
+    </style>
+
+    <style name="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

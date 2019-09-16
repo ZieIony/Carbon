@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.PagerAdapter;
+
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
@@ -189,7 +190,7 @@ public class PagerTabStrip extends android.widget.HorizontalScrollView implement
         if (indicatorPos == indicatorPos2)
             indicatorPos2 = content.getChildAt(selectedPage).getWidth();
         paint.setColor(getTint().getColorForState(getDrawableState(), getTint().getDefaultColor()));
-        canvas.drawRect(indicatorPos, getHeight() - indicatorHeight, indicatorPos2, getHeight(), paint);
+        canvas.drawRect(indicatorPos + getPaddingLeft(), getHeight() - indicatorHeight - getPaddingBottom(), indicatorPos2 + getPaddingLeft(), getHeight(), paint);
     }
 
     public ViewPager getViewPager() {

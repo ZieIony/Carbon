@@ -12,7 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-public class EdgeEffect {
+public class EdgeEffect extends android.widget.EdgeEffect{
 
     private static final int RECEDE_TIME = 600;
     private static final int PULL_TIME = 167;
@@ -66,6 +66,8 @@ public class EdgeEffect {
      * @param context Context used to provide theming and resource information for the EdgeEffect
      */
     public EdgeEffect(Context context) {
+        super(context);
+
         mPaint.setAntiAlias(true);
         //final TypedArray a = context.obtainStyledAttributes(
         //      com.android.internal.R.styleable.EdgeEffect);

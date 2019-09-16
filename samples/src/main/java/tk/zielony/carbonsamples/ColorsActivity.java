@@ -6,9 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
+
 import java.io.Serializable;
 
-import androidx.databinding.DataBindingUtil;
 import carbon.widget.DropDown;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
@@ -41,7 +42,9 @@ public class ColorsActivity extends SamplesActivity {
             new Item("Dark", R.style.ThemeDark, R.color.carbon_colorBackground_dark),
             new Item("Dark.DarkPrimaryColor", R.style.ThemeDark_Inverse, R.color.carbon_colorBackground_dark),
             new Item("Light", R.style.ThemeLight, R.color.carbon_colorBackground_light),
-            new Item("Light.LightPrimaryColor", R.style.ThemeLight_Inverse, R.color.carbon_colorBackground_light)
+            new Item("Light.DarkPrimaryColor", R.style.ThemeLight_Inverse, R.color.carbon_colorBackground_light),
+            new Item("DayNight", R.style.ThemeDayNight, R.color.carbon_black_38),
+            new Item("DayNight.DarkPrimaryColor", R.style.ThemeDayNight_Inverse, R.color.carbon_black_38)
     };
 
     public static Item[] primary = new Item[]{

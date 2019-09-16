@@ -2,12 +2,13 @@ package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.recycler.ItemTouchHelper;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.R;

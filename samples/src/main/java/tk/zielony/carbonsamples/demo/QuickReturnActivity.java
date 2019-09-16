@@ -3,11 +3,12 @@ package tk.zielony.carbonsamples.demo;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.component.DefaultHeaderItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
@@ -68,7 +69,6 @@ public class QuickReturnActivity extends SamplesActivity {
         randomData.fill(items);
 
         RecyclerView recycler = findViewById(R.id.recycler);
-        recycler.setEdgeEffectOffsetTop(getResources().getDimension(R.dimen.carbon_toolbarHeight));
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
         adapter.addFactory(PaddingItem.class, PaddingRow::new);

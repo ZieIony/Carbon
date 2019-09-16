@@ -1320,9 +1320,6 @@
 
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
-
-        <attr name="edgeEffectOffsetTop" format="dimension"/>
-        <attr name="edgeEffectOffsetBottom" format="dimension"/>
     </declare-styleable>
 
     <attr name="carbon_buttonGravity" format="enum">

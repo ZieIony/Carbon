@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="carbon_Theme.DayNight" parent="carbon_Theme.Dark" />
+
+    <style name="carbon_ThemeOverlay.DayNight" parent="carbon_ThemeOverlay.Dark" />
+
+    <style name="carbon_Theme.DayNight.NoActionBar" parent="carbon_Theme.Dark.NoActionBar" />
+
+    <style name="carbon_Theme.DayNight.DarkPrimaryColor" parent="carbon_Theme.Dark.DarkPrimaryColor" />
+
+    <style name="carbon_Theme.DayNight.DarkPrimaryColor.NoActionBar" parent="carbon_Theme.Dark.DarkPrimaryColor.NoActionBar" />
+</resources>
