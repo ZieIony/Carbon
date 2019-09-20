@@ -41,6 +41,12 @@ import android.view.ViewOutlineProvider;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.ViewCompat;
+
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -48,11 +54,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
-import androidx.annotation.FloatRange;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -60,7 +61,6 @@ import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.UnderlineDrawable;
-import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.AllCapsTransformationMethod;
@@ -309,15 +309,15 @@ public class EditText extends android.widget.EditText
             fSelectHandleRight.setAccessible(true);
             fSelectHandleCenter.setAccessible(true);
 
-            VectorDrawable leftHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_left);
+            Drawable leftHandle = getResources().getDrawable(R.drawable.carbon_selecthandle_left);
             leftHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.SRC_IN);
             fSelectHandleLeft.set(editor, leftHandle);
 
-            VectorDrawable rightHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_right);
+            Drawable rightHandle = getResources().getDrawable(R.drawable.carbon_selecthandle_right);
             rightHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.SRC_IN);
             fSelectHandleRight.set(editor, rightHandle);
 
-            VectorDrawable middleHandle = new VectorDrawable(getResources(), R.raw.carbon_selecthandle_middle);
+            Drawable middleHandle = getResources().getDrawable(R.drawable.carbon_selecthandle_middle);
             middleHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorAccent), PorterDuff.Mode.SRC_IN);
             fSelectHandleCenter.set(editor, middleHandle);
         } catch (final Exception ignored) {

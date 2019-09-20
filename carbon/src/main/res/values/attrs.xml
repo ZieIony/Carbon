@@ -1207,14 +1207,6 @@
 
     <attr name="carbon_pagerTabStripStyle" format="reference"/>
     <declare-styleable name="PagerTabStrip">
-        <attr name="carbon_theme"/>
-
-        <attr name="carbon_tint"/>
-        <attr name="carbon_tintMode"/>
-        <attr name="carbon_backgroundTint"/>
-        <attr name="carbon_backgroundTintMode"/>
-        <attr name="carbon_animateColorChanges"/>
-
         <attr name="carbon_indicatorWidth" format="dimension"/>
         <attr name="carbon_fixedTabs" format="boolean"/>
     </declare-styleable>

@@ -17,7 +17,7 @@
 
         <carbon.widget.ImageView
             style="@style/carbon_ImageView.IconButton"
-            android:src="@raw/carbon_search"/>
+            android:src="@drawable/carbon_search"/>
     </carbon.widget.Toolbar>
 
     <carbon.widget.RelativeLayout

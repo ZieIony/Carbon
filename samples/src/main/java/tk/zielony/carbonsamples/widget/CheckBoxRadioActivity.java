@@ -5,7 +5,8 @@ import android.view.LayoutInflater;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import carbon.drawable.CheckableDrawable;
+
+import carbon.drawable.CheckedState;
 import carbon.widget.CheckBox;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
@@ -33,7 +34,7 @@ public class CheckBoxRadioActivity extends SamplesActivity {
 
         CheckBox.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
             if (binding.checkBoxChild1.isChecked() != binding.checkBoxChild2.isChecked()) {
-                binding.checkBoxGroup.setChecked(CheckableDrawable.CheckedState.INDETERMINATE);
+                binding.checkBoxGroup.setChecked(CheckedState.INDETERMINATE);
             } else {
                 binding.checkBoxGroup.setChecked(binding.checkBoxChild1.isChecked());
             }

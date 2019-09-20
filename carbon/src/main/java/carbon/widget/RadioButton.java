@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -23,10 +22,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
+
 import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.ButtonGravity;
-import carbon.drawable.CheckableDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 
 public class RadioButton extends TextView implements Checkable {
@@ -58,18 +57,8 @@ public class RadioButton extends TextView implements Checkable {
     public void initRadioButton(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, defStyleRes);
 
-        int drawableId = a.getResourceId(R.styleable.RadioButton_android_button, R.drawable.carbon_defaultdrawable);
-        Drawable d;
-        if (drawableId == R.drawable.carbon_defaultdrawable) {
-            if (!isInEditMode()) {
-                d = new CheckableDrawable(getContext(), R.raw.carbon_radiobutton_checked, R.raw.carbon_radiobutton_unchecked, R.raw.carbon_radiobutton_filled, new PointF(-0.09f, 0.11f));
-            } else {
-                d = getResources().getDrawable(android.R.drawable.radiobutton_on_background);
-            }
-        } else {
-            d = ContextCompat.getDrawable(getContext(), drawableId);
-        }
-        setButtonDrawable(d);
+        int drawableId = a.getResourceId(R.styleable.RadioButton_android_button, R.drawable.carbon_radiobutton);
+        setButtonDrawable(ContextCompat.getDrawable(getContext(), drawableId));
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

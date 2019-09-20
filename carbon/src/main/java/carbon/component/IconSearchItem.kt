@@ -5,9 +5,7 @@ import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
 import carbon.databinding.CarbonRowIconsearchBinding
-import carbon.drawable.VectorDrawable
 import carbon.widget.SearchEditText
-
 import java.io.Serializable
 
 interface IconSearchItem : Serializable {
@@ -22,7 +20,7 @@ class DefaultIconSearchItem : IconSearchItem {
     override var hint: String? = null
 
     constructor(context: Context) {
-        icon = VectorDrawable(context.resources, R.raw.carbon_search)
+        icon = context.resources.getDrawable(R.drawable.carbon_search)
     }
 
     constructor(context: Context, query: String, hint: String) : this(context) {

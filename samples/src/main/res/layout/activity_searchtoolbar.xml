@@ -39,7 +39,7 @@
             <carbon.widget.ImageView
                 android:id="@+id/close"
                 style="@style/carbon_ImageView.IconButton"
-                android:src="@raw/carbon_clear"/>
+                android:src="@drawable/carbon_clear"/>
 
             <carbon.widget.SearchEditText
                 android:layout_width="0dp"

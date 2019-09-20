@@ -43,6 +43,8 @@ public class ExpansionPanel extends LinearLayout {
         content = findViewById(R.id.carbon_expansionPanelContent);
         setOrientation(VERTICAL);
 
+        setExpanded(true);
+
         header.setOnClickListener(v -> {
             if (isExpanded()) {
                 collapse();

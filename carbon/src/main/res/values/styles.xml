@@ -209,7 +209,7 @@
         <item name="android:layout_height">@dimen/carbon_toolbarHeight</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="carbon_elevation">@dimen/carbon_elevationToolbar</item>
-        <item name="carbon_icon">@raw/carbon_uparrow</item>
+        <item name="carbon_icon">@drawable/carbon_uparrow</item>
         <item name="contentInsetLeft">0dp</item>
         <item name="contentInsetStart">0dp</item>
         <item name="android:padding">0dp</item>
@@ -426,6 +426,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
         <item name="carbon_popupTheme">?attr/carbon_dropDownPopupTheme</item>
+        <item name="android:drawableEnd">@drawable/carbon_dropdown</item>
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">
@@ -463,36 +464,6 @@
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
-    <style name="carbon_CheckedTextView" parent="carbon_TextView">
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingRight">12dp</item>
-        <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">12dp</item>
-        <item name="carbon_rippleColor">@null</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
-        <item name="android:drawablePadding">12dp</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
-        <item name="android:background">@null</item>
-    </style>
-
-    <style name="carbon_CheckedTextView.IconButton">
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
-        <item name="carbon_rippleStyle">borderless</item>
-        <item name="android:scaleType">center</item>
-        <item name="android:clickable">true</item>
-        <item name="android:layout_width">@dimen/carbon_toolbarItemSize</item>
-        <item name="android:layout_height">@dimen/carbon_toolbarItemSize</item>
-        <item name="android:paddingRight">@null</item>
-        <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">@null</item>
-        <item name="android:padding">@dimen/carbon_toolbarItemPadding</item>
-        <item name="android:drawablePadding">0dp</item>
-    </style>
-
-    <style name="carbon_CheckedTextView.IconButton.Inverse">
-        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
-    </style>
-
     <style name="carbon_CheckBox" parent="carbon_TextView">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
@@ -505,7 +476,7 @@
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
         <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
         <item name="android:background">@null</item>
-        <item name="android:button">@drawable/carbon_defaultdrawable</item>
+        <item name="android:button">@drawable/carbon_checkbox</item>
     </style>
 
     <style name="carbon_CheckBox.IconButton">
@@ -543,7 +514,7 @@
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
         <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
         <item name="android:background">@null</item>
-        <item name="android:button">@drawable/carbon_defaultdrawable</item>
+        <item name="android:button">@drawable/carbon_radiobutton</item>
     </style>
 
     <style name="carbon_RadioButton.IconButton">

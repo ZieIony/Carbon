@@ -15,7 +15,6 @@
         <item name="android:dialogTheme">@style/carbon_ThemeOverlay.Dark.Dialog</item>
 
         <item name="toolbarStyle">@style/carbon_Toolbar</item>
-        <item name="checkedTextViewStyle">@style/carbon_CheckedTextView</item>
 
         <item name="carbon_horizontalScrollViewStyle">@style/carbon_HorizontalScrollView</item>
         <item name="carbon_imageViewStyle">@style/carbon_ImageView</item>

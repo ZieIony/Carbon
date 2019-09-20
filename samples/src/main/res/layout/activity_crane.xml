@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +18,7 @@
         <carbon.widget.ImageView
             android:id="@+id/crane_search"
             style="@style/carbon_ImageView.IconButton"
-            android:src="@raw/carbon_search"/>
+            android:src="@drawable/carbon_search" />
     </carbon.widget.Toolbar>
 
     <carbon.widget.BackdropLayout
@@ -50,14 +49,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
-                    app:srcCompat="@drawable/ic_person_black_24dp"/>
+                    app:srcCompat="@drawable/ic_person_black_24dp" />
 
                 <carbon.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="1 Adult, Economy"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse"/>
+                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse" />
             </carbon.widget.LinearLayout>
 
             <carbon.widget.LinearLayout
@@ -76,14 +75,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
-                    app:srcCompat="@drawable/ic_location_on_black_24dp"/>
+                    app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
                 <carbon.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="Seoul, Korea"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse"/>
+                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse" />
             </carbon.widget.LinearLayout>
 
             <carbon.widget.LinearLayout
@@ -102,14 +101,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
-                    android:src="@raw/ic_airplanemode_on_24px"/>
+                    android:src="@raw/ic_airplanemode_on_24px" />
 
                 <carbon.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="Choose Destination"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse"/>
+                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse" />
             </carbon.widget.LinearLayout>
 
             <carbon.widget.LinearLayout
@@ -128,14 +127,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
-                    android:src="@raw/ic_today_24px"/>
+                    android:src="@raw/ic_today_24px" />
 
                 <carbon.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="Select Dates"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse"/>
+                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse" />
             </carbon.widget.LinearLayout>
 
         </carbon.widget.BackdropLayout_Back>
@@ -155,12 +154,12 @@
                 android:paddingLeft="@dimen/carbon_windowPadding"
                 android:paddingRight="@dimen/carbon_windowPadding"
                 android:text="Explore Flights by Destination"
-                android:textAppearance="@style/carbon_TextAppearance.Caption"/>
+                android:textAppearance="@style/carbon_TextAppearance.Caption" />
 
             <carbon.widget.RecyclerView
                 android:id="@+id/crane_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </carbon.widget.BackdropLayout_Front>
     </carbon.widget.BackdropLayout>
 </carbon.widget.LinearLayout>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -16,22 +17,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Checkable;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import carbon.Carbon;
 import carbon.R;
-import carbon.drawable.VectorDrawable;
 import carbon.internal.DropDownMenu;
 import carbon.recycler.ListAdapter;
 import carbon.recycler.RowListAdapter;
 
 public class DropDown<Type extends Serializable> extends EditText {
 
-    private VectorDrawable arrowDrawable;
     private CustomItemFactory<Type> customItemFactory = text -> (Type) text;
 
     public enum Mode {
@@ -81,13 +80,6 @@ public class DropDown<Type extends Serializable> extends EditText {
     }
 
     private void initDropDown(Context context, AttributeSet attrs, int defStyleAttr) {
-        if (!isInEditMode()) {
-            arrowDrawable = new VectorDrawable(getResources(), R.raw.carbon_dropdown);
-            int size = (int) (Carbon.getDip(getContext()) * 24);
-            arrowDrawable.setBounds(0, 0, size, size);
-            setCompoundDrawables(null, null, arrowDrawable, null);
-        }
-
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DropDown, defStyleAttr, R.style.carbon_DropDown);
 
         int theme = a.getResourceId(R.styleable.DropDown_carbon_popupTheme, -1);
@@ -184,9 +176,10 @@ public class DropDown<Type extends Serializable> extends EditText {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (dropDownMenu.getStyle() == Style.Editable &&
-                event.getX() >= getWidth() - getPaddingRight() - arrowDrawable.getBounds().width() ||
-                dropDownMenu.getStyle() != Style.Editable) {
+        Drawable[] compoundDrawables = getCompoundDrawables();
+        if (dropDownMenu.getStyle() != Style.Editable ||
+                (compoundDrawables[1] != null && event.getX() <= getPaddingLeft() + compoundDrawables[0].getBounds().width() ||
+                compoundDrawables[2] != null && event.getX() >= getWidth() - getPaddingRight() - compoundDrawables[2].getBounds().width())) {
             gestureDetector.onTouchEvent(event);
             return true;
         }
