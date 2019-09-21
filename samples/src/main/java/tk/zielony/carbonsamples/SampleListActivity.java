@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import java.io.Serializable;
-import java.util.Map;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import java.io.Serializable;
+import java.util.Map;
+
 import carbon.component.DataBindingComponent;
 import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
@@ -43,7 +44,7 @@ public class SampleListActivity extends SamplesActivity {
                     getView().findViewById(R.id.star).setOnClickListener(v -> {
                         data.setStarred(!data.isStarred());
                         if (data.isStarred()) {
-                            preferences.edit().putString(data.getActivityClass().getName(), data.getName()).commit();
+                            preferences.edit().putString(data.getActivityClass().getName(), getString(data.getName())).commit();
                         } else {
                             preferences.edit().remove(data.getActivityClass().getName()).commit();
                         }

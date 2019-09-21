@@ -2,21 +2,24 @@ package tk.zielony.carbonsamples.dialog;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import carbon.dialog.MultiSelectDialog;
 import carbon.dialog.SingleSelectDialog;
 import carbon.widget.DropDown;
 import carbon.widget.EditText;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.randomdata.food.StringFruitGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_selectdialog, title = R.string.selectDialogActivity_title)
 public class SelectDialogActivity extends SamplesActivity {
 
     private String selectedItem;
@@ -25,9 +28,8 @@ public class SelectDialogActivity extends SamplesActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selectdialog);
 
-        Samples.initToolbar(this, getString(R.string.simpleDialogActivity_title));
+        Samples.initToolbar(this);
 
         EditText titleText = findViewById(R.id.titleText);
         DropDown<String> dropDown = findViewById(R.id.dropDown);

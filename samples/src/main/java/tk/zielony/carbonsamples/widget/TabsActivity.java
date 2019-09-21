@@ -10,18 +10,19 @@ import carbon.widget.PagerTabStrip;
 import carbon.widget.RelativeLayout;
 import carbon.widget.ViewPager;
 import carbon.widget.ViewPagerIndicator;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_tabs, title = R.string.tabsActivity_title)
 public class TabsActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabs);
 
-        Samples.initToolbar(this, getString(R.string.tabsActivity_title));
+        Samples.initToolbar(this);
 
         ViewPager pager = findViewById(R.id.pager);
         pager.setAdapter(new PagerAdapter() {

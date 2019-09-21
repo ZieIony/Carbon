@@ -7,18 +7,19 @@ import android.os.Looper;
 import androidx.annotation.Nullable;
 import carbon.dialog.ProgressDialog;
 import carbon.widget.EditText;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_progressdialog, title = R.string.progressDialogActivity_title)
 public class ProgressDialogActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_progressdialog);
 
-        Samples.initToolbar(this, getString(R.string.progressDialogActivity_title));
+        Samples.initToolbar(this);
 
         EditText titleText = findViewById(R.id.titleText);
         EditText messageText = findViewById(R.id.messageText);

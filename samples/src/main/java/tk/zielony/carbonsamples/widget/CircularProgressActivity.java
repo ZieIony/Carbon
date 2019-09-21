@@ -5,17 +5,18 @@ import android.os.Handler;
 import android.view.View;
 
 import carbon.widget.ProgressBar;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_circular_progress, title = R.string.circularProgressActivity_title)
 public class CircularProgressActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_circular_progress);
 
-        Samples.initToolbar(this, getString(R.string.circularProgressActivity_title));
+        Samples.initToolbar(this);
 
         final ProgressBar progress1 = findViewById(R.id.progress1);
         final Handler handler = new Handler();

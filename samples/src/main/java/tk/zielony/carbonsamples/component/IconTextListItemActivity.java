@@ -5,11 +5,12 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.component.DefaultIconSearchItem;
 import carbon.component.DefaultIconTextItem;
@@ -22,20 +23,21 @@ import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.ArraySearchDataProvider;
 import carbon.widget.RecyclerView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.randomdata.DataContext;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_listcomponent, title = R.string.iconTextListItemActivity_title)
 public class IconTextListItemActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listcomponent);
 
-        Samples.initToolbar(this, getString(R.string.iconTextListItemActivity_title));
+        Samples.initToolbar(this);
 
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));

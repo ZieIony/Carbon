@@ -12,11 +12,13 @@ import carbon.internal.MathUtils;
 import carbon.internal.NURBS;
 import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_pathanimation, title = R.string.pathAnimationActivity_title)
 public class PathAnimationActivity extends SamplesActivity {
 
     boolean expanded = false;
@@ -25,9 +27,8 @@ public class PathAnimationActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pathanimation);
 
-        Samples.initToolbar(this, getString(R.string.pathAnimationActivity_title));
+        Samples.initToolbar(this);
 
         ImageView imageView = findViewById(R.id.image);
         imageView.setImageDrawable(new DrawableImageGenerator(this).next());

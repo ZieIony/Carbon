@@ -10,20 +10,21 @@ import java.util.Map;
 
 import carbon.component.PaddingItem;
 
+@ActivityAnnotation(title = R.string.favouritesActivity_title)
 public class FavouritesActivity extends SampleListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this, getString(R.string.favouritesActivity_title));
+        Samples.initToolbar(this);
 
         List<Serializable> favourites = new ArrayList<>();
         favourites.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
         favourites.add("Tap the star icon next to a sample to add it to this list");
         for (Map.Entry<String, String> entry : allPreferences.entrySet()) {
             try {
-                favourites.add(new SampleActivityItem((Class<? extends Activity>) Class.forName(entry.getKey()), entry.getValue()));
+                favourites.add(new SampleActivityItem((Class<? extends Activity>) Class.forName(entry.getKey())));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

@@ -1,22 +1,23 @@
 package tk.zielony.carbonsamples.guidelines
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import carbon.component.DefaultImageTextSubtextItem
 import carbon.component.ImageTextSubtextRow
 import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import kotlinx.android.synthetic.main.activity_crane.*
+import tk.zielony.carbonsamples.ActivityAnnotation
 import tk.zielony.carbonsamples.R
+import tk.zielony.carbonsamples.SamplesActivity
 import tk.zielony.randomdata.RandomData
 import tk.zielony.randomdata.common.DrawableImageGenerator
 import tk.zielony.randomdata.common.TextGenerator
 import tk.zielony.randomdata.place.StringCityGenerator
 
-class CraneActivity : AppCompatActivity() {
+@ActivityAnnotation(layout = R.layout.activity_crane, title = R.string.craneActivity_title)
+class CraneActivity : SamplesActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_crane)
 
         crane_search.setOnClickListener { crane_backdropLayout.toggleLayout() }
 

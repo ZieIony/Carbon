@@ -10,14 +10,15 @@ import java.util.List;
 import carbon.animation.AnimUtils;
 import carbon.internal.MathUtils;
 import carbon.widget.LinearLayout;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_share_toolbar, title = R.string.shareToolbarActivity_title)
 public class ShareToolbarActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share_toolbar);
 
         final LinearLayout shareToolbar = findViewById(R.id.shareToolbar);
         final View root = shareToolbar.getRootView();

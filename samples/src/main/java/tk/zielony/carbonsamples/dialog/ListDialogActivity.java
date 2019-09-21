@@ -2,15 +2,17 @@ package tk.zielony.carbonsamples.dialog;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+
 import com.annimon.stream.Stream;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
 import carbon.dialog.ListDialog;
 import carbon.widget.EditText;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
@@ -21,14 +23,14 @@ import tk.zielony.randomdata.common.StringDateGenerator;
 import tk.zielony.randomdata.common.TextGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_listdialog, title = R.string.listDialogActivity_title)
 public class ListDialogActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listdialog);
 
-        Samples.initToolbar(this, getString(R.string.listDialogActivity_title));
+        Samples.initToolbar(this);
 
         EditText titleText = findViewById(R.id.titleText);
 

@@ -10,22 +10,22 @@ import tk.zielony.carbonsamples.library.DesignActivity;
 import tk.zielony.carbonsamples.library.PicassoActivity;
 import tk.zielony.carbonsamples.library.RecyclerCardsActivity;
 
-
+@ActivityAnnotation(title = R.string.librariesActivity_title)
 public class LibrariesActivity extends SampleListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this, getString(R.string.librariesActivity_title));
+        Samples.initToolbar(this);
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "The most popular libraries used with Carbon",
-                new SampleActivityItem(PicassoActivity.class, getString(R.string.picassoActivity_title)),
-                new SampleActivityItem(RecyclerCardsActivity.class, getString(R.string.recyclerCardsActivity_title)),
-                new SampleActivityItem(DesignActivity.class, getString(R.string.designActivity_title)),
-                new SampleActivityItem(ConstraintLayoutActivity.class, getString(R.string.constraintLayoutActivity_title)),
+                new SampleActivityItem(PicassoActivity.class),
+                new SampleActivityItem(RecyclerCardsActivity.class),
+                new SampleActivityItem(DesignActivity.class),
+                new SampleActivityItem(ConstraintLayoutActivity.class),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

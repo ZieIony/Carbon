@@ -10,17 +10,18 @@ import java.util.List;
 
 import carbon.beta.TableLayout;
 import carbon.widget.TableView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.carbon_tablelayout, title = R.string.tableLayoutActivity_title)
 public class TableLayoutActivity extends SamplesActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tablelayout);
 
-        Samples.initToolbar(this, getString(R.string.tableLayoutActivity_title));
+        Samples.initToolbar(this);
 
         TableLayout tableLayout = findViewById(R.id.tableLayout);
         List<List<Object>> items = new ArrayList<>();

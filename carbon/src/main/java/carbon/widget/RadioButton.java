@@ -358,13 +358,9 @@ public class RadioButton extends TextView implements Checkable {
     protected void drawableStateChanged() {
         super.drawableStateChanged();
 
-        if (drawable != null) {
-            int[] myDrawableState = getDrawableState();
-
-            // Set the state of the Drawable
-            drawable.setState(myDrawableState);
-
-            postInvalidate();
+        if (drawable != null && drawable.isStateful()
+                && drawable.setState(getDrawableState())) {
+            invalidateDrawable(drawable);
         }
     }
 

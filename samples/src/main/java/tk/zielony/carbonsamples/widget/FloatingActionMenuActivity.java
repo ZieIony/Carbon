@@ -10,18 +10,19 @@ import carbon.Carbon;
 import carbon.component.MenuItem;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.FloatingActionMenu;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.ColorsActivity;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_floatingactionmenu, title = R.string.floatingActionMenuActivity_title)
 public class FloatingActionMenuActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_floatingactionmenu);
 
-        Samples.initToolbar(this, getString(R.string.floatingActionMenuActivity_title));
+        Samples.initToolbar(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setMenu(R.menu.menu_fab);

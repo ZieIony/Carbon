@@ -12,17 +12,17 @@ class MainActivity : SampleListActivity() {
 
         setItems(arrayOf(
                 PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
-                SampleActivityGroup(NewSamplesActivity::class.java, getString(R.string.newSamplesActivity_title)),
-                SampleActivityGroup(FavouritesActivity::class.java, getString(R.string.favouritesActivity_title)),
-                SampleActivityGroup(AnimationsActivity::class.java, getString(R.string.animationsActivity_title)),
-                SampleActivityItem(ColorsActivity::class.java, getString(R.string.colorsActivity_title)),
-                SampleActivityGroup(ComponentsActivity::class.java, getString(R.string.componentsActivity_title)),
-                SampleActivityGroup(DemosActivity::class.java, getString(R.string.demosActivity_title)),
-                SampleActivityGroup(DialogsActivity::class.java, getString(R.string.dialogsActivity_title)),
-                SampleActivityGroup(FeaturesActivity::class.java, getString(R.string.featuresActivity_title)),
-                SampleActivityGroup(GuidelinesActivity::class.java, getString(R.string.guidelinesActivity_title)),
-                SampleActivityGroup(LibrariesActivity::class.java, getString(R.string.librariesActivity_title)),
-                SampleActivityGroup(WidgetsActivity::class.java, getString(R.string.widgetsActivity_title)),
+                SampleActivityGroup(NewSamplesActivity::class.java),
+                SampleActivityGroup(FavouritesActivity::class.java),
+                SampleActivityGroup(AnimationsActivity::class.java),
+                SampleActivityItem(ColorsActivity::class.java),
+                SampleActivityGroup(ComponentsActivity::class.java),
+                SampleActivityGroup(DemosActivity::class.java),
+                SampleActivityGroup(DialogsActivity::class.java),
+                SampleActivityGroup(FeaturesActivity::class.java),
+                SampleActivityGroup(GuidelinesActivity::class.java),
+                SampleActivityGroup(LibrariesActivity::class.java),
+                SampleActivityGroup(WidgetsActivity::class.java),
                 PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         ))
     }

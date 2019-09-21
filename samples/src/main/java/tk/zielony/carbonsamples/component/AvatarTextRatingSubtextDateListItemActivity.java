@@ -2,12 +2,13 @@ package tk.zielony.carbonsamples.component;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.component.AvatarTextRatingSubtextDateRow;
 import carbon.component.DefaultAvatarTextRatingSubtextDateItem;
 import carbon.component.DefaultHeaderItem;
@@ -16,6 +17,7 @@ import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
@@ -27,14 +29,14 @@ import tk.zielony.randomdata.common.TextGenerator;
 import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_listcomponent, title = R.string.avatarTextRatingSubtextDateListItemActivity_title)
 public class AvatarTextRatingSubtextDateListItemActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listcomponent);
 
-        Samples.initToolbar(this, getString(R.string.avatarTextRatingSubtextDateListItemActivity_title));
+        Samples.initToolbar(this);
 
         List<Serializable> items = Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),

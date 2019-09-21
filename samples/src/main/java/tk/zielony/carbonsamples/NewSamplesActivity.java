@@ -13,26 +13,29 @@ import tk.zielony.carbonsamples.guidelines.ShrineActivity;
 import tk.zielony.carbonsamples.widget.BackdropActivity;
 import tk.zielony.carbonsamples.widget.BannerActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
+import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 
+@ActivityAnnotation(title = R.string.newSamplesActivity_title)
 public class NewSamplesActivity extends SampleListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this, getString(R.string.newSamplesActivity_title));
+        Samples.initToolbar(this);
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "These samples are new or have significant changes since the previous release",
-                new SampleActivityItem(BannerActivity.class, getString(R.string.bannerActivity_title)),
-                new SampleActivityItem(ButtonsActivity.class, getString(R.string.buttonsActivity_title)),
-                new SampleActivityItem(BackdropActivity.class, getString(R.string.backdropActivity_title)),
-                new SampleActivityItem(ShadowActivity.class, getString(R.string.shadowActivity_title), true),
-                new SampleActivityItem(FontResourceActivity.class, getString(R.string.fontResourceActivity_title)),
-                new SampleActivityItem(ShrineActivity.class, getString(R.string.shrineActivity_title), true),
-                new SampleActivityItem(CraneActivity.class, getString(R.string.craneActivity_title)),
-                new SampleActivityItem(BasilActivity.class, getString(R.string.basilActivity_title), true),
+                new SampleActivityItem(BannerActivity.class),
+                new SampleActivityItem(CheckBoxRadioActivity.class),
+                new SampleActivityItem(ButtonsActivity.class),
+                new SampleActivityItem(BackdropActivity.class),
+                new SampleActivityItem(ShadowActivity.class, true),
+                new SampleActivityItem(FontResourceActivity.class),
+                new SampleActivityItem(ShrineActivity.class, true),
+                new SampleActivityItem(CraneActivity.class),
+                new SampleActivityItem(BasilActivity.class, true),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

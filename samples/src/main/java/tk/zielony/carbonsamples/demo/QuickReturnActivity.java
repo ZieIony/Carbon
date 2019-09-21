@@ -20,6 +20,7 @@ import carbon.recycler.RowListAdapter;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.randomdata.Generator;
@@ -29,12 +30,12 @@ import tk.zielony.randomdata.common.StringDateGenerator;
 import tk.zielony.randomdata.common.TextGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_quickreturn, title = R.string.quickReturnActivity_title)
 public class QuickReturnActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quickreturn);
 
         List<Serializable> items = Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_toolbarHeight) + getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
@@ -78,7 +79,7 @@ public class QuickReturnActivity extends SamplesActivity {
 
         final FloatingActionButton fab = findViewById(R.id.fab);
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.quickReturnActivity_title));
+        toolbar.setTitle(getTitle());
         recycler.addOnScrollListener(new androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             int yScroll = 0;
 

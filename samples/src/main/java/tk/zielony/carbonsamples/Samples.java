@@ -26,6 +26,10 @@ public class Samples {
     private Samples() {
     }
 
+    public static void initToolbar(final Activity activity) {
+        initToolbar(activity, activity.getTitle().toString(), true);
+    }
+
     public static void initToolbar(final Activity activity, String title) {
         initToolbar(activity, title, true);
     }

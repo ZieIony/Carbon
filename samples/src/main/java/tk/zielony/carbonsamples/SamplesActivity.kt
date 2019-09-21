@@ -16,7 +16,7 @@ abstract class SamplesActivity : AppCompatActivity() {
             if (it.layout != 0)
                 setContentView(it.layout)
             if (it.title != 0)
-                Samples.initToolbar(this, getString(it.title))
+              title = getString(it.title)
         }
     }
 

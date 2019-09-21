@@ -9,6 +9,7 @@ import java.util.Random;
 
 import carbon.widget.Chip;
 import carbon.widget.FlowLayout;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
@@ -17,14 +18,14 @@ import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.Gender;
 import tk.zielony.randomdata.person.StringFirstNameGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_flowlayout, title = R.string.flowLayoutActivity_title)
 public class FlowLayoutActivity extends SamplesActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_flowlayout);
 
-        Samples.initToolbar(this, getString(R.string.flowLayoutActivity_title));
+        Samples.initToolbar(this);
 
         DrawableAvatarGenerator avatarGenerator = new DrawableAvatarGenerator(this);
         StringFirstNameGenerator nameGenerator = new StringFirstNameGenerator(Gender.Both, false, false);

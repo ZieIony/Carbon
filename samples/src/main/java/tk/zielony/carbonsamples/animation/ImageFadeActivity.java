@@ -6,20 +6,21 @@ import android.view.View;
 
 import carbon.widget.FrameLayout;
 import carbon.widget.ImageView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.randomdata.DataContext;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_imagefade, title = R.string.imageFadeActivity_title)
 public class ImageFadeActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_imagefade);
 
-        Samples.initToolbar(this, getString(R.string.imageFadeActivity_title));
+        Samples.initToolbar(this);
 
         FrameLayout grid = findViewById(R.id.grid);
 

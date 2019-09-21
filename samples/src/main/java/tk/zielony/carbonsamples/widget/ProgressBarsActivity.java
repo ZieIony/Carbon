@@ -5,17 +5,18 @@ import android.os.Handler;
 import android.view.View;
 
 import carbon.widget.ProgressBar;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_progress_bars, title = R.string.progressBarsActivity_title)
 public class ProgressBarsActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_progress_bars);
 
-        Samples.initToolbar(this, getString(R.string.progressBarsActivity_title));
+        Samples.initToolbar(this);
 
         final ProgressBar progress1 = findViewById(R.id.progress5);
         findViewById(R.id.button1).setOnClickListener(view -> progress1.animateVisibility(progress1.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE));

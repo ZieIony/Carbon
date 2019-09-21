@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import carbon.widget.AutoCompleteEditText;
 import carbon.widget.AutoCompleteLayout;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_autocomplete, title = R.string.autoCompleteActivity_title)
 public class AutoCompleteActivity extends SamplesActivity {
 
     String[] fruits = {"Strawberry\npie", "Apple\npie", "Orange\njuice", "Lemon\njuice", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"};
@@ -15,9 +17,8 @@ public class AutoCompleteActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_autocomplete);
 
-        Samples.initToolbar(this, getString(R.string.autoCompleteActivity_title));
+        Samples.initToolbar(this);
 
         AutoCompleteLayout autoCompleteLayout = findViewById(R.id.autoComplete);
         autoCompleteLayout.setDataProvider(new AutoCompleteEditText.AutoCompleteDataProvider() {

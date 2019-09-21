@@ -11,11 +11,13 @@ import java.util.List;
 
 import carbon.recycler.ItemTouchHelper;
 import carbon.widget.RecyclerView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.carbonsamples.library.FruitAdapter;
 
+@ActivityAnnotation(layout = R.layout.activity_recycler, title = R.string.recyclerViewActivity_title)
 public class RecyclerActivity extends SamplesActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
     FruitAdapter fruitAdapter;
@@ -23,9 +25,8 @@ public class RecyclerActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recycler);
 
-        Samples.initToolbar(this, getString(R.string.recyclerViewActivity_title));
+        Samples.initToolbar(this);
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

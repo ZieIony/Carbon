@@ -27,38 +27,39 @@ import tk.zielony.carbonsamples.widget.TableLayoutActivity;
 import tk.zielony.carbonsamples.widget.TabsActivity;
 import tk.zielony.carbonsamples.widget.TextFieldsActivity;
 
+@ActivityAnnotation(title = R.string.widgetsActivity_title)
 public class WidgetsActivity extends SampleListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this, getString(R.string.widgetsActivity_title));
+        Samples.initToolbar(this);
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Widgets with sample styles, data and applications",
-                new SampleActivityItem(BannerActivity.class, getString(R.string.bannerActivity_title)),
-                new SampleActivityItem(CheckBoxRadioActivity.class, getString(R.string.checkBoxRadioActivity_title)),
-                new SampleActivityItem(ButtonsActivity.class, getString(R.string.buttonsActivity_title)),
-                new SampleActivityItem(CircularProgressActivity.class, getString(R.string.circularProgressActivity_title)),
-                new SampleActivityItem(ProgressBarsActivity.class, getString(R.string.progressBarsActivity_title)),
-                new SampleActivityItem(SnackbarActivity.class, getString(R.string.snackbarActivity_title)),
-                new SampleActivityItem(PercentLayoutActivity.class, getString(R.string.percentLayoutActivity_title)),
-                new SampleActivityItem(TextFieldsActivity.class, getString(R.string.textFieldsActivity_title)),
-                new SampleActivityItem(TabsActivity.class, getString(R.string.tabsActivity_title)),
-                new SampleActivityItem(RecyclerActivity.class, getString(R.string.recyclerViewActivity_title)),
-                new SampleActivityItem(ExpandableRecyclerActivity.class, getString(R.string.expandableRecyclerActivity_title)),
-                new SampleActivityItem(ExpansionPanelActivity.class, getString(R.string.expansionPanelActivity_title)),
-                new SampleActivityItem(DropDownActivity.class, getString(R.string.dropDownActivityActivity_title)),
-                new SampleActivityItem(NavigationViewActivity.class, getString(R.string.navigationViewActivity_title)),
-                new SampleActivityItem(SeekBarActivity.class, getString(R.string.seekBarActivity_title)),
-                new SampleActivityItem(FlowLayoutActivity.class, getString(R.string.flowLayoutActivity_title)),
-                new SampleActivityItem(TableLayoutActivity.class, getString(R.string.tableLayoutActivity_title)),
-                new SampleActivityItem(FloatingActionMenuActivity.class, getString(R.string.floatingActionMenuActivity_title)),
-                new SampleActivityItem(BottomBarActivity.class, getString(R.string.bottomBarActivity_title), true),
-                new SampleActivityItem(BottomSheetActivity.class, getString(R.string.bottomSheetActivity_title), true),
-                new SampleActivityItem(BackdropActivity.class, getString(R.string.backdropActivity_title)),
+                new SampleActivityItem(BannerActivity.class),
+                new SampleActivityItem(CheckBoxRadioActivity.class),
+                new SampleActivityItem(ButtonsActivity.class),
+                new SampleActivityItem(CircularProgressActivity.class),
+                new SampleActivityItem(ProgressBarsActivity.class),
+                new SampleActivityItem(SnackbarActivity.class),
+                new SampleActivityItem(PercentLayoutActivity.class),
+                new SampleActivityItem(TextFieldsActivity.class),
+                new SampleActivityItem(TabsActivity.class),
+                new SampleActivityItem(RecyclerActivity.class),
+                new SampleActivityItem(ExpandableRecyclerActivity.class),
+                new SampleActivityItem(ExpansionPanelActivity.class),
+                new SampleActivityItem(DropDownActivity.class),
+                new SampleActivityItem(NavigationViewActivity.class),
+                new SampleActivityItem(SeekBarActivity.class),
+                new SampleActivityItem(FlowLayoutActivity.class),
+                new SampleActivityItem(TableLayoutActivity.class),
+                new SampleActivityItem(FloatingActionMenuActivity.class),
+                new SampleActivityItem(BottomBarActivity.class, true),
+                new SampleActivityItem(BottomSheetActivity.class, true),
+                new SampleActivityItem(BackdropActivity.class),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

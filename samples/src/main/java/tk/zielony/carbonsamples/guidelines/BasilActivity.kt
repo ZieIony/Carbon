@@ -1,12 +1,8 @@
 package tk.zielony.carbonsamples.guidelines
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import tk.zielony.carbonsamples.ActivityAnnotation
 import tk.zielony.carbonsamples.R
+import tk.zielony.carbonsamples.SamplesActivity
 
-class BasilActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_basil)
-    }
-}
+@ActivityAnnotation(layout = R.layout.activity_basil, title = R.string.basilActivity_title)
+class BasilActivity : SamplesActivity()

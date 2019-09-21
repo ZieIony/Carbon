@@ -6,12 +6,14 @@ import java.io.Serializable
 open class SampleActivityGroup : Serializable {
     var activityClass: Class<out Activity>? = null
         private set
-    var name: String? = null
+    var name: Int? = null
         private set
 
-    constructor(activityClass: Class<out Activity>, name: String) {
-        this.activityClass = activityClass
-        this.name = name
+    @JvmOverloads
+    constructor(activityClass: Class<out Activity>) : super(
+        ) {
+          this.activityClass = activityClass
+          this.name = activityClass.getAnnotation(ActivityAnnotation::class.java).title
     }
 }
 
@@ -20,10 +22,8 @@ class SampleActivityItem : SampleActivityGroup {
         private set
     var isStarred: Boolean = false
 
-    constructor(activityClass: Class<out Activity>, name: String) : super(activityClass, name) {
-    }
-
-    constructor(activityClass: Class<out Activity>, name: String, beta: Boolean) : super(activityClass, name) {
-        this.isBeta = beta
+  @JvmOverloads
+    constructor(activityClass: Class<out Activity>, beta:Boolean = false) : super(activityClass) {
+      this.isBeta = beta
     }
 }

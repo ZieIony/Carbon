@@ -2,12 +2,13 @@ package tk.zielony.carbonsamples.feature;
 
 import android.os.Bundle;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.behavior.HeightBehavior;
 import carbon.behavior.RecyclerScrollBehavior;
 import carbon.component.AvatarTextRow;
@@ -15,6 +16,7 @@ import carbon.component.DefaultAvatarTextItem;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import carbon.widget.RelativeLayout;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.landscapeview.LandscapeView;
@@ -23,11 +25,11 @@ import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_behavior, title = R.string.behaviorActivity_title)
 public class BehaviorActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_behavior);
 
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));

@@ -20,9 +20,11 @@ import carbon.widget.FrameLayout;
 import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
 import carbon.widget.TextView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_powermenu, title = R.string.powerMenuActivity_title)
 public class PowerMenuActivity extends SamplesActivity {
     boolean vibration = false, volume = true, airplaneMode = false;
 
@@ -33,7 +35,6 @@ public class PowerMenuActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_powermenu);
 
         button = findViewById(R.id.button);
         powerMenu = findViewById(R.id.powerMenu);

@@ -5,18 +5,19 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import carbon.dialog.Dialog;
 import carbon.widget.EditText;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_simpledialog, title = R.string.simpleDialogActivity_title)
 public class SimpleDialogActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simpledialog);
 
-        Samples.initToolbar(this, getString(R.string.simpleDialogActivity_title));
+        Samples.initToolbar(this);
 
         EditText titleText = findViewById(R.id.titleText);
         EditText buttonText = findViewById(R.id.buttonText);

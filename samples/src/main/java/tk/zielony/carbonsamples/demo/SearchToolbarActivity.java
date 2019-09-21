@@ -7,15 +7,16 @@ import android.view.View;
 
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import carbon.widget.LinearLayout;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_searchtoolbar, title = R.string.searchToolbarActivity_title)
 public class SearchToolbarActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_searchtoolbar);
 
         LinearLayout searchEditText = findViewById(R.id.searchbar);
         View searchButton = findViewById(R.id.search);

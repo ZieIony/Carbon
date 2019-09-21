@@ -28,7 +28,7 @@
             android:layout_height="@dimen/carbon_listItemHeight"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@{data.name}"
+            android:text="@{context.getString(data.name)}"
             tools:text="item name"/>
 
     </carbon.widget.LinearLayout>

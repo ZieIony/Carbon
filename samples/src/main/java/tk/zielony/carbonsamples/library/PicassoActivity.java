@@ -7,17 +7,18 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import carbon.widget.rx.Button;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_picasso, title = R.string.picassoActivity_title)
 public class PicassoActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_picasso);
 
-        Samples.initToolbar(this, getString(R.string.picassoActivity_title));
+        Samples.initToolbar(this);
 
         final PicassoView image = findViewById(R.id.image);
         Button button = findViewById(R.id.button);

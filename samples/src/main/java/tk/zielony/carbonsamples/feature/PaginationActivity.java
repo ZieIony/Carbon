@@ -14,10 +14,12 @@ import java.util.List;
 import carbon.component.TextRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_pagination, title = R.string.paginationActivity_title)
 public class PaginationActivity extends SamplesActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
     RowListAdapter<String> fruitAdapter;
@@ -25,9 +27,8 @@ public class PaginationActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pagination);
 
-        Samples.initToolbar(this, getString(R.string.paginationActivity_title));
+        Samples.initToolbar(this);
 
         SwipeRefreshLayout swipeRefresh = findViewById(R.id.swipeRefresh);
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);

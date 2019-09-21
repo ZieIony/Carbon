@@ -8,20 +8,21 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 
 import carbon.widget.ImageView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
 
+@ActivityAnnotation(layout = R.layout.activity_largeshadow, title = R.string.largeShadowActivity_title)
 public class LargeShadowActivity extends SamplesActivity {
     ValueAnimator animator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_largeshadow);
 
-        Samples.initToolbar(this, getString(R.string.largeShadowActivity_title));
+        Samples.initToolbar(this);
 
         final View view = findViewById(R.id.layout);
         View parent = (View) view.getParent();

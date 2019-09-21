@@ -10,18 +10,19 @@ import carbon.widget.CheckBox;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.RelativeLayout;
 import carbon.widget.Snackbar;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_snackbar, title = R.string.snackbarActivity_title)
 public class SnackbarActivity extends SamplesActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_snackbar);
 
-        Samples.initToolbar(this, getString(R.string.snackbarActivity_title));
+        Samples.initToolbar(this);
 
         final CheckBox tapCheckBox = findViewById(R.id.tap);
         final CheckBox swipeCheckBox = findViewById(R.id.swipe);

@@ -27,11 +27,16 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageHelper;
 import androidx.core.view.ViewCompat;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -56,8 +61,6 @@ import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressLint("AppCompatCustomView")
 public class ImageView extends android.widget.ImageView
@@ -183,11 +186,18 @@ public class ImageView extends android.widget.ImageView
     }
 
     @Override
+    public void setImageBitmap(Bitmap bm) {
+        super.setImageBitmap(bm);
+        updateTint();
+    }
+
+    @Override
     public void setImageResource(int resId) {
         if (resId != 0 && getContext().getResources().getResourceTypeName(resId).equals("raw")) {
             setImageDrawable(new VectorDrawable(getResources(), resId));
         } else {
             super.setImageResource(resId);
+            updateTint();
         }
     }
 

@@ -11,22 +11,23 @@ import tk.zielony.carbonsamples.guidelines.CraneActivity;
 import tk.zielony.carbonsamples.guidelines.MenusBehaviorActivity;
 import tk.zielony.carbonsamples.guidelines.ShrineActivity;
 
+@ActivityAnnotation(title = R.string.guidelinesActivity_title)
 public class GuidelinesActivity extends SampleListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this, getString(R.string.guidelinesActivity_title));
+        Samples.initToolbar(this);
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Sample screens taken from Material Design guidelines",
-                new SampleActivityItem(ButtonsUsageActivity.class, getString(R.string.buttonsUsageActivity_title)),
-                new SampleActivityItem(MenusBehaviorActivity.class, getString(R.string.menusBehaviorActivity_title)),
-                new SampleActivityItem(ShrineActivity.class, getString(R.string.shrineActivity_title), true),
-                new SampleActivityItem(CraneActivity.class, getString(R.string.craneActivity_title)),
-                new SampleActivityItem(BasilActivity.class, getString(R.string.basilActivity_title), true),
+                new SampleActivityItem(ButtonsUsageActivity.class),
+                new SampleActivityItem(MenusBehaviorActivity.class),
+                new SampleActivityItem(ShrineActivity.class, true),
+                new SampleActivityItem(CraneActivity.class),
+                new SampleActivityItem(BasilActivity.class, true),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

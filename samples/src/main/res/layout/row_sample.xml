@@ -29,7 +29,7 @@
             android:layout_height="@dimen/carbon_listItemHeight"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@{data.name}"
+            android:text="@{context.getString(data.name)}"
             tools:text="item name" />
 
         <carbon.widget.TextView
@@ -40,7 +40,7 @@
             android:paddingStart="@dimen/carbon_padding"
             android:paddingLeft="@dimen/carbon_padding"
             android:text="beta"
-            android:textColor="#ffcf0000"
+            android:textColor="#afff2020"
             android:textSize="16sp"
             android:visibility="@{data.beta?View.VISIBLE:View.GONE}" />
 

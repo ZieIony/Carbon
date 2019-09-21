@@ -5,19 +5,20 @@ import android.widget.FrameLayout;
 
 import carbon.shadow.ShadowView;
 import carbon.widget.Button;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_zorder, title = R.string.zOrderActivity_title)
 public class ZOrderActivity extends SamplesActivity {
     boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zorder);
 
-        Samples.initToolbar(this, getString(R.string.zOrderActivity_title));
+        Samples.initToolbar(this);
 
         final FrameLayout layout = findViewById(R.id.layout);
         Button button = findViewById(R.id.button);

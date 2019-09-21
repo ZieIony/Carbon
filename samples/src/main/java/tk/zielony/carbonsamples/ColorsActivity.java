@@ -13,7 +13,7 @@ import java.io.Serializable;
 import carbon.widget.DropDown;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
-
+@ActivityAnnotation(title = R.string.colorsActivity_title)
 public class ColorsActivity extends SamplesActivity {
 
     public static final String ACCENT = "accent";
@@ -97,7 +97,7 @@ public class ColorsActivity extends SamplesActivity {
         super.onCreate(savedInstanceState);
         ActivityColordemoBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_colordemo);
 
-        Samples.initToolbar(this, getString(R.string.colorsActivity_title));
+        Samples.initToolbar(this);
 
         ((DropDown<Item>) binding.style).setItems(styles);
         ((DropDown<Item>) binding.style).setOnSelectionChangedListener((item, position) -> {

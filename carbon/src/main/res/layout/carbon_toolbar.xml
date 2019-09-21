@@ -17,7 +17,7 @@
         android:layout_marginRight="@dimen/carbon_toolbarUpTitleMargin"
         app:carbon_inAnimation="none"
         app:carbon_outAnimation="none"
-        tools:src="?attr/homeAsUpIndicator" />
+        tools:src="@drawable/carbon_uparrow" />
 
     <carbon.widget.TextView
         android:id="@+id/carbon_toolbarTitle"
@@ -30,8 +30,8 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text=""
-        tools:text="Toolbar"
-        android:textAppearance="?attr/carbon_textAppearanceTitle" />
+        android:textAppearance="?attr/carbon_textAppearanceTitle"
+        tools:text="Toolbar" />
 
     <carbon.widget.LinearLayout
         android:id="@+id/carbon_toolbarContent"

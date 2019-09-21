@@ -8,11 +8,13 @@ import androidx.databinding.ViewDataBinding;
 
 import carbon.drawable.CheckedState;
 import carbon.widget.CheckBox;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 import tk.zielony.carbonsamples.databinding.ActivityCheckboxRadioBinding;
 
+@ActivityAnnotation(title = R.string.checkBoxRadioActivity_title)
 public class CheckBoxRadioActivity extends SamplesActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,7 @@ public class CheckBoxRadioActivity extends SamplesActivity {
         setContentView(viewDataBinding.getRoot());
         ActivityCheckboxRadioBinding binding = (ActivityCheckboxRadioBinding) viewDataBinding;
 
-        Samples.initToolbar(this, getString(R.string.checkBoxRadioActivity_title));
+        Samples.initToolbar(this, getTitle().toString());
 
         binding.check.setOnClickListener(view -> binding.checkBox.setChecked(true));
 

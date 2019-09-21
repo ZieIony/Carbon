@@ -2,11 +2,12 @@ package tk.zielony.carbonsamples.component;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.component.DataBindingComponent;
 import carbon.component.DefaultIconDropDownItem;
 import carbon.component.DefaultIconEditTextItem;
@@ -21,17 +22,18 @@ import carbon.component.PaddingRow;
 import carbon.drawable.VectorDrawable;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
+import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
+@ActivityAnnotation(layout = R.layout.activity_listcomponent, title = R.string.registerActivity_title)
 public class RegisterActivity extends SamplesActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listcomponent);
 
-        Samples.initToolbar(this, getString(R.string.registerActivity_title));
+        Samples.initToolbar(this);
 
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));

@@ -18,7 +18,7 @@ import tk.zielony.randomdata.person.StringNameGenerator
 import java.io.Serializable
 import java.util.*
 
-@ActivityAnnotation(layout = R.layout.activity_backdrop)
+@ActivityAnnotation(layout = R.layout.activity_backdrop, title = R.string.backdropActivity_title)
 class BackdropActivity : SamplesActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

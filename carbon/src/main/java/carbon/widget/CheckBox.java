@@ -349,11 +349,9 @@ public class CheckBox extends TextView implements Checkable {
     protected void drawableStateChanged() {
         super.drawableStateChanged();
 
-        if (drawable != null) {
-            int[] myDrawableState = getDrawableState();
-
-            // Set the state of the Drawable
-            drawable.setState(myDrawableState);
+        if (drawable != null && drawable.isStateful()
+                && drawable.setState(getDrawableState())) {
+            invalidateDrawable(drawable);
         }
     }
 
