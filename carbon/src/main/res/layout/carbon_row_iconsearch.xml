@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="data"
-            type="carbon.component.IconSearchItem"/>
+            type="carbon.component.IconSearchItem" />
 
     </data>
 
@@ -18,9 +19,10 @@
         <carbon.widget.ImageView
             style="@style/carbon_ImageView.Icon"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:src="@{data.getIcon()}"/>
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            android:src="@{data.getIcon()}"
+            tools:src="@drawable/carbon_iconplaceholder" />
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
@@ -28,21 +30,22 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_query"/>
+            app:carbon_textView="@+id/carbon_query" />
 
         <carbon.widget.SearchEditText
             android:id="@+id/carbon_query"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/carbon_marker"
-            android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginEnd="@dimen/carbon_windowPadding"
+            android:layout_marginRight="@dimen/carbon_windowPadding"
             android:background="@null"
             android:hint="@{data.hint}"
             android:padding="0dp"
-            android:text="@{data.query}"/>
+            android:text="@{data.query}"
+            tools:text="@tools:sample/lorem" />
 
     </carbon.widget.RelativeLayout>
 </layout>

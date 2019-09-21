@@ -427,6 +427,7 @@
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
         <item name="carbon_popupTheme">?attr/carbon_dropDownPopupTheme</item>
         <item name="android:drawableEnd">@drawable/carbon_dropdown</item>
+        <item name="android:drawableTint">?attr/carbon_iconColor</item>
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">

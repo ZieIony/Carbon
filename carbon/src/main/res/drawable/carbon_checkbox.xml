@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/carbon_checkbox_checked" android:state_checked="true" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:drawable="@drawable/carbon_checkbox_filled" android:state_pressed="true" />
-    <item android:drawable="@drawable/carbon_checkbox_unchecked" />
+    <item android:drawable="@drawable/carbon_checkbox_checked" android:state_checked="true" />
+    <item android:drawable="@drawable/carbon_checkbox_indeterminate" app:carbon_state_indeterminate="true" />
+    <item android:drawable="@drawable/carbon_checkbox_unchecked" android:state_pressed="false" />
 </selector>

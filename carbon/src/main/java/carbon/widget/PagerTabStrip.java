@@ -17,6 +17,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
 import carbon.R;
@@ -123,7 +124,10 @@ public class PagerTabStrip extends HorizontalScrollView {
         setHorizontalFadingEdgeEnabled(false);
         setHorizontalScrollBarEnabled(false);
 
+        int layoutDirection = ViewCompat.getLayoutDirection(this);
+        ViewCompat.setLayoutDirection(this, ViewCompat.LAYOUT_DIRECTION_LTR);
         content = new LinearLayout(getContext());
+        ViewCompat.setLayoutDirection(content, layoutDirection);
         addView(content, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         initTabs();
     }

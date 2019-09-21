@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/carbon_marker"
             android:layout_marginEnd="@dimen/carbon_windowPadding"
+            tools:text="@tools:sample/lorem"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_windowPadding"

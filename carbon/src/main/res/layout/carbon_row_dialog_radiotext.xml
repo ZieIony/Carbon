@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="data"
-            type="Object"/>
+            type="Object" />
 
     </data>
 
@@ -22,11 +23,11 @@
             android:id="@+id/carbon_radioButton"
             android:layout_width="@dimen/carbon_iconSize"
             android:layout_height="@dimen/carbon_iconSize"
-            android:layout_marginLeft="@dimen/carbon_dialogPadding"
             android:layout_marginStart="@dimen/carbon_dialogPadding"
+            android:layout_marginLeft="@dimen/carbon_dialogPadding"
             android:layout_marginTop="@dimen/carbon_toolbarItemPadding"
-            android:paddingLeft="@null"
-            android:paddingStart="@null"/>
+            android:paddingStart="@null"
+            android:paddingLeft="@null" />
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
@@ -34,19 +35,20 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_text"/>
+            app:carbon_textView="@+id/carbon_text" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/carbon_marker"
-            android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginEnd="@dimen/carbon_windowPadding"
+            android:layout_marginRight="@dimen/carbon_windowPadding"
             android:text="@{String.valueOf(data)}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"
+            tools:text="@tools:sample/lorem" />
 
     </carbon.widget.RelativeLayout>
 </layout>
