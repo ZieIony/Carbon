@@ -7,15 +7,40 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.ViewDebug;
+import android.widget.Checkable;
 
 import carbon.R;
 
-public class Chip extends LinearLayout {
+public class Chip extends LinearLayout implements Checkable {
+
+    /**
+     * Interface definition for a callback to be invoked when the checked state of a chip
+     * changed.
+     */
+    public interface OnCheckedChangeListener {
+        /**
+         * Called when the checked state of a chip has changed.
+         *
+         * @param chip      The chip whose state has changed.
+         * @param isChecked The new checked state of buttonView.
+         */
+        void onCheckedChanged(Chip chip, boolean isChecked);
+    }
+
     private ImageView icon;
+    private ImageView check;
     private TextView title;
     private ImageView close;
     private OnRemoveListener onRemoveListener;
+    private boolean checkedState = false;
+    private OnCheckedChangeListener onCheckedChangeListener;
+
+    private static final int[] CHECKED_STATE_SET = {
+            android.R.attr.state_checked
+    };
 
     public interface OnRemoveListener {
         void onDismiss();
@@ -46,6 +71,8 @@ public class Chip extends LinearLayout {
         inflate(getContext(), R.layout.carbon_chip, this);
         title = findViewById(R.id.carbon_chipText);
         icon = findViewById(R.id.carbon_chipIcon);
+        //check.setImageDrawable(DrawableCompat.wrap(check.getDrawable()));
+        check = findViewById(R.id.carbon_chipCheck);
         close = findViewById(R.id.carbon_chipClose);
 
         close.setOnClickListener(v -> {
@@ -57,14 +84,66 @@ public class Chip extends LinearLayout {
 
         setCornerRadius(a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
         setText(a.getString(R.styleable.Chip_android_text));
-        int iconRes = a.getResourceId(R.styleable.Chip_carbon_icon, 0);
-        if (iconRes != 0) {
-            setIcon(iconRes);
-        } else {
-            setIconVisible(false);
-        }
+        setIcon(a.getResourceId(R.styleable.Chip_carbon_icon, 0));
 
         a.recycle();
+    }
+
+    public void toggle() {
+        setChecked(!isChecked());
+    }
+
+    @Override
+    public boolean performClick() {
+        toggle();
+
+        if (onCheckedChangeListener != null)
+            onCheckedChangeListener.onCheckedChanged(this, isChecked());
+
+        final boolean handled = super.performClick();
+        if (!handled) {
+            // View only makes a sound effect if the onClickListener was
+            // called, so we'll need to make one here instead.
+            playSoundEffect(SoundEffectConstants.CLICK);
+        }
+
+        return handled;
+    }
+
+    @ViewDebug.ExportedProperty
+    public boolean isChecked() {
+        return checkedState;
+    }
+
+    /**
+     * <p>Changes the checked state of this chip.</p>
+     *
+     * @param checked true to check the chip, false to uncheck it
+     */
+    public void setChecked(boolean checked) {
+        if (this.checkedState != checked) {
+            checkedState = checked;
+            check.setVisibility(checked ? VISIBLE : GONE);
+            refreshDrawableState();
+        }
+    }
+
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        final int[] drawableState = super.onCreateDrawableState(extraSpace + 2);
+        if (isChecked()) {
+            mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+        }
+        return drawableState;
+    }
+
+    /**
+     * Register a callback to be invoked when the checked state of this chip changes.
+     *
+     * @param listener the callback to call on checked state change
+     */
+    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+        onCheckedChangeListener = listener;
     }
 
     public void setText(String text) {
@@ -90,17 +169,17 @@ public class Chip extends LinearLayout {
 
     public void setIcon(int iconRes) {
         icon.setImageResource(iconRes);
-        setIconVisible(iconRes != 0);
+        icon.setVisibility(iconRes != 0 ? VISIBLE : GONE);
     }
 
     public void setIcon(Drawable drawable) {
         icon.setImageDrawable(drawable);
-        setIconVisible(drawable != null);
+        icon.setVisibility(drawable != null ? VISIBLE : GONE);
     }
 
     public void setIcon(Bitmap bitmap) {
         icon.setImageBitmap(bitmap);
-        setIconVisible(bitmap != null);
+        icon.setVisibility(bitmap != null ? VISIBLE : GONE);
     }
 
     public Drawable getIcon() {
@@ -111,14 +190,8 @@ public class Chip extends LinearLayout {
         return icon;
     }
 
-    public void setIconVisible(boolean visible) {
-        icon.setVisibility(visible ? VISIBLE : GONE);
-        setPadding(visible ? 0 : (int) getResources().getDimension(R.dimen.carbon_chipPadding), getPaddingTop(), getPaddingRight(), getPaddingBottom());
-    }
-
     public void setRemovable(boolean removable) {
         close.setVisibility(removable ? VISIBLE : GONE);
-        setPadding(getPaddingLeft(), getPaddingTop(), removable ? 0 : (int) getResources().getDimension(R.dimen.carbon_chipPadding), getPaddingBottom());
     }
 
     public boolean isRemovable() {

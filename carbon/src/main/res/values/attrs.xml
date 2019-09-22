@@ -7,6 +7,7 @@
         <attr name="carbon_colorError" format="reference|color"/>
         <attr name="carbon_colorDisabled" format="reference|color"/>
         <attr name="carbon_colorDisabledInverse" format="reference|color"/>
+        <attr name="carbon_colorControl" format="reference|color"/>
 
         <attr name="carbon_dividerColor" format="reference|color"/>
 
@@ -1190,6 +1191,10 @@
     <attr name="carbon_dropDownStyle" format="reference"/>
     <declare-styleable name="DropDown">
         <attr name="carbon_theme"/>
+
+        <attr name="android:drawablePadding"/>
+        <attr name="carbon_buttonGravity"/>
+        <attr name="android:button"/>
 
         <attr name="carbon_popupTheme" format="reference"/>
 

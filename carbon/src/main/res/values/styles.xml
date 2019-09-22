@@ -218,13 +218,18 @@
     </style>
 
     <style name="carbon_Chip">
-        <item name="carbon_cornerRadius">@dimen/carbon_margin</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
-        <item name="android:background">?attr/colorControlNormal
-        </item>    <!-- TODO: what color should be here? -->
+        <item name="carbon_cornerRadius">@dimen/carbon_margin</item>
+        <item name="android:background">?attr/carbon_dividerColor</item>
         <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
         <item name="carbon_icon">@null</item>
         <item name="android:minHeight">@dimen/carbon_chipHeight</item>
+    </style>
+
+    <style name="carbon_Chip.Outlined">
+        <item name="carbon_strokeWidth">0.5dp</item>
+        <item name="carbon_stroke">?attr/carbon_colorControl</item>
+        <item name="android:background">@null</item>
     </style>
 
     <style name="carbon_ImageView">
@@ -266,7 +271,7 @@
         <item name="android:layout_width">@dimen/carbon_avatarSize</item>
         <item name="android:layout_height">@dimen/carbon_avatarSize</item>
         <item name="carbon_cornerRadius">@dimen/carbon_avatarSizeHalf</item>
-        <item name="carbon_stroke">?attr/carbon_dividerColor</item>
+        <item name="carbon_stroke">?attr/carbon_colorControl</item>
         <item name="carbon_strokeWidth">0.5dp</item>
     </style>
 
@@ -274,7 +279,7 @@
         <item name="android:scrollbarSize">8dp</item>
         <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
         <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
-        <item name="android:divider">?attr/carbon_dividerColor</item>
+        <item name="android:divider">?attr/carbon_colorControl</item>
         <item name="android:dividerHeight">@dimen/carbon_dividerHeight</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
@@ -405,7 +410,9 @@
         <item name="carbon_cursorColor">?attr/colorAccent</item>
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">@color/carbon_defaultColor</item>
+        <item name="carbon_tintMode">src_in</item>
         <item name="carbon_backgroundTint">@color/carbon_defaultColor</item>
+        <item name="carbon_backgroundTintMode">src_in</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
 
@@ -426,8 +433,10 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>
         <item name="carbon_popupTheme">?attr/carbon_dropDownPopupTheme</item>
-        <item name="android:drawableEnd">@drawable/carbon_dropdown</item>
-        <item name="android:drawableTint">?attr/carbon_iconColor</item>
+        <item name="carbon_buttonGravity">end</item>
+        <item name="android:drawablePadding">@dimen/carbon_padding</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
+        <item name="android:button">@drawable/carbon_dropdown</item>
     </style>
 
     <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">

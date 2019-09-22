@@ -21,6 +21,7 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
 import carbon.Carbon;
@@ -187,6 +188,7 @@ public class CheckBox extends TextView implements Checkable {
             drawable = d;
 
             if (d != null) {
+                drawable = DrawableCompat.wrap(d);
                 d.setCallback(this);
                 //d.setLayoutDirection(getLayoutDirection());
                 if (d.isStateful()) {
@@ -231,11 +233,8 @@ public class CheckBox extends TextView implements Checkable {
 
     private void updateButtonTint() {
         if (drawable != null) {
-            drawable = drawable.mutate();
-
             if (tint != null && tintMode != null) {
-                Carbon.setTintList(drawable, tint);
-                Carbon.setTintMode(drawable, tintMode);
+                Carbon.setTintListMode(drawable, tint, tintMode);
             } else {
                 Carbon.setTintList(drawable, null);
             }
@@ -335,11 +334,17 @@ public class CheckBox extends TextView implements Checkable {
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
-        final int[] drawableState = super.onCreateDrawableState(extraSpace + 2);
+        int[] drawableState = super.onCreateDrawableState(extraSpace);
         if (isChecked()) {
+            int[] state = new int[drawableState.length + 1];
+            System.arraycopy(drawableState, 0, state, 0, drawableState.length);
+            drawableState = state;
             mergeDrawableStates(drawableState, CHECKED_STATE_SET);
         }
         if (isIndeterminate()) {
+            int[] state = new int[drawableState.length + 1];
+            System.arraycopy(drawableState, 0, state, 0, drawableState.length);
+            drawableState = state;
             mergeDrawableStates(drawableState, INDETERMINATE_STATE_SET);
         }
         return drawableState;
@@ -349,9 +354,10 @@ public class CheckBox extends TextView implements Checkable {
     protected void drawableStateChanged() {
         super.drawableStateChanged();
 
-        if (drawable != null && drawable.isStateful()
-                && drawable.setState(getDrawableState())) {
-            invalidateDrawable(drawable);
+        Drawable d = drawable;
+        if (d != null && d.isStateful()
+                && d.setState(getDrawableState())) {
+            invalidateDrawable(d);
         }
     }
 

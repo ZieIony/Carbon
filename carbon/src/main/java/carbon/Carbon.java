@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.TintAwareDrawable;
 
 import java.security.InvalidParameterException;
@@ -314,6 +315,13 @@ public class Carbon {
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(attr, typedValue, true);
         return typedValue.resourceId != 0 ? context.getResources().getColor(typedValue.resourceId) : typedValue.data;
+    }
+
+    public static Drawable getThemeDrawable(Context context, int attr) {
+        Resources.Theme theme = context.getTheme();
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(attr, typedValue, true);
+        return typedValue.resourceId != 0 ? ContextCompat.getDrawable(context, typedValue.resourceId) : null;
     }
 
     public static Context getThemedContext(Context context, AttributeSet attributeSet, int[] attrs, int defStyleAttr, int attr) {

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar"/>
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.FlowLayout
         android:id="@+id/flowLayout"
@@ -18,68 +18,81 @@
         <carbon.widget.Chip
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
+            android:layout_margin="@dimen/carbon_marginHalf" />
+
+        <carbon.widget.Chip
+            style="@style/carbon_Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_chipHeight"
+            android:layout_margin="@dimen/carbon_marginHalf" />
+
+        <carbon.widget.Chip
+            style="@style/carbon_Chip.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_chipHeight"
+            android:layout_margin="@dimen/carbon_marginHalf" />
+
+        <carbon.widget.Chip
+            style="@style/carbon_Chip.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_chipHeight"
+            android:layout_margin="@dimen/carbon_marginHalf" />
 
         <carbon.widget.Chip
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
+            android:layout_margin="@dimen/carbon_marginHalf" />
+
+        <carbon.widget.Chip
+            style="@style/carbon_Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_chipHeight"
+            android:layout_margin="@dimen/carbon_marginHalf" />
+
+        <carbon.widget.Chip
+            style="@style/carbon_Chip.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_chipHeight"
+            android:layout_margin="@dimen/carbon_marginHalf" />
+
+        <carbon.widget.Chip
+            style="@style/carbon_Chip.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_chipHeight"
+            android:layout_margin="@dimen/carbon_marginHalf" />
 
         <carbon.widget.Chip
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
+            android:layout_margin="@dimen/carbon_marginHalf"
+            android:clickable="true" />
 
         <carbon.widget.Chip
+            style="@style/carbon_Chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
+            android:layout_margin="@dimen/carbon_marginHalf"
+            android:clickable="true" />
 
         <carbon.widget.Chip
+            style="@style/carbon_Chip.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
+            android:layout_margin="@dimen/carbon_marginHalf"
+            android:clickable="true" />
 
         <carbon.widget.Chip
+            style="@style/carbon_Chip.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
-
-        <carbon.widget.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
-
-        <carbon.widget.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
-
-        <carbon.widget.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
-
-        <carbon.widget.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
-
-        <carbon.widget.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
-
-        <carbon.widget.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_chipHeight"
-            android:layout_margin="@dimen/carbon_marginHalf"/>
+            android:layout_margin="@dimen/carbon_marginHalf"
+            android:clickable="true" />
 
         <carbon.widget.EditText
             android:layout_width="100dp"
             android:layout_height="@dimen/carbon_chipHeight"
             android:layout_margin="@dimen/carbon_marginHalf"
             android:background="@null"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical" />
     </carbon.widget.FlowLayout>
 </carbon.widget.LinearLayout>

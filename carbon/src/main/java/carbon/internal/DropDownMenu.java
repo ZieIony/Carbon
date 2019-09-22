@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,12 +15,13 @@ import android.widget.Checkable;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.R;
 import carbon.recycler.DividerItemDecoration;
@@ -55,10 +55,7 @@ public class DropDownMenu<Type> extends PopupWindow {
             }
             return false;
         });
-        LayerDrawable dividerDrawable = new LayerDrawable(new Drawable[]{
-                new ColorDrawable(Carbon.getThemeColor(context, R.attr.carbon_colorForeground)),
-                new ColorDrawable(Carbon.getThemeColor(context, R.attr.carbon_dividerColor))
-        });
+        Drawable dividerDrawable = Carbon.getThemeDrawable(context, R.attr.carbon_dividerColor);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable, context.getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
         dividerItemDecoration.setDrawAfter(position -> getAdapter().getItem(position) == customItem);
         recycler.addItemDecoration(dividerItemDecoration);

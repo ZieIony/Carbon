@@ -47,6 +47,7 @@
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
                     android:layout_weight="1"
+                    app:carbon_buttonGravity="left"
                     android:background="@color/carbon_defaultColor"
                     android:paddingBottom="@dimen/carbon_paddingHalf"
                     android:text="Jan"/>

@@ -67,7 +67,7 @@
         <item name="carbon_colorBackground">@color/carbon_colorBackground_dark</item>
         <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_light</item>
         <item name="carbon_colorForeground">@color/carbon_colorForeground_dark</item>
-        <item name="carbon_dividerColor">@color/carbon_dividerColor_dark</item>
+        <item name="carbon_dividerColor">@drawable/carbon_dividerbackground_dark</item>
         <item name="carbon_inputLayoutBoxColor">@color/carbon_white_10</item>
         <item name="carbon_inputLayoutBoxPadding">0dp</item>
         <item name="carbon_rippleColor">@color/carbon_rippleColor_dark</item>
@@ -76,6 +76,7 @@
         <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_light</item>
         <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_dark</item>
         <item name="carbon_colorDisabledInverse">@color/carbon_iconColorInactive_light</item>
+        <item name="carbon_colorControl">@color/carbon_colorcontrol_dark</item>
         <item name="colorControlNormal">@color/carbon_colorControl_dark</item>
         <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/carbon_rippleColor_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
@@ -128,7 +129,7 @@
         <item name="carbon_colorBackground">@color/carbon_colorBackground_dark</item>
         <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_light</item>
         <item name="carbon_colorForeground">@color/carbon_colorForeground_dark</item>
-        <item name="carbon_dividerColor">@color/carbon_dividerColor_dark</item>
+        <item name="carbon_dividerColor">@drawable/carbon_dividerbackground_dark</item>
         <item name="carbon_inputLayoutBoxColor">@color/carbon_white_10</item>
         <item name="carbon_rippleColor">@color/carbon_rippleColor_dark</item>
         <item name="carbon_rippleColorInverse">@color/carbon_rippleColor_light</item>
@@ -136,6 +137,7 @@
         <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_light</item>
         <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_dark</item>
         <item name="carbon_colorDisabledInverse">@color/carbon_iconColorInactive_light</item>
+        <item name="carbon_colorControl">@color/carbon_colorcontrol_dark</item>
         <item name="colorControlNormal">@color/carbon_colorControl_dark</item>
         <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/carbon_rippleColor_light</item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>

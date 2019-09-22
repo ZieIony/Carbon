@@ -3,7 +3,10 @@ package carbon.widget;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
@@ -11,20 +14,29 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.Checkable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.ViewCompat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import carbon.Carbon;
 import carbon.R;
+import carbon.drawable.ButtonGravity;
+import carbon.drawable.ripple.RippleDrawable;
 import carbon.internal.DropDownMenu;
 import carbon.recycler.ListAdapter;
 import carbon.recycler.RowListAdapter;
@@ -57,7 +69,11 @@ public class DropDown<Type extends Serializable> extends EditText {
     OnSelectionChangedListener<Type> onSelectionChangedListener;
 
     private boolean isShowingPopup = false;
-
+    
+    private Drawable drawable;
+    private float drawablePadding;
+    private ButtonGravity buttonGravity;
+    
     public DropDown(Context context) {
         super(context, null, R.attr.carbon_dropDownStyle);
         initDropDown(context, null, R.attr.carbon_dropDownStyle);
@@ -89,6 +105,18 @@ public class DropDown<Type extends Serializable> extends EditText {
         dropDownMenu.setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.Over.ordinal())]);
         setStyle(Style.values()[a.getInt(R.styleable.DropDown_carbon_style, Style.SingleSelect.ordinal())]);
         dropDownMenu.setOnItemClickedListener(onItemClickedListener);
+
+        int drawableId = a.getResourceId(R.styleable.DropDown_android_button, R.drawable.carbon_dropdown);
+        setButtonDrawable(ContextCompat.getDrawable(getContext(), drawableId));
+
+        for (int i = 0; i < a.getIndexCount(); i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.DropDown_android_drawablePadding) {
+                drawablePadding = a.getDimension(attr, 0);
+            } else if (attr == R.styleable.DropDown_carbon_buttonGravity) {
+                buttonGravity = ButtonGravity.values()[a.getInt(attr, 0)];
+            }
+        }
 
         a.recycle();
     }
@@ -176,10 +204,9 @@ public class DropDown<Type extends Serializable> extends EditText {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Drawable[] compoundDrawables = getCompoundDrawables();
         if (dropDownMenu.getStyle() != Style.Editable ||
-                (compoundDrawables[1] != null && event.getX() <= getPaddingLeft() + compoundDrawables[0].getBounds().width() ||
-                compoundDrawables[2] != null && event.getX() >= getWidth() - getPaddingRight() - compoundDrawables[2].getBounds().width())) {
+                (isButtonOnTheLeft() && event.getX() <= getCompoundPaddingLeft() ||
+                !isButtonOnTheLeft() && event.getX() >= getWidth() - getCompoundPaddingRight())) {
             gestureDetector.onTouchEvent(event);
             return true;
         }
@@ -344,6 +371,196 @@ public class DropDown<Type extends Serializable> extends EditText {
 
         if (isShowingPopup)
             dropDownMenu.dismissImmediate();
+    }
+
+    private boolean isLayoutRtl() {
+        return ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
+    }
+
+    private boolean isButtonOnTheLeft() {
+        return buttonGravity == ButtonGravity.LEFT ||
+                !isLayoutRtl() && buttonGravity == ButtonGravity.START ||
+                isLayoutRtl() && buttonGravity == ButtonGravity.END;
+    }
+
+    /**
+     * Set the button graphic to a given Drawable
+     *
+     * @param d The Drawable to use as the button graphic
+     */
+    public void setButtonDrawable(Drawable d) {
+        if (drawable != d) {
+            if (drawable != null) {
+                drawable.setCallback(null);
+                unscheduleDrawable(drawable);
+            }
+
+            drawable = d;
+
+            if (d != null) {
+                drawable = DrawableCompat.wrap(d);
+                d.setCallback(this);
+                //d.setLayoutDirection(getLayoutDirection());
+                if (d.isStateful()) {
+                    d.setState(getDrawableState());
+                }
+                d.setVisible(getVisibility() == VISIBLE, false);
+                setMinHeight(d.getIntrinsicHeight());
+                updateButtonTint();
+            }
+        }
+    }
+
+    public ButtonGravity getButtonGravity() {
+        return buttonGravity;
+    }
+
+    public void setButtonGravity(ButtonGravity buttonGravity) {
+        this.buttonGravity = buttonGravity;
+    }
+
+    @Override
+    public void setTintList(ColorStateList list) {
+        super.setTintList(list);
+        updateButtonTint();
+    }
+
+    @Deprecated
+    public void setTint(@Nullable ColorStateList list) {
+        super.setTintList(list);
+        updateButtonTint();
+    }
+
+    @Override
+    public void setTint(int color) {
+        setTintList(ColorStateList.valueOf(color));
+    }
+
+    public void setTintMode(@NonNull PorterDuff.Mode mode) {
+        super.setTintMode(mode);
+        updateButtonTint();
+    }
+
+    private void updateButtonTint() {
+        if (drawable != null) {
+            if (tint != null && tintMode != null) {
+                Carbon.setTintListMode(drawable, tint, tintMode);
+            } else {
+                Carbon.setTintList(drawable, null);
+            }
+
+            // The drawable (or one of its children) may not have been
+            // stateful before applying the tint, so let's try again.
+            if (drawable.isStateful())
+                drawable.setState(getDrawableState());
+        }
+    }
+
+    @Override
+    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
+        super.onInitializeAccessibilityEvent(event);
+        event.setClassName(DropDown.class.getName());
+    }
+
+    /*@Override
+    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
+        super.onInitializeAccessibilityNodeInfo(info);
+        info.setClassName(DropDown.class.getName());
+        info.setCheckable(true);
+        info.setChecked(mChecked);
+    }*/
+
+    @Override
+    public int getCompoundPaddingLeft() {
+        int padding = super.getCompoundPaddingLeft();
+        if (isButtonOnTheLeft()) {
+            final Drawable buttonDrawable = drawable;
+            if (buttonDrawable != null) {
+                padding += buttonDrawable.getIntrinsicWidth() + drawablePadding;
+            }
+        }
+        return padding;
+    }
+
+    @Override
+    public int getCompoundPaddingRight() {
+        int padding = super.getCompoundPaddingRight();
+        if (!isButtonOnTheLeft()) {
+            final Drawable buttonDrawable = drawable;
+            if (buttonDrawable != null) {
+                padding += buttonDrawable.getIntrinsicWidth() + drawablePadding;
+            }
+        }
+        return padding;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        final Drawable buttonDrawable = drawable;
+        if (buttonDrawable != null) {
+            final int verticalGravity = getGravity() & Gravity.VERTICAL_GRAVITY_MASK;
+            final int drawableHeight = buttonDrawable.getIntrinsicHeight();
+            final int drawableWidth = buttonDrawable.getIntrinsicWidth();
+
+            final int top;
+            switch (verticalGravity) {
+                case Gravity.BOTTOM:
+                    top = getHeight() - drawableHeight;
+                    break;
+                case Gravity.CENTER_VERTICAL:
+                    top = (getHeight() - drawableHeight) / 2;
+                    break;
+                default:
+                    top = 0;
+            }
+            final int bottom = top + drawableHeight;
+            final int left = isButtonOnTheLeft() ? getPaddingLeft() : getWidth() - drawableWidth - getPaddingRight();
+            final int right = isButtonOnTheLeft() ? drawableWidth + getPaddingLeft() : getWidth() - getPaddingRight();
+
+            buttonDrawable.setBounds(left, top, right, bottom);
+
+            final Drawable background = getBackground();
+            if (background != null && background instanceof RippleDrawable) {
+                //TODO: hotspotBounds
+                // ((RippleDrawable)background).setHotspotBounds(left, top, right, bottom);
+            }
+        }
+
+        super.onDraw(canvas);
+
+        if (buttonDrawable != null) {
+            final int scrollX = getScrollX();
+            final int scrollY = getScrollY();
+            if (scrollX == 0 && scrollY == 0) {
+                buttonDrawable.draw(canvas);
+            } else {
+                canvas.translate(scrollX, scrollY);
+                buttonDrawable.draw(canvas);
+                canvas.translate(-scrollX, -scrollY);
+            }
+        }
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+
+        Drawable d = drawable;
+        if (d != null && d.isStateful()
+                && d.setState(getDrawableState())) {
+            invalidateDrawable(d);
+        }
+    }
+
+    @Override
+    protected boolean verifyDrawable(@NonNull Drawable who) {
+        return super.verifyDrawable(who) || who == drawable;
+    }
+
+    @Override
+    public void jumpDrawablesToCurrentState() {
+        super.jumpDrawablesToCurrentState();
+        if (drawable != null) drawable.jumpToCurrentState();
     }
 
     @Override

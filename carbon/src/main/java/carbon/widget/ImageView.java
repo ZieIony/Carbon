@@ -910,8 +910,14 @@ public class ImageView extends android.widget.ImageView
         if (drawable == null)
             return;
 
-        Carbon.setTintList(drawable, tint);
-        Carbon.setTintMode(drawable, tintMode);
+        if (tint != null && tintMode != null) {
+            Carbon.setTintListMode(drawable, tint, tintMode);
+        } else {
+            Carbon.setTintList(drawable, null);
+        }
+
+        if(drawable.isStateful())
+            drawable.setState(getDrawableState());
     }
 
     @Override

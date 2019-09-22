@@ -26,7 +26,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
-                app:carbon_stroke="?attr/carbon_dividerColor"/>
+                app:carbon_stroke="?attr/carbon_colorControl"/>
 
             <carbon.widget.DropDown
                 android:id="@+id/style"
@@ -52,7 +52,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
-                app:carbon_stroke="?attr/carbon_dividerColor"/>
+                app:carbon_stroke="?attr/carbon_colorControl"/>
 
             <carbon.widget.DropDown
                 android:id="@+id/primary"
@@ -78,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
-                app:carbon_stroke="?attr/carbon_dividerColor"/>
+                app:carbon_stroke="?attr/carbon_colorControl"/>
 
             <carbon.widget.DropDown
                 android:id="@+id/accent"

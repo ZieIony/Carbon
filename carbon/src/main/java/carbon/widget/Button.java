@@ -38,6 +38,7 @@ import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
 import java.lang.ref.WeakReference;
@@ -655,7 +656,11 @@ public class Button extends android.widget.Button
 
     @Override
     public void setCompoundDrawables(@Nullable Drawable left, @Nullable Drawable top, @Nullable Drawable right, @Nullable Drawable bottom) {
-        super.setCompoundDrawables(left, top, right, bottom);
+        super.setCompoundDrawables(
+                left != null ? DrawableCompat.wrap(left) : null,
+                top != null ? DrawableCompat.wrap(top) : null,
+                right != null ? DrawableCompat.wrap(right) : null,
+                bottom != null ? DrawableCompat.wrap(bottom) : null);
         updateTint();
     }
 

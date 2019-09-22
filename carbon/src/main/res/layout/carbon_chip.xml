@@ -1,32 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       android:layout_width="wrap_content"
-       android:layout_height="match_parent"
-       android:orientation="horizontal">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
-    <carbon.widget.ImageView
-        android:id="@+id/carbon_chipIcon"
-        android:layout_width="@dimen/carbon_chipHeight"
-        android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/carbon_marginHalf"
-        app:carbon_cornerRadius="@dimen/carbon_margin"/>
+    <carbon.widget.FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_chipIcon"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:layout_margin="@dimen/carbon_chipCloseMargin"
+            android:visibility="gone"
+            app:carbon_cornerRadius="@dimen/carbon_iconSizeHalf" />
+
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_chipCheck"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:layout_margin="@dimen/carbon_chipCloseMargin"
+            android:background="@color/carbon_defaultIconColor"
+            android:src="@drawable/carbon_check"
+            android:visibility="gone"
+            app:carbon_cornerRadius="@dimen/carbon_iconSizeHalf"
+            app:carbon_tint="@color/carbon_defaultIconColorInverse"
+            tools:visibility="visible" />
+    </carbon.widget.FrameLayout>
 
     <carbon.widget.TextView
         android:id="@+id/carbon_chipText"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"/>
+        android:layout_marginLeft="@dimen/carbon_chipPadding"
+        android:layout_marginRight="@dimen/carbon_chipPadding"
+        android:gravity="center_vertical"
+        tools:text="text" />
 
     <carbon.widget.ImageView
-        android:scaleType="center"
         android:id="@+id/carbon_chipClose"
-        app:carbon_tint="@color/carbon_defaultIconColor"
-        android:layout_width="@dimen/carbon_chipHeight"
-        android:layout_height="match_parent"
-        app:carbon_cornerRadius="@dimen/carbon_margin"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/carbon_chipCloseMargin"
+        android:scaleType="center"
+        android:src="@drawable/carbon_remove"
+        app:carbon_cornerRadius="@dimen/carbon_iconSizeHalf"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless"
-        android:src="@drawable/carbon_remove"/>
+        app:carbon_tint="@color/carbon_defaultIconColor" />
 
 </merge>

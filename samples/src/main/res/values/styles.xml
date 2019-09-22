@@ -54,29 +54,17 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="ThemeLight" parent="carbon_Theme.Light.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-    </style>
+    <style name="ThemeLight" parent="carbon_Theme.Light.NoActionBar"/>
 
-    <style name="ThemeLight.Inverse" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-    </style>
+    <style name="ThemeLight.Inverse" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar"/>
 
-    <style name="ThemeDark" parent="carbon_Theme.Dark.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-    </style>
+    <style name="ThemeDark" parent="carbon_Theme.Dark.NoActionBar"/>
 
-    <style name="ThemeDark.Inverse" parent="carbon_Theme.Dark.DarkPrimaryColor.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-    </style>
+    <style name="ThemeDark.Inverse" parent="carbon_Theme.Dark.DarkPrimaryColor.NoActionBar"/>
 
-    <style name="ThemeDayNight" parent="carbon_Theme.DayNight.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-    </style>
+    <style name="ThemeDayNight" parent="carbon_Theme.DayNight.NoActionBar"/>
 
-    <style name="ThemeDayNight.Inverse" parent="carbon_Theme.DayNight.DarkPrimaryColor.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-    </style>
+    <style name="ThemeDayNight.Inverse" parent="carbon_Theme.DayNight.DarkPrimaryColor.NoActionBar"/>
 
     <style name="PrimaryRed">
         <item name="colorPrimary">@color/carbon_red_500</item>

@@ -21,6 +21,7 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
 import carbon.Carbon;
@@ -199,6 +200,7 @@ public class RadioButton extends TextView implements Checkable {
             drawable = d;
 
             if (d != null) {
+                drawable = DrawableCompat.wrap(d);
                 d.setCallback(this);
                 //d.setLayoutDirection(getLayoutDirection());
                 if (d.isStateful()) {
@@ -243,11 +245,8 @@ public class RadioButton extends TextView implements Checkable {
 
     private void updateButtonTint() {
         if (drawable != null) {
-            drawable = drawable.mutate();
-
             if (tint != null && tintMode != null) {
-                Carbon.setTintList(drawable, tint);
-                Carbon.setTintMode(drawable, tintMode);
+                Carbon.setTintListMode(drawable, tint, tintMode);
             } else {
                 Carbon.setTintList(drawable, null);
             }
