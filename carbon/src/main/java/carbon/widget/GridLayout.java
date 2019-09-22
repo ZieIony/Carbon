@@ -16,8 +16,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -29,16 +27,17 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.FloatRange;
-import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -276,8 +275,10 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
@@ -313,7 +314,7 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || !Carbon.IS_PIE_OR_HIGHER && ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((ShadowView) child).getElevationShadowColor() != null && !Carbon.IS_PIE_OR_HIGHER)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }

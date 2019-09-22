@@ -15,7 +15,7 @@ import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.SamplesActivity;
 
-@ActivityAnnotation(layout = R.layout.carbon_tablelayout, title = R.string.tableLayoutActivity_title)
+@ActivityAnnotation(layout = R.layout.activity_tablelayout, title = R.string.tableLayoutActivity_title)
 public class TableLayoutActivity extends SamplesActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {

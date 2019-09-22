@@ -29,16 +29,17 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.FloatRange;
-import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -282,8 +283,10 @@ public class RelativeLayout extends android.widget.RelativeLayout
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
@@ -320,7 +323,7 @@ public class RelativeLayout extends android.widget.RelativeLayout
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
         // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || !Carbon.IS_PIE_OR_HIGHER && ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((ShadowView) child).getElevationShadowColor() != null && !Carbon.IS_PIE_OR_HIGHER)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }

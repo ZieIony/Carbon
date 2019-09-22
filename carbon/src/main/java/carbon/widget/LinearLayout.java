@@ -28,10 +28,18 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
+
+import com.annimon.stream.Stream;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -60,10 +68,6 @@ import carbon.view.StrokeView;
 import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
-import com.annimon.stream.Stream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A LinearLayout implementation with support for material features including shadows, ripples,
@@ -279,8 +283,10 @@ public class LinearLayout extends android.widget.LinearLayout
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
@@ -317,7 +323,7 @@ public class LinearLayout extends android.widget.LinearLayout
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
         // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || !Carbon.IS_PIE_OR_HIGHER && ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((ShadowView) child).getElevationShadowColor() != null && !Carbon.IS_PIE_OR_HIGHER)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }

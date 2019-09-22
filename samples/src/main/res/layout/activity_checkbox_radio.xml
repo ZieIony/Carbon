@@ -93,7 +93,7 @@
                     android:layout_margin="@dimen/carbon_margin"
                     android:orientation="horizontal"
                     app:carbon_cornerRadius="2dp"
-                    app:carbon_stroke="?attr/colorControlNormal"
+                    app:carbon_stroke="?attr/carbon_colorControl"
                     app:carbon_strokeWidth="@dimen/carbon_dividerHeight">
 
                     <carbon.widget.RadioButton

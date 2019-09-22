@@ -396,8 +396,10 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
@@ -422,7 +424,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
     @Override
     public boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
         // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || !Carbon.IS_PIE_OR_HIGHER && ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((ShadowView) child).getElevationShadowColor() != null && !Carbon.IS_PIE_OR_HIGHER)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
