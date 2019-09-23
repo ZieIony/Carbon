@@ -4,11 +4,11 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_font_resource.*
 import tk.zielony.carbonsamples.ActivityAnnotation
 import tk.zielony.carbonsamples.R
-import tk.zielony.carbonsamples.SamplesActivity
+import tk.zielony.carbonsamples.ThemedActivity
 import tk.zielony.randomdata.common.TextGenerator
 
 @ActivityAnnotation(layout = R.layout.activity_font_resource, title = R.string.fontResourceActivity_title)
-class FontResourceActivity : SamplesActivity() {
+class FontResourceActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

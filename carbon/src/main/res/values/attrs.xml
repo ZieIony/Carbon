@@ -967,6 +967,7 @@
 
         <attr name="android:background"/>
         <attr name="carbon_icon"/>
+        <attr name="carbon_removable" format="boolean"/>
 
         <attr name="carbon_cornerRadiusTopStart"/>
         <attr name="carbon_cornerRadiusTopEnd"/>

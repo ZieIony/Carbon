@@ -26,12 +26,12 @@ import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.DataContext;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_listcomponent, title = R.string.iconTextListItemActivity_title)
-public class IconTextListItemActivity extends SamplesActivity {
+public class IconTextListItemActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -11,11 +11,11 @@ import carbon.widget.CheckBox;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.carbonsamples.databinding.ActivityCheckboxRadioBinding;
 
 @ActivityAnnotation(title = R.string.checkBoxRadioActivity_title)
-public class CheckBoxRadioActivity extends SamplesActivity {
+public class CheckBoxRadioActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

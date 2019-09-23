@@ -18,7 +18,7 @@ import carbon.component.PaddingRow;
 import carbon.recycler.RowArrayAdapter;
 import carbon.widget.RecyclerView;
 
-public class SampleListActivity extends SamplesActivity {
+public class SampleListActivity extends ThemedActivity {
 
     RowArrayAdapter<Serializable> adapter;
     Map<String, String> allPreferences;

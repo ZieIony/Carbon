@@ -18,7 +18,7 @@ import carbon.widget.RecyclerView;
 import carbon.widget.RelativeLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.landscapeview.LandscapeView;
 import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
@@ -26,7 +26,7 @@ import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_behavior, title = R.string.behaviorActivity_title)
-public class BehaviorActivity extends SamplesActivity {
+public class BehaviorActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

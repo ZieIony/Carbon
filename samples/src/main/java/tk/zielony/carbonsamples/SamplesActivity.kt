@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +7,6 @@ import androidx.appcompat.app.AppCompatDelegate
 
 abstract class SamplesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        applyTheme()
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
@@ -29,10 +27,4 @@ abstract class SamplesActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun applyTheme() {
-        val preferences = getSharedPreferences(ColorsActivity.THEME, Context.MODE_PRIVATE)
-        setTheme(ColorsActivity.styles[preferences.getInt(ColorsActivity.STYLE, 2)].value)
-        theme.applyStyle(ColorsActivity.primary[preferences.getInt(ColorsActivity.PRIMARY, 8)].value, true)
-        theme.applyStyle(ColorsActivity.accents[preferences.getInt(ColorsActivity.ACCENT, 14)].value, true)
-    }
 }

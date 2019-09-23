@@ -71,7 +71,6 @@ public class Chip extends LinearLayout implements Checkable {
         inflate(getContext(), R.layout.carbon_chip, this);
         title = findViewById(R.id.carbon_chipText);
         icon = findViewById(R.id.carbon_chipIcon);
-        //check.setImageDrawable(DrawableCompat.wrap(check.getDrawable()));
         check = findViewById(R.id.carbon_chipCheck);
         close = findViewById(R.id.carbon_chipClose);
 
@@ -85,6 +84,7 @@ public class Chip extends LinearLayout implements Checkable {
         setCornerRadius(a.getDimension(R.styleable.Chip_carbon_cornerRadius, 0));  // this shouldn't be necessary
         setText(a.getString(R.styleable.Chip_android_text));
         setIcon(a.getResourceId(R.styleable.Chip_carbon_icon, 0));
+        setRemovable(a.getBoolean(R.styleable.Chip_carbon_removable, false));
 
         a.recycle();
     }

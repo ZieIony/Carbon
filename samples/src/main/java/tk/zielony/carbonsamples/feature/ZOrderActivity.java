@@ -8,10 +8,10 @@ import carbon.widget.Button;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_zorder, title = R.string.zOrderActivity_title)
-public class ZOrderActivity extends SamplesActivity {
+public class ZOrderActivity extends ThemedActivity {
     boolean flag = false;
 
     @Override

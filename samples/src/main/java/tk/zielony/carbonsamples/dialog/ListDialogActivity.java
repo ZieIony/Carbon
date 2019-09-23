@@ -15,7 +15,7 @@ import carbon.widget.EditText;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
@@ -24,7 +24,7 @@ import tk.zielony.randomdata.common.TextGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_listdialog, title = R.string.listDialogActivity_title)
-public class ListDialogActivity extends SamplesActivity {
+public class ListDialogActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

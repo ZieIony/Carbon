@@ -8,14 +8,14 @@
         <item name="carbon_font">@font/rubik_regular</item>
     </style>
 
-    <style name="AppTheme.Crane">
+    <style name="AppTheme.Crane" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
         <item name="colorPrimary">#720d5d</item>
         <item name="colorPrimaryDark">#4e0d3a</item>
         <item name="colorAccent">#e30425</item>
         <item name="carbon_font">@font/raleway_regular</item>
     </style>
 
-    <color name="basilBackground">#fffbe6</color>
+    <color name="basilBackground">#fffffbe6</color>
 
     <style name="AppTheme.Basil">
         <item name="colorPrimary">#356859</item>

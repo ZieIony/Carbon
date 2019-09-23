@@ -14,11 +14,11 @@ import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.carbonsamples.library.FruitAdapter;
 
 @ActivityAnnotation(layout = R.layout.activity_recycler, title = R.string.recyclerViewActivity_title)
-public class RecyclerActivity extends SamplesActivity {
+public class RecyclerActivity extends ThemedActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
     FruitAdapter fruitAdapter;
 

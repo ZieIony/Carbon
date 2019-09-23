@@ -9,10 +9,10 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_searchtoolbar, title = R.string.searchToolbarActivity_title)
-public class SearchToolbarActivity extends SamplesActivity {
+public class SearchToolbarActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

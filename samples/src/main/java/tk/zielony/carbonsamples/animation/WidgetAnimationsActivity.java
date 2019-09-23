@@ -9,10 +9,10 @@ import carbon.widget.rx.FloatingActionButton;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_animations, title = R.string.widgetAnimationsActivity_title)
-public class WidgetAnimationsActivity extends SamplesActivity {
+public class WidgetAnimationsActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

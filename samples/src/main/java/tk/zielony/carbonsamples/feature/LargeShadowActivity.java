@@ -11,11 +11,11 @@ import carbon.widget.ImageView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_largeshadow, title = R.string.largeShadowActivity_title)
-public class LargeShadowActivity extends SamplesActivity {
+public class LargeShadowActivity extends ThemedActivity {
     ValueAnimator animator;
 
     @Override

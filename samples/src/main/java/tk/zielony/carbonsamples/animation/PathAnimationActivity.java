@@ -15,11 +15,11 @@ import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_pathanimation, title = R.string.pathAnimationActivity_title)
-public class PathAnimationActivity extends SamplesActivity {
+public class PathAnimationActivity extends ThemedActivity {
 
     boolean expanded = false;
 

@@ -13,10 +13,10 @@ import carbon.widget.Snackbar;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_snackbar, title = R.string.snackbarActivity_title)
-public class SnackbarActivity extends SamplesActivity {
+public class SnackbarActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

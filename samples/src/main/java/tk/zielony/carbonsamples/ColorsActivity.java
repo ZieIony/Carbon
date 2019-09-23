@@ -14,7 +14,7 @@ import carbon.widget.DropDown;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
 @ActivityAnnotation(title = R.string.colorsActivity_title)
-public class ColorsActivity extends SamplesActivity {
+public class ColorsActivity extends ThemedActivity {
 
     public static final String ACCENT = "accent";
     public static final String PRIMARY = "primary";

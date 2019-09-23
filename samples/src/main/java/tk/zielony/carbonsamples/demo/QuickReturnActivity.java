@@ -22,7 +22,7 @@ import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
@@ -31,7 +31,7 @@ import tk.zielony.randomdata.common.TextGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_quickreturn, title = R.string.quickReturnActivity_title)
-public class QuickReturnActivity extends SamplesActivity {
+public class QuickReturnActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

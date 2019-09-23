@@ -12,10 +12,10 @@ import carbon.internal.MathUtils;
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_share_toolbar, title = R.string.shareToolbarActivity_title)
-public class ShareToolbarActivity extends SamplesActivity {
+public class ShareToolbarActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

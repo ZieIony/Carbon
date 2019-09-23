@@ -22,10 +22,10 @@ import carbon.widget.LinearLayout;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_powermenu, title = R.string.powerMenuActivity_title)
-public class PowerMenuActivity extends SamplesActivity {
+public class PowerMenuActivity extends ThemedActivity {
     boolean vibration = false, volume = true, airplaneMode = false;
 
     Button button;

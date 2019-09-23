@@ -13,10 +13,10 @@ import carbon.widget.ViewPagerIndicator;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_tabs, title = R.string.tabsActivity_title)
-public class TabsActivity extends SamplesActivity {
+public class TabsActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

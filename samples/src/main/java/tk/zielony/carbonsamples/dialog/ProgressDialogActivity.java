@@ -10,10 +10,10 @@ import carbon.widget.EditText;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_progressdialog, title = R.string.progressDialogActivity_title)
-public class ProgressDialogActivity extends SamplesActivity {
+public class ProgressDialogActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

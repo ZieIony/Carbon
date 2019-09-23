@@ -8,7 +8,7 @@ import carbon.widget.BackdropLayout
 import kotlinx.android.synthetic.main.activity_backdrop.*
 import tk.zielony.carbonsamples.ActivityAnnotation
 import tk.zielony.carbonsamples.R
-import tk.zielony.carbonsamples.SamplesActivity
+import tk.zielony.carbonsamples.ThemedActivity
 import tk.zielony.randomdata.RandomData
 import tk.zielony.randomdata.common.IntegerGenerator
 import tk.zielony.randomdata.common.StringDateGenerator
@@ -19,7 +19,7 @@ import java.io.Serializable
 import java.util.*
 
 @ActivityAnnotation(layout = R.layout.activity_backdrop, title = R.string.backdropActivity_title)
-class BackdropActivity : SamplesActivity() {
+class BackdropActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

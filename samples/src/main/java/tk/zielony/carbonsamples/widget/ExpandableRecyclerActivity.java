@@ -15,10 +15,10 @@ import carbon.widget.ExpandableRecyclerView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_expandablerecycler, title = R.string.expandableRecyclerActivity_title)
-public class ExpandableRecyclerActivity extends SamplesActivity {
+public class ExpandableRecyclerActivity extends ThemedActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
 
     @Override

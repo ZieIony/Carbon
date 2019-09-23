@@ -6,10 +6,10 @@ import carbon.widget.DropDown;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_dropdown, title = R.string.dropDownActivityActivity_title)
-public class DropDownActivity extends SamplesActivity {
+public class DropDownActivity extends ThemedActivity {
     private static String[] months = new String[]{
             "Jan", "Feb", "Mar",
             "Apr", "May", "Jun",

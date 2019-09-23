@@ -5,10 +5,10 @@ import tk.zielony.carbonsamples.ActivityAnnotation
 
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.Samples
-import tk.zielony.carbonsamples.SamplesActivity
+import tk.zielony.carbonsamples.ThemedActivity
 
 @ActivityAnnotation(layout = R.layout.activity_roboto, title = R.string.robotoActivity_title)
-class RobotoActivity : SamplesActivity() {
+class RobotoActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

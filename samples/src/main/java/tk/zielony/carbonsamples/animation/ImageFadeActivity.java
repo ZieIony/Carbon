@@ -9,12 +9,12 @@ import carbon.widget.ImageView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.DataContext;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_imagefade, title = R.string.imageFadeActivity_title)
-public class ImageFadeActivity extends SamplesActivity {
+public class ImageFadeActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

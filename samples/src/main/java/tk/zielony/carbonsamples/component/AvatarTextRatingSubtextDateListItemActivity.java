@@ -20,7 +20,7 @@ import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.common.IntegerGenerator;
@@ -30,7 +30,7 @@ import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_listcomponent, title = R.string.avatarTextRatingSubtextDateListItemActivity_title)
-public class AvatarTextRatingSubtextDateListItemActivity extends SamplesActivity {
+public class AvatarTextRatingSubtextDateListItemActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

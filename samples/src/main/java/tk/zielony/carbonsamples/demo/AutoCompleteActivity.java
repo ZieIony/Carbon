@@ -7,10 +7,10 @@ import carbon.widget.AutoCompleteLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_autocomplete, title = R.string.autoCompleteActivity_title)
-public class AutoCompleteActivity extends SamplesActivity {
+public class AutoCompleteActivity extends ThemedActivity {
 
     String[] fruits = {"Strawberry\npie", "Apple\npie", "Orange\njuice", "Lemon\njuice", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"};
 

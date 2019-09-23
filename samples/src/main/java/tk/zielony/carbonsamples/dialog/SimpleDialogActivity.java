@@ -8,10 +8,10 @@ import carbon.widget.EditText;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
-import tk.zielony.carbonsamples.SamplesActivity;
+import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_simpledialog, title = R.string.simpleDialogActivity_title)
-public class SimpleDialogActivity extends SamplesActivity {
+public class SimpleDialogActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
