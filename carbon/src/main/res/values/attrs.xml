@@ -963,26 +963,14 @@
 
     <attr name="carbon_chipStyle" format="reference"/>
     <declare-styleable name="Chip">
-        <attr name="carbon_theme"/>
-
-        <attr name="android:background"/>
         <attr name="carbon_icon"/>
         <attr name="carbon_removable" format="boolean"/>
+    </declare-styleable>
 
-        <attr name="carbon_cornerRadiusTopStart"/>
-        <attr name="carbon_cornerRadiusTopEnd"/>
-        <attr name="carbon_cornerRadiusBottomStart"/>
-        <attr name="carbon_cornerRadiusBottomEnd"/>
-        <attr name="carbon_cornerRadius"/>
-
-        <attr name="carbon_cornerCutTopStart"/>
-        <attr name="carbon_cornerCutTopEnd"/>
-        <attr name="carbon_cornerCutBottomStart"/>
-        <attr name="carbon_cornerCutBottomEnd"/>
-        <attr name="carbon_cornerCut"/>
-
-        <attr name="carbon_stroke"/>
-        <attr name="carbon_strokeWidth"/>
+    <attr name="carbon_bottomBarStyle" format="reference"/>
+    <declare-styleable name="BottomBar">
+        <attr name="carbon_menu"/>
+        <attr name="carbon_itemLayout" format="reference"/>
     </declare-styleable>
 
     <attr name="carbon_imageViewStyle" format="reference"/>
@@ -1076,8 +1064,6 @@
     <attr name="carbon_inputLayoutContainerStyle" format="reference"/>
     <attr name="carbon_inputLayoutButtonStyle" format="reference"/>
     <declare-styleable name="InputLayout">
-        <attr name="carbon_theme"/>
-
         <attr name="carbon_error" format="string"/>
 
         <attr name="carbon_errorMode" format="enum">

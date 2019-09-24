@@ -8,6 +8,7 @@ import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.widget.BackdropActivity;
 import tk.zielony.carbonsamples.widget.BannerActivity;
+import tk.zielony.carbonsamples.widget.BottomBarActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
 
@@ -28,6 +29,7 @@ public class NewSamplesActivity extends SampleListActivity {
                 new SampleActivityItem(FlowLayoutActivity.class),
                 new SampleActivityItem(BackdropActivity.class),
                 new SampleActivityItem(ShadowActivity.class, true),
+                new SampleActivityItem(BottomBarActivity.class, true),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

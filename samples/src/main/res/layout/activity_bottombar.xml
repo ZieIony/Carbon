@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:orientation="vertical">
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_debugtoolbar"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <carbon.widget.TextView
+        style="@style/sectionDescription"
+        android:text="Items can be provided from code as an array of BottomBar.Item objects" />
+
+    <carbon.widget.BottomBar
+        android:id="@+id/bottomBar3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_bottomBarHeight"
+        android:layout_marginBottom="@dimen/carbon_margin"
+        android:background="?attr/colorPrimary" />
+
+    <carbon.widget.TextView
+        style="@style/sectionDescription"
+        android:text="Provide a custom item's layout easily using carbon_itemLayout attribute and data binding" />
 
     <carbon.widget.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_bottomBarHeight"
-        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/carbon_margin"
+        app:carbon_itemLayout="@layout/item_bottombar"
+        app:carbon_menu="@menu/menu_navigation" />
+
+    <carbon.widget.TextView
+        style="@style/sectionDescription"
+        android:text="Default BottomBar with items set using a menu resource" />
+
+    <carbon.widget.BottomBar
+        android:id="@+id/bottomBar2"
+        app:carbon_elevation="8dp"
         android:background="?attr/carbon_colorBackground"
-        app:carbon_elevation="@dimen/carbon_elevationToolbar"/>
-</carbon.widget.FrameLayout>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_bottomBarHeight"
+        app:carbon_menu="@menu/menu_navigation" />
+</carbon.widget.LinearLayout>

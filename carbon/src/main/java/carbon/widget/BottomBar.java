@@ -1,55 +1,100 @@
 package carbon.widget;
 
-import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+
+import carbon.BR;
 import carbon.CarbonContextWrapper;
 import carbon.R;
-import carbon.drawable.DefaultColorStateList;
 
 public class BottomBar extends FrameLayout {
-    private LinearLayout content;
-    private Menu menu;
-    private View activeView;
+    public static class Item {
+        private final Drawable icon;
+        private final String text;
 
-    MenuItem.OnMenuItemClickListener listener;
+        public Item(Drawable icon, String text) {
+            this.icon = icon;
+            this.text = text;
+        }
+
+        public Drawable getIcon() {
+            return icon;
+        }
+
+        public String getText() {
+            return text;
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Item item);
+    }
+
+    private LinearLayout content;
+    private Item[] items;
+    private View activeView;
+    private int itemLayoutId;
+
+    OnItemClickListener listener;
 
     public BottomBar(Context context) {
-        super(context);
-        inflate(context, R.layout.carbon_bottombar, this);
-        content = findViewById(R.id.carbon_bottomBarContent);
+        super(context, null, R.attr.carbon_bottomBarStyle);
+        initBottomBar(null, R.attr.carbon_bottomBarStyle);
     }
 
     public BottomBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        inflate(context, R.layout.carbon_bottombar, this);
-        content = findViewById(R.id.carbon_bottomBarContent);
+        super(context, attrs, R.attr.carbon_bottomBarStyle);
+        initBottomBar(attrs, R.attr.carbon_bottomBarStyle);
     }
 
     public BottomBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        inflate(context, R.layout.carbon_bottombar, this);
-        content = findViewById(R.id.carbon_bottomBarContent);
+        initBottomBar(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public BottomBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        inflate(context, R.layout.carbon_bottombar, this);
+        initBottomBar(attrs, defStyleAttr);
+    }
+
+    private void initBottomBar(AttributeSet attrs, int defStyleAttr) {
+        inflate(getContext(), R.layout.carbon_bottombar, this);
         content = findViewById(R.id.carbon_bottomBarContent);
+
+        if (attrs == null)
+            return;
+
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.BottomBar, defStyleAttr, R.style.carbon_BottomBar);
+
+        itemLayoutId = a.getResourceId(R.styleable.BottomBar_carbon_itemLayout, R.layout.carbon_bottombar_item);
+        int menuId = a.getResourceId(R.styleable.BottomBar_carbon_menu, 0);
+        if (menuId != 0)
+            setMenu(menuId);
+
+        a.recycle();
+    }
+
+    public void setItems(Item[] items) {
+        this.items = items;
+        initItems();
     }
 
     public void setMenu(int resId) {
@@ -60,79 +105,43 @@ public class BottomBar extends FrameLayout {
     }
 
     public void setMenu(Menu menu) {
-        this.menu = menu;
-        content.removeAllViews();
-        content.setWeightSum(menu.size());
+        items = new Item[menu.size()];
         for (int i = 0; i < menu.size(); i++) {
             final MenuItem item = menu.getItem(i);
-            final View view = View.inflate(getContext(), R.layout.carbon_bottombar_item, null);
-            view.setOnClickListener(v -> {
-                if (view == activeView)
+            items[i] = new Item(item.getIcon(), item.getTitle().toString());
+        }
+        initItems();
+    }
+
+    public void setItemLayout(int itemLayoutId) {
+        this.itemLayoutId = itemLayoutId;
+        initItems();
+    }
+
+    private void initItems() {
+        content.removeAllViews();
+        content.setWeightSum(items.length);
+        for (int i = 0; i < items.length; i++) {
+            Item item = items[i];
+            ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), itemLayoutId, this, false);
+            binding.getRoot().setOnClickListener(v -> {
+                if (binding.getRoot() == activeView)
                     return;
-                if (activeView != null) {
-                    deselectItem(activeView);
-                }
-                selectItem(view);
+                selectItem(binding.getRoot());
                 if (listener != null)
-                    listener.onMenuItemClick(item);
+                    listener.onItemClick(item);
             });
-            ImageView icon = view.findViewById(R.id.carbon_bottomIcon);
-            icon.setTintList(new DefaultColorStateList(getContext()));
-            icon.setImageDrawable(item.getIcon());
-            TextView text = view.findViewById(R.id.carbon_bottomText);
-            text.setTextColor(new DefaultColorStateList(getContext()));
-            text.setText(item.getTitle());
-            content.addView(view, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+            binding.setVariable(BR.data, item);
+            content.addView(binding.getRoot(), new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
         }
     }
 
     private void selectItem(final View item) {
+        if (activeView != null)
+            activeView.setSelected(false);
         activeView = item;
-        final ImageView icon = item.findViewById(R.id.carbon_bottomIcon);
-        icon.setSelected(true);
-        final TextView text = item.findViewById(R.id.carbon_bottomText);
-        text.setSelected(true);
-        ValueAnimator animator = ValueAnimator.ofFloat(1, getResources().getDimension(R.dimen.carbon_bottomBarActiveTextSize) / getResources().getDimension(R.dimen.carbon_bottomBarInactiveTextSize));
-        animator.setDuration(200);
-        animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(animation -> {
-            text.setScaleX((Float) animation.getAnimatedValue());
-            text.setScaleY((Float) animation.getAnimatedValue());
-            text.postInvalidate();
-        });
-        animator.start();
-        ValueAnimator animator2 = ValueAnimator.ofFloat(0, -getResources().getDimension(R.dimen.carbon_1dip) * 2);
-        animator2.setDuration(200);
-        animator2.setInterpolator(new DecelerateInterpolator());
-        animator2.addUpdateListener(animation -> {
-            icon.setTranslationY((Float) animation.getAnimatedValue());
-            icon.postInvalidate();
-        });
-        animator2.start();
-    }
-
-    private void deselectItem(final View item) {
-        final ImageView icon = item.findViewById(R.id.carbon_bottomIcon);
-        icon.setSelected(false);
-        final TextView text = item.findViewById(R.id.carbon_bottomText);
-        text.setSelected(false);
-        ValueAnimator animator = ValueAnimator.ofFloat(getResources().getDimension(R.dimen.carbon_bottomBarActiveTextSize) / getResources().getDimension(R.dimen.carbon_bottomBarInactiveTextSize), 1);
-        animator.setDuration(200);
-        animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(animation -> {
-            text.setScaleX((Float) animation.getAnimatedValue());
-            text.setScaleY((Float) animation.getAnimatedValue());
-            text.postInvalidate();
-        });
-        animator.start();
-        ValueAnimator animator2 = ValueAnimator.ofFloat(-getResources().getDimension(R.dimen.carbon_1dip) * 2, 0);
-        animator2.setDuration(200);
-        animator2.setInterpolator(new DecelerateInterpolator());
-        animator2.addUpdateListener(animation -> {
-            icon.setTranslationY((Float) animation.getAnimatedValue());
-            icon.postInvalidate();
-        });
-        animator2.start();
+        if (activeView != null)
+            activeView.setSelected(true);
     }
 
     public int getSelectedIndex() {
@@ -142,12 +151,10 @@ public class BottomBar extends FrameLayout {
     }
 
     public void setSelectedIndex(int index) {
-        if (activeView != null)
-            deselectItem(activeView);
         selectItem(content.getChildAt(index));
     }
 
-    public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 

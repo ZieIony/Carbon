@@ -25,6 +25,7 @@
     <dimen name="carbon_toolbarUpTitleMargin">4dp</dimen>
 
     <dimen name="carbon_bottomBarHeight">56dp</dimen>
+    <dimen name="carbon_bottomBarMaxWidth">480dp</dimen>
     <dimen name="carbon_bottomBarActiveMargin">6dp</dimen>
     <dimen name="carbon_bottomBarInctiveMargin">10dp</dimen>
     <dimen name="carbon_bottomBarActiveMaxWidth">168dp</dimen>
@@ -76,7 +77,7 @@
     <dimen name="carbon_elevationSnackbar">6dp</dimen>
     <dimen name="carbon_elevationFAB">6dp</dimen>
     <dimen name="carbon_elevationMenu">8dp</dimen>
-    <dimen name="carbon_elevationBottomNavigationBar">8dp</dimen>
+    <dimen name="carbon_elevationBottomBar">8dp</dimen>
     <dimen name="carbon_elevationDrawer">16dp</dimen>
     <dimen name="carbon_elevationBottomSheet">16dp</dimen>
     <dimen name="carbon_elevationDialog">24dp</dimen>

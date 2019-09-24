@@ -46,6 +46,7 @@
         <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
         <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout</item>
         <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
+        <item name="carbon_bottomBarStyle">@style/carbon_BottomBar</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Light.Snackbar</item>

@@ -104,7 +104,7 @@ public class FrameLayout extends android.widget.FrameLayout
 
     public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, defStyleAttr, R.styleable.FrameLayout_carbon_theme), attrs, defStyleAttr);
-        initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle);
+        initFrameLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

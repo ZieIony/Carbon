@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="carbon.widget.BottomBar.Item" />
+    </data>
+
+    <carbon.widget.FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:minWidth="@dimen/carbon_bottomBarInactiveMinWidth"
+        app:carbon_maxWidth="@dimen/carbon_bottomBarInactiveMaxWidth"
+        app:carbon_rippleColor="?attr/carbon_rippleColor"
+        app:carbon_rippleStyle="borderless">
+
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_bottomIcon"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"
+            android:src="@{data.icon}"
+            app:carbon_tint="@color/carbon_defaultIconColorPrimary" />
+    </carbon.widget.FrameLayout>
+</layout>

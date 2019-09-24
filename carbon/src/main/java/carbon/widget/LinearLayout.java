@@ -93,12 +93,12 @@ public class LinearLayout extends android.widget.LinearLayout
     private OnTouchListener onDispatchTouchListener;
 
     public LinearLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_linearLayoutStyle);
         initLinearLayout(null, R.attr.carbon_linearLayoutStyle);
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.LinearLayout, R.attr.carbon_linearLayoutStyle, R.styleable.LinearLayout_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.LinearLayout, R.attr.carbon_linearLayoutStyle, R.styleable.LinearLayout_carbon_theme), attrs, R.attr.carbon_linearLayoutStyle);
         initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle);
     }
 

@@ -21,7 +21,6 @@
             android:layout_margin="@dimen/carbon_marginHalf" />
 
         <carbon.widget.Chip
-            style="@style/carbon_Chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
             android:layout_margin="@dimen/carbon_marginHalf" />
@@ -44,7 +43,6 @@
             android:layout_margin="@dimen/carbon_marginHalf" />
 
         <carbon.widget.Chip
-            style="@style/carbon_Chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
             android:layout_margin="@dimen/carbon_marginHalf" />
@@ -68,7 +66,6 @@
             android:clickable="true" />
 
         <carbon.widget.Chip
-            style="@style/carbon_Chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_chipHeight"
             android:layout_margin="@dimen/carbon_marginHalf"

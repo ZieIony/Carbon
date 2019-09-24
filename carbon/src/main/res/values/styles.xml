@@ -217,7 +217,7 @@
         <item name="collapseIcon">@null</item>
     </style>
 
-    <style name="carbon_Chip">
+    <style name="carbon_Chip" parent="carbon_LinearLayout">
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_cornerRadius">@dimen/carbon_margin</item>
         <item name="android:background">?attr/carbon_dividerColor</item>
@@ -314,7 +314,7 @@
         <item name="android:layout_margin">@dimen/carbon_paddingHalf</item>
     </style>
 
-    <style name="carbon_InputLayout">
+    <style name="carbon_InputLayout" parent="carbon_RelativeLayout">
         <item name="carbon_labelStyle">persistent</item>
 
         <item name="carbon_errorTextSize">@dimen/carbon_textSizeCaption</item>
@@ -595,6 +595,12 @@
         <item name="android:background">?attr/carbon_colorForeground</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
+    </style>
+
+    <style name="carbon_BottomBar" parent="carbon_FrameLayout">
+        <item name="android:background">?attr/carbon_colorBackground</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationBottomBar</item>
+        <item name="android:minHeight">@dimen/carbon_bottomBarHeight</item>
     </style>
 
 </resources>

@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import carbon.Carbon;
+
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.drawable.DefaultAccentColorStateList;
@@ -57,22 +57,22 @@ public class InputLayout extends RelativeLayout {
     TransformationMethod transformationMethod;
 
     public InputLayout(Context context) {
-        super(context);
+        super(context,null, R.attr.carbon_inputLayoutStyle);
         initInputLayout(null, R.attr.carbon_inputLayoutStyle);
     }
 
     public InputLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, R.attr.carbon_inputLayoutStyle, R.styleable.InputLayout_carbon_theme), attrs);
+        super(context, attrs, R.attr.carbon_inputLayoutStyle);
         initInputLayout(attrs, R.attr.carbon_inputLayoutStyle);
     }
 
     public InputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, defStyleAttr, R.styleable.InputLayout_carbon_theme), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initInputLayout(attrs, defStyleAttr);
     }
 
     public InputLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, defStyleAttr, R.styleable.InputLayout_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initInputLayout(attrs, defStyleAttr);
     }
 
@@ -96,7 +96,7 @@ public class InputLayout extends RelativeLayout {
         if (attrs == null)
             return;
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.InputLayout, defStyleAttr, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.InputLayout, defStyleAttr, R.style.carbon_InputLayout);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
