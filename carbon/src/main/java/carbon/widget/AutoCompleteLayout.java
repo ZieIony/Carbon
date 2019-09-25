@@ -27,17 +27,17 @@ public class AutoCompleteLayout extends LinearLayout {
     }
 
     public AutoCompleteLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_carbon_theme), attrs, R.attr.carbon_autoCompleteLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_android_theme), attrs, R.attr.carbon_autoCompleteLayoutStyle);
         initAutoCompleteLayout();
     }
 
     public AutoCompleteLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_android_theme), attrs, defStyleAttr);
         initAutoCompleteLayout();
     }
 
     public AutoCompleteLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_android_theme), attrs, defStyleAttr, defStyleRes);
         initAutoCompleteLayout();
     }
 

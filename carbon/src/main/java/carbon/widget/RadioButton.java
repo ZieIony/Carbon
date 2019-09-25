@@ -40,18 +40,18 @@ public class RadioButton extends TextView implements Checkable {
     }
 
     public RadioButton(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, android.R.attr.radioButtonStyle, R.styleable.RadioButton_carbon_theme), attrs, android.R.attr.radioButtonStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, android.R.attr.radioButtonStyle, R.styleable.RadioButton_android_theme), attrs, android.R.attr.radioButtonStyle);
         initRadioButton(attrs, android.R.attr.radioButtonStyle, R.style.carbon_RadioButton);
     }
 
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, defStyleAttr, R.styleable.RadioButton_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, defStyleAttr, R.styleable.RadioButton_android_theme), attrs, defStyleAttr);
         initRadioButton(attrs, defStyleAttr, R.style.carbon_RadioButton);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, defStyleAttr, R.styleable.RadioButton_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, defStyleAttr, R.styleable.RadioButton_android_theme), attrs, defStyleAttr, defStyleRes);
         initRadioButton(attrs, defStyleAttr, defStyleRes);
     }
 

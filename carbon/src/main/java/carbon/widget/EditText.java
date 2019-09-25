@@ -133,18 +133,18 @@ public class EditText extends android.widget.EditText
     }
 
     public EditText(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, android.R.attr.editTextStyle, R.styleable.EditText_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, android.R.attr.editTextStyle, R.styleable.EditText_android_theme), attrs);
         initEditText(attrs, android.R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, defStyleAttr, R.styleable.EditText_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, defStyleAttr, R.styleable.EditText_android_theme), attrs, defStyleAttr);
         initEditText(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public EditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, defStyleAttr, R.styleable.EditText_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.EditText, defStyleAttr, R.styleable.EditText_android_theme), attrs, defStyleAttr, defStyleRes);
         initEditText(attrs, defStyleAttr);
     }
 

@@ -43,18 +43,18 @@ public class CheckBox extends TextView implements Checkable {
     }
 
     public CheckBox(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, android.R.attr.checkboxStyle, R.styleable.CheckBox_carbon_theme), attrs, android.R.attr.checkboxStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, android.R.attr.checkboxStyle, R.styleable.CheckBox_android_theme), attrs, android.R.attr.checkboxStyle);
         initCheckBox(attrs, android.R.attr.checkboxStyle, R.style.carbon_CheckBox);
     }
 
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_android_theme), attrs, defStyleAttr);
         initCheckBox(attrs, defStyleAttr, R.style.carbon_CheckBox);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_android_theme), attrs, defStyleAttr, defStyleRes);
         initCheckBox(attrs, defStyleAttr, defStyleRes);
     }
 

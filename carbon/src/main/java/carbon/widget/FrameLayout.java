@@ -98,18 +98,18 @@ public class FrameLayout extends android.widget.FrameLayout
     }
 
     public FrameLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, R.attr.carbon_frameLayoutStyle, R.styleable.FrameLayout_carbon_theme), attrs, R.attr.carbon_frameLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, R.attr.carbon_frameLayoutStyle, R.styleable.FrameLayout_android_theme), attrs, R.attr.carbon_frameLayoutStyle);
         initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle);
     }
 
     public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, defStyleAttr, R.styleable.FrameLayout_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, defStyleAttr, R.styleable.FrameLayout_android_theme), attrs, defStyleAttr);
         initFrameLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, defStyleAttr, R.styleable.FrameLayout_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FrameLayout, defStyleAttr, R.styleable.FrameLayout_android_theme), attrs, defStyleAttr, defStyleRes);
         initFrameLayout(attrs, defStyleAttr);
     }
 

@@ -87,12 +87,12 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
     }
 
     public ConstraintLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ConstraintLayout, R.attr.carbon_constraintLayoutStyle, R.styleable.ConstraintLayout_carbon_theme), attrs, R.attr.carbon_constraintLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ConstraintLayout, R.attr.carbon_constraintLayoutStyle, R.styleable.ConstraintLayout_android_theme), attrs, R.attr.carbon_constraintLayoutStyle);
         initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle);
     }
 
     public ConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ConstraintLayout, defStyleAttr, R.styleable.ConstraintLayout_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ConstraintLayout, defStyleAttr, R.styleable.ConstraintLayout_android_theme), attrs, defStyleAttr);
         initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle);
     }
 

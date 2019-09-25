@@ -96,12 +96,12 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
     }
 
     public Toolbar(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.Toolbar, R.attr.toolbarStyle, R.styleable.Toolbar_carbon_theme), attrs, R.attr.toolbarStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Toolbar, R.attr.toolbarStyle, R.styleable.Toolbar_android_theme), attrs, R.attr.toolbarStyle);
         initToolbar(attrs, R.attr.toolbarStyle);
     }
 
     public Toolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.Toolbar, defStyleAttr, R.styleable.Toolbar_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.Toolbar, defStyleAttr, R.styleable.Toolbar_android_theme), attrs, defStyleAttr);
         initToolbar(attrs, defStyleAttr);
     }
 

@@ -28,13 +28,14 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -77,18 +78,18 @@ public abstract class View extends android.view.View
     }
 
     public View(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.View, 0, R.styleable.View_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.View, 0, R.styleable.View_android_theme), attrs);
         initView(attrs, 0);
     }
 
     public View(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.View, defStyleAttr, R.styleable.View_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.View, defStyleAttr, R.styleable.View_android_theme), attrs, defStyleAttr);
         initView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public View(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.View, defStyleAttr, R.styleable.View_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.View, defStyleAttr, R.styleable.View_android_theme), attrs, defStyleAttr, defStyleRes);
         initView(attrs, defStyleAttr);
     }
 

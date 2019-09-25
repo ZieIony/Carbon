@@ -46,18 +46,18 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
     }
 
     public ScrollView(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, android.R.attr.scrollViewStyle, R.styleable.ScrollView_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, android.R.attr.scrollViewStyle, R.styleable.ScrollView_android_theme), attrs);
         initScrollView(attrs, android.R.attr.scrollViewStyle);
     }
 
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, defStyleAttr, R.styleable.ScrollView_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, defStyleAttr, R.styleable.ScrollView_android_theme), attrs, defStyleAttr);
         initScrollView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, defStyleAttr, R.styleable.ScrollView_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ScrollView, defStyleAttr, R.styleable.ScrollView_android_theme), attrs, defStyleAttr, defStyleRes);
         initScrollView(attrs, defStyleAttr);
     }
 

@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.widget;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +31,7 @@ public class ExpandableRecyclerActivity extends ThemedActivity {
         final ExpandableFruitAdapter fruitAdapter = new ExpandableFruitAdapter(fruits);
         recyclerView.setAdapter(fruitAdapter);
 
-        DividerItemDecoration decoration = new DividerItemDecoration(new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_dividerColor)), getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
+        DividerItemDecoration decoration = new DividerItemDecoration(Carbon.getThemeDrawable(this, R.attr.carbon_dividerColor), getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
         decoration.setDrawBefore(position -> position > 0 && fruits.contains(fruitAdapter.getItem(position)));
         recyclerView.addItemDecoration(decoration);
     }

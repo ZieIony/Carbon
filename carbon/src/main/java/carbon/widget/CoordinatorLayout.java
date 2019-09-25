@@ -85,12 +85,12 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     }
 
     public CoordinatorLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CoordinatorLayout, R.attr.carbon_coordinatorLayoutStyle, R.styleable.CoordinatorLayout_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CoordinatorLayout, R.attr.carbon_coordinatorLayoutStyle, R.styleable.CoordinatorLayout_android_theme), attrs);
         initCoordinatorLayout(attrs, R.attr.carbon_coordinatorLayoutStyle);
     }
 
     public CoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CoordinatorLayout, defStyleAttr, R.styleable.CoordinatorLayout_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.CoordinatorLayout, defStyleAttr, R.styleable.CoordinatorLayout_android_theme), attrs, defStyleAttr);
         initCoordinatorLayout(attrs, defStyleAttr);
     }
 

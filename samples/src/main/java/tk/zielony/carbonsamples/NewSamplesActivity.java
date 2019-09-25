@@ -28,8 +28,8 @@ public class NewSamplesActivity extends SampleListActivity {
                 new SampleActivityItem(CheckBoxRadioActivity.class),
                 new SampleActivityItem(FlowLayoutActivity.class),
                 new SampleActivityItem(BackdropActivity.class),
-                new SampleActivityItem(ShadowActivity.class, true),
-                new SampleActivityItem(BottomBarActivity.class, true),
+                new SampleActivityItem(ShadowActivity.class, 0, true),
+                new SampleActivityItem(BottomBarActivity.class, 0, true),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

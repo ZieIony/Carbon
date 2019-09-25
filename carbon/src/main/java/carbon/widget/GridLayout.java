@@ -96,12 +96,12 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
     }
 
     public GridLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.GridLayout, R.attr.carbon_gridLayoutStyle, R.styleable.GridLayout_carbon_theme), attrs, R.attr.carbon_gridLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.GridLayout, R.attr.carbon_gridLayoutStyle, R.styleable.GridLayout_android_theme), attrs, R.attr.carbon_gridLayoutStyle);
         initGridLayout(attrs, R.attr.carbon_gridLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.GridLayout, defStyleAttr, R.styleable.GridLayout_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.GridLayout, defStyleAttr, R.styleable.GridLayout_android_theme), attrs, defStyleAttr);
         initGridLayout(attrs, defStyleAttr);
     }
 

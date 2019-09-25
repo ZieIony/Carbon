@@ -205,7 +205,7 @@
     </style>
 
     <style name="carbon_Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="carbon_theme">?attr/carbon_toolbarTheme</item>
+        <item name="android:theme">?attr/carbon_toolbarTheme</item>
         <item name="android:layout_height">@dimen/carbon_toolbarHeight</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="carbon_elevation">@dimen/carbon_elevationToolbar</item>
@@ -326,7 +326,7 @@
 
         <item name="android:gravity">start|left</item>
 
-        <item name="carbon_theme">@style/carbon_InputLayoutContainerTheme</item>
+        <item name="android:theme">@style/carbon_InputLayoutContainerTheme</item>
     </style>
 
     <style name="carbon_ImageView.InputLayout" parent="carbon_ImageView.IconButton">
@@ -344,7 +344,7 @@
     </style>
 
     <style name="carbon_InputLayout.Box">
-        <item name="carbon_theme">@style/carbon_InputLayoutContainerTheme.Box</item>
+        <item name="android:theme">@style/carbon_InputLayoutContainerTheme.Box</item>
     </style>
 
     <style name="carbon_EditText.InputLayout.Box" parent="carbon_EditText">
@@ -372,7 +372,7 @@
     </style>
 
     <style name="carbon_InputLayout.Stroke">
-        <item name="carbon_theme">@style/carbon_InputLayoutContainerTheme.Stroke</item>
+        <item name="android:theme">@style/carbon_InputLayoutContainerTheme.Stroke</item>
     </style>
 
     <style name="carbon_EditText.InputLayout.Stroke" parent="carbon_EditText">
@@ -435,7 +435,7 @@
         <item name="carbon_popupTheme">?attr/carbon_dropDownPopupTheme</item>
         <item name="carbon_buttonGravity">end</item>
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
         <item name="android:button">@drawable/carbon_dropdown</item>
     </style>
 

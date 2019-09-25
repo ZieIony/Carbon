@@ -25,18 +25,18 @@ public class FloatingActionButton extends ImageView {
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, R.attr.carbon_fabStyle, R.styleable.FloatingActionButton_carbon_theme), attrs, R.attr.carbon_fabStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, R.attr.carbon_fabStyle, R.styleable.FloatingActionButton_android_theme), attrs, R.attr.carbon_fabStyle);
         initFloatingActionButton(attrs, R.attr.carbon_fabStyle);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, defStyleAttr, R.styleable.FloatingActionButton_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, defStyleAttr, R.styleable.FloatingActionButton_android_theme), attrs, defStyleAttr);
         initFloatingActionButton(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, defStyleAttr, R.styleable.FloatingActionButton_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, defStyleAttr, R.styleable.FloatingActionButton_android_theme), attrs, defStyleAttr, defStyleRes);
         initFloatingActionButton(attrs, defStyleAttr);
     }
 

@@ -77,7 +77,7 @@ import carbon.view.ValidStateView;
 import carbon.view.VisibleView;
 
 /**
- * @attr ref R.styleable#carbon_theme
+ * @attr ref R.styleable#android:theme
  * @attr ref R.styleable#carbon_rippleColor
  * @attr ref R.styleable#carbon_rippleHotspot
  * @attr ref R.styleable#carbon_rippleStyle
@@ -144,18 +144,18 @@ public class TextView extends android.widget.TextView
     }
 
     public TextView(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, android.R.attr.textViewStyle, R.styleable.TextView_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, android.R.attr.textViewStyle, R.styleable.TextView_android_theme), attrs);
         initTextView(attrs, android.R.attr.textViewStyle);
     }
 
     public TextView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, defStyleAttr, R.styleable.TextView_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, defStyleAttr, R.styleable.TextView_android_theme), attrs, defStyleAttr);
         initTextView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, defStyleAttr, R.styleable.TextView_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, defStyleAttr, R.styleable.TextView_android_theme), attrs, defStyleAttr, defStyleRes);
         initTextView(attrs, defStyleAttr);
     }
 

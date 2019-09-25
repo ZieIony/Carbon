@@ -24,10 +24,10 @@ public class DemosActivity extends SampleListActivity {
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "The most popular problem solutions and other fun ideas implemented with Carbon's widgets and features",
                 new SampleActivityItem(PowerMenuActivity.class),
-                new SampleActivityItem(AutoCompleteActivity.class, false),
-                new SampleActivityItem(QuickReturnActivity.class, false),
-                new SampleActivityItem(SearchToolbarActivity.class, false),
-                new SampleActivityItem(ShareToolbarActivity.class, true),
+                new SampleActivityItem(AutoCompleteActivity.class, 0, false),
+                new SampleActivityItem(QuickReturnActivity.class, 0, false),
+                new SampleActivityItem(SearchToolbarActivity.class, 0, false),
+                new SampleActivityItem(ShareToolbarActivity.class, 0, true),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

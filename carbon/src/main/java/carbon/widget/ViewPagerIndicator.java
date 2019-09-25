@@ -72,18 +72,18 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
     }
 
     public ViewPagerIndicator(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, R.attr.carbon_viewPagerIndicatorStyle, R.styleable.ViewPagerIndicator_carbon_theme), attrs, R.attr.carbon_viewPagerIndicatorStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, R.attr.carbon_viewPagerIndicatorStyle, R.styleable.ViewPagerIndicator_android_theme), attrs, R.attr.carbon_viewPagerIndicatorStyle);
         initViewPagerIndicator(attrs, R.attr.carbon_viewPagerIndicatorStyle);
     }
 
     public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, defStyleAttr, R.styleable.ViewPagerIndicator_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, defStyleAttr, R.styleable.ViewPagerIndicator_android_theme), attrs, defStyleAttr);
         initViewPagerIndicator(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, defStyleAttr, R.styleable.ViewPagerIndicator_carbon_theme), attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, defStyleAttr, R.styleable.ViewPagerIndicator_android_theme), attrs, defStyleAttr, defStyleRes);
         initViewPagerIndicator(attrs, defStyleAttr);
     }
 

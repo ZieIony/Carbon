@@ -77,12 +77,12 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
     }
 
     public ViewPager(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPager, R.attr.carbon_viewPagerStyle, R.styleable.ViewPager_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPager, R.attr.carbon_viewPagerStyle, R.styleable.ViewPager_android_theme), attrs);
         initViewPager(attrs, R.attr.carbon_viewPagerStyle);
     }
 
     public ViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPager, defStyleAttr, R.styleable.ViewPager_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPager, defStyleAttr, R.styleable.ViewPager_android_theme), attrs);
         initViewPager(attrs, defStyleAttr);
     }
 

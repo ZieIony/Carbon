@@ -25,9 +25,9 @@ public class GuidelinesActivity extends SampleListActivity {
                 "Sample screens taken from Material Design guidelines",
                 new SampleActivityItem(ButtonsUsageActivity.class),
                 new SampleActivityItem(MenusBehaviorActivity.class),
-                new SampleActivityItem(ShrineActivity.class, true),
+                new SampleActivityItem(ShrineActivity.class, 0, true),
                 new SampleActivityItem(CraneActivity.class),
-                new SampleActivityItem(BasilActivity.class, true),
+                new SampleActivityItem(BasilActivity.class, 0, true),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

@@ -87,12 +87,12 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
     }
 
     public DrawerLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.DrawerLayout, R.attr.carbon_drawerLayoutStyle, R.styleable.DrawerLayout_carbon_theme), attrs, R.attr.carbon_drawerLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.DrawerLayout, R.attr.carbon_drawerLayoutStyle, R.styleable.DrawerLayout_android_theme), attrs, R.attr.carbon_drawerLayoutStyle);
         initDrawerLayout(attrs, R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.DrawerLayout, defStyleAttr, R.styleable.DrawerLayout_carbon_theme), attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.DrawerLayout, defStyleAttr, R.styleable.DrawerLayout_android_theme), attrs, defStyleAttr);
         initDrawerLayout(attrs, defStyleAttr);
     }
 

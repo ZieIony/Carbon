@@ -47,8 +47,6 @@
         <attr name="carbon_textAppearanceButtonInverse" format="reference"/>
     </declare-styleable>
 
-    <attr name="carbon_theme" format="reference"/>
-
     <attr name="carbon_maxWidth" format="dimension"/>
     <attr name="carbon_maxHeight" format="dimension"/>
 
@@ -195,7 +193,7 @@
     <!-- FloatingActionButton -->
     <attr name="carbon_fabStyle" format="reference"/>
     <declare-styleable name="FloatingActionButton">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
         <attr name="android:background"/>
 
         <attr name="carbon_cornerRadiusTopStart"/>
@@ -219,7 +217,7 @@
 
     <!-- View -->
     <declare-styleable name="View">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
         <attr name="android:background"/>
 
         <attr name="carbon_rippleColor"/>
@@ -269,7 +267,7 @@
 
     <!-- Button -->
     <declare-styleable name="Button">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
         <attr name="android:background"/>
         <attr name="android:textColor"/>
 
@@ -336,7 +334,7 @@
 
     <!-- TextView -->
     <declare-styleable name="TextView">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
         <attr name="android:background"/>
         <attr name="android:textColor"/>
 
@@ -408,7 +406,7 @@
 
     <attr name="carbon_collapsingToolbarLayoutStyle" format="reference"/>
     <declare-styleable name="CollapsingToolbarLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -457,7 +455,7 @@
 
     <attr name="carbon_appBarLayoutStyle" format="reference"/>
     <declare-styleable name="AppBarLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -505,7 +503,7 @@
     </declare-styleable>
 
     <declare-styleable name="AppBarLayout_Layout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_anchor"/>
         <attr name="carbon_anchorGravity"/>
@@ -513,7 +511,7 @@
 
     <attr name="carbon_coordinatorLayoutStyle" format="reference"/>
     <declare-styleable name="CoordinatorLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -561,7 +559,7 @@
     </declare-styleable>
 
     <declare-styleable name="CoordinatorLayout_Layout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_anchor"/>
         <attr name="carbon_anchorGravity"/>
@@ -569,7 +567,7 @@
 
     <attr name="carbon_frameLayoutStyle" format="reference"/>
     <declare-styleable name="FrameLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -623,7 +621,7 @@
 
     <attr name="carbon_constraintLayoutStyle" format="reference"/>
     <declare-styleable name="ConstraintLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -672,7 +670,7 @@
 
     <attr name="carbon_flowLayoutStyle" format="reference"/>
     <declare-styleable name="FlowLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -723,7 +721,7 @@
 
     <attr name="carbon_gridLayoutStyle" format="reference"/>
     <declare-styleable name="GridLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -772,7 +770,7 @@
 
     <attr name="carbon_relativeLayoutStyle" format="reference"/>
     <declare-styleable name="RelativeLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -826,7 +824,7 @@
 
     <attr name="carbon_linearLayoutStyle" format="reference"/>
     <declare-styleable name="LinearLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -880,7 +878,7 @@
 
     <attr name="carbon_drawerLayoutStyle" format="reference"/>
     <declare-styleable name="DrawerLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -928,7 +926,7 @@
     </declare-styleable>
 
     <declare-styleable name="Toolbar">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_stroke"/>
         <attr name="carbon_strokeWidth"/>
@@ -975,7 +973,7 @@
 
     <attr name="carbon_imageViewStyle" format="reference"/>
     <declare-styleable name="ImageView">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
         <attr name="android:background"/>
 
         <attr name="carbon_rippleColor"/>
@@ -1032,7 +1030,7 @@
     </declare-styleable>
 
     <declare-styleable name="ProgressBar">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -1055,7 +1053,7 @@
 
     <attr name="carbon_navigationViewStyle" format="reference"/>
     <declare-styleable name="NavigationView">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
     </declare-styleable>
 
     <attr name="carbon_cardViewStyle" format="reference"/>
@@ -1100,7 +1098,7 @@
     </declare-styleable>
 
     <declare-styleable name="EditText">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
         <attr name="android:background"/>
         <attr name="android:textColor"/>
 
@@ -1177,7 +1175,7 @@
 
     <attr name="carbon_dropDownStyle" format="reference"/>
     <declare-styleable name="DropDown">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="android:drawablePadding"/>
         <attr name="carbon_buttonGravity"/>
@@ -1205,7 +1203,7 @@
 
     <attr name="carbon_viewPagerIndicatorStyle" format="reference"/>
     <declare-styleable name="ViewPagerIndicator">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -1222,7 +1220,7 @@
     </declare-styleable>
 
     <declare-styleable name="ScrollView">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -1238,7 +1236,7 @@
 
     <attr name="carbon_horizontalScrollViewStyle" format="reference"/>
     <declare-styleable name="HorizontalScrollView">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -1251,7 +1249,7 @@
 
     <attr name="carbon_viewPagerStyle" format="reference"/>
     <declare-styleable name="ViewPager">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_tint"/>
         <attr name="carbon_tintMode"/>
@@ -1264,7 +1262,7 @@
 
     <attr name="carbon_recyclerViewStyle"/>
     <declare-styleable name="RecyclerView">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_elevation"/>
         <attr name="carbon_elevationShadowColor"/>
@@ -1314,7 +1312,7 @@
     </attr>
 
     <declare-styleable name="CheckBox">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="android:drawablePadding"/>
         <attr name="android:checked"/>
@@ -1325,7 +1323,7 @@
     </declare-styleable>
 
     <declare-styleable name="RadioButton">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="android:drawablePadding"/>
         <attr name="android:checked"/>
@@ -1336,14 +1334,14 @@
     </declare-styleable>
 
     <declare-styleable name="RadioGroup">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="android:checkedButton"/>
     </declare-styleable>
 
     <attr name="carbon_rangeSeekBarStyle" format="reference"/>
     <declare-styleable name="SeekBar">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
 
         <attr name="carbon_rippleColor"/>
         <attr name="carbon_rippleHotspot"/>
@@ -1382,7 +1380,7 @@
 
     <attr name="carbon_autoCompleteLayoutStyle" format="reference"/>
     <declare-styleable name="AutoCompleteLayout">
-        <attr name="carbon_theme"/>
+        <attr name="android:theme"/>
     </declare-styleable>
 
     <attr name="carbon_bannerStyle" format="reference"/>

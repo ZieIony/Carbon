@@ -85,7 +85,7 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
     }
 
     public AppBarLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.AppBarLayout, R.attr.carbon_appBarLayoutStyle, R.styleable.CollapsingToolbarLayout_carbon_theme), attrs);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.AppBarLayout, R.attr.carbon_appBarLayoutStyle, R.styleable.CollapsingToolbarLayout_android_theme), attrs);
         initAppBarLayout(attrs, R.attr.carbon_appBarLayoutStyle);
     }
 

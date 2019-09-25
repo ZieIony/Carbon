@@ -12,42 +12,57 @@
         <import type="android.view.View" />
     </data>
 
-    <carbon.widget.LinearLayout
+    <carbon.widget.FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/carbon_colorForeground"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/carbon_windowPadding"
-        android:paddingLeft="@dimen/carbon_windowPadding"
-        android:paddingEnd="@dimen/carbon_toolbarItemMargin"
-        android:paddingRight="@dimen/carbon_toolbarItemMargin"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-        <carbon.widget.TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_listItemHeight"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="@{context.getString(data.name)}"
-            tools:text="item name" />
-
-        <carbon.widget.TextView
-            android:id="@+id/beta"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_listItemHeight"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/carbon_padding"
-            android:paddingLeft="@dimen/carbon_padding"
-            android:text="beta"
-            android:textColor="#afff2020"
-            android:textSize="16sp"
-            android:visibility="@{data.beta?View.VISIBLE:View.GONE}" />
-
         <carbon.widget.ImageView
-            android:id="@+id/star"
-            style="@style/carbon_ImageView.IconButton"
-            android:src="@{data.starred?@drawable/ic_star_black_24dp:@drawable/ic_star_border_black_24dp}" />
+            style="@style/carbon_ImageView.Icon"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            android:src="@{data.icon!=0?context.getResources().getDrawable(data.icon):null}"
+            tools:src="@drawable/ic_android_black_24dp" />
 
-    </carbon.widget.LinearLayout>
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/carbon_contentPadding"
+            android:paddingLeft="@dimen/carbon_contentPadding"
+            android:paddingEnd="@dimen/carbon_toolbarItemMargin"
+            android:paddingRight="@dimen/carbon_toolbarItemMargin"
+            app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+            <carbon.widget.TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/carbon_listItemHeight"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@{context.getString(data.name)}"
+                tools:text="item name" />
+
+            <carbon.widget.TextView
+                android:id="@+id/beta"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/carbon_listItemHeight"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/carbon_padding"
+                android:paddingLeft="@dimen/carbon_padding"
+                android:text="beta"
+                android:textColor="#afff2020"
+                android:textSize="16sp"
+                android:visibility="@{data.beta?View.VISIBLE:View.GONE}" />
+
+            <carbon.widget.ImageView
+                android:id="@+id/star"
+                style="@style/carbon_ImageView.IconButton"
+                android:src="@{data.starred?@drawable/ic_star_black_24dp:@drawable/ic_star_border_black_24dp}"
+                tools:src="@drawable/ic_star_border_black_24dp" />
+        </carbon.widget.LinearLayout>
+    </carbon.widget.FrameLayout>
 </layout>
