@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
@@ -529,6 +530,9 @@ public class DropDown<Type extends Serializable> extends EditText {
         super.onDraw(canvas);
 
         if (buttonDrawable != null) {
+            if (animateColorChanges && tint != null && tintMode != null)
+                buttonDrawable.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(buttonDrawable.getState(), tint.getDefaultColor()), tintMode));
+
             final int scrollX = getScrollX();
             final int scrollY = getScrollY();
             if (scrollX == 0 && scrollY == 0) {

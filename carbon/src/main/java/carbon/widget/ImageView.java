@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -339,6 +340,9 @@ public class ImageView extends android.widget.ImageView
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
+        if (animateColorChanges && getDrawable() != null && tint != null && tintMode != null)
+            getDrawable().setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getDrawable().getState(), tint.getDefaultColor()), tintMode));
+
         super.draw(canvas);
         if (stroke != null)
             drawStroke(canvas);
@@ -916,7 +920,7 @@ public class ImageView extends android.widget.ImageView
             Carbon.setTintList(drawable, null);
         }
 
-        if(drawable.isStateful())
+        if (drawable.isStateful())
             drawable.setState(getDrawableState());
     }
 

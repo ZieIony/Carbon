@@ -25,8 +25,16 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
+
+import com.annimon.stream.Stream;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -54,10 +62,6 @@ import carbon.view.StrokeView;
 import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
-import com.annimon.stream.Stream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Carbon version of a drawer layout with support for shadows, ripples and other material features.
@@ -266,8 +270,10 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
@@ -304,7 +310,7 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
         // TODO: why isShown() returns false after being reattached?
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || !Carbon.IS_PIE_OR_HIGHER && ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((ShadowView) child).getElevationShadowColor() != null && !Carbon.IS_PIE_OR_HIGHER)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -682,8 +688,14 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
 
-        paint.setAlpha((int) (127 * alpha));
-        saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        if (alpha != 255) {
+            paint.setAlpha((int) (127 * alpha));
+            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        } else {
+            saveCount = canvas.save();
+        }
+        Matrix matrix = getMatrix();
+        canvas.setMatrix(matrix);
 
         if (r) {
             canvas.clipRect(
@@ -691,31 +703,25 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
 
-        Matrix matrix = getMatrix();
-
         shadowDrawable.setTintList(spotShadowColor);
         shadowDrawable.setAlpha(0x44);
         shadowDrawable.setElevation(z);
         shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 2), getRight(), (int) (getBottom() + z / 2));
         shadowDrawable.draw(canvas);
 
-        if (saveCount != 0) {
-            canvas.translate(this.getLeft(), this.getTop());
-            canvas.concat(matrix);
-            paint.setXfermode(Carbon.CLEAR_MODE);
-        }
+        canvas.translate(this.getLeft(), this.getTop());
+        canvas.concat(matrix);
+        paint.setXfermode(Carbon.CLEAR_MODE);
         if (maskShadow) {
             cornersMask.setFillType(Path.FillType.WINDING);
             canvas.drawPath(cornersMask, paint);
         }
-        if (r) {
+        if (r)
             canvas.drawPath(revealAnimator.mask, paint);
-        }
-        if (saveCount != 0) {
-            canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
-            paint.setAlpha(255);
-        }
+
+        canvas.restoreToCount(saveCount);
+        paint.setXfermode(null);
+        paint.setAlpha(255);
     }
 
     @Override

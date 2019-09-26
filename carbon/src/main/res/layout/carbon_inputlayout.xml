@@ -45,7 +45,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
         android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
-        android:src="@drawable/carbon_visibility"
+        app:srcCompat="@drawable/carbon_visibility"
         android:tag="inputLayout"/>
 
     <carbon.widget.ImageView
@@ -56,7 +56,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
         android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
-        android:src="@drawable/carbon_voice"
+        app:srcCompat="@drawable/carbon_voice"
         android:tag="inputLayout"/>
 
     <carbon.widget.LinearLayout

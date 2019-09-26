@@ -155,7 +155,7 @@ public class ShadowRenderer {
                 new RadialGradient(
                         bounds.centerX(),
                         bounds.centerY(),
-                        bounds.width() / 2,
+                        Math.max(bounds.width() / 2, 0.01f),
                         cornerColors,
                         cornerPositions,
                         Shader.TileMode.CLAMP));

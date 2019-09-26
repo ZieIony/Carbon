@@ -463,6 +463,8 @@ public class Button extends android.widget.Button
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
+        if(animateColorChanges)
+            drawableStateChanged();
         super.draw(canvas);
         if (stroke != null)
             drawStroke(canvas);

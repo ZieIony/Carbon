@@ -454,7 +454,6 @@ public class Carbon {
     }
 
     public static void setTint(Drawable drawable, int tint) {
-        drawable.mutate();
         if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             drawable.setTint(tint);
         } else if (drawable instanceof TintAwareDrawable) {
@@ -465,7 +464,6 @@ public class Carbon {
     }
 
     public static void setTintListMode(Drawable drawable, ColorStateList tint, PorterDuff.Mode mode) {
-        drawable.mutate();
         if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             drawable.setTintList(tint);
             drawable.setTintMode(mode);
@@ -478,7 +476,6 @@ public class Carbon {
     }
 
     public static void setTintList(Drawable drawable, ColorStateList tint) {
-        drawable.mutate();
         if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             drawable.setTintList(tint);
         } else if (drawable instanceof TintAwareDrawable) {
@@ -489,7 +486,6 @@ public class Carbon {
     }
 
     public static void setTintMode(Drawable drawable, PorterDuff.Mode mode) {
-        drawable.mutate();
         if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
             drawable.setTintMode(mode);
         } else if (drawable instanceof TintAwareDrawable) {

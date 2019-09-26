@@ -1,5 +1,6 @@
 package carbon.widget
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -61,18 +62,65 @@ open class BackdropLayout : FrameLayout {
 
         val params = frontLayout!!.layoutParams as MarginLayoutParams
         when (s) {
-            Side.LEFT -> frontLayout!!.animate().translationX(backLayout!!.width.toFloat() - params.leftMargin).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
-            Side.TOP -> frontLayout!!.animate().translationY(backLayout!!.height.toFloat() - params.topMargin).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
-            Side.RIGHT -> frontLayout!!.animate().translationX(-backLayout!!.width.toFloat() - params.rightMargin).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
-            else -> frontLayout!!.animate().translationY(-backLayout!!.height.toFloat() - params.bottomMargin).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
+            Side.LEFT -> {
+                val animator = ValueAnimator.ofFloat(frontLayout!!.translationX, backLayout!!.width.toFloat() - params.leftMargin)
+                animator.interpolator = AccelerateDecelerateInterpolator()
+                animator.duration = 200
+                animator.addUpdateListener {
+                    frontLayout!!.translationX = it.animatedValue as Float
+                }
+                animator.start()
+            }
+            Side.TOP -> {
+                val animator = ValueAnimator.ofFloat(frontLayout!!.translationY, backLayout!!.height.toFloat() - params.topMargin)
+                animator.interpolator = AccelerateDecelerateInterpolator()
+                animator.duration = 200
+                animator.addUpdateListener {
+                    frontLayout!!.translationY = it.animatedValue as Float
+                }
+                animator.start()
+            }
+            Side.RIGHT -> {
+                val animator = ValueAnimator.ofFloat(frontLayout!!.translationX, -backLayout!!.width.toFloat() - params.rightMargin)
+                animator.interpolator = AccelerateDecelerateInterpolator()
+                animator.duration = 200
+                animator.addUpdateListener {
+                    frontLayout!!.translationX = it.animatedValue as Float
+                }
+                animator.start()
+            }
+            else -> {
+                val animator = ValueAnimator.ofFloat(frontLayout!!.translationY, -backLayout!!.height.toFloat() - params.bottomMargin)
+                animator.interpolator = AccelerateDecelerateInterpolator()
+                animator.duration = 200
+                animator.addUpdateListener {
+                    frontLayout!!.translationY = it.animatedValue as Float
+                }
+                animator.start()
+            }
         }
         opened = true
-        this.side = side
+        this.side = s
     }
 
     fun closeLayout() {
-        frontLayout!!.animate().translationY(0.0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
-        frontLayout!!.animate().translationX(0.0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(200).start()
+        if (side == Side.LEFT || side == Side.RIGHT) {
+            val animator = ValueAnimator.ofFloat(frontLayout!!.translationX, 0.0f)
+            animator.interpolator = AccelerateDecelerateInterpolator()
+            animator.duration = 200
+            animator.addUpdateListener {
+                frontLayout!!.translationX = it.animatedValue as Float
+            }
+            animator.start()
+        }else {
+            val animator = ValueAnimator.ofFloat(frontLayout!!.translationY, 0.0f)
+            animator.interpolator = AccelerateDecelerateInterpolator()
+            animator.duration = 200
+            animator.addUpdateListener {
+                frontLayout!!.translationY = it.animatedValue as Float
+            }
+            animator.start()
+        }
         opened = false
     }
 }

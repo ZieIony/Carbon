@@ -796,6 +796,8 @@ public class EditText extends android.widget.EditText
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
+        if(animateColorChanges)
+            drawableStateChanged();
         super.draw(canvas);
         if (prefixLayout != null) {
             canvas.translate(getPaddingLeft() - prefixPadding - prefixTextPadding, 0);

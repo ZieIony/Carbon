@@ -1,5 +1,7 @@
 package carbon.animation;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
 import android.os.Parcel;
@@ -14,7 +16,7 @@ import carbon.internal.ArgbEvaluator;
 
 public class AnimatedColorStateList extends ColorStateList {
     private final int[][] states;
-    private int[] currentState = null;
+    private int[] currentState = new int[0];
     private ValueAnimator colorAnimation = null;
     private int animatedColor;
 
@@ -65,12 +67,19 @@ public class AnimatedColorStateList extends ColorStateList {
                 listener.onAnimationUpdate(animation);
             }
         });
+        colorAnimation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                animatedColor = (int) colorAnimation.getAnimatedValue();
+                listener.onAnimationUpdate(colorAnimation);
+            }
+        });
     }
 
     @Override
     public int getColorForState(int[] stateSet, int defaultColor) {
         synchronized (AnimatedColorStateList.this) {
-            if (Arrays.equals(stateSet, currentState)) {
+            if (Arrays.equals(stateSet, currentState) && colorAnimation.isRunning()) {
                 return animatedColor;
             }
         }
@@ -78,24 +87,26 @@ public class AnimatedColorStateList extends ColorStateList {
     }
 
     public void setState(int[] newState) {
-        if (Arrays.equals(newState, currentState))
-            return;
-        if (currentState != null)
-            cancel();
-
-        for (final int[] state : states) {
-            if (StateSet.stateSetMatches(state, newState)) {
-                int firstColor = super.getColorForState(currentState, getDefaultColor());
-                int secondColor = super.getColorForState(newState, getDefaultColor());
-                colorAnimation.setIntValues(firstColor, secondColor);
-                currentState = newState;
-                animatedColor = firstColor;
-                colorAnimation.start();
+        synchronized (AnimatedColorStateList.this) {
+            if (Arrays.equals(newState, currentState))
                 return;
-            }
-        }
+            if (currentState != null)
+                cancel();
 
-        currentState = newState;
+            for (final int[] state : states) {
+                if (StateSet.stateSetMatches(state, newState)) {
+                    int firstColor = getColorForState(currentState, getDefaultColor());
+                    int secondColor = super.getColorForState(newState, getDefaultColor());
+                    colorAnimation.setIntValues(firstColor, secondColor);
+                    currentState = newState;
+                    animatedColor = firstColor;
+                    colorAnimation.start();
+                    return;
+                }
+            }
+
+            currentState = newState;
+        }
     }
 
     private void cancel() {
