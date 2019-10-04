@@ -15,10 +15,13 @@ import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.view.SupportMenuInflater;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.TintAwareDrawable;
 
@@ -28,9 +31,15 @@ import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.drawable.AlphaDrawable;
+import carbon.drawable.AlphaWithParentDrawable;
 import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.DefaultAccentColorStateList;
+import carbon.drawable.DefaultColorControlInverseStateList;
+import carbon.drawable.DefaultColorControlStateList;
 import carbon.drawable.DefaultColorStateList;
+import carbon.drawable.DefaultHighlightColorAccentStateList;
+import carbon.drawable.DefaultHighlightColorPrimaryStateList;
+import carbon.drawable.DefaultHighlightColorStateList;
 import carbon.drawable.DefaultIconColorAccentInverseStateList;
 import carbon.drawable.DefaultIconColorAccentStateList;
 import carbon.drawable.DefaultIconColorInverseStateList;
@@ -38,7 +47,9 @@ import carbon.drawable.DefaultIconColorPrimaryInverseStateList;
 import carbon.drawable.DefaultIconColorPrimaryStateList;
 import carbon.drawable.DefaultIconColorStateList;
 import carbon.drawable.DefaultPrimaryColorStateList;
+import carbon.drawable.DefaultTextColorAccentInverseStateList;
 import carbon.drawable.DefaultTextColorAccentStateList;
+import carbon.drawable.DefaultTextColorPrimaryInverseStateList;
 import carbon.drawable.DefaultTextColorPrimaryStateList;
 import carbon.drawable.DefaultTextPrimaryColorInverseStateList;
 import carbon.drawable.DefaultTextPrimaryColorStateList;
@@ -46,7 +57,6 @@ import carbon.drawable.DefaultTextSecondaryColorInverseStateList;
 import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.internal.Menu;
 import carbon.shadow.CutCornerTreatment;
 import carbon.shadow.RoundedCornerTreatment;
 import carbon.shadow.ShadowView;
@@ -105,6 +115,19 @@ public class Carbon {
             return new DefaultPrimaryColorStateList(context);
         } else if (resourceId == R.color.carbon_defaultColorAccent) {
             return new DefaultAccentColorStateList(context);
+
+        } else if (resourceId == R.color.carbon_defaultColorControl) {
+            return new DefaultColorControlStateList(context);
+        } else if (resourceId == R.color.carbon_defaultColorControlInverse) {
+            return new DefaultColorControlInverseStateList(context);
+
+        } else if (resourceId == R.color.carbon_defaultHighlightColor) {
+            return new DefaultHighlightColorStateList(context);
+        } else if (resourceId == R.color.carbon_defaultHighlightColorAccent) {
+            return new DefaultHighlightColorAccentStateList(context);
+        } else if (resourceId == R.color.carbon_defaultHighlightColorPrimary) {
+            return new DefaultHighlightColorPrimaryStateList(context);
+
         } else if (resourceId == R.color.carbon_defaultIconColor) {
             return new DefaultIconColorStateList(context);
         } else if (resourceId == R.color.carbon_defaultIconColorInverse) {
@@ -127,11 +150,12 @@ public class Carbon {
             return new DefaultTextSecondaryColorInverseStateList(context);
         } else if (resourceId == R.color.carbon_defaultTextColorPrimary) {
             return new DefaultTextColorPrimaryStateList(context);
+        } else if (resourceId == R.color.carbon_defaultTextColorPrimaryInverse) {
+            return new DefaultTextColorPrimaryInverseStateList(context);
         } else if (resourceId == R.color.carbon_defaultTextColorAccent) {
             return new DefaultTextColorAccentStateList(context);
-        } else if (resourceId == R.color.carbon_defaultRippleColor) {
-            int c = Carbon.getThemeColor(context, R.attr.carbon_rippleColor);
-            return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
+        } else if (resourceId == R.color.carbon_defaultTextColorAccentInverse) {
+            return new DefaultTextColorAccentInverseStateList(context);
         } else if (resourceId == R.color.carbon_defaultRippleColorPrimary) {
             int c = Carbon.getThemeColor(context, R.attr.colorPrimary);
             return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
@@ -143,10 +167,21 @@ public class Carbon {
         return null;
     }
 
-    public static void initDefaultBackground(View view, TypedArray a, int id) {
+    public static Drawable getDefaultColorDrawable(View view, TypedArray a, int id) {
         ColorStateList color = getDefaultColorStateList(view, a, id);
-        if (color != null)
-            view.setBackgroundDrawable(new ColorStateListDrawable(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate())));
+        if (color != null) {
+            Drawable d = new ColorStateListDrawable(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate()));
+            if (color instanceof AlphaWithParentDrawable.Marker)
+                return new AlphaWithParentDrawable(view, d);
+            return d;
+        }
+        return null;
+    }
+
+    public static void initDefaultBackground(View view, TypedArray a, int id) {
+        Drawable d = getDefaultColorDrawable(view, a, id);
+        if (d != null)
+            view.setBackgroundDrawable(d);
     }
 
     public static void initDefaultTextColor(TextView view, TypedArray a, int id) {
@@ -427,19 +462,9 @@ public class Carbon {
 
     public static Menu getMenu(Context context, int resId) {
         Context contextWrapper = CarbonContextWrapper.wrap(context);
-        Menu menu = new Menu(contextWrapper);
-        MenuInflater inflater = new MenuInflater(contextWrapper);
+        Menu menu = new MenuBuilder(contextWrapper);
+        MenuInflater inflater = new SupportMenuInflater(contextWrapper);
         inflater.inflate(resId, menu);
-        return menu;
-    }
-
-    public static Menu getMenu(Context context, android.view.Menu baseMenu) {
-        Context contextWrapper = CarbonContextWrapper.wrap(context);
-        Menu menu = new Menu(contextWrapper);
-        for (int i = 0; i < baseMenu.size(); i++) {
-            android.view.MenuItem menuItem = baseMenu.getItem(i);
-            menu.add(menuItem.getGroupId(), menuItem.getItemId(), menuItem.getOrder(), menuItem.getTitle()).setIcon(menuItem.getIcon()).setVisible(menuItem.isVisible()).setEnabled(menuItem.isEnabled());
-        }
         return menu;
     }
 

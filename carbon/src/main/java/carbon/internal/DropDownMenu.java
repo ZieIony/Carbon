@@ -24,6 +24,8 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.drawable.ColorStateListDrawable;
+import carbon.drawable.DefaultColorControlStateList;
 import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.ListAdapter;
 import carbon.widget.DropDown;
@@ -55,7 +57,7 @@ public class DropDownMenu<Type> extends PopupWindow {
             }
             return false;
         });
-        Drawable dividerDrawable = Carbon.getThemeDrawable(context, R.attr.carbon_dividerColor);
+        Drawable dividerDrawable = new ColorStateListDrawable(new DefaultColorControlStateList(context));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable, context.getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
         dividerItemDecoration.setDrawAfter(position -> getAdapter().getItem(position) == customItem);
         recycler.addItemDecoration(dividerItemDecoration);

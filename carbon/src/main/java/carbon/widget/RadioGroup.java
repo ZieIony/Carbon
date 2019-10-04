@@ -210,27 +210,6 @@ public class RadioGroup extends LinearLayout {
         mOnCheckedChangeListener = listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return new RadioGroup.LayoutParams(getContext(), attrs);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
-        return p instanceof RadioGroup.LayoutParams;
-    }
-
-    @Override
-    protected LinearLayout.LayoutParams generateDefaultLayoutParams() {
-        return new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    }
-
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -241,79 +220,6 @@ public class RadioGroup extends LinearLayout {
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
         // info.setClassName(RadioGroup.class.getName());
-    }
-
-    /**
-     * <p>This set of layout parameters defaults the width and the height of
-     * the children to {@link #WRAP_CONTENT} when they are not specified in the XML file. Otherwise,
-     * this class ussed the value read from the XML file.</p>
-     * <p>
-     * <p>See
-     * {@link android.R.styleable#LinearLayout_Layout LinearLayout Attributes} for a list of all
-     * child view attributes that this class supports.</p>
-     */
-    public static class LayoutParams extends LinearLayout.LayoutParams {
-        /**
-         * {@inheritDoc}
-         */
-        public LayoutParams(Context c, AttributeSet attrs) {
-            super(c, attrs);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public LayoutParams(int w, int h) {
-            super(w, h);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public LayoutParams(int w, int h, float initWeight) {
-            super(w, h, initWeight);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public LayoutParams(ViewGroup.LayoutParams p) {
-            super(p);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public LayoutParams(MarginLayoutParams source) {
-            super(source);
-        }
-
-        /**
-         * <p>Fixes the child's width to
-         * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT} and the child's height to
-         * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT} when not specified in the XML
-         * file.</p>
-         *
-         * @param a          the styled attributes set
-         * @param widthAttr  the width attribute to fetch
-         * @param heightAttr the height attribute to fetch
-         */
-        @Override
-        protected void setBaseAttributes(TypedArray a,
-                                         int widthAttr, int heightAttr) {
-
-            if (a.hasValue(widthAttr)) {
-                width = a.getLayoutDimension(widthAttr, "layout_width");
-            } else {
-                width = WRAP_CONTENT;
-            }
-
-            if (a.hasValue(heightAttr)) {
-                height = a.getLayoutDimension(heightAttr, "layout_height");
-            } else {
-                height = WRAP_CONTENT;
-            }
-        }
     }
 
     /**

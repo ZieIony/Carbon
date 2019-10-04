@@ -147,14 +147,15 @@ public abstract class View extends android.view.View
     private void initView(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.View, defStyleAttr, R.style.carbon_View);
 
-        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, elevationIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+        Carbon.initDefaultBackground(this, a, R.styleable.View_android_background);
 
         a.recycle();
     }
@@ -310,27 +311,23 @@ public abstract class View extends android.view.View
                 super.setOutlineAmbientShadowColor(ambientShadowColor.getColorForState(getDrawableState(), ambientShadowColor.getDefaultColor()));
         }
 
-        if (isInEditMode()) {
-            if ((r || c) && getWidth() > 0 && getHeight() > 0) {
-                Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-                Canvas layerCanvas = new Canvas(layer);
-                drawInternal(layerCanvas);
+        if (isInEditMode() && (r || c) && getWidth() > 0 && getHeight() > 0) {
+            Bitmap layer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas layerCanvas = new Canvas(layer);
+            drawInternal(layerCanvas);
 
-                Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-                Canvas maskCanvas = new Canvas(mask);
-                Paint maskPaint = new Paint(0xffffffff);
-                maskCanvas.drawPath(cornersMask, maskPaint);
+            Bitmap mask = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas maskCanvas = new Canvas(mask);
+            Paint maskPaint = new Paint(0xffffffff);
+            maskCanvas.drawPath(cornersMask, maskPaint);
 
-                for (int x = 0; x < getWidth(); x++) {
-                    for (int y = 0; y < getHeight(); y++) {
-                        int maskPixel = mask.getPixel(x, y);
-                        layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
-                    }
+            for (int x = 0; x < getWidth(); x++) {
+                for (int y = 0; y < getHeight(); y++) {
+                    int maskPixel = mask.getPixel(x, y);
+                    layer.setPixel(x, y, Color.alpha(maskPixel) > 0 ? layer.getPixel(x, y) : 0);
                 }
-                canvas.drawBitmap(layer, 0, 0, paint);
-            } else {
-                drawInternal(canvas);
             }
+            canvas.drawBitmap(layer, 0, 0, paint);
         } else if (getWidth() > 0 && getHeight() > 0 && (((r || c) && !Carbon.IS_LOLLIPOP_OR_HIGHER) || !shapeModel.isRoundRect())) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
@@ -550,7 +547,7 @@ public abstract class View extends android.view.View
 
     @Override
     public void drawShadow(Canvas canvas) {
-        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
 
@@ -560,8 +557,14 @@ public abstract class View extends android.view.View
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
 
-        paint.setAlpha((int) (127 * alpha));
-        saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        if (alpha != 255) {
+            paint.setAlpha((int) (127 * alpha));
+            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        } else {
+            saveCount = canvas.save();
+        }
+        Matrix matrix = getMatrix();
+        canvas.setMatrix(matrix);
 
         if (r) {
             canvas.clipRect(
@@ -569,31 +572,25 @@ public abstract class View extends android.view.View
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
 
-        Matrix matrix = getMatrix();
-
         shadowDrawable.setTintList(spotShadowColor);
         shadowDrawable.setAlpha(0x44);
         shadowDrawable.setElevation(z);
         shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 2), getRight(), (int) (getBottom() + z / 2));
         shadowDrawable.draw(canvas);
 
-        if (saveCount != 0) {
-            canvas.translate(this.getLeft(), this.getTop());
-            canvas.concat(matrix);
-            paint.setXfermode(Carbon.CLEAR_MODE);
-        }
+        canvas.translate(this.getLeft(), this.getTop());
+        canvas.concat(matrix);
+        paint.setXfermode(Carbon.CLEAR_MODE);
         if (maskShadow) {
             cornersMask.setFillType(Path.FillType.WINDING);
             canvas.drawPath(cornersMask, paint);
         }
-        if (r) {
+        if (r)
             canvas.drawPath(revealAnimator.mask, paint);
-        }
-        if (saveCount != 0) {
-            canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
-            paint.setAlpha(255);
-        }
+
+        canvas.restoreToCount(saveCount);
+        paint.setXfermode(null);
+        paint.setAlpha(255);
     }
 
     @Override

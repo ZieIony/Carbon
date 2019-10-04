@@ -8,14 +8,15 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import carbon.Carbon;
 import carbon.R;
-import carbon.internal.Menu;
 import carbon.widget.DropDown;
 import carbon.widget.RecyclerView;
 
@@ -174,7 +175,7 @@ public class PopupMenu extends PopupWindow {
     }
 
     public void setMenu(final android.view.Menu baseMenu) {
-        menu = Carbon.getMenu(getContentView().getContext(), baseMenu);
+        menu = baseMenu;
     }
 
     public android.view.Menu getMenu() {

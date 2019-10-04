@@ -13,6 +13,8 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
 
+import androidx.collection.LongSparseArray;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -22,7 +24,6 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.collection.LongSparseArray;
 import carbon.Carbon;
 
 public class LollipopDrawablesCompat {

@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 
 import carbon.R;
+import carbon.view.View;
 
 /**
  * A very simple class of a divider. Just place it in your layout to get a material divider.

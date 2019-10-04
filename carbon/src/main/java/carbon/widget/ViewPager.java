@@ -15,11 +15,12 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;

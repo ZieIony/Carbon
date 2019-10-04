@@ -10,7 +10,7 @@ import tk.zielony.carbonsamples.library.DesignActivity;
 import tk.zielony.carbonsamples.library.PicassoActivity;
 import tk.zielony.carbonsamples.library.RecyclerCardsActivity;
 
-@ActivityAnnotation(title = R.string.librariesActivity_title)
+@ActivityAnnotation(title = R.string.librariesActivity_title, layout = R.layout.activity_samplelist)
 public class LibrariesActivity extends SampleListActivity {
 
     @Override

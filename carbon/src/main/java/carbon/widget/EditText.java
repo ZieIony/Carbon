@@ -796,7 +796,7 @@ public class EditText extends android.widget.EditText
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
-        if(animateColorChanges)
+        if (animateColorChanges)
             drawableStateChanged();
         super.draw(canvas);
         if (prefixLayout != null) {
@@ -1085,7 +1085,7 @@ public class EditText extends android.widget.EditText
 
     @Override
     public void drawShadow(Canvas canvas) {
-        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar"/>
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress5"
@@ -15,7 +15,7 @@
         android:layout_height="5dp"
         android:layout_margin="@dimen/carbon_padding"
         app:carbon_barWidth="5dp"
-        app:carbon_progressStyle="bar_indeterminate"/>
+        app:carbon_progressStyle="bar_indeterminate" />
 
     <carbon.widget.Button
         android:id="@+id/button1"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="@dimen/carbon_padding"
-        android:text="animate"/>
+        android:text="animate" />
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress6"
@@ -31,7 +31,7 @@
         android:layout_height="5dp"
         android:layout_margin="@dimen/carbon_padding"
         app:carbon_barWidth="5dp"
-        app:carbon_progressStyle="bar_determinate"/>
+        app:carbon_progressStyle="bar_determinate" />
 
     <carbon.widget.Button
         android:id="@+id/button2"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="@dimen/carbon_padding"
-        android:text="animate"/>
+        android:text="animate" />
 
     <carbon.widget.ProgressBar
         android:id="@+id/progress7"
@@ -48,7 +48,7 @@
         android:layout_margin="@dimen/carbon_padding"
         app:carbon_barWidth="5dp"
         app:carbon_progressStyle="bar_query"
-        app:carbon_tint="?attr/colorAccent"/>
+        app:carbon_tint="?attr/colorAccent" />
 
     <carbon.widget.Button
         android:id="@+id/button3"
@@ -56,5 +56,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="@dimen/carbon_padding"
-        android:text="animate"/>
+        android:text="animate" />
 </carbon.widget.LinearLayout>

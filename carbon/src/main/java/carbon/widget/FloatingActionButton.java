@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import carbon.Carbon;
 import carbon.R;
@@ -88,13 +87,21 @@ public class FloatingActionButton extends ImageView {
         }
     }
 
+    public void setMenuItems(FloatingActionMenu.Item[] items) {
+        floatingActionMenu = new FloatingActionMenu(getContext());
+        floatingActionMenu.setMenuItems(items);
+        floatingActionMenu.setAnchor(this);
+
+        setOnClickListener(__ -> floatingActionMenu.show());
+    }
+
     public FloatingActionMenu getFloatingActionMenu() {
         return floatingActionMenu;
     }
 
-    public void setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener listener) {
+    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener<FloatingActionMenu.Item> listener) {
         if (floatingActionMenu != null)
-            floatingActionMenu.setOnMenuItemClickListener(listener);
+            floatingActionMenu.setOnItemClickedListener(listener);
     }
 
 }

@@ -17,6 +17,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.collection.LongSparseArray;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -26,9 +30,6 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.collection.LongSparseArray;
 import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.LollipopDrawable;
 import carbon.drawable.ripple.RippleDrawableICS;

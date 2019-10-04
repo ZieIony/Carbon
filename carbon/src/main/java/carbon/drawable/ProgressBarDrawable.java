@@ -8,6 +8,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import androidx.annotation.NonNull;
+
 import carbon.widget.ProgressBar;
 
 public class ProgressBarDrawable extends ProgressDrawable {

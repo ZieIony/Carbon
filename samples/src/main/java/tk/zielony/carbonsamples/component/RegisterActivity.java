@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import carbon.component.DataBindingComponent;
 import carbon.component.DefaultIconDropDownItem;
 import carbon.component.DefaultIconEditTextItem;
 import carbon.component.DefaultIconPasswordItem;
@@ -27,7 +26,7 @@ import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_listcomponent, title = R.string.registerActivity_title)
+@ActivityAnnotation(layout = R.layout.activity_register, title = R.string.registerActivity_title)
 public class RegisterActivity extends ThemedActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,14 +39,12 @@ public class RegisterActivity extends ThemedActivity {
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconEditTextItem.class, IconEditTextRow::new);
         adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));
         adapter.addFactory(DividerItem.class, DividerRow::new);
         adapter.addFactory(DefaultIconPasswordItem.class, IconPasswordRow::new);
         adapter.addFactory(DefaultIconDropDownItem.class, IconDropDownRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
-                "Forms such as registration screen can be easily created with reusable components and a recycler",
                 new DefaultIconEditTextItem(new VectorDrawable(getResources(), R.raw.profile), "login", ""),
                 new DefaultIconEditTextItem(new VectorDrawable(getResources(), R.raw.email), "email", ""),
                 new DefaultIconPasswordItem(new VectorDrawable(getResources(), R.raw.lock), "password", ""),

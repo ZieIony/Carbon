@@ -1,17 +1,19 @@
 package carbon.drawable;
 
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+
 import carbon.animation.AnimatedColorStateList;
 
 public class ColorStateListDrawable extends Drawable implements AlphaDrawable {
-    private AnimatedColorStateList list;
+    private ColorStateList list;
 
-    public ColorStateListDrawable(AnimatedColorStateList list) {
+    public ColorStateListDrawable(ColorStateList list) {
         this.list = list;
     }
 
@@ -42,7 +44,8 @@ public class ColorStateListDrawable extends Drawable implements AlphaDrawable {
 
     @Override
     public boolean setState(@NonNull int[] stateSet) {
-        list.setState(stateSet);
+        if (list instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) list).setState(stateSet);
         return super.setState(stateSet);
     }
 

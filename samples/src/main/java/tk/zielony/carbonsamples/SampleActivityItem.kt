@@ -13,7 +13,7 @@ open class SampleActivityGroup : Serializable {
 
     @JvmOverloads
     constructor(activityClass: Class<out Activity>, icon: Int = 0) : super(
-        ) {
+    ) {
         this.activityClass = activityClass
         this.name = activityClass.getAnnotation(ActivityAnnotation::class.java)?.title
         this.icon = icon

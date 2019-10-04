@@ -3,6 +3,7 @@ package carbon.internal;
 import android.text.Html;
 
 import androidx.databinding.BindingAdapter;
+
 import carbon.widget.TextView;
 
 public class BindingAdapters {

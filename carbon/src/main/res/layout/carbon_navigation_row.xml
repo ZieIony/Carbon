@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="data"
-            type="carbon.component.MenuItem"/>
+            type="carbon.widget.NavigationView.Item" />
     </data>
 
     <carbon.widget.LinearLayout
@@ -24,8 +24,9 @@
             android:layout_marginEnd="@dimen/carbon_padding"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_padding"
+            app:srcCompat="@{data.getIcon()}"
             android:layout_marginStart="@dimen/carbon_windowPadding"
-            app:carbon_tint="?attr/carbon_iconColor"/>
+            app:carbon_tint="@{data.iconTintList}" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_itemText"
@@ -35,6 +36,6 @@
             android:layout_marginRight="@dimen/carbon_padding"
             android:gravity="center_vertical"
             android:text="@{data.title}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
+            android:textAppearance="?attr/carbon_textAppearanceSubhead" />
     </carbon.widget.LinearLayout>
 </layout>

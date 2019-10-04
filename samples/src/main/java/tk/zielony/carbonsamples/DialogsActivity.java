@@ -10,7 +10,7 @@ import tk.zielony.carbonsamples.dialog.ProgressDialogActivity;
 import tk.zielony.carbonsamples.dialog.SelectDialogActivity;
 import tk.zielony.carbonsamples.dialog.SimpleDialogActivity;
 
-@ActivityAnnotation(title = R.string.dialogsActivity_title)
+@ActivityAnnotation(title = R.string.dialogsActivity_title, layout = R.layout.activity_samplelist)
 public class DialogsActivity extends SampleListActivity {
 
     @Override

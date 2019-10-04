@@ -8,12 +8,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.text.Format;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.R;
 import carbon.recycler.ListAdapter;

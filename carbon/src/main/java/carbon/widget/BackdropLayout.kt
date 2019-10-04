@@ -112,7 +112,7 @@ open class BackdropLayout : FrameLayout {
                 frontLayout!!.translationX = it.animatedValue as Float
             }
             animator.start()
-        }else {
+        } else {
             val animator = ValueAnimator.ofFloat(frontLayout!!.translationY, 0.0f)
             animator.interpolator = AccelerateDecelerateInterpolator()
             animator.duration = 200

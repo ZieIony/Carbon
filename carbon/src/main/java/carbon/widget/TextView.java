@@ -37,18 +37,19 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
+
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
@@ -597,7 +598,7 @@ public class TextView extends android.widget.TextView
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
-        if(animateColorChanges)
+        if (animateColorChanges)
             drawableStateChanged();
         super.draw(canvas);
         if (stroke != null)
@@ -869,7 +870,7 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void drawShadow(Canvas canvas) {
-        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
 

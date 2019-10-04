@@ -8,7 +8,7 @@
     android:orientation="vertical"
     app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar"/>
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -19,5 +19,5 @@
         app:carbon_headerMinHeight="@dimen/carbon_toolbarHeight"
         app:carbon_headerParallax="0.5"
         app:carbon_headerTint="?attr/colorPrimary"
-        app:carbon_overScroll="always"/>
+        app:carbon_overScroll="always" />
 </carbon.widget.LinearLayout>

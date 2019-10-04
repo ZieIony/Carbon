@@ -16,10 +16,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
-import java.lang.reflect.Field;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
+
+import java.lang.reflect.Field;
+
 import carbon.R;
 import carbon.internal.EditTextMenu;
 import carbon.widget.EditText;

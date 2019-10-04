@@ -16,7 +16,6 @@ import tk.zielony.randomdata.common.TextGenerator
 import tk.zielony.randomdata.person.DrawableAvatarGenerator
 import tk.zielony.randomdata.person.StringNameGenerator
 import java.io.Serializable
-import java.util.*
 
 @ActivityAnnotation(layout = R.layout.activity_backdrop, title = R.string.backdropActivity_title)
 class BackdropActivity : ThemedActivity() {
@@ -39,7 +38,7 @@ class BackdropActivity : ThemedActivity() {
         }
 
         run {
-            val items = Arrays.asList(
+            val items = listOf(
                     PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                     DefaultHeaderItem("Header"),
                     DefaultAvatarTextRatingSubtextDateItem(),

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="carbon_View" parent="@android:style/Widget">
-    </style>
+    <style name="carbon_View" parent="@android:style/Widget"></style>
+
 
     <style name="carbon_Button" parent="@android:style/Widget.Button">
         <item name="android:gravity">center_vertical|center_horizontal</item>
@@ -16,13 +16,13 @@
         <item name="carbon_touchMarginBottom">6dp</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="android:textColor">@null</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
         <item name="android:maxLines">1</item>
-        <item name="android:background">@color/carbon_defaultColor</item>
+        <item name="android:background">@color/carbon_defaultColorControl</item>
         <item name="carbon_animateColorChanges">true</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
-        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
-        <item name="android:inset">0dp</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="android:inset" tools:targetApi="lollipop">0dp</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
 
@@ -34,15 +34,16 @@
     </style>
 
     <style name="carbon_Button.Inverse">
-        <item name="android:background">?attr/colorControlNormal</item>
-        <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="android:background">@color/carbon_defaultColorControlInverse</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
     </style>
 
     <style name="carbon_Button.Colored.Inverse">
-        <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
     </style>
+
 
     <style name="carbon_Button.Flat">
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
@@ -51,29 +52,45 @@
         <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
     </style>
 
+    <style name="carbon_Button.Flat.Inverse">
+        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
+        <item name="android:background">@null</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+    </style>
+
     <style name="carbon_Button.Flat.Colored">
-        <item name="android:textColor">@color/carbon_defaultTextColorAccent</item>
+        <item name="carbon_rippleColor">@color/carbon_defaultRippleColorPrimary</item>
+        <item name="android:textColor">@color/carbon_defaultTextColorPrimary</item>
     </style>
 
     <style name="carbon_Button.Flat.Colored.Inverse">
-        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
-        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
+        <item name="android:textColor">@color/carbon_defaultTextColorPrimaryInverse</item>
     </style>
 
+
     <style name="carbon_Button.Outlined" parent="carbon_Button.Flat">
-        <item name="carbon_stroke">?attr/colorControlNormal</item>
+        <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
+        <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+    </style>
+
+    <style name="carbon_Button.Outlined.Inverse" parent="carbon_Button.Flat.Inverse">
+        <item name="carbon_stroke">@color/carbon_defaultColorControlInverse</item>
         <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
     </style>
 
     <style name="carbon_Button.Outlined.Colored" parent="carbon_Button.Flat.Colored">
-        <item name="carbon_stroke">?attr/colorControlNormal</item>
+        <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
         <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+        <item name="carbon_rippleColor">@color/carbon_defaultRippleColorPrimary</item>
     </style>
 
     <style name="carbon_Button.Outlined.Colored.Inverse" parent="carbon_Button.Flat.Colored.Inverse">
-        <item name="carbon_stroke">?attr/colorControlNormal</item>
+        <item name="carbon_stroke">@color/carbon_defaultColorControlInverse</item>
         <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+        <item name="carbon_rippleColor">@color/carbon_defaultRippleColorPrimary</item>
     </style>
+
 
     <style name="carbon_ToggleButton" parent="@android:style/Widget.Button.Toggle">
         <item name="android:gravity">center_vertical|center_horizontal</item>
@@ -138,7 +155,7 @@
 
     <style name="carbon_Snackbar" parent="carbon_LinearLayout">
         <item name="carbon_elevation">@dimen/carbon_elevationSnackbar</item>
-        <item name="android:background">?attr/carbon_colorBackgroundInverse</item>
+        <item name="android:background">@color/carbon_defaultColorControlInverse</item>
         <item name="android:fitsSystemWindows">false</item>
         <item name="android:maxHeight">80dp</item>
         <item name="android:maxWidth">568dp</item>
@@ -217,10 +234,16 @@
         <item name="collapseIcon">@null</item>
     </style>
 
+    <style name="carbon_Toolbar.Flat">
+        <item name="android:theme">@null</item>
+        <item name="android:background">@null</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
+    </style>
+
     <style name="carbon_Chip" parent="carbon_LinearLayout">
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_cornerRadius">@dimen/carbon_margin</item>
-        <item name="android:background">?attr/carbon_dividerColor</item>
+        <item name="android:background">@color/carbon_defaultColorControl</item>
         <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
         <item name="carbon_icon">@null</item>
         <item name="android:minHeight">@dimen/carbon_chipHeight</item>
@@ -228,7 +251,7 @@
 
     <style name="carbon_Chip.Outlined">
         <item name="carbon_strokeWidth">0.5dp</item>
-        <item name="carbon_stroke">?attr/carbon_colorControl</item>
+        <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -271,15 +294,19 @@
         <item name="android:layout_width">@dimen/carbon_avatarSize</item>
         <item name="android:layout_height">@dimen/carbon_avatarSize</item>
         <item name="carbon_cornerRadius">@dimen/carbon_avatarSizeHalf</item>
-        <item name="carbon_stroke">?attr/carbon_colorControl</item>
+        <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
         <item name="carbon_strokeWidth">0.5dp</item>
+    </style>
+
+    <style name="carbon_ImageView.Avatar.Square">
+        <item name="carbon_cornerRadius">@dimen/carbon_cornerRadiusImage</item>
     </style>
 
     <style name="carbon_ListView" parent="@android:style/Widget.ListView">
         <item name="android:scrollbarSize">8dp</item>
         <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
         <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
-        <item name="android:divider">?attr/carbon_colorControl</item>
+        <item name="android:divider">@color/carbon_defaultColorControl</item>
         <item name="android:dividerHeight">@dimen/carbon_dividerHeight</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
@@ -294,8 +321,17 @@
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
+    <style name="carbon_RecyclerView.TransparentComponentsThemeOverlay">
+        <item name="carbon_colorForeground">@null</item>
+    </style>
+
+    <style name="carbon_RecyclerView.TransparentComponents">
+        <item name="android:theme">@style/carbon_RecyclerView.TransparentComponentsThemeOverlay
+        </item>
+    </style>
+
     <style name="carbon_Divider">
-        <item name="android:background">?attr/carbon_dividerColor</item>
+        <item name="android:background">@color/carbon_defaultColorControl</item>
         <item name="android:orientation">horizontal</item>
     </style>
 
@@ -308,7 +344,7 @@
     </style>
 
     <style name="carbon_CardView" parent="carbon_LinearLayout">
-        <item name="android:background">?attr/carbon_colorBackground</item>
+        <item name="android:background">@color/carbon_defaultColorControl</item>
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="android:layout_margin">@dimen/carbon_paddingHalf</item>
@@ -340,8 +376,7 @@
         <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
     </style>
 
-    <style name="carbon_InputLayoutContainer" parent="carbon_RelativeLayout">
-    </style>
+    <style name="carbon_InputLayoutContainer" parent="carbon_RelativeLayout"></style>
 
     <style name="carbon_InputLayout.Box">
         <item name="android:theme">@style/carbon_InputLayoutContainerTheme.Box</item>
@@ -439,11 +474,12 @@
         <item name="android:button">@drawable/carbon_dropdown</item>
     </style>
 
-    <style name="carbon_PagerTabStrip" parent="carbon_HorizontalScrollView">
+    <style name="carbon_TabLayout" parent="carbon_HorizontalScrollView">
         <item name="carbon_tint">?attr/colorAccent</item>
         <item name="carbon_indicatorWidth">2dp</item>
         <item name="carbon_fixedTabs">true</item>
         <item name="android:clipToPadding">false</item>
+        <item name="android:minHeight">@dimen/carbon_tabLayoutHeight</item>
     </style>
 
     <style name="carbon_ViewPagerIndicator">
@@ -484,7 +520,7 @@
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
         <item name="android:background">@null</item>
         <item name="android:button">@drawable/carbon_checkbox</item>
     </style>
@@ -504,7 +540,7 @@
     </style>
 
     <style name="carbon_CheckBox.IconButton.Colored">
-        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
     </style>
 
     <style name="carbon_CheckBox.IconButton.Inverse">
@@ -522,7 +558,7 @@
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
         <item name="android:background">@null</item>
         <item name="android:button">@drawable/carbon_radiobutton</item>
     </style>
@@ -542,7 +578,7 @@
     </style>
 
     <style name="carbon_RadioButton.IconButton.Colored">
-        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
     </style>
 
     <style name="carbon_RadioButton.IconButton.Inverse">
@@ -573,11 +609,11 @@
         <item name="carbon_value2">4</item>
         <item name="carbon_tick">true</item>
         <item name="carbon_tickStep">1</item>
-        <item name="carbon_tickColor">?attr/colorControlNormal</item>
+        <item name="carbon_tickColor">@color/carbon_defaultColorControl</item>
         <item name="carbon_labelFormat">%.0f</item>
     </style>
 
-    <style name="carbon_NavigationView"/>
+    <style name="carbon_NavigationView" />
 
     <style name="carbon_TextView.Tooltip">
         <item name="android:minHeight">@dimen/carbon_tooltipHeight</item>
@@ -597,10 +633,12 @@
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
     </style>
 
-    <style name="carbon_BottomBar" parent="carbon_FrameLayout">
-        <item name="android:background">?attr/carbon_colorBackground</item>
-        <item name="carbon_elevation">@dimen/carbon_elevationBottomBar</item>
-        <item name="android:minHeight">@dimen/carbon_bottomBarHeight</item>
+    <style name="carbon_BottomNavigationView" parent="carbon_FrameLayout">
+        <item name="android:background">@color/carbon_defaultColorControl</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationBottomNavigationView</item>
+        <item name="android:minHeight">@dimen/carbon_bottomNavigationViewHeight</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 
 </resources>

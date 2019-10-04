@@ -2,14 +2,15 @@ package carbon.recycler;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 import carbon.widget.AutoCompleteEditText;
 
 public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
@@ -72,7 +73,7 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
         this.onItemClickedListener = onItemClickedListener;
     }
 
-    public void setOnItemClickedListener(Class<? extends I> type, carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener) {
+    public <ItemType extends I> void setOnItemClickedListener(Class<ItemType> type, carbon.widget.RecyclerView.OnItemClickedListener<ItemType> onItemClickedListener) {
         this.onItemClickedListeners.put(type, onItemClickedListener);
     }
 

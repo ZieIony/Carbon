@@ -1,0 +1,28 @@
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimaryDark">
+
+    <carbon.widget.Toolbar
+        app:carbon_icon="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name">
+
+        <carbon.widget.ImageView
+            android:id="@+id/colors"
+            style="@style/carbon_ImageView.IconButton"
+            app:srcCompat="@drawable/ic_color_lens_black_24dp" />
+    </carbon.widget.Toolbar>
+
+    <carbon.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:itemCount="10"
+        tools:listitem="@layout/row_sample" />
+</carbon.widget.LinearLayout>

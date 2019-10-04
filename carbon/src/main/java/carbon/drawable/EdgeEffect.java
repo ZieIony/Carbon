@@ -12,7 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-public class EdgeEffect extends android.widget.EdgeEffect{
+public class EdgeEffect extends android.widget.EdgeEffect {
 
     private static final int RECEDE_TIME = 600;
     private static final int PULL_TIME = 167;

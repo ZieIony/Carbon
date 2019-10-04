@@ -5,10 +5,10 @@ import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.util.Log;
 
-import java.lang.reflect.Method;
-
 import androidx.collection.LruCache;
 import androidx.collection.SimpleArrayMap;
+
+import java.lang.reflect.Method;
 
 class DrawableReflectiveUtils {
     private final static String TAG = "DrawableReflectiveUtils";

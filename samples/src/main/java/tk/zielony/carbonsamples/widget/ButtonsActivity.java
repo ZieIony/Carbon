@@ -18,3 +18,4 @@ public class ButtonsActivity extends ThemedActivity {
         Samples.initToolbar(this);
     }
 }
+

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.Nullable;
+
 import carbon.dialog.ProgressDialog;
 import carbon.widget.EditText;
 import tk.zielony.carbonsamples.ActivityAnnotation;

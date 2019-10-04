@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/carbon_black_6" android:state_enabled="false" />
-    <item android:color="@color/carbon_black_38" android:state_selected="true" />
-    <item android:color="@color/carbon_black_38" android:state_checked="true" />
-    <item android:color="@color/carbon_black_38" android:state_activated="true" />
-    <item android:color="@color/carbon_black_12" />
-</selector>

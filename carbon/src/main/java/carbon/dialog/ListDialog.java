@@ -4,14 +4,15 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
-
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+
 import carbon.R;
 import carbon.recycler.RowFactory;
 import carbon.recycler.RowListAdapter;

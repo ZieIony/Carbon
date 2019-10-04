@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_debugtoolbar" />
+
+    <carbon.widget.TextView
+        style="@style/sectionDescription"
+        android:text="Forms such as registration screen can be easily created with reusable components and a recycler" />
+
+    <carbon.widget.LinearLayout
+        style="@style/carbon_CardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/carbon_margin"
+        android:background="?attr/carbon_colorForeground"
+        android:orientation="vertical">
+
+        <carbon.widget.Toolbar
+            style="@style/carbon_Toolbar.Flat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/registerActivity_title"
+            app:carbon_icon="@drawable/carbon_clear" />
+
+        <carbon.widget.Divider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <carbon.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <carbon.widget.Divider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <carbon.widget.Button
+            style="@style/carbon_Button.Flat.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:text="register" />
+    </carbon.widget.LinearLayout>
+</carbon.widget.LinearLayout>

@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".widget.ButtonsActivity"/>
+        <activity android:name=".widget.FABActivity"/>
         <activity android:name=".widget.SVGActivity"/>
         <activity android:name=".widget.SnackbarActivity"/>
         <activity android:name=".widget.TextFieldsActivity"/>
@@ -46,7 +47,7 @@
         <activity android:name=".widget.FlowLayoutActivity"/>
         <activity android:name=".widget.TableLayoutActivity"/>
         <activity android:name=".widget.FloatingActionMenuActivity"/>
-        <activity android:name=".widget.BottomBarActivity"/>
+        <activity android:name=".widget.BottomNavigationViewActivity"/>
         <activity android:name=".widget.BottomSheetActivity"/>
         <activity android:name=".widget.BackdropActivity"/>
         <activity android:name=".widget.BannerActivity"/>
@@ -109,6 +110,9 @@
         <activity android:name=".dialog.SelectDialogActivity"/>
         <activity android:name=".dialog.SimpleDialogActivity"/>
 
+        <activity android:name=".themes.CurrentThemeActivity"/>
+        <activity android:name=".themes.WindowsThemeActivity" android:theme="@style/WindowsTheme"/>
+
         <activity android:name=".NewSamplesActivity"/>
         <activity android:name=".FavouritesActivity"/>
         <activity android:name=".AnimationsActivity"/>
@@ -120,6 +124,7 @@
         <activity android:name=".GuidelinesActivity"/>
         <activity android:name=".WidgetsActivity"/>
         <activity android:name=".DialogsActivity"/>
+        <activity android:name=".ThemesActivity"/>
     </application>
 
 </manifest>

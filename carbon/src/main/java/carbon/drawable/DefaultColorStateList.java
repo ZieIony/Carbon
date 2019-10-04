@@ -17,13 +17,13 @@ public class DefaultColorStateList extends ColorStateList {
                 new int[]{android.R.attr.state_focused},
                 new int[]{}
         }, new int[]{
-                Carbon.getThemeColor(context, R.attr.carbon_colorDisabled),
+                Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabled),
                 Carbon.getThemeColor(context, R.attr.carbon_colorError),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorControlNormal)
+                Carbon.getThemeColor(context, R.attr.carbon_colorControl)
         });
     }
 }

@@ -171,7 +171,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             if (attr == R.styleable.RecyclerView_carbon_overScroll) {
                 setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
             } else if (attr == R.styleable.RecyclerView_android_divider) {
-                Drawable drawable = a.getDrawable(attr);
+                Drawable drawable = Carbon.getDefaultColorDrawable(this, a, attr);
                 float height = a.getDimension(R.styleable.RecyclerView_android_dividerHeight, 0);
                 if (drawable != null && height > 0) {
                     setDivider(drawable, (int) height);
@@ -185,6 +185,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         Carbon.initTint(this, a, tintIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+        Carbon.initDefaultBackground(this, a, R.styleable.RecyclerView_android_background);
 
         a.recycle();
 
@@ -801,7 +802,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 
     @Override
     public void drawShadow(Canvas canvas) {
-        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
 

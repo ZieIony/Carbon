@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_debugtoolbar"/>
+    <include layout="@layout/view_debugtoolbar" />
 
     <View
         android:layout_width="match_parent"
@@ -14,12 +14,12 @@
 
     <carbon.widget.TextView
         style="@style/sectionDescription"
-        android:text="Items can be provided from code as an array of BottomBar.Item objects" />
+        android:text="Items can be provided from code as an array of BottomNavigationView.Item objects" />
 
-    <carbon.widget.BottomBar
+    <carbon.widget.BottomNavigationView
         android:id="@+id/bottomBar3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_bottomBarHeight"
+        android:layout_height="@dimen/carbon_bottomNavigationViewHeight"
         android:layout_marginBottom="@dimen/carbon_margin"
         android:background="?attr/colorPrimary" />
 
@@ -27,23 +27,23 @@
         style="@style/sectionDescription"
         android:text="Provide a custom item's layout easily using carbon_itemLayout attribute and data binding" />
 
-    <carbon.widget.BottomBar
+    <carbon.widget.BottomNavigationView
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_bottomBarHeight"
+        android:layout_height="@dimen/carbon_bottomNavigationViewHeight"
         android:layout_marginBottom="@dimen/carbon_margin"
         app:carbon_itemLayout="@layout/item_bottombar"
         app:carbon_menu="@menu/menu_navigation" />
 
     <carbon.widget.TextView
         style="@style/sectionDescription"
-        android:text="Default BottomBar with items set using a menu resource" />
+        android:text="Default BottomNavigationView with items set using a menu resource" />
 
-    <carbon.widget.BottomBar
+    <carbon.widget.BottomNavigationView
         android:id="@+id/bottomBar2"
         app:carbon_elevation="8dp"
         android:background="?attr/carbon_colorBackground"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_bottomBarHeight"
+        android:layout_height="@dimen/carbon_bottomNavigationViewHeight"
         app:carbon_menu="@menu/menu_navigation" />
 </carbon.widget.LinearLayout>

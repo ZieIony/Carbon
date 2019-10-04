@@ -57,7 +57,7 @@ public class InputLayout extends RelativeLayout {
     TransformationMethod transformationMethod;
 
     public InputLayout(Context context) {
-        super(context,null, R.attr.carbon_inputLayoutStyle);
+        super(context, null, R.attr.carbon_inputLayoutStyle);
         initInputLayout(null, R.attr.carbon_inputLayoutStyle);
     }
 

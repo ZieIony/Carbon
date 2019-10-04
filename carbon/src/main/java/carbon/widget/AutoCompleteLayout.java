@@ -1,18 +1,21 @@
 package carbon.widget;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.R;
 import carbon.component.Component;
+import carbon.drawable.ColorStateListDrawable;
+import carbon.drawable.DefaultColorControlStateList;
 import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.RowListAdapter;
 
@@ -47,9 +50,9 @@ public class AutoCompleteLayout extends LinearLayout {
         search = findViewById(R.id.carbon_autoCompleteSearch);
         results = findViewById(R.id.carbon_autoCompleteResults);
         results.setLayoutManager(new LinearLayoutManager(getContext()));
-        ColorDrawable colorDrawable = new ColorDrawable(Carbon.getThemeColor(getContext(), R.attr.carbon_dividerColor));
-        int dividerWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
-        results.addItemDecoration(new DividerItemDecoration(colorDrawable, dividerWidth));
+        Drawable dividerDrawable = new ColorStateListDrawable(new DefaultColorControlStateList(getContext()));
+        int dividerWidth = getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight);
+        results.addItemDecoration(new DividerItemDecoration(dividerDrawable, dividerWidth));
         results.setAdapter(adapter);
         search.setOnFilterListener(filteringResults -> {
             if (filteringResults == null) {

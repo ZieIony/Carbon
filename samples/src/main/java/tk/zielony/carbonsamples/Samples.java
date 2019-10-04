@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import carbon.dialog.MultiSelectDialog;
+import carbon.drawable.CheckedState;
 import carbon.internal.DebugOverlay;
 import carbon.widget.CheckBox;
 import carbon.widget.ImageView;
@@ -107,7 +108,7 @@ public class Samples {
                     View v = views.remove(0);
                     if (v.getId() == R.id.toolbar)
                         continue;
-                    v.setEnabled(checked);
+                    v.setEnabled(checked == CheckedState.CHECKED);
                     if (v instanceof ViewGroup) {
                         ViewGroup viewGroup = (ViewGroup) v;
                         for (int i = 0; i < viewGroup.getChildCount(); i++)

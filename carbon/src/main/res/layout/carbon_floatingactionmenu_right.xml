@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="data"
-            type="carbon.component.MenuItem"/>
+            type="carbon.widget.FloatingActionMenu.Item" />
     </data>
 
     <carbon.widget.LinearLayout
@@ -27,17 +27,18 @@
             android:duplicateParentState="true"
             android:enabled="@{data.enabled}"
             android:maxLines="1"
-            android:text="@{data.title}"/>
+            android:text="@{data.title}" />
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/carbon_fab"
             style="@style/carbon_FloatingActionButton.Small"
+            srcCompat="@{data.icon}"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/carbon_paddingHalf"
             android:layout_marginRight="@dimen/carbon_paddingHalf"
             android:clickable="false"
             android:duplicateParentState="true"
             android:enabled="@{data.enabled}"
-            android:focusable="false"/>
+            android:focusable="false" />
     </carbon.widget.LinearLayout>
 </layout>

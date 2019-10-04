@@ -6,6 +6,7 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
 import carbon.R;
 
 class SnackbarView extends LinearLayout {

@@ -24,14 +24,14 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 
-import com.google.android.material.R;
-import com.google.android.material.internal.Experimental;
-import com.google.android.material.shape.CornerFamily;
-
 import androidx.annotation.AttrRes;
 import androidx.annotation.Dimension;
 import androidx.annotation.RestrictTo;
 import androidx.annotation.StyleRes;
+
+import com.google.android.material.R;
+import com.google.android.material.internal.Experimental;
+import com.google.android.material.shape.CornerFamily;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 

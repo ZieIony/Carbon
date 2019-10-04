@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <carbon.widget.TextView
         android:id="@+id/carbon_windowTitle"
@@ -12,12 +12,12 @@
         android:layout_marginRight="24dp"
         android:layout_marginTop="24dp"
         android:padding="0dp"
-        android:textAppearance="?attr/carbon_textAppearanceTitle"/>
+        android:textAppearance="?attr/carbon_textAppearanceTitle" />
 
     <carbon.widget.Divider
         android:id="@+id/carbon_topDivider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </carbon.widget.FrameLayout>

@@ -18,6 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
+
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;

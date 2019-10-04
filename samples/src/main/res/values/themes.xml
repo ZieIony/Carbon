@@ -24,4 +24,61 @@
         <item name="android:windowBackground">@color/basilBackground</item>
         <item name="carbon_font">@font/lekton_regular</item>
     </style>
+
+
+    <!-- Windows Theme -->
+
+    <style name="WindowsTheme.Button" parent="carbon_Button.Outlined">
+        <item name="carbon_cornerRadius">0dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="carbon_stroke">@color/carbon_white_50</item>
+        <item name="carbon_rippleColor">@color/carbon_white</item>
+    </style>
+
+    <style name="WindowsTheme.TextAppearance.Title" parent="carbon_TextAppearance.Title">
+        <item name="carbon_fontFamily">"sans-serif-light"</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="WindowsTheme.TextAppearance.Subhead" parent="carbon_TextAppearance.Subhead">
+        <item name="carbon_fontFamily">"sans-serif-light"</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="WindowsTheme.TextAppearance.Button" parent="carbon_TextAppearance.Button">
+        <item name="carbon_fontFamily">"sans-serif"</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="WindowsTheme.TextAppearance.ListHeader" parent="carbon_TextAppearance.ListHeader">
+        <item name="carbon_fontFamily">"sans-serif-light"</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="WindowsTheme.TabLayout" parent="carbon_TabLayout">
+        <item name="carbon_fixedTabs">false</item>
+        <item name="carbon_indicatorWidth">0dp</item>
+        <item name="carbon_itemLayout">@layout/item_windowstab</item>
+    </style>
+
+    <style name="WindowsTheme.BottomNavigationView" parent="carbon_BottomNavigationView">
+        <item name="android:background">@color/carbon_black</item>
+        <item name="carbon_itemLayout">@layout/item_windowsbottomnavigation</item>
+    </style>
+
+    <style name="WindowsTheme" parent="carbon_Theme.Dark.DarkPrimaryColor.NoActionBar">
+        <item name="android:buttonStyle">@style/WindowsTheme.Button</item>
+        <item name="toolbarStyle">@style/carbon_Toolbar.Flat</item>
+        <item name="carbon_tabLayoutStyle">@style/WindowsTheme.TabLayout</item>
+        <item name="carbon_bottomNavigationViewStyle">@style/WindowsTheme.BottomNavigationView
+        </item>
+        <item name="android:windowBackground">@color/carbon_black</item>
+        <item name="carbon_colorBackground">@color/carbon_black</item>
+        <item name="carbon_colorForeground">@color/carbon_black</item>
+        <item name="carbon_textAppearanceTitle">@style/WindowsTheme.TextAppearance.Title</item>
+        <item name="carbon_textAppearanceSubhead">@style/WindowsTheme.TextAppearance.Subhead</item>
+        <item name="carbon_textAppearanceButton">@style/WindowsTheme.TextAppearance.Button</item>
+        <item name="carbon_textAppearanceListHeader">@style/WindowsTheme.TextAppearance.ListHeader
+        </item>
+    </style>
 </resources>

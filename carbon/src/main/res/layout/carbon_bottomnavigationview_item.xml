@@ -6,11 +6,12 @@
 
         <variable
             name="data"
-            type="carbon.widget.BottomBar.Item" />
+            type="carbon.widget.BottomNavigationView.Item" />
     </data>
 
     <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="match_parent"
         android:clickable="true"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
@@ -32,8 +33,8 @@
             android:layout_alignBaseline="@id/carbon_bottomTextMarker"
             android:layout_centerHorizontal="true"
             android:duplicateParentState="true"
-            android:text="@{data.text}"
-            android:textColor="@color/carbon_defaultIconColorAccent"
+            android:text="@{data.title}"
+            android:textColor="@{data.iconTintList}"
             android:textSize="12sp"
             app:carbon_fontFamily="RobotoRegular" />
 
@@ -46,6 +47,6 @@
             android:layout_marginBottom="6dp"
             android:duplicateParentState="true"
             android:src="@{data.icon}"
-            app:carbon_tint="@color/carbon_defaultIconColorAccent" />
+            app:carbon_tint="@{data.iconTintList}" />
     </carbon.widget.RelativeLayout>
 </layout>

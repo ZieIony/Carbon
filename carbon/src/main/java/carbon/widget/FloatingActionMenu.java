@@ -3,35 +3,99 @@ package carbon.widget;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.annimon.stream.Stream;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.component.FloatingActionMenuLeftRow;
 import carbon.component.FloatingActionMenuRightRow;
-import carbon.component.MenuItem;
-import carbon.internal.Menu;
-import carbon.recycler.RowListAdapter;
+import carbon.recycler.RowArrayAdapter;
 
 public class FloatingActionMenu extends PopupWindow {
+    public static class Item implements Serializable {
+        Drawable icon;
+        ColorStateList tint;
+        Drawable background;
+        private boolean enabled;
+        private CharSequence title;
+
+        public Item(MenuItem item) {
+            icon = item.getIcon();
+            tint = MenuItemCompat.getIconTintList(item);
+            enabled = item.isEnabled();
+            title = item.getTitle();
+        }
+
+        public void setIcon(Drawable icon) {
+            this.icon = icon;
+        }
+
+        public Drawable getIcon() {
+            return icon;
+        }
+
+        public void setIconTintList(ColorStateList tint) {
+            this.tint = tint;
+        }
+
+        public ColorStateList getIconTintList() {
+            return tint;
+        }
+
+        public void setBackgroundDrawable(Drawable background) {
+            this.background = background;
+        }
+
+        public Drawable getBackgroundDrawable() {
+            return background;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setTitle(CharSequence title) {
+            this.title = title;
+        }
+
+        public CharSequence getTitle() {
+            return title;
+        }
+    }
+
     private final Handler handler;
     private final RecyclerView content;
-    private Menu menu;
+    private Item[] items;
 
-    android.view.MenuItem.OnMenuItemClickListener listener;
+    RecyclerView.OnItemClickedListener<Item> listener;
     private View anchor;
 
-    private RowListAdapter<MenuItem> adapter;
+    private RowArrayAdapter<Item> adapter;
 
     public FloatingActionMenu(Context context) {
         super(new RecyclerView(CarbonContextWrapper.wrap(context)), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -75,14 +139,12 @@ public class FloatingActionMenu extends PopupWindow {
         boolean left = location[0] < display.getWidth() + anchor.getWidth() - location[0];
         boolean top = location[1] < display.getHeight() + anchor.getHeight() - location[1];
 
-        adapter = new RowListAdapter<>(MenuItem.class, left ? FloatingActionMenuLeftRow::new : FloatingActionMenuRightRow::new);
+        adapter = new RowArrayAdapter<>(items, left ? FloatingActionMenuLeftRow::new : FloatingActionMenuRightRow::new);
         content.setAdapter(adapter);
-        adapter.setItems(menu.getVisibleItems());
-        adapter.notifyDataSetChanged();
 
         adapter.setOnItemClickedListener((view, o, position) -> {
             if (listener != null)
-                listener.onMenuItemClick(menu.getItem(position));
+                listener.onItemClicked(view, o, position);
             dismiss();
         });
 
@@ -101,7 +163,7 @@ public class FloatingActionMenu extends PopupWindow {
         for (int i = 0; i < content.getChildCount(); i++) {
             LinearLayout item = (LinearLayout) content.getChildAt(i);
             item.setVisibility(View.INVISIBLE);
-            int delay = top ? i * 50 : (menu.size() - 1 - i) * 50;
+            int delay = top ? i * 50 : (items.length - 1 - i) * 50;
             handler.postDelayed(() -> item.animateVisibility(View.VISIBLE), delay);
         }
 
@@ -126,18 +188,28 @@ public class FloatingActionMenu extends PopupWindow {
     }
 
     public void setMenu(int resId) {
-        menu = Carbon.getMenu(getContentView().getContext(), resId);
+        setMenu(Carbon.getMenu(getContentView().getContext(), resId));
     }
 
-    public void setMenu(final android.view.Menu baseMenu) {
-        menu = Carbon.getMenu(getContentView().getContext(), baseMenu);
+    public void setMenu(final android.view.Menu menu) {
+        List<Item> items = new ArrayList<>();
+        for (int i = 0; i < menu.size(); i++) {
+            if (menu.getItem(i).isVisible())
+                items.add(new Item(menu.getItem(i)));
+        }
+
+        this.items = Stream.of(items).toArray(Item[]::new);
     }
 
-    public android.view.Menu getMenu() {
-        return menu;
+    public void setMenuItems(Item[] items) {
+        this.items = items;
     }
 
-    public void setOnMenuItemClickListener(android.view.MenuItem.OnMenuItemClickListener listener) {
+    public Item[] getMenuItems() {
+        return items;
+    }
+
+    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener<Item> listener) {
         this.listener = listener;
     }
 }

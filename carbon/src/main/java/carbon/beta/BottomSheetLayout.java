@@ -1,31 +1,68 @@
 package carbon.beta;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+
+import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.R;
 import carbon.component.BottomSheetCell;
 import carbon.component.BottomSheetRow;
 import carbon.component.DividerItem;
 import carbon.component.DividerRow;
-import carbon.component.MenuItem;
 import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
-import carbon.internal.Menu;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.LinearLayout;
 import carbon.widget.RecyclerView;
 import carbon.widget.TextView;
 
 public class BottomSheetLayout extends LinearLayout {
+
+    public static class Item implements Serializable {
+        private ColorStateList iconTint;
+        private int groupId;
+        private Drawable icon;
+        private CharSequence title;
+
+        public Item() {
+        }
+
+        public Item(MenuItem menuItem) {
+            groupId = menuItem.getGroupId();
+            icon = menuItem.getIcon();
+            iconTint = MenuItemCompat.getIconTintList(menuItem);
+            title = menuItem.getTitle();
+        }
+
+        public int getGroupId() {
+            return groupId;
+        }
+
+        public Drawable getIcon() {
+            return icon;
+        }
+
+        public ColorStateList getIconTintList() {
+            return iconTint;
+        }
+
+        public CharSequence getTitle() {
+            return title;
+        }
+    }
 
     public enum Style {
         List, Grid
@@ -73,8 +110,8 @@ public class BottomSheetLayout extends LinearLayout {
         updateRecycler();
     }
 
-    public void setMenu(final android.view.Menu baseMenu) {
-        menu = Carbon.getMenu(getContext(), baseMenu);
+    public void setMenu(final Menu baseMenu) {
+        menu = baseMenu;
         updateRecycler();
     }
 
@@ -104,16 +141,19 @@ public class BottomSheetLayout extends LinearLayout {
         recycler.setLayoutManager(style == Style.List ? new LinearLayoutManager(getContext()) : new GridLayoutManager(getContext(), 3));
 
         ArrayList<Serializable> items = new ArrayList<>();
-        items.addAll(menu.getVisibleItems());
+        for (int i = 0; i < menu.size(); i++) {
+            if (menu.getItem(i).isVisible())
+                items.add(new Item(menu.getItem(i)));
+        }
         if (style == Style.List) {
             for (int i = 0; i < items.size() - 1; i++) {
-                if (((android.view.MenuItem) items.get(i)).getGroupId() != ((android.view.MenuItem) items.get(i + 1)).getGroupId())
+                if (((Item) items.get(i)).getGroupId() != ((Item) items.get(i + 1)).getGroupId())
                     items.add(++i, new DividerItem());
             }
             items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
         }
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<>(MenuItem.class, style == Style.List ? BottomSheetRow::new : BottomSheetCell::new);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(Item.class, style == Style.List ? BottomSheetRow::new : BottomSheetCell::new);
         adapter.addFactory(PaddingItem.class, PaddingRow::new);
         adapter.addFactory(DividerItem.class, DividerRow::new);
         adapter.setItems(items);

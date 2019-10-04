@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <carbon.widget.BackdropLayout
         android:id="@+id/backdrop_backdropLayout"
@@ -20,12 +20,13 @@
                 android:layout_height="@dimen/carbon_toolbarHeight"
                 android:layout_marginStart="@dimen/carbon_toolbarItemMargin"
                 android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
-                app:srcCompat="@drawable/ic_menu_black_24dp"/>
+                app:srcCompat="@drawable/ic_menu_black_24dp" />
 
             <carbon.widget.RecyclerView
                 android:id="@+id/backdrop_recycler"
+                style="@style/carbon_RecyclerView.TransparentComponents"
                 android:layout_width="200dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </carbon.widget.BackdropLayout_Back>
 
         <carbon.widget.BackdropLayout_Front
@@ -40,7 +41,7 @@
             <carbon.widget.RecyclerView
                 android:id="@+id/backdrop_contentRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </carbon.widget.BackdropLayout_Front>
     </carbon.widget.BackdropLayout>
 </carbon.widget.FrameLayout>

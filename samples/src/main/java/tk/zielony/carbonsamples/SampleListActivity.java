@@ -26,7 +26,6 @@ public class SampleListActivity extends ThemedActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_samplelist);
 
         SharedPreferences preferences = getSharedPreferences("samples", Context.MODE_PRIVATE);
         allPreferences = (Map<String, String>) preferences.getAll();

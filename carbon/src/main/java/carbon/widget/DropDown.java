@@ -70,11 +70,11 @@ public class DropDown<Type extends Serializable> extends EditText {
     OnSelectionChangedListener<Type> onSelectionChangedListener;
 
     private boolean isShowingPopup = false;
-    
+
     private Drawable drawable;
     private float drawablePadding;
     private ButtonGravity buttonGravity;
-    
+
     public DropDown(Context context) {
         super(context, null, R.attr.carbon_dropDownStyle);
         initDropDown(context, null, R.attr.carbon_dropDownStyle);
@@ -207,7 +207,7 @@ public class DropDown<Type extends Serializable> extends EditText {
     public boolean onTouchEvent(MotionEvent event) {
         if (dropDownMenu.getStyle() != Style.Editable ||
                 (isButtonOnTheLeft() && event.getX() <= getCompoundPaddingLeft() ||
-                !isButtonOnTheLeft() && event.getX() >= getWidth() - getCompoundPaddingRight())) {
+                        !isButtonOnTheLeft() && event.getX() >= getWidth() - getCompoundPaddingRight())) {
             gestureDetector.onTouchEvent(event);
             return true;
         }

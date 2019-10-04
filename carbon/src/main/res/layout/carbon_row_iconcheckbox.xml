@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="data"
-            type="carbon.component.CheckBoxItem"/>
+            type="carbon.component.CheckBoxItem" />
 
     </data>
 
@@ -24,7 +24,7 @@
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_windowPadding"
             android:checked="@{data.checked}"
-            app:carbon_tint="?attr/carbon_iconColor"/>
+            app:carbon_tint="?attr/carbon_iconColor" />
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_label"/>
+            app:carbon_textView="@+id/carbon_label" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_label"
@@ -44,7 +44,7 @@
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_contentPadding"
             android:maxLines="1"
-            android:text="@{data.text}"/>
+            android:text="@{data.text}" />
 
     </carbon.widget.RelativeLayout>
 </layout>

@@ -13,7 +13,7 @@ public class DefaultPrimaryColorStateList extends ColorStateList {
                 new int[]{R.attr.carbon_state_invalid},
                 new int[]{}
         }, new int[]{
-                Carbon.getThemeColor(context, R.attr.carbon_colorDisabled),
+                Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabled),
                 Carbon.getThemeColor(context, R.attr.carbon_colorError),
                 Carbon.getThemeColor(context, R.attr.colorPrimary)
         });

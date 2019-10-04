@@ -24,9 +24,11 @@
     <string name="progressBarsActivity_title">Progress bars</string>
     <string name="circularProgressActivity_title">Circular progress</string>
     <string name="buttonsActivity_title">Buttons</string>
+    <string name="fabActivity_title">Floating Action Button</string>
     <string name="bannerActivity_title">Banner</string>
     <string name="checkBoxRadioActivity_title"><![CDATA[CheckBoxes & RadioButtons]]></string>
     <string name="widgetsActivity_title">Widgets</string>
+    <string name="themesActivity_title">Themes</string>
     <string name="dialogsActivity_title">Dialogs</string>
     <string name="featuresActivity_title">Features</string>
     <string name="componentsActivity_title">Components</string>
@@ -67,9 +69,9 @@
     <string name="rippleComparisonActivity_title">Ripple comparison</string>
     <string name="radialTransitionActivity_title">Radial transition</string>
     <string name="textMarkerActivity_title">Text marker</string>
-    <string name="bottomBarActivity_title">BottomBar</string>
+    <string name="bottomBarActivity_title">BottomNavigationView</string>
     <string name="bottomSheetActivity_title">BottomSheet</string>
-    <string name="themeActivity_title">Theme</string>
+    <string name="themeActivity_title">Dark and Light</string>
 
     <string name="iconTextListItemActivity_title">Icon and text list item</string>
     <string name="avatarTextListItemActivity_title">Avatar and text list item</string>
@@ -94,6 +96,9 @@
     <string name="shrineActivity_title">Studies/Shrine</string>
     <string name="craneActivity_title">Studies/Crane</string>
     <string name="basilActivity_title">Studies/Basil</string>
+
+    <string name="currentThemeActivity_title">Current Theme</string>
+    <string name="windowsThemeActivity_title">Windows Theme</string>
 
     <string name="samplehtml"><![CDATA[cdata tag makes it <i>very</i> easy to add <b>formatting</b>]]></string>
 

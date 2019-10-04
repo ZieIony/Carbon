@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar"/>
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.TextView
         style="@style/sectionDescription"
-        app:carbon_htmlText="Carbon supports SVGs instead of Android vector files. You can render more complex icons and images with transformations, gradients, text, clipping and other features. SVGs can be exported directly from Inkscape or Illustrator. SVG files have to be in &lt;i>res/raw&lt;/i> folder."/>
+        app:carbon_htmlText="Carbon supports SVGs instead of Android vector files. You can render more complex icons and images with transformations, gradients, text, clipping and other features. SVGs can be exported directly from Inkscape or Illustrator. SVG files have to be in &lt;i>res/raw&lt;/i> folder." />
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -23,35 +23,35 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
-            android:src="@raw/ic_description_24px"/>
+            android:src="@raw/ic_description_24px" />
 
         <carbon.widget.ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/carbon_padding"
             android:src="@raw/ic_dns_24px"
-            app:carbon_tint="?attr/carbon_colorBackgroundInverse"/>
+            app:carbon_tint="?attr/carbon_colorBackgroundInverse" />
 
         <carbon.widget.ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
             android:src="@raw/ic_face_24px"
-            app:carbon_tint="?attr/carbon_colorBackgroundInverse"/>
+            app:carbon_tint="?attr/carbon_colorBackgroundInverse" />
 
         <carbon.widget.ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
             android:src="@raw/ic_print_24px"
-            app:carbon_tint="?attr/carbon_colorBackgroundInverse"/>
+            app:carbon_tint="?attr/carbon_colorBackgroundInverse" />
 
         <carbon.widget.ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
             android:src="@raw/ic_settings_input_svideo_24px"
-            app:carbon_tint="?attr/carbon_colorBackgroundInverse"/>
+            app:carbon_tint="?attr/carbon_colorBackgroundInverse" />
     </carbon.widget.LinearLayout>
 
     <carbon.widget.LinearLayout
@@ -64,19 +64,19 @@
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
             android:src="@raw/ic_shopping_cart_24px"
-            app:carbon_tint="#ff00ff00"/>
+            app:carbon_tint="#ff00ff00" />
 
         <carbon.widget.ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
             android:src="@raw/ic_wallet_travel_24px"
-            app:carbon_tint="#ff0000ff"/>
+            app:carbon_tint="#ff0000ff" />
     </carbon.widget.LinearLayout>
 
     <carbon.widget.Divider
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -91,7 +91,7 @@
             android:layout_margin="@dimen/carbon_padding"
             android:duplicateParentState="true"
             android:src="@raw/ic_today_24px"
-            app:carbon_tint="@drawable/red_black_selector"/>
+            app:carbon_tint="@drawable/red_black_selector" />
 
         <carbon.widget.TextView
             android:layout_width="match_parent"
@@ -101,7 +101,7 @@
             android:gravity="center_vertical"
             android:text="press me"
             android:textAppearance="?attr/carbon_textAppearanceBody2"
-            android:textColor="@drawable/red_black_selector"/>
+            android:textColor="@drawable/red_black_selector" />
     </carbon.widget.LinearLayout>
 
 </carbon.widget.LinearLayout>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="vertical"
-                            android:paddingTop="@dimen/carbon_padding"
-                            android:paddingBottom="@dimen/carbon_padding">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/carbon_padding"
+    android:paddingBottom="@dimen/carbon_padding">
 
     <carbon.widget.LinearLayout
         android:id="@+id/powerOff"
@@ -32,7 +32,7 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_tint="@color/carbon_iconColorActive_dark"/>
+            app:carbon_tint="@color/carbon_iconColor_dark" />
 
         <carbon.widget.TextView
             android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
             android:tag="animate"
             android:text="Power Off"
             android:textAppearance="?attr/carbon_textAppearanceSubhead"
-            app:carbon_inAnimation="fly"/>
+            app:carbon_inAnimation="fly" />
     </carbon.widget.LinearLayout>
 
     <carbon.widget.LinearLayout
@@ -69,7 +69,7 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_tint="@color/carbon_iconColorActive_dark"/>
+            app:carbon_tint="@color/carbon_iconColor_dark" />
 
         <carbon.widget.TextView
             android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
             android:tag="animate"
             android:text="Reboot"
             android:textAppearance="?attr/carbon_textAppearanceSubhead"
-            app:carbon_inAnimation="fly"/>
+            app:carbon_inAnimation="fly" />
     </carbon.widget.LinearLayout>
 
     <carbon.widget.LinearLayout
@@ -106,7 +106,7 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_tint="@color/carbon_iconColorActive_dark"/>
+            app:carbon_tint="@color/carbon_iconColor_dark" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                 android:tag="animate"
                 android:text="Airplane Mode"
                 android:textAppearance="?attr/carbon_textAppearanceSubhead"
-                app:carbon_inAnimation="fly"/>
+                app:carbon_inAnimation="fly" />
 
             <carbon.widget.TextView
                 android:id="@+id/airplaneModeStatus"
@@ -133,7 +133,7 @@
                 android:tag="animate"
                 android:text="Airplane Mode is off"
                 android:textAppearance="?attr/carbon_textAppearanceCaption"
-                app:carbon_inAnimation="fly"/>
+                app:carbon_inAnimation="fly" />
         </FrameLayout>
     </carbon.widget.LinearLayout>
 
@@ -142,7 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
         android:tag="animate"
-        app:carbon_inAnimation="pop"/>
+        app:carbon_inAnimation="pop" />
 
     <carbon.widget.LinearLayout
         android:layout_width="wrap_content"
@@ -162,7 +162,7 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_tint="?attr/carbon_iconColor"/>
+            app:carbon_tint="?attr/carbon_iconColor" />
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/volume"
@@ -175,6 +175,6 @@
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
-            app:carbon_tint="?attr/carbon_iconColorInverse"/>
+            app:carbon_tint="?attr/carbon_iconColorInverse" />
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

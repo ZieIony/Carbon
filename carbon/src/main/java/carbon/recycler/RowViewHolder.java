@@ -1,6 +1,7 @@
 package carbon.recycler;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import carbon.component.Component;
 
 public class RowViewHolder<Type> extends RecyclerView.ViewHolder {

@@ -10,7 +10,7 @@ import tk.zielony.carbonsamples.animation.PathAnimationActivity;
 import tk.zielony.carbonsamples.animation.RippleActivity;
 import tk.zielony.carbonsamples.animation.WidgetAnimationsActivity;
 
-@ActivityAnnotation(title = R.string.animationsActivity_title)
+@ActivityAnnotation(title = R.string.animationsActivity_title, layout = R.layout.activity_samplelist)
 public class AnimationsActivity extends SampleListActivity {
 
     @Override

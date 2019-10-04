@@ -76,6 +76,7 @@ public class CheckBox extends TextView implements Checkable {
             }
         }
 
+        Carbon.initDefaultBackground(this, a, R.styleable.CheckBox_android_background);
         Carbon.initHtmlText(this, a, R.styleable.CheckBox_carbon_htmlText);
 
         a.recycle();
@@ -109,7 +110,7 @@ public class CheckBox extends TextView implements Checkable {
         toggle();
 
         if (onCheckedChangeListener != null)
-            onCheckedChangeListener.onCheckedChanged(this, isChecked());
+            onCheckedChangeListener.onCheckedChanged(this, checkedState);
 
         final boolean handled = super.performClick();
         if (!handled) {
@@ -148,6 +149,8 @@ public class CheckBox extends TextView implements Checkable {
         if (this.checkedState != state) {
             checkedState = state;
             refreshDrawableState();
+            //notifyViewAccessibilityStateChangedIfNeeded(
+            //      AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED);
         }
     }
 
@@ -171,7 +174,7 @@ public class CheckBox extends TextView implements Checkable {
          * @param buttonView The compound button view whose state has changed.
          * @param isChecked  The new checked state of buttonView.
          */
-        void onCheckedChanged(CheckBox buttonView, boolean isChecked);
+        void onCheckedChanged(CheckBox buttonView, CheckedState isChecked);
     }
 
     /**

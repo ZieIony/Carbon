@@ -168,14 +168,15 @@ public class RelativeLayout extends android.widget.RelativeLayout
     private void initRelativeLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, R.style.carbon_RelativeLayout);
 
-        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, elevationIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initInset(this, a, insetIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+        Carbon.initDefaultBackground(this, a, R.styleable.FrameLayout_android_background);
 
         a.recycle();
 
@@ -694,7 +695,7 @@ public class RelativeLayout extends android.widget.RelativeLayout
 
     @Override
     public void drawShadow(Canvas canvas) {
-        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
 

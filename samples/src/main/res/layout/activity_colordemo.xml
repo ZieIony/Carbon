@@ -1,5 +1,5 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -8,11 +8,11 @@
         android:orientation="vertical"
         app:carbon_insetColor="?attr/colorPrimary">
 
-        <include layout="@layout/view_debugtoolbar"/>
+        <include layout="@layout/view_debugtoolbar" />
 
         <carbon.widget.TextView
             style="@style/sectionDescription"
-            android:text="Select your favourite theme style and colors. Then press back to see all the samples using that theme."/>
+            android:text="Select your favourite theme style and colors. Then press back to see all the samples using that theme." />
 
         <carbon.widget.RelativeLayout
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
-                app:carbon_stroke="?attr/carbon_colorControl"/>
+                app:carbon_stroke="?attr/carbon_colorControl" />
 
             <carbon.widget.DropDown
                 android:id="@+id/style"
@@ -36,7 +36,7 @@
                 android:layout_marginLeft="@dimen/carbon_contentPadding"
                 android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_contentPadding"
-                android:text="Style"/>
+                android:text="Style" />
         </carbon.widget.RelativeLayout>
 
 
@@ -52,7 +52,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
-                app:carbon_stroke="?attr/carbon_colorControl"/>
+                app:carbon_stroke="?attr/carbon_colorControl" />
 
             <carbon.widget.DropDown
                 android:id="@+id/primary"
@@ -63,7 +63,7 @@
                 android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_contentPadding"
                 android:text="Primary color"
-                app:carbon_mode="over"/>
+                app:carbon_mode="over" />
         </carbon.widget.RelativeLayout>
 
         <carbon.widget.RelativeLayout
@@ -78,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
-                app:carbon_stroke="?attr/carbon_colorControl"/>
+                app:carbon_stroke="?attr/carbon_colorControl" />
 
             <carbon.widget.DropDown
                 android:id="@+id/accent"
@@ -89,7 +89,7 @@
                 android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_contentPadding"
                 android:text="Accent color"
-                app:carbon_mode="fit"/>
+                app:carbon_mode="fit" />
         </carbon.widget.RelativeLayout>
 
     </carbon.widget.LinearLayout>

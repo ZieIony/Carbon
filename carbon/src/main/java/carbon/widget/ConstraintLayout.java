@@ -163,6 +163,7 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+        Carbon.initDefaultBackground(this, a, R.styleable.ConstraintLayout_android_background);
 
         a.recycle();
 
@@ -677,7 +678,7 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
 
     @Override
     public void drawShadow(Canvas canvas) {
-        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <carbon.widget.TextView
         android:id="@+id/carbon_bottomSheetTitle"
@@ -13,10 +13,10 @@
         android:paddingLeft="@dimen/carbon_windowPadding"
         android:paddingRight="@dimen/carbon_windowPadding"
         android:textAppearance="?attr/carbon_textAppearanceTitle"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <carbon.widget.RecyclerView
         android:id="@+id/carbon_bottomSheetRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 </merge>

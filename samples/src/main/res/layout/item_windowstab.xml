@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="carbon.widget.TabLayout.Item" />
+    </data>
+
+    <carbon.widget.RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/carbon_windowPadding"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/carbon_marker"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:textSize="1sp" />
+
+        <carbon.widget.TextView
+            android:id="@+id/carbon_tabText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/carbon_marker"
+            android:duplicateParentState="true"
+            android:gravity="center"
+            android:text="@{data.title}"
+            android:textAppearance="@style/carbon_TextAppearance.Headline"
+            android:textColor="@color/windowstabtext_selector"
+            tools:text="@tools:sample/lorem" />
+    </carbon.widget.RelativeLayout>
+</layout>

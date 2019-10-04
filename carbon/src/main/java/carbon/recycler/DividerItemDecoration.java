@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import carbon.widget.RecyclerView;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {

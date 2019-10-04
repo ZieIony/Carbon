@@ -144,14 +144,15 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
     private void initAppBarLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarLayout, defStyleAttr, 0);
 
-        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, elevationIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initInset(this, a, insetIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+        Carbon.initDefaultBackground(this, a, R.styleable.AppBarLayout_android_background);
 
         a.recycle();
 
@@ -259,8 +260,10 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
             }
 
             paint.setXfermode(Carbon.CLEAR_MODE);
-            if (c)
+            if (c) {
+                cornersMask.setFillType(Path.FillType.INVERSE_WINDING);
                 canvas.drawPath(cornersMask, paint);
+            }
             if (r)
                 canvas.drawPath(revealAnimator.mask, paint);
             paint.setXfermode(null);
@@ -296,7 +299,7 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || !Carbon.IS_PIE_OR_HIGHER && ((ShadowView) child).getElevationShadowColor() != null)) {
+        if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((ShadowView) child).getElevationShadowColor() != null && !Carbon.IS_PIE_OR_HIGHER)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
         }
@@ -665,7 +668,7 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
 
     @Override
     public void drawShadow(Canvas canvas) {
-        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
 
@@ -675,8 +678,14 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
 
-        paint.setAlpha((int) (127 * alpha));
-        saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        if (alpha != 255) {
+            paint.setAlpha((int) (127 * alpha));
+            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        } else {
+            saveCount = canvas.save();
+        }
+        Matrix matrix = getMatrix();
+        canvas.setMatrix(matrix);
 
         if (r) {
             canvas.clipRect(
@@ -684,31 +693,25 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
 
-        Matrix matrix = getMatrix();
-
         shadowDrawable.setTintList(spotShadowColor);
         shadowDrawable.setAlpha(0x44);
         shadowDrawable.setElevation(z);
         shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 2), getRight(), (int) (getBottom() + z / 2));
         shadowDrawable.draw(canvas);
 
-        if (saveCount != 0) {
-            canvas.translate(this.getLeft(), this.getTop());
-            canvas.concat(matrix);
-            paint.setXfermode(Carbon.CLEAR_MODE);
-        }
+        canvas.translate(this.getLeft(), this.getTop());
+        canvas.concat(matrix);
+        paint.setXfermode(Carbon.CLEAR_MODE);
         if (maskShadow) {
             cornersMask.setFillType(Path.FillType.WINDING);
             canvas.drawPath(cornersMask, paint);
         }
-        if (r) {
+        if (r)
             canvas.drawPath(revealAnimator.mask, paint);
-        }
-        if (saveCount != 0) {
-            canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
-            paint.setAlpha(255);
-        }
+
+        canvas.restoreToCount(saveCount);
+        paint.setXfermode(null);
+        paint.setAlpha(255);
     }
 
     @Override

@@ -73,6 +73,7 @@ public class RadioButton extends TextView implements Checkable {
             }
         }
 
+        Carbon.initDefaultBackground(this, a, R.styleable.RadioButton_android_background);
         Carbon.initHtmlText(this, a, R.styleable.RadioButton_carbon_htmlText);
 
         a.recycle();
@@ -89,10 +90,10 @@ public class RadioButton extends TextView implements Checkable {
     }
 
 
-    private boolean mChecked;
+    private boolean checked;
     private boolean mBroadcasting;
 
-    private OnCheckedChangeListener mOnCheckedChangeListener;
+    private OnCheckedChangeListener onCheckedChangeListener;
     private OnCheckedChangeListener mOnCheckedChangeWidgetListener;
 
     private static final int[] CHECKED_STATE_SET = {
@@ -100,13 +101,15 @@ public class RadioButton extends TextView implements Checkable {
     };
 
     public void toggle() {
-        if (!mChecked)
-            setChecked(true);
+        setChecked(!isChecked());
     }
 
     @Override
     public boolean performClick() {
         toggle();
+
+        if (onCheckedChangeListener != null)
+            onCheckedChangeListener.onCheckedChanged(this, checked);
 
         final boolean handled = super.performClick();
         if (!handled) {
@@ -120,7 +123,7 @@ public class RadioButton extends TextView implements Checkable {
 
     @ViewDebug.ExportedProperty
     public boolean isChecked() {
-        return mChecked;
+        return checked;
     }
 
     /**
@@ -129,8 +132,8 @@ public class RadioButton extends TextView implements Checkable {
      * @param checked true to check the button, false to uncheck it
      */
     public void setChecked(boolean checked) {
-        if (mChecked != checked) {
-            mChecked = checked;
+        if (this.checked != checked) {
+            this.checked = checked;
             refreshDrawableState();
             //notifyViewAccessibilityStateChangedIfNeeded(
             //      AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED);
@@ -141,11 +144,8 @@ public class RadioButton extends TextView implements Checkable {
             }
 
             mBroadcasting = true;
-            if (mOnCheckedChangeListener != null) {
-                mOnCheckedChangeListener.onCheckedChanged(this, mChecked);
-            }
             if (mOnCheckedChangeWidgetListener != null) {
-                mOnCheckedChangeWidgetListener.onCheckedChanged(this, mChecked);
+                mOnCheckedChangeWidgetListener.onCheckedChanged(this, checked);
             }
 
             mBroadcasting = false;
@@ -158,7 +158,7 @@ public class RadioButton extends TextView implements Checkable {
      * @param listener the callback to call on checked state change
      */
     public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
-        mOnCheckedChangeListener = listener;
+        onCheckedChangeListener = listener;
     }
 
     /**
@@ -263,7 +263,7 @@ public class RadioButton extends TextView implements Checkable {
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
         event.setClassName(RadioButton.class.getName());
-        event.setChecked(mChecked);
+        event.setChecked(checked);
     }
 
     /*@Override
@@ -271,7 +271,7 @@ public class RadioButton extends TextView implements Checkable {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(RadioButton.class.getName());
         info.setCheckable(true);
-        info.setChecked(mChecked);
+        info.setChecked(checked);
     }*/
 
     @Override
@@ -350,8 +350,11 @@ public class RadioButton extends TextView implements Checkable {
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
-        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        int[] drawableState = super.onCreateDrawableState(extraSpace);
         if (isChecked()) {
+            int[] state = new int[drawableState.length + 1];
+            System.arraycopy(drawableState, 0, state, 0, drawableState.length);
+            drawableState = state;
             mergeDrawableStates(drawableState, CHECKED_STATE_SET);
         }
         return drawableState;
@@ -361,9 +364,10 @@ public class RadioButton extends TextView implements Checkable {
     protected void drawableStateChanged() {
         super.drawableStateChanged();
 
-        if (drawable != null && drawable.isStateful()
-                && drawable.setState(getDrawableState())) {
-            invalidateDrawable(drawable);
+        Drawable d = drawable;
+        if (d != null && d.isStateful()
+                && d.setState(getDrawableState())) {
+            invalidateDrawable(d);
         }
     }
 

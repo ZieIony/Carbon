@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:layout_gravity="center"
-                           android:background="#F8A825"
-                           android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#F8A825"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
             app:carbon_progressStyle="circular_indeterminate"
-            app:carbon_tint="#ffffffff"/>
+            app:carbon_tint="#ffffffff" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
                 android:text="Reboot"
                 android:textAppearance="@style/carbon_TextAppearance.Title.Inverse"
                 android:textColor="@color/carbon_textColorPrimary_dark"
-                app:carbon_inAnimation="fly"/>
+                app:carbon_inAnimation="fly" />
 
             <carbon.widget.TextView
                 android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
                 android:text="Rebooting..."
                 android:textAppearance="@style/carbon_TextAppearance.Caption.Inverse"
                 android:textColor="@color/carbon_textColorSecondary_dark"
-                app:carbon_inAnimation="fly"/>
+                app:carbon_inAnimation="fly" />
         </LinearLayout>
     </LinearLayout>
 </carbon.widget.FrameLayout>

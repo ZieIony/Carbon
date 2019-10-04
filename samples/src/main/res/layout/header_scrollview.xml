@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="200dp"
-             android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/mazda"/>
+        android:src="@drawable/mazda" />
 
     <carbon.widget.ImageView
         style="@style/carbon_ImageView.IconButton"
@@ -16,10 +16,10 @@
         android:layout_height="@dimen/carbon_toolbarItemSize"
         android:layout_gravity="bottom|end"
         android:padding="@dimen/carbon_padding"
-        android:src="@raw/ic_shopping_cart_24px"/>
+        android:src="@raw/ic_shopping_cart_24px" />
 
     <carbon.widget.EditText
         android:layout_gravity="top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 </FrameLayout>

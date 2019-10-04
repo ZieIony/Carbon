@@ -11,7 +11,7 @@ import tk.zielony.carbonsamples.component.IconTextListItemActivity;
 import tk.zielony.carbonsamples.component.ImageTextSubtextDateListItemActivity;
 import tk.zielony.carbonsamples.component.RegisterActivity;
 
-@ActivityAnnotation(title = R.string.componentsActivity_title)
+@ActivityAnnotation(title = R.string.componentsActivity_title, layout = R.layout.activity_samplelist)
 public class ComponentsActivity extends SampleListActivity {
 
     @Override

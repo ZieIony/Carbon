@@ -46,16 +46,12 @@
                 android:text="@{context.getString(data.name)}"
                 tools:text="item name" />
 
-            <carbon.widget.TextView
+            <carbon.widget.ImageView
                 android:id="@+id/beta"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/carbon_listItemHeight"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/carbon_padding"
-                android:paddingLeft="@dimen/carbon_padding"
-                android:text="beta"
-                android:textColor="#afff2020"
-                android:textSize="16sp"
+                style="@style/carbon_ImageView.Icon"
+                android:layout_width="@dimen/carbon_toolbarItemSize"
+                android:layout_height="@dimen/carbon_toolbarItemSize"
+                app:srcCompat="@drawable/ic_warning_black_24dp"
                 android:visibility="@{data.beta?View.VISIBLE:View.GONE}" />
 
             <carbon.widget.ImageView

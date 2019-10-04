@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                xmlns:app="http://schemas.android.com/apk/res-auto"
-                                xmlns:tools="http://schemas.android.com/tools"
-                                android:id="@+id/activity_main_done"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:layout_editor_absoluteX="0dp"
-                                app:layout_editor_absoluteY="80dp"
-                                tools:layout_editor_absoluteX="0dp"
-                                tools:layout_editor_absoluteY="80dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_done"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_editor_absoluteX="0dp"
+    app:layout_editor_absoluteY="80dp"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="80dp">
 
     <carbon.widget.ImageView
         android:id="@+id/header"
@@ -32,7 +32,7 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"/>
+        tools:layout_constraintTop_creator="1" />
 
     <carbon.widget.FloatingActionButton
         android:id="@+id/favorite"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25"
         app:layout_editor_absoluteX="359dp"
-        app:layout_editor_absoluteY="104dp"/>
+        app:layout_editor_absoluteY="104dp" />
 
     <carbon.widget.TextView
         android:id="@+id/title"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_creator="0"
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_editor_absoluteX="16dp"
-        app:layout_editor_absoluteY="140dp"/>
+        app:layout_editor_absoluteY="140dp" />
 
     <carbon.widget.EditText
         android:id="@+id/cameraType"
@@ -85,7 +85,7 @@
         app:layout_editor_absoluteX="73dp"
         app:layout_editor_absoluteY="176dp"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"/>
+        tools:layout_constraintRight_creator="1" />
 
     <carbon.widget.TextView
         android:id="@+id/cameraLabel"
@@ -100,7 +100,7 @@
         app:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_editor_absoluteX="16dp"
-        app:layout_editor_absoluteY="189dp"/>
+        app:layout_editor_absoluteY="189dp" />
 
     <carbon.widget.TextView
         android:id="@+id/settingsLabel"
@@ -115,7 +115,7 @@
         app:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_editor_absoluteX="16dp"
-        app:layout_editor_absoluteY="238dp"/>
+        app:layout_editor_absoluteY="238dp" />
 
     <carbon.widget.EditText
         android:id="@+id/settings"
@@ -136,7 +136,7 @@
         app:layout_editor_absoluteX="73dp"
         app:layout_editor_absoluteY="225dp"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"/>
+        tools:layout_constraintRight_creator="1" />
 
     <carbon.widget.Button
         android:id="@+id/upload"
@@ -151,7 +151,7 @@
         app:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_editor_absoluteX="307dp"
-        app:layout_editor_absoluteY="538dp"/>
+        app:layout_editor_absoluteY="538dp" />
 
     <carbon.widget.Button
         android:id="@+id/discard"
@@ -166,7 +166,7 @@
         app:layout_constraintRight_creator="0"
         app:layout_constraintRight_toLeftOf="@+id/upload"
         app:layout_editor_absoluteX="211dp"
-        app:layout_editor_absoluteY="538dp"/>
+        app:layout_editor_absoluteY="538dp" />
 
     <carbon.widget.TextView
         android:id="@+id/description"
@@ -195,5 +195,5 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"/>
+        tools:layout_constraintTop_creator="1" />
 </carbon.widget.ConstraintLayout>

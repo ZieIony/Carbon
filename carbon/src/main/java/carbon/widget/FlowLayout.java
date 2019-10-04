@@ -169,14 +169,15 @@ public class FlowLayout extends android.widget.FrameLayout
     private void initFlowLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FlowLayout, defStyleAttr, R.style.carbon_FlowLayout);
 
-        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initElevation(this, a, elevationIds);
+        Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initTouchMargin(this, a, touchMarginIds);
         Carbon.initInset(this, a, insetIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+        Carbon.initDefaultBackground(this, a, R.styleable.FlowLayout_android_background);
 
         gravity = a.getInt(R.styleable.FlowLayout_android_gravity, Gravity.START);
 
@@ -795,7 +796,7 @@ public class FlowLayout extends android.widget.FrameLayout
 
     @Override
     public void drawShadow(Canvas canvas) {
-        float alpha = getAlpha() * Carbon.getDrawableAlpha(getBackground()) / 255.0f * Carbon.getBackgroundTintAlpha(this) / 255.0f;
+        float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
 

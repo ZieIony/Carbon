@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                       android:id="@+id/toolbar"
-                       android:layout_width="match_parent"
-                       android:layout_height="@dimen/carbon_toolbarHeight">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar"
+    tools:text="test title"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/carbon_toolbarHeight">
 
     <carbon.widget.ImageView
         android:id="@+id/debug"
         style="@style/carbon_ImageView.IconButton"
-        android:src="@raw/ic_bug_report_24px"/>
+        android:src="@raw/ic_bug_report_24px" />
 
     <carbon.widget.CheckBox
         android:id="@+id/enabled"
         style="@style/carbon_CheckBox.IconButton"
-        android:checked="true"/>
+        android:checked="true" />
 </carbon.widget.Toolbar>

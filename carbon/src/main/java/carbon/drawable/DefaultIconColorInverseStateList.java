@@ -13,7 +13,7 @@ public class DefaultIconColorInverseStateList extends ColorStateList {
                 new int[]{R.attr.carbon_state_invalid},
                 new int[]{}
         }, new int[]{
-                Carbon.getThemeColor(context, R.attr.carbon_colorDisabledInverse),
+                Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabledInverse),
                 Carbon.getThemeColor(context, R.attr.carbon_colorError),
                 Carbon.getThemeColor(context, R.attr.carbon_iconColorInverse)
         });

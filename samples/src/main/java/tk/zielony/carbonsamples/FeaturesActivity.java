@@ -18,11 +18,10 @@ import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
 import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.feature.TextAppearanceActivity;
 import tk.zielony.carbonsamples.feature.TextMarkerActivity;
-import tk.zielony.carbonsamples.feature.ThemeActivity;
 import tk.zielony.carbonsamples.feature.ZOrderActivity;
 import tk.zielony.carbonsamples.widget.SVGActivity;
 
-@ActivityAnnotation(title = R.string.featuresActivity_title)
+@ActivityAnnotation(title = R.string.featuresActivity_title, layout = R.layout.activity_samplelist)
 public class FeaturesActivity extends SampleListActivity {
 
     @Override
@@ -50,7 +49,6 @@ public class FeaturesActivity extends SampleListActivity {
                 new SampleActivityItem(AnchorActivity.class),
                 new SampleActivityItem(ContextWrapperActivity.class),
                 new SampleActivityItem(TextMarkerActivity.class),
-                new SampleActivityItem(ThemeActivity.class),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

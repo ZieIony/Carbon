@@ -32,16 +32,17 @@
                 app:carbon_tint="?attr/carbon_iconColor" />
         </carbon.widget.Toolbar>
 
-        <carbon.widget.PagerTabStrip
-            android:id="@+id/tabStrip"
+        <carbon.widget.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:paddingLeft="@dimen/carbon_tabsPadding"
-            android:paddingStart="@dimen/carbon_tabsPadding"
-            app:carbon_fixedTabs="false"
             android:background="?attr/colorPrimary"
+            android:paddingStart="@dimen/carbon_tabsPadding"
+            android:paddingLeft="@dimen/carbon_tabsPadding"
+            android:theme="?attr/carbon_toolbarTheme"
+            app:carbon_fixedTabs="false"
             tools:itemCount="5"
-            tools:listitem="@layout/carbon_tab" />
+            tools:listitem="@layout/carbon_tablayout_tab" />
 
     </carbon.widget.LinearLayout>
 

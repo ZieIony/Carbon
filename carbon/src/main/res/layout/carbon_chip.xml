@@ -24,11 +24,10 @@
             android:layout_width="@dimen/carbon_iconSize"
             android:layout_height="@dimen/carbon_iconSize"
             android:layout_margin="@dimen/carbon_chipCloseMargin"
-            android:background="@color/carbon_defaultIconColor"
-            app:srcCompat="@drawable/carbon_check"
+            app:srcCompat="@drawable/carbon_check_circle"
             android:visibility="gone"
             app:carbon_cornerRadius="@dimen/carbon_iconSizeHalf"
-            app:carbon_tint="@color/carbon_defaultIconColorInverse"
+            app:carbon_tint="@color/carbon_defaultIconColor"
             tools:visibility="visible" />
     </carbon.widget.FrameLayout>
 

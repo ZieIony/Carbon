@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="String"/>
+            type="String" />
 
     </data>
 
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_text"/>
+            app:carbon_textView="@+id/carbon_text" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_text"
@@ -38,7 +38,7 @@
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:layout_marginStart="@dimen/carbon_windowPadding"
             android:text="@{data}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead"/>
+            android:textAppearance="?attr/carbon_textAppearanceSubhead" />
 
     </carbon.widget.RelativeLayout>
 </layout>

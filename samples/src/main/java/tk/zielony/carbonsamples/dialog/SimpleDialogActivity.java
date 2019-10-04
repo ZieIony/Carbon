@@ -3,6 +3,7 @@ package tk.zielony.carbonsamples.dialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+
 import carbon.dialog.Dialog;
 import carbon.widget.EditText;
 import tk.zielony.carbonsamples.ActivityAnnotation;

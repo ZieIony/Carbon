@@ -11,7 +11,7 @@ import tk.zielony.carbonsamples.guidelines.CraneActivity;
 import tk.zielony.carbonsamples.guidelines.MenusBehaviorActivity;
 import tk.zielony.carbonsamples.guidelines.ShrineActivity;
 
-@ActivityAnnotation(title = R.string.guidelinesActivity_title)
+@ActivityAnnotation(title = R.string.guidelinesActivity_title, layout = R.layout.activity_samplelist)
 public class GuidelinesActivity extends SampleListActivity {
 
     @Override

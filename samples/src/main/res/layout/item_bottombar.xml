@@ -6,15 +6,15 @@
 
         <variable
             name="data"
-            type="carbon.widget.BottomBar.Item" />
+            type="carbon.widget.BottomNavigationView.Item" />
     </data>
 
     <carbon.widget.FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:minWidth="@dimen/carbon_bottomBarInactiveMinWidth"
-        app:carbon_maxWidth="@dimen/carbon_bottomBarInactiveMaxWidth"
+        android:minWidth="@dimen/carbon_bottomNavigationViewInactiveMinWidth"
+        app:carbon_maxWidth="@dimen/carbon_bottomNavigationViewInactiveMaxWidth"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless">
 

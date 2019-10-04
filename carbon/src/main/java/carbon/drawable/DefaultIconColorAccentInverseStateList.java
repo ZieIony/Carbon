@@ -18,7 +18,7 @@ public class DefaultIconColorAccentInverseStateList extends ColorStateList {
                 new int[]{android.R.attr.state_focused},
                 new int[]{}
         }, new int[]{
-                Carbon.getThemeColor(context, R.attr.carbon_colorDisabledInverse),
+                Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabledInverse),
                 Carbon.getThemeColor(context, R.attr.carbon_colorError),
                 Carbon.getThemeColor(context, R.attr.colorAccent),
                 Carbon.getThemeColor(context, R.attr.colorAccent),

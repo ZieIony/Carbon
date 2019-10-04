@@ -1,8 +1,8 @@
 <carbon.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/drawerLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <carbon.widget.LinearLayout
         android:id="@+id/content"
@@ -12,7 +12,19 @@
         android:orientation="vertical"
         app:carbon_insetColor="?attr/colorPrimary">
 
-        <include layout="@layout/view_debugtoolbar"/>
+        <include layout="@layout/view_debugtoolbar" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <carbon.widget.TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Swipe from the left border to open the drawer."
+                android:textAppearance="@style/carbon_TextAppearance.Caption" />
+        </FrameLayout>
 
     </carbon.widget.LinearLayout>
 
@@ -25,6 +37,7 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         app:carbon_elevation="@dimen/carbon_elevationDrawer"
-        app:carbon_insetTop="0dp"/>
+        app:carbon_insetTop="0dp"
+        app:carbon_menu="@menu/menu_navigation" />
 
 </carbon.widget.DrawerLayout>

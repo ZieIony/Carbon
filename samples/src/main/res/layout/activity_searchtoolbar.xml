@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:fitsSystemWindows="true"
-                           android:orientation="vertical"
-                           app:carbon_insetColor="?attr/colorPrimaryDark">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimaryDark">
 
     <carbon.widget.FrameLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             <carbon.widget.ImageView
                 android:id="@+id/search"
                 style="@style/carbon_ImageView.IconButton"
-                android:src="@raw/ic_search_24px"/>
+                android:src="@raw/ic_search_24px" />
         </carbon.widget.Toolbar>
 
         <carbon.widget.LinearLayout
@@ -39,19 +39,19 @@
             <carbon.widget.ImageView
                 android:id="@+id/close"
                 style="@style/carbon_ImageView.IconButton"
-                android:src="@drawable/carbon_clear"/>
+                android:src="@drawable/carbon_clear" />
 
             <carbon.widget.SearchEditText
                 android:layout_width="0dp"
                 android:layout_height="@dimen/carbon_toolbarHeight"
                 android:layout_weight="1"
                 android:background="@null"
-                android:padding="0dp"/>
+                android:padding="0dp" />
 
             <carbon.widget.ImageView
                 style="@style/carbon_ImageView.IconButton"
                 android:clickable="false"
-                android:src="@raw/ic_search_24px"/>
+                android:src="@raw/ic_search_24px" />
         </carbon.widget.LinearLayout>
     </carbon.widget.FrameLayout>
 </carbon.widget.FrameLayout>

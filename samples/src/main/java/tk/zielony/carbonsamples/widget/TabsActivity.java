@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import androidx.viewpager.widget.PagerAdapter;
 
-import carbon.widget.PagerTabStrip;
 import carbon.widget.RelativeLayout;
+import carbon.widget.TabLayout;
 import carbon.widget.ViewPager;
 import carbon.widget.ViewPagerIndicator;
 import tk.zielony.carbonsamples.ActivityAnnotation;
@@ -61,7 +61,7 @@ public class TabsActivity extends ThemedActivity {
             }
 
         });
-        PagerTabStrip tabs = findViewById(R.id.tabStrip);
+        TabLayout tabs = findViewById(R.id.tabs);
         tabs.setViewPager(pager);
         ViewPagerIndicator indicator = findViewById(R.id.indicator);
         indicator.setViewPager(pager);

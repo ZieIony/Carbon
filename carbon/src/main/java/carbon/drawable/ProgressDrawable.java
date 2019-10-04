@@ -10,6 +10,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+
 import carbon.widget.ProgressBar;
 
 public abstract class ProgressDrawable extends Drawable {

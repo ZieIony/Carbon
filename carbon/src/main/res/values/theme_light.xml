@@ -3,7 +3,7 @@
     <style name="carbon_Theme.Light" parent="Theme.MaterialComponents.Light">
         <item name="carbon_colorError">#ffF44336</item>
 
-        <item name="android:buttonStyle">@style/carbon_Button.Colored.Inverse</item>
+        <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:listViewStyle">@style/carbon_ListView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
@@ -32,7 +32,7 @@
         <item name="carbon_cardViewStyle">@style/carbon_CardView</item>
         <item name="carbon_searchEditTextStyle">@style/carbon_SearchEditText</item>
         <item name="carbon_dropDownStyle">@style/carbon_DropDown</item>
-        <item name="carbon_pagerTabStripStyle">@style/carbon_PagerTabStrip</item>
+        <item name="carbon_tabLayoutStyle">@style/carbon_TabLayout</item>
         <item name="carbon_viewPagerIndicatorStyle">@style/carbon_ViewPagerIndicator</item>
         <item name="carbon_viewPagerStyle">@style/carbon_ViewPager</item>
         <item name="carbon_recyclerViewStyle">@style/carbon_RecyclerView</item>
@@ -46,7 +46,7 @@
         <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
         <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout</item>
         <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
-        <item name="carbon_bottomBarStyle">@style/carbon_BottomBar</item>
+        <item name="carbon_bottomNavigationViewStyle">@style/carbon_BottomNavigationView</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Light.Snackbar</item>
@@ -68,18 +68,26 @@
         <item name="carbon_colorBackground">@color/carbon_colorBackground_light</item>
         <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
         <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
-        <item name="carbon_dividerColor">@drawable/carbon_dividerbackground_light</item>
         <item name="carbon_inputLayoutBoxColor">@color/carbon_black_6</item>
         <item name="carbon_inputLayoutBoxPadding">0dp</item>
         <item name="carbon_rippleColor">@color/carbon_rippleColor_light</item>
         <item name="carbon_rippleColorInverse">@color/carbon_rippleColor_dark</item>
-        <item name="carbon_iconColor">@color/carbon_iconColorActive_light</item>
-        <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_dark</item>
-        <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_light</item>
-        <item name="carbon_colorDisabledInverse">@color/carbon_iconColorInactive_dark</item>
-        <item name="carbon_colorControl">@color/carbon_colorcontrol_light</item>
+        <item name="carbon_iconColor">@color/carbon_iconColor_light</item>
+        <item name="carbon_iconColorInverse">@color/carbon_iconColor_dark</item>
+        <item name="carbon_iconColorDisabled">@color/carbon_iconColorDisabled_light</item>
+        <item name="carbon_iconColorDisabledInverse">@color/carbon_iconColorDisabled_dark</item>
+        <item name="carbon_colorControl">@color/carbon_colorControl_light</item>
+        <item name="carbon_colorControlInverse">@color/carbon_colorControl_dark</item>
+        <item name="carbon_colorControlDisabled">@color/carbon_colorControlDisabled_light</item>
+        <item name="carbon_colorControlDisabledInverse">@color/carbon_colorControlDisabled_dark
+        </item>
+        <item name="carbon_colorControlActivated">@color/carbon_colorControlActivated_light</item>
+        <item name="carbon_colorControlActivatedInverse">@color/carbon_colorControlActivated_dark
+        </item>
         <item name="colorControlNormal">@color/carbon_colorControl_light</item>
-        <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/carbon_rippleColor_light</item>
+        <item name="android:colorControlHighlight" tools:targetApi="lollipop">
+            @color/carbon_rippleColor_light
+        </item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
         <item name="android:textColorHint">@color/carbon_textColorHint_light</item>
 
@@ -130,17 +138,25 @@
         <item name="carbon_colorBackground">@color/carbon_colorBackground_light</item>
         <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
         <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
-        <item name="carbon_dividerColor">@drawable/carbon_dividerbackground_light</item>
         <item name="carbon_inputLayoutBoxColor">@color/carbon_black_6</item>
         <item name="carbon_rippleColor">@color/carbon_rippleColor_light</item>
         <item name="carbon_rippleColorInverse">@color/carbon_rippleColor_dark</item>
-        <item name="carbon_iconColor">@color/carbon_iconColorActive_light</item>
-        <item name="carbon_iconColorInverse">@color/carbon_iconColorActive_dark</item>
-        <item name="carbon_colorDisabled">@color/carbon_iconColorInactive_light</item>
-        <item name="carbon_colorDisabledInverse">@color/carbon_iconColorInactive_dark</item>
-        <item name="carbon_colorControl">@color/carbon_colorcontrol_light</item>
+        <item name="carbon_iconColor">@color/carbon_iconColor_light</item>
+        <item name="carbon_iconColorInverse">@color/carbon_iconColor_dark</item>
+        <item name="carbon_iconColorDisabled">@color/carbon_iconColorDisabled_light</item>
+        <item name="carbon_iconColorDisabledInverse">@color/carbon_iconColorDisabled_dark</item>
+        <item name="carbon_colorControl">@color/carbon_colorControl_light</item>
+        <item name="carbon_colorControlInverse">@color/carbon_colorControl_dark</item>
+        <item name="carbon_colorControlDisabled">@color/carbon_colorControlDisabled_light</item>
+        <item name="carbon_colorControlDisabledInverse">@color/carbon_colorControlDisabled_dark
+        </item>
+        <item name="carbon_colorControlActivated">@color/carbon_colorControlActivated_light</item>
+        <item name="carbon_colorControlActivatedInverse">@color/carbon_colorControlActivated_dark
+        </item>
         <item name="colorControlNormal">@color/carbon_colorControl_light</item>
-        <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/carbon_rippleColor_light</item>
+        <item name="android:colorControlHighlight" tools:targetApi="lollipop">
+            @color/carbon_rippleColor_light
+        </item>
         <item name="android:textColorHighlight">?attr/colorAccent</item>
         <item name="android:textColorHint">@color/carbon_textColorHint_light</item>
 
@@ -185,7 +201,7 @@
 
     <style name="carbon_Theme.Light.DarkPrimaryColor">
         <item name="carbon_toolbarTheme">@style/carbon_ThemeOverlay.Dark</item>
-        <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
+        <item name="android:buttonStyle">@style/carbon_Button.Colored.Inverse</item>
     </style>
 
     <style name="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">

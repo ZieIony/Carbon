@@ -36,9 +36,17 @@ public class ColorsActivity extends ThemedActivity {
         public String toString() {
             return name;
         }
+
+        public int getValue() {
+            return value;
+        }
+
+        public int getColor() {
+            return color;
+        }
     }
 
-    static Item[] styles = new Item[]{
+    public static Item[] styles = new Item[]{
             new Item("Dark", R.style.ThemeDark, R.color.carbon_colorBackground_dark),
             new Item("Dark.DarkPrimaryColor", R.style.ThemeDark_Inverse, R.color.carbon_colorBackground_dark),
             new Item("Light", R.style.ThemeLight, R.color.carbon_colorBackground_light),
@@ -71,7 +79,7 @@ public class ColorsActivity extends ThemedActivity {
             new Item("Black", R.style.PrimaryBlack, R.color.carbon_black)
     };
 
-    static Item[] accents = new Item[]{
+    public static Item[] accents = new Item[]{
             new Item("Red", R.style.AccentRed, R.color.carbon_red_a200),
             new Item("Pink", R.style.AccentPink, R.color.carbon_pink_a200),
             new Item("Purple", R.style.AccentPurple, R.color.carbon_purple_a200),
@@ -107,7 +115,7 @@ public class ColorsActivity extends ThemedActivity {
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-            binding.style.setSelectedIndex(preferences.getInt(STYLE, 2));
+            binding.style.setSelectedIndex(preferences.getInt(STYLE, 3));
             Item item = styles[preferences.getInt(STYLE, 2)];
             binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }

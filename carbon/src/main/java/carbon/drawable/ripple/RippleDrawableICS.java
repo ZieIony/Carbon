@@ -22,14 +22,15 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import carbon.Carbon;
 import carbon.R;
 

@@ -1,13 +1,13 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/content"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar"/>
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.ScrollView
         android:layout_width="match_parent"
@@ -20,7 +20,71 @@
 
             <carbon.widget.TextView
                 style="@style/sectionDescription"
-                android:text="Plain buttons with different styles"/>
+                android:text="Plain buttons with different styles" />
+
+            <carbon.widget.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:tag="enable"
+                    android:text="Contained Button" />
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Outlined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:tag="enable"
+                    android:text="Outlined button" />
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Flat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:tag="enable"
+                    android:text="flat button" />
+            </carbon.widget.FlowLayout>
+
+            <carbon.widget.TextView
+                style="@style/sectionDescription"
+                android:text="Inversed styles" />
+
+            <carbon.widget.FlowLayout
+                android:background="?attr/carbon_colorBackgroundInverse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:text="Contained Button" />
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Outlined.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:text="Outlined button" />
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Flat.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:text="flat button" />
+            </carbon.widget.FlowLayout>
+
+            <carbon.widget.TextView
+                style="@style/sectionDescription"
+                android:text="Colored styles" />
 
             <carbon.widget.FlowLayout
                 android:layout_width="match_parent"
@@ -31,8 +95,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/carbon_padding"
                     android:tag="enable"
-                    android:text="Contained Button"/>
-
+                    style="@style/carbon_Button.Colored"
+                    android:text="Contained Button" />
 
                 <carbon.widget.Button
                     style="@style/carbon_Button.Outlined.Colored"
@@ -40,16 +104,51 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/carbon_padding"
                     android:tag="enable"
-                    android:text="Outlined button"/>
+                    android:text="Outlined button" />
 
                 <carbon.widget.Button
-                    style="@style/carbon_Button.Flat"
+                    style="@style/carbon_Button.Flat.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/carbon_padding"
                     android:tag="enable"
-                    android:text="flat button"/>
+                    android:text="flat button" />
             </carbon.widget.FlowLayout>
+
+            <carbon.widget.TextView
+                style="@style/sectionDescription"
+                android:text="Colored, inversed styles" />
+
+            <carbon.widget.FlowLayout
+                android:background="?attr/carbon_colorBackgroundInverse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Colored.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:text="Contained Button" />
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Outlined.Colored.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:text="Outlined button" />
+
+                <carbon.widget.Button
+                    style="@style/carbon_Button.Flat.Colored.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:text="flat button" />
+            </carbon.widget.FlowLayout>
+
+            <carbon.widget.TextView
+                style="@style/sectionDescription"
+                android:text="Custom buttons" />
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
@@ -61,7 +160,7 @@
                 android:textColor="@color/carbon_textColorPrimary_dark"
                 app:carbon_backgroundTint="@null"
                 app:carbon_cornerRadius="0dp"
-                app:carbon_cornerRadiusTopStart="24dp"/>
+                app:carbon_cornerRadiusTopStart="24dp" />
 
             <carbon.widget.Button
                 style="@style/carbon_Button"
@@ -83,7 +182,7 @@
                 app:carbon_touchMarginBottom="6dp"
                 app:carbon_touchMarginLeft="100dp"
                 app:carbon_touchMarginRight="100dp"
-                app:carbon_touchMarginTop="6dp"/>
+                app:carbon_touchMarginTop="6dp" />
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
@@ -96,7 +195,7 @@
                 app:carbon_cornerRadius="18dp"
                 app:carbon_rippleColor="#40ff0000"
                 app:carbon_stroke="@color/carbon_amber_700"
-                app:carbon_strokeWidth="2dp"/>
+                app:carbon_strokeWidth="2dp" />
 
             <carbon.widget.Button
                 android:layout_width="wrap_content"
@@ -113,44 +212,8 @@
                 app:carbon_cornerRadiusTopStart="8dp"
                 app:carbon_rippleColor="#4000ff00"
                 app:carbon_stroke="@color/carbon_green_700"
-                app:carbon_strokeWidth="2dp"/>
+                app:carbon_strokeWidth="2dp" />
 
-            <carbon.widget.Divider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <carbon.widget.TextView
-                style="@style/sectionDescription"
-                android:text="Floating action buttons with vector graphics and proper sizes"/>
-
-            <carbon.widget.FlowLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <carbon.widget.FloatingActionButton
-                    style="@style/carbon_FloatingActionButton"
-                    android:layout_margin="@dimen/carbon_padding"
-                    android:padding="0dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/mazda"
-                    android:tag="enable"
-                    app:carbon_tint="@null"/>
-
-                <carbon.widget.FloatingActionButton
-                    style="@style/carbon_FloatingActionButton.Small.Primary"
-                    android:layout_margin="@dimen/carbon_padding"
-                    android:src="@raw/ic_data_usage_24px"
-                    android:tag="enable"/>
-
-                <carbon.widget.FloatingActionButton
-                    android:layout_width="@dimen/carbon_fabSize"
-                    android:layout_height="@dimen/carbon_fabSize"
-                    android:layout_margin="@dimen/carbon_padding"
-                    android:padding="@dimen/carbon_padding"
-                    android:scaleType="fitXY"
-                    android:tag="enable"
-                    app:srcCompat="@drawable/ic_android_black_24dp"/>
-            </carbon.widget.FlowLayout>
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>
 

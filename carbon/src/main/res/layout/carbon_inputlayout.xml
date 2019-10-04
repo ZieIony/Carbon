@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <carbon.widget.RelativeLayout
         android:id="@+id/carbon_inputLayoutContainer"
@@ -22,7 +22,7 @@
             android:tag="inputLayout"
             android:textAppearance="?attr/carbon_textAppearanceCaption"
             app:carbon_inAnimation="fly"
-            app:carbon_outAnimation="fly"/>
+            app:carbon_outAnimation="fly" />
 
     </carbon.widget.RelativeLayout>
 
@@ -35,7 +35,7 @@
         android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
         android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
         app:srcCompat="@drawable/carbon_clear"
-        android:tag="inputLayout"/>
+        android:tag="inputLayout" />
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_showPassword"
@@ -46,7 +46,7 @@
         android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
         android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
         app:srcCompat="@drawable/carbon_visibility"
-        android:tag="inputLayout"/>
+        android:tag="inputLayout" />
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_voiceInput"
@@ -57,7 +57,7 @@
         android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
         android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
         app:srcCompat="@drawable/carbon_voice"
-        android:tag="inputLayout"/>
+        android:tag="inputLayout" />
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -74,13 +74,13 @@
             android:layout_weight="1"
             android:textAppearance="?attr/carbon_textAppearanceCaption"
             app:carbon_inAnimation="fade"
-            app:carbon_outAnimation="fade"/>
+            app:carbon_outAnimation="fade" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/carbon_textAppearanceCaption"/>
+            android:textAppearance="?attr/carbon_textAppearanceCaption" />
 
     </carbon.widget.LinearLayout>
 

@@ -131,7 +131,7 @@ class TypedArrayCompat {
 
     /**
      * Retrieve a dimensional unit attribute at <var>index</var> for use as an offset in raw pixels.
-     *  This is the same as {@link TypedArray#getDimension}, except the returned value is converted
+     * This is the same as {@link TypedArray#getDimension}, except the returned value is converted
      * to integer pixels for you.  An offset conversion involves simply truncating the base value to
      * an integer.
      * <p/>

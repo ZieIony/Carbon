@@ -16,10 +16,10 @@
 
 package carbon.shadow;
 
-import com.google.android.material.shape.CornerFamily;
-
 import androidx.annotation.RestrictTo;
 import androidx.annotation.RestrictTo.Scope;
+
+import com.google.android.material.shape.CornerFamily;
 
 /**
  * Utility methods for {@link MaterialShapeDrawable} and related classes.

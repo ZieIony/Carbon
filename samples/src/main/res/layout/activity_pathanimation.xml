@@ -1,18 +1,18 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            xmlns:tools="http://schemas.android.com/tools"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:orientation="vertical"
-                            app:carbon_insetColor="?attr/colorPrimary"
-                            tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary"
+    tools:context=".MainActivity">
 
-    <include layout="@layout/view_debugtoolbar"/>
+    <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.TextView
         style="@style/sectionDescription"
-        android:text="Path animation using NURBS"/>
+        android:text="Path animation using NURBS" />
 
     <carbon.widget.LinearLayout
         android:id="@+id/layout"
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:maxHeight="200dp"
                 android:minHeight="100dp"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
 
             <carbon.widget.LinearLayout
                 android:layout_width="match_parent"
@@ -48,14 +48,14 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/carbon_padding"
                     android:paddingRight="@dimen/carbon_padding"
-                    android:text="Title"/>
+                    android:text="Title" />
 
                 <carbon.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/carbon_padding"
                     android:paddingRight="@dimen/carbon_padding"
-                    android:text="Subtitle"/>
+                    android:text="Subtitle" />
             </carbon.widget.LinearLayout>
         </carbon.widget.LinearLayout>
     </carbon.widget.LinearLayout>

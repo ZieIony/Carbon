@@ -10,6 +10,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import androidx.core.graphics.drawable.TintAwareDrawable;
+
 import carbon.widget.ProgressBar;
 
 /**

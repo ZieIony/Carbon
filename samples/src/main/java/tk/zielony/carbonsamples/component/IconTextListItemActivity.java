@@ -1,8 +1,6 @@
 package tk.zielony.carbonsamples.component;
 
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,13 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import carbon.Carbon;
 import carbon.component.DefaultIconSearchItem;
 import carbon.component.DefaultIconTextItem;
 import carbon.component.IconSearchRow;
 import carbon.component.IconTextRow;
 import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
+import carbon.drawable.ColorStateListDrawable;
+import carbon.drawable.DefaultColorControlStateList;
 import carbon.drawable.VectorDrawable;
 import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.RowListAdapter;
@@ -27,7 +26,6 @@ import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
-import tk.zielony.randomdata.DataContext;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
 @ActivityAnnotation(layout = R.layout.activity_listcomponent, title = R.string.iconTextListItemActivity_title)
@@ -48,10 +46,7 @@ public class IconTextListItemActivity extends ThemedActivity {
         }));
         recycler.setAdapter(adapter);
 
-        LayerDrawable dividerDrawable = new LayerDrawable(new Drawable[]{
-                new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_colorForeground)),
-                new ColorDrawable(Carbon.getThemeColor(this, R.attr.carbon_dividerColor))
-        });
+        Drawable dividerDrawable = new ColorStateListDrawable(new DefaultColorControlStateList(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable, getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
         dividerItemDecoration.setDrawAfter(position -> adapter.getItem(position) instanceof DefaultIconSearchItem);
         recycler.addItemDecoration(dividerItemDecoration);
@@ -61,14 +56,14 @@ public class IconTextListItemActivity extends ThemedActivity {
         adapter.setItems(Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new DefaultIconSearchItem(this),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
-                new DefaultIconTextItem(drawable, generator.next(new DataContext())),
+                new DefaultIconTextItem(drawable, generator.next()),
+                new DefaultIconTextItem(drawable, generator.next()),
+                new DefaultIconTextItem(drawable, generator.next()),
+                new DefaultIconTextItem(drawable, generator.next()),
+                new DefaultIconTextItem(drawable, generator.next()),
+                new DefaultIconTextItem(drawable, generator.next()),
+                new DefaultIconTextItem(drawable, generator.next()),
+                new DefaultIconTextItem(drawable, generator.next()),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))));
     }
 }
