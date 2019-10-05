@@ -7,8 +7,7 @@
         android:checkableBehavior="single">
         <item
             android:icon="@raw/ic_face_24px"
-            android:title="Fender"
-            app:iconTint="@color/menu_selector" />
+            android:title="Fender" />
 
         <item
             android:icon="@raw/ic_print_24px"
@@ -20,8 +19,7 @@
         android:checkableBehavior="single">
         <item
             android:icon="@raw/ic_dns_24px"
-            android:title="Gibson"
-            app:iconTint="@color/menu_selector" />
+            android:title="Gibson" />
 
         <item
             android:icon="@drawable/ic_email_black_24dp"
@@ -30,7 +28,6 @@
 
         <item
             android:icon="@raw/ic_search_24px"
-            android:title="Ibanez"
-            app:iconTint="@color/menu_selector" />
+            android:title="Ibanez" />
     </group>
 </menu>

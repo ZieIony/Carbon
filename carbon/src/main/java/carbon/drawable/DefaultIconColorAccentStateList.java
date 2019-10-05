@@ -28,4 +28,8 @@ public class DefaultIconColorAccentStateList extends ColorStateList {
                 Carbon.getThemeColor(context, R.attr.carbon_iconColor)
         });
     }
+
+    public static DefaultIconColorAccentStateList make(Context context){
+        return new DefaultIconColorAccentStateList(context);
+    }
 }

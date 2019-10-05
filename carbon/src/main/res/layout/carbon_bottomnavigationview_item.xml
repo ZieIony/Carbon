@@ -7,12 +7,14 @@
         <variable
             name="data"
             type="carbon.widget.BottomNavigationView.Item" />
+
+        <import type="carbon.drawable.DefaultIconColorAccentStateList" />
     </data>
 
     <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:clickable="true"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless">
@@ -34,9 +36,9 @@
             android:layout_centerHorizontal="true"
             android:duplicateParentState="true"
             android:text="@{data.title}"
-            android:textColor="@{data.iconTintList}"
-            android:textSize="12sp"
-            app:carbon_fontFamily="RobotoRegular" />
+            android:textAppearance="@style/carbon_TextAppearance.Body1"
+            android:textColor="@{data.iconTintList??DefaultIconColorAccentStateList.make(context)}"
+            android:textSize="12sp" />
 
         <carbon.widget.ImageView
             android:id="@+id/carbon_bottomIcon"
@@ -47,6 +49,6 @@
             android:layout_marginBottom="6dp"
             android:duplicateParentState="true"
             android:src="@{data.icon}"
-            app:carbon_tint="@{data.iconTintList}" />
+            app:carbon_tint="@{data.iconTintList??DefaultIconColorAccentStateList.make(context)}" />
     </carbon.widget.RelativeLayout>
 </layout>
