@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <carbon.widget.ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/randomdata_background4" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/black_gradient" />
+            </FrameLayout>
+
+
+            <carbon.widget.LinearLayout
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/carbon_windowPadding"
+                android:paddingRight="@dimen/carbon_windowPadding"
+                app:carbon_anchor="@id/image"
+                app:carbon_anchorGravity="bottom">
+
+                <carbon.widget.ImageView
+                    style="@style/carbon_ImageView.Avatar"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:src="@drawable/randomdata_woman1"
+                    app:carbon_cornerRadius="48dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/carbon_padding"
+                    android:paddingRight="@dimen/carbon_padding">
+
+                    <carbon.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Michelle Strander"
+                        android:textAppearance="@style/carbon_TextAppearance.Headline.Inverse"
+                        android:textColor="@color/carbon_textColorPrimary_dark" />
+
+                    <carbon.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                        android:gravity="center_vertical"
+                        android:text="Berlin, Oststraße"
+                        android:textAppearance="?attr/carbon_textAppearanceBody1"
+                        app:carbon_tint="?attr/carbon_iconColor" />
+
+                </LinearLayout>
+
+                <carbon.widget.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_email_black_24dp" />
+
+            </carbon.widget.LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image"
+                android:layout_marginTop="64dp"
+                android:orientation="vertical">
+
+                <carbon.widget.FlowLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/carbon_windowPadding"
+                    android:paddingRight="@dimen/carbon_windowPadding">
+
+                    <carbon.widget.Chip
+                        style="@style/carbon_Chip.Outlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Beer" />
+
+                    <carbon.widget.Chip
+                        style="@style/carbon_Chip.Outlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/carbon_margin"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:text="Walks" />
+
+                    <carbon.widget.Chip
+                        style="@style/carbon_Chip.Outlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/carbon_margin"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:text="People" />
+                </carbon.widget.FlowLayout>
+
+                <carbon.widget.TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/carbon_padding"
+                    android:paddingLeft="@dimen/carbon_windowPadding"
+                    android:paddingRight="@dimen/carbon_windowPadding"
+                    android:text="I like long walks, good beer and fun people. Or long beer, fun walks and good people."
+                    android:textAppearance="?attr/carbon_textAppearanceBody1" />
+
+                <carbon.widget.TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/carbon_margin"
+                    android:paddingLeft="@dimen/carbon_windowPadding"
+                    android:paddingRight="@dimen/carbon_windowPadding"
+                    android:text="Photos"
+                    android:textAppearance="?attr/carbon_textAppearanceListHeader" />
+
+                <carbon.widget.HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/carbon_windowPadding"
+                        android:paddingTop="@dimen/carbon_padding"
+                        android:paddingRight="@dimen/carbon_windowPadding"
+                        android:paddingBottom="@dimen/carbon_padding">
+
+                        <carbon.widget.ImageView
+                            android:layout_width="112dp"
+                            android:layout_height="96dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/randomdata_background3"
+                            app:carbon_cornerRadius="@dimen/carbon_cornerRadiusImage"
+                            app:carbon_stroke="@color/carbon_defaultColorControl" />
+
+                        <carbon.widget.ImageView
+                            android:layout_width="112dp"
+                            android:layout_height="96dp"
+                            android:layout_marginStart="@dimen/carbon_margin"
+                            android:layout_marginLeft="@dimen/carbon_margin"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/randomdata_background2"
+                            app:carbon_cornerRadius="@dimen/carbon_cornerRadiusImage"
+                            app:carbon_stroke="@color/carbon_defaultColorControl" />
+
+                        <carbon.widget.ImageView
+                            android:layout_width="112dp"
+                            android:layout_height="96dp"
+                            android:layout_marginStart="@dimen/carbon_margin"
+                            android:layout_marginLeft="@dimen/carbon_margin"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/randomdata_background1"
+                            app:carbon_cornerRadius="@dimen/carbon_cornerRadiusImage"
+                            app:carbon_stroke="@color/carbon_defaultColorControl" />
+
+                        <carbon.widget.ImageView
+                            android:layout_width="112dp"
+                            android:layout_height="96dp"
+                            android:layout_marginStart="@dimen/carbon_margin"
+                            android:layout_marginLeft="@dimen/carbon_margin"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/randomdata_background0"
+                            app:carbon_cornerRadius="@dimen/carbon_cornerRadiusImage"
+                            app:carbon_stroke="@color/carbon_defaultColorControl" />
+
+                    </LinearLayout>
+                </carbon.widget.HorizontalScrollView>
+
+                <carbon.widget.TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/carbon_windowPadding"
+                    android:paddingRight="@dimen/carbon_windowPadding"
+                    android:text="Friends"
+                    android:textAppearance="?attr/carbon_textAppearanceListHeader" />
+
+                <carbon.widget.HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/carbon_windowPadding"
+                        android:paddingTop="@dimen/carbon_padding"
+                        android:paddingRight="@dimen/carbon_windowPadding"
+                        android:paddingBottom="@dimen/carbon_padding">
+
+                        <carbon.widget.LinearLayout
+                            android:layout_width="96dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <carbon.widget.ImageView
+                                style="@style/carbon_ImageView.Avatar"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/randomdata_man8"
+                                app:carbon_cornerRadius="32dp" />
+
+                            <carbon.widget.TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginTop="@dimen/carbon_marginHalf"
+                                android:gravity="center"
+                                android:text="Mark"
+                                android:textAppearance="?attr/carbon_textAppearanceBody1" />
+                        </carbon.widget.LinearLayout>
+
+                        <carbon.widget.LinearLayout
+                            android:layout_width="96dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/carbon_margin"
+                            android:layout_marginLeft="@dimen/carbon_margin"
+                            android:orientation="vertical">
+
+                            <carbon.widget.ImageView
+                                style="@style/carbon_ImageView.Avatar"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/randomdata_woman9"
+                                app:carbon_cornerRadius="32dp" />
+
+                            <carbon.widget.TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginTop="@dimen/carbon_marginHalf"
+                                android:gravity="center"
+                                android:text="Daisy"
+                                android:textAppearance="?attr/carbon_textAppearanceBody1" />
+                        </carbon.widget.LinearLayout>
+
+                        <carbon.widget.LinearLayout
+                            android:layout_width="96dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/carbon_margin"
+                            android:layout_marginLeft="@dimen/carbon_margin"
+                            android:orientation="vertical">
+
+                            <carbon.widget.ImageView
+                                style="@style/carbon_ImageView.Avatar"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/randomdata_man3"
+                                app:carbon_cornerRadius="32dp" />
+
+                            <carbon.widget.TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginTop="@dimen/carbon_marginHalf"
+                                android:gravity="center"
+                                android:text="Andre"
+                                android:textAppearance="?attr/carbon_textAppearanceBody1" />
+                        </carbon.widget.LinearLayout>
+
+                        <carbon.widget.LinearLayout
+                            android:layout_width="96dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/carbon_margin"
+                            android:layout_marginLeft="@dimen/carbon_margin"
+                            android:orientation="vertical">
+
+                            <carbon.widget.ImageView
+                                style="@style/carbon_ImageView.Avatar"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/randomdata_woman3"
+                                app:carbon_cornerRadius="32dp" />
+
+                            <carbon.widget.TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginTop="@dimen/carbon_marginHalf"
+                                android:gravity="center"
+                                android:text="Linda"
+                                android:textAppearance="?attr/carbon_textAppearanceBody1" />
+                        </carbon.widget.LinearLayout>
+                    </LinearLayout>
+                </carbon.widget.HorizontalScrollView>
+            </LinearLayout>
+        </carbon.widget.RelativeLayout>
+    </carbon.widget.ScrollView>
+
+    <carbon.widget.FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/carbon_Theme.Dark">
+
+        <include layout="@layout/view_debugtoolbar_flat" />
+    </carbon.widget.FrameLayout>
+
+</carbon.widget.FrameLayout>

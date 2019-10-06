@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -9,48 +9,55 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.ScrollView
+    <carbon.widget.FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <carbon.widget.LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <carbon.widget.FloatingActionButton
+            android:id="@+id/fab"
+            style="@style/carbon_FloatingActionButton"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="@dimen/carbon_padding"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mazda"
+            android:tag="enable"
+            app:carbon_tint="@null" />
 
-            <carbon.widget.TextView
-                style="@style/sectionDescription"
-                android:text="Floating action buttons with vector graphics and proper sizes" />
+        <carbon.widget.FloatingActionButton
+            android:id="@+id/fab2"
+            style="@style/carbon_FloatingActionButton.Small.Primary"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="@dimen/carbon_padding"
+            android:src="@raw/ic_data_usage_24px"
+            android:tag="enable"
+            app:carbon_menu="@menu/menu_fab" />
 
-            <carbon.widget.FlowLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <carbon.widget.TextView
+            style="@style/sectionDescription"
+            android:layout_gravity="center"
+            android:text="Menu appears automatically on the side it has the most space. You can specify items using standard menu xml files. Use raw svgs as icons if you wish." />
 
-                <carbon.widget.FloatingActionButton
-                    style="@style/carbon_FloatingActionButton"
-                    android:layout_margin="@dimen/carbon_padding"
-                    android:padding="0dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/mazda"
-                    android:tag="enable"
-                    app:carbon_tint="@null" />
+        <carbon.widget.FloatingActionButton
+            android:id="@+id/fab3"
+            android:layout_width="@dimen/carbon_fabSize"
+            android:layout_height="@dimen/carbon_fabSize"
+            android:layout_gravity="top|right"
+            android:layout_margin="@dimen/carbon_padding"
+            android:padding="@dimen/carbon_padding"
+            android:tag="enable"
+            app:carbon_menu="@menu/menu_fab"
+            app:srcCompat="@drawable/ic_android_black_24dp" />
 
-                <carbon.widget.FloatingActionButton
-                    style="@style/carbon_FloatingActionButton.Small.Primary"
-                    android:layout_margin="@dimen/carbon_padding"
-                    android:src="@raw/ic_data_usage_24px"
-                    android:tag="enable" />
-
-                <carbon.widget.FloatingActionButton
-                    android:layout_width="@dimen/carbon_fabSize"
-                    android:layout_height="@dimen/carbon_fabSize"
-                    android:layout_margin="@dimen/carbon_padding"
-                    android:padding="@dimen/carbon_padding"
-                    android:scaleType="fitXY"
-                    android:tag="enable"
-                    app:srcCompat="@drawable/ic_android_black_24dp" />
-            </carbon.widget.FlowLayout>
-        </carbon.widget.LinearLayout>
-    </carbon.widget.ScrollView>
-
+        <carbon.widget.FloatingActionButton
+            android:id="@+id/fab4"
+            style="@style/carbon_FloatingActionButton.Accent.Inverse"
+            android:layout_gravity="top|left"
+            android:layout_margin="@dimen/carbon_padding"
+            android:tag="enable"
+            app:carbon_cornerCut="@dimen/carbon_fabSizeHalf"
+            app:carbon_cornerRadius="@null"
+            app:carbon_menu="@menu/menu_fab"
+            app:srcCompat="@drawable/ic_email_black_24dp" />
+    </carbon.widget.FrameLayout>
 </carbon.widget.LinearLayout>

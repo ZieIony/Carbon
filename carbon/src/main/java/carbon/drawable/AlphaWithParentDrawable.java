@@ -1,7 +1,6 @@
 package carbon.drawable;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Rect;
@@ -18,15 +17,10 @@ public class AlphaWithParentDrawable extends Drawable {
 
     private View owner;
     private Drawable alphaDrawable;
-    private final Bitmap bitmap;
-    private final Canvas canvas;
 
     public AlphaWithParentDrawable(View owner, Drawable alphaDrawable) {
         this.owner = owner;
         this.alphaDrawable = alphaDrawable;
-
-        bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
     }
 
     @Override

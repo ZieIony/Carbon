@@ -16,8 +16,7 @@
         android:layout_marginEnd="@dimen/carbon_toolbarUpTitleMargin"
         android:layout_marginRight="@dimen/carbon_toolbarUpTitleMargin"
         app:carbon_inAnimation="none"
-        app:carbon_outAnimation="none"
-        tools:src="@drawable/carbon_uparrow" />
+        app:carbon_outAnimation="none" />
 
     <carbon.widget.TextView
         android:id="@+id/carbon_toolbarTitle"

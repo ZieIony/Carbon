@@ -5,12 +5,13 @@ import android.os.Bundle;
 import java.io.Serializable;
 
 import carbon.component.PaddingItem;
+import tk.zielony.carbonsamples.demo.ProfileActivity;
 import tk.zielony.carbonsamples.widget.BackdropActivity;
 import tk.zielony.carbonsamples.widget.BannerActivity;
 import tk.zielony.carbonsamples.widget.BottomNavigationViewActivity;
 import tk.zielony.carbonsamples.widget.ButtonsActivity;
 import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
-import tk.zielony.carbonsamples.widget.FloatingActionMenuActivity;
+import tk.zielony.carbonsamples.widget.FABActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
 import tk.zielony.carbonsamples.widget.NavigationViewActivity;
 
@@ -33,7 +34,8 @@ public class NewSamplesActivity extends SampleListActivity {
                 new SampleActivityItem(BackdropActivity.class),
                 new SampleActivityItem(BottomNavigationViewActivity.class),
                 new SampleActivityItem(NavigationViewActivity.class, 0, true),
-                new SampleActivityItem(FloatingActionMenuActivity.class),
+                new SampleActivityItem(FABActivity.class, R.drawable.ic_add_circle_black_24dp),
+                new SampleActivityItem(ProfileActivity.class, R.drawable.ic_person_black_24dp),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

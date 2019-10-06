@@ -107,7 +107,7 @@
         <item name="android:layout_height">@dimen/carbon_fabSize</item>
         <item name="android:padding">@dimen/carbon_padding</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">@color/carbon_defaultColorAccent</item>
+        <item name="android:background">@color/carbon_defaultColorControl</item>
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
         <item name="carbon_tintMode">src_in</item>
@@ -121,6 +121,7 @@
     </style>
 
     <style name="carbon_FloatingActionButton.Inverse">
+        <item name="android:background">@color/carbon_defaultColorControlInverse</item>
         <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
     </style>
 
@@ -129,6 +130,14 @@
     </style>
 
     <style name="carbon_FloatingActionButton.Primary.Inverse">
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Accent">
+        <item name="android:background">@color/carbon_defaultColorAccent</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Accent.Inverse">
         <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
     </style>
 
@@ -155,7 +164,7 @@
 
     <style name="carbon_Snackbar" parent="carbon_LinearLayout">
         <item name="carbon_elevation">@dimen/carbon_elevationSnackbar</item>
-        <item name="android:background">@color/carbon_defaultColorControlInverse</item>
+        <item name="android:background">?attr/carbon_colorForeground</item>
         <item name="android:fitsSystemWindows">false</item>
         <item name="android:maxHeight">80dp</item>
         <item name="android:maxWidth">568dp</item>
@@ -347,7 +356,6 @@
         <item name="android:background">@color/carbon_defaultColorControl</item>
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
         <item name="carbon_cornerRadius">2dp</item>
-        <item name="android:layout_margin">@dimen/carbon_paddingHalf</item>
     </style>
 
     <style name="carbon_InputLayout" parent="carbon_RelativeLayout">

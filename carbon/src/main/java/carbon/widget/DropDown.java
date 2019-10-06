@@ -42,9 +42,9 @@ import carbon.internal.DropDownMenu;
 import carbon.recycler.ListAdapter;
 import carbon.recycler.RowListAdapter;
 
-public class DropDown<Type extends Serializable> extends EditText {
+public class DropDown extends EditText {
 
-    private CustomItemFactory<Type> customItemFactory = text -> (Type) text;
+    private CustomItemFactory customItemFactory = text -> text;
 
     public enum Mode {
         Over, Fit;
@@ -62,12 +62,12 @@ public class DropDown<Type extends Serializable> extends EditText {
         void onSelectionChanged(Type item, int position);
     }
 
-    private List<Type> items = new ArrayList<>();
+    private List items = new ArrayList<>();
 
-    DropDownMenu<Type> dropDownMenu;
+    DropDownMenu dropDownMenu;
 
-    OnItemSelectedListener<Type> onItemSelectedListener;
-    OnSelectionChangedListener<Type> onSelectionChangedListener;
+    OnItemSelectedListener onItemSelectedListener;
+    OnSelectionChangedListener onSelectionChangedListener;
 
     private boolean isShowingPopup = false;
 
@@ -101,7 +101,7 @@ public class DropDown<Type extends Serializable> extends EditText {
 
         int theme = a.getResourceId(R.styleable.DropDown_carbon_popupTheme, -1);
 
-        dropDownMenu = new DropDownMenu<Type>(new ContextThemeWrapper(context, theme));
+        dropDownMenu = new DropDownMenu(new ContextThemeWrapper(context, theme));
         dropDownMenu.setOnDismissListener(() -> isShowingPopup = false);
         dropDownMenu.setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.Over.ordinal())]);
         setStyle(Style.values()[a.getInt(R.styleable.DropDown_carbon_style, Style.SingleSelect.ordinal())]);
@@ -164,7 +164,7 @@ public class DropDown<Type extends Serializable> extends EditText {
         return dropDownMenu.getSelectedIndices();
     }
 
-    public void setSelectedItem(Type item) {
+    public <Type extends Serializable> void setSelectedItem(Type item) {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).equals(item)) {
                 setSelectedIndex(i);
@@ -173,24 +173,24 @@ public class DropDown<Type extends Serializable> extends EditText {
         }
     }
 
-    public void setSelectedItems(List<Type> items) {
+    public <Type extends Serializable> void setSelectedItems(List<Type> items) {
         dropDownMenu.setSelectedItems(items);
     }
 
-    public Type getSelectedItem() {
+    public <Type extends Serializable> Type getSelectedItem() {
         return dropDownMenu.getSelectedItem();
     }
 
-    public List<Type> getSelectedItems() {
+    public <Type extends Serializable> List<Type> getSelectedItems() {
         return dropDownMenu.getSelectedItems();
     }
 
-    public void setAdapter(final RowListAdapter<Type> adapter) {
+    public void setAdapter(final RowListAdapter<Serializable> adapter) {
         dropDownMenu.setAdapter(adapter);
         setText(dropDownMenu.getSelectedText());
     }
 
-    public ListAdapter<?, Type> getAdapter() {
+    public ListAdapter<?, Serializable> getAdapter() {
         return dropDownMenu.getAdapter();
     }
 
@@ -220,17 +220,17 @@ public class DropDown<Type extends Serializable> extends EditText {
         isShowingPopup = true;
     }
 
-    public interface CustomItemFactory<Type> {
-        Type makeItem(String text);
+    public interface CustomItemFactory {
+        Serializable makeItem(String text);
     }
 
-    public void setCustomItemFactory(CustomItemFactory<Type> factory) {
+    public void setCustomItemFactory(CustomItemFactory factory) {
         customItemFactory = factory;
     }
 
-    RecyclerView.OnItemClickedListener<Type> onItemClickedListener = new RecyclerView.OnItemClickedListener<Type>() {
+    RecyclerView.OnItemClickedListener<Serializable> onItemClickedListener = new RecyclerView.OnItemClickedListener<Serializable>() {
         @Override
-        public void onItemClicked(View view, Type item, int position) {
+        public void onItemClicked(View view, Serializable item, int position) {
             Style style = dropDownMenu.getStyle();
             if (style == Style.MultiSelect) {
                 dropDownMenu.toggle(position);
@@ -253,22 +253,22 @@ public class DropDown<Type extends Serializable> extends EditText {
         }
     };
 
-    public void setOnItemSelectedListener(OnItemSelectedListener<Type> onItemSelectedListener) {
+    public <Type extends Serializable> void setOnItemSelectedListener(OnItemSelectedListener<Type> onItemSelectedListener) {
         this.onItemSelectedListener = onItemSelectedListener;
     }
 
-    public void setOnSelectionChangedListener(OnSelectionChangedListener<Type> onSelectionChangedListener) {
+    public <Type extends Serializable> void setOnSelectionChangedListener(OnSelectionChangedListener<Type> onSelectionChangedListener) {
         this.onSelectionChangedListener = onSelectionChangedListener;
     }
 
-    public void setItems(Type[] items) {
+    public <Type extends Serializable> void setItems(Type[] items) {
         this.items.clear();
         this.items.addAll(Arrays.asList(items));
         dropDownMenu.setItems(this.items);
         setSelectedIndex(0);
     }
 
-    public void setItems(List<Type> items) {
+    public <Type extends Serializable> void setItems(List<Type> items) {
         this.items = items;
         dropDownMenu.setItems(items);
         setSelectedIndex(0);

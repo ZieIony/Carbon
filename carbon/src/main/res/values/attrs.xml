@@ -195,24 +195,6 @@
     <!-- FloatingActionButton -->
     <attr name="carbon_fabStyle" format="reference" />
     <declare-styleable name="FloatingActionButton">
-        <attr name="android:theme" />
-        <attr name="android:background" />
-
-        <attr name="carbon_cornerRadiusTopStart" />
-        <attr name="carbon_cornerRadiusTopEnd" />
-        <attr name="carbon_cornerRadiusBottomStart" />
-        <attr name="carbon_cornerRadiusBottomEnd" />
-        <attr name="carbon_cornerRadius" />
-
-        <attr name="carbon_cornerCutTopStart" />
-        <attr name="carbon_cornerCutTopEnd" />
-        <attr name="carbon_cornerCutBottomStart" />
-        <attr name="carbon_cornerCutBottomEnd" />
-        <attr name="carbon_cornerCut" />
-
-        <attr name="carbon_stroke" />
-        <attr name="carbon_strokeWidth" />
-
         <attr name="carbon_menu" format="reference" />
     </declare-styleable>
 

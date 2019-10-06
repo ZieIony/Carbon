@@ -8,7 +8,6 @@
     <string name="textViewComparisonActivity_title">TextView</string>
     <string name="cardViewComparisonActivity_title">CardView</string>
 
-    <string name="floatingActionMenuActivity_title">FloatingActionMenu</string>
     <string name="tableLayoutActivity_title">TableLayout</string>
     <string name="flowLayoutActivity_title"><![CDATA[FlowLayout & Chips]]></string>
     <string name="seekBarActivity_title">SeekBar</string>
@@ -58,6 +57,7 @@
     <string name="shareToolbarActivity_title">Share Toolbar</string>
     <string name="backdropActivity_title">Backdrop</string>
     <string name="autoCompleteActivity_title">Auto Complete</string>
+    <string name="profileActivity_title">Profile</string>
     <string name="quickReturnActivity_title">Quick Return</string>
     <string name="calculatorActivity_title">Calculator</string>
     <string name="picassoActivity_title">Picasso</string>
@@ -69,7 +69,7 @@
     <string name="rippleComparisonActivity_title">Ripple comparison</string>
     <string name="radialTransitionActivity_title">Radial transition</string>
     <string name="textMarkerActivity_title">Text marker</string>
-    <string name="bottomBarActivity_title">BottomNavigationView</string>
+    <string name="bottomNavigationViewActivity_title">BottomNavigationView</string>
     <string name="bottomSheetActivity_title">BottomSheet</string>
     <string name="themeActivity_title">Dark and Light</string>
 

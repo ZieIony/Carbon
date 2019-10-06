@@ -49,7 +49,7 @@
         <item name="carbon_bottomNavigationViewStyle">@style/carbon_BottomNavigationView</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
-        <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Light.Snackbar</item>
+        <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Dark</item>
         <item name="carbon_dropDownPopupTheme">@style/carbon_ThemeOverlay.Light</item>
         <item name="carbon_toolbarTheme">@style/carbon_ThemeOverlay.Light</item>
 
@@ -207,10 +207,6 @@
     <style name="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="carbon_ThemeOverlay.Light.Snackbar">
-        <item name="android:buttonStyle">@style/carbon_Button.Flat.Colored</item>
     </style>
 
     <style name="carbon_ThemeOverlay.Light.Dialog">

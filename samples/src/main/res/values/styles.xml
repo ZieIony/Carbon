@@ -8,7 +8,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="carbon_Theme.Light.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
         <item name="colorPrimary">@color/carbon_cyan_500</item>
         <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
         <item name="colorAccent">@color/carbon_orange_a200</item>
@@ -16,6 +15,7 @@
     </style>
 
     <style name="AppTheme.Translucent">
+        <item name="android:statusBarColor">@null</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
@@ -65,6 +65,11 @@
     <style name="ThemeDayNight" parent="carbon_Theme.DayNight.NoActionBar" />
 
     <style name="ThemeDayNight.Inverse" parent="carbon_Theme.DayNight.DarkPrimaryColor.NoActionBar" />
+
+    <style name="Translucent">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@null</item>
+    </style>
 
     <style name="PrimaryRed">
         <item name="colorPrimary">@color/carbon_red_500</item>

@@ -14,7 +14,7 @@ class MenusBehaviorActivity : ThemedActivity() {
 
         Samples.initToolbar(this)
 
-        val dropDown = findViewById<DropDown<String>>(R.id.dropDown)
+        val dropDown = findViewById<DropDown>(R.id.dropDown)
         dropDown.setItems(arrayOf("NY", "NC", "ND"))
     }
 }

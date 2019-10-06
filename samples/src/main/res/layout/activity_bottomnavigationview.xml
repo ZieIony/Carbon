@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
     <include layout="@layout/view_debugtoolbar" />
 
@@ -41,9 +43,9 @@
 
     <carbon.widget.BottomNavigationView
         android:id="@+id/bottomBar2"
-        app:carbon_elevation="8dp"
-        android:background="?attr/carbon_colorBackground"
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_bottomNavigationViewHeight"
+        android:background="?attr/carbon_colorBackground"
+        app:carbon_elevation="8dp"
         app:carbon_menu="@menu/menu_navigation" />
 </carbon.widget.LinearLayout>

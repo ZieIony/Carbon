@@ -7,7 +7,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Menu;
 
-import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 
@@ -24,26 +23,28 @@ public class FloatingActionButton extends ImageView {
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, R.attr.carbon_fabStyle, R.styleable.FloatingActionButton_android_theme), attrs, R.attr.carbon_fabStyle);
+        super(context, attrs, R.attr.carbon_fabStyle);
         initFloatingActionButton(attrs, R.attr.carbon_fabStyle);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, defStyleAttr, R.styleable.FloatingActionButton_android_theme), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initFloatingActionButton(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FloatingActionButton, defStyleAttr, R.styleable.FloatingActionButton_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initFloatingActionButton(attrs, defStyleAttr);
     }
 
     private void initFloatingActionButton(AttributeSet attrs, int defStyleAttr) {
         AnimUtils.setupElevationAnimator(getStateAnimator(), this);
 
+        if (attrs == null)
+            return;
+
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, R.style.carbon_FloatingActionButton);
-        setCornerRadius(a.getDimension(R.styleable.FloatingActionButton_carbon_cornerRadius, -1));
 
         if (a.hasValue(R.styleable.FloatingActionButton_carbon_menu)) {
             int resId = a.getResourceId(R.styleable.FloatingActionButton_carbon_menu, 0);

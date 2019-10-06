@@ -21,8 +21,8 @@ class BottomSheetActivity : ThemedActivity() {
         bottomSheet.setMenu(R.menu.menu_navigation)
 
         val items = arrayOf("List", "Grid")
-        (dropDown as DropDown<String>).setItems(items)
-        dropDown.setOnSelectionChangedListener { item, _ ->
+        (dropDown as DropDown).setItems(items)
+        dropDown.setOnSelectionChangedListener { item: String, _ ->
             bottomSheet.style = if (item == "List")
                 BottomSheetLayout.Style.List
             else

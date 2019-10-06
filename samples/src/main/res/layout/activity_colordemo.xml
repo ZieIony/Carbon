@@ -8,11 +8,15 @@
         android:orientation="vertical"
         app:carbon_insetColor="?attr/colorPrimary">
 
-        <include layout="@layout/view_debugtoolbar" />
+        <carbon.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:carbon_icon="@drawable/carbon_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <carbon.widget.TextView
             style="@style/sectionDescription"
-            android:text="Select your favourite theme style and colors. Then press back to see all the samples using that theme." />
+            android:text="Select your favourite theme style and colors. Then close this Activity to see all the samples using that theme." />
 
         <carbon.widget.RelativeLayout
             android:layout_width="match_parent"

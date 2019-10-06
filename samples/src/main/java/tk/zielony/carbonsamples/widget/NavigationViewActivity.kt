@@ -28,4 +28,8 @@ class NavigationViewActivity : ThemedActivity() {
         drawerMenu.setHeader(header)
     }
 
+    override fun applyTheme() {
+        super.applyTheme()
+        theme.applyStyle(R.style.Translucent, true)
+    }
 }

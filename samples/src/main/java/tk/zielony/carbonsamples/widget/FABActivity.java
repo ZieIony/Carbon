@@ -15,8 +15,8 @@ import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_floatingactionmenu, title = R.string.floatingActionMenuActivity_title)
-public class FloatingActionMenuActivity extends ThemedActivity {
+@ActivityAnnotation(layout = R.layout.activity_fab, title = R.string.fabActivity_title)
+public class FABActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

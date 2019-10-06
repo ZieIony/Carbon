@@ -9,7 +9,7 @@ abstract class ThemedActivity : SamplesActivity() {
         super.onCreate(savedInstanceState)
     }
 
-    private fun applyTheme() {
+    open protected fun applyTheme() {
         val preferences = getSharedPreferences(ColorsActivity.THEME, Context.MODE_PRIVATE)
         setTheme(ColorsActivity.styles[preferences.getInt(ColorsActivity.STYLE, 2)].value)
         theme.applyStyle(ColorsActivity.primary[preferences.getInt(ColorsActivity.PRIMARY, 8)].value, true)

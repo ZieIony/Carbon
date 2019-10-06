@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 
 import java.io.Serializable;
 
-import carbon.widget.DropDown;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
 @ActivityAnnotation(title = R.string.colorsActivity_title)
@@ -107,8 +106,8 @@ public class ColorsActivity extends ThemedActivity {
 
         Samples.initToolbar(this);
 
-        ((DropDown<Item>) binding.style).setItems(styles);
-        ((DropDown<Item>) binding.style).setOnSelectionChangedListener((item, position) -> {
+        binding.style.setItems(styles);
+        binding.style.setOnSelectionChangedListener((Item item, int position) -> {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
             preferences.edit().putInt(STYLE, binding.style.getSelectedIndex()).commit();
             binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
@@ -120,8 +119,8 @@ public class ColorsActivity extends ThemedActivity {
             binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }
 
-        ((DropDown<Item>) binding.primary).setItems(primary);
-        ((DropDown<Item>) binding.primary).setOnSelectionChangedListener((item, position) -> {
+        binding.primary.setItems(primary);
+        binding.primary.setOnSelectionChangedListener((Item item, int position) -> {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
             preferences.edit().putInt(PRIMARY, binding.primary.getSelectedIndex()).commit();
             binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
@@ -133,8 +132,8 @@ public class ColorsActivity extends ThemedActivity {
             binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }
 
-        ((DropDown<Item>) binding.accent).setItems(accents);
-        ((DropDown<Item>) binding.accent).setOnSelectionChangedListener((item, position) -> {
+        binding.accent.setItems(accents);
+        binding.accent.setOnSelectionChangedListener((Item item, int position) -> {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
             preferences.edit().putInt(ACCENT, binding.accent.getSelectedIndex()).commit();
             binding.accentbg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));

@@ -32,7 +32,7 @@ public class SelectDialogActivity extends ThemedActivity {
         Samples.initToolbar(this);
 
         EditText titleText = findViewById(R.id.titleText);
-        DropDown<String> dropDown = findViewById(R.id.dropDown);
+        DropDown dropDown = findViewById(R.id.dropDown);
         dropDown.setItems(new String[]{"Single select", "Multi select"});
 
         StringFruitGenerator generator = new StringFruitGenerator();

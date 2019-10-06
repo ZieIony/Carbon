@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,16 +33,16 @@ import carbon.widget.DropDown;
 import carbon.widget.FrameLayout;
 import carbon.widget.RecyclerView;
 
-public class DropDownMenu<Type> extends PopupWindow {
+public class DropDownMenu extends PopupWindow {
 
     protected RecyclerView recycler;
     private View anchorView;
     private DropDown.Mode mode;
-    private ListAdapter<?, Type> defaultAdapter;
+    private ListAdapter defaultAdapter;
     private DropDown.Style style;
     private List<Integer> selectedIndices = new ArrayList<>();
-    private RecyclerView.OnItemClickedListener<Type> onItemClickedListener;
-    private Type customItem;
+    private RecyclerView.OnItemClickedListener<Serializable> onItemClickedListener;
+    private Serializable customItem;
 
     public DropDownMenu(Context context) {
         super(View.inflate(context, R.layout.carbon_popupmenu, null));
@@ -224,7 +225,7 @@ public class DropDownMenu<Type> extends PopupWindow {
         return width;
     }*/
 
-    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener<Type> listener) {
+    public void setOnItemClickedListener(RecyclerView.OnItemClickedListener<Serializable> listener) {
         this.onItemClickedListener = listener;
         getAdapter().setOnItemClickedListener(listener);
     }
@@ -237,8 +238,8 @@ public class DropDownMenu<Type> extends PopupWindow {
         }
     }
 
-    public ListAdapter<?, Type> getAdapter() {
-        return (ListAdapter<?, Type>) recycler.getAdapter();
+    public ListAdapter<?, Serializable> getAdapter() {
+        return (ListAdapter<?, Serializable>) recycler.getAdapter();
     }
 
     public void setSelectedIndex(int index) {
@@ -263,10 +264,10 @@ public class DropDownMenu<Type> extends PopupWindow {
         return result;
     }
 
-    public void setSelectedItems(List<Type> items) {
-        List<Type> adapterItems = getAdapter().getItems();
+    public <Type extends Serializable> void setSelectedItems(List<Type> items) {
+        List<Serializable> adapterItems = getAdapter().getItems();
         selectedIndices.clear();
-        for (Type item : items) {
+        for (Serializable item : items) {
             for (int i = 0; i < adapterItems.size(); i++) {
                 if (adapterItems.get(i).equals(item)) {
                     selectedIndices.add(i);
@@ -276,14 +277,14 @@ public class DropDownMenu<Type> extends PopupWindow {
         }
     }
 
-    public Type getSelectedItem() {
-        return selectedIndices.isEmpty() ? null : getAdapter().getItem(selectedIndices.get(0));
+    public <Type extends Serializable> Type getSelectedItem() {
+        return selectedIndices.isEmpty() ? null : (Type) getAdapter().getItem(selectedIndices.get(0));
     }
 
-    public List<Type> getSelectedItems() {
+    public <Type extends Serializable> List<Type> getSelectedItems() {
         List<Type> result = new ArrayList<>();
         for (int i : selectedIndices)
-            result.add(getAdapter().getItem(i));
+            result.add((Type) getAdapter().getItem(i));
         return result;
     }
 
@@ -324,7 +325,7 @@ public class DropDownMenu<Type> extends PopupWindow {
 
     public void setStyle(@NonNull DropDown.Style style) {
         this.style = style;
-        ListAdapter<?, Type> newAdapter;
+        ListAdapter<?, Serializable> newAdapter;
         if (style == DropDown.Style.MultiSelect) {
             newAdapter = new DropDown.CheckableAdapter<>(selectedIndices);
         } else {
@@ -336,7 +337,7 @@ public class DropDownMenu<Type> extends PopupWindow {
         newAdapter.setOnItemClickedListener(onItemClickedListener);
     }
 
-    public void setCustomItem(Type item) {
+    public <Type extends Serializable> void setCustomItem(Type item) {
         if (getAdapter().getItems().get(0) == customItem) {
             getAdapter().getItems().remove(0);
             getAdapter().notifyItemRemoved(0);
@@ -350,7 +351,7 @@ public class DropDownMenu<Type> extends PopupWindow {
         }
     }
 
-    public void setItems(List<Type> items) {
+    public <Type extends Serializable> void setItems(List<Type> items) {
         defaultAdapter.setItems(items);
         defaultAdapter.notifyDataSetChanged();
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="tk.zielony.carbonsamples">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="tk.zielony.carbonsamples">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -18,113 +18,113 @@
 
         <meta-data
             android:name="com.samsung.android.icon_container.has_icon_container"
-            android:value="true"/>
+            android:value="true" />
 
         <activity android:name="tk.zielony.carbonsamples.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".widget.ButtonsActivity"/>
-        <activity android:name=".widget.FABActivity"/>
-        <activity android:name=".widget.SVGActivity"/>
-        <activity android:name=".widget.SnackbarActivity"/>
-        <activity android:name=".widget.TextFieldsActivity"/>
-        <activity android:name=".widget.CircularProgressActivity"/>
-        <activity android:name=".widget.ProgressBarsActivity"/>
-        <activity android:name=".widget.TabsActivity"/>
-        <activity android:name=".widget.CheckBoxRadioActivity"/>
-        <activity android:name=".widget.RecyclerActivity"/>
-        <activity android:name=".widget.ExpandableRecyclerActivity"/>
-        <activity android:name=".widget.ExpansionPanelActivity"/>
-        <activity android:name=".widget.DropDownActivity"/>
-        <activity
-            android:name=".widget.NavigationViewActivity"
-            android:theme="@style/AppTheme.Translucent"/>
-        <activity android:name=".widget.SeekBarActivity"/>
-        <activity android:name=".widget.FlowLayoutActivity"/>
-        <activity android:name=".widget.TableLayoutActivity"/>
-        <activity android:name=".widget.FloatingActionMenuActivity"/>
-        <activity android:name=".widget.BottomNavigationViewActivity"/>
-        <activity android:name=".widget.BottomSheetActivity"/>
-        <activity android:name=".widget.BackdropActivity"/>
-        <activity android:name=".widget.BannerActivity"/>
+        <activity android:name=".widget.ButtonsActivity" />
+        <activity android:name=".widget.FABActivity" />
+        <activity android:name=".widget.SVGActivity" />
+        <activity android:name=".widget.SnackbarActivity" />
+        <activity android:name=".widget.TextFieldsActivity" />
+        <activity android:name=".widget.CircularProgressActivity" />
+        <activity android:name=".widget.ProgressBarsActivity" />
+        <activity android:name=".widget.TabsActivity" />
+        <activity android:name=".widget.CheckBoxRadioActivity" />
+        <activity android:name=".widget.RecyclerActivity" />
+        <activity android:name=".widget.ExpandableRecyclerActivity" />
+        <activity android:name=".widget.ExpansionPanelActivity" />
+        <activity android:name=".widget.DropDownActivity" />
+        <activity android:name=".widget.NavigationViewActivity" />
+        <activity android:name=".widget.SeekBarActivity" />
+        <activity android:name=".widget.FlowLayoutActivity" />
+        <activity android:name=".widget.TableLayoutActivity" />
+        <activity android:name=".widget.BottomNavigationViewActivity" />
+        <activity android:name=".widget.BottomSheetActivity" />
+        <activity android:name=".widget.BackdropActivity" />
+        <activity android:name=".widget.BannerActivity" />
 
-        <activity android:name=".animation.ImageFadeActivity"/>
-        <activity android:name=".animation.RippleActivity"/>
-        <activity android:name=".animation.WidgetAnimationsActivity"/>
-        <activity android:name=".animation.PathAnimationActivity"/>
+        <activity android:name=".animation.ImageFadeActivity" />
+        <activity android:name=".animation.RippleActivity" />
+        <activity android:name=".animation.WidgetAnimationsActivity" />
+        <activity android:name=".animation.PathAnimationActivity" />
 
-        <activity android:name=".feature.FontResourceActivity"/>
-        <activity android:name=".feature.AutoSizeTextActivity"/>
-        <activity android:name=".feature.BehaviorActivity"/>
-        <activity android:name=".feature.HtmlActivity"/>
-        <activity android:name=".feature.RoundedCornersActivity"/>
-        <activity android:name=".feature.AnchorActivity"/>
-        <activity android:name=".feature.ShadowActivity"/>
-        <activity android:name=".feature.LargeShadowActivity"/>
-        <activity android:name=".feature.PaginationActivity"/>
-        <activity android:name=".feature.RobotoActivity"/>
-        <activity android:name=".feature.TextAppearanceActivity"/>
-        <activity android:name=".feature.ZOrderActivity"/>
-        <activity android:name=".feature.ContextWrapperActivity"/>
-        <activity android:name=".feature.PercentLayoutActivity"/>
-        <activity android:name=".feature.TextMarkerActivity"/>
-        <activity android:name=".feature.ThemeActivity"/>
+        <activity android:name=".feature.FontResourceActivity" />
+        <activity android:name=".feature.AutoSizeTextActivity" />
+        <activity android:name=".feature.BehaviorActivity" />
+        <activity android:name=".feature.HtmlActivity" />
+        <activity android:name=".feature.RoundedCornersActivity" />
+        <activity android:name=".feature.AnchorActivity" />
+        <activity android:name=".feature.ShadowActivity" />
+        <activity android:name=".feature.LargeShadowActivity" />
+        <activity android:name=".feature.PaginationActivity" />
+        <activity android:name=".feature.RobotoActivity" />
+        <activity android:name=".feature.TextAppearanceActivity" />
+        <activity android:name=".feature.ZOrderActivity" />
+        <activity android:name=".feature.ContextWrapperActivity" />
+        <activity android:name=".feature.PercentLayoutActivity" />
+        <activity android:name=".feature.TextMarkerActivity" />
+        <activity android:name=".feature.ThemeActivity" />
 
-        <activity android:name=".library.PicassoActivity"/>
-        <activity android:name=".library.RecyclerCardsActivity"/>
-        <activity android:name=".library.DesignActivity"/>
-        <activity android:name=".library.ConstraintLayoutActivity"/>
+        <activity android:name=".library.PicassoActivity" />
+        <activity android:name=".library.RecyclerCardsActivity" />
+        <activity android:name=".library.DesignActivity" />
+        <activity android:name=".library.ConstraintLayoutActivity" />
 
-        <activity android:name=".demo.PowerMenuActivity"/>
-        <activity android:name=".demo.QuickReturnActivity"/>
-        <activity android:name=".demo.AutoCompleteActivity"/>
-        <activity android:name=".demo.SearchToolbarActivity"/>
-        <activity android:name=".demo.ShareToolbarActivity"/>
+        <activity android:name=".demo.PowerMenuActivity" />
+        <activity android:name=".demo.QuickReturnActivity" />
+        <activity android:name=".demo.AutoCompleteActivity" />
+        <activity android:name=".demo.SearchToolbarActivity" />
+        <activity android:name=".demo.ShareToolbarActivity" />
+        <activity android:name=".demo.ProfileActivity" />
 
         <activity
             android:name=".guidelines.ButtonsUsageActivity"
-            android:theme="@style/RaisedButtonStyle"/>
-        <activity android:name=".guidelines.MenusBehaviorActivity"/>
+            android:theme="@style/RaisedButtonStyle" />
+        <activity android:name=".guidelines.MenusBehaviorActivity" />
         <activity
             android:name=".guidelines.ShrineActivity"
-            android:theme="@style/AppTheme.Shrine"/>
+            android:theme="@style/AppTheme.Shrine" />
         <activity
             android:name=".guidelines.CraneActivity"
-            android:theme="@style/AppTheme.Crane"/>
+            android:theme="@style/AppTheme.Crane" />
         <activity
             android:name=".guidelines.BasilActivity"
-            android:theme="@style/AppTheme.Basil"/>
+            android:theme="@style/AppTheme.Basil" />
 
-        <activity android:name=".component.IconTextListItemActivity"/>
-        <activity android:name=".component.AvatarTextListItemActivity"/>
-        <activity android:name=".component.ImageTextSubtextDateListItemActivity"/>
-        <activity android:name=".component.AvatarTextRatingSubtextDateListItemActivity"/>
-        <activity android:name=".component.RegisterActivity"/>
+        <activity android:name=".component.IconTextListItemActivity" />
+        <activity android:name=".component.AvatarTextListItemActivity" />
+        <activity android:name=".component.ImageTextSubtextDateListItemActivity" />
+        <activity android:name=".component.AvatarTextRatingSubtextDateListItemActivity" />
+        <activity android:name=".component.RegisterActivity" />
 
-        <activity android:name=".dialog.ListDialogActivity"/>
-        <activity android:name=".dialog.ProgressDialogActivity"/>
-        <activity android:name=".dialog.SelectDialogActivity"/>
-        <activity android:name=".dialog.SimpleDialogActivity"/>
+        <activity android:name=".dialog.ListDialogActivity" />
+        <activity android:name=".dialog.ProgressDialogActivity" />
+        <activity android:name=".dialog.SelectDialogActivity" />
+        <activity android:name=".dialog.SimpleDialogActivity" />
 
-        <activity android:name=".themes.CurrentThemeActivity"/>
-        <activity android:name=".themes.WindowsThemeActivity" android:theme="@style/WindowsTheme"/>
+        <activity android:name=".themes.CurrentThemeActivity" />
+        <activity
+            android:name=".themes.WindowsThemeActivity"
+            android:theme="@style/WindowsTheme" />
 
-        <activity android:name=".NewSamplesActivity"/>
-        <activity android:name=".FavouritesActivity"/>
-        <activity android:name=".AnimationsActivity"/>
-        <activity android:name=".LibrariesActivity"/>
-        <activity android:name=".ColorsActivity"/>
-        <activity android:name=".ComponentsActivity"/>
-        <activity android:name=".DemosActivity"/>
-        <activity android:name=".FeaturesActivity"/>
-        <activity android:name=".GuidelinesActivity"/>
-        <activity android:name=".WidgetsActivity"/>
-        <activity android:name=".DialogsActivity"/>
-        <activity android:name=".ThemesActivity"/>
+        <activity android:name=".NewSamplesActivity" />
+        <activity android:name=".FavouritesActivity" />
+        <activity android:name=".AnimationsActivity" />
+        <activity android:name=".LibrariesActivity" />
+        <activity android:name=".ColorsActivity" />
+        <activity android:name=".ComponentsActivity" />
+        <activity android:name=".DemosActivity" />
+        <activity android:name=".FeaturesActivity" />
+        <activity android:name=".GuidelinesActivity" />
+        <activity android:name=".WidgetsActivity" />
+        <activity android:name=".DialogsActivity" />
+        <activity android:name=".ThemesActivity" />
     </application>
 
 </manifest>

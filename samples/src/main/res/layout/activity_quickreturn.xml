@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimaryDark">
+    app:carbon_insetColor="?attr/colorPrimary">
 
     <carbon.widget.RecyclerView
         android:id="@+id/recycler"

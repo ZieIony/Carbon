@@ -17,7 +17,6 @@ import tk.zielony.carbonsamples.widget.DropDownActivity;
 import tk.zielony.carbonsamples.widget.ExpandableRecyclerActivity;
 import tk.zielony.carbonsamples.widget.ExpansionPanelActivity;
 import tk.zielony.carbonsamples.widget.FABActivity;
-import tk.zielony.carbonsamples.widget.FloatingActionMenuActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
 import tk.zielony.carbonsamples.widget.NavigationViewActivity;
 import tk.zielony.carbonsamples.widget.ProgressBarsActivity;
@@ -43,7 +42,7 @@ public class WidgetsActivity extends SampleListActivity {
                 new SampleActivityItem(BannerActivity.class),
                 new SampleActivityItem(CheckBoxRadioActivity.class, R.drawable.carbon_checkbox_checked),
                 new SampleActivityItem(ButtonsActivity.class),
-                new SampleActivityItem(FABActivity.class),
+                new SampleActivityItem(FABActivity.class, R.drawable.ic_add_circle_black_24dp),
                 new SampleActivityItem(CircularProgressActivity.class),
                 new SampleActivityItem(ProgressBarsActivity.class),
                 new SampleActivityItem(SnackbarActivity.class),
@@ -58,7 +57,6 @@ public class WidgetsActivity extends SampleListActivity {
                 new SampleActivityItem(SeekBarActivity.class),
                 new SampleActivityItem(FlowLayoutActivity.class),
                 new SampleActivityItem(TableLayoutActivity.class),
-                new SampleActivityItem(FloatingActionMenuActivity.class),
                 new SampleActivityItem(BottomNavigationViewActivity.class),
                 new SampleActivityItem(BottomSheetActivity.class, 0, true),
                 new SampleActivityItem(BackdropActivity.class),

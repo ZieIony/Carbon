@@ -3,7 +3,6 @@
     android:id="@+id/carbon_snackbarContent"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="?attr/carbon_colorBackgroundInverse"
     android:fitsSystemWindows="false"
     android:maxHeight="80dp"
     android:maxWidth="568dp"
@@ -22,11 +21,11 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:maxLines="2"
-        android:textAppearance="?attr/carbon_textAppearanceBody2Inverse" />
+        android:textAppearance="?attr/carbon_textAppearanceBody2" />
 
     <carbon.widget.Button
         android:id="@+id/carbon_actionButton"
-        style="@style/carbon_Button.Flat.Colored.Inverse"
+        style="@style/carbon_Button.Flat.Colored"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_marginBottom="6dp"

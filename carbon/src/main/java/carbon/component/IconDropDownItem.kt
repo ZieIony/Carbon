@@ -7,37 +7,37 @@ import carbon.widget.DropDown
 
 import java.io.Serializable
 
-interface IconDropDownItem<Type : Serializable> : Serializable {
+interface IconDropDownItem : Serializable {
     val icon: Drawable?
     val hint: String?
-    val items: Array<Type>
-    val selectedItem: Type?
+    val items: Array<Serializable>
+    val selectedItem: Serializable?
 }
 
-open class DefaultIconDropDownItem<Type : Serializable> : IconDropDownItem<Type> {
+open class DefaultIconDropDownItem<Type : Serializable> : IconDropDownItem {
     override var icon: Drawable? = null
     override var hint: String? = null
-    override lateinit var items: Array<Type>
-    override var selectedItem: Type? = null
+    override lateinit var items: Array<Serializable>
+    override var selectedItem: Serializable? = null
 
     constructor()
 
     constructor(icon: Drawable?, hint: String?, items: Array<Type>, selectedItem: Type?) {
         this.icon = icon
         this.hint = hint
-        this.items = items
+        this.items = arrayOf(*items)
         this.selectedItem = selectedItem
     }
 }
 
-open class IconDropDownRow<Type : IconDropDownItem<ItemType>, ItemType : Serializable> : DataBindingComponent<Type> {
+open class IconDropDownRow<Type : IconDropDownItem, ItemType : Serializable> : DataBindingComponent<Type> {
 
-    val dropDown: DropDown<ItemType>
+    val dropDown: DropDown
 
     var selectedItem: ItemType
-        get() = dropDown.selectedItem
+        get() = dropDown.getSelectedItem()
         set(value) {
-            dropDown.selectedItem = value
+            dropDown.setSelectedItem(value)
         }
 
     constructor(parent: ViewGroup) : super(parent, R.layout.carbon_row_icondropdown) {
