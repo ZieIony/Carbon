@@ -37,9 +37,9 @@ public class DropDownMenu extends PopupWindow {
 
     protected RecyclerView recycler;
     private View anchorView;
-    private DropDown.Mode mode;
+    private DropDown.PopupMode popupMode;
     private ListAdapter defaultAdapter;
-    private DropDown.Style style;
+    private DropDown.Mode mode;
     private List<Integer> selectedIndices = new ArrayList<>();
     private RecyclerView.OnItemClickedListener<Serializable> onItemClickedListener;
     private Serializable customItem;
@@ -104,7 +104,7 @@ public class DropDownMenu extends PopupWindow {
         if (anchorView == null)
             return;
 
-        setClippingEnabled(mode == DropDown.Mode.Fit);
+        setClippingEnabled(popupMode == DropDown.PopupMode.Fit);
 
         final Resources res = getContentView().getContext().getResources();
 
@@ -134,7 +134,7 @@ public class DropDownMenu extends PopupWindow {
         int[] location = new int[2];
         anchorView.getLocationInWindow(location);
 
-        if (mode == DropDown.Mode.Over) {
+        if (popupMode == DropDown.PopupMode.Over) {
             int maxHeightAbove = location[1] - windowRect.top - marginHalf * 2;
             int maxItemsAbove = maxHeightAbove / itemHeight;
             int maxHeightBelow = hWindow - location[1] - marginHalf * 2;
@@ -311,22 +311,22 @@ public class DropDownMenu extends PopupWindow {
             ((Checkable) viewHolder).toggle();
     }
 
+    public DropDown.PopupMode getPopupMode() {
+        return popupMode;
+    }
+
+    public void setPopupMode(DropDown.PopupMode popupMode) {
+        this.popupMode = popupMode;
+    }
+
     public DropDown.Mode getMode() {
         return mode;
     }
 
-    public void setMode(DropDown.Mode mode) {
+    public void setMode(@NonNull DropDown.Mode mode) {
         this.mode = mode;
-    }
-
-    public DropDown.Style getStyle() {
-        return style;
-    }
-
-    public void setStyle(@NonNull DropDown.Style style) {
-        this.style = style;
         ListAdapter<?, Serializable> newAdapter;
-        if (style == DropDown.Style.MultiSelect) {
+        if (mode == DropDown.Mode.MultiSelect) {
             newAdapter = new DropDown.CheckableAdapter<>(selectedIndices);
         } else {
             newAdapter = new DropDown.Adapter<>();
@@ -342,7 +342,7 @@ public class DropDownMenu extends PopupWindow {
             getAdapter().getItems().remove(0);
             getAdapter().notifyItemRemoved(0);
         }
-        if (getAdapter().getItems().contains(item) || style != DropDown.Style.Editable)
+        if (getAdapter().getItems().contains(item) || mode != DropDown.Mode.Editable)
             return;
         customItem = item;
         if (item != null) {

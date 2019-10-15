@@ -1,171 +1,255 @@
 package carbon.gesture;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Matrix;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.ViewParent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import carbon.R;
 
 public class GestureDetector {
 
     private static final int DEFAULT_PRESS_TIMEOUT = 100;
+    private static final int DEFAULT_LONGPRESS_TIMEOUT = 200;
     private static final int DEFAULT_TAP_TIMEOUT = 300;
-    private static final int DEFAULT_MOVE_EPSILON = 4;
-    private int pressTimeout = DEFAULT_PRESS_TIMEOUT;
-    private int tapTimeout = DEFAULT_TAP_TIMEOUT;
-    private int moveEpsilon = DEFAULT_MOVE_EPSILON;
-    private Handler handler;
-    private Runnable tapHandler;
-    private Runnable pressHandler;
-    private final OnGestureListener listener;
-    private long prevTouchTime;
-    private float prevTouchY;
-    private float prevTouchX;
-    boolean verticalMoveCancel = true;
-    boolean horizontalMoveCancel = true;
-    private boolean dragging;
-    private boolean moving;
-    private Runnable longPressHandler;
-    private long longPressTimeout = 200;
-    private int clicks = 0;
-    private boolean pressed;
 
-    public GestureDetector(OnGestureListener listener) {
-        if (listener == null)
-            throw new NullPointerException("Listener cannot be null");
-        this.listener = listener;
-        handler = new Handler();
+    private int pressTimeout = DEFAULT_PRESS_TIMEOUT;
+    private long longPressTimeout = DEFAULT_LONGPRESS_TIMEOUT;
+    private int tapTimeout = DEFAULT_TAP_TIMEOUT;
+    private int moveEpsilon;
+
+    private Handler handler = new Handler();
+    private Runnable pressHandler;
+    private Runnable longPressHandler;
+    private Runnable tapHandler;
+
+    private float prevTouchY, startTouchX;
+    private float prevTouchX, startTouchY;
+    private float prevCenterX, prevCenterY, prevDist, prevRotation;
+
+    private boolean pressed;
+    private int clicks = 0;
+    private boolean moving, transforming = false;
+
+    public GestureDetector(Context context){
+        moveEpsilon = context.getResources().getDimensionPixelSize(R.dimen.carbon_moveEpsilon);
     }
 
-    public void onTouchEvent(final MotionEvent motionEvent) {
+    private List<OnGestureListener> listeners = new ArrayList<>();
+
+    public void addOnGestureListener(OnGestureListener listener) {
+        if (listener == null)
+            throw new NullPointerException("Listener cannot be null");
+        listeners.add(listener);
+    }
+
+    public void removeOnGestureListener(OnGestureListener listener){
+        if (listener == null)
+            throw new NullPointerException("Listener cannot be null");
+        listeners.remove(listener);
+    }
+
+    public void clearOnGestureListeners(){
+        listeners.clear();
+    }
+
+    public boolean shouldInterceptEvents(MotionEvent event){
+        if(event.getPointerCount()>1)
+            return true;
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                moving = false;
+                pressed = true;
+                startTouchX=event.getX();
+                startTouchY=event.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if(pressed) {
+                    if (!moving) {
+                        float dx = event.getX() - startTouchX;
+                        float dy = event.getY() - startTouchY;
+                        if (Math.sqrt(dx * dx + dy * dy) > moveEpsilon)
+                            return true;
+                    } else {
+                        return true;
+                    }
+                }
+            break;
+        }
+        return false;
+    }
+
+    public boolean onTouchEvent(final MotionEvent motionEvent) {
         final MotionEvent event = MotionEvent.obtain(motionEvent);
-        float dx = motionEvent.getX() - prevTouchX;
-        float dy = motionEvent.getY() - prevTouchY;
-        long time = System.currentTimeMillis();
-        long dt = System.currentTimeMillis() - prevTouchTime;
         handler.removeCallbacks(longPressHandler);
         longPressHandler = null;
 
-        switch (motionEvent.getAction()) {
+        if (motionEvent.getPointerCount() == 1) {
+            transforming = false;
+            handleSinglePointer(event);
+        } else if (motionEvent.getPointerCount() == 2) {
+            handleTwoPointers(event);
+        } else {
+        }
+
+        prevTouchX = motionEvent.getX();
+        prevTouchY = motionEvent.getY();
+
+        return moving;
+    }
+
+    private void handleSinglePointer(MotionEvent event) {
+        switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                dragging = false;
                 moving = false;
                 pressed = true;
-                if (tapHandler != null) {
-                    clicks++;
-                    handler.removeCallbacks(tapHandler);
-                    tapHandler = null;
-                }
+                startTouchX=event.getX();
+                startTouchY=event.getY();
 
-                handler.removeCallbacks(pressHandler);
-                pressHandler = () -> {
-                    // handler.removeCallbacks(tapHandler);
-                    // tapHandler = null;
-                    onPress(event);
-                };
+                clicks++;
+                handler.removeCallbacks(tapHandler);
+                tapHandler = null;
+
+                pressHandler = () -> firePressEvent(event);
                 handler.postDelayed(pressHandler, pressTimeout);
 
-                longPressHandler = () -> onLongPress(event);
+                longPressHandler = () -> fireLongPressEvent(event);
                 handler.removeCallbacks(longPressHandler);
                 handler.postDelayed(longPressHandler, longPressTimeout);
 
-                prevTouchTime = time;
                 break;
+
             case MotionEvent.ACTION_UP:
-                if (pressed || moving || dragging) {
-                    if (pressHandler != null) {
-                        handler.removeCallbacks(pressHandler);
-                        pressHandler.run();
-                    }
-                    onRelease(event);
-                    //break;
+                if (pressed&&pressHandler != null) {
+                    handler.removeCallbacks(pressHandler);
+                    pressHandler.run();
                 }
 
-                //TODO: tapping is broken
-                /*tapHandler = new Runnable() {
+                if (clicks > 0) {
+                    fireTapEvent(event, clicks);
 
-                    @Override
-                    public void run() {
-                        handler.removeCallbacks(longPressHandler);
-                        longPressHandler = null;
-                        onTap(motionEvent, clicks);
-                    }
-                };
-                handler.postDelayed(tapHandler, tapTimeout - dt);*/
+                    tapHandler = () -> {
+                        tapHandler = null;
+                        clicks=0;
+                    };
+                    handler.postDelayed(tapHandler, tapTimeout);
+                }
 
                 pressed = false;
-                prevTouchTime = time;
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                if (Math.abs(dx) > moveEpsilon || Math.abs(dy) > moveEpsilon || dragging || moving) {
-                    if (pressHandler == null && !moving) {
-                        dragging = true;
-                    }
-                    handler.removeCallbacks(tapHandler);
-                    tapHandler = null;
-                    handler.removeCallbacks(pressHandler);
-                    pressHandler = null;
-                    handler.removeCallbacks(longPressHandler);
-                    longPressHandler = null;
-                    moving = true;
-                    if (dragging) {
-                        onDrag(event);
+                if(pressed) {
+                    if (!moving) {
+                        float dx = event.getX() - startTouchX;
+                        float dy = event.getY() - startTouchY;
+                        if (Math.sqrt(dx * dx + dy * dy) > moveEpsilon) {
+                            handler.removeCallbacks(tapHandler);
+                            tapHandler = null;
+                            handler.removeCallbacks(pressHandler);
+                            pressHandler = null;
+                            handler.removeCallbacks(longPressHandler);
+                            longPressHandler = null;
+                            moving = true;
+                            fireDragEvent(event, dx, dy);
+                        }
                     } else {
-                        onMove(event);
+                        fireDragEvent(event, event.getX() - prevTouchX, event.getY() - prevTouchY);
                     }
                 }
                 break;
+
             case MotionEvent.ACTION_CANCEL:
                 pressed = false;
+                moving = false;
                 handler.removeCallbacks(pressHandler);
                 pressHandler = null;
                 handler.removeCallbacks(tapHandler);
                 tapHandler = null;
                 handler.removeCallbacks(longPressHandler);
                 longPressHandler = null;
-                onCancel(event);
+                clicks=0;
         }
-        prevTouchX = motionEvent.getX();
-        prevTouchY = motionEvent.getY();
     }
 
-    private void onCancel(MotionEvent motionEvent) {
+    private void handleTwoPointers(MotionEvent event) {
+        clicks=0;
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
+            case MotionEvent.ACTION_POINTER_2_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                if(!transforming) {
+                    transforming = true;
+                    handler.removeCallbacks(pressHandler);
+                    pressHandler = null;
+                    handler.removeCallbacks(longPressHandler);
+                    longPressHandler = null;
+                    handler.removeCallbacks(tapHandler);
+                    tapHandler = null;
+
+                    prevRotation = (float) Math.atan2(event.getY(0) - event.getY(1), event.getX(0) - event.getX(1));
+                    prevDist = (float) Math.sqrt(Math.pow(event.getX(0) - event.getX(1), 2) +
+                            Math.pow(event.getY(0) - event.getY(1), 2));
+                    prevCenterX = (event.getX(0) + event.getX(1)) / 2;
+                    prevCenterY = (event.getY(0) + event.getY(1)) / 2;
+                }else {
+                    float dist = (float) Math.sqrt(Math.pow(event.getX(0) - event.getX(1), 2) +
+                            Math.pow(event.getY(0) - event.getY(1), 2));
+                    float cx = (event.getX(0) + event.getX(1)) / 2;
+                    float cy = (event.getY(0) + event.getY(1)) / 2;
+                    float dx = cx-prevCenterX;
+                    float dy = cy-prevCenterY;
+
+                    float rotation = (float) Math.atan2(event.getY(0) - event.getY(1), event.getX(0) - event.getX(1));
+                    float scale = dist / prevDist;
+                    float rx = rotation - prevRotation;
+
+                    fireTransformEvent(event, cx,cy,dx,dy,rx,scale);
+
+                    prevCenterX = cx;
+                    prevCenterY = cy;
+                    prevRotation = rotation;
+                    prevDist = dist;
+                }
+                break;
+        }
+    }
+
+    private void fireTransformEvent(MotionEvent motionEvent, float cx, float cy, float dx, float dy, float rx, float scale) {
+        for(OnGestureListener listener:listeners)
+            listener.onTransform(motionEvent, cx,cy,dx,dy,rx,scale);
+    }
+
+    private void fireDragEvent(MotionEvent motionEvent, float translationX, float translationY) {
         clicks = 0;
-        listener.onCancel(motionEvent);
+        for(OnGestureListener listener:listeners)
+            listener.onDrag(motionEvent, translationX, translationY);
     }
 
-    private void onRelease(MotionEvent motionEvent) {
-        clicks = 0;
-        listener.onRelease(motionEvent);
-    }
-
-    private void onDrag(MotionEvent motionEvent) {
-        clicks = 0;
-        listener.onDrag(motionEvent);
-    }
-
-    private void onMove(MotionEvent motionEvent) {
-        clicks = 0;
-        listener.onMove(motionEvent);
-    }
-
-    protected void onTap(MotionEvent motionEvent, int clicks) {
+    private void fireTapEvent(MotionEvent motionEvent, int clicks) {
         tapHandler = null;
-        if (clicks == 0) {
-            listener.onTap(motionEvent);
-        } else {
-            listener.onMultiTap(motionEvent, clicks + 1);
-        }
-        this.clicks = 0;
+        for(OnGestureListener listener:listeners)
+            listener.onTap(motionEvent, clicks);
     }
 
-    protected void onLongPress(MotionEvent motionEvent) {
+    private void fireLongPressEvent(MotionEvent motionEvent) {
         clicks = 0;
         longPressHandler = null;
-        listener.onLongPress(motionEvent);
+        for(OnGestureListener listener:listeners)
+            listener.onLongPress(motionEvent);
     }
 
-    protected void onPress(MotionEvent motionEvent) {
+    private void firePressEvent(MotionEvent motionEvent) {
         pressHandler = null;
-        listener.onPress(motionEvent);
+        for(OnGestureListener listener:listeners)
+            listener.onPress(motionEvent);
     }
 
     public int getPressTimeout() {
@@ -176,10 +260,21 @@ public class GestureDetector {
         this.pressTimeout = pressTimeout;
     }
 
+    public long getLongPressTimeout() {
+        return longPressTimeout;
+    }
+
+    public void setLongPressTimeout(long longPressTimeout) {
+        this.longPressTimeout = longPressTimeout;
+    }
+
     public int getTapTimeout() {
         return tapTimeout;
     }
 
+    /**
+     * @param tapTimeout time between subsequent release events to be interpreted as another tap
+     */
     public void setTapTimeout(int tapTimeout) {
         this.tapTimeout = tapTimeout;
     }
@@ -188,16 +283,11 @@ public class GestureDetector {
         return moveEpsilon;
     }
 
+    /**
+     * @param moveEpsilon distance over which move and drag events are reported
+     */
     public void setMoveEpsilon(int moveEpsilon) {
         this.moveEpsilon = moveEpsilon;
-    }
-
-    public long getLongPressTimeout() {
-        return longPressTimeout;
-    }
-
-    public void setLongPressTimeout(long longPressTimeout) {
-        this.longPressTimeout = longPressTimeout;
     }
 }
 

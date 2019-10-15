@@ -38,7 +38,7 @@ public class Samples {
     public static void initToolbar(final Activity activity, String title, boolean showBack) {
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setTitle(title);
-        toolbar.setIconVisible(showBack);
+        toolbar.setIconVisible(toolbar.getIcon()!=null&&showBack);
 
         final DebugOverlay overlay = new DebugOverlay(activity);
         overlay.setDrawBoundsEnabled(false);

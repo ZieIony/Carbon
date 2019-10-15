@@ -16,6 +16,7 @@
         android:theme="@style/carbon_Theme.Dark.DarkPrimaryColor">
 
         <carbon.widget.Toolbar
+            style="@style/carbon_Toolbar.ActionBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
             android:text="Dark theme">
@@ -50,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
             android:text="edittext" />
     </carbon.widget.LinearLayout>
 
@@ -64,6 +65,7 @@
         android:theme="@style/carbon_Theme.Light">
 
         <carbon.widget.Toolbar
+            style="@style/carbon_Toolbar.ActionBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
             android:text="Light theme">
@@ -98,8 +100,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
             android:text="edittext" />
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import carbon.widget.RelativeLayout;
@@ -31,12 +32,12 @@ public class TabsActivity extends ThemedActivity {
                 return "Page " + position;
             }
 
-            public View getView(int position, ViewPager pager) {
+            View getView(int position, ViewPager pager) {
                 return new RelativeLayout(pager.getContext(), null, R.attr.carbon_cardViewStyle);
             }
 
             @Override
-            public boolean isViewFromObject(View view, Object object) {
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
                 return view == object;
             }
 
@@ -45,8 +46,9 @@ public class TabsActivity extends ThemedActivity {
                 return 7;
             }
 
+            @NonNull
             @Override
-            public Object instantiateItem(ViewGroup container, int position) {
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
                 ViewPager pager = (ViewPager) container;
                 View view = getView(position, pager);
 
@@ -56,7 +58,7 @@ public class TabsActivity extends ThemedActivity {
             }
 
             @Override
-            public void destroyItem(ViewGroup container, int position, Object view) {
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object view) {
                 container.removeView((View) view);
             }
 

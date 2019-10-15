@@ -67,6 +67,7 @@ import carbon.shadow.RoundedCornerTreatment;
 import carbon.shadow.ShadowView;
 import carbon.shadow.ShapeAppearanceModel;
 import carbon.view.AutoSizeTextView;
+import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
 import carbon.view.ShapeModelView;
@@ -125,7 +126,8 @@ public class TextView extends android.widget.TextView
         ValidStateView,
         AutoSizeTextView,
         RevealView,
-        VisibleView {
+        VisibleView,
+        MarginView {
 
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -201,8 +203,8 @@ public class TextView extends android.widget.TextView
             R.styleable.TextView_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.TextView_carbon_maxWidth,
-            R.styleable.TextView_carbon_maxHeight,
+            R.styleable.TextView_android_maxWidth,
+            R.styleable.TextView_android_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.TextView_carbon_elevation,
@@ -1347,23 +1349,23 @@ public class TextView extends android.widget.TextView
     int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
 
     @Override
-    public int getMaximumWidth() {
+    public int getMaxWidth() {
         return maxWidth;
     }
 
     @Override
-    public void setMaximumWidth(int maxWidth) {
+    public void setMaxWidth(int maxWidth) {
         this.maxWidth = maxWidth;
         requestLayout();
     }
 
     @Override
-    public int getMaximumHeight() {
+    public int getMaxHeight() {
         return maxHeight;
     }
 
     @Override
-    public void setMaximumHeight(int maxHeight) {
+    public void setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
         requestLayout();
     }

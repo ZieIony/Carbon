@@ -1,13 +1,16 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 
 import java.util.Random;
 
 import carbon.widget.Chip;
+import carbon.widget.EditText;
 import carbon.widget.FlowLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
@@ -42,6 +45,17 @@ public class FlowLayoutActivity extends ThemedActivity {
             chip.setOnRemoveListener(() -> {
                 chip.setVisibility(View.GONE);
             });
+        });
+
+        EditText addChip = findViewById(R.id.addChip);
+        addChip.setOnEditorActionListener((textView, i, keyEvent) -> {
+            Chip chip = new Chip(FlowLayoutActivity.this);
+            chip.setText(addChip.getText());
+            chip.setRemovable(random.nextBoolean());
+            chip.setSelected(random.nextBoolean());
+            layout.addView(chip);
+            addChip.setText("");
+            return true;
         });
     }
 }

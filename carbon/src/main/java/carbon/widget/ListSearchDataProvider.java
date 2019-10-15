@@ -20,7 +20,7 @@ public class ListSearchDataProvider<Type> implements SearchEditText.SearchDataPr
     }
 
     @Override
-    public String[] getItemWords(int i) {
-        return new String[]{data.get(i).toString()};
+    public String[] getItemWords(Type item) {
+        return new String[]{item.toString()};
     }
 }

@@ -86,10 +86,16 @@
             android:clickable="true" />
 
         <carbon.widget.EditText
-            android:layout_width="100dp"
+            android:id="@+id/addChip"
+            android:layout_width="200dp"
             android:layout_height="@dimen/carbon_chipHeight"
             android:layout_margin="@dimen/carbon_marginHalf"
-            android:background="@null"
-            android:gravity="center_vertical" />
+            style="@style/carbon_EditText"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/carbon_paddingHalf"
+            android:paddingRight="@dimen/carbon_paddingHalf"
+            android:hint="add chip"
+            app:carbon_cornerRadius="@dimen/carbon_cornerRadiusCard"
+            app:carbon_stroke="@color/carbon_defaultColorControl" />
     </carbon.widget.FlowLayout>
 </carbon.widget.LinearLayout>

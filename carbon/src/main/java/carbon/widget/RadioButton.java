@@ -106,7 +106,7 @@ public class RadioButton extends TextView implements Checkable {
 
     @Override
     public boolean performClick() {
-        toggle();
+        setChecked(true);
 
         if (onCheckedChangeListener != null)
             onCheckedChangeListener.onCheckedChanged(this, checked);

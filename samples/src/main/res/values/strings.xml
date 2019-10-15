@@ -39,18 +39,18 @@
     <string name="demosActivity_title">Demos</string>
     <string name="guidelinesActivity_title">Guidelines</string>
     <string name="toolbarsUsageActivity_title">Toolbars / Usage</string>
+
+    <string name="gestureDetectorActivity_title">Gesture detector</string>
+    <string name="fontResourceActivity_title">Font resource</string>
     <string name="behaviorActivity_title">Behavior</string>
     <string name="htmlActivity_title">HTML</string>
-    <string name="fontResourceActivity_title">Font resource</string>
     <string name="robotoActivity_title">Roboto</string>
     <string name="shadowActivity_title">Shadow</string>
-    <string name="largeShadowActivity_title">Large shadow</string>
     <string name="textappearanceActivity_title">Text appearance</string>
     <string name="paginationActivity_title">Pagination</string>
     <string name="zOrderActivity_title">Z order</string>
     <string name="roundedCornersActivity_title">Rounded corners</string>
     <string name="anchorsActivity_title">Anchors</string>
-    <string name="contextWrapperActivity_title">Context wrapper</string>
     <string name="percentLayoutActivity_title">Percent layout</string>
     <string name="powerMenuActivity_title">Power Menu</string>
     <string name="searchToolbarActivity_title">Search Toolbar</string>

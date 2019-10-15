@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <carbon.widget.Toolbar
-        app:carbon_icon="@null"
+        style="@style/carbon_Toolbar.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name">
+        android:text="@string/app_name"
+        app:carbon_icon="@null">
 
         <carbon.widget.ImageView
             android:id="@+id/colors"

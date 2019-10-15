@@ -53,6 +53,7 @@ import carbon.shadow.MaterialShapeDrawable;
 import carbon.shadow.RoundedCornerTreatment;
 import carbon.shadow.ShadowView;
 import carbon.shadow.ShapeAppearanceModel;
+import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
 import carbon.view.ShapeModelView;
@@ -77,7 +78,8 @@ public class ImageView extends android.widget.ImageView
         MaxSizeView,
         RevealView,
         VisibleView,
-        TransformationView {
+        TransformationView,
+        MarginView {
 
     public ImageView(Context context) {
         super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_imageViewStyle);
@@ -141,8 +143,8 @@ public class ImageView extends android.widget.ImageView
             R.styleable.ImageView_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.ImageView_carbon_maxWidth,
-            R.styleable.ImageView_carbon_maxHeight,
+            R.styleable.ImageView_android_maxWidth,
+            R.styleable.ImageView_android_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.ImageView_carbon_elevation,
@@ -1045,23 +1047,23 @@ public class ImageView extends android.widget.ImageView
     int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
 
     @Override
-    public int getMaximumWidth() {
+    public int getMaxWidth() {
         return maxWidth;
     }
 
     @Override
-    public void setMaximumWidth(int maxWidth) {
+    public void setMaxWidth(int maxWidth) {
         this.maxWidth = maxWidth;
         requestLayout();
     }
 
     @Override
-    public int getMaximumHeight() {
+    public int getMaxHeight() {
         return maxHeight;
     }
 
     @Override
-    public void setMaximumHeight(int maxHeight) {
+    public void setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
         requestLayout();
     }

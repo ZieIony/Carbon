@@ -23,6 +23,7 @@ public class SearchEditText<Type> extends EditText {
 
     private OnFilterListener onFilterListener;
     private String prevText = "";
+    private boolean usePartialMatch = false;
 
     public void setDataProvider(SearchDataProvider<Type> dataProvider) {
         this.dataProvider = dataProvider;
@@ -34,7 +35,7 @@ public class SearchEditText<Type> extends EditText {
 
         Type getItem(int i);
 
-        String[] getItemWords(int i);
+        String[] getItemWords(Type item);
     }
 
     protected TextWatcher searchTextWatcher;
@@ -73,26 +74,15 @@ public class SearchEditText<Type> extends EditText {
             @Override
             public void afterTextChanged(Editable text) {
                 if (!prevText.equals(text.toString()))
-                    search();
+                    filter();
                 prevText = text.toString();
             }
         };
         addTextChangedListener(searchTextWatcher);
     }
 
-    private void search() {
-        if (dataProvider == null) {
-            return;
-        }
-
-        String currentWord = getText().toString();
-        if (currentWord.length() == 0) {
-            fireOnFilterEvent(null);
-            return;
-        }
-
-        filter(currentWord);
-        fireOnFilterEvent(filteredItems);
+    public void setUsePartialMatch(boolean usePartialMatch){
+        this.usePartialMatch = usePartialMatch;
     }
 
     private void fireOnFilterEvent(List filteredItems) {
@@ -117,15 +107,26 @@ public class SearchEditText<Type> extends EditText {
 
     List<Type> filteredItems = new ArrayList<>();
 
+    public void filter(){
+        filter(getText().toString());
+    }
+
     public void filter(String word) {
-        filteredItems.clear();
-        if (word.length() == 0)
+        if (dataProvider == null) {
             return;
+        }
+
+        filteredItems.clear();
+        if (word.length() == 0) {
+            fireOnFilterEvent(null);
+            return;
+        }
 
         for (int i = 0; i < dataProvider.getItemCount(); i++) {
-            String[] itemWords = dataProvider.getItemWords(i);
+            String[] itemWords = dataProvider.getItemWords(dataProvider.getItem(i));
             matchItem(word, i, itemWords);
         }
+        fireOnFilterEvent(filteredItems);
     }
 
     private void matchItem(String word, int i, String[] itemWords) {
@@ -134,7 +135,7 @@ public class SearchEditText<Type> extends EditText {
             if (itemText.indexOf(word) == 0) {
                 filteredItems.add(dataProvider.getItem(i));
                 return;
-            } else if (partialMatch(itemText, word)) {
+            } else if (usePartialMatch&&partialMatch(itemText, word)) {
                 filteredItems.add(dataProvider.getItem(i));
                 return;
             }

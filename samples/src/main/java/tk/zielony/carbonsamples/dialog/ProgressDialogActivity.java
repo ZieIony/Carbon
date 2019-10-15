@@ -31,7 +31,7 @@ public class ProgressDialogActivity extends ThemedActivity {
             if (titleText.length() > 0)
                 dialog.setTitle(titleText.getText());
             if (buttonText.length() > 0)
-                dialog.setPositiveButton(buttonText.getText().toString(), null);
+                dialog.addButton(buttonText.getText().toString(), null);
             Handler handler = new Handler(Looper.getMainLooper());
             Runnable dismissRunnable = dialog::dismiss;
             dialog.setOnDismissListener(dialogInterface -> handler.removeCallbacks(dismissRunnable));

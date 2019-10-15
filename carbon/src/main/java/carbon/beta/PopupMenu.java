@@ -24,7 +24,7 @@ public class PopupMenu extends PopupWindow {
 
     protected RecyclerView recycler;
     private android.view.View mAnchorView;
-    private DropDown.Mode mode;
+    private DropDown.PopupMode popupMode;
     private Menu menu;
     private MenuItem.OnMenuItemClickListener listener;
 
@@ -81,7 +81,7 @@ public class PopupMenu extends PopupWindow {
         if (mAnchorView == null)
             return;
 
-        setClippingEnabled(mode == DropDown.Mode.Fit);
+        setClippingEnabled(popupMode == DropDown.PopupMode.Fit);
 
         final Resources res = getContentView().getContext().getResources();
 
@@ -111,7 +111,7 @@ public class PopupMenu extends PopupWindow {
         int[] location = new int[2];
         mAnchorView.getLocationInWindow(location);
 
-        /*if (mode == DropDown.Mode.Over) {
+        /*if (popupMode == DropDown.PopupMode.Over) {
             int maxHeightAbove = location[1] - windowRect.top - marginHalf * 2;
             int maxItemsAbove = maxHeightAbove / itemHeight;
             int maxHeightBelow = hWindow - location[1] - marginHalf * 2;
@@ -182,12 +182,12 @@ public class PopupMenu extends PopupWindow {
         return menu;
     }
 
-    public DropDown.Mode getMode() {
-        return mode;
+    public DropDown.PopupMode getPopupMode() {
+        return popupMode;
     }
 
-    public void setMode(DropDown.Mode mode) {
-        this.mode = mode;
+    public void setPopupMode(DropDown.PopupMode popupMode) {
+        this.popupMode = popupMode;
     }
 
     /* @Override

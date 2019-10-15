@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_debugtoolbar" />
+
+    <carbon.widget.TextView
+        android:id="@+id/state"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/carbon_windowPadding"
+        android:paddingRight="@dimen/carbon_windowPadding"
+        android:text="state"
+        android:textAppearance="?attr/carbon_textAppearanceHeadline" />
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <carbon.widget.FrameLayout
+        android:id="@+id/testArea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.TextView
+            android:id="@+id/testText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/carbon_windowPadding"
+            android:paddingTop="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_windowPadding"
+            android:paddingBottom="@dimen/carbon_padding"
+            android:text="test area"
+            android:textAppearance="?attr/carbon_textAppearanceCaption" />
+    </carbon.widget.FrameLayout>
+</carbon.widget.LinearLayout>

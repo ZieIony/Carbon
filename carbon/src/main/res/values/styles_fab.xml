@@ -1,0 +1,63 @@
+<resources>
+
+    <style name="carbon_FloatingActionButton" parent="carbon_ImageView">
+        <item name="android:layout_width">@dimen/carbon_fabSize</item>
+        <item name="android:layout_height">@dimen/carbon_fabSize</item>
+        <item name="android:padding">@dimen/carbon_padding</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@color/carbon_defaultColorControl</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+        <item name="carbon_tintMode">src_in</item>
+        <item name="carbon_inAnimation">pop</item>
+        <item name="carbon_outAnimation">pop</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationFAB</item>
+        <item name="android:minWidth">@dimen/carbon_fabSize</item>
+        <item name="android:minHeight">@dimen/carbon_fabSize</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_fabSizeHalf</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Inverse">
+        <item name="android:background">@color/carbon_defaultColorControlInverse</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Primary">
+        <item name="android:background">@color/carbon_defaultColorPrimary</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Primary.Inverse">
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Accent">
+        <item name="android:background">@color/carbon_defaultColorAccent</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Accent.Inverse">
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Small">
+        <item name="android:layout_width">@dimen/carbon_smallFabSize</item>
+        <item name="android:layout_height">@dimen/carbon_smallFabSize</item>
+        <item name="android:minWidth">@dimen/carbon_smallFabSize</item>
+        <item name="android:minHeight">@dimen/carbon_smallFabSize</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_smallFabSizeHalf</item>
+        <item name="android:padding">@dimen/carbon_paddingHalf</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Small.Inverse">
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Small.Primary">
+        <item name="android:background">@color/carbon_defaultColorPrimary</item>
+    </style>
+
+    <style name="carbon_FloatingActionButton.Small.Primary.Inverse">
+        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+    </style>
+
+</resources>

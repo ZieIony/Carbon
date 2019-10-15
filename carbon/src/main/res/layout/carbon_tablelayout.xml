@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/carbon_listItemHeight"
             android:layout_gravity="center_vertical"
-            app:carbon_mode="fit" />
+            app:carbon_popupMode="fit" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_tablePageNumbers"

@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="carbon_Button" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingLeft">@dimen/carbon_paddingHalf</item>
+        <item name="android:paddingRight">@dimen/carbon_paddingHalf</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationButton</item>
+        <item name="carbon_touchMarginTop">6dp</item>
+        <item name="carbon_touchMarginBottom">6dp</item>
+        <item name="carbon_cornerRadius">2dp</item>
+        <item name="android:textColor">@null</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:background">@color/carbon_defaultColorControl</item>
+        <item name="carbon_animateColorChanges">true</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="android:inset" tools:targetApi="lollipop">0dp</item>
+
+        <item name="carbon_autoSizeStepGranularity">1sp</item>
+
+        <item name="font">?attr/carbon_font</item>
+    </style>
+
+    <style name="carbon_Button.Colored">
+        <item name="android:background">@color/carbon_defaultColorPrimary</item>
+    </style>
+
+    <style name="carbon_Button.Inverse">
+        <item name="android:background">@color/carbon_defaultColorControlInverse</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
+    </style>
+
+    <style name="carbon_Button.Colored.Inverse">
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
+    </style>
+
+
+    <style name="carbon_Button.Flat">
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
+        <item name="android:background">@null</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButton</item>
+    </style>
+
+    <style name="carbon_Button.Flat.Inverse">
+        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
+        <item name="android:background">@null</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceButtonInverse</item>
+    </style>
+
+    <style name="carbon_Button.Flat.Colored">
+        <item name="carbon_rippleColor">@color/carbon_defaultRippleColorPrimary</item>
+        <item name="android:textColor">@color/carbon_defaultTextColorPrimary</item>
+    </style>
+
+    <style name="carbon_Button.Flat.Colored.Inverse">
+        <item name="android:textColor">@color/carbon_defaultTextColorPrimaryInverse</item>
+    </style>
+
+
+    <style name="carbon_Button.Outlined" parent="carbon_Button.Flat">
+        <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
+        <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+    </style>
+
+    <style name="carbon_Button.Outlined.Inverse" parent="carbon_Button.Flat.Inverse">
+        <item name="carbon_stroke">@color/carbon_defaultColorControlInverse</item>
+        <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+    </style>
+
+    <style name="carbon_Button.Outlined.Colored" parent="carbon_Button.Flat.Colored">
+        <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
+        <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+        <item name="carbon_rippleColor">@color/carbon_defaultRippleColorPrimary</item>
+    </style>
+
+    <style name="carbon_Button.Outlined.Colored.Inverse" parent="carbon_Button.Flat.Colored.Inverse">
+        <item name="carbon_stroke">@color/carbon_defaultColorControlInverse</item>
+        <item name="carbon_strokeWidth">@dimen/carbon_strokeWidthButton</item>
+        <item name="carbon_rippleColor">@color/carbon_defaultRippleColorPrimary</item>
+    </style>
+
+</resources>

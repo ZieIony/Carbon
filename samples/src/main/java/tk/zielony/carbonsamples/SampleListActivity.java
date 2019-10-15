@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.io.Serializable;
@@ -31,9 +30,7 @@ public class SampleListActivity extends ThemedActivity {
         allPreferences = (Map<String, String>) preferences.getAll();
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(getResources().getBoolean(R.bool.tablet) ?
-                new GridLayoutManager(this, 2) :
-                new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RowArrayAdapter<>(SampleActivityGroup.class, parent -> new DataBindingComponent<>(parent, R.layout.row_main));
         adapter.addFactory(SampleActivityItem.class, parent -> {
             return new DataBindingComponent<SampleActivityItem>(parent, R.layout.row_sample) {
@@ -78,7 +75,6 @@ public class SampleListActivity extends ThemedActivity {
         }
 
         adapter.setItems(items);
-
     }
 
 }

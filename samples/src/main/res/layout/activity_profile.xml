@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -60,21 +61,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
+                        android:maxLines="1"
                         android:text="Michelle Strander"
                         android:textAppearance="@style/carbon_TextAppearance.Headline.Inverse"
                         android:textColor="@color/carbon_textColorPrimary_dark" />
 
-                    <carbon.widget.TextView
-                        android:layout_width="wrap_content"
+                    <carbon.widget.LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_location_on_black_24dp"
-                        android:gravity="center_vertical"
-                        android:text="Berlin, Oststraße"
-                        android:textAppearance="?attr/carbon_textAppearanceBody1"
-                        app:carbon_tint="?attr/carbon_iconColor" />
+                        android:layout_weight="1">
 
+                        <carbon.widget.ImageView
+                            style="@style/carbon_ImageView.Icon"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_location_on_black_24dp" />
+
+                        <carbon.widget.TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:maxLines="1"
+                            android:text="Berlin, Oststraße"
+                            android:textAppearance="?attr/carbon_textAppearanceBody1"
+                            app:carbon_tint="?attr/carbon_iconColor" />
+                    </carbon.widget.LinearLayout>
                 </LinearLayout>
 
                 <carbon.widget.FloatingActionButton
@@ -327,7 +340,24 @@
         android:fitsSystemWindows="true"
         android:theme="@style/carbon_Theme.Dark">
 
-        <include layout="@layout/view_debugtoolbar_flat" />
+        <carbon.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/carbon_Toolbar.Flat"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            app:carbon_icon="@drawable/carbon_uparrow"
+            tools:text="test title">
+
+            <carbon.widget.ImageView
+                android:id="@+id/debug"
+                style="@style/carbon_ImageView.IconButton"
+                app:srcCompat="@drawable/ic_bug_report_black_24dp" />
+
+            <carbon.widget.CheckBox
+                android:id="@+id/enabled"
+                style="@style/carbon_CheckBox.IconButton"
+                android:checked="true" />
+        </carbon.widget.Toolbar>
     </carbon.widget.FrameLayout>
 
 </carbon.widget.FrameLayout>

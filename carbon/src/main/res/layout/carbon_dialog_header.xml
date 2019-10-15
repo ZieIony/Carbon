@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <carbon.widget.TextView
+        android:id="@+id/carbon_windowTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/carbon_dialogPadding"
+        android:layout_marginRight="@dimen/carbon_dialogPadding"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/carbon_dialogToolbarMinimumHeight"
+        android:padding="0dp"
+        android:paddingTop="@dimen/carbon_paddingHalf"
+        android:paddingBottom="@dimen/carbon_paddingHalf"
+        android:textAppearance="?attr/carbon_textAppearanceTitle"
+        tools:text="title" />
+
+    <carbon.widget.Divider
+        android:id="@+id/carbon_topDivider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible" />
+</carbon.widget.LinearLayout>

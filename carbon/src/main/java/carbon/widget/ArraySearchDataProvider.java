@@ -18,7 +18,7 @@ public class ArraySearchDataProvider<Type> implements SearchEditText.SearchDataP
     }
 
     @Override
-    public String[] getItemWords(int i) {
-        return new String[]{data[i].toString()};
+    public String[] getItemWords(Type item) {
+        return new String[]{item.toString()};
     }
 }

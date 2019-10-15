@@ -174,7 +174,7 @@
 
                 <carbon.widget.TextView
                     style="@style/sectionDescription"
-                    android:text="It's easy to create square textless CheckBox with a predefined style" />
+                    android:text="It's easy to create square textless CheckBox with a predefined mode" />
 
                 <carbon.widget.CheckBox
                     android:id="@+id/checkBox"

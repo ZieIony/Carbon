@@ -7,6 +7,8 @@
     android:orientation="vertical"
     app:carbon_insetColor="?attr/colorPrimary">
 
+    <include layout="@layout/view_debugtoolbar_flat" />
+
     <carbon.widget.Button
         android:id="@+id/button"
         android:layout_width="wrap_content"

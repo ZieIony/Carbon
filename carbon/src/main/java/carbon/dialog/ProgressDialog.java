@@ -52,8 +52,8 @@ public class ProgressDialog extends DialogBase {
     }
 
     @Override
-    protected void setButton(String text, View.OnClickListener listener, int buttonId) {
-        super.setButton(text, listener, buttonId);
+    public void addButton(String text, View.OnClickListener listener) {
+        super.addButton(text, listener);
         int padding = getContext().getResources().getDimensionPixelSize(R.dimen.carbon_dialogPadding);
         getContentView().setPadding(padding, hasTitle() ? 0 : padding, padding, 0);
     }

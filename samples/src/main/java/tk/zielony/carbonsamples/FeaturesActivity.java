@@ -8,10 +8,9 @@ import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.feature.AnchorActivity;
 import tk.zielony.carbonsamples.feature.AutoSizeTextActivity;
 import tk.zielony.carbonsamples.feature.BehaviorActivity;
-import tk.zielony.carbonsamples.feature.ContextWrapperActivity;
 import tk.zielony.carbonsamples.feature.FontResourceActivity;
+import tk.zielony.carbonsamples.feature.GestureDetectorActivity;
 import tk.zielony.carbonsamples.feature.HtmlActivity;
-import tk.zielony.carbonsamples.feature.LargeShadowActivity;
 import tk.zielony.carbonsamples.feature.PaginationActivity;
 import tk.zielony.carbonsamples.feature.RobotoActivity;
 import tk.zielony.carbonsamples.feature.RoundedCornersActivity;
@@ -32,22 +31,21 @@ public class FeaturesActivity extends SampleListActivity {
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
-                "Carbon adds tons of useful features to allPreferences popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
+                "Carbon adds tons of useful features to all popular widgets. These include rounded corners, HTML text, elevation system, theme attributes, anchors and " +
                         "others",
+                new SampleActivityItem(GestureDetectorActivity.class),
                 new SampleActivityItem(FontResourceActivity.class),
                 new SampleActivityItem(AutoSizeTextActivity.class),
                 new SampleActivityItem(BehaviorActivity.class),
                 new SampleActivityItem(HtmlActivity.class),
                 new SampleActivityItem(RobotoActivity.class),
                 new SampleActivityItem(ShadowActivity.class, 0, true),
-                new SampleActivityItem(LargeShadowActivity.class),
                 new SampleActivityItem(PaginationActivity.class),
                 new SampleActivityItem(TextAppearanceActivity.class),
                 new SampleActivityItem(SVGActivity.class),
                 new SampleActivityItem(ZOrderActivity.class),
                 new SampleActivityItem(RoundedCornersActivity.class),
                 new SampleActivityItem(AnchorActivity.class),
-                new SampleActivityItem(ContextWrapperActivity.class),
                 new SampleActivityItem(TextMarkerActivity.class),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });

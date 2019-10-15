@@ -1,5 +1,4 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.15.3-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.15.3/)&nbsp;&nbsp;
 [![Maven Central](https://img.shields.io/badge/Maven%20Central-0.16.0.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.16.0.1/)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/wllgpan9cl01mh3/samples.apk?raw=1)
 
@@ -16,11 +15,10 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
  
 ### What's new
 
- - Carbon 0.16.0 moves to androidx. There's no corresponding support version. Use 0.15.3 if needed
- - backdrop layout, banner layout
- - full support for font resources back to api 14
- - new approach to colored shadows using MaterialShapeDrawable
- - cut and rounded corners for all views
+ - custom item layouts for BottomNavigationView, TabLayout and NavigationView
+ - DayNight themes
+ - updated control colors
+ - fixed color animations, background tint, menu inflation, shadow transformations
 
 ### Features
 
@@ -48,6 +46,7 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
  - percent layouts, anchors, colored insets
  - view stroke
  - visibility animations
+ - color state animations
  - ttf/otf fonts
  - text auto size
  - TextMarker
@@ -56,10 +55,10 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
 
  - colors, dimensions, typography
  - ready-to-use rows and adapters for RecyclerView
- - DropDown, FloatingActionMenu, RangeSeekBar, ExpandableRecyclerView, FlowLayout, TableView, BackdropLayout, Banner
+ - DropDown, FloatingActionMenu, RangeSeekBar, ExpandableRecyclerView, FlowLayout, TableView, BackdropLayout, Banner, BottomNavigationView, TabLayout
 
 ### Samples
-<img src="https://github.com/ZieIony/Carbon/blob/master/images/backdrop.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/components.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/dropdown.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/fontresource.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/guidelinesbuttons.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/guidelinesmenus.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/listdialog.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/buttons.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/textfields.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/tablelayout.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/multiselect.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/powermenu.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/studiescrane.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/tabs.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/themes.png" width="135px" height="240px"/> 
+<img src="https://github.com/ZieIony/Carbon/blob/master/images/profile.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/backdrop.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/checkboxes.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/components.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/dropdown.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/fontresource.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/guidelinesbuttons.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/guidelinesmenus.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/listdialog.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/buttons.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/textfields.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/tablelayout.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/multiselect.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/powermenu.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/studiescrane.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/tabs.png" width="135px" height="240px"/> <img src="https://github.com/ZieIony/Carbon/blob/master/images/themes.png" width="135px" height="240px"/> 
 
 ### [Installation](https://github.com/ZieIony/Carbon/wiki/Installation)
 
@@ -68,6 +67,11 @@ Material Design implementation for Android 4.0 and newer. This is not the exact 
 ### [Changelog](https://github.com/ZieIony/Carbon/wiki/Changelog)
 
 ### [JavaDoc](http://zieiony.github.io/Carbon/javadoc/)
+
+### Articles
+
+ - [Clipping and shadows on Android](https://medium.com/@Zielony/clipping-and-shadows-on-android-e702a0d96bd4)
+ - [Aligning text using markers](https://medium.com/@Zielony/aligning-text-on-android-7119eb3dba74)
 
 ### License
 ```

@@ -53,6 +53,7 @@ import carbon.shadow.RoundedCornerTreatment;
 import carbon.shadow.ShadowView;
 import carbon.shadow.ShapeAppearanceModel;
 import carbon.view.InsetView;
+import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
 import carbon.view.ShapeModelView;
@@ -75,7 +76,8 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
         StrokeView,
         MaxSizeView,
         RevealView,
-        VisibleView {
+        VisibleView,
+        MarginView {
 
     private OnTouchListener onDispatchTouchListener;
 
@@ -131,8 +133,8 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
             R.styleable.AppBarLayout_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.AppBarLayout_carbon_maxWidth,
-            R.styleable.AppBarLayout_carbon_maxHeight,
+            R.styleable.AppBarLayout_android_maxWidth,
+            R.styleable.AppBarLayout_android_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.AppBarLayout_carbon_elevation,
@@ -1334,23 +1336,23 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
     int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
 
     @Override
-    public int getMaximumWidth() {
+    public int getMaxWidth() {
         return maxWidth;
     }
 
     @Override
-    public void setMaximumWidth(int maxWidth) {
+    public void setMaxWidth(int maxWidth) {
         this.maxWidth = maxWidth;
         requestLayout();
     }
 
     @Override
-    public int getMaximumHeight() {
+    public int getMaxHeight() {
         return maxHeight;
     }
 
     @Override
-    public void setMaximumHeight(int maxHeight) {
+    public void setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
         requestLayout();
     }

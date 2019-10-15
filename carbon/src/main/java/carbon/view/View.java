@@ -68,7 +68,8 @@ public abstract class View extends android.view.View
         MaxSizeView,
         RevealView,
         VisibleView,
-        TransformationView {
+        TransformationView,
+        MarginView {
 
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -134,8 +135,8 @@ public abstract class View extends android.view.View
             R.styleable.View_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.View_carbon_maxWidth,
-            R.styleable.View_carbon_maxHeight,
+            R.styleable.View_android_maxWidth,
+            R.styleable.View_android_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.View_carbon_elevation,
@@ -984,23 +985,23 @@ public abstract class View extends android.view.View
     int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
 
     @Override
-    public int getMaximumWidth() {
+    public int getMaxWidth() {
         return maxWidth;
     }
 
     @Override
-    public void setMaximumWidth(int maxWidth) {
+    public void setMaxWidth(int maxWidth) {
         this.maxWidth = maxWidth;
         requestLayout();
     }
 
     @Override
-    public int getMaximumHeight() {
+    public int getMaxHeight() {
         return maxHeight;
     }
 
     @Override
-    public void setMaximumHeight(int maxHeight) {
+    public void setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
         requestLayout();
     }

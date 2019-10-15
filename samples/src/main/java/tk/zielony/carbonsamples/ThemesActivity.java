@@ -20,7 +20,7 @@ public class ThemesActivity extends SampleListActivity {
 
         setItems(new Serializable[]{
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
-                "Widgets with sample styles, data and applications",
+                "What can be done by applying different themes",
                 new SampleActivityItem(ThemeActivity.class),
                 new SampleActivityItem(CurrentThemeActivity.class),
                 new SampleActivityItem(WindowsThemeActivity.class),

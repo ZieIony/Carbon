@@ -9,26 +9,46 @@ public interface MaxSizeView {
      *
      * @param maxWidth maximal width
      */
-    void setMaximumWidth(int maxWidth);
+    void setMaxWidth(int maxWidth);
 
     /**
      * Gets maximum width
      *
      * @return maximum width
      */
-    int getMaximumWidth();
+    int getMaxWidth();
 
     /**
      * Sets maximum height. The new maximum size will be respected after next layout pass.
      *
      * @param maxHeight maximum height
      */
-    void setMaximumHeight(int maxHeight);
+    void setMaxHeight(int maxHeight);
 
     /**
      * Gets maximum height
      *
      * @return maximum height
      */
-    int getMaximumHeight();
+    int getMaxHeight();
+
+    @Deprecated
+    default void setMaximumWidth(int w){
+        setMaxWidth(w);
+    }
+
+    @Deprecated
+    default int getMaximumWidth(){
+        return getMaxWidth();
+    }
+
+    @Deprecated
+    default void setMaximumHeight(int w){
+        setMaxHeight(w);
+    }
+
+    @Deprecated
+    default int getMaximumHeight(){
+        return getMaxHeight();
+    }
 }

@@ -9,19 +9,11 @@ public class OnGestureAdapter implements OnGestureListener {
     }
 
     @Override
-    public void onTap(MotionEvent motionEvent) {
+    public void onTap(MotionEvent motionEvent, int clicks) {
     }
 
     @Override
-    public void onDrag(MotionEvent motionEvent) {
-    }
-
-    @Override
-    public void onMove(MotionEvent motionEvent) {
-    }
-
-    @Override
-    public void onRelease(MotionEvent motionEvent) {
+    public void onDrag(MotionEvent motionEvent, float translationX, float translationY) {
     }
 
     @Override
@@ -29,11 +21,7 @@ public class OnGestureAdapter implements OnGestureListener {
     }
 
     @Override
-    public void onMultiTap(MotionEvent motionEvent, int clicks) {
-    }
-
-    @Override
-    public void onCancel(MotionEvent motionEvent) {
+    public void onTransform(MotionEvent motionEvent, float cx, float cy, float dx, float dy, float rx, float scale) {
     }
 
 }

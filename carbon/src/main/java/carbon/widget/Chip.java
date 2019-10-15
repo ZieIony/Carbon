@@ -87,6 +87,7 @@ public class Chip extends LinearLayout implements Checkable {
         setText(a.getString(R.styleable.Chip_android_text));
         setIcon(a.getResourceId(R.styleable.Chip_carbon_icon, 0));
         setRemovable(a.getBoolean(R.styleable.Chip_carbon_removable, false));
+        setChecked(a.getBoolean(R.styleable.Chip_android_checked, false));
 
         a.recycle();
     }
@@ -148,7 +149,12 @@ public class Chip extends LinearLayout implements Checkable {
         onCheckedChangeListener = listener;
     }
 
-    public void setText(String text) {
+    @Deprecated
+    public void setText(String text){
+        setText((CharSequence)text);
+    }
+
+    public void setText(CharSequence text) {
         if (text != null) {
             title.setText(text);
             title.setVisibility(View.VISIBLE);

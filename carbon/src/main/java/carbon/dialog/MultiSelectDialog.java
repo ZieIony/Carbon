@@ -29,7 +29,7 @@ public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Typ
     }
 
     private void init() {
-        setPositiveButton("ok", null);
+        addButton("ok", null);
     }
 
     protected RecyclerView.OnItemClickedListener<Type> getInternalListener() {

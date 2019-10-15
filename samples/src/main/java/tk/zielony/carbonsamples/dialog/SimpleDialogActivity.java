@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import carbon.dialog.Dialog;
+import carbon.dialog.TextDialog;
 import carbon.widget.EditText;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
@@ -24,12 +24,12 @@ public class SimpleDialogActivity extends ThemedActivity {
         EditText buttonText = findViewById(R.id.buttonText);
 
         findViewById(R.id.showDialog).setOnClickListener(view -> {
-            Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.dialog_text);
+            TextDialog dialog = new TextDialog(this);
+            dialog.setText("Danish carrot cake toffee cupcake caramels chocolate cheesecake. Sugar plum chocolate cake dragée chocolate cake chupa chups jelly dessert. Icing lemon drops ice cream. Sesame snaps jelly cake biscuit. Ice cream halvah cookie gingerbread cookie candy donut sweet.");
             if (titleText.length() > 0)
                 dialog.setTitle(titleText.getText());
             if (buttonText.length() > 0)
-                dialog.setPositiveButton(buttonText.getText().toString(), null);
+                dialog.addButton(buttonText.getText().toString(), null);
             dialog.show();
         });
     }

@@ -25,10 +25,11 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.EdgeEffect;
+import carbon.view.MarginView;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
-public class ViewPager extends androidx.viewpager.widget.ViewPager implements TintedView, VisibleView {
+public class ViewPager extends androidx.viewpager.widget.ViewPager implements TintedView, VisibleView, MarginView {
     private int mTouchSlop;
     EdgeEffect leftGlow;
     EdgeEffect rightGlow;

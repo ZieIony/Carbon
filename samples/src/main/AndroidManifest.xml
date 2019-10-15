@@ -54,6 +54,7 @@
         <activity android:name=".animation.WidgetAnimationsActivity" />
         <activity android:name=".animation.PathAnimationActivity" />
 
+        <activity android:name=".feature.GestureDetectorActivity" />
         <activity android:name=".feature.FontResourceActivity" />
         <activity android:name=".feature.AutoSizeTextActivity" />
         <activity android:name=".feature.BehaviorActivity" />
@@ -61,12 +62,10 @@
         <activity android:name=".feature.RoundedCornersActivity" />
         <activity android:name=".feature.AnchorActivity" />
         <activity android:name=".feature.ShadowActivity" />
-        <activity android:name=".feature.LargeShadowActivity" />
         <activity android:name=".feature.PaginationActivity" />
         <activity android:name=".feature.RobotoActivity" />
         <activity android:name=".feature.TextAppearanceActivity" />
         <activity android:name=".feature.ZOrderActivity" />
-        <activity android:name=".feature.ContextWrapperActivity" />
         <activity android:name=".feature.PercentLayoutActivity" />
         <activity android:name=".feature.TextMarkerActivity" />
         <activity android:name=".feature.ThemeActivity" />

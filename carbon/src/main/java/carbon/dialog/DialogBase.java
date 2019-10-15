@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -94,7 +95,7 @@ public abstract class DialogBase extends android.app.Dialog {
     @Override
     public void setTitle(@Nullable CharSequence title) {
         if (titleTextView == null && title != null) {
-            container.addView(getLayoutInflater().inflate(R.layout.carbon_dialogheader, null), 0);
+            container.addView(getLayoutInflater().inflate(R.layout.carbon_dialog_header, null), 0);
             titleTextView = dialogLayout.findViewById(R.id.carbon_windowTitle);
             titleTextView.setText(title);
             topDivider = dialogLayout.findViewById(R.id.carbon_topDivider);
@@ -110,21 +111,23 @@ public abstract class DialogBase extends android.app.Dialog {
         setTitle(getContext().getResources().getString(titleId));
     }
 
+    @Deprecated
     public void setNegativeButton(String text, View.OnClickListener listener) {
-        setButton(text, listener, R.id.carbon_buttonNegative);
+        addButton(text, listener);
     }
 
+    @Deprecated
     public void setPositiveButton(String text, View.OnClickListener listener) {
-        setButton(text, listener, R.id.carbon_buttonPositive);
+        addButton(text, listener);
     }
 
-    protected void setButton(String text, View.OnClickListener listener, int buttonId) {
+    public void addButton(String text, View.OnClickListener listener) {
         if (buttonContainer == null) {
-            container.addView(getLayoutInflater().inflate(R.layout.carbon_dialogfooter, null));
+            container.addView(getLayoutInflater().inflate(R.layout.carbon_dialog_footer, null));
             buttonContainer = dialogLayout.findViewById(R.id.carbon_buttonContainer);
             bottomDivider = dialogLayout.findViewById(R.id.carbon_bottomDivider);
         }
-        Button button = findViewById(buttonId);
+        Button button = (Button) LayoutInflater.from(getContext()).inflate(R.layout.carbon_dialog_button, buttonContainer, false);
         button.setText(text);
         button.setOnClickListener(v -> {
             if (listener != null) {
@@ -132,7 +135,7 @@ public abstract class DialogBase extends android.app.Dialog {
             }
             dismiss();
         });
-        button.setVisibility(View.VISIBLE);
+        buttonContainer.addView(button);
         buttonContainer.setVisibility(View.VISIBLE);
     }
 

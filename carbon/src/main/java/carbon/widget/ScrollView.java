@@ -25,10 +25,11 @@ import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.EdgeEffect;
+import carbon.view.MarginView;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
-public class ScrollView extends android.widget.ScrollView implements TintedView, VisibleView, NestedScrollingParent {
+public class ScrollView extends android.widget.ScrollView implements TintedView, VisibleView, NestedScrollingParent, MarginView {
     private int mTouchSlop;
     EdgeEffect topGlow;
     EdgeEffect bottomGlow;

@@ -50,6 +50,7 @@
 
     <dimen name="carbon_dialogPadding">24dp</dimen>
     <dimen name="carbon_dialogMinimumWidth">280dp</dimen>
+    <dimen name="carbon_dialogToolbarMinimumHeight">64dp</dimen>
 
     <dimen name="carbon_timelineTextSize">14sp</dimen>
 
@@ -127,4 +128,6 @@
     <dimen name="carbon_dividerHeight">1dp</dimen>
 
     <dimen name="carbon_progressSize">40dp</dimen>
+
+    <dimen name="carbon_moveEpsilon">4dp</dimen>
 </resources>

@@ -252,8 +252,8 @@ public class Carbon {
 
         int width = (int) a.getDimension(carbon_maxWidth, Integer.MAX_VALUE);
         int height = (int) a.getDimension(carbon_maxHeight, Integer.MAX_VALUE);
-        view.setMaximumWidth(width);
-        view.setMaximumHeight(height);
+        view.setMaxWidth(width);
+        view.setMaxHeight(height);
     }
 
     public static void initTint(TintedView view, TypedArray a, int[] ids) {

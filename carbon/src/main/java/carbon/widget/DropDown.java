@@ -46,11 +46,11 @@ public class DropDown extends EditText {
 
     private CustomItemFactory customItemFactory = text -> text;
 
-    public enum Mode {
+    public enum PopupMode {
         Over, Fit;
     }
 
-    public enum Style {
+    public enum Mode {
         SingleSelect, MultiSelect, Editable;
     }
 
@@ -103,8 +103,8 @@ public class DropDown extends EditText {
 
         dropDownMenu = new DropDownMenu(new ContextThemeWrapper(context, theme));
         dropDownMenu.setOnDismissListener(() -> isShowingPopup = false);
-        dropDownMenu.setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.Over.ordinal())]);
-        setStyle(Style.values()[a.getInt(R.styleable.DropDown_carbon_style, Style.SingleSelect.ordinal())]);
+        dropDownMenu.setPopupMode(PopupMode.values()[a.getInt(R.styleable.DropDown_carbon_popupMode, PopupMode.Over.ordinal())]);
+        setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.SingleSelect.ordinal())]);
         dropDownMenu.setOnItemClickedListener(onItemClickedListener);
 
         int drawableId = a.getResourceId(R.styleable.DropDown_android_button, R.drawable.carbon_dropdown);
@@ -122,21 +122,21 @@ public class DropDown extends EditText {
         a.recycle();
     }
 
-    public Mode getMode() {
+    public PopupMode getPopupMode() {
+        return dropDownMenu.getPopupMode();
+    }
+
+    public void setPopupMode(PopupMode popupMode) {
+        dropDownMenu.setPopupMode(popupMode);
+    }
+
+    public Mode getStyle() {
         return dropDownMenu.getMode();
     }
 
-    public void setMode(Mode mode) {
+    public void setMode(@NonNull Mode mode) {
         dropDownMenu.setMode(mode);
-    }
-
-    public Style getStyle() {
-        return dropDownMenu.getStyle();
-    }
-
-    public void setStyle(@NonNull Style style) {
-        dropDownMenu.setStyle(style);
-        if (style == DropDown.Style.Editable) {
+        if (mode == Mode.Editable) {
             setFocusableInTouchMode(true);
             setCursorVisible(true);
             setLongClickable(true);
@@ -205,7 +205,7 @@ public class DropDown extends EditText {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (dropDownMenu.getStyle() != Style.Editable ||
+        if (dropDownMenu.getMode() != Mode.Editable ||
                 (isButtonOnTheLeft() && event.getX() <= getCompoundPaddingLeft() ||
                         !isButtonOnTheLeft() && event.getX() >= getWidth() - getCompoundPaddingRight())) {
             gestureDetector.onTouchEvent(event);
@@ -231,8 +231,8 @@ public class DropDown extends EditText {
     RecyclerView.OnItemClickedListener<Serializable> onItemClickedListener = new RecyclerView.OnItemClickedListener<Serializable>() {
         @Override
         public void onItemClicked(View view, Serializable item, int position) {
-            Style style = dropDownMenu.getStyle();
-            if (style == Style.MultiSelect) {
+            Mode mode = dropDownMenu.getMode();
+            if (mode == Mode.MultiSelect) {
                 dropDownMenu.toggle(position);
                 if (onItemSelectedListener != null)
                     onItemSelectedListener.onItemSelected(item, position);
@@ -248,7 +248,7 @@ public class DropDown extends EditText {
             }
 
             setText(dropDownMenu.getSelectedText());
-            if (style != Style.MultiSelect)
+            if (mode != Mode.MultiSelect)
                 dropDownMenu.dismiss();
         }
     };

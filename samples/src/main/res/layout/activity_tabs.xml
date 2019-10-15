@@ -39,7 +39,7 @@
             android:background="?attr/colorPrimary"
             android:paddingStart="@dimen/carbon_tabsPadding"
             android:paddingLeft="@dimen/carbon_tabsPadding"
-            android:theme="?attr/carbon_toolbarTheme"
+            android:theme="?attr/actionBarTheme"
             app:carbon_fixedTabs="false"
             tools:itemCount="5"
             tools:listitem="@layout/carbon_tablayout_tab" />

@@ -54,6 +54,7 @@ import carbon.shadow.ShadowView;
 import carbon.shadow.ShapeAppearanceModel;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
+import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
 import carbon.view.ShapeModelView;
@@ -81,7 +82,8 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
         RevealView,
         VisibleView,
         TransformationView,
-        BehaviorView {
+        BehaviorView,
+        MarginView {
 
     private OnTouchListener onDispatchTouchListener;
 
@@ -142,8 +144,8 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
             R.styleable.DrawerLayout_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.DrawerLayout_carbon_maxWidth,
-            R.styleable.DrawerLayout_carbon_maxHeight,
+            R.styleable.DrawerLayout_android_maxWidth,
+            R.styleable.DrawerLayout_android_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.DrawerLayout_carbon_elevation,
@@ -1235,23 +1237,23 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
     int maxWidth = Integer.MAX_VALUE, maxHeight = Integer.MAX_VALUE;
 
     @Override
-    public int getMaximumWidth() {
+    public int getMaxWidth() {
         return maxWidth;
     }
 
     @Override
-    public void setMaximumWidth(int maxWidth) {
+    public void setMaxWidth(int maxWidth) {
         this.maxWidth = maxWidth;
         requestLayout();
     }
 
     @Override
-    public int getMaximumHeight() {
+    public int getMaxHeight() {
         return maxHeight;
     }
 
     @Override
-    public void setMaximumHeight(int maxHeight) {
+    public void setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
         requestLayout();
     }

@@ -22,6 +22,7 @@ import carbon.widget.LinearLayout;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_powermenu, title = R.string.powerMenuActivity_title)
@@ -35,6 +36,8 @@ public class PowerMenuActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Samples.initToolbar(this);
 
         button = findViewById(R.id.button);
         powerMenu = findViewById(R.id.powerMenu);
@@ -150,7 +153,7 @@ public class PowerMenuActivity extends ThemedActivity {
                 circularReveal2.start();
                 airplaneMode = !airplaneMode;
                 TextView amStatus = findViewById(R.id.airplaneModeStatus);
-                amStatus.setText("Airplane Mode is " + (airplaneMode ? "on" : "off"));
+                amStatus.setText("Airplane PopupMode is " + (airplaneMode ? "on" : "off"));
                 ImageView airplaneModeIcon = view.findViewById(R.id.airplaneModeIcon);
                 airplaneModeIcon.setImageResource(airplaneMode ? R.raw.ic_airplanemode_on_24px : R.raw.ic_airplanemode_off_24px);
             }, 3000);

@@ -24,10 +24,11 @@ import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.EdgeEffect;
+import carbon.view.MarginView;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
-public class HorizontalScrollView extends android.widget.HorizontalScrollView implements TintedView, VisibleView {
+public class HorizontalScrollView extends android.widget.HorizontalScrollView implements TintedView, VisibleView, MarginView {
     private int mTouchSlop;
     EdgeEffect leftGlow;
     EdgeEffect rightGlow;

@@ -51,9 +51,6 @@
         <attr name="carbon_textAppearanceButtonInverse" format="reference" />
     </declare-styleable>
 
-    <attr name="carbon_maxWidth" format="dimension" />
-    <attr name="carbon_maxHeight" format="dimension" />
-
     <attr name="carbon_rippleColor" format="reference|color" />
     <attr name="carbon_rippleColorInverse" format="reference|color" />
     <attr name="carbon_rippleHotspot" format="boolean" />
@@ -223,8 +220,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -274,8 +271,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -341,8 +338,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -414,8 +411,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -469,8 +466,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_cornerRadiusTopStart" />
         <attr name="carbon_cornerRadiusTopEnd" />
@@ -526,8 +523,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_cornerRadiusTopStart" />
         <attr name="carbon_cornerRadiusTopEnd" />
@@ -578,8 +575,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -633,8 +630,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -683,8 +680,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -735,8 +732,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -785,8 +782,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -840,8 +837,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -895,8 +892,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -928,8 +925,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -957,6 +954,7 @@
     <declare-styleable name="Chip">
         <attr name="carbon_icon" />
         <attr name="carbon_removable" format="boolean" />
+        <attr name="android:checked"/>
     </declare-styleable>
 
     <attr name="carbon_bottomNavigationViewStyle" format="reference" />
@@ -989,8 +987,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -1134,8 +1132,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -1181,12 +1179,12 @@
 
         <attr name="carbon_popupTheme" format="reference" />
 
-        <attr name="carbon_mode" format="enum">
+        <attr name="carbon_popupMode" format="enum">
             <enum name="over" value="0" />
             <enum name="fit" value="1" />
         </attr>
 
-        <attr name="carbon_style" format="enum">
+        <attr name="carbon_mode" format="enum">
             <enum name="singleSelect" value="0" />
             <enum name="multiSelect" value="1" />
             <enum name="editable" value="2" />
@@ -1272,8 +1270,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="carbon_maxWidth" />
-        <attr name="carbon_maxHeight" />
+        <attr name="android:maxWidth" />
+        <attr name="android:maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -1378,7 +1376,6 @@
     <attr name="carbon_editMenuTheme" format="reference" />
     <attr name="carbon_snackbarTheme" format="reference" />
     <attr name="carbon_dropDownPopupTheme" format="reference" />
-    <attr name="carbon_toolbarTheme" format="reference" />
 
     <attr name="carbon_autoCompleteLayoutStyle" format="reference" />
     <declare-styleable name="AutoCompleteLayout">
@@ -1411,7 +1408,7 @@
              RTL (right-to-left). -->
         <attr name="android:autoMirrored" />
         <!-- Indicates how layer padding should affect the bounds of subsequent layers.
-             The default padding mode value is nest. -->
+             The default padding popupMode value is nest. -->
         <attr name="android:paddingMode" />
         <attr name="android:paddingTop" />
         <attr name="android:paddingBottom" />

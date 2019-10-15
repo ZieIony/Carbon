@@ -10,13 +10,14 @@
 
         <carbon.widget.Toolbar
             android:id="@+id/toolbar"
-            app:carbon_icon="@drawable/carbon_clear"
+            style="@style/carbon_Toolbar.ActionBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:carbon_icon="@drawable/carbon_clear" />
 
         <carbon.widget.TextView
             style="@style/sectionDescription"
-            android:text="Select your favourite theme style and colors. Then close this Activity to see all the samples using that theme." />
+            android:text="Select your favourite theme mode and colors. Then close this Activity to see all the samples using that theme." />
 
         <carbon.widget.RelativeLayout
             android:layout_width="match_parent"
@@ -28,18 +29,18 @@
                 android:layout_width="@dimen/carbon_iconSize"
                 android:layout_height="@dimen/carbon_iconSize"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
+                android:layout_marginLeft="@dimen/carbon_windowPadding"
                 app:carbon_stroke="?attr/carbon_colorControl" />
 
             <carbon.widget.DropDown
                 android:id="@+id/style"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/carbon_listItemHeight"
-                android:layout_marginEnd="@dimen/carbon_windowPadding"
-                android:layout_marginLeft="@dimen/carbon_contentPadding"
-                android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_contentPadding"
+                android:layout_marginLeft="@dimen/carbon_contentPadding"
+                android:layout_marginEnd="@dimen/carbon_windowPadding"
+                android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:text="Style" />
         </carbon.widget.RelativeLayout>
 
@@ -54,20 +55,20 @@
                 android:layout_width="@dimen/carbon_iconSize"
                 android:layout_height="@dimen/carbon_iconSize"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
+                android:layout_marginLeft="@dimen/carbon_windowPadding"
                 app:carbon_stroke="?attr/carbon_colorControl" />
 
             <carbon.widget.DropDown
                 android:id="@+id/primary"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/carbon_listItemHeight"
-                android:layout_marginEnd="@dimen/carbon_windowPadding"
-                android:layout_marginLeft="@dimen/carbon_contentPadding"
-                android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_contentPadding"
+                android:layout_marginLeft="@dimen/carbon_contentPadding"
+                android:layout_marginEnd="@dimen/carbon_windowPadding"
+                android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:text="Primary color"
-                app:carbon_mode="over" />
+                app:carbon_popupMode="over" />
         </carbon.widget.RelativeLayout>
 
         <carbon.widget.RelativeLayout
@@ -80,20 +81,20 @@
                 android:layout_width="@dimen/carbon_iconSize"
                 android:layout_height="@dimen/carbon_iconSize"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_windowPadding"
+                android:layout_marginLeft="@dimen/carbon_windowPadding"
                 app:carbon_stroke="?attr/carbon_colorControl" />
 
             <carbon.widget.DropDown
                 android:id="@+id/accent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/carbon_listItemHeight"
-                android:layout_marginEnd="@dimen/carbon_windowPadding"
-                android:layout_marginLeft="@dimen/carbon_contentPadding"
-                android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginStart="@dimen/carbon_contentPadding"
+                android:layout_marginLeft="@dimen/carbon_contentPadding"
+                android:layout_marginEnd="@dimen/carbon_windowPadding"
+                android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:text="Accent color"
-                app:carbon_mode="fit" />
+                app:carbon_popupMode="fit" />
         </carbon.widget.RelativeLayout>
 
     </carbon.widget.LinearLayout>

@@ -1,0 +1,89 @@
+<resources>
+
+    <style name="carbon_InputLayout" parent="carbon_RelativeLayout">
+        <item name="carbon_labelStyle">persistent</item>
+
+        <item name="carbon_errorTextSize">@dimen/carbon_textSizeCaption</item>
+        <item name="carbon_counterTextSize">@dimen/carbon_textSizeCaption</item>
+        <item name="carbon_labelTextSize">@dimen/carbon_textSizeCaption</item>
+        <item name="carbon_errorFontFamily">"sans-serif"</item>
+        <item name="carbon_counterFontFamily">"sans-serif"</item>
+        <item name="carbon_labelFontFamily">"sans-serif"</item>
+
+        <item name="android:gravity">start|left</item>
+
+        <item name="android:theme">@style/carbon_InputLayoutContainerTheme</item>
+    </style>
+
+    <style name="carbon_ImageView.InputLayout" parent="carbon_ImageView.IconButton">
+        <item name="android:layout_width">@dimen/carbon_iconSize</item>
+        <item name="android:layout_height">@dimen/carbon_iconSize</item>
+        <item name="android:layout_marginBottom">@dimen/carbon_margin</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainerTheme" parent="">
+        <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout</item>
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainer" parent="carbon_RelativeLayout"/>
+
+    <style name="carbon_InputLayout.Box">
+        <item name="android:theme">@style/carbon_InputLayoutContainerTheme.Box</item>
+    </style>
+
+    <style name="carbon_EditText.InputLayout.Box" parent="carbon_EditText.Underlined">
+        <item name="android:paddingBottom">@dimen/carbon_paddingHalf</item>
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingRight">@dimen/carbon_padding</item>
+    </style>
+
+    <style name="carbon_ImageView.InputLayout.Box">
+        <item name="android:layout_marginBottom">@dimen/carbon_marginHalf</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainerTheme.Box" parent="">
+        <item name="android:editTextStyle">@style/carbon_EditText.InputLayout.Box</item>
+        <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout.Box</item>
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer.Box</item>
+        <item name="carbon_inputLayoutBoxPadding">@dimen/carbon_padding</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainer.Box" parent="carbon_RelativeLayout">
+        <item name="android:paddingTop">@dimen/carbon_paddingHalf</item>
+        <item name="carbon_cornerRadiusTopStart">4dp</item>
+        <item name="carbon_cornerRadiusTopEnd">4dp</item>
+        <item name="android:background">?attr/carbon_inputLayoutBoxColor</item>
+    </style>
+
+    <style name="carbon_InputLayout.Stroke">
+        <item name="android:theme">@style/carbon_InputLayoutContainerTheme.Stroke</item>
+    </style>
+
+    <style name="carbon_EditText.InputLayout.Stroke" parent="carbon_EditText.Underlined">
+        <item name="android:paddingLeft">@dimen/carbon_padding</item>
+        <item name="android:paddingRight">@dimen/carbon_padding</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="carbon_ImageView.InputLayout.Stroke">
+        <item name="android:layout_marginBottom">@dimen/carbon_margin</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainerTheme.Stroke" parent="">
+        <item name="android:editTextStyle">@style/carbon_EditText.InputLayout.Stroke</item>
+        <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout.Stroke</item>
+        <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer.Stroke
+        </item>
+        <item name="carbon_inputLayoutBoxPadding">@dimen/carbon_padding</item>
+    </style>
+
+    <style name="carbon_InputLayoutContainer.Stroke" parent="carbon_RelativeLayout">
+        <item name="android:paddingTop">@dimen/carbon_paddingHalf</item>
+        <item name="carbon_cornerRadius">4dp</item>
+        <item name="carbon_strokeWidth">1dp</item>
+        <item name="carbon_stroke">@color/carbon_defaultColorAccent</item>
+        <item name="android:layout_marginBottom">@dimen/carbon_marginHalf</item>
+    </style>
+
+</resources>

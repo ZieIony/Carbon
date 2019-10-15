@@ -31,39 +31,36 @@
 
                 <carbon.widget.DropDown
                     android:id="@+id/day"
+                    style="@style/carbon_DropDown.Underlined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@color/carbon_defaultColor"
-                    android:paddingBottom="@dimen/carbon_paddingHalf"
                     android:text="1"
-                    app:carbon_style="multiSelect" />
+                    app:carbon_mode="multiSelect" />
 
                 <carbon.widget.DropDown
                     android:id="@+id/month"
+                    style="@style/carbon_DropDown.Underlined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
                     android:layout_weight="1"
-                    app:carbon_buttonGravity="left"
-                    android:background="@color/carbon_defaultColor"
-                    android:paddingBottom="@dimen/carbon_paddingHalf"
-                    android:text="Jan" />
+                    android:text="Jan"
+                    app:carbon_buttonGravity="left" />
 
                 <carbon.widget.DropDown
                     android:id="@+id/year"
+                    style="@style/carbon_DropDown.Underlined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@color/carbon_defaultColor"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:paddingBottom="@dimen/carbon_paddingHalf"
                     android:text="1987"
-                    app:carbon_style="editable" />
+                    app:carbon_mode="editable" />
             </carbon.widget.LinearLayout>
         </carbon.widget.InputLayout>
     </carbon.widget.LinearLayout>
