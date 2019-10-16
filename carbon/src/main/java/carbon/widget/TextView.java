@@ -529,32 +529,6 @@ public class TextView extends android.widget.TextView
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         onMeasure2(widthMeasureSpec, heightMeasureSpec);
 
-            /*super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-            if (layout != null && field != null) {
-                try {
-                    field.setInt(layout, Integer.MAX_VALUE);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }*/
-            /*if(getEllipsize()== TextUtils.TruncateAt.START) {
-                StaticLayout layout = new StaticLayout(getText(), getPaint(), getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
-                int end = layout.getLineVisibleEnd(0);
-                StringBuilder builder = new StringBuilder(TextUtils.ellipsize(getText().subSequence(0, end),getPaint(),layout.getWidth(),getEllipsize()));
-                builder.append(getText().subSequence(end,length()));
-                setText(builder);
-            }else*/
-            /*if(getEllipsize()== TextUtils.TruncateAt.END){
-                StaticLayout layout = new StaticLayout(getText(), getPaint(), getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
-                int start = layout.getLineStart(maxLines - 1);
-                StringBuilder builder = new StringBuilder(getText().subSequence(0,start));
-                builder.append(TextUtils.ellipsize(getText().subSequence(start, length()),getPaint(),layout.getWidth(),getEllipsize()));
-                setTransformationMethod(new ReplaceTransformationMethod(builder));
-            }else{
-                StaticLayout layout = new StaticLayout(getText(), getPaint(), getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
-                int end = layout.getLineVisibleEnd(maxLines - 1);
-                setTransformationMethod(new ReplaceTransformationMethod(getText().subSequence(0,end)));
-            }*/
         if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.AT_MOST && getMeasuredWidth() == MeasureSpec.getSize(widthMeasureSpec) && getEllipsize() == null) {
             StaticLayout layout = new StaticLayout(getText(), getPaint(), getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, spacingMult, spacingAdd, true);
             int width = 0;
