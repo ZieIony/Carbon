@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.ItemTouchUIUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import carbon.R;
-import carbon.shadow.ShadowView;
+import carbon.view.ShadowView;
 
 
 /**

@@ -3,7 +3,7 @@ package tk.zielony.carbonsamples.feature;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
-import carbon.shadow.ShadowView;
+import carbon.view.ShadowView;
 import carbon.widget.Button;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;

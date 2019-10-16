@@ -39,7 +39,7 @@ public class FeaturesActivity extends SampleListActivity {
                 new SampleActivityItem(BehaviorActivity.class),
                 new SampleActivityItem(HtmlActivity.class),
                 new SampleActivityItem(RobotoActivity.class),
-                new SampleActivityItem(ShadowActivity.class, 0, true),
+                new SampleActivityItem(ShadowActivity.class),
                 new SampleActivityItem(PaginationActivity.class),
                 new SampleActivityItem(TextAppearanceActivity.class),
                 new SampleActivityItem(SVGActivity.class),

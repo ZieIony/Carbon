@@ -1,6 +1,6 @@
 package carbon.view;
 
-import carbon.shadow.ShapeAppearanceModel;
+import com.google.android.material.shape.ShapeAppearanceModel;
 
 public interface ShapeModelView {
     ShapeAppearanceModel getShapeModel();

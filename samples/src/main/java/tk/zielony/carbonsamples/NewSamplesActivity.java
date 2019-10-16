@@ -7,6 +7,7 @@ import java.io.Serializable;
 import carbon.component.PaddingItem;
 import tk.zielony.carbonsamples.demo.ProfileActivity;
 import tk.zielony.carbonsamples.feature.GestureDetectorActivity;
+import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.widget.BackdropActivity;
 import tk.zielony.carbonsamples.widget.BannerActivity;
 import tk.zielony.carbonsamples.widget.BottomNavigationViewActivity;
@@ -38,6 +39,7 @@ public class NewSamplesActivity extends SampleListActivity {
                 new SampleActivityItem(FABActivity.class, R.drawable.ic_add_circle_black_24dp),
                 new SampleActivityItem(ProfileActivity.class, R.drawable.ic_person_black_24dp),
                 new SampleActivityItem(GestureDetectorActivity.class),
+                new SampleActivityItem(ShadowActivity.class),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         });
     }

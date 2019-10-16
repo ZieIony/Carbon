@@ -29,6 +29,11 @@ import android.view.ViewOutlineProvider;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 
+import com.google.android.material.shape.CutCornerTreatment;
+import com.google.android.material.shape.MaterialShapeDrawable;
+import com.google.android.material.shape.RoundedCornerTreatment;
+import com.google.android.material.shape.ShapeAppearanceModel;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,11 +49,7 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.shadow.CutCornerTreatment;
-import carbon.shadow.MaterialShapeDrawable;
-import carbon.shadow.RoundedCornerTreatment;
-import carbon.shadow.ShadowView;
-import carbon.shadow.ShapeAppearanceModel;
+import carbon.view.ShadowView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
@@ -226,7 +227,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
         boolean r = revealAnimator != null && revealAnimator.isRunning();
-        boolean c = !Carbon.isShapeRect(shapeModel);
+        boolean c = !Carbon.isShapeRect(shapeModel, boundsRect);
 
         if (Carbon.IS_PIE_OR_HIGHER) {
             if (spotShadowColor != null)
@@ -343,7 +344,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
     // corners
     // -------------------------------
 
-    private Rect boundsRect = new Rect();
+    private RectF boundsRect = new RectF();
     private Path cornersMask = new Path();
 
     public ShapeAppearanceModel getShapeModel() {
@@ -358,23 +359,24 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
      */
     @Override
     public void setCornerRadius(float cornerRadius) {
-        shapeModel.setAllCorners(new RoundedCornerTreatment(cornerRadius));
+        shapeModel = ShapeAppearanceModel.builder().setAllCorners(new RoundedCornerTreatment(cornerRadius)).build();
         setShapeModel(shapeModel);
     }
 
     @Override
     public void setCornerCut(float cornerCut) {
-        shapeModel.setAllCorners(new CutCornerTreatment(cornerCut));
+        shapeModel = ShapeAppearanceModel.builder().setAllCorners(new CutCornerTreatment(cornerCut)).build();
         setShapeModel(shapeModel);
     }
 
     @Override
     public void setShapeModel(ShapeAppearanceModel model) {
-        if (!Carbon.IS_LOLLIPOP_OR_HIGHER)
-            postInvalidate();
         this.shapeModel = model;
+        shadowDrawable = new MaterialShapeDrawable(shapeModel);
         if (getWidth() > 0 && getHeight() > 0)
             updateCorners();
+        if (!Carbon.IS_LOLLIPOP_OR_HIGHER)
+            postInvalidate();
     }
 
     @Override
@@ -399,7 +401,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
             setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    if (Carbon.isShapeRect(shapeModel)) {
+                    if (Carbon.isShapeRect(shapeModel, boundsRect)) {
                         outline.setRect(0, 0, getWidth(), getHeight());
                     } else {
                         shadowDrawable.setBounds(0, 0, getWidth(), getHeight());
@@ -409,8 +411,8 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
             });
         }
 
-        boundsRect.set(0, 0, getWidth(), getHeight());
-        shadowDrawable.getPathForSize(boundsRect, cornersMask);
+        boundsRect.set(shadowDrawable.getBounds());
+        shadowDrawable.getPathForSize(getWidth(), getHeight(), cornersMask);
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
@@ -426,7 +428,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
     public void draw(@NonNull Canvas canvas) {
         drawCalled = true;
         boolean r = revealAnimator != null;
-        boolean c = !Carbon.isShapeRect(shapeModel);
+        boolean c = !Carbon.isShapeRect(shapeModel, boundsRect);
 
         if (Carbon.IS_PIE_OR_HIGHER) {
             if (spotShadowColor != null)
@@ -452,7 +454,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
                 }
             }
             canvas.drawBitmap(layer, 0, 0, paint);
-        } else if (getWidth() > 0 && getHeight() > 0 && (((r || c) && !Carbon.IS_LOLLIPOP_OR_HIGHER) || !shapeModel.isRoundRect())) {
+        } else if (getWidth() > 0 && getHeight() > 0 && (((r || c) && !Carbon.IS_LOLLIPOP_OR_HIGHER) || !shapeModel.isRoundRect(boundsRect))) {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
             if (r) {
@@ -558,7 +560,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).invalidate();
 
-        if (elevation > 0 || !Carbon.isShapeRect(shapeModel))
+        if (elevation > 0 || !Carbon.isShapeRect(shapeModel, boundsRect))
             ((View) getParent()).invalidate();
     }
 
@@ -581,7 +583,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
         if (rippleDrawable != null && rippleDrawable.getStyle() == RippleDrawable.Style.Borderless)
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
 
-        if (elevation > 0 || !Carbon.isShapeRect(shapeModel))
+        if (elevation > 0 || !Carbon.isShapeRect(shapeModel, boundsRect))
             ((View) getParent()).postInvalidateDelayed(delayMilliseconds);
     }
 
@@ -698,10 +700,12 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
 
-        shadowDrawable.setTintList(spotShadowColor);
+        shadowDrawable.setFillColor(spotShadowColor);
+        shadowDrawable.setShadowColor(spotShadowColor != null ? spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()) : 0xff000000);
         shadowDrawable.setAlpha(0x44);
         shadowDrawable.setElevation(z);
-        shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 2), getRight(), (int) (getBottom() + z / 2));
+        shadowDrawable.setShadowVerticalOffset(0);
+        shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 4), getRight(), (int) (getBottom() + z / 4));
         shadowDrawable.draw(canvas);
 
         canvas.translate(this.getLeft(), this.getTop());

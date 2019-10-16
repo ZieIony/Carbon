@@ -1,4 +1,4 @@
-package carbon.shadow;
+package carbon.view;
 
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;

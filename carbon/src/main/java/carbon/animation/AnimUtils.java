@@ -19,7 +19,7 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import carbon.R;
 import carbon.internal.MathUtils;
-import carbon.shadow.ShadowView;
+import carbon.view.ShadowView;
 import carbon.widget.ProgressBar;
 
 public class AnimUtils {

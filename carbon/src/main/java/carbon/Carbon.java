@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -24,6 +25,10 @@ import androidx.appcompat.view.SupportMenuInflater;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.TintAwareDrawable;
+
+import com.google.android.material.shape.CutCornerTreatment;
+import com.google.android.material.shape.RoundedCornerTreatment;
+import com.google.android.material.shape.ShapeAppearanceModel;
 
 import java.security.InvalidParameterException;
 
@@ -57,10 +62,7 @@ import carbon.drawable.DefaultTextSecondaryColorInverseStateList;
 import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.shadow.CutCornerTreatment;
-import carbon.shadow.RoundedCornerTreatment;
-import carbon.shadow.ShadowView;
-import carbon.shadow.ShapeAppearanceModel;
+import carbon.view.ShadowView;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
@@ -424,7 +426,6 @@ public class Carbon {
         int carbon_cornerCutBottomEnd = ids[8];
         int carbon_cornerCut = ids[9];
 
-        ShapeAppearanceModel model = shapeModelView.getShapeModel();
         float cornerRadius = Math.max(a.getDimension(carbon_cornerRadius, 0), 0.1f);
         float cornerRadiusTopStart = a.getDimension(carbon_cornerRadiusTopStart, cornerRadius);
         float cornerRadiusTopEnd = a.getDimension(carbon_cornerRadiusTopEnd, cornerRadius);
@@ -435,10 +436,12 @@ public class Carbon {
         float cornerCutTopEnd = a.getDimension(carbon_cornerCutTopEnd, cornerCut);
         float cornerCutBottomStart = a.getDimension(carbon_cornerCutBottomStart, cornerCut);
         float cornerCutBottomEnd = a.getDimension(carbon_cornerCutBottomEnd, cornerCut);
-        model.setTopLeftCorner(cornerCutTopStart >= cornerRadiusTopStart ? new CutCornerTreatment(cornerCutTopStart) : new RoundedCornerTreatment(cornerRadiusTopStart));
-        model.setTopRightCorner(cornerCutTopEnd >= cornerRadiusTopEnd ? new CutCornerTreatment(cornerCutTopEnd) : new RoundedCornerTreatment(cornerRadiusTopEnd));
-        model.setBottomLeftCorner(cornerCutBottomStart >= cornerRadiusBottomStart ? new CutCornerTreatment(cornerCutBottomStart) : new RoundedCornerTreatment(cornerRadiusBottomStart));
-        model.setBottomRightCorner(cornerCutBottomEnd >= cornerRadiusBottomEnd ? new CutCornerTreatment(cornerCutBottomEnd) : new RoundedCornerTreatment(cornerRadiusBottomEnd));
+        ShapeAppearanceModel model = ShapeAppearanceModel.builder()
+                .setTopLeftCorner(cornerCutTopStart >= cornerRadiusTopStart ? new CutCornerTreatment(cornerCutTopStart) : new RoundedCornerTreatment(cornerRadiusTopStart))
+                .setTopRightCorner(cornerCutTopEnd >= cornerRadiusTopEnd ? new CutCornerTreatment(cornerCutTopEnd) : new RoundedCornerTreatment(cornerRadiusTopEnd))
+                .setBottomLeftCorner(cornerCutBottomStart >= cornerRadiusBottomStart ? new CutCornerTreatment(cornerCutBottomStart) : new RoundedCornerTreatment(cornerRadiusBottomStart))
+                .setBottomRightCorner(cornerCutBottomEnd >= cornerRadiusBottomEnd ? new CutCornerTreatment(cornerCutBottomEnd) : new RoundedCornerTreatment(cornerRadiusBottomEnd))
+                .build();
         shapeModelView.setShapeModel(model);
     }
 
@@ -518,11 +521,11 @@ public class Carbon {
         }
     }
 
-    public static boolean isShapeRect(ShapeAppearanceModel model) {
-        return model.getTopLeftCorner().getCornerSize() <= 0.2f &&
-                model.getTopRightCorner().getCornerSize() <= 0.2f &&
-                model.getBottomLeftCorner().getCornerSize() <= 0.2f &&
-                model.getBottomRightCorner().getCornerSize() <= 0.2f;
+    public static boolean isShapeRect(ShapeAppearanceModel model, RectF bounds) {
+        return model.getTopLeftCornerSize().getCornerSize(bounds) <= 0.2f &&
+                model.getTopRightCornerSize().getCornerSize(bounds) <= 0.2f &&
+                model.getBottomLeftCornerSize().getCornerSize(bounds) <= 0.2f &&
+                model.getBottomRightCornerSize().getCornerSize(bounds) <= 0.2f;
     }
 
     public static void logReflectionError(Exception e) {

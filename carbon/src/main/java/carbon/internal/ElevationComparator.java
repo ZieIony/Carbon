@@ -4,7 +4,7 @@ import android.view.View;
 
 import java.util.Comparator;
 
-import carbon.shadow.ShadowView;
+import carbon.view.ShadowView;
 
 public class ElevationComparator implements Comparator<View> {
     @Override
