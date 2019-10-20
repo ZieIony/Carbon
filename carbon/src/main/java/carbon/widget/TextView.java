@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,7 +19,6 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.DynamicLayout;
@@ -40,7 +38,6 @@ import android.view.ViewOutlineProvider;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -49,11 +46,9 @@ import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
@@ -65,12 +60,11 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.AllCapsTransformationMethod;
 import carbon.internal.RevealAnimator;
-import carbon.internal.TypefaceUtils;
-import carbon.view.ShadowView;
 import carbon.view.AutoSizeTextView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -99,9 +93,8 @@ import carbon.view.VisibleView;
  * @attr ref R.styleable#carbon_backgroundTint
  * @attr ref R.styleable#carbon_backgroundTintMode
  * @attr ref R.styleable#carbon_animateColorChanges
- * @attr ref R.styleable#carbon_fontFamily
  * @attr ref R.styleable#android:textStyle
- * @attr ref R.styleable#carbon_fontPath
+ * @attr ref R.styleable#carbon_font
  * @attr ref R.styleable#android:textAppearance
  * @attr ref R.styleable#carbon_cornerRadius
  * @attr ref R.styleable#carbon_stroke
@@ -204,8 +197,8 @@ public class TextView extends android.widget.TextView
             R.styleable.TextView_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.TextView_android_maxWidth,
-            R.styleable.TextView_android_maxHeight,
+            R.styleable.TextView_carbon_maxWidth,
+            R.styleable.TextView_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.TextView_carbon_elevation,
@@ -225,25 +218,15 @@ public class TextView extends android.widget.TextView
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearanceInternal(ap, a.hasValue(R.styleable.TextView_android_textColor));
+            Carbon.setTextAppearance(this, ap, a.hasValue(R.styleable.TextView_android_textColor));
 
         int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
-        boolean bold = (textStyle & Typeface.BOLD) != 0;
-        boolean italic = (textStyle & Typeface.ITALIC) != 0;
+        int fontWeight = a.getInt(R.styleable.TextView_carbon_fontWeight, 400);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (!isInEditMode() && attr == R.styleable.TextView_carbon_fontPath) {
-                String path = a.getString(attr);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                setTypeface(typeface);
-            } else if (attr == R.styleable.TextView_carbon_fontFamily) {
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                setTypeface(typeface);
-                bold = false;
-                italic = false;
-            } else if (attr == R.styleable.TextView_carbon_font) {
-                handleFontAttribute(a, textStyle, attr);
+            if (attr == R.styleable.TextView_carbon_font) {
+                Carbon.handleFontAttribute(this, a, textStyle, fontWeight, attr);
             } else if (attr == R.styleable.TextView_android_textAllCaps) {
                 setAllCaps(a.getBoolean(attr, true));
             } else if (attr == R.styleable.TextView_android_singleLine) {
@@ -252,12 +235,6 @@ public class TextView extends android.widget.TextView
                 setMaxLines(a.getInt(attr, Integer.MAX_VALUE));
             }
         }
-
-        TextPaint paint = getPaint();
-        if (bold)
-            paint.setFakeBoldText(true);
-        if (italic)
-            paint.setTextSkewX(-0.25f);
 
         Carbon.initDefaultBackground(this, a, R.styleable.TextView_android_background);
         Carbon.initDefaultTextColor(this, a, R.styleable.TextView_android_textColor);
@@ -313,78 +290,12 @@ public class TextView extends android.widget.TextView
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearanceInternal(resid, false);
+        Carbon.setTextAppearance(this, resid, false);
     }
 
     public void setTextAppearance(int resid) {
         super.setTextAppearance(getContext(), resid);
-        setTextAppearanceInternal(resid, false);
-    }
-
-    private void setTextAppearanceInternal(int resid, boolean hasTextColor) {
-        TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
-
-        if (appearance != null) {
-            int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
-            boolean bold = (textStyle & Typeface.BOLD) != 0;
-            boolean italic = (textStyle & Typeface.ITALIC) != 0;
-
-            for (int i = 0; i < appearance.getIndexCount(); i++) {
-                int attr = appearance.getIndex(i);
-                if (!isInEditMode() && attr == R.styleable.TextAppearance_carbon_fontPath) {
-                    String path = appearance.getString(attr);
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                    setTypeface(typeface);
-                } else if (attr == R.styleable.TextAppearance_carbon_fontFamily) {
-                    Typeface typeface = TypefaceUtils.getTypeface(getContext(), appearance.getString(attr), textStyle);
-                    setTypeface(typeface);
-                    bold = false;
-                    italic = false;
-                } else if (attr == R.styleable.TextAppearance_carbon_font) {
-                    handleFontAttribute(appearance, textStyle, attr);
-                } else if (attr == R.styleable.TextAppearance_android_textAllCaps) {
-                    setAllCaps(appearance.getBoolean(attr, true));
-                } else if (!hasTextColor && attr == R.styleable.TextAppearance_android_textColor) {
-                    Carbon.initDefaultTextColor(this, appearance, attr);
-                }
-            }
-            appearance.recycle();
-
-            TextPaint paint = getPaint();
-            if (bold)
-                paint.setFakeBoldText(true);
-            if (italic)
-                paint.setTextSkewX(-0.25f);
-        }
-    }
-
-    private void handleFontAttribute(TypedArray appearance, int textStyle, int attributeId) {
-        WeakReference<android.widget.TextView> textViewWeak = new WeakReference<>(this);
-        AtomicBoolean asyncFontPending = new AtomicBoolean();
-        ResourcesCompat.FontCallback replyCallback = new ResourcesCompat.FontCallback() {
-            @Override
-            public void onFontRetrieved(@NonNull Typeface typeface) {
-                if (asyncFontPending.get()) {
-                    android.widget.TextView textView = textViewWeak.get();
-                    if (textView != null)
-                        textView.setTypeface(typeface, textStyle);
-                }
-            }
-
-            @Override
-            public void onFontRetrievalFailed(int reason) {
-            }
-        };
-        try {
-            int resourceId = appearance.getResourceId(attributeId, 0);
-            TypedValue mTypedValue = new TypedValue();
-            Typeface typeface = ResourcesCompat.getFont(getContext(), resourceId, mTypedValue, textStyle, replyCallback);
-            if (typeface != null) {
-                asyncFontPending.set(true);
-                setTypeface(typeface, textStyle);
-            }
-        } catch (UnsupportedOperationException | Resources.NotFoundException ignored) {
-        }
+        Carbon.setTextAppearance(this, resid, false);
     }
 
     @Override
@@ -858,16 +769,20 @@ public class TextView extends android.widget.TextView
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
 
-        paint.setAlpha((int) (127 * alpha));
-        saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        if (alpha != 255) {
+            paint.setAlpha((int) (127 * alpha));
+            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        } else {
+            saveCount = canvas.save();
+        }
+        Matrix matrix = getMatrix();
+        canvas.setMatrix(matrix);
 
         if (r) {
             canvas.clipRect(
                     getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius,
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
-
-        Matrix matrix = getMatrix();
 
         shadowDrawable.setFillColor(spotShadowColor);
         shadowDrawable.setShadowColor(spotShadowColor != null ? spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()) : 0xff000000);
@@ -877,23 +792,19 @@ public class TextView extends android.widget.TextView
         shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 4), getRight(), (int) (getBottom() + z / 4));
         shadowDrawable.draw(canvas);
 
-        if (saveCount != 0) {
-            canvas.translate(this.getLeft(), this.getTop());
-            canvas.concat(matrix);
-            paint.setXfermode(Carbon.CLEAR_MODE);
-        }
+        canvas.translate(this.getLeft(), this.getTop());
+        canvas.concat(matrix);
+        paint.setXfermode(Carbon.CLEAR_MODE);
         if (maskShadow) {
             cornersMask.setFillType(Path.FillType.WINDING);
             canvas.drawPath(cornersMask, paint);
         }
-        if (r) {
+        if (r)
             canvas.drawPath(revealAnimator.mask, paint);
-        }
-        if (saveCount != 0) {
-            canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
-            paint.setAlpha(255);
-        }
+
+        canvas.restoreToCount(saveCount);
+        paint.setXfermode(null);
+        paint.setAlpha(255);
     }
 
     @Override

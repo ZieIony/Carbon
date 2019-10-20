@@ -68,4 +68,19 @@ public class AlphaWithParentDrawable extends Drawable {
     public void setBounds(int left, int top, int right, int bottom) {
         alphaDrawable.setBounds(left, top, right, bottom);
     }
+
+    @Override
+    public boolean isStateful() {
+        return alphaDrawable.isStateful();
+    }
+
+    @Override
+    public boolean setState(@NonNull int[] stateSet) {
+        return alphaDrawable.setState(stateSet);
+    }
+
+    @Override
+    public void jumpToCurrentState() {
+        alphaDrawable.jumpToCurrentState();
+    }
 }

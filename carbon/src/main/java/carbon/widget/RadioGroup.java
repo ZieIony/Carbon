@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.Checkable;
 
 import carbon.R;
 
@@ -54,7 +55,7 @@ public class RadioGroup extends LinearLayout {
     // holds the checked id; the selection is empty by default
     private int mCheckedId = -1;
     // tracks children radio buttons checked state
-    private RadioButton.OnCheckedChangeListener mChildOnCheckedChangeListener;
+    private carbon.widget.OnCheckedChangeListener mChildOnCheckedChangeListener;
     // when true, mOnCheckedChangeListener discards events
     private boolean mProtectFromCheckedChange = false;
     private OnCheckedChangeListener mOnCheckedChangeListener;
@@ -121,15 +122,15 @@ public class RadioGroup extends LinearLayout {
 
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (child instanceof RadioButton) {
-            final RadioButton button = (RadioButton) child;
+        if (child instanceof Checkable) {
+            final Checkable button = (Checkable) child;
             if (button.isChecked()) {
                 mProtectFromCheckedChange = true;
                 if (mCheckedId != -1) {
                     setCheckedStateForView(mCheckedId, false);
                 }
                 mProtectFromCheckedChange = false;
-                setCheckedId(button.getId());
+                setCheckedId(child.getId());
             }
         }
 
@@ -142,7 +143,7 @@ public class RadioGroup extends LinearLayout {
      * equivalent to invoking {@link #clearCheck()}.</p>
      *
      * @param id the unique id of the radio button to select in this group
-     * @see #getCheckedRadioButtonId()
+     * @see #getCheckedButtonId()
      * @see #clearCheck()
      */
     public void check(int id) {
@@ -171,8 +172,8 @@ public class RadioGroup extends LinearLayout {
 
     private void setCheckedStateForView(int viewId, boolean checked) {
         View checkedView = findViewById(viewId);
-        if (checkedView != null && checkedView instanceof RadioButton) {
-            ((RadioButton) checkedView).setChecked(checked);
+        if (checkedView != null && checkedView instanceof Checkable) {
+            ((Checkable) checkedView).setChecked(checked);
         }
     }
 
@@ -185,16 +186,16 @@ public class RadioGroup extends LinearLayout {
      * @see #check(int)
      * @see #clearCheck()
      */
-    public int getCheckedRadioButtonId() {
+    public int getCheckedButtonId() {
         return mCheckedId;
     }
 
     /**
      * <p>Clears the selection. When the selection is cleared, no radio button
-     * in this group is selected and {@link #getCheckedRadioButtonId()} returns null.</p>
+     * in this group is selected and {@link #getCheckedButtonId()} returns null.</p>
      *
      * @see #check(int)
-     * @see #getCheckedRadioButtonId()
+     * @see #getCheckedButtonId()
      */
     public void clearCheck() {
         check(-1);
@@ -237,8 +238,8 @@ public class RadioGroup extends LinearLayout {
         void onCheckedChanged(RadioGroup group, int checkedId);
     }
 
-    private class CheckedStateTracker implements RadioButton.OnCheckedChangeListener {
-        public void onCheckedChanged(RadioButton buttonView, boolean isChecked) {
+    private class CheckedStateTracker implements carbon.widget.OnCheckedChangeListener {
+        public void onCheckedChanged(Checkable view, boolean isChecked) {
             // prevents from infinite recursion
             if (mProtectFromCheckedChange) {
                 return;
@@ -250,7 +251,7 @@ public class RadioGroup extends LinearLayout {
             }
             mProtectFromCheckedChange = false;
 
-            int id = buttonView.getId();
+            int id = ((View) view).getId();
             setCheckedId(id);
         }
     }

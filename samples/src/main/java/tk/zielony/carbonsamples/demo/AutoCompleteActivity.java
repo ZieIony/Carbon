@@ -2,11 +2,10 @@ package tk.zielony.carbonsamples.demo;
 
 import android.os.Bundle;
 
-import carbon.widget.AutoCompleteEditText;
 import carbon.widget.AutoCompleteLayout;
+import carbon.widget.SearchDataProvider;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_autocomplete, title = R.string.autoCompleteActivity_title)
@@ -18,10 +17,10 @@ public class AutoCompleteActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         AutoCompleteLayout autoCompleteLayout = findViewById(R.id.autoComplete);
-        autoCompleteLayout.setDataProvider(new AutoCompleteEditText.AutoCompleteDataProvider() {
+        autoCompleteLayout.setDataProvider(new SearchDataProvider<String>() {
 
             @Override
             public int getItemCount() {
@@ -34,8 +33,8 @@ public class AutoCompleteActivity extends ThemedActivity {
             }
 
             @Override
-            public String[] getItemWords(int i) {
-                return fruits[i].split("\n");
+            public String[] getItemWords(String item) {
+                return item.split("\n");
             }
         });
     }

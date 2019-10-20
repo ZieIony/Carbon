@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -26,7 +27,7 @@
 
             <carbon.widget.ImageView
                 style="@style/carbon_ImageView.Avatar"
-                srcCompat="@{data.icon}"
+                app:carbon_src="@{data.icon}"
                 tools:src="@tools:sample/avatars" />
 
             <LinearLayout

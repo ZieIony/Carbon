@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
-import carbon.Carbon;
 import carbon.R;
 import carbon.component.Component;
 import carbon.drawable.ColorStateListDrawable;
@@ -19,6 +18,7 @@ import carbon.drawable.DefaultColorControlStateList;
 import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.RowListAdapter;
 
+@Deprecated
 public class AutoCompleteLayout extends LinearLayout {
     AutoCompleteEditText search;
     RecyclerView results;
@@ -30,17 +30,17 @@ public class AutoCompleteLayout extends LinearLayout {
     }
 
     public AutoCompleteLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_android_theme), attrs, R.attr.carbon_autoCompleteLayoutStyle);
+        super(context, attrs, R.attr.carbon_autoCompleteLayoutStyle);
         initAutoCompleteLayout();
     }
 
     public AutoCompleteLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_android_theme), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initAutoCompleteLayout();
     }
 
     public AutoCompleteLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.AutoCompleteLayout, R.attr.carbon_autoCompleteLayoutStyle, R.styleable.AutoCompleteLayout_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initAutoCompleteLayout();
     }
 
@@ -65,7 +65,7 @@ public class AutoCompleteLayout extends LinearLayout {
         adapter.setOnItemClickedListener((view, item, position) -> search.performCompletion(item.text.toString()));
     }
 
-    public void setDataProvider(AutoCompleteEditText.AutoCompleteDataProvider dataProvider) {
+    public void setDataProvider(SearchDataProvider dataProvider) {
         search.setDataProvider(dataProvider);
     }
 

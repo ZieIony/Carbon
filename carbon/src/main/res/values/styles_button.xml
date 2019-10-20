@@ -23,7 +23,7 @@
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
 
-        <item name="font">?attr/carbon_font</item>
+        <item name="font">?attr/font</item>
     </style>
 
     <style name="carbon_Button.Colored">

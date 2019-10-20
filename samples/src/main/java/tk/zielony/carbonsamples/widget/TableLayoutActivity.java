@@ -12,7 +12,6 @@ import carbon.beta.TableLayout;
 import carbon.widget.TableView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_tablelayout, title = R.string.tableLayoutActivity_title)
@@ -21,7 +20,7 @@ public class TableLayoutActivity extends ThemedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         TableLayout tableLayout = findViewById(R.id.tableLayout);
         List<List<Object>> items = new ArrayList<>();

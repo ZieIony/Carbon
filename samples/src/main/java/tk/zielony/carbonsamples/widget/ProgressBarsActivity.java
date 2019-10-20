@@ -7,7 +7,6 @@ import android.view.View;
 import carbon.widget.ProgressBar;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_progress_bars, title = R.string.progressBarsActivity_title)
@@ -16,7 +15,7 @@ public class ProgressBarsActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         final ProgressBar progress1 = findViewById(R.id.progress5);
         findViewById(R.id.button1).setOnClickListener(view -> progress1.animateVisibility(progress1.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE));

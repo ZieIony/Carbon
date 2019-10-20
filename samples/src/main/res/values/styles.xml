@@ -3,15 +3,16 @@
     <style name="DropDownTheme" parent="carbon_Theme.Light">
         <item name="colorPrimary">@color/carbon_cyan_500</item>
         <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
-        <item name="colorAccent">@color/carbon_orange_a200</item>
+        <item name="colorSecondary">@color/carbon_orange_a200</item>
     </style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="carbon_Theme.Light.NoActionBar">
+    <style name="AppTheme" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
         <item name="colorPrimary">@color/carbon_cyan_500</item>
         <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
-        <item name="colorAccent">@color/carbon_orange_a200</item>
+        <item name="colorSecondary">@color/carbon_orange_a200</item>
         <item name="carbon_dropDownPopupTheme">@style/DropDownTheme</item>
+        <item name="carbon_font">@font/lato</item>
     </style>
 
     <style name="AppTheme.Translucent">
@@ -25,14 +26,14 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="colorPrimary">@color/carbon_cyan_500</item>
         <item name="colorPrimaryDark">@color/carbon_cyan_700</item>
-        <item name="colorAccent">@color/carbon_orange_a200</item>
+        <item name="colorSecondary">@color/carbon_orange_a200</item>
     </style>
 
     <style name="RaisedButtonStyle" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="colorPrimaryDark">#ff731D82</item>
         <item name="colorPrimary">#ff9C27B0</item>
-        <item name="colorAccent">#ffFF5252</item>
+        <item name="colorSecondary">#ffFF5252</item>
     </style>
 
     <style name="calcButtonStyle" parent="carbon_Button.Flat">
@@ -41,7 +42,7 @@
         <item name="carbon_rippleHotspot">false</item>
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">30sp</item>
-        <item name="carbon_fontFamily">"sans-serif-light"</item>
+        <item name="carbon_fontWeight">200</item>
     </style>
 
     <style name="sectionDescription">
@@ -52,6 +53,10 @@
         <item name="android:layout_marginBottom">@dimen/carbon_marginHalf</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="sectionDescription.Inverse">
+        <item name="android:textAppearance">?attr/carbon_textAppearanceCaptionInverse</item>
     </style>
 
     <style name="ThemeLight" parent="carbon_Theme.Light.NoActionBar" />
@@ -77,7 +82,7 @@
     </style>
 
     <style name="AccentRed">
-        <item name="colorAccent">@color/carbon_red_a200</item>
+        <item name="colorSecondary">@color/carbon_red_a200</item>
     </style>
 
     <style name="PrimaryPink">
@@ -86,7 +91,7 @@
     </style>
 
     <style name="AccentPink">
-        <item name="colorAccent">@color/carbon_pink_a200</item>
+        <item name="colorSecondary">@color/carbon_pink_a200</item>
     </style>
 
     <style name="PrimaryPurple">
@@ -95,7 +100,7 @@
     </style>
 
     <style name="AccentPurple">
-        <item name="colorAccent">@color/carbon_purple_a200</item>
+        <item name="colorSecondary">@color/carbon_purple_a200</item>
     </style>
 
     <style name="PrimaryDeepPurple">
@@ -104,7 +109,7 @@
     </style>
 
     <style name="AccentDeepPurple">
-        <item name="colorAccent">@color/carbon_deepPurple_a200</item>
+        <item name="colorSecondary">@color/carbon_deepPurple_a200</item>
     </style>
 
     <style name="PrimaryIndigo">
@@ -113,7 +118,7 @@
     </style>
 
     <style name="AccentIndigo">
-        <item name="colorAccent">@color/carbon_indigo_a200</item>
+        <item name="colorSecondary">@color/carbon_indigo_a200</item>
     </style>
 
     <style name="PrimaryBlue">
@@ -122,7 +127,7 @@
     </style>
 
     <style name="AccentBlue">
-        <item name="colorAccent">@color/carbon_blue_a200</item>
+        <item name="colorSecondary">@color/carbon_blue_a200</item>
     </style>
 
     <style name="PrimaryLightBlue">
@@ -131,7 +136,7 @@
     </style>
 
     <style name="AccentLightBlue">
-        <item name="colorAccent">@color/carbon_lightBlue_a200</item>
+        <item name="colorSecondary">@color/carbon_lightBlue_a200</item>
     </style>
 
     <style name="PrimaryCyan">
@@ -140,7 +145,7 @@
     </style>
 
     <style name="AccentCyan">
-        <item name="colorAccent">@color/carbon_cyan_a200</item>
+        <item name="colorSecondary">@color/carbon_cyan_a200</item>
     </style>
 
     <style name="PrimaryTeal">
@@ -149,7 +154,7 @@
     </style>
 
     <style name="AccentTeal">
-        <item name="colorAccent">@color/carbon_teal_a200</item>
+        <item name="colorSecondary">@color/carbon_teal_a200</item>
     </style>
 
     <style name="PrimaryGreen">
@@ -158,7 +163,7 @@
     </style>
 
     <style name="AccentGreen">
-        <item name="colorAccent">@color/carbon_green_a200</item>
+        <item name="colorSecondary">@color/carbon_green_a200</item>
     </style>
 
     <style name="PrimaryLightGreen">
@@ -167,7 +172,7 @@
     </style>
 
     <style name="AccentLightGreen">
-        <item name="colorAccent">@color/carbon_lightGreen_a200</item>
+        <item name="colorSecondary">@color/carbon_lightGreen_a200</item>
     </style>
 
     <style name="PrimaryLime">
@@ -176,7 +181,7 @@
     </style>
 
     <style name="AccentLime">
-        <item name="colorAccent">@color/carbon_lime_a200</item>
+        <item name="colorSecondary">@color/carbon_lime_a200</item>
     </style>
 
     <style name="PrimaryYellow">
@@ -185,7 +190,7 @@
     </style>
 
     <style name="AccentYellow">
-        <item name="colorAccent">@color/carbon_yellow_a200</item>
+        <item name="colorSecondary">@color/carbon_yellow_a200</item>
     </style>
 
     <style name="PrimaryAmber">
@@ -194,7 +199,7 @@
     </style>
 
     <style name="AccentAmber">
-        <item name="colorAccent">@color/carbon_amber_a200</item>
+        <item name="colorSecondary">@color/carbon_amber_a200</item>
     </style>
 
     <style name="PrimaryOrange">
@@ -203,7 +208,7 @@
     </style>
 
     <style name="AccentOrange">
-        <item name="colorAccent">@color/carbon_orange_a200</item>
+        <item name="colorSecondary">@color/carbon_orange_a200</item>
     </style>
 
     <style name="PrimaryDeepOrange">
@@ -212,7 +217,7 @@
     </style>
 
     <style name="AccentDeepOrange">
-        <item name="colorAccent">@color/carbon_deepOrange_a200</item>
+        <item name="colorSecondary">@color/carbon_deepOrange_a200</item>
     </style>
 
     <style name="PrimaryBrown">
@@ -241,10 +246,43 @@
     </style>
 
     <style name="AccentWhite">
-        <item name="colorAccent">@color/carbon_white</item>
+        <item name="colorSecondary">@color/carbon_white</item>
     </style>
 
     <style name="AccentBlack">
-        <item name="colorAccent">@color/carbon_black</item>
+        <item name="colorSecondary">@color/carbon_black</item>
+    </style>
+
+
+    <style name="FontRoboto">
+        <item name="carbon_font">@font/roboto</item>
+    </style>
+
+    <style name="FontRobotoCondensed">
+        <item name="carbon_font">@font/roboto_condensed</item>
+    </style>
+
+    <style name="FontLato">
+        <item name="carbon_font">@font/lato</item>
+    </style>
+
+    <style name="FontLobster">
+        <item name="carbon_font">@font/lobster</item>
+    </style>
+
+    <style name="FontLekton">
+        <item name="carbon_font">@font/lekton_regular</item>
+    </style>
+
+    <style name="FontRaleway">
+        <item name="carbon_font">@font/raleway_regular</item>
+    </style>
+
+    <style name="FontRubik">
+        <item name="carbon_font">@font/rubik_regular</item>
+    </style>
+
+    <style name="FontCodeNewRoman">
+        <item name="carbon_font">@font/code_new_roman</item>
     </style>
 </resources>

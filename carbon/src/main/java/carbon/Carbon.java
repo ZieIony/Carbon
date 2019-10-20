@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -21,16 +22,20 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.view.SupportMenuInflater;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.TintAwareDrawable;
 
 import com.google.android.material.shape.CutCornerTreatment;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
+import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
@@ -62,10 +67,10 @@ import carbon.drawable.DefaultTextSecondaryColorInverseStateList;
 import carbon.drawable.DefaultTextSecondaryColorStateList;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.view.ShadowView;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -162,7 +167,7 @@ public class Carbon {
             int c = Carbon.getThemeColor(context, R.attr.colorPrimary);
             return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
         } else if (resourceId == R.color.carbon_defaultRippleColorAccent) {
-            int c = Carbon.getThemeColor(context, R.attr.colorAccent);
+            int c = Carbon.getThemeColor(context, R.attr.colorSecondary);
             return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
         }
 
@@ -538,6 +543,55 @@ public class Carbon {
                 " - device: " + Build.MANUFACTURER + " " + Build.MODEL + ", API " + Build.VERSION.SDK_INT + "\n" +
                 " - method: " + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "(...)\n" +
                 " - cause: " + e.getClass().getName() + ": " + e.getMessage() + " at " + cause.getMethodName() + "(" + cause.getFileName() + ":" + cause.getLineNumber() + ")\n", e);
+    }
+
+    public static void handleFontAttribute(android.widget.TextView textView, TypedArray appearance, int textStyle, int fontWeight, int attributeId) {
+        WeakReference<TextView> textViewWeak = new WeakReference<>(textView);
+        AtomicBoolean asyncFontPending = new AtomicBoolean();
+        ResourcesCompat.FontCallback replyCallback = new ResourcesCompat.FontCallback() {
+            @Override
+            public void onFontRetrieved(@NonNull Typeface typeface) {
+                if (asyncFontPending.get()) {
+                    android.widget.TextView textView = textViewWeak.get();
+                    if (textView != null)
+                        textView.setTypeface(typeface, textStyle);
+                }
+            }
+
+            @Override
+            public void onFontRetrievalFailed(int reason) {
+            }
+        };
+        try {
+            int resourceId = appearance.getResourceId(attributeId, 0);
+            TypedValue mTypedValue = new TypedValue();
+            Typeface typeface = carbon.internal.ResourcesCompat.getFont(textView.getContext(), resourceId, mTypedValue, textStyle, fontWeight, replyCallback);
+            if (typeface != null) {
+                asyncFontPending.set(true);
+                textView.setTypeface(typeface, textStyle);
+            }
+        } catch (UnsupportedOperationException | Resources.NotFoundException ignored) {
+        }
+    }
+
+    public static void setTextAppearance(carbon.widget.TextView tv, int resid, boolean hasTextColor) {
+        TypedArray appearance = tv.getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
+
+        int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
+        int fontWeight = appearance.getInt(R.styleable.TextAppearance_carbon_fontWeight, 400);
+
+        for (int i = 0; i < appearance.getIndexCount(); i++) {
+            int attr = appearance.getIndex(i);
+            if (attr == R.styleable.TextAppearance_carbon_font) {
+                Carbon.handleFontAttribute(tv, appearance, textStyle, fontWeight, attr);
+            } else if (attr == R.styleable.TextAppearance_android_textAllCaps) {
+                tv.setAllCaps(appearance.getBoolean(attr, true));
+            } else if (!hasTextColor && attr == R.styleable.TextAppearance_android_textColor) {
+                Carbon.initDefaultTextColor(tv, appearance, attr);
+            }
+        }
+
+        appearance.recycle();
     }
 
 }

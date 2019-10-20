@@ -54,7 +54,7 @@
 
         <item name="colorPrimary">@color/carbon_colorPrimary_dark</item>
         <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_dark</item>
-        <item name="colorAccent">@color/carbon_cyan_a700</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
 
         <item name="android:textColorPrimary">@color/carbon_textColorPrimary_dark</item>
         <item name="android:textColorSecondary">@color/carbon_textColorSecondary_dark</item>
@@ -87,7 +87,7 @@
         <item name="android:colorControlHighlight" tools:targetApi="lollipop">
             @color/carbon_rippleColor_light
         </item>
-        <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHighlight">?attr/colorSecondary</item>
         <item name="android:textColorHint">@color/carbon_textColorHint_dark</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline</item>
@@ -156,7 +156,7 @@
         <item name="android:colorControlHighlight" tools:targetApi="lollipop">
             @color/carbon_rippleColor_light
         </item>
-        <item name="android:textColorHighlight">?attr/colorAccent</item>
+        <item name="android:textColorHighlight">?attr/colorSecondary</item>
         <item name="android:textColorHint">@color/carbon_textColorHint_dark</item>
 
         <item name="carbon_textAppearanceHeadline">@style/carbon_TextAppearance.Headline</item>

@@ -44,18 +44,18 @@ public class CheckBox extends TextView implements Checkable {
     }
 
     public CheckBox(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, android.R.attr.checkboxStyle, R.styleable.CheckBox_android_theme), attrs, android.R.attr.checkboxStyle);
+        super(context, attrs, android.R.attr.checkboxStyle);
         initCheckBox(attrs, android.R.attr.checkboxStyle, R.style.carbon_CheckBox);
     }
 
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_android_theme), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initCheckBox(attrs, defStyleAttr, R.style.carbon_CheckBox);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CheckBox, defStyleAttr, R.styleable.CheckBox_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initCheckBox(attrs, defStyleAttr, defStyleRes);
     }
 
@@ -75,9 +75,6 @@ public class CheckBox extends TextView implements Checkable {
                 buttonGravity = ButtonGravity.values()[a.getInt(attr, 0)];
             }
         }
-
-        Carbon.initDefaultBackground(this, a, R.styleable.CheckBox_android_background);
-        Carbon.initHtmlText(this, a, R.styleable.CheckBox_carbon_htmlText);
 
         a.recycle();
     }

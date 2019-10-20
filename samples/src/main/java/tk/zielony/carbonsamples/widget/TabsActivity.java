@@ -13,7 +13,6 @@ import carbon.widget.ViewPager;
 import carbon.widget.ViewPagerIndicator;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_tabs, title = R.string.tabsActivity_title)
@@ -23,7 +22,7 @@ public class TabsActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         ViewPager pager = findViewById(R.id.pager);
         pager.setAdapter(new PagerAdapter() {

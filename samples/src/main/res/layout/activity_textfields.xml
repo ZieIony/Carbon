@@ -25,7 +25,7 @@
                 android:layout_margin="@dimen/carbon_padding"
                 app:carbon_actionButton="voiceInput"
                 app:carbon_label="Weight"
-                app:carbon_labelStyle="floating"
+                app:carbon_labelMode="floating"
                 app:carbon_minCharacters="3">
 
                 <carbon.widget.rx.EditText
@@ -48,7 +48,7 @@
                 app:carbon_error="it's not an email"
                 app:carbon_errorMode="whenInvalid"
                 app:carbon_label="email"
-                app:carbon_labelStyle="persistent">
+                app:carbon_labelMode="persistent">
 
                 <carbon.widget.EditText
                     android:id="@+id/editText3"
@@ -69,7 +69,7 @@
                 android:layout_margin="@dimen/carbon_padding"
                 app:carbon_actionButton="showPassword"
                 app:carbon_label="password"
-                app:carbon_labelStyle="floating">
+                app:carbon_labelMode="floating">
 
                 <carbon.widget.EditText
                     android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
                 app:carbon_label="Amount"
-                app:carbon_labelStyle="ifNotEmpty">
+                app:carbon_labelMode="ifNotEmpty">
 
                 <carbon.widget.EditText
                     android:layout_width="match_parent"

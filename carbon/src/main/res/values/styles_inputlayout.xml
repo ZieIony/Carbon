@@ -1,18 +1,16 @@
 <resources>
 
     <style name="carbon_InputLayout" parent="carbon_RelativeLayout">
-        <item name="carbon_labelStyle">persistent</item>
+        <item name="carbon_labelMode">persistent</item>
 
-        <item name="carbon_errorTextSize">@dimen/carbon_textSizeCaption</item>
-        <item name="carbon_counterTextSize">@dimen/carbon_textSizeCaption</item>
-        <item name="carbon_labelTextSize">@dimen/carbon_textSizeCaption</item>
-        <item name="carbon_errorFontFamily">"sans-serif"</item>
-        <item name="carbon_counterFontFamily">"sans-serif"</item>
-        <item name="carbon_labelFontFamily">"sans-serif"</item>
+        <item name="carbon_errorTextAppearance">?attr/carbon_textAppearanceCaption</item>
+        <item name="carbon_counterTextAppearance">?attr/carbon_textAppearanceCaption</item>
+        <item name="carbon_labelTextAppearance">?attr/carbon_textAppearanceCaption</item>
 
         <item name="android:gravity">start|left</item>
 
         <item name="android:theme">@style/carbon_InputLayoutContainerTheme</item>
+        <item name="android:addStatesFromChildren">true</item>
     </style>
 
     <style name="carbon_ImageView.InputLayout" parent="carbon_ImageView.IconButton">
@@ -26,7 +24,7 @@
         <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
     </style>
 
-    <style name="carbon_InputLayoutContainer" parent="carbon_RelativeLayout"/>
+    <style name="carbon_InputLayoutContainer" parent="carbon_RelativeLayout" />
 
     <style name="carbon_InputLayout.Box">
         <item name="android:theme">@style/carbon_InputLayoutContainerTheme.Box</item>

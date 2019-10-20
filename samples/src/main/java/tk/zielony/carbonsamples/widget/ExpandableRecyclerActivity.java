@@ -15,7 +15,6 @@ import carbon.recycler.DividerItemDecoration;
 import carbon.widget.ExpandableRecyclerView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_expandablerecycler, title = R.string.expandableRecyclerActivity_title)
@@ -26,7 +25,7 @@ public class ExpandableRecyclerActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         final ExpandableRecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

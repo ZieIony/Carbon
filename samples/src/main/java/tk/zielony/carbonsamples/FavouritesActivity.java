@@ -17,7 +17,7 @@ public class FavouritesActivity extends SampleListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         List<Serializable> favourites = new ArrayList<>();
         favourites.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));

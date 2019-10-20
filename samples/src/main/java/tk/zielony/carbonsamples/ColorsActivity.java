@@ -10,15 +10,17 @@ import androidx.databinding.DataBindingUtil;
 
 import java.io.Serializable;
 
+import carbon.internal.ResourcesCompat;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
 @ActivityAnnotation(title = R.string.colorsActivity_title)
 public class ColorsActivity extends ThemedActivity {
 
-    public static final String ACCENT = "accent";
+    public static final String SECONDARY = "secondary";
     public static final String PRIMARY = "primary";
     public static final String STYLE = "style";
     public static final String THEME = "theme";
+    public static final String FONT = "font";
 
     public static class Item implements Serializable {
         String name;
@@ -78,7 +80,7 @@ public class ColorsActivity extends ThemedActivity {
             new Item("Black", R.style.PrimaryBlack, R.color.carbon_black)
     };
 
-    public static Item[] accents = new Item[]{
+    public static Item[] secondary = new Item[]{
             new Item("Red", R.style.AccentRed, R.color.carbon_red_a200),
             new Item("Pink", R.style.AccentPink, R.color.carbon_pink_a200),
             new Item("Purple", R.style.AccentPurple, R.color.carbon_purple_a200),
@@ -99,12 +101,23 @@ public class ColorsActivity extends ThemedActivity {
             new Item("Black", R.style.AccentBlack, R.color.carbon_black)
     };
 
+    public static Item[] fonts = new Item[]{
+            new Item("Roboto", R.style.FontRoboto, R.font.roboto),
+            new Item("Roboto Condensed", R.style.FontRobotoCondensed, R.font.roboto_condensed),
+            new Item("Lato", R.style.FontLato, R.font.lato),
+            new Item("Lobster", R.style.FontLobster, R.font.lobster),
+            new Item("Lekton", R.style.FontLekton, R.font.lekton_regular),
+            new Item("Raleway", R.style.FontRaleway, R.font.raleway_regular),
+            new Item("Rubik", R.style.FontRubik, R.font.rubik_regular),
+            new Item("Code New Roman", R.style.FontCodeNewRoman, R.font.code_new_roman)
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityColordemoBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_colordemo);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         binding.style.setItems(styles);
         binding.style.setOnSelectionChangedListener((Item item, int position) -> {
@@ -115,7 +128,7 @@ public class ColorsActivity extends ThemedActivity {
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
             binding.style.setSelectedIndex(preferences.getInt(STYLE, 3));
-            Item item = styles[preferences.getInt(STYLE, 2)];
+            Item item = styles[preferences.getInt(STYLE, 3)];
             binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }
 
@@ -132,17 +145,30 @@ public class ColorsActivity extends ThemedActivity {
             binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         }
 
-        binding.accent.setItems(accents);
-        binding.accent.setOnSelectionChangedListener((Item item, int position) -> {
+        binding.secondary.setItems(secondary);
+        binding.secondary.setOnSelectionChangedListener((Item item, int position) -> {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-            preferences.edit().putInt(ACCENT, binding.accent.getSelectedIndex()).commit();
+            preferences.edit().putInt(SECONDARY, binding.secondary.getSelectedIndex()).commit();
             binding.accentbg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
         });
         {
             SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
-            binding.accent.setSelectedIndex(preferences.getInt(ACCENT, 14));
-            Item item = accents[preferences.getInt(ACCENT, 14)];
+            binding.secondary.setSelectedIndex(preferences.getInt(SECONDARY, 14));
+            Item item = secondary[preferences.getInt(SECONDARY, 14)];
             binding.accentbg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
+        }
+
+        binding.font.setItems(fonts);
+        binding.font.setOnSelectionChangedListener((Item item, int position) -> {
+            SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
+            preferences.edit().putInt(FONT, binding.font.getSelectedIndex()).commit();
+            binding.font.setTypeface(ResourcesCompat.getFont(this, item.color));
+        });
+        {
+            SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
+            binding.font.setSelectedIndex(preferences.getInt(FONT, 0));
+            Item item = fonts[preferences.getInt(FONT, 0)];
+            binding.font.setTypeface(ResourcesCompat.getFont(this, item.color));
         }
     }
 

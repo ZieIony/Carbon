@@ -57,12 +57,12 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.view.ShadowView;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -128,8 +128,8 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
             R.styleable.Toolbar_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.Toolbar_android_maxWidth,
-            R.styleable.Toolbar_android_maxHeight,
+            R.styleable.Toolbar_carbon_maxWidth,
+            R.styleable.Toolbar_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.Toolbar_carbon_elevation,

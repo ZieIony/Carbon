@@ -54,10 +54,10 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
 import carbon.recycler.DividerItemDecoration;
-import carbon.view.ShadowView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -156,8 +156,8 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             R.styleable.RecyclerView_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.RecyclerView_android_maxWidth,
-            R.styleable.RecyclerView_android_maxHeight,
+            R.styleable.RecyclerView_carbon_maxWidth,
+            R.styleable.RecyclerView_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.RecyclerView_carbon_elevation,
@@ -182,13 +182,13 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             }
         }
 
+        Carbon.initDefaultBackground(this, a, R.styleable.RecyclerView_android_background);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initTint(this, a, tintIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
-        Carbon.initDefaultBackground(this, a, R.styleable.RecyclerView_android_background);
 
         a.recycle();
 

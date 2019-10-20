@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
+
+    <include layout="@layout/view_debugtoolbar" />
+
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.TextView
+            style="@style/sectionDescription"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Carbon backports xml fonts and font weights back to API 14" />
+
+        <carbon.widget.ImageView
+            android:id="@+id/code_fonts"
+            style="@style/carbon_ImageView.IconButton"
+            android:layout_marginEnd="@dimen/carbon_toolbarItemMargin"
+            android:layout_marginRight="@dimen/carbon_toolbarItemMargin"
+            app:carbon_src="@drawable/ic_code_black_24dp" />
+    </carbon.widget.LinearLayout>
+
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/carbon_windowPadding"
+        android:paddingRight="@dimen/carbon_windowPadding">
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:text="Lato regular"
+            android:textSize="20sp"
+            app:carbon_font="@font/lato" />
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:text="Lato light"
+            android:textSize="20sp"
+            app:carbon_font="@font/lato"
+            app:carbon_fontWeight="200" />
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:text="Roboto bold"
+            android:textSize="20sp"
+            app:carbon_font="@font/roboto"
+            app:carbon_fontWeight="700" />
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:text="Roboto italic"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:carbon_font="@font/roboto" />
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:text="Roboto condensed regular"
+            android:textSize="20sp"
+            app:carbon_font="@font/roboto_condensed" />
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:text="Roboto thin italic"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:carbon_font="@font/roboto"
+            app:carbon_fontWeight="200" />
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:text="Lobster"
+            android:textSize="20sp"
+            app:carbon_font="@font/lobster" />
+
+        <carbon.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:gravity="center_vertical"
+            android:text="Lekton Regular"
+            android:textSize="20sp"
+            app:carbon_font="@font/lekton_regular" />
+    </carbon.widget.LinearLayout>
+
+</carbon.widget.LinearLayout>

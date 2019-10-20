@@ -52,11 +52,11 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.view.ShadowView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -134,8 +134,8 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
             R.styleable.AppBarLayout_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.AppBarLayout_android_maxWidth,
-            R.styleable.AppBarLayout_android_maxHeight,
+            R.styleable.AppBarLayout_carbon_maxWidth,
+            R.styleable.AppBarLayout_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.AppBarLayout_carbon_elevation,
@@ -147,6 +147,7 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
     private void initAppBarLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarLayout, defStyleAttr, 0);
 
+        Carbon.initDefaultBackground(this, a, R.styleable.AppBarLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
@@ -155,7 +156,6 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
-        Carbon.initDefaultBackground(this, a, R.styleable.AppBarLayout_android_background);
 
         a.recycle();
 

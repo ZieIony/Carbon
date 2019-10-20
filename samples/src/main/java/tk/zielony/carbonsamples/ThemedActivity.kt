@@ -13,6 +13,7 @@ abstract class ThemedActivity : SamplesActivity() {
         val preferences = getSharedPreferences(ColorsActivity.THEME, Context.MODE_PRIVATE)
         setTheme(ColorsActivity.styles[preferences.getInt(ColorsActivity.STYLE, 2)].value)
         theme.applyStyle(ColorsActivity.primary[preferences.getInt(ColorsActivity.PRIMARY, 8)].value, true)
-        theme.applyStyle(ColorsActivity.accents[preferences.getInt(ColorsActivity.ACCENT, 14)].value, true)
+        theme.applyStyle(ColorsActivity.secondary[preferences.getInt(ColorsActivity.SECONDARY, 14)].value, true)
+        theme.applyStyle(ColorsActivity.fonts[preferences.getInt(ColorsActivity.FONT, 0)].value, true)
     }
 }

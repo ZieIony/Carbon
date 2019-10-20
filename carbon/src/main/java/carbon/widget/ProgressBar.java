@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 
 import androidx.annotation.NonNull;
 
-import carbon.Carbon;
 import carbon.R;
 import carbon.drawable.CircularProgressDrawable;
 import carbon.drawable.ProgressBarDrawable;
@@ -30,18 +29,18 @@ public class ProgressBar extends View {
     }
 
     public ProgressBar(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ProgressBar, android.R.attr.progressBarStyle, R.styleable.ProgressBar_android_theme), attrs, android.R.attr.progressBarStyle);
+        super(context, attrs, android.R.attr.progressBarStyle);
         initProgressBar(attrs, android.R.attr.progressBarStyle);
     }
 
     public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ProgressBar, defStyleAttr, R.styleable.ProgressBar_android_theme), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initProgressBar(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ProgressBar, defStyleAttr, R.styleable.ProgressBar_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initProgressBar(attrs, defStyleAttr);
     }
 

@@ -7,7 +7,6 @@ import android.view.View;
 import carbon.widget.ProgressBar;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_circular_progress, title = R.string.circularProgressActivity_title)
@@ -16,7 +15,7 @@ public class CircularProgressActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         final ProgressBar progress1 = findViewById(R.id.progress1);
         final Handler handler = new Handler();

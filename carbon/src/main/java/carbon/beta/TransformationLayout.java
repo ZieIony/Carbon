@@ -14,9 +14,9 @@ public class TransformationLayout extends FrameLayout implements OnGestureListen
     GestureDetector detector;
     Matrix matrix = new Matrix();
     Matrix dm = new Matrix();
-    float minX=0,maxX=0,minY=0,maxY=0,minScale=1,maxScale=2,minRotation=-100,maxRotation=100;
-    float ax=0,ay=0,as=1,ar=0;
-    boolean tx=true,ty=true,sx=true,sy=true,r=true;
+    float minX = 0, maxX = 0, minY = 0, maxY = 0, minScale = 1, maxScale = 2, minRotation = -100, maxRotation = 100;
+    float ax = 0, ay = 0, as = 1, ar = 0;
+    boolean tx = true, ty = true, sx = true, sy = true, r = true;
 
     public TransformationLayout(Context context) {
         super(context);
@@ -45,7 +45,7 @@ public class TransformationLayout extends FrameLayout implements OnGestureListen
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (detector.shouldInterceptEvents(event)){
+        if (detector.shouldInterceptEvents(event)) {
             getParent().requestDisallowInterceptTouchEvent(true);
             return true;
         }
@@ -79,13 +79,13 @@ public class TransformationLayout extends FrameLayout implements OnGestureListen
         dm.reset();
         dm.postTranslate(-cx, -cy);
 
-        float s2 = Math.max(minScale, Math.min(as*scale, maxScale));
-        dm.postScale(sx?s2/as:0, sy?s2/as:0);
-        as=s2;
-        if(r)
+        float s2 = Math.max(minScale, Math.min(as * scale, maxScale));
+        dm.postScale(sx ? s2 / as : 0, sy ? s2 / as : 0);
+        as = s2;
+        if (r)
             dm.postRotate((float) ((dr) * 180 / Math.PI));
         dm.postTranslate(cx, cy);
-        dm.postTranslate(tx?dx:0, ty?dy:0);
+        dm.postTranslate(tx ? dx : 0, ty ? dy : 0);
 
         TransformedLayout child = (TransformedLayout) getChildAt(0);
         matrix.postConcat(dm);

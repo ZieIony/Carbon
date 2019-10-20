@@ -94,6 +94,9 @@
     <attr name="carbon_touchMarginRight" format="dimension" />
     <attr name="carbon_touchMarginBottom" format="dimension" />
 
+    <attr name="carbon_maxWidth" format="dimension" />
+    <attr name="carbon_maxHeight" format="dimension" />
+
     <attr name="carbon_inAnimation" format="enum|reference">
         <enum name="none" value="0" />
         <enum name="fade" value="1" />
@@ -149,7 +152,7 @@
     <attr name="carbon_headerParallax" format="float" />
 
     <attr name="carbon_font" format="reference" />
-    <attr name="carbon_fontFamily" format="string" />
+    <attr name="carbon_fontWeight" format="integer" />
 
     <attr name="carbon_icon" format="reference" />
 
@@ -186,7 +189,7 @@
 
 
     <attr name="carbon_snackbarStyle" format="reference" />
-    <declare-styleable name="Snackbar"></declare-styleable>
+    <declare-styleable name="Snackbar" />
 
 
     <!-- FloatingActionButton -->
@@ -220,8 +223,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -271,8 +274,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -280,10 +283,9 @@
         <attr name="carbon_backgroundTintMode" />
         <attr name="carbon_animateColorChanges" />
 
-        <attr name="carbon_fontFamily" />
         <attr name="android:textStyle" />
         <attr name="carbon_font" />
-        <attr name="carbon_fontPath" />
+        <attr name="carbon_fontWeight" />
         <attr name="android:textAppearance" />
         <attr name="android:singleLine" />
         <attr name="android:maxLines" />
@@ -338,8 +340,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -347,10 +349,9 @@
         <attr name="carbon_backgroundTintMode" />
         <attr name="carbon_animateColorChanges" />
 
-        <attr name="carbon_fontFamily" />
         <attr name="android:textStyle" />
         <attr name="carbon_font" />
-        <attr name="carbon_fontPath" />
+        <attr name="carbon_fontWeight" />
         <attr name="android:textAppearance" />
         <attr name="android:singleLine" />
         <attr name="android:maxLines" />
@@ -411,8 +412,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -466,8 +467,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_cornerRadiusTopStart" />
         <attr name="carbon_cornerRadiusTopEnd" />
@@ -523,8 +524,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_cornerRadiusTopStart" />
         <attr name="carbon_cornerRadiusTopEnd" />
@@ -575,8 +576,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -630,8 +631,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -680,8 +681,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -732,8 +733,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -782,8 +783,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -837,8 +838,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -892,8 +893,8 @@
         <attr name="carbon_insetBottom" />
         <attr name="carbon_insetColor" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -925,8 +926,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_elevation" />
         <attr name="carbon_elevationShadowColor" />
@@ -954,7 +955,7 @@
     <declare-styleable name="Chip">
         <attr name="carbon_icon" />
         <attr name="carbon_removable" format="boolean" />
-        <attr name="android:checked"/>
+        <attr name="android:checked" />
     </declare-styleable>
 
     <attr name="carbon_bottomNavigationViewStyle" format="reference" />
@@ -987,8 +988,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -996,7 +997,7 @@
         <attr name="carbon_backgroundTintMode" />
         <attr name="carbon_animateColorChanges" />
 
-        <attr name="android:src" />
+        <attr name="carbon_src" format="reference" />
 
         <attr name="carbon_cornerRadiusTopStart" />
         <attr name="carbon_cornerRadiusTopEnd" />
@@ -1012,8 +1013,6 @@
 
         <attr name="carbon_stroke" />
         <attr name="carbon_strokeWidth" />
-
-        <attr name="android:enabled" />
     </declare-styleable>
 
     <attr name="carbon_dividerStyle" format="reference" />
@@ -1022,17 +1021,6 @@
     </declare-styleable>
 
     <declare-styleable name="ProgressBar">
-        <attr name="android:theme" />
-
-        <attr name="carbon_tint" />
-        <attr name="carbon_tintMode" />
-        <attr name="carbon_backgroundTint" />
-        <attr name="carbon_backgroundTintMode" />
-        <attr name="carbon_animateColorChanges" />
-
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
-
         <attr name="carbon_progressStyle" format="enum">
             <enum name="bar_determinate" value="0" />
             <enum name="bar_indeterminate" value="1" />
@@ -1044,7 +1032,7 @@
     </declare-styleable>
 
     <attr name="carbon_navigationHeaderStyle" format="reference" />
-    <declare-styleable name="NavigationHeader"></declare-styleable>
+    <declare-styleable name="NavigationHeader" />
 
     <attr name="carbon_navigationViewStyle" format="reference" />
     <declare-styleable name="NavigationView">
@@ -1065,7 +1053,7 @@
             <enum name="always" value="1" />
             <enum name="never" value="2" />
         </attr>
-        <attr name="carbon_labelStyle" format="enum">
+        <attr name="carbon_labelMode" format="enum">
             <enum name="floating" value="0" />
             <enum name="persistent" value="1" />
             <enum name="hint" value="2" />
@@ -1079,16 +1067,9 @@
             <enum name="voiceInput" value="3" />
         </attr>
 
-        <attr name="carbon_errorTextSize" format="dimension" />
-        <attr name="carbon_counterTextSize" format="dimension" />
-        <attr name="carbon_labelTextSize" format="dimension" />
-        <attr name="carbon_errorFontPath" format="string" />
-        <attr name="carbon_counterFontPath" format="string" />
-        <attr name="carbon_labelFontPath" format="string" />
-        <attr name="carbon_errorFontFamily" format="string" />
-        <attr name="carbon_counterFontFamily" format="string" />
-        <attr name="carbon_labelFontFamily" format="string" />
-        <attr name="android:textStyle" />
+        <attr name="carbon_errorTextAppearance" format="dimension" />
+        <attr name="carbon_counterTextAppearance" format="dimension" />
+        <attr name="carbon_labelTextAppearance" format="dimension" />
 
         <attr name="android:gravity" />
     </declare-styleable>
@@ -1132,8 +1113,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -1141,10 +1122,9 @@
         <attr name="carbon_backgroundTintMode" />
         <attr name="carbon_animateColorChanges" />
 
-        <attr name="carbon_fontFamily" />
         <attr name="android:textStyle" />
         <attr name="carbon_font" />
-        <attr name="carbon_fontPath" />
+        <attr name="carbon_fontWeight" />
         <attr name="carbon_pattern" format="string" />
         <attr name="carbon_minCharacters" format="integer" />
         <attr name="carbon_maxCharacters" format="integer" />
@@ -1171,8 +1151,6 @@
 
     <attr name="carbon_dropDownStyle" format="reference" />
     <declare-styleable name="DropDown">
-        <attr name="android:theme" />
-
         <attr name="android:drawablePadding" />
         <attr name="carbon_buttonGravity" />
         <attr name="android:button" />
@@ -1199,20 +1177,11 @@
     </declare-styleable>
 
     <attr name="carbon_viewPagerIndicatorStyle" format="reference" />
-    <declare-styleable name="ViewPagerIndicator">
-        <attr name="android:theme" />
-
-        <attr name="carbon_tint" />
-        <attr name="carbon_tintMode" />
-        <attr name="carbon_backgroundTint" />
-        <attr name="carbon_backgroundTintMode" />
-        <attr name="carbon_animateColorChanges" />
-    </declare-styleable>
+    <declare-styleable name="ViewPagerIndicator" />
 
     <declare-styleable name="TextAppearance">
-        <attr name="carbon_fontFamily" />
         <attr name="carbon_font" />
-        <attr name="carbon_fontPath" />
+        <attr name="carbon_fontWeight" />
         <attr name="android:textAllCaps" />
     </declare-styleable>
 
@@ -1270,8 +1239,8 @@
         <attr name="carbon_inAnimation" />
         <attr name="carbon_outAnimation" />
 
-        <attr name="android:maxWidth" />
-        <attr name="android:maxHeight" />
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
 
         <attr name="carbon_tint" />
         <attr name="carbon_tintMode" />
@@ -1310,53 +1279,25 @@
     </attr>
 
     <declare-styleable name="CheckBox">
-        <attr name="android:theme" />
-        <attr name="android:background" />
-
         <attr name="android:drawablePadding" />
         <attr name="android:checked" />
         <attr name="carbon_buttonGravity" />
         <attr name="android:button" />
-
-        <attr name="carbon_htmlText" />
     </declare-styleable>
 
     <declare-styleable name="RadioButton">
-        <attr name="android:theme" />
-        <attr name="android:background" />
-
         <attr name="android:drawablePadding" />
         <attr name="android:checked" />
         <attr name="carbon_buttonGravity" />
         <attr name="android:button" />
-
-        <attr name="carbon_htmlText" />
     </declare-styleable>
 
     <declare-styleable name="RadioGroup">
-        <attr name="android:theme" />
-
         <attr name="android:checkedButton" />
     </declare-styleable>
 
     <attr name="carbon_rangeSeekBarStyle" format="reference" />
     <declare-styleable name="SeekBar">
-        <attr name="android:theme" />
-
-        <attr name="carbon_rippleColor" />
-        <attr name="carbon_rippleHotspot" />
-        <attr name="carbon_rippleStyle" />
-        <attr name="carbon_rippleRadius" />
-
-        <attr name="carbon_inAnimation" />
-        <attr name="carbon_outAnimation" />
-
-        <attr name="carbon_tint" />
-        <attr name="carbon_tintMode" />
-        <attr name="carbon_backgroundTint" />
-        <attr name="carbon_backgroundTintMode" />
-        <attr name="carbon_animateColorChanges" />
-
         <attr name="carbon_barStyle" format="enum">
             <enum name="continuous" value="0" />
             <enum name="discrete" value="1" />
@@ -1378,9 +1319,7 @@
     <attr name="carbon_dropDownPopupTheme" format="reference" />
 
     <attr name="carbon_autoCompleteLayoutStyle" format="reference" />
-    <declare-styleable name="AutoCompleteLayout">
-        <attr name="android:theme" />
-    </declare-styleable>
+    <declare-styleable name="AutoCompleteLayout" />
 
     <attr name="carbon_bannerStyle" format="reference" />
     <declare-styleable name="Banner">

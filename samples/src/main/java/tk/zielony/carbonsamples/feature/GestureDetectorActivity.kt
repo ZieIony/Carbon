@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.feature
 
-import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -10,31 +9,30 @@ import carbon.gesture.OnGestureListener
 import kotlinx.android.synthetic.main.activity_gesturedetector.*
 import tk.zielony.carbonsamples.ActivityAnnotation
 import tk.zielony.carbonsamples.R
-import tk.zielony.carbonsamples.Samples
 import tk.zielony.carbonsamples.ThemedActivity
 
 @ActivityAnnotation(layout = R.layout.activity_gesturedetector, title = R.string.gestureDetectorActivity_title)
 class GestureDetectorActivity : ThemedActivity(), OnGestureListener {
 
     var handler = Handler()
-    var clearRunnable = Runnable{
+    var clearRunnable = Runnable {
         state.text = "state"
-        state.background=null
-        testText.text=""
+        state.background = null
+        testText.text = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Samples.initToolbar(this)
+        initToolbar()
         val detector = GestureDetector(this)
         detector.addOnGestureListener(this)
-        testArea.setOnDispatchTouchListener{ v, event ->
-            when(event.action){
-                MotionEvent.ACTION_DOWN->onDown(event)
-                MotionEvent.ACTION_UP->onUp(event)
-                MotionEvent.ACTION_MOVE->onMove(event)
-                MotionEvent.ACTION_CANCEL->onCancel(event)
+        testArea.setOnDispatchTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> onDown(event)
+                MotionEvent.ACTION_UP -> onUp(event)
+                MotionEvent.ACTION_MOVE -> onMove(event)
+                MotionEvent.ACTION_CANCEL -> onCancel(event)
             }
             detector.onTouchEvent(event)
             true
@@ -58,7 +56,7 @@ class GestureDetectorActivity : ThemedActivity(), OnGestureListener {
         logEvent("tap $clicks", R.color.carbon_green_200)
     }
 
-    override fun onDrag(motionEvent: MotionEvent, dx:Float, dy:Float) {
+    override fun onDrag(motionEvent: MotionEvent, dx: Float, dy: Float) {
         logEvent("drag", R.color.carbon_blueGrey_200)
     }
 
@@ -76,15 +74,15 @@ class GestureDetectorActivity : ThemedActivity(), OnGestureListener {
     private fun onCancel(motionEvent: MotionEvent) = logEvent("cancel")
 
 
-    private fun logEvent(text:String, color:Int?=null) {
+    private fun logEvent(text: String, color: Int? = null) {
         state.text = text
-        state.background = if(color!=null) ColorDrawable(resources.getColor(color)) else null
+        state.background = if (color != null) ColorDrawable(resources.getColor(color)) else null
         testText.text = "${testText.text}\n${text}"
         handler.removeCallbacks(clearRunnable)
         handler.postDelayed(clearRunnable, CLEAR_TIMEOUT)
     }
 
-    companion object{
+    companion object {
         const val CLEAR_TIMEOUT = 2000L
     }
 }

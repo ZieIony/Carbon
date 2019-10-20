@@ -23,5 +23,5 @@
         android:paddingRight="@dimen/carbon_paddingHalf"
         android:paddingBottom="@dimen/carbon_paddingHalf"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 </carbon.widget.LinearLayout>

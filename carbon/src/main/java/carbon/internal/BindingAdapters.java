@@ -22,7 +22,7 @@ public class BindingAdapters {
     }
 
 
-    @BindingAdapter("srcCompat")
+    @BindingAdapter("carbon_src")
     public static void setDrawable(ImageView imageView, Drawable drawable) {
         imageView.setImageDrawable(drawable);
     }

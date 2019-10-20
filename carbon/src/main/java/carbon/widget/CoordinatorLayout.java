@@ -50,12 +50,12 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.view.ShadowView;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -139,8 +139,8 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
             R.styleable.CoordinatorLayout_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.CoordinatorLayout_android_maxWidth,
-            R.styleable.CoordinatorLayout_android_maxHeight,
+            R.styleable.CoordinatorLayout_carbon_maxWidth,
+            R.styleable.CoordinatorLayout_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.CoordinatorLayout_carbon_elevation,
@@ -152,6 +152,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     private void initCoordinatorLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CoordinatorLayout, defStyleAttr, 0);
 
+        Carbon.initDefaultBackground(this, a, R.styleable.CoordinatorLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
@@ -160,7 +161,6 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
-        Carbon.initDefaultBackground(this, a, R.styleable.CoordinatorLayout_android_background);
 
         a.recycle();
 

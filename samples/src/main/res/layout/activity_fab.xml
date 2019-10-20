@@ -47,7 +47,7 @@
             android:padding="@dimen/carbon_padding"
             android:tag="enable"
             app:carbon_menu="@menu/menu_fab"
-            app:srcCompat="@drawable/ic_android_black_24dp" />
+            app:carbon_src="@drawable/ic_android_black_24dp" />
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/fab4"
@@ -58,6 +58,6 @@
             app:carbon_cornerCut="@dimen/carbon_fabSizeHalf"
             app:carbon_cornerRadius="@null"
             app:carbon_menu="@menu/menu_fab"
-            app:srcCompat="@drawable/ic_email_black_24dp" />
+            app:carbon_src="@drawable/ic_email_black_24dp" />
     </carbon.widget.FrameLayout>
 </carbon.widget.LinearLayout>

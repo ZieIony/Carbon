@@ -86,7 +86,7 @@
                 app:carbon_stroke="?attr/carbon_colorControl" />
 
             <carbon.widget.DropDown
-                android:id="@+id/accent"
+                android:id="@+id/secondary"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/carbon_listItemHeight"
                 android:layout_marginStart="@dimen/carbon_contentPadding"
@@ -94,7 +94,24 @@
                 android:layout_marginEnd="@dimen/carbon_windowPadding"
                 android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:text="Accent color"
-                app:carbon_popupMode="fit" />
+                app:carbon_popupMode="over" />
+        </carbon.widget.RelativeLayout>
+
+        <carbon.widget.RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <carbon.widget.DropDown
+                android:id="@+id/font"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/carbon_listItemHeight"
+                android:layout_marginStart="@dimen/carbon_contentPadding"
+                android:layout_marginLeft="@dimen/carbon_contentPadding"
+                android:layout_marginEnd="@dimen/carbon_windowPadding"
+                android:layout_marginRight="@dimen/carbon_windowPadding"
+                android:text="Font"
+                app:carbon_popupMode="over" />
         </carbon.widget.RelativeLayout>
 
     </carbon.widget.LinearLayout>

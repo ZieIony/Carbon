@@ -4,14 +4,14 @@
     <style name="AppTheme.Shrine">
         <item name="colorPrimary">#fedbd0</item>
         <item name="colorPrimaryDark">#fedbd0</item>
-        <item name="colorAccent">#442c2e</item>
+        <item name="colorSecondary">#442c2e</item>
         <item name="carbon_font">@font/rubik_regular</item>
     </style>
 
     <style name="AppTheme.Crane" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
         <item name="colorPrimary">#720d5d</item>
         <item name="colorPrimaryDark">#4e0d3a</item>
-        <item name="colorAccent">#e30425</item>
+        <item name="colorSecondary">#e30425</item>
         <item name="carbon_font">@font/raleway_regular</item>
     </style>ac
 
@@ -20,7 +20,7 @@
     <style name="AppTheme.Basil">
         <item name="colorPrimary">#356859</item>
         <item name="colorPrimaryDark">#356859</item>
-        <item name="colorAccent">#fd5523</item>
+        <item name="colorSecondary">#fd5523</item>
         <item name="android:windowBackground">@color/basilBackground</item>
         <item name="carbon_font">@font/lekton_regular</item>
     </style>
@@ -36,22 +36,22 @@
     </style>
 
     <style name="WindowsTheme.TextAppearance.Title" parent="carbon_TextAppearance.Title">
-        <item name="carbon_fontFamily">"sans-serif-light"</item>
+        <item name="carbon_fontWeight">200</item>
         <item name="android:textSize">22sp</item>
     </style>
 
     <style name="WindowsTheme.TextAppearance.Subhead" parent="carbon_TextAppearance.Subhead">
-        <item name="carbon_fontFamily">"sans-serif-light"</item>
+        <item name="carbon_fontWeight">200</item>
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="WindowsTheme.TextAppearance.Button" parent="carbon_TextAppearance.Button">
-        <item name="carbon_fontFamily">"sans-serif"</item>
+        <item name="carbon_fontWeight">400</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="WindowsTheme.TextAppearance.ListHeader" parent="carbon_TextAppearance.ListHeader">
-        <item name="carbon_fontFamily">"sans-serif-light"</item>
+        <item name="carbon_fontWeight">200</item>
         <item name="android:textSize">18sp</item>
     </style>
 

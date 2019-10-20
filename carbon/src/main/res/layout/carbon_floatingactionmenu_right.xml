@@ -32,7 +32,7 @@
         <carbon.widget.FloatingActionButton
             android:id="@+id/carbon_fab"
             style="@style/carbon_FloatingActionButton.Small"
-            srcCompat="@{data.icon}"
+            app:carbon_src="@{data.icon}"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/carbon_paddingHalf"
             android:layout_marginRight="@dimen/carbon_paddingHalf"

@@ -7,7 +7,6 @@ import carbon.view.ShadowView;
 import carbon.widget.Button;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_zorder, title = R.string.zOrderActivity_title)
@@ -18,7 +17,7 @@ public class ZOrderActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         final FrameLayout layout = findViewById(R.id.layout);
         Button button = findViewById(R.id.button);

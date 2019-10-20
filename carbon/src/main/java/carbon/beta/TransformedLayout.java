@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
+
 import carbon.widget.FrameLayout;
 
 public class TransformedLayout extends FrameLayout {
@@ -30,7 +31,7 @@ public class TransformedLayout extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public void setMatrix(Matrix matrix){
+    public void setMatrix(Matrix matrix) {
         this.matrix = matrix;
         matrix.invert(inverse);
     }

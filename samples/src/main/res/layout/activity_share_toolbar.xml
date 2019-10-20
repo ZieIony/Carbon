@@ -19,7 +19,7 @@
             android:layout_height="@dimen/carbon_fabSize"
             android:layout_gravity="bottom|right"
             android:layout_margin="@dimen/carbon_padding"
-            android:background="?attr/colorAccent"
+            android:background="?attr/colorSecondary"
             app:carbon_cornerRadius="28dp"
             app:carbon_elevation="@dimen/carbon_elevationToolbar">
 
@@ -31,7 +31,7 @@
                 app:carbon_inAnimation="pop"
                 app:carbon_outAnimation="pop"
                 app:carbon_tint="?attr/carbon_iconColor"
-                app:srcCompat="@drawable/ic_share_black_24dp" />
+                app:carbon_src="@drawable/ic_share_black_24dp" />
 
             <carbon.widget.ImageView
                 android:layout_width="@dimen/carbon_fabSize"
@@ -53,7 +53,7 @@
                 app:carbon_inAnimation="pop"
                 app:carbon_outAnimation="pop"
                 app:carbon_tint="?attr/carbon_iconColor"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
+                app:carbon_src="@drawable/ic_star_black_24dp" />
 
             <carbon.widget.ImageView
                 android:layout_width="@dimen/carbon_fabSize"
@@ -64,7 +64,7 @@
                 app:carbon_inAnimation="pop"
                 app:carbon_outAnimation="pop"
                 app:carbon_tint="?attr/carbon_iconColor"
-                app:srcCompat="@drawable/ic_person_black_24dp" />
+                app:carbon_src="@drawable/ic_person_black_24dp" />
 
             <carbon.widget.ImageView
                 android:layout_width="@dimen/carbon_fabSize"
@@ -75,7 +75,7 @@
                 app:carbon_inAnimation="pop"
                 app:carbon_outAnimation="pop"
                 app:carbon_tint="?attr/carbon_iconColor"
-                app:srcCompat="@drawable/ic_email_black_24dp" />
+                app:carbon_src="@drawable/ic_email_black_24dp" />
         </carbon.widget.LinearLayout>
     </carbon.widget.FrameLayout>
 </carbon.widget.LinearLayout>

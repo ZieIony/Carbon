@@ -41,7 +41,7 @@
             android:layout_marginEnd="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:label="@{data.hint}"
-            app:carbon_labelStyle="floating">
+            app:carbon_labelMode="floating">
 
             <carbon.widget.EditText
                 android:id="@+id/carbon_text"

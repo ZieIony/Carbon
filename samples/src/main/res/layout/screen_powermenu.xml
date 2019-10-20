@@ -27,7 +27,7 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:padding="@dimen/carbon_paddingHalf"
-            app:srcCompat="@drawable/ic_power_settings_new_black_24dp"
+            app:carbon_src="@drawable/ic_power_settings_new_black_24dp"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"

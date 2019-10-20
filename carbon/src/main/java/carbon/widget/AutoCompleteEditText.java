@@ -36,10 +36,6 @@ public class AutoCompleteEditText extends EditText {
     private OnFilterListener onFilterListener;
     private String prevText = "";
 
-    public void setDataProvider(AutoCompleteDataProvider dataProvider) {
-        this.dataProvider = dataProvider;
-    }
-
     @SuppressLint("ParcelCreator")
     public static class HintSpan extends ForegroundColorSpan {
 
@@ -88,17 +84,8 @@ public class AutoCompleteEditText extends EditText {
         }
     }
 
-    public interface AutoCompleteDataProvider<Type> {
-
-        int getItemCount();
-
-        Type getItem(int i);
-
-        String[] getItemWords(int i);
-    }
-
     protected TextWatcher autoCompleteTextWatcher;
-    AutoCompleteDataProvider dataProvider;
+    SearchDataProvider dataProvider;
 
     public AutoCompleteEditText(Context context) {
         super(context);
@@ -125,6 +112,10 @@ public class AutoCompleteEditText extends EditText {
     public AutoCompleteEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAutoCompleteEditText();
+    }
+
+    public void setDataProvider(SearchDataProvider dataProvider) {
+        this.dataProvider = dataProvider;
     }
 
     private void initAutoCompleteEditText() {

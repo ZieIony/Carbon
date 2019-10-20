@@ -5,7 +5,6 @@ import android.util.TypedValue
 import kotlinx.android.synthetic.main.activity_autosizetext.*
 import tk.zielony.carbonsamples.ActivityAnnotation
 import tk.zielony.carbonsamples.R
-import tk.zielony.carbonsamples.Samples
 import tk.zielony.carbonsamples.ThemedActivity
 
 @ActivityAnnotation(layout = R.layout.activity_autosizetext, title = R.string.autoSizeTextActivity_title)
@@ -13,7 +12,7 @@ class AutoSizeTextActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Samples.initToolbar(this)
+        initToolbar()
 
         autoSizeText.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             textSize.setTextSize(TypedValue.COMPLEX_UNIT_PX, autoSizeText.textSize)

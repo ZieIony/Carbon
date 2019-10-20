@@ -12,7 +12,6 @@ import carbon.widget.FloatingActionMenu;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.ColorsActivity;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_fab, title = R.string.fabActivity_title)
@@ -21,7 +20,7 @@ public class FABActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setMenu(R.menu.menu_fab);

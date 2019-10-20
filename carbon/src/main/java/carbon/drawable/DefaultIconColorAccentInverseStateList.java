@@ -20,11 +20,11 @@ public class DefaultIconColorAccentInverseStateList extends ColorStateList {
         }, new int[]{
                 Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabledInverse),
                 Carbon.getThemeColor(context, R.attr.carbon_colorError),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
                 Carbon.getThemeColor(context, R.attr.carbon_iconColorInverse)
         });
     }

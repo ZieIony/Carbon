@@ -48,7 +48,7 @@
         android:layout_margin="@dimen/carbon_padding"
         app:carbon_barWidth="5dp"
         app:carbon_progressStyle="bar_query"
-        app:carbon_tint="?attr/colorAccent" />
+        app:carbon_tint="?attr/colorSecondary" />
 
     <carbon.widget.Button
         android:id="@+id/button3"

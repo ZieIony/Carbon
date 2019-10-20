@@ -15,7 +15,7 @@ class DefaultTextColorAccentStateList(context: Context) : ColorStateList(
         intArrayOf(
                 Carbon.getThemeColor(context, android.R.attr.textColorTertiary),
                 Carbon.getThemeColor(context, R.attr.carbon_colorError),
-                Carbon.getThemeColor(context, R.attr.colorAccent)
+                Carbon.getThemeColor(context, R.attr.colorSecondary)
         )
 )
 
@@ -28,6 +28,6 @@ class DefaultTextColorAccentInverseStateList(context: Context) : ColorStateList(
         intArrayOf(
                 Carbon.getThemeColor(context, android.R.attr.textColorTertiaryInverse),
                 Carbon.getThemeColor(context, R.attr.carbon_colorError),
-                Carbon.getThemeColor(context, R.attr.colorAccent)
+                Carbon.getThemeColor(context, R.attr.colorSecondary)
         )
 )

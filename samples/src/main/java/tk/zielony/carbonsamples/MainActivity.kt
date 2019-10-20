@@ -3,7 +3,7 @@ package tk.zielony.carbonsamples
 import android.content.Intent
 import android.os.Bundle
 import carbon.component.PaddingItem
-import carbon.widget.ImageView
+import kotlinx.android.synthetic.main.activity_main.*
 
 @ActivityAnnotation(layout = R.layout.activity_main)
 class MainActivity : SampleListActivity() {
@@ -11,7 +11,11 @@ class MainActivity : SampleListActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        findViewById<ImageView>(R.id.colors).setOnClickListener {
+        about.setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
+
+        colors.setOnClickListener {
             startActivity(Intent(this, ColorsActivity::class.java))
         }
 

@@ -6,7 +6,6 @@
 
     <style name="carbon_TextAppearance.Headline">
         <item name="android:textSize">@dimen/carbon_textSizeHeadline</item>
-        <item name="carbon_fontFamily">"sans-serif"</item>
         <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
@@ -17,7 +16,7 @@
 
     <style name="carbon_TextAppearance.Title">
         <item name="android:textSize">@dimen/carbon_textSizeTitle</item>
-        <item name="carbon_fontFamily">"sans-serif-medium"</item>
+        <item name="fontWeight">500</item>
         <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
@@ -28,7 +27,6 @@
 
     <style name="carbon_TextAppearance.Subhead">
         <item name="android:textSize">@dimen/carbon_textSizeSubhead</item>
-        <item name="carbon_fontFamily">"sans-serif"</item>
         <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
@@ -39,7 +37,7 @@
 
     <style name="carbon_TextAppearance.Body2">
         <item name="android:textSize">@dimen/carbon_textSizeBody</item>
-        <item name="carbon_fontFamily">"sans-serif-medium"</item>
+        <item name="fontWeight">500</item>
         <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
@@ -50,7 +48,6 @@
 
     <style name="carbon_TextAppearance.Body1">
         <item name="android:textSize">@dimen/carbon_textSizeBody</item>
-        <item name="carbon_fontFamily">"sans-serif"</item>
         <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>
 
@@ -61,7 +58,7 @@
 
     <style name="carbon_TextAppearance.ListHeader">
         <item name="android:textSize">@dimen/carbon_textSizeListHeader</item>
-        <item name="carbon_fontFamily">"sans-serif-medium"</item>
+        <item name="fontWeight">500</item>
         <item name="android:textColor">@color/carbon_defaultTextSecondaryColor</item>
     </style>
 
@@ -72,7 +69,6 @@
 
     <style name="carbon_TextAppearance.Caption">
         <item name="android:textSize">@dimen/carbon_textSizeCaption</item>
-        <item name="carbon_fontFamily">"sans-serif"</item>
         <item name="android:textColor">@color/carbon_defaultTextSecondaryColor</item>
     </style>
 
@@ -83,7 +79,7 @@
 
     <style name="carbon_TextAppearance.Button">
         <item name="android:textSize">@dimen/carbon_textSizeButton</item>
-        <item name="carbon_fontFamily">"sans-serif-medium"</item>
+        <item name="fontWeight">500</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/carbon_defaultTextPrimaryColor</item>
     </style>

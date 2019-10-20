@@ -41,18 +41,18 @@ public class RadioButton extends TextView implements Checkable {
     }
 
     public RadioButton(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, android.R.attr.radioButtonStyle, R.styleable.RadioButton_android_theme), attrs, android.R.attr.radioButtonStyle);
+        super(context, attrs, android.R.attr.radioButtonStyle);
         initRadioButton(attrs, android.R.attr.radioButtonStyle, R.style.carbon_RadioButton);
     }
 
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, defStyleAttr, R.styleable.RadioButton_android_theme), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initRadioButton(attrs, defStyleAttr, R.style.carbon_RadioButton);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RadioButton, defStyleAttr, R.styleable.RadioButton_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initRadioButton(attrs, defStyleAttr, defStyleRes);
     }
 
@@ -72,9 +72,6 @@ public class RadioButton extends TextView implements Checkable {
                 buttonGravity = ButtonGravity.values()[a.getInt(attr, 0)];
             }
         }
-
-        Carbon.initDefaultBackground(this, a, R.styleable.RadioButton_android_background);
-        Carbon.initHtmlText(this, a, R.styleable.RadioButton_carbon_htmlText);
 
         a.recycle();
     }
@@ -170,20 +167,6 @@ public class RadioButton extends TextView implements Checkable {
      */
     void setOnCheckedChangeWidgetListener(OnCheckedChangeListener listener) {
         mOnCheckedChangeWidgetListener = listener;
-    }
-
-    /**
-     * Interface definition for a callback to be invoked when the checked state of a compound button
-     * changed.
-     */
-    public interface OnCheckedChangeListener {
-        /**
-         * Called when the checked state of a compound button has changed.
-         *
-         * @param buttonView The compound button view whose state has changed.
-         * @param isChecked  The new checked state of buttonView.
-         */
-        void onCheckedChanged(RadioButton buttonView, boolean isChecked);
     }
 
     /**

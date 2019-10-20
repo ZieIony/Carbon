@@ -6,12 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import carbon.widget.AutoCompleteEditText;
-
-public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
+public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> {
     private carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener;
     private Map<Class<? extends I>, carbon.widget.RecyclerView.OnItemClickedListener<? extends I>> onItemClickedListeners = new HashMap<>();
     private boolean diff = true;
@@ -32,11 +31,6 @@ public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extend
     }
 
     @Override
-    public String[] getItemWords(int position) {
-        return new String[]{getItem(position).toString()};
-    }
-
-    @Override
     public int getItemCount() {
         return items.length;
     }
@@ -46,15 +40,16 @@ public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extend
     }
 
     public void setItems(@NonNull I[] items) {
+        I[] newItems = Arrays.copyOf(items, items.length);
         if (!diff) {
-            this.items = items;
+            this.items = newItems;
             return;
         }
         if (diffCallback == null)
             diffCallback = new DiffArrayCallback<>();
-        diffCallback.setArrays(this.items, items);
+        diffCallback.setArrays(this.items, newItems);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-        this.items = items;
+        this.items = newItems;
         diffResult.dispatchUpdatesTo(this);
     }
 

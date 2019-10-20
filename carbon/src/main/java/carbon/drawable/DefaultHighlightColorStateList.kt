@@ -36,10 +36,10 @@ class DefaultHighlightColorAccentStateList(context: Context) : ColorStateList(
         ),
         intArrayOf(
                 (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorError) and 0xffffff)),
-                (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorAccent) and 0xffffff)),
-                (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorAccent) and 0xffffff)),
-                (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorAccent) and 0xffffff)),
-                (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorAccent) and 0xffffff)),
+                (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorSecondary) and 0xffffff)),
+                (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorSecondary) and 0xffffff)),
+                (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorSecondary) and 0xffffff)),
+                (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorSecondary) and 0xffffff)),
                 0
         )
 )

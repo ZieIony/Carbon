@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <carbon.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/carbon_Toolbar.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:carbon_icon="@drawable/carbon_uparrow">
+
+        <carbon.widget.ImageView
+            android:id="@+id/share"
+            style="@style/carbon_ImageView.IconButton"
+            app:carbon_src="@drawable/ic_share_black_24dp" />
+    </carbon.widget.Toolbar>
+
+    <carbon.widget.TextView
+        style="@style/sectionDescription"
+        android:text="This is the code used to display the sample. XML and Java/Kotlin, when neccessary. Carbon-specific stuff in blue." />
+
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.TextView
+            android:id="@+id/code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/carbon_windowPadding"
+            android:paddingTop="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_windowPadding"
+            android:paddingBottom="@dimen/carbon_padding"
+            android:textIsSelectable="true"
+            app:carbon_font="@font/code_new_roman" />
+
+    </carbon.widget.ScrollView>
+</carbon.widget.LinearLayout>

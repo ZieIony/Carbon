@@ -5,9 +5,6 @@
 
     <string name="comparisonActivity_title">Comparison</string>
 
-    <string name="textViewComparisonActivity_title">TextView</string>
-    <string name="cardViewComparisonActivity_title">CardView</string>
-
     <string name="tableLayoutActivity_title">TableLayout</string>
     <string name="flowLayoutActivity_title"><![CDATA[FlowLayout & Chips]]></string>
     <string name="seekBarActivity_title">SeekBar</string>
@@ -35,16 +32,18 @@
     <string name="favouritesActivity_title">Favourites</string>
     <string name="animationsActivity_title">Animations</string>
     <string name="librariesActivity_title">Libraries</string>
-    <string name="colorsActivity_title">Colors</string>
     <string name="demosActivity_title">Demos</string>
     <string name="guidelinesActivity_title">Guidelines</string>
     <string name="toolbarsUsageActivity_title">Toolbars / Usage</string>
 
+    <string name="colorsActivity_title">Colors</string>
+    <string name="codeActivity_title">Code</string>
+    <string name="aboutActivity_title">About</string>
+
     <string name="gestureDetectorActivity_title">Gesture detector</string>
-    <string name="fontResourceActivity_title">Font resource</string>
     <string name="behaviorActivity_title">Behavior</string>
     <string name="htmlActivity_title">HTML</string>
-    <string name="robotoActivity_title">Roboto</string>
+    <string name="xmlFontActivity_title">XML Font</string>
     <string name="shadowActivity_title">Shadow</string>
     <string name="textappearanceActivity_title">Text appearance</string>
     <string name="paginationActivity_title">Pagination</string>
@@ -61,9 +60,7 @@
     <string name="quickReturnActivity_title">Quick Return</string>
     <string name="calculatorActivity_title">Calculator</string>
     <string name="picassoActivity_title">Picasso</string>
-    <string name="recyclerCardsActivity_title"><![CDATA[RecyclerView & cards]]></string>
     <string name="navigationViewActivity_title">NavigationView</string>
-    <string name="designActivity_title">Design Support Library</string>
     <string name="constraintLayoutActivity_title">Constraint Layout</string>
     <string name="listRippleActivity_title">List ripple</string>
     <string name="rippleComparisonActivity_title">Ripple comparison</string>
@@ -89,8 +86,6 @@
     <string name="selectDialogActivity_title">Select dialog</string>
     <string name="simpleDialogActivity_title">Simple dialog</string>
 
-    <string name="swatchTestActivity_title">Swatch test</string>
-
     <string name="buttonsUsageActivity_title">Buttons/Usage</string>
     <string name="menusBehaviorActivity_title">Menus/Behavior</string>
     <string name="shrineActivity_title">Studies/Shrine</string>
@@ -101,5 +96,19 @@
     <string name="windowsThemeActivity_title">Windows Theme</string>
 
     <string name="samplehtml"><![CDATA[cdata tag makes it <i>very</i> easy to add <b>formatting</b>]]></string>
+
+    <string name="copyright"><![CDATA[Copyright 2015 Marcin Korniluk \'Zielony\'\n\n
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at\n\n
+
+    http://www.apache.org/licenses/LICENSE-2.0\n\n
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.]]></string>
 
 </resources>

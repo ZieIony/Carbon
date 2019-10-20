@@ -22,7 +22,6 @@ import carbon.widget.LinearLayout;
 import carbon.widget.TextView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_powermenu, title = R.string.powerMenuActivity_title)
@@ -37,7 +36,7 @@ public class PowerMenuActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         button = findViewById(R.id.button);
         powerMenu = findViewById(R.id.powerMenu);

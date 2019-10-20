@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_debugtoolbar" />
+
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <carbon.widget.TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/carbon_windowPadding"
+                android:layout_marginLeft="@dimen/carbon_windowPadding"
+                android:layout_marginTop="@dimen/carbon_margin"
+                android:layout_marginEnd="@dimen/carbon_windowPadding"
+                android:layout_marginRight="@dimen/carbon_windowPadding"
+                android:text="This application contains samples showing most of features of Carbon. All it needs is an Internet connection. It doesn't require any special permissions, doesn't send anything and doesn't gather any information.\n\nMost of the samples has a couple of options:\n - debug layouts\n - disable/enable views\n - display code\n\nYou can also change themes, fonts and colors to see, how the samples would look like in other styles.\n\nFeel free to break things and report found issues to me as it helps me and the other users." />
+
+            <carbon.widget.Divider
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/carbon_margin" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/carbon_colorForeground"
+                android:orientation="vertical">
+
+                <carbon.widget.FrameLayout
+                    android:id="@+id/website"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:layout_marginTop="@dimen/carbon_marginHalf"
+                    app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+                    <carbon.widget.ImageView
+                        style="@style/carbon_ImageView.IconButton"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/carbon_windowPadding"
+                        android:layout_marginLeft="@dimen/carbon_windowPadding"
+                        app:carbon_src="@drawable/ic_link_black_24dp" />
+
+                    <carbon.widget.TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/carbon_contentPadding"
+                        android:layout_marginLeft="@dimen/carbon_contentPadding"
+                        android:text="Visit website" />
+                </carbon.widget.FrameLayout>
+
+                <carbon.widget.FrameLayout
+                    android:id="@+id/issue"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/carbon_listItemHeight"
+                    android:layout_marginBottom="@dimen/carbon_marginHalf"
+                    app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+                    <carbon.widget.ImageView
+                        style="@style/carbon_ImageView.IconButton"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/carbon_windowPadding"
+                        android:layout_marginLeft="@dimen/carbon_windowPadding"
+                        app:carbon_src="@drawable/ic_warning_black_24dp" />
+
+                    <carbon.widget.TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/carbon_contentPadding"
+                        android:layout_marginLeft="@dimen/carbon_contentPadding"
+                        android:text="Report issue" />
+                </carbon.widget.FrameLayout>
+            </LinearLayout>
+
+            <carbon.widget.Divider
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <carbon.widget.TextView
+                android:id="@+id/version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/carbon_windowPadding"
+                android:layout_marginLeft="@dimen/carbon_windowPadding"
+                android:layout_marginTop="@dimen/carbon_margin"
+                android:layout_marginEnd="@dimen/carbon_windowPadding"
+                android:layout_marginRight="@dimen/carbon_windowPadding"
+                android:layout_marginBottom="@dimen/carbon_marginHalf"
+                android:textAppearance="?attr/carbon_textAppearanceCaption"
+                tools:text="Carbon version: 0.17.0" />
+
+            <carbon.widget.TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/carbon_windowPadding"
+                android:layout_marginLeft="@dimen/carbon_windowPadding"
+                android:layout_marginTop="@dimen/carbon_margin"
+                android:layout_marginEnd="@dimen/carbon_windowPadding"
+                android:layout_marginRight="@dimen/carbon_windowPadding"
+                android:layout_marginBottom="@dimen/carbon_margin"
+                android:text="@string/copyright"
+                android:textAppearance="?attr/carbon_textAppearanceCaption" />
+        </carbon.widget.LinearLayout>
+    </carbon.widget.ScrollView>
+
+</carbon.widget.LinearLayout>

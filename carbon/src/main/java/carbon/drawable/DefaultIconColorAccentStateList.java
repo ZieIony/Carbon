@@ -20,16 +20,16 @@ public class DefaultIconColorAccentStateList extends ColorStateList {
         }, new int[]{
                 Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabled),
                 Carbon.getThemeColor(context, R.attr.carbon_colorError),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
-                Carbon.getThemeColor(context, R.attr.colorAccent),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
+                Carbon.getThemeColor(context, R.attr.colorSecondary),
                 Carbon.getThemeColor(context, R.attr.carbon_iconColor)
         });
     }
 
-    public static DefaultIconColorAccentStateList make(Context context){
+    public static DefaultIconColorAccentStateList make(Context context) {
         return new DefaultIconColorAccentStateList(context);
     }
 }

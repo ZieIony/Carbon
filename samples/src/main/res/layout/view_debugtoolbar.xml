@@ -11,7 +11,7 @@
     <carbon.widget.ImageView
         android:id="@+id/debug"
         style="@style/carbon_ImageView.IconButton"
-        app:srcCompat="@drawable/ic_bug_report_black_24dp" />
+        app:carbon_src="@drawable/ic_bug_report_black_24dp" />
 
     <carbon.widget.CheckBox
         android:id="@+id/enabled"

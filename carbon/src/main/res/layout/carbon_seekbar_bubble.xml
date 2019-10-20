@@ -16,8 +16,8 @@
         <carbon.widget.ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/carbon_bubble"
-            app:carbon_tint="?attr/colorAccent" />
+            app:carbon_src="@drawable/carbon_bubble"
+            app:carbon_tint="?attr/colorSecondary" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_label"

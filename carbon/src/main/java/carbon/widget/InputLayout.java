@@ -2,10 +2,8 @@ package carbon.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,17 +11,17 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.drawable.DefaultAccentColorStateList;
-import carbon.internal.TypefaceUtils;
 import carbon.view.InputView;
 
 public class InputLayout extends RelativeLayout {
 
     private int gravity;
 
-    public enum LabelStyle {
+    public enum LabelMode {
         Floating, Persistent, Hint, IfNotEmpty
     }
 
@@ -43,7 +41,7 @@ public class InputLayout extends RelativeLayout {
     private String label;
     private TextView counterTextView;
 
-    private LabelStyle labelStyle;
+    private LabelMode labelMode;
     private TextView labelTextView;
 
     private ActionButton actionButton = ActionButton.None;
@@ -100,43 +98,19 @@ public class InputLayout extends RelativeLayout {
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_errorFontPath) {
-                String path = a.getString(attr);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                setErrorTypeface(typeface);
-            } else if (attr == R.styleable.InputLayout_carbon_errorTextSize) {
-                setErrorTextSize(a.getDimension(attr, 0));
-            } else if (attr == R.styleable.InputLayout_carbon_errorFontFamily) {
-                int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                setErrorTypeface(typeface);
-            } else if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_labelFontPath) {
-                String path = a.getString(attr);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                setLabelTypeface(typeface);
-            } else if (attr == R.styleable.InputLayout_carbon_counterTextSize) {
-                setCounterTextSize(a.getDimension(attr, 0));
-            } else if (attr == R.styleable.InputLayout_carbon_labelFontFamily) {
-                int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                setLabelTypeface(typeface);
-            } else if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_counterFontPath) {
-                String path = a.getString(attr);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), path);
-                setCounterTypeface(typeface);
-            } else if (attr == R.styleable.InputLayout_carbon_labelTextSize) {
-                setLabelTextSize(a.getDimension(attr, 0));
-            } else if (attr == R.styleable.InputLayout_carbon_counterFontFamily) {
-                int textStyle = a.getInt(R.styleable.InputLayout_android_textStyle, 0);
-                Typeface typeface = TypefaceUtils.getTypeface(getContext(), a.getString(attr), textStyle);
-                setCounterTypeface(typeface);
+            if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_errorTextAppearance) {
+                Carbon.setTextAppearance(errorTextView, attr, false);
+            } else if (attr == R.styleable.InputLayout_carbon_counterTextAppearance) {
+                Carbon.setTextAppearance(counterTextView, attr, false);
+            } else if (attr == R.styleable.InputLayout_carbon_labelTextAppearance) {
+                Carbon.setTextAppearance(labelTextView, attr, false);
             }
         }
 
         setError(a.getString(R.styleable.InputLayout_carbon_error));
         setErrorMode(ErrorMode.values()[a.getInt(R.styleable.InputLayout_carbon_errorMode, ErrorMode.WhenInvalid.ordinal())]);
 
-        setLabelStyle(LabelStyle.values()[a.getInt(R.styleable.InputLayout_carbon_labelStyle, LabelStyle.Floating.ordinal())]);
+        setLabelMode(LabelMode.values()[a.getInt(R.styleable.InputLayout_carbon_labelMode, LabelMode.Floating.ordinal())]);
         setLabel(a.getString(R.styleable.InputLayout_carbon_label));
         setActionButton(ActionButton.values()[a.getInt(R.styleable.InputLayout_carbon_actionButton, 0)]);
         setGravity(a.getInt(R.styleable.InputLayout_android_gravity, Gravity.START));
@@ -258,16 +232,18 @@ public class InputLayout extends RelativeLayout {
     }
 
     private void updateHint(View child) {
+        if (labelTextView == null)
+            return;
         if (child == null) {
             labelTextView.setVisibility(GONE);
             return;
         }
-        if (labelStyle == LabelStyle.Persistent || labelStyle == LabelStyle.Floating && child.isFocused() ||
-                labelStyle == LabelStyle.IfNotEmpty && (child.isFocused() || child instanceof android.widget.TextView && ((android.widget.TextView) child).getText().length() > 0)) {
+        if (labelMode == LabelMode.Persistent || labelMode == LabelMode.Floating && child.isFocused() ||
+                labelMode == LabelMode.IfNotEmpty && (child.isFocused() || child instanceof android.widget.TextView && ((android.widget.TextView) child).getText().length() > 0)) {
             labelTextView.animateVisibility(VISIBLE);
             if (child instanceof EditText)
                 ((EditText) child).setHint(null);
-        } else if (labelStyle != LabelStyle.Hint) {
+        } else if (labelMode != LabelMode.Hint) {
             labelTextView.animateVisibility(INVISIBLE);
             if (child instanceof EditText)
                 ((EditText) child).setHint(label + (((EditText) child).isRequired() ? " *" : ""));
@@ -291,52 +267,16 @@ public class InputLayout extends RelativeLayout {
         errorTextView.setVisibility(errorMode == ErrorMode.WhenInvalid ? INVISIBLE : errorMode == ErrorMode.Always ? VISIBLE : GONE);
     }
 
-    public float getErrorTextSize() {
-        return errorTextView.getTextSize();
+    public void setErrorTextAppearance(int resId) {
+        Carbon.setTextAppearance(errorTextView, resId, false);
     }
 
-    public void setErrorTextSize(float errorTextSize) {
-        errorTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, errorTextSize);
+    public void setCounterTextAppearance(int resId) {
+        Carbon.setTextAppearance(counterTextView, resId, false);
     }
 
-    public float getCounterTextSize() {
-        return counterTextView.getTextSize();
-    }
-
-    public void setCounterTextSize(float counterTextSize) {
-        counterTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, counterTextSize);
-    }
-
-    public float getLabelTextSize() {
-        return labelTextView.getTextSize();
-    }
-
-    public void setLabelTextSize(float labelTextSize) {
-        labelTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, labelTextSize);
-    }
-
-    public Typeface getErrorTypeface() {
-        return errorTextView.getTypeface();
-    }
-
-    public void setErrorTypeface(Typeface errorTypeface) {
-        errorTextView.setTypeface(errorTypeface);
-    }
-
-    public Typeface getCounterTypeface() {
-        return counterTextView.getTypeface();
-    }
-
-    public void setCounterTypeface(Typeface counterTypeface) {
-        counterTextView.setTypeface(counterTypeface);
-    }
-
-    public Typeface getLabelTypeface() {
-        return labelTextView.getTypeface();
-    }
-
-    public void setLabelTypeface(Typeface labelTypeface) {
-        labelTextView.setTypeface(labelTypeface);
+    public void setLabelTextAppearance(int resId) {
+        Carbon.setTextAppearance(labelTextView, resId, false);
     }
 
     public String getLabel() {
@@ -354,12 +294,12 @@ public class InputLayout extends RelativeLayout {
             updateHint(child);
     }
 
-    public LabelStyle getLabelStyle() {
-        return labelStyle;
+    public LabelMode getLabelMode() {
+        return labelMode;
     }
 
-    public void setLabelStyle(LabelStyle labelStyle) {
-        this.labelStyle = labelStyle;
+    public void setLabelMode(LabelMode labelMode) {
+        this.labelMode = labelMode;
         if (child != null)
             updateHint(child);
     }

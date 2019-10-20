@@ -2,7 +2,7 @@ package carbon.widget;
 
 import java.util.List;
 
-public class ListSearchDataProvider<Type> implements SearchEditText.SearchDataProvider<Type> {
+public class ListSearchDataProvider<Type> implements SearchDataProvider<Type> {
     private List<Type> data;
 
     public ListSearchDataProvider(List<Type> data) {

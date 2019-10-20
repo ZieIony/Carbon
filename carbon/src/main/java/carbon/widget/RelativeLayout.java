@@ -57,12 +57,12 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.PercentLayoutHelper;
 import carbon.internal.RevealAnimator;
-import carbon.view.ShadowView;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -157,8 +157,8 @@ public class RelativeLayout extends android.widget.RelativeLayout
             R.styleable.RelativeLayout_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.RelativeLayout_android_maxWidth,
-            R.styleable.RelativeLayout_android_maxHeight,
+            R.styleable.RelativeLayout_carbon_maxWidth,
+            R.styleable.RelativeLayout_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.RelativeLayout_carbon_elevation,
@@ -170,6 +170,7 @@ public class RelativeLayout extends android.widget.RelativeLayout
     private void initRelativeLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, R.style.carbon_RelativeLayout);
 
+        Carbon.initDefaultBackground(this, a, R.styleable.FrameLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
@@ -178,7 +179,6 @@ public class RelativeLayout extends android.widget.RelativeLayout
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
-        Carbon.initDefaultBackground(this, a, R.styleable.FrameLayout_android_background);
 
         a.recycle();
 

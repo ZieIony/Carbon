@@ -19,7 +19,6 @@ import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
@@ -36,7 +35,7 @@ public class AvatarTextRatingSubtextDateListItemActivity extends ThemedActivity 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         List<Serializable> items = Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),

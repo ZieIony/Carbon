@@ -10,7 +10,6 @@ import carbon.drawable.CheckedState;
 import carbon.widget.CheckBox;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.carbonsamples.databinding.ActivityCheckboxRadioBinding;
 
@@ -23,7 +22,7 @@ public class CheckBoxRadioActivity extends ThemedActivity {
         setContentView(viewDataBinding.getRoot());
         ActivityCheckboxRadioBinding binding = (ActivityCheckboxRadioBinding) viewDataBinding;
 
-        Samples.initToolbar(this, getTitle().toString());
+        initToolbar();
 
         binding.check.setOnClickListener(view -> binding.checkBox.setChecked(true));
 

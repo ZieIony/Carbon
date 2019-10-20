@@ -7,7 +7,6 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
@@ -96,10 +95,13 @@ public class UnderlineDrawable extends Drawable implements TintAwareDrawable {
 
     public void updateTint() {
         if (colorFilter != null) {
+            paint.setColor(Color.WHITE);
             paint.setColorFilter(colorFilter);
         } else if (tint != null && tintMode != null) {
-            paint.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getState(), tint.getDefaultColor()), tintMode));
+            paint.setColor(tint.getColorForState(getState(), tint.getDefaultColor()));
+            paint.setColorFilter(null);
         } else {
+            paint.setColor(Color.WHITE);
             paint.setColorFilter(null);
         }
     }

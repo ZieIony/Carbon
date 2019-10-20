@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:maxWidth="72dp">
+        app:carbon_maxWidth="72dp">
 
         <carbon.widget.ImageView
             android:id="@+id/carbon_bottomIcon"

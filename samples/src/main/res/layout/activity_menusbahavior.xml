@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_person_black_24dp" />
+                    app:carbon_src="@drawable/ic_person_black_24dp" />
 
                 <carbon.widget.EditText
                     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_location_on_black_24dp" />
+                    app:carbon_src="@drawable/ic_location_on_black_24dp" />
 
                 <carbon.widget.EditText
                     android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_email_black_24dp" />
+                    app:carbon_src="@drawable/ic_email_black_24dp" />
 
                 <carbon.widget.EditText
                     android:layout_width="match_parent"

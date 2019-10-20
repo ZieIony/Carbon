@@ -150,8 +150,8 @@ public class Chip extends LinearLayout implements Checkable {
     }
 
     @Deprecated
-    public void setText(String text){
-        setText((CharSequence)text);
+    public void setText(String text) {
+        setText((CharSequence) text);
     }
 
     public void setText(CharSequence text) {

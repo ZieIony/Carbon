@@ -10,11 +10,10 @@
     <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.AutoCompleteLayout
-        android:background="?attr/carbon_colorBackground"
         android:id="@+id/autoComplete"
-        android:layout_gravity="top|start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_paddingHalf" />
+        android:layout_gravity="top|start"
+        android:background="?attr/carbon_colorForeground" />
 
 </carbon.widget.LinearLayout>

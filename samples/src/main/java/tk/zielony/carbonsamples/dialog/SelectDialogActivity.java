@@ -15,7 +15,6 @@ import carbon.widget.DropDown;
 import carbon.widget.EditText;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.food.StringFruitGenerator;
 
@@ -29,7 +28,7 @@ public class SelectDialogActivity extends ThemedActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         EditText titleText = findViewById(R.id.titleText);
         DropDown dropDown = findViewById(R.id.dropDown);

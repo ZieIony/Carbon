@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +13,7 @@
         app:carbon_elevation="@dimen/carbon_elevationToolbar">
 
         <carbon.widget.Toolbar
+            style="@style/carbon_Toolbar.ActionBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
             android:text="Search"
@@ -21,37 +22,45 @@
             <carbon.widget.ImageView
                 android:id="@+id/search"
                 style="@style/carbon_ImageView.IconButton"
-                android:src="@raw/ic_search_24px" />
+                app:carbon_src="@raw/ic_search_24px" />
         </carbon.widget.Toolbar>
 
-        <carbon.widget.LinearLayout
+        <carbon.widget.FrameLayout
             android:id="@+id/searchbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/carbon_colorBackground"
-            android:clickable="true"
-            android:gravity="center_vertical"
+            android:background="?attr/carbon_colorForeground"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/carbon_toolbarItemMargin"
-            android:paddingRight="@dimen/carbon_toolbarItemMargin"
             android:visibility="invisible">
 
             <carbon.widget.ImageView
                 android:id="@+id/close"
                 style="@style/carbon_ImageView.IconButton"
-                app:srcCompat="@drawable/carbon_clear" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/carbon_toolbarItemMargin"
+                android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
+                app:carbon_src="@drawable/carbon_uparrow" />
 
             <carbon.widget.SearchEditText
-                android:layout_width="0dp"
+                android:id="@+id/searchEditText"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/carbon_toolbarHeight"
-                android:layout_weight="1"
-                android:background="@null"
-                android:padding="0dp" />
+                android:layout_marginLeft="@dimen/carbon_contentPadding"
+                android:layout_marginRight="@dimen/carbon_contentPadding"
+                android:hint="search" />
 
             <carbon.widget.ImageView
+                android:id="@+id/clear"
                 style="@style/carbon_ImageView.IconButton"
-                android:clickable="false"
-                android:src="@raw/ic_search_24px" />
-        </carbon.widget.LinearLayout>
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/carbon_toolbarItemMargin"
+                android:layout_marginRight="@dimen/carbon_toolbarItemMargin"
+                app:carbon_src="@drawable/carbon_clear" />
+        </carbon.widget.FrameLayout>
     </carbon.widget.FrameLayout>
-</carbon.widget.FrameLayout>
+
+    <carbon.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</carbon.widget.LinearLayout>

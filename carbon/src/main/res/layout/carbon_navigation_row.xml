@@ -24,7 +24,7 @@
             android:layout_marginEnd="@dimen/carbon_padding"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_padding"
-            app:srcCompat="@{data.getIcon()}"
+            app:carbon_src="@{data.getIcon()}"
             android:layout_marginStart="@dimen/carbon_windowPadding"
             app:carbon_tint="@{data.iconTintList}" />
 

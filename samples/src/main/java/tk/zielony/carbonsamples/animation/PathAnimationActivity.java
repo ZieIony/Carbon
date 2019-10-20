@@ -15,7 +15,6 @@ import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
 
@@ -29,7 +28,7 @@ public class PathAnimationActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         ImageView imageView = findViewById(R.id.image);
         imageView.setImageDrawable(new DrawableImageGenerator(this).next());

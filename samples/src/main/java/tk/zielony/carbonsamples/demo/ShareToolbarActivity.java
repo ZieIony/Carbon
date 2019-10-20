@@ -13,7 +13,6 @@ import carbon.internal.MathUtils;
 import carbon.widget.LinearLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_share_toolbar, title = R.string.shareToolbarActivity_title)
@@ -22,7 +21,7 @@ public class ShareToolbarActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         final LinearLayout shareToolbar = findViewById(R.id.shareToolbar);
         final View root = shareToolbar.getRootView();
@@ -39,7 +38,7 @@ public class ShareToolbarActivity extends ThemedActivity {
                 float right = MathUtils.lerp(root.getWidth() - getResources().getDimension(R.dimen.carbon_padding), root.getWidth(), frac);
                 shareToolbar.layout((int) left, shareToolbar.getTop(), (int) right, shareToolbar.getBottom());
                 shareToolbar.setElevation(frac);
-                int inColor = Carbon.getThemeColor(this, R.attr.colorAccent);
+                int inColor = Carbon.getThemeColor(this, R.attr.colorSecondary);
                 int outColor = Carbon.getThemeColor(this, R.attr.carbon_colorForeground);
                 shareToolbar.setBackgroundColor(AnimUtils.lerpColor(frac, inColor, outColor));
             });

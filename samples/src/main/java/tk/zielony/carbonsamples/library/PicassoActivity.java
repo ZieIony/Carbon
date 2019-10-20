@@ -9,7 +9,6 @@ import com.squareup.picasso.Target;
 import carbon.widget.rx.Button;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_picasso, title = R.string.picassoActivity_title)
@@ -18,7 +17,7 @@ public class PicassoActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         final PicassoView image = findViewById(R.id.image);
         Button button = findViewById(R.id.button);

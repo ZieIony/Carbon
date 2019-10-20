@@ -1,9 +1,7 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 
@@ -14,7 +12,6 @@ import carbon.widget.EditText;
 import carbon.widget.FlowLayout;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.DataContext;
 import tk.zielony.randomdata.person.DrawableAvatarGenerator;
@@ -28,7 +25,7 @@ public class FlowLayoutActivity extends ThemedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         DrawableAvatarGenerator avatarGenerator = new DrawableAvatarGenerator(this);
         StringFirstNameGenerator nameGenerator = new StringFirstNameGenerator(Gender.Both, false, false);

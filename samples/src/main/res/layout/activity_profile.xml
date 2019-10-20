@@ -76,7 +76,7 @@
                         <carbon.widget.ImageView
                             style="@style/carbon_ImageView.Icon"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_location_on_black_24dp" />
+                            app:carbon_src="@drawable/ic_location_on_black_24dp" />
 
                         <carbon.widget.TextView
                             android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                 <carbon.widget.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_email_black_24dp" />
+                    app:carbon_src="@drawable/ic_email_black_24dp" />
 
             </carbon.widget.LinearLayout>
 
@@ -351,7 +351,7 @@
             <carbon.widget.ImageView
                 android:id="@+id/debug"
                 style="@style/carbon_ImageView.IconButton"
-                app:srcCompat="@drawable/ic_bug_report_black_24dp" />
+                app:carbon_src="@drawable/ic_bug_report_black_24dp" />
 
             <carbon.widget.CheckBox
                 android:id="@+id/enabled"

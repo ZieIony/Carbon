@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,7 +9,7 @@
         android:id="@+id/landscape"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:maxHeight="400dp"
+        app:carbon_maxHeight="400dp"
         android:minHeight="64dp" />
 
     <carbon.widget.RecyclerView

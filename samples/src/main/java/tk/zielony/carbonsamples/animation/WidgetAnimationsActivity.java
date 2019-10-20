@@ -8,7 +8,6 @@ import carbon.widget.rx.Button;
 import carbon.widget.rx.FloatingActionButton;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_animations, title = R.string.widgetAnimationsActivity_title)
@@ -18,7 +17,7 @@ public class WidgetAnimationsActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         final FloatingActionButton fab = findViewById(R.id.fab);
         Button button = findViewById(R.id.button);

@@ -55,12 +55,12 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.PercentLayoutHelper;
 import carbon.internal.RevealAnimator;
-import carbon.view.ShadowView;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -149,8 +149,8 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
             R.styleable.GridLayout_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.GridLayout_android_maxWidth,
-            R.styleable.GridLayout_android_maxHeight,
+            R.styleable.GridLayout_carbon_maxWidth,
+            R.styleable.GridLayout_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.GridLayout_carbon_elevation,
@@ -162,6 +162,7 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
     private void initGridLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, R.style.carbon_GridLayout);
 
+        Carbon.initDefaultBackground(this, a, R.styleable.GridLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
@@ -170,7 +171,6 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
-        Carbon.initDefaultBackground(this, a, R.styleable.GridLayout_android_background);
 
         a.recycle();
 

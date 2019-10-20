@@ -1,4 +1,4 @@
-package tk.zielony.carbonsamples.library;
+package tk.zielony.carbonsamples.widget;
 
 import android.view.LayoutInflater;
 import android.view.MotionEvent;

@@ -61,10 +61,10 @@
 
         <carbon.widget.ImageView
             style="@style/carbon_ImageView.IconButton"
-            app:srcCompat="@drawable/carbon_prev" />
+            app:carbon_src="@drawable/carbon_prev" />
 
         <carbon.widget.ImageView
             style="@style/carbon_ImageView.IconButton"
-            app:srcCompat="@drawable/carbon_next" />
+            app:carbon_src="@drawable/carbon_next" />
     </carbon.widget.LinearLayout>
 </merge>

@@ -33,22 +33,22 @@ public interface MaxSizeView {
     int getMaxHeight();
 
     @Deprecated
-    default void setMaximumWidth(int w){
+    default void setMaximumWidth(int w) {
         setMaxWidth(w);
     }
 
     @Deprecated
-    default int getMaximumWidth(){
+    default int getMaximumWidth() {
         return getMaxWidth();
     }
 
     @Deprecated
-    default void setMaximumHeight(int w){
+    default void setMaximumHeight(int w) {
         setMaxHeight(w);
     }
 
     @Deprecated
-    default int getMaximumHeight(){
+    default int getMaximumHeight() {
         return getMaxHeight();
     }
 }

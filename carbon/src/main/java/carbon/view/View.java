@@ -135,8 +135,8 @@ public abstract class View extends android.view.View
             R.styleable.View_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.View_android_maxWidth,
-            R.styleable.View_android_maxHeight,
+            R.styleable.View_carbon_maxWidth,
+            R.styleable.View_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.View_carbon_elevation,
@@ -148,6 +148,7 @@ public abstract class View extends android.view.View
     private void initView(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.View, defStyleAttr, R.style.carbon_View);
 
+        Carbon.initDefaultBackground(this, a, R.styleable.View_android_background);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initTint(this, a, tintIds);
@@ -156,7 +157,6 @@ public abstract class View extends android.view.View
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
-        Carbon.initDefaultBackground(this, a, R.styleable.View_android_background);
 
         a.recycle();
     }

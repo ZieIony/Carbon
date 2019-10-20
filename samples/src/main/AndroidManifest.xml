@@ -55,7 +55,6 @@
         <activity android:name=".animation.PathAnimationActivity" />
 
         <activity android:name=".feature.GestureDetectorActivity" />
-        <activity android:name=".feature.FontResourceActivity" />
         <activity android:name=".feature.AutoSizeTextActivity" />
         <activity android:name=".feature.BehaviorActivity" />
         <activity android:name=".feature.HtmlActivity" />
@@ -63,7 +62,7 @@
         <activity android:name=".feature.AnchorActivity" />
         <activity android:name=".feature.ShadowActivity" />
         <activity android:name=".feature.PaginationActivity" />
-        <activity android:name=".feature.RobotoActivity" />
+        <activity android:name=".feature.XmlFontActivity" />
         <activity android:name=".feature.TextAppearanceActivity" />
         <activity android:name=".feature.ZOrderActivity" />
         <activity android:name=".feature.PercentLayoutActivity" />
@@ -71,8 +70,6 @@
         <activity android:name=".feature.ThemeActivity" />
 
         <activity android:name=".library.PicassoActivity" />
-        <activity android:name=".library.RecyclerCardsActivity" />
-        <activity android:name=".library.DesignActivity" />
         <activity android:name=".library.ConstraintLayoutActivity" />
 
         <activity android:name=".demo.PowerMenuActivity" />
@@ -116,7 +113,6 @@
         <activity android:name=".FavouritesActivity" />
         <activity android:name=".AnimationsActivity" />
         <activity android:name=".LibrariesActivity" />
-        <activity android:name=".ColorsActivity" />
         <activity android:name=".ComponentsActivity" />
         <activity android:name=".DemosActivity" />
         <activity android:name=".FeaturesActivity" />
@@ -124,6 +120,10 @@
         <activity android:name=".WidgetsActivity" />
         <activity android:name=".DialogsActivity" />
         <activity android:name=".ThemesActivity" />
+
+        <activity android:name=".ColorsActivity" />
+        <activity android:name=".CodeActivity" />
+        <activity android:name=".AboutActivity"/>
     </application>
 
 </manifest>

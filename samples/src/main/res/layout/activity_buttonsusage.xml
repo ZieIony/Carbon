@@ -142,7 +142,7 @@
                         android:layout_below="@id/totalValue"
                         android:background="#42FF5252"
                         app:carbon_progressStyle="bar_determinate"
-                        app:carbon_tint="?attr/colorAccent" />
+                        app:carbon_tint="?attr/colorSecondary" />
 
                     <carbon.widget.TextView
                         android:id="@+id/app"

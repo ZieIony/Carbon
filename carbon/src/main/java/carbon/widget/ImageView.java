@@ -32,7 +32,7 @@ import android.view.ViewOutlineProvider;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageHelper;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.view.ViewCompat;
 
 import com.google.android.material.shape.CutCornerTreatment;
@@ -53,10 +53,10 @@ import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.RevealAnimator;
-import carbon.view.ShadowView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -144,8 +144,8 @@ public class ImageView extends android.widget.ImageView
             R.styleable.ImageView_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.ImageView_android_maxWidth,
-            R.styleable.ImageView_android_maxHeight,
+            R.styleable.ImageView_carbon_maxWidth,
+            R.styleable.ImageView_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.ImageView_carbon_elevation,
@@ -159,21 +159,21 @@ public class ImageView extends android.widget.ImageView
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.ImageView_android_src) {
+            if (attr == R.styleable.ImageView_carbon_src) {
                 int resId = a.getResourceId(attr, 0);
-                if (resId != 0 && getContext().getResources().getResourceTypeName(resId).equals("raw")) {
-                    if (!isInEditMode()) {
-                        setImageDrawable(new VectorDrawable(getResources(), resId));
+                if (resId != 0) {
+                    if (getContext().getResources().getResourceTypeName(resId).equals("raw")) {
+                        if (!isInEditMode()) {
+                            setImageDrawable(new VectorDrawable(getResources(), resId));
+                        } else {
+                            setImageResource(R.drawable.carbon_iconplaceholder);
+                        }
                     } else {
-                        setImageResource(R.drawable.carbon_iconplaceholder);
+                        setImageDrawable(AppCompatResources.getDrawable(getContext(), resId));
                     }
                 }
-            } else if (attr == R.styleable.ImageView_android_enabled) {
-                setEnabled(a.getBoolean(attr, true));
             }
         }
-
-        new AppCompatImageHelper(this).loadFromAttributes(attrs, defStyleAttr);
 
         Carbon.initDefaultBackground(this, a, R.styleable.ImageView_android_background);
 
@@ -613,16 +613,20 @@ public class ImageView extends android.widget.ImageView
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
 
-        paint.setAlpha((int) (127 * alpha));
-        saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        if (alpha != 255) {
+            paint.setAlpha((int) (127 * alpha));
+            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        } else {
+            saveCount = canvas.save();
+        }
+        Matrix matrix = getMatrix();
+        canvas.setMatrix(matrix);
 
         if (r) {
             canvas.clipRect(
                     getLeft() + revealAnimator.x - revealAnimator.radius, getTop() + revealAnimator.y - revealAnimator.radius,
                     getLeft() + revealAnimator.x + revealAnimator.radius, getTop() + revealAnimator.y + revealAnimator.radius);
         }
-
-        Matrix matrix = getMatrix();
 
         shadowDrawable.setFillColor(spotShadowColor);
         shadowDrawable.setShadowColor(spotShadowColor != null ? spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()) : 0xff000000);
@@ -632,23 +636,19 @@ public class ImageView extends android.widget.ImageView
         shadowDrawable.setBounds(getLeft(), (int) (getTop() + z / 4), getRight(), (int) (getBottom() + z / 4));
         shadowDrawable.draw(canvas);
 
-        if (saveCount != 0) {
-            canvas.translate(this.getLeft(), this.getTop());
-            canvas.concat(matrix);
-            paint.setXfermode(Carbon.CLEAR_MODE);
-        }
+        canvas.translate(this.getLeft(), this.getTop());
+        canvas.concat(matrix);
+        paint.setXfermode(Carbon.CLEAR_MODE);
         if (maskShadow) {
             cornersMask.setFillType(Path.FillType.WINDING);
             canvas.drawPath(cornersMask, paint);
         }
-        if (r) {
+        if (r)
             canvas.drawPath(revealAnimator.mask, paint);
-        }
-        if (saveCount != 0) {
-            canvas.restoreToCount(saveCount);
-            paint.setXfermode(null);
-            paint.setAlpha(255);
-        }
+
+        canvas.restoreToCount(saveCount);
+        paint.setXfermode(null);
+        paint.setAlpha(255);
     }
 
     @Override

@@ -22,7 +22,7 @@
                 android:layout_height="@dimen/carbon_toolbarHeight"
                 android:layout_marginStart="@dimen/carbon_toolbarItemMargin"
                 android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
-                app:srcCompat="@drawable/ic_menu_black_24dp" />
+                app:carbon_src="@drawable/ic_menu_black_24dp" />
 
             <carbon.widget.RecyclerView
                 android:id="@+id/backdrop_recycler"

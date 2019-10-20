@@ -8,7 +8,6 @@ import carbon.widget.FrameLayout;
 import carbon.widget.ImageView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.DataContext;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
@@ -20,7 +19,7 @@ public class ImageFadeActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         FrameLayout grid = findViewById(R.id.grid);
 

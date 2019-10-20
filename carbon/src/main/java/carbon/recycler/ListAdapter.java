@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import carbon.widget.AutoCompleteEditText;
-
-public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> implements AutoCompleteEditText.AutoCompleteDataProvider<I> {
+public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends Adapter<VH, I> {
     private carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener;
     private Map<Class<? extends I>, carbon.widget.RecyclerView.OnItemClickedListener<? extends I>> onItemClickedListeners = new HashMap<>();
     private boolean diff = true;
@@ -34,11 +32,6 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
     }
 
     @Override
-    public String[] getItemWords(int position) {
-        return new String[]{getItem(position).toString()};
-    }
-
-    @Override
     public int getItemCount() {
         return items.size();
     }
@@ -48,15 +41,16 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
     }
 
     public void setItems(@NonNull List<I> items) {
+        List<I> newItems = new ArrayList<>(items);
         if (!diff) {
-            this.items = items;
+            this.items = newItems;
             return;
         }
         if (diffCallback == null)
             diffCallback = new DiffListCallback<>();
-        diffCallback.setLists(this.items, items);
+        diffCallback.setLists(this.items, newItems);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-        this.items = items;
+        this.items = newItems;
         diffResult.dispatchUpdatesTo(this);
     }
 

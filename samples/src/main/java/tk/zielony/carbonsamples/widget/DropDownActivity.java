@@ -5,7 +5,6 @@ import android.os.Bundle;
 import carbon.widget.DropDown;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_dropdown, title = R.string.dropDownActivityActivity_title)
@@ -21,7 +20,7 @@ public class DropDownActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         String[] days = new String[31];
         for (int i = 0; i < days.length; i++)

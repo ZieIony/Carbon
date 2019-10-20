@@ -51,12 +51,12 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.view.ShadowView;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -144,8 +144,8 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
             R.styleable.DrawerLayout_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.DrawerLayout_android_maxWidth,
-            R.styleable.DrawerLayout_android_maxHeight,
+            R.styleable.DrawerLayout_carbon_maxWidth,
+            R.styleable.DrawerLayout_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
             R.styleable.DrawerLayout_carbon_elevation,
@@ -157,6 +157,7 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
     private void initDrawerLayout(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, R.style.carbon_DrawerLayout);
 
+        Carbon.initDefaultBackground(this, a, R.styleable.DrawerLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
@@ -165,7 +166,6 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
-        Carbon.initDefaultBackground(this, a, R.styleable.DrawerLayout_android_background);
 
         a.recycle();
 

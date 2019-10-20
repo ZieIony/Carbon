@@ -15,7 +15,12 @@
         <carbon.widget.ImageView
             android:id="@+id/colors"
             style="@style/carbon_ImageView.IconButton"
-            app:srcCompat="@drawable/ic_color_lens_black_24dp" />
+            app:carbon_src="@drawable/ic_color_lens_black_24dp" />
+
+        <carbon.widget.ImageView
+            android:id="@+id/about"
+            style="@style/carbon_ImageView.IconButton"
+            app:carbon_src="@drawable/ic_help_outline_black_24dp" />
     </carbon.widget.Toolbar>
 
     <carbon.widget.RecyclerView

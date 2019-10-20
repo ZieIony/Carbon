@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:minWidth="@dimen/carbon_bottomNavigationViewInactiveMinWidth"
-        android:maxWidth="@dimen/carbon_bottomNavigationViewInactiveMaxWidth"
+        app:carbon_maxWidth="@dimen/carbon_bottomNavigationViewInactiveMaxWidth"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless">
 

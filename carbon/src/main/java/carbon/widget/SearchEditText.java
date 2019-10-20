@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.R;
+import carbon.internal.SearchHelper;
 import carbon.internal.SimpleTextWatcher;
 
 /**
@@ -19,27 +20,19 @@ import carbon.internal.SimpleTextWatcher;
  * This class can be used to create new material search fields with drop down menus separated by a
  * seam.
  */
-public class SearchEditText<Type> extends EditText {
+public class SearchEditText extends EditText {
+
+    public enum MatchMode {
+        START, ADJACENT, NONADJACENT
+    }
 
     private OnFilterListener onFilterListener;
     private String prevText = "";
-    private boolean usePartialMatch = false;
-
-    public void setDataProvider(SearchDataProvider<Type> dataProvider) {
-        this.dataProvider = dataProvider;
-    }
-
-    public interface SearchDataProvider<Type> {
-
-        int getItemCount();
-
-        Type getItem(int i);
-
-        String[] getItemWords(Type item);
-    }
+    private MatchMode matchMode = MatchMode.ADJACENT;
+    private int searchThreshold = 2;
 
     protected TextWatcher searchTextWatcher;
-    SearchDataProvider<Type> dataProvider;
+    SearchDataProvider dataProvider;
 
     public SearchEditText(Context context) {
         super(context, null, R.attr.carbon_searchEditTextStyle);
@@ -81,8 +74,20 @@ public class SearchEditText<Type> extends EditText {
         addTextChangedListener(searchTextWatcher);
     }
 
-    public void setUsePartialMatch(boolean usePartialMatch){
-        this.usePartialMatch = usePartialMatch;
+    public <Type> void setDataProvider(SearchDataProvider<Type> dataProvider) {
+        this.dataProvider = dataProvider;
+    }
+
+    public void setMatchMode(MatchMode mode) {
+        this.matchMode = mode;
+    }
+
+    public void setSearchThreshold(int threshold) {
+        this.searchThreshold = threshold;
+    }
+
+    public int getSearchThreshold() {
+        return searchThreshold;
     }
 
     private void fireOnFilterEvent(List filteredItems) {
@@ -105,62 +110,55 @@ public class SearchEditText<Type> extends EditText {
         }
     }
 
-    List<Type> filteredItems = new ArrayList<>();
+    List filteredItems = new ArrayList();
 
-    public void filter(){
+    public void filter() {
         filter(getText().toString());
     }
 
-    public void filter(String word) {
+    public void filter(String query) {
         if (dataProvider == null) {
             return;
         }
 
         filteredItems.clear();
-        if (word.length() == 0) {
+        if (query.length() < searchThreshold) {
             fireOnFilterEvent(null);
             return;
         }
 
         for (int i = 0; i < dataProvider.getItemCount(); i++) {
             String[] itemWords = dataProvider.getItemWords(dataProvider.getItem(i));
-            matchItem(word, i, itemWords);
+            matchItem(query, i, itemWords);
         }
         fireOnFilterEvent(filteredItems);
     }
 
-    private void matchItem(String word, int i, String[] itemWords) {
+    private void matchItem(String query, int i, String[] itemWords) {
         for (String itemWord : itemWords) {
             String itemText = itemWord.toLowerCase();
-            if (itemText.indexOf(word) == 0) {
+            if (matchMode == MatchMode.START && itemText.indexOf(query) == 0) {
                 filteredItems.add(dataProvider.getItem(i));
                 return;
-            } else if (usePartialMatch&&partialMatch(itemText, word)) {
+            } else if (matchMode == MatchMode.ADJACENT && itemText.contains(query)) {
+                filteredItems.add(dataProvider.getItem(i));
+                return;
+            } else if (matchMode == MatchMode.NONADJACENT && SearchHelper.nonadjacentMatch(itemText, query)) {
                 filteredItems.add(dataProvider.getItem(i));
                 return;
             }
         }
     }
 
-    private boolean partialMatch(String item, String word) {  // item: 'lemon', text: 'le'
-        int i = 0, j = 0;
-        String text = word.toLowerCase();
-        for (; i < item.length() && j < text.length(); i++) {
-            if (item.charAt(i) == text.charAt(j))
-                j++;
-        }
-        return j == text.length();
+    public interface OnFilterListener<Type> {
+        void onFilter(List<Type> filterResults);
     }
 
-    public interface OnFilterListener {
-        void onFilter(List filterResults);
-    }
-
-    public void setOnFilterListener(OnFilterListener onFilterListener) {
+    public <Type> void setOnFilterListener(OnFilterListener<Type> onFilterListener) {
         this.onFilterListener = onFilterListener;
     }
 
-    public List getFilteredItems() {
+    public <Type> List<Type> getFilteredItems() {
         return filteredItems;
     }
 }

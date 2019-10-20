@@ -10,7 +10,6 @@ import carbon.dialog.ProgressDialog;
 import carbon.widget.EditText;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
-import tk.zielony.carbonsamples.Samples;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @ActivityAnnotation(layout = R.layout.activity_progressdialog, title = R.string.progressDialogActivity_title)
@@ -20,7 +19,7 @@ public class ProgressDialogActivity extends ThemedActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Samples.initToolbar(this);
+        initToolbar();
 
         EditText titleText = findViewById(R.id.titleText);
         EditText messageText = findViewById(R.id.messageText);

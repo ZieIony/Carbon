@@ -3,29 +3,19 @@ package carbon.widget;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
 
-import carbon.Carbon;
 import carbon.R;
-import carbon.animation.AnimatedColorStateList;
-import carbon.view.TintedView;
-import carbon.view.VisibleView;
+import carbon.view.View;
 
-public class ViewPagerIndicator extends View implements TintedView, VisibleView {
+public class ViewPagerIndicator extends View {
     ViewPager viewPager;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float indicatorPos = 0;
@@ -69,39 +59,19 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
 
     public ViewPagerIndicator(Context context) {
         super(context, null, R.attr.carbon_viewPagerIndicatorStyle);
-        initViewPagerIndicator(null, R.attr.carbon_viewPagerIndicatorStyle);
     }
 
     public ViewPagerIndicator(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, R.attr.carbon_viewPagerIndicatorStyle, R.styleable.ViewPagerIndicator_android_theme), attrs, R.attr.carbon_viewPagerIndicatorStyle);
-        initViewPagerIndicator(attrs, R.attr.carbon_viewPagerIndicatorStyle);
+        super(context, attrs, R.attr.carbon_viewPagerIndicatorStyle);
     }
 
     public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, defStyleAttr, R.styleable.ViewPagerIndicator_android_theme), attrs, defStyleAttr);
-        initViewPagerIndicator(attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPagerIndicator, defStyleAttr, R.styleable.ViewPagerIndicator_android_theme), attrs, defStyleAttr, defStyleRes);
-        initViewPagerIndicator(attrs, defStyleAttr);
-    }
-
-    private static int[] tintIds = new int[]{
-            R.styleable.ViewPagerIndicator_carbon_tint,
-            R.styleable.ViewPagerIndicator_carbon_tintMode,
-            R.styleable.ViewPagerIndicator_carbon_backgroundTint,
-            R.styleable.ViewPagerIndicator_carbon_backgroundTintMode,
-            R.styleable.ViewPagerIndicator_carbon_animateColorChanges
-    };
-
-    private void initViewPagerIndicator(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator, defStyleAttr, R.style.carbon_ViewPagerIndicator);
-
-        Carbon.initTint(this, a, tintIds);
-
-        a.recycle();
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     public void setViewPager(final ViewPager viewPager) {
@@ -110,6 +80,10 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
         this.viewPager = viewPager;
         if (viewPager != null)
             viewPager.addOnPageChangeListener(pageChangeListener);
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 
     @Override
@@ -147,109 +121,4 @@ public class ViewPagerIndicator extends View implements TintedView, VisibleView 
         }
     }
 
-    public ViewPager getViewPager() {
-        return viewPager;
-    }
-
-
-    // -------------------------------
-    // tint
-    // -------------------------------
-
-    ColorStateList tint;
-    PorterDuff.Mode tintMode;
-    ColorStateList backgroundTint;
-    PorterDuff.Mode backgroundTintMode;
-    boolean animateColorChanges;
-    ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
-        updateTint();
-        ViewCompat.postInvalidateOnAnimation(this);
-    };
-    ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
-        updateBackgroundTint();
-        ViewCompat.postInvalidateOnAnimation(this);
-    };
-
-    @Override
-    public void setTintList(ColorStateList list) {
-        this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
-        updateTint();
-    }
-
-    @Override
-    public void setTint(int color) {
-        setTintList(ColorStateList.valueOf(color));
-    }
-
-    @Override
-    public ColorStateList getTint() {
-        return tint;
-    }
-
-    private void updateTint() {
-        if (tint == null)
-            return;
-        tint.getColorForState(getDrawableState(), tint.getDefaultColor());
-    }
-
-    @Override
-    public void setTintMode(@NonNull PorterDuff.Mode mode) {
-        this.tintMode = mode;
-        updateTint();
-    }
-
-    @Override
-    public PorterDuff.Mode getTintMode() {
-        return tintMode;
-    }
-
-    @Override
-    public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
-        updateBackgroundTint();
-    }
-
-    @Override
-    public void setBackgroundTint(int color) {
-        setBackgroundTintList(ColorStateList.valueOf(color));
-    }
-
-    @Override
-    public ColorStateList getBackgroundTint() {
-        return backgroundTint;
-    }
-
-    private void updateBackgroundTint() {
-        if (getBackground() == null)
-            return;
-        if (backgroundTint != null && backgroundTintMode != null) {
-            int color = backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor());
-            getBackground().setColorFilter(new PorterDuffColorFilter(color, tintMode));
-        } else {
-            getBackground().setColorFilter(null);
-        }
-    }
-
-    @Override
-    public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
-        this.backgroundTintMode = mode;
-        updateBackgroundTint();
-    }
-
-    @Override
-    public PorterDuff.Mode getBackgroundTintMode() {
-        return backgroundTintMode;
-    }
-
-    public boolean isAnimateColorChangesEnabled() {
-        return animateColorChanges;
-    }
-
-    public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
-        this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
-    }
 }

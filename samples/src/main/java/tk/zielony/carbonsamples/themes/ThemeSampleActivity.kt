@@ -8,8 +8,10 @@ import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import carbon.widget.TabLayout
 import kotlinx.android.synthetic.main.activity_theme2.*
-import tk.zielony.carbonsamples.*
-
+import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.ColorsActivity
+import tk.zielony.carbonsamples.R
+import tk.zielony.carbonsamples.SamplesActivity
 import tk.zielony.randomdata.RandomData
 import tk.zielony.randomdata.common.IntegerGenerator
 import tk.zielony.randomdata.common.StringDateGenerator
@@ -22,7 +24,7 @@ open class ThemeSampleActivity : SamplesActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Samples.initToolbar(this)
+        initToolbar()
 
         tabs.setItems(arrayOf(
                 TabLayout.Item("Recent"),
@@ -88,7 +90,7 @@ class CurrentThemeActivity : ThemeSampleActivity() {
         val preferences = getSharedPreferences(ColorsActivity.THEME, Context.MODE_PRIVATE)
         setTheme(ColorsActivity.styles[preferences.getInt(ColorsActivity.STYLE, 2)].value)
         theme.applyStyle(ColorsActivity.primary[preferences.getInt(ColorsActivity.PRIMARY, 8)].value, true)
-        theme.applyStyle(ColorsActivity.accents[preferences.getInt(ColorsActivity.ACCENT, 14)].value, true)
+        theme.applyStyle(ColorsActivity.secondary[preferences.getInt(ColorsActivity.SECONDARY, 14)].value, true)
     }
 }
 
