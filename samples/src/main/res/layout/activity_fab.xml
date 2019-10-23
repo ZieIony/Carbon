@@ -20,8 +20,8 @@
             android:layout_margin="@dimen/carbon_padding"
             android:padding="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/mazda"
             android:tag="enable"
+            app:carbon_src="@drawable/mazda"
             app:carbon_tint="@null" />
 
         <carbon.widget.FloatingActionButton
@@ -29,9 +29,9 @@
             style="@style/carbon_FloatingActionButton.Small.Primary"
             android:layout_gravity="bottom|left"
             android:layout_margin="@dimen/carbon_padding"
-            android:src="@raw/ic_data_usage_24px"
             android:tag="enable"
-            app:carbon_menu="@menu/menu_fab" />
+            app:carbon_menu="@menu/menu_fab"
+            app:carbon_src="@raw/ic_data_usage_24px" />
 
         <carbon.widget.TextView
             style="@style/sectionDescription"

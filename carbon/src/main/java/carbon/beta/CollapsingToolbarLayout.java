@@ -87,12 +87,12 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
     }
 
     public CollapsingToolbarLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CollapsingToolbarLayout, R.attr.carbon_collapsingToolbarLayoutStyle, R.styleable.CollapsingToolbarLayout_android_theme), attrs);
+        super(CarbonContextWrapper.wrap(context), attrs);
         initCollapsingToolbarLayout(attrs, R.attr.carbon_collapsingToolbarLayoutStyle);
     }
 
     public CollapsingToolbarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.CollapsingToolbarLayout, defStyleAttr, R.styleable.CollapsingToolbarLayout_android_theme), attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
         initCollapsingToolbarLayout(attrs, defStyleAttr);
     }
 

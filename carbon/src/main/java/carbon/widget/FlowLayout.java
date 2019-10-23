@@ -101,18 +101,18 @@ public class FlowLayout extends android.widget.FrameLayout
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FlowLayout, R.attr.carbon_flowLayoutStyle, R.styleable.FlowLayout_android_theme), attrs, R.attr.carbon_flowLayoutStyle);
+        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_flowLayoutStyle);
         initFlowLayout(attrs, R.attr.carbon_flowLayoutStyle);
     }
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FlowLayout, defStyleAttr, R.styleable.FlowLayout_android_theme), attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
         initFlowLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.FlowLayout, defStyleAttr, R.styleable.FlowLayout_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
         initFlowLayout(attrs, defStyleAttr);
     }
 

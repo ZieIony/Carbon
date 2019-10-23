@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_debugtoolbar" />
+
+    <carbon.widget.FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.ImageView
+            style="@style/carbon_ImageView.Icon"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            app:srcCompat="@drawable/carbon_search" />
+
+        <carbon.widget.SearchEditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:hint="What's your taste today?" />
+
+    </carbon.widget.FrameLayout>
+
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/carbon_windowPadding"
+            android:paddingRight="@dimen/carbon_windowPadding">
+
+        </carbon.widget.LinearLayout>
+    </carbon.widget.ScrollView>
+</carbon.widget.LinearLayout>

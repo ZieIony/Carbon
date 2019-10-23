@@ -95,30 +95,30 @@ public class Button extends android.widget.Button
 
     public Button(Context context) {
         super(CarbonContextWrapper.wrap(context));
-        initButton(null, android.R.attr.buttonStyle);
+        initButton(null, android.R.attr.buttonStyle, R.style.carbon_Button);
     }
 
     public Button(Context context, String text, OnClickListener listener) {
         super(CarbonContextWrapper.wrap(context));
-        initButton(null, android.R.attr.buttonStyle);
+        initButton(null, android.R.attr.buttonStyle, R.style.carbon_Button);
         setText(text);
         setOnClickListener(listener);
     }
 
     public Button(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.Button, android.R.attr.buttonStyle, R.styleable.Button_android_theme), attrs, android.R.attr.buttonStyle);
-        initButton(attrs, android.R.attr.buttonStyle);
+        super(CarbonContextWrapper.wrap(context), attrs);
+        initButton(attrs, android.R.attr.buttonStyle, R.style.carbon_Button);
     }
 
     public Button(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.Button, defStyleAttr, R.styleable.Button_android_theme), attrs, defStyleAttr);
-        initButton(attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        initButton(attrs, defStyleAttr, R.style.carbon_Button);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.Button, defStyleAttr, R.styleable.Button_android_theme), attrs, defStyleAttr, defStyleRes);
-        initButton(attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        initButton(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -178,8 +178,8 @@ public class Button extends android.widget.Button
             R.styleable.Button_carbon_autoSizeStepGranularity
     };
 
-    private void initButton(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, R.style.carbon_Button);
+    private void initButton(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, defStyleRes);
 
         int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
         if (ap != -1)

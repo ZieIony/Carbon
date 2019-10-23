@@ -100,18 +100,18 @@ public class RelativeLayout extends android.widget.RelativeLayout
     }
 
     public RelativeLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RelativeLayout, R.attr.carbon_relativeLayoutStyle, R.styleable.RelativeLayout_android_theme), attrs, R.attr.carbon_relativeLayoutStyle);
+        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_relativeLayoutStyle);
         initRelativeLayout(attrs, R.attr.carbon_relativeLayoutStyle);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RelativeLayout, R.attr.carbon_relativeLayoutStyle, R.styleable.RelativeLayout_android_theme), attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
         initRelativeLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.RelativeLayout, R.attr.carbon_relativeLayoutStyle, R.styleable.RelativeLayout_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
         initRelativeLayout(attrs, defStyleAttr);
     }
 

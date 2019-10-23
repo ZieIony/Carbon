@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.Carbon;
+import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.EdgeEffect;
@@ -74,17 +75,17 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
     }
 
     public ViewPager(Context context) {
-        super(context, null);
+        super(CarbonContextWrapper.wrap(context), null);
         initViewPager(null, R.attr.carbon_viewPagerStyle);
     }
 
     public ViewPager(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPager, R.attr.carbon_viewPagerStyle, R.styleable.ViewPager_android_theme), attrs);
+        super(CarbonContextWrapper.wrap(context), attrs);
         initViewPager(attrs, R.attr.carbon_viewPagerStyle);
     }
 
     public ViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ViewPager, defStyleAttr, R.styleable.ViewPager_android_theme), attrs);
+        super(CarbonContextWrapper.wrap(context), attrs);
         initViewPager(attrs, defStyleAttr);
     }
 

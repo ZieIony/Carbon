@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <carbon.widget.FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:carbon_src="@drawable/abstract_background_abstract_photo_art_1935220" />
+
+        <carbon.widget.ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            app:carbon_src="@drawable/black_gradient" />
+
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/carbon_contentPadding"
+            android:paddingLeft="@dimen/carbon_contentPadding"
+            android:paddingBottom="@dimen/carbon_paddingHalf">
+
+            <carbon.widget.TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Poor Lines (2018)"
+                android:textAppearance="?attr/carbon_textAppearanceBody1Inverse" />
+
+            <carbon.widget.TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Mighty Lints"
+                android:textAppearance="?attr/carbon_textAppearanceHeadlineInverse" />
+        </carbon.widget.LinearLayout>
+    </carbon.widget.FrameLayout>
+
+    <carbon.widget.ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        app:carbon_progress="0.3"
+        app:carbon_progressStyle="bar_determinate" />
+
+    <carbon.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:carbon_icon="@drawable/carbon_uparrow">
+
+        <carbon.widget.ImageView
+            style="@style/carbon_ImageView.IconButton"
+            app:carbon_src="@drawable/ic_skip_previous_black_24dp" />
+
+        <carbon.widget.ImageView
+            style="@style/carbon_ImageView.IconButton"
+            app:carbon_src="@drawable/ic_play_arrow_black_24dp" />
+
+        <carbon.widget.ImageView
+            style="@style/carbon_ImageView.IconButton"
+            app:carbon_src="@drawable/ic_skip_next_black_24dp" />
+    </carbon.widget.Toolbar>
+
+    <carbon.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

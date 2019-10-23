@@ -75,7 +75,7 @@
                     android:layout_width="@dimen/carbon_fabSize"
                     android:layout_height="@dimen/carbon_fabSize"
                     android:layout_centerInParent="true"
-                    android:src="@raw/ic_settings_input_svideo_24px" />
+                    app:carbon_src="@raw/ic_settings_input_svideo_24px" />
 
                 <carbon.widget.ProgressBar
                     android:id="@+id/progress4"

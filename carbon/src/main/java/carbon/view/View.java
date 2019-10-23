@@ -79,18 +79,18 @@ public abstract class View extends android.view.View
     }
 
     public View(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.View, 0, R.styleable.View_android_theme), attrs);
+        super(CarbonContextWrapper.wrap(context), attrs);
         initView(attrs, 0);
     }
 
     public View(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.View, defStyleAttr, R.styleable.View_android_theme), attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
         initView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public View(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.View, defStyleAttr, R.styleable.View_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
         initView(attrs, defStyleAttr);
     }
 

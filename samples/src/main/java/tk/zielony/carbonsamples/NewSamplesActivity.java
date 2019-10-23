@@ -5,6 +5,7 @@ import android.os.Bundle;
 import java.io.Serializable;
 
 import carbon.component.PaddingItem;
+import tk.zielony.carbonsamples.demo.MusicPlayerActivity;
 import tk.zielony.carbonsamples.demo.ProfileActivity;
 import tk.zielony.carbonsamples.demo.SearchToolbarActivity;
 import tk.zielony.carbonsamples.feature.GestureDetectorActivity;
@@ -32,16 +33,17 @@ public class NewSamplesActivity extends SampleListActivity {
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "These samples are new or have significant changes since the previous release",
                 new SampleActivityItem(ButtonsActivity.class),
-                new SampleActivityItem(CheckBoxRadioActivity.class, R.drawable.carbon_checkbox_checked),
                 new SampleActivityItem(FlowLayoutActivity.class),
-                new SampleActivityItem(BackdropActivity.class),
-                new SampleActivityItem(BottomNavigationViewActivity.class),
-                new SampleActivityItem(FABActivity.class, R.drawable.ic_add_circle_black_24dp),
-                new SampleActivityItem(ProfileActivity.class, R.drawable.ic_person_black_24dp),
-                new SampleActivityItem(GestureDetectorActivity.class, R.drawable.ic_gesture_black_24dp),
                 new SampleActivityItem(ShadowActivity.class),
+                new SampleActivityItem(BottomNavigationViewActivity.class),
                 new SampleActivityItem(XmlFontActivity.class, R.drawable.ic_font_download_black_24dp),
+                new SampleActivityItem(BackdropActivity.class),
                 new SampleActivityItem(SearchToolbarActivity.class, R.drawable.carbon_search),
+                new SampleActivityItem(MusicPlayerActivity.class, R.drawable.ic_play_arrow_black_24dp, true),
+                new SampleActivityItem(ProfileActivity.class, R.drawable.ic_person_black_24dp),
+                new SampleActivityItem(CheckBoxRadioActivity.class, R.drawable.carbon_checkbox_checked),
+                new SampleActivityItem(GestureDetectorActivity.class, R.drawable.ic_gesture_black_24dp),
+                new SampleActivityItem(FABActivity.class, R.drawable.ic_add_circle_black_24dp),
                 new SampleActivityItem(BannerActivity.class),
                 new SampleActivityItem(NavigationViewActivity.class, 0, true),
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf))

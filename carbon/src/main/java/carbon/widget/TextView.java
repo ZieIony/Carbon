@@ -130,29 +130,29 @@ public class TextView extends android.widget.TextView
     private boolean valid = true;
 
     public TextView(Context context) {
-        super(CarbonContextWrapper.wrap(context), null);
+        super(CarbonContextWrapper.wrap(context));
         initTextView(null, android.R.attr.textViewStyle);
     }
 
     public TextView(Context context, String text) {
-        super(context, null);
+        super(CarbonContextWrapper.wrap(context));
         initTextView(null, android.R.attr.textViewStyle);
         setText(text);
     }
 
     public TextView(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, android.R.attr.textViewStyle, R.styleable.TextView_android_theme), attrs);
+        super(CarbonContextWrapper.wrap(context), attrs);
         initTextView(attrs, android.R.attr.textViewStyle);
     }
 
     public TextView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, defStyleAttr, R.styleable.TextView_android_theme), attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
         initTextView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.TextView, defStyleAttr, R.styleable.TextView_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
         initTextView(attrs, defStyleAttr);
     }
 

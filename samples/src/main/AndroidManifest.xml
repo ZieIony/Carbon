@@ -78,6 +78,10 @@
         <activity android:name=".demo.SearchToolbarActivity" />
         <activity android:name=".demo.ShareToolbarActivity" />
         <activity android:name=".demo.ProfileActivity" />
+        <activity
+            android:name=".demo.FoodActivity"
+            android:theme="@style/AppTheme.Food" />
+        <activity android:name=".demo.MusicPlayerActivity" />
 
         <activity
             android:name=".guidelines.ButtonsUsageActivity"

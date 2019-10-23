@@ -25,6 +25,12 @@
         <item name="carbon_font">@font/lekton_regular</item>
     </style>
 
+    <style name="AppTheme.Food" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
+        <item name="colorPrimary">@color/carbon_deepOrange_400</item>
+        <item name="colorPrimaryDark">@color/carbon_deepOrange_700</item>
+        <item name="colorAccent">@color/carbon_green_a400</item>
+    </style>
+
 
     <!-- Windows Theme -->
 

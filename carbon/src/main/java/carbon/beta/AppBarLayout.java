@@ -52,11 +52,11 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
+import carbon.view.ShadowView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
-import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -88,7 +88,7 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
     }
 
     public AppBarLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.AppBarLayout, R.attr.carbon_appBarLayoutStyle, R.styleable.CollapsingToolbarLayout_android_theme), attrs);
+        super(CarbonContextWrapper.wrap(context), attrs);
         initAppBarLayout(attrs, R.attr.carbon_appBarLayoutStyle);
     }
 

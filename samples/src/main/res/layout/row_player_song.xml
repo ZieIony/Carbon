@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="tk.zielony.carbonsamples.demo.SongItem" />
+    </data>
+
+    <carbon.widget.RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/carbon_colorForeground"
+        android:clickable="true"
+        android:focusable="true"
+        android:minHeight="@dimen/carbon_listItemHeight"
+        app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+        <carbon.widget.TextView
+            android:id="@+id/id"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            android:gravity="center_horizontal"
+            android:text="@{String.valueOf(data.id)}"
+            android:textAppearance="?attr/carbon_textAppearanceBody1"
+            tools:text="1" />
+
+        <carbon.widget.TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
+            android:layout_marginEnd="@dimen/carbon_marginHalf"
+            android:layout_marginRight="@dimen/carbon_marginHalf"
+            android:layout_toStartOf="@id/duration"
+            android:layout_toLeftOf="@id/duration"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{data.name}"
+            android:textAppearance="?attr/carbon_textAppearanceBody1"
+            tools:text="Last Man on the Moon" />
+
+        <carbon.widget.TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingEnd="@dimen/carbon_windowPadding"
+            android:paddingRight="@dimen/carbon_windowPadding"
+            android:text="@{data.durationString}"
+            android:textAppearance="?attr/carbon_textAppearanceCaption"
+            tools:text="3:42" />
+    </carbon.widget.RelativeLayout>
+</layout>

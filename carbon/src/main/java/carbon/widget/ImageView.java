@@ -88,18 +88,18 @@ public class ImageView extends android.widget.ImageView
     }
 
     public ImageView(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ImageView, R.attr.carbon_imageViewStyle, R.styleable.ImageView_android_theme), attrs, R.attr.carbon_imageViewStyle);
+        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_imageViewStyle);
         initImageView(attrs, R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ImageView, defStyleAttr, R.styleable.ImageView_android_theme), attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
         initImageView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.ImageView, defStyleAttr, R.styleable.ImageView_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
         initImageView(attrs, defStyleAttr);
     }
 

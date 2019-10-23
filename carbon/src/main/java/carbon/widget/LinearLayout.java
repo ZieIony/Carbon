@@ -100,18 +100,18 @@ public class LinearLayout extends android.widget.LinearLayout
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.LinearLayout, R.attr.carbon_linearLayoutStyle, R.styleable.LinearLayout_android_theme), attrs, R.attr.carbon_linearLayoutStyle);
+        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_linearLayoutStyle);
         initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle);
     }
 
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.LinearLayout, defStyleAttr, R.styleable.LinearLayout_android_theme), attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
         initLinearLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.LinearLayout, defStyleAttr, R.styleable.LinearLayout_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
         initLinearLayout(attrs, defStyleAttr);
     }
 

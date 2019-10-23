@@ -47,18 +47,18 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.HorizontalScrollView, android.R.attr.horizontalScrollViewStyle, R.styleable.HorizontalScrollView_android_theme), attrs);
+        super(CarbonContextWrapper.wrap(context), attrs);
         initHorizontalScrollView(attrs, android.R.attr.horizontalScrollViewStyle);
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.HorizontalScrollView, defStyleAttr, R.styleable.HorizontalScrollView_android_theme), attrs, defStyleAttr);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
         initHorizontalScrollView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.HorizontalScrollView, defStyleAttr, R.styleable.HorizontalScrollView_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
         initHorizontalScrollView(attrs, defStyleAttr);
     }
 

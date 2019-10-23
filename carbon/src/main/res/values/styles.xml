@@ -183,7 +183,7 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
-    <style name="carbon_ProgressBar" parent="Widget.AppCompat.ProgressBar">
+    <style name="carbon_ProgressBar">
         <item name="carbon_progressStyle">bar_indeterminate</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
         <item name="carbon_barWidth">3dp</item>
