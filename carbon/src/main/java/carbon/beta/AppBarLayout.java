@@ -52,11 +52,11 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.view.ShadowView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
+import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
@@ -488,6 +488,8 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        if (shadowDrawable.isPointInTransparentRegion((int) event.getX(), (int) event.getY()))
+            return false;
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 

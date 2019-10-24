@@ -652,6 +652,8 @@ public class FlowLayout extends android.widget.FrameLayout
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        if (shadowDrawable.isPointInTransparentRegion((int) event.getX(), (int) event.getY()))
+            return false;
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 

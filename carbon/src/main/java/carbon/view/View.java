@@ -367,6 +367,9 @@ public abstract class View extends android.view.View
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        if (shadowDrawable.isPointInTransparentRegion((int) event.getX(), (int) event.getY()))
+            return false;
+
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);

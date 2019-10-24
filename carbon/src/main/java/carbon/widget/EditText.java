@@ -829,6 +829,9 @@ public class EditText extends android.widget.EditText
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        if (shadowDrawable.isPointInTransparentRegion((int) event.getX(), (int) event.getY()))
+            return false;
+
         if (rippleDrawable != null && event.getAction() == MotionEvent.ACTION_DOWN)
             rippleDrawable.setHotspot(event.getX(), event.getY());
         return super.dispatchTouchEvent(event);

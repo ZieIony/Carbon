@@ -582,6 +582,8 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
 
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        if (shadowDrawable.isPointInTransparentRegion((int) event.getX(), (int) event.getY()))
+            return false;
         if (onDispatchTouchListener != null && onDispatchTouchListener.onTouch(this, event))
             return true;
 
