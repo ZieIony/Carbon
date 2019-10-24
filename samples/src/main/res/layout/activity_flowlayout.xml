@@ -87,7 +87,7 @@
 
         <carbon.widget.EditText
             android:id="@+id/addChip"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_chipHeight"
             android:layout_margin="@dimen/carbon_marginHalf"
             style="@style/carbon_EditText"

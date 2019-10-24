@@ -374,12 +374,12 @@ public class FlowLayout extends android.widget.FrameLayout
         }
     }
 
-    private int layoutFlowingViews(int width) {
+    private void layoutFlowingViews(int width) {
         int gravity = GravityCompat.getAbsoluteGravity(this.gravity, ViewCompat.getLayoutDirection(this));
         if ((gravity & Gravity.RIGHT) == Gravity.RIGHT) {
-            return layoutFlowingViewsRight(width);
+            layoutFlowingViewsRight(width);
         } else {
-            return layoutFlowingViewsLeft(width);
+            layoutFlowingViewsLeft(width);
         }
     }
 
@@ -388,8 +388,6 @@ public class FlowLayout extends android.widget.FrameLayout
             return;
 
         int maxY = Integer.MIN_VALUE, minY = currentLine.get(0).getTop() - ((LayoutParams) currentLine.get(0).getLayoutParams()).topMargin;
-        //int minX = currentLine.get(0).getLeft() - ((LayoutParams) currentLine.get(0).getLayoutParams()).leftMargin;
-        //int maxX = currentLine.get(currentLine.size() - 1).getRight() + ((LayoutParams) currentLine.get(0).getLayoutParams()).rightMargin;
         for (View view : currentLine) {
             LayoutParams params = (LayoutParams) view.getLayoutParams();
             maxY = Math.max(maxY, view.getBottom() + params.bottomMargin);
@@ -408,7 +406,7 @@ public class FlowLayout extends android.widget.FrameLayout
         }
     }
 
-    private int layoutFlowingViewsRight(int width) {
+    private void layoutFlowingViewsRight(int width) {
         int currentX = width - getPaddingRight();
         int currentY = getPaddingTop();
         int nextY = getPaddingTop();
@@ -431,10 +429,9 @@ public class FlowLayout extends android.widget.FrameLayout
             }
         }
         relayoutLine(currentLine);
-        return nextY + getPaddingBottom();
     }
 
-    private int layoutFlowingViewsLeft(int width) {
+    private void layoutFlowingViewsLeft(int width) {
         int currentX = getPaddingLeft();
         int currentY = getPaddingTop();
         int nextY = getPaddingTop();
@@ -457,7 +454,47 @@ public class FlowLayout extends android.widget.FrameLayout
             }
         }
         relayoutLine(currentLine);
+    }
+
+    private int measureWidth() {
+        int currentX = getPaddingLeft();
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            LayoutParams params = (LayoutParams) child.getLayoutParams();
+            if (child.getVisibility() != GONE) {
+                currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
+            }
+        }
+
+        return currentX + getPaddingRight();
+    }
+
+    private int measureHeight(int width) {
+        int currentX = getPaddingLeft();
+        int currentY = getPaddingTop();
+        int nextY = getPaddingTop();
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            LayoutParams params = (LayoutParams) child.getLayoutParams();
+            if (child.getVisibility() != GONE) {
+                if (currentX != getPaddingLeft() && currentX + params.leftMargin + child.getMeasuredWidth() + params.rightMargin > width - getPaddingRight()) {
+                    currentX = getPaddingLeft();
+                    currentY = nextY;
+                }
+
+                currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
+                nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+            }
+        }
         return nextY + getPaddingBottom();
+    }
+
+    protected void measureChildren(int widthMeasureSpec, int heightMeasureSpec) {
+        for (int i = 0; i < getChildCount(); ++i) {
+            final View child = getChildAt(i);
+            if (child.getVisibility() != GONE)
+                measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);
+        }
     }
 
 
@@ -1462,22 +1499,59 @@ public class FlowLayout extends android.widget.FrameLayout
         requestLayout();
     }
 
+    private void onMeasureIntenal(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int width;
+        int height;
+
+        if (widthMode == MeasureSpec.EXACTLY) {
+            width = widthSize;
+        } else {
+            width = measureWidth();
+
+            width = Math.max(width, getSuggestedMinimumWidth());
+            if (widthMode == MeasureSpec.AT_MOST)
+                width = Math.min(widthSize, width);
+        }
+
+        if (heightMode == MeasureSpec.EXACTLY) {
+            height = heightSize;
+        } else {
+            height = measureHeight(width);
+
+            height = Math.max(height, getSuggestedMinimumHeight());
+            if (heightMode == MeasureSpec.AT_MOST)
+                height = Math.min(height, heightSize);
+        }
+
+        setMeasuredDimension(width, height);
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (MeasureSpec.getMode(heightMeasureSpec) != MeasureSpec.EXACTLY) {
-            int height = layoutFlowingViews(getMeasuredWidth());
-            setMeasuredDimension(getMeasuredWidth(), height);
-        }
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
+
+        onMeasureIntenal(widthMeasureSpec, heightMeasureSpec);
+
         if (percentLayoutHelper.handleMeasuredStateTooSmall())
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            onMeasureIntenal(widthMeasureSpec, heightMeasureSpec);
+
         if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
             if (getMeasuredWidth() > maxWidth)
                 widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
             if (getMeasuredHeight() > maxHeight)
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            onMeasureIntenal(widthMeasureSpec, heightMeasureSpec);
+        }
+
+        if (getMeasuredHeight() > maxHeight) {
+            if (getMeasuredHeight() > maxHeight)
+                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
+            onMeasureIntenal(widthMeasureSpec, heightMeasureSpec);
         }
     }
 

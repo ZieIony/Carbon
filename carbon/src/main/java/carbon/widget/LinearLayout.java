@@ -1438,6 +1438,11 @@ public class LinearLayout extends android.widget.LinearLayout
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
+        if (getMeasuredHeight() > maxHeight) {
+            if (getMeasuredHeight() > maxHeight)
+                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
 
