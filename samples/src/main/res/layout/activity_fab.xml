@@ -33,7 +33,7 @@
             app:carbon_menu="@menu/menu_fab"
             app:carbon_src="@raw/ic_data_usage_24px" />
 
-        <carbon.widget.TextView
+        <carbon.widget.Label
             style="@style/sectionDescription"
             android:layout_gravity="center"
             android:text="Menu appears automatically on the side it has the most space. You can specify items using standard menu xml files. Use raw svgs as icons if you wish." />

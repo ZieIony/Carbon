@@ -9,7 +9,7 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         style="@style/sectionDescription"
         android:text="To round corners of a view simply use carbon_cornerRadius. Rounded corners cut view's content." />
 

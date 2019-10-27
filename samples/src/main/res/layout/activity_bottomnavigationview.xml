@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         style="@style/sectionDescription"
         android:text="Items can be provided from code as an array of BottomNavigationView.Item objects" />
 
@@ -25,7 +25,7 @@
         android:layout_marginBottom="@dimen/carbon_margin"
         android:background="?attr/colorPrimary" />
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         style="@style/sectionDescription"
         android:text="Provide a custom item's layout easily using carbon_itemLayout attribute and data binding" />
 
@@ -37,7 +37,7 @@
         app:carbon_itemLayout="@layout/item_bottombar"
         app:carbon_menu="@menu/menu_navigation" />
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         style="@style/sectionDescription"
         android:text="Default BottomNavigationView with items set using a menu resource" />
 

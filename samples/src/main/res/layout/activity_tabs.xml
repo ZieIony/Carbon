@@ -16,6 +16,7 @@
 
         <carbon.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/carbon_Toolbar.ActionBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
             app:carbon_elevation="0dp">

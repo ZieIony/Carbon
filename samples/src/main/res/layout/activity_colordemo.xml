@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             app:carbon_icon="@drawable/carbon_clear" />
 
-        <carbon.widget.TextView
+        <carbon.widget.Label
             style="@style/sectionDescription"
             android:text="Select your favourite theme mode and colors. Then close this Activity to see all the samples using that theme." />
 

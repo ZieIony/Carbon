@@ -1,46 +1,93 @@
 <carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="?attr/colorPrimary">
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.TextView
-        android:text="Carbon correctly handles z-order of views placed inside Carbon layouts. Elevation is added to the static z value and affects z-order as well"
-        style="@style/sectionDescription" />
+    <carbon.widget.Label
+        style="@style/sectionDescription"
+        android:text="Carbon correctly handles z-order of views placed inside Carbon layouts. Elevation is added to the static z value and affects z-order as well" />
 
     <carbon.widget.FrameLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="wrap_content">
 
         <carbon.widget.Button
-            android:text="Button1"
-            app:carbon_elevation="2dp"
-            app:backgroundTint="#ffafafff"
+            style="@style/carbon_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_margin="@dimen/carbon_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="Button1"
+            app:carbon_elevation="2dp" />
 
         <carbon.widget.Button
-            android:text="Button2"
-            app:carbon_elevation="3dp"
-            app:backgroundTint="#ffffafaf"
-            android:layout_gravity="left"
-            android:layout_marginTop="@dimen/carbon_padding"
-            android:layout_marginLeft="70dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="@dimen/carbon_paddingHalf"
+            android:text="Button2"
+            app:carbon_elevation="3dp" />
     </carbon.widget.FrameLayout>
 
     <carbon.widget.Button
         android:id="@+id/button"
-        android:text="Change Order"
-        android:layout_margin="@dimen/carbon_padding"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/carbon_padding"
+        android:text="Change Order" />
+
+    <carbon.widget.Divider
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:padding="@dimen/carbon_padding">
+
+        <carbon.widget.FrameLayout
+            style="@style/carbon_CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            app:carbon_elevation="8dp" />
+
+        <carbon.widget.FrameLayout
+            style="@style/carbon_CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            app:carbon_elevation="8dp" />
+    </carbon.widget.LinearLayout>
+
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:padding="@dimen/carbon_padding">
+
+        <carbon.widget.FrameLayout
+            style="@style/carbon_CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            app:carbon_elevation="8dp"
+            app:carbon_elevationShadowColor="@color/carbon_red_400" />
+
+        <carbon.widget.FrameLayout
+            style="@style/carbon_CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            app:carbon_elevation="8dp"
+            app:carbon_elevationShadowColor="@color/carbon_red_400" />
+    </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

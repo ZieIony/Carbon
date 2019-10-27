@@ -55,7 +55,6 @@ import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
-import carbon.internal.PercentLayoutHelper;
 import carbon.internal.RevealAnimator;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
@@ -92,7 +91,6 @@ public class FlowLayout extends android.widget.FrameLayout
         BehaviorView,
         MarginView {
 
-    private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
     private OnTouchListener onDispatchTouchListener;
 
     public FlowLayout(Context context) {
@@ -423,9 +421,17 @@ public class FlowLayout extends android.widget.FrameLayout
                 }
 
                 currentLine.add(0, child);
-                child.layout(currentX - params.rightMargin - child.getMeasuredWidth(), currentY + params.topMargin, currentX - params.rightMargin, currentY + params.topMargin + child.getMeasuredHeight());
+                int left = params.fill ? getPaddingLeft() + params.leftMargin : currentX - params.rightMargin - child.getMeasuredWidth();
+                child.layout(left, currentY + params.topMargin, currentX - params.rightMargin, currentY + params.topMargin + child.getMeasuredHeight());
                 currentX -= params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
                 nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+
+                if (params.fill) {
+                    currentX = width - getPaddingRight();
+                    currentY = nextY;
+                    relayoutLine(currentLine);
+                    currentLine.clear();
+                }
             }
         }
         relayoutLine(currentLine);
@@ -448,9 +454,17 @@ public class FlowLayout extends android.widget.FrameLayout
                 }
 
                 currentLine.add(child);
-                child.layout(currentX + params.leftMargin, currentY + params.topMargin, currentX + params.leftMargin + child.getMeasuredWidth(), currentY + params.topMargin + child.getMeasuredHeight());
+                int right = params.fill ? width - getPaddingRight() - params.rightMargin : currentX + params.leftMargin + child.getMeasuredWidth();
+                child.layout(currentX + params.leftMargin, currentY + params.topMargin, right, currentY + params.topMargin + child.getMeasuredHeight());
                 currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
                 nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+
+                if (params.fill) {
+                    currentX = getPaddingLeft();
+                    currentY = nextY;
+                    relayoutLine(currentLine);
+                    currentLine.clear();
+                }
             }
         }
         relayoutLine(currentLine);
@@ -482,8 +496,15 @@ public class FlowLayout extends android.widget.FrameLayout
                     currentY = nextY;
                 }
 
+                if (params.fill)
+                    child.measure(MeasureSpec.makeMeasureSpec(width - getPaddingRight() - params.leftMargin - params.rightMargin - currentX, MeasureSpec.EXACTLY), child.getMeasuredHeightAndState());
                 currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
                 nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+
+                if (params.fill) {
+                    currentX = getPaddingLeft();
+                    currentY = nextY;
+                }
             }
         }
         return nextY + getPaddingBottom();
@@ -552,8 +573,6 @@ public class FlowLayout extends android.widget.FrameLayout
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
-
-        percentLayoutHelper.restoreOriginalParams();
     }
 
     private void updateCorners() {
@@ -1408,20 +1427,19 @@ public class FlowLayout extends android.widget.FrameLayout
         return new LayoutParams(p);
     }
 
-    public static class LayoutParams extends android.widget.FrameLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
-        private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
-        private RuntimeException delayedException;
+    public static class LayoutParams extends android.widget.FrameLayout.LayoutParams {
+        private boolean fill = false;
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
 
-            if (delayedException != null) {
-                percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
-
-                if ((percentLayoutInfo.widthPercent == -1.0f || percentLayoutInfo.heightPercent == -1.0f) && percentLayoutInfo.aspectRatio == -1 ||
-                        (percentLayoutInfo.widthPercent == -1.0f && percentLayoutInfo.heightPercent == -1.0f))
-                    throw delayedException;
-            }
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.FlowLayout_Layout);
+            fill = a.getBoolean(R.styleable.FlowLayout_Layout_carbon_layout_fill, false);
+            if (a.hasValue(R.styleable.FlowLayout_Layout_carbon_layout_marginHorizontal))
+                leftMargin = rightMargin = a.getDimensionPixelSize(R.styleable.FlowLayout_Layout_carbon_layout_marginHorizontal, 0);
+            if (a.hasValue(R.styleable.FlowLayout_Layout_carbon_layout_marginVertical))
+                topMargin = bottomMargin = a.getDimensionPixelSize(R.styleable.FlowLayout_Layout_carbon_layout_marginVertical, 0);
+            a.recycle();
         }
 
         public LayoutParams(int w, int h) {
@@ -1444,31 +1462,19 @@ public class FlowLayout extends android.widget.FrameLayout
 
         public LayoutParams(android.widget.FrameLayout.LayoutParams source) {
             super((MarginLayoutParams) source);
-            gravity = source.gravity;
         }
 
         public LayoutParams(LayoutParams source) {
             super((MarginLayoutParams) source);
-
-            percentLayoutInfo = source.percentLayoutInfo;
+            fill = source.fill;
         }
 
-        @Override
-        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
-            try {
-                super.setBaseAttributes(a, widthAttr, heightAttr);
-            } catch (RuntimeException e) {
-                delayedException = e;
-            }
+        public boolean getFill() {
+            return fill;
         }
 
-        @Override
-        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
-            if (percentLayoutInfo == null) {
-                percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();
-            }
-
-            return percentLayoutInfo;
+        public void setFill(boolean fill) {
+            this.fill = fill;
         }
     }
 
@@ -1501,7 +1507,7 @@ public class FlowLayout extends android.widget.FrameLayout
         requestLayout();
     }
 
-    private void onMeasureIntenal(int widthMeasureSpec, int heightMeasureSpec) {
+    private void onMeasureInternal(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -1534,26 +1540,21 @@ public class FlowLayout extends android.widget.FrameLayout
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
         measureChildren(widthMeasureSpec, heightMeasureSpec);
-
-        onMeasureIntenal(widthMeasureSpec, heightMeasureSpec);
-
-        if (percentLayoutHelper.handleMeasuredStateTooSmall())
-            onMeasureIntenal(widthMeasureSpec, heightMeasureSpec);
+        onMeasureInternal(widthMeasureSpec, heightMeasureSpec);
 
         if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
             if (getMeasuredWidth() > maxWidth)
                 widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
             if (getMeasuredHeight() > maxHeight)
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
-            onMeasureIntenal(widthMeasureSpec, heightMeasureSpec);
+            onMeasureInternal(widthMeasureSpec, heightMeasureSpec);
         }
 
         if (getMeasuredHeight() > maxHeight) {
             if (getMeasuredHeight() > maxHeight)
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
-            onMeasureIntenal(widthMeasureSpec, heightMeasureSpec);
+            onMeasureInternal(widthMeasureSpec, heightMeasureSpec);
         }
     }
 

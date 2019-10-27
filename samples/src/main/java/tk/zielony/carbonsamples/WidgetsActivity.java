@@ -5,7 +5,6 @@ import android.os.Bundle;
 import java.io.Serializable;
 
 import carbon.component.PaddingItem;
-import tk.zielony.carbonsamples.feature.PercentLayoutActivity;
 import tk.zielony.carbonsamples.widget.BackdropActivity;
 import tk.zielony.carbonsamples.widget.BannerActivity;
 import tk.zielony.carbonsamples.widget.BottomNavigationViewActivity;
@@ -46,14 +45,13 @@ public class WidgetsActivity extends SampleListActivity {
                 new SampleActivityItem(CircularProgressActivity.class),
                 new SampleActivityItem(ProgressBarsActivity.class),
                 new SampleActivityItem(SnackbarActivity.class),
-                new SampleActivityItem(PercentLayoutActivity.class),
                 new SampleActivityItem(TextFieldsActivity.class, R.drawable.ic_text_fields_black_24dp),
                 new SampleActivityItem(TabsActivity.class),
                 new SampleActivityItem(RecyclerActivity.class),
                 new SampleActivityItem(ExpandableRecyclerActivity.class),
                 new SampleActivityItem(ExpansionPanelActivity.class),
                 new SampleActivityItem(DropDownActivity.class, R.drawable.carbon_dropdown),
-                new SampleActivityItem(NavigationViewActivity.class),
+                new SampleActivityItem(NavigationViewActivity.class, 0, true),
                 new SampleActivityItem(SeekBarActivity.class),
                 new SampleActivityItem(FlowLayoutActivity.class),
                 new SampleActivityItem(TableLayoutActivity.class),

@@ -7,7 +7,7 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         style="@style/sectionDescription"
         android:text="Text markers allow pixel perfect text alignment." />
 

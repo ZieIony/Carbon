@@ -19,8 +19,7 @@
     </style>
 
     <style name="carbon_FloatingActionButton.Inverse">
-        <item name="android:background">@color/carbon_defaultColorControlInverse</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
     </style>
 
     <style name="carbon_FloatingActionButton.Primary">
@@ -28,7 +27,7 @@
     </style>
 
     <style name="carbon_FloatingActionButton.Primary.Inverse">
-        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
     </style>
 
     <style name="carbon_FloatingActionButton.Accent">
@@ -36,7 +35,7 @@
     </style>
 
     <style name="carbon_FloatingActionButton.Accent.Inverse">
-        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
     </style>
 
     <style name="carbon_FloatingActionButton.Small">
@@ -49,7 +48,7 @@
     </style>
 
     <style name="carbon_FloatingActionButton.Small.Inverse">
-        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
     </style>
 
     <style name="carbon_FloatingActionButton.Small.Primary">
@@ -57,7 +56,7 @@
     </style>
 
     <style name="carbon_FloatingActionButton.Small.Primary.Inverse">
-        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
     </style>
 
 </resources>

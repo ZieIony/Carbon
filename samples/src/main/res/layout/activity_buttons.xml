@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <carbon.widget.TextView
+                <carbon.widget.Label
                     style="@style/sectionDescription"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -73,10 +73,11 @@
                     android:layout_height="wrap_content">
 
                     <carbon.widget.TextView
+                        style="@style/sectionDescription"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        style="@style/sectionDescription.Inverse"
-                        android:text="Inversed styles" />
+                        android:text="Inversed styles"
+                        android:theme="?attr/carbon_themeOverlayInverse" />
 
                     <carbon.widget.ImageView
                         android:id="@+id/code_buttonsInversed"
@@ -117,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <carbon.widget.TextView
+                <carbon.widget.Label
                     style="@style/sectionDescription"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -170,11 +171,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <carbon.widget.TextView
+                    <carbon.widget.Label
+                        style="@style/sectionDescription"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        style="@style/sectionDescription.Inverse"
-                        android:text="Colored, inversed styles" />
+                        android:text="Colored, inversed styles"
+                        android:theme="?attr/carbon_themeOverlayInverse" />
 
                     <carbon.widget.ImageView
                         android:id="@+id/code_buttonsColoredInversed"
@@ -215,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <carbon.widget.TextView
+                <carbon.widget.Label
                     style="@style/sectionDescription"
                     android:layout_width="0dp"
                     android:layout_weight="1"

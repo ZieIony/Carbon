@@ -45,7 +45,7 @@
         <item name="carbon_fontWeight">200</item>
     </style>
 
-    <style name="sectionDescription">
+    <style name="sectionDescription" parent="carbon_Label">
         <item name="android:textAppearance">?attr/carbon_textAppearanceCaption</item>
         <item name="android:layout_marginLeft">@dimen/carbon_margin</item>
         <item name="android:layout_marginRight">@dimen/carbon_margin</item>
@@ -53,10 +53,6 @@
         <item name="android:layout_marginBottom">@dimen/carbon_marginHalf</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="sectionDescription.Inverse">
-        <item name="android:textAppearance">?attr/carbon_textAppearanceCaptionInverse</item>
     </style>
 
     <style name="ThemeLight" parent="carbon_Theme.Light.NoActionBar" />

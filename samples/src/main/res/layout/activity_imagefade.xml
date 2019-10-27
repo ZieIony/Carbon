@@ -10,92 +10,125 @@
     <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.Button
-        android:id="@+id/button"
+        android:id="@+id/imageFade_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_padding"
         android:text="fade" />
 
-    <carbon.widget.FrameLayout
-        android:id="@+id/grid"
+    <carbon.widget.ConstraintLayout
+        android:id="@+id/imageFade_grid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <carbon.widget.ImageView
-            android:layout_gravity="left"
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toTopOf="@+id/imageView5"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <carbon.widget.ImageView
-            android:layout_gravity="center_horizontal"
+            android:id="@+id/imageView3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toTopOf="@+id/imageView6"
+            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <carbon.widget.ImageView
-            android:layout_gravity="right"
+            android:id="@+id/imageView4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toTopOf="@+id/imageView7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <carbon.widget.ImageView
-            android:layout_gravity="center_vertical"
+            android:id="@+id/imageView5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toTopOf="@+id/imageView8"
+            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <carbon.widget.ImageView
-            android:layout_gravity="center"
+            android:id="@+id/imageView6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toTopOf="@+id/imageView9"
+            app:layout_constraintEnd_toStartOf="@+id/imageView7"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <carbon.widget.ImageView
-            android:layout_gravity="center_vertical|right"
+            android:id="@+id/imageView7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toTopOf="@+id/imageView10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         <carbon.widget.ImageView
-            android:layout_gravity="bottom|left"
+            android:id="@+id/imageView8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
         <carbon.widget.ImageView
-            android:layout_gravity="bottom|center_horizontal"
+            android:id="@+id/imageView9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView10"
+            app:layout_constraintStart_toEndOf="@+id/imageView8"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
         <carbon.widget.ImageView
-            android:layout_gravity="bottom|right"
+            android:id="@+id/imageView10"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:carbon_heightPercent="33.3%"
             app:carbon_inAnimation="brightnessSaturationFade"
             app:carbon_outAnimation="brightnessSaturationFade"
-            app:carbon_widthPercent="33.3%" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-
-    </carbon.widget.FrameLayout>
-
+    </carbon.widget.ConstraintLayout>
 
 </carbon.widget.LinearLayout>

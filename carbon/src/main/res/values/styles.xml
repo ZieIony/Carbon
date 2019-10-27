@@ -1,7 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="carbon_View" parent="@android:style/Widget" />
-
+    <style name="carbon_Label">
+        <item name="carbon_animateColorChanges">true</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
+    </style>
 
     <style name="carbon_Snackbar" parent="carbon_LinearLayout">
         <item name="carbon_elevation">@dimen/carbon_elevationSnackbar</item>
@@ -81,7 +83,6 @@
     </style>
 
     <style name="carbon_Toolbar.Flat">
-        <item name="android:theme">@null</item>
         <item name="android:background">@null</item>
         <item name="carbon_elevation">@dimen/carbon_elevationFlat</item>
     </style>
@@ -128,7 +129,7 @@
     </style>
 
     <style name="carbon_ImageView.Icon.Inverse">
-        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
     </style>
 
     <style name="carbon_ImageView.IconButton">
@@ -142,8 +143,7 @@
     </style>
 
     <style name="carbon_ImageView.IconButton.Inverse">
-        <item name="carbon_rippleColor">?attr/carbon_rippleColorInverse</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorInverse</item>
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
     </style>
 
     <style name="carbon_ImageView.Avatar">

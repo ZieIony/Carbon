@@ -24,20 +24,20 @@
             android:layout_width="@dimen/carbon_iconSize"
             android:layout_height="@dimen/carbon_iconSize"
             android:layout_margin="@dimen/carbon_chipCloseMargin"
-            app:carbon_src="@drawable/carbon_check"
             android:visibility="gone"
             app:carbon_cornerRadius="@dimen/carbon_iconSizeHalf"
+            app:carbon_src="@drawable/carbon_check"
             app:carbon_tint="@color/carbon_defaultIconColor"
             tools:visibility="visible" />
     </carbon.widget.FrameLayout>
 
     <carbon.widget.TextView
         android:id="@+id/carbon_chipText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/carbon_chipPadding"
-        android:layout_marginRight="@dimen/carbon_chipPadding"
+        android:layout_weight="1"
         android:gravity="center_vertical"
+        app:carbon_layout_marginHorizontal="@dimen/carbon_chipPadding"
         tools:text="text" />
 
     <carbon.widget.ImageView
@@ -47,10 +47,10 @@
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/carbon_chipCloseMargin"
         android:scaleType="center"
-        app:carbon_src="@drawable/carbon_remove"
         app:carbon_cornerRadius="@dimen/carbon_iconSizeHalf"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless"
+        app:carbon_src="@drawable/carbon_remove"
         app:carbon_tint="@color/carbon_defaultIconColor" />
 
 </merge>

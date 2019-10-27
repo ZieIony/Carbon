@@ -64,6 +64,7 @@ import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
+import carbon.view.TextAppearanceView;
 import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
@@ -89,7 +90,8 @@ public class Button extends android.widget.Button
         RevealView,
         VisibleView,
         TransformationView,
-        MarginView {
+        MarginView,
+        TextAppearanceView {
 
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 

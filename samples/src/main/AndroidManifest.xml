@@ -65,7 +65,6 @@
         <activity android:name=".feature.XmlFontActivity" />
         <activity android:name=".feature.TextAppearanceActivity" />
         <activity android:name=".feature.ZOrderActivity" />
-        <activity android:name=".feature.PercentLayoutActivity" />
         <activity android:name=".feature.TextMarkerActivity" />
         <activity android:name=".feature.ThemeActivity" />
 

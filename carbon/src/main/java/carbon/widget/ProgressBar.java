@@ -57,7 +57,7 @@ public class ProgressBar extends View {
 
         drawable.setBarWidth(a.getDimension(R.styleable.ProgressBar_carbon_barWidth, 5));
 
-        setProgress(a.getFloat(R.styleable.ProgressBar_carbon_progress,0.0f));
+        setProgress(a.getFloat(R.styleable.ProgressBar_carbon_progress, 0.0f));
 
         a.recycle();
 

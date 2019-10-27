@@ -99,11 +99,11 @@ public class InputLayout extends RelativeLayout {
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);
             if (!isInEditMode() && attr == R.styleable.InputLayout_carbon_errorTextAppearance) {
-                Carbon.setTextAppearance(errorTextView, attr, false);
+                Carbon.setTextAppearance(errorTextView, attr, false, true);
             } else if (attr == R.styleable.InputLayout_carbon_counterTextAppearance) {
-                Carbon.setTextAppearance(counterTextView, attr, false);
+                Carbon.setTextAppearance(counterTextView, attr, false, true);
             } else if (attr == R.styleable.InputLayout_carbon_labelTextAppearance) {
-                Carbon.setTextAppearance(labelTextView, attr, false);
+                Carbon.setTextAppearance(labelTextView, attr, false, true);
             }
         }
 
@@ -121,20 +121,19 @@ public class InputLayout extends RelativeLayout {
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (!"inputLayout".equals(child.getTag())) {
-            params = setInputChild(child, (android.widget.RelativeLayout.LayoutParams) params);
-            container.addView(child, 1, params);
+            setInputChild(child);
+            container.addView(child, index==-1?-1:index + 1, new LinearLayout.LayoutParams(params));
         } else {
             // Carry on adding the View...
             super.addView(child, index, params);
         }
     }
 
-    private ViewGroup.LayoutParams setInputChild(View child, android.widget.RelativeLayout.LayoutParams params) {
+    private void setInputChild(View child) {
         this.child = child;
 
         if (child.getId() == NO_ID)
             child.setId(R.id.carbon_input);
-        params.addRule(BELOW, R.id.carbon_label);
 
         if (child instanceof EditText) {
             final EditText editText = (EditText) child;
@@ -190,8 +189,6 @@ public class InputLayout extends RelativeLayout {
             int buttonPadding = getResources().getDimensionPixelSize(R.dimen.carbon_padding) + getResources().getDimensionPixelSize(R.dimen.carbon_iconSize);
             child.setPadding(child.getPaddingLeft(), child.getPaddingTop(), child.getPaddingRight() + buttonPadding, child.getPaddingBottom());
         }
-
-        return params;
     }
 
     @Override
@@ -268,15 +265,15 @@ public class InputLayout extends RelativeLayout {
     }
 
     public void setErrorTextAppearance(int resId) {
-        Carbon.setTextAppearance(errorTextView, resId, false);
+        Carbon.setTextAppearance(errorTextView, resId, false, true);
     }
 
     public void setCounterTextAppearance(int resId) {
-        Carbon.setTextAppearance(counterTextView, resId, false);
+        Carbon.setTextAppearance(counterTextView, resId, false, true);
     }
 
     public void setLabelTextAppearance(int resId) {
-        Carbon.setTextAppearance(labelTextView, resId, false);
+        Carbon.setTextAppearance(labelTextView, resId, false, true);
     }
 
     public String getLabel() {

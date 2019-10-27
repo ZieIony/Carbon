@@ -20,12 +20,13 @@
             app:carbon_tint="?attr/colorSecondary" />
 
         <carbon.widget.TextView
+            android:theme="?attr/carbon_themeOverlayInverse"
             android:id="@+id/carbon_label"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:gravity="center"
             android:maxLines="1"
-            android:textAppearance="?attr/carbon_textAppearanceBody1Inverse"
+            android:textAppearance="?attr/carbon_textAppearanceBody1"
             android:textSize="10sp" />
     </carbon.widget.FrameLayout>
 </carbon.widget.FrameLayout>

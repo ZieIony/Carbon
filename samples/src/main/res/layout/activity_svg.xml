@@ -9,7 +9,7 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         style="@style/sectionDescription"
         app:carbon_htmlText="Carbon supports SVGs instead of Android vector files. You can render more complex icons and images with transformations, gradients, text, clipping and other features. SVGs can be exported directly from Inkscape or Illustrator. SVG files have to be in &lt;i>res/raw&lt;/i> folder." />
 

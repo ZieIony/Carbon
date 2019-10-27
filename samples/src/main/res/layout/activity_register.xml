@@ -7,7 +7,7 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         style="@style/sectionDescription"
         android:text="Forms such as registration screen can be easily created with reusable components and a recycler" />
 

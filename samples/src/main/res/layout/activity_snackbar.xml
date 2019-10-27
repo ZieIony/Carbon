@@ -87,10 +87,9 @@
         android:id="@+id/fab"
         android:layout_width="@dimen/carbon_fabSize"
         android:layout_height="@dimen/carbon_fabSize"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/carbon_padding"
-        android:src="@raw/ic_face_24px"
-        app:carbon_rippleColor="#7fffffff" />
+        app:carbon_src="@raw/ic_face_24px" />
 
 </carbon.widget.RelativeLayout>

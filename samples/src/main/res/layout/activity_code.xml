@@ -18,7 +18,7 @@
             app:carbon_src="@drawable/ic_share_black_24dp" />
     </carbon.widget.Toolbar>
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         style="@style/sectionDescription"
         android:text="This is the code used to display the sample. XML and Java/Kotlin, when neccessary. Carbon-specific stuff in blue." />
 

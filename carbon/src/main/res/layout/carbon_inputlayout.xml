@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <carbon.widget.RelativeLayout
+    <carbon.widget.LinearLayout
         android:id="@+id/carbon_inputLayoutContainer"
         style="?attr/carbon_inputLayoutContainerStyle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:addStatesFromChildren="true"
+        android:orientation="vertical"
         android:tag="inputLayout">
 
         <carbon.widget.TextView
@@ -22,42 +23,50 @@
             android:tag="inputLayout"
             android:textAppearance="?attr/carbon_textAppearanceCaption"
             app:carbon_inAnimation="fly"
-            app:carbon_outAnimation="fly" />
+            app:carbon_outAnimation="fly"
+            tools:text="label" />
 
-    </carbon.widget.RelativeLayout>
+    </carbon.widget.LinearLayout>
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_clear"
         style="?attr/carbon_inputLayoutButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/carbon_inputLayoutContainer"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
         android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
-        app:carbon_src="@drawable/carbon_clear"
-        android:tag="inputLayout" />
+        android:tag="inputLayout"
+        app:carbon_src="@drawable/carbon_clear" />
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_showPassword"
         style="?attr/carbon_inputLayoutButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/carbon_inputLayoutContainer"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
         android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
+        android:tag="inputLayout"
         app:carbon_src="@drawable/carbon_visibility"
-        android:tag="inputLayout" />
+        tools:style="@style/carbon_ImageView.InputLayout" />
 
     <carbon.widget.ImageView
         android:id="@+id/carbon_voiceInput"
         style="?attr/carbon_inputLayoutButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/carbon_inputLayoutContainer"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
         android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
-        app:carbon_src="@drawable/carbon_voice"
-        android:tag="inputLayout" />
+        android:tag="inputLayout"
+        app:carbon_src="@drawable/carbon_voice" />
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -74,13 +83,15 @@
             android:layout_weight="1"
             android:textAppearance="?attr/carbon_textAppearanceCaption"
             app:carbon_inAnimation="fade"
-            app:carbon_outAnimation="fade" />
+            app:carbon_outAnimation="fade"
+            tools:text="error" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/carbon_textAppearanceCaption" />
+            android:textAppearance="?attr/carbon_textAppearanceCaption"
+            tools:text="3 / 7" />
 
     </carbon.widget.LinearLayout>
 

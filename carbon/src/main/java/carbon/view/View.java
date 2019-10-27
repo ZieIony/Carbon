@@ -146,7 +146,7 @@ public abstract class View extends android.view.View
     };
 
     private void initView(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.View, defStyleAttr, R.style.carbon_View);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.View, defStyleAttr, 0);
 
         Carbon.initDefaultBackground(this, a, R.styleable.View_android_background);
         Carbon.initElevation(this, a, elevationIds);

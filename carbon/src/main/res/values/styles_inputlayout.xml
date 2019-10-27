@@ -1,7 +1,7 @@
 <resources>
 
     <style name="carbon_InputLayout" parent="carbon_RelativeLayout">
-        <item name="carbon_labelMode">persistent</item>
+        <item name="carbon_labelMode">floating</item>
 
         <item name="carbon_errorTextAppearance">?attr/carbon_textAppearanceCaption</item>
         <item name="carbon_counterTextAppearance">?attr/carbon_textAppearanceCaption</item>
@@ -19,12 +19,13 @@
         <item name="android:layout_marginBottom">@dimen/carbon_margin</item>
     </style>
 
-    <style name="carbon_InputLayoutContainerTheme" parent="">
+    <style name="carbon_InputLayoutContainerTheme">
         <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout</item>
         <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer</item>
     </style>
 
     <style name="carbon_InputLayoutContainer" parent="carbon_RelativeLayout" />
+
 
     <style name="carbon_InputLayout.Box">
         <item name="android:theme">@style/carbon_InputLayoutContainerTheme.Box</item>
@@ -53,6 +54,7 @@
         <item name="carbon_cornerRadiusTopEnd">4dp</item>
         <item name="android:background">?attr/carbon_inputLayoutBoxColor</item>
     </style>
+
 
     <style name="carbon_InputLayout.Stroke">
         <item name="android:theme">@style/carbon_InputLayoutContainerTheme.Stroke</item>

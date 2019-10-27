@@ -32,7 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:theme="?attr/carbon_themeOverlayInverse">
 
             <carbon.widget.LinearLayout
                 android:layout_width="match_parent"
@@ -43,10 +44,10 @@
                 android:background="?attr/colorPrimaryDark"
                 android:clickable="true"
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusButton"
-                app:carbon_rippleColor="?attr/carbon_rippleColorInverse">
+                app:carbon_rippleColor="?attr/carbon_rippleColor">
 
                 <carbon.widget.ImageView
-                    style="@style/carbon_ImageView.Icon.Inverse"
+                    style="@style/carbon_ImageView.Icon"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
@@ -57,7 +58,7 @@
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="1 Adult, Economy"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse" />
+                    android:textAppearance="@style/carbon_TextAppearance.Body1" />
             </carbon.widget.LinearLayout>
 
             <carbon.widget.LinearLayout
@@ -69,10 +70,10 @@
                 android:background="?attr/colorPrimaryDark"
                 android:clickable="true"
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusButton"
-                app:carbon_rippleColor="?attr/carbon_rippleColorInverse">
+                app:carbon_rippleColor="?attr/carbon_rippleColor">
 
                 <carbon.widget.ImageView
-                    style="@style/carbon_ImageView.Icon.Inverse"
+                    style="@style/carbon_ImageView.Icon"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
@@ -83,7 +84,7 @@
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="Seoul, Korea"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse" />
+                    android:textAppearance="@style/carbon_TextAppearance.Body1" />
             </carbon.widget.LinearLayout>
 
             <carbon.widget.LinearLayout
@@ -95,21 +96,21 @@
                 android:background="?attr/colorPrimaryDark"
                 android:clickable="true"
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusButton"
-                app:carbon_rippleColor="?attr/carbon_rippleColorInverse">
+                app:carbon_rippleColor="?attr/carbon_rippleColor">
 
                 <carbon.widget.ImageView
-                    style="@style/carbon_ImageView.Icon.Inverse"
+                    style="@style/carbon_ImageView.Icon"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
-                    android:src="@raw/ic_airplanemode_on_24px" />
+                    app:carbon_src="@raw/ic_airplanemode_on_24px" />
 
                 <carbon.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="Choose Destination"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse" />
+                    android:textAppearance="@style/carbon_TextAppearance.Body1" />
             </carbon.widget.LinearLayout>
 
             <carbon.widget.LinearLayout
@@ -121,21 +122,21 @@
                 android:background="?attr/colorPrimaryDark"
                 android:clickable="true"
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusButton"
-                app:carbon_rippleColor="?attr/carbon_rippleColorInverse">
+                app:carbon_rippleColor="?attr/carbon_rippleColor">
 
                 <carbon.widget.ImageView
-                    style="@style/carbon_ImageView.Icon.Inverse"
+                    style="@style/carbon_ImageView.Icon"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
-                    android:src="@raw/ic_today_24px" />
+                    app:carbon_src="@raw/ic_today_24px" />
 
                 <carbon.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="Select Dates"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1.Inverse" />
+                    android:textAppearance="@style/carbon_TextAppearance.Body1" />
             </carbon.widget.LinearLayout>
 
         </carbon.widget.BackdropLayout_Back>

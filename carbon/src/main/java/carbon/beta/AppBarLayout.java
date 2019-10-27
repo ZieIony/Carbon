@@ -1287,8 +1287,10 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
             super(c, attrs);
 
             TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.AppBarLayout_Layout);
-            anchorView = a.getResourceId(R.styleable.AppBarLayout_Layout_carbon_anchor, -1);
-            anchorGravity = a.getInt(R.styleable.AppBarLayout_Layout_carbon_anchorGravity, -1);
+            if (a.hasValue(R.styleable.AppBarLayout_Layout_carbon_layout_marginHorizontal))
+                leftMargin = rightMargin = a.getDimensionPixelSize(R.styleable.AppBarLayout_Layout_carbon_layout_marginHorizontal, 0);
+            if (a.hasValue(R.styleable.AppBarLayout_Layout_carbon_layout_marginVertical))
+                topMargin = bottomMargin = a.getDimensionPixelSize(R.styleable.AppBarLayout_Layout_carbon_layout_marginVertical, 0);
             a.recycle();
         }
 

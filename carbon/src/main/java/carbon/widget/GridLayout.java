@@ -53,7 +53,6 @@ import carbon.component.ComponentView;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
-import carbon.internal.PercentLayoutHelper;
 import carbon.internal.RevealAnimator;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
@@ -89,7 +88,6 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
         BehaviorView,
         MarginView {
 
-    private final PercentLayoutHelper percentLayoutHelper = new PercentLayoutHelper(this);
     private OnTouchListener onDispatchTouchListener;
 
     public GridLayout(Context context) {
@@ -405,8 +403,6 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
-
-        percentLayoutHelper.restoreOriginalParams();
     }
 
     private void updateCorners() {
@@ -1296,27 +1292,19 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
         }
     }
 
-    public static class LayoutParams extends androidx.gridlayout.widget.GridLayout.LayoutParams implements PercentLayoutHelper.PercentLayoutParams {
-        private PercentLayoutHelper.PercentLayoutInfo percentLayoutInfo;
+    public static class LayoutParams extends androidx.gridlayout.widget.GridLayout.LayoutParams {
         private int anchorView;
         private int anchorGravity;
-        private RuntimeException delayedException;
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
 
-            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.FrameLayout_Layout);
-            anchorView = a.getResourceId(R.styleable.FrameLayout_Layout_carbon_anchor, -1);
-            anchorGravity = a.getInt(R.styleable.FrameLayout_Layout_carbon_anchorGravity, -1);
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.GridLayout_Layout);
+            if (a.hasValue(R.styleable.GridLayout_Layout_carbon_layout_marginHorizontal))
+                leftMargin = rightMargin = a.getDimensionPixelSize(R.styleable.GridLayout_Layout_carbon_layout_marginHorizontal, 0);
+            if (a.hasValue(R.styleable.GridLayout_Layout_carbon_layout_marginVertical))
+                topMargin = bottomMargin = a.getDimensionPixelSize(R.styleable.GridLayout_Layout_carbon_layout_marginVertical, 0);
             a.recycle();
-
-            if (delayedException != null) {
-                percentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
-
-                if ((percentLayoutInfo.widthPercent == -1.0f || percentLayoutInfo.heightPercent == -1.0f) && percentLayoutInfo.aspectRatio == -1 ||
-                        (percentLayoutInfo.widthPercent == -1.0f && percentLayoutInfo.heightPercent == -1.0f))
-                    throw delayedException;
-            }
         }
 
         public LayoutParams(Spec rowSpec, Spec columnSpec) {
@@ -1350,25 +1338,6 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
 
             this.anchorView = source.anchorView;
             this.anchorGravity = source.anchorGravity;
-            percentLayoutInfo = source.percentLayoutInfo;
-        }
-
-        @Override
-        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
-            try {
-                super.setBaseAttributes(a, widthAttr, heightAttr);
-            } catch (RuntimeException e) {
-                delayedException = e;
-            }
-        }
-
-        @Override
-        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
-            if (percentLayoutInfo == null) {
-                percentLayoutInfo = new PercentLayoutHelper.PercentLayoutInfo();
-            }
-
-            return percentLayoutInfo;
         }
 
         public int getAnchorGravity() {
@@ -1419,10 +1388,7 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        percentLayoutHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (percentLayoutHelper.handleMeasuredStateTooSmall())
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
             if (getMeasuredWidth() > maxWidth)
                 widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);

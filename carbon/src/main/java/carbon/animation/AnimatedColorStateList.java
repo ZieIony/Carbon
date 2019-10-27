@@ -93,7 +93,7 @@ public class AnimatedColorStateList extends ColorStateList {
 
             colorAnimation.end();
 
-            if(currentState.length!=0) {
+            if (currentState.length != 0) {
                 for (final int[] state : states) {
                     if (StateSet.stateSetMatches(state, newState)) {
                         int firstColor = getColorForState(currentState, getDefaultColor());

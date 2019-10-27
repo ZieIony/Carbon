@@ -47,7 +47,7 @@
                 android:layout_width="@dimen/carbon_fabSize"
                 android:layout_height="@dimen/carbon_fabSize"
                 android:layout_margin="@dimen/carbon_padding"
-                android:src="@raw/ic_shopping_cart_24px" />
+                app:carbon_src="@raw/ic_shopping_cart_24px" />
 
 
             <carbon.widget.rx.Button

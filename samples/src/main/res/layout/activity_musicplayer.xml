@@ -32,18 +32,20 @@
             android:paddingBottom="@dimen/carbon_paddingHalf">
 
             <carbon.widget.TextView
+                android:theme="?attr/carbon_themeOverlayInverse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:text="Poor Lines (2018)"
-                android:textAppearance="?attr/carbon_textAppearanceBody1Inverse" />
+                android:textAppearance="?attr/carbon_textAppearanceBody1" />
 
             <carbon.widget.TextView
+                android:theme="?attr/carbon_themeOverlayInverse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:text="Mighty Lints"
-                android:textAppearance="?attr/carbon_textAppearanceHeadlineInverse" />
+                android:textAppearance="?attr/carbon_textAppearanceHeadline" />
         </carbon.widget.LinearLayout>
     </carbon.widget.FrameLayout>
 

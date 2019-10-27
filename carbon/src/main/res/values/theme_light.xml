@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="carbon_Theme.Light" parent="Theme.MaterialComponents.Light">
+        <item name="carbon_themeOverlayInverse">@style/carbon_ThemeOverlay.Dark</item>
+
         <item name="carbon_colorError">#ffF44336</item>
 
         <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
@@ -47,6 +49,7 @@
         <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout</item>
         <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
         <item name="carbon_bottomNavigationViewStyle">@style/carbon_BottomNavigationView</item>
+        <item name="carbon_labelStyle">@style/carbon_Label</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Dark</item>
@@ -126,6 +129,8 @@
     </style>
 
     <style name="carbon_ThemeOverlay.Light" parent="ThemeOverlay.MaterialComponents">
+        <item name="carbon_themeOverlayInverse">@style/carbon_ThemeOverlay.Dark</item>
+
         <item name="android:textColorPrimary">@color/carbon_textColorPrimary_light</item>
         <item name="android:textColorSecondary">@color/carbon_textColorSecondary_light</item>
         <item name="android:textColorTertiary">@color/carbon_textColorHint_light</item>

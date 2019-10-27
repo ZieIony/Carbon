@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <carbon.widget.TextView
+                <carbon.widget.Label
                     style="@style/sectionDescription"
                     android:text="CheckBox class is written from scratch. It behaves consistently across all platforms and offers animated vector icons" />
 
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/carbon_margin" />
 
-                <carbon.widget.TextView
+                <carbon.widget.Label
                     style="@style/sectionDescription"
                     android:text="RadioGroup with RadioButtons" />
 
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/carbon_margin" />
 
-                <carbon.widget.TextView
+                <carbon.widget.Label
                     style="@style/sectionDescription"
                     android:text="It's easy to combine RadioButtons, border and other features into a toggle group" />
 
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/carbon_margin" />
 
-                <carbon.widget.TextView
+                <carbon.widget.Label
                     style="@style/sectionDescription"
                     android:text="CheckBox supports indeterminate state as well" />
 
@@ -172,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/carbon_margin" />
 
-                <carbon.widget.TextView
+                <carbon.widget.Label
                     style="@style/sectionDescription"
                     android:text="It's easy to create square textless CheckBox with a predefined mode" />
 

@@ -1235,6 +1235,65 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
 
 
     // -------------------------------
+    // layout params
+    // -------------------------------
+
+    @Override
+    protected ConstraintLayout.LayoutParams generateDefaultLayoutParams() {
+        return new ConstraintLayout.LayoutParams(super.generateDefaultLayoutParams());
+    }
+
+    @Override
+    public ConstraintLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new ConstraintLayout.LayoutParams(getContext(), attrs);
+    }
+
+    @Override
+    protected ConstraintLayout.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        return new ConstraintLayout.LayoutParams(p);
+    }
+
+    public static class LayoutParams extends androidx.constraintlayout.widget.ConstraintLayout.LayoutParams {
+        public LayoutParams(Context c, AttributeSet attrs) {
+            super(c, attrs);
+
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.ConstraintLayout_Layout);
+            if (a.hasValue(R.styleable.ConstraintLayout_Layout_carbon_layout_marginHorizontal))
+                leftMargin = rightMargin = a.getDimensionPixelSize(R.styleable.ConstraintLayout_Layout_carbon_layout_marginHorizontal, 0);
+            if (a.hasValue(R.styleable.ConstraintLayout_Layout_carbon_layout_marginVertical))
+                topMargin = bottomMargin = a.getDimensionPixelSize(R.styleable.ConstraintLayout_Layout_carbon_layout_marginVertical, 0);
+            a.recycle();
+        }
+
+        public LayoutParams(int w, int h) {
+            super(w, h);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public LayoutParams(ViewGroup.LayoutParams source) {
+            super(source);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public LayoutParams(ViewGroup.MarginLayoutParams source) {
+            super(source);
+        }
+
+        public LayoutParams(androidx.constraintlayout.widget.ConstraintLayout.LayoutParams source) {
+            super((MarginLayoutParams) source);
+        }
+
+        public LayoutParams(ConstraintLayout.LayoutParams source) {
+            super((MarginLayoutParams) source);
+        }
+    }
+
+
+    // -------------------------------
     // maximum width & height
     // -------------------------------
 

@@ -39,8 +39,8 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/carbon_windowPadding"
                 android:paddingRight="@dimen/carbon_windowPadding"
-                app:carbon_anchor="@id/image"
-                app:carbon_anchorGravity="bottom">
+                app:carbon_layout_anchor="@id/image"
+                app:carbon_layout_anchorGravity="bottom">
 
                 <carbon.widget.ImageView
                     style="@style/carbon_ImageView.Avatar"
@@ -60,12 +60,13 @@
                     <carbon.widget.TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        android:theme="?attr/carbon_themeOverlayInverse"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:text="Michelle Strander"
-                        android:textAppearance="@style/carbon_TextAppearance.Headline.Inverse"
+                        android:textAppearance="@style/carbon_TextAppearance.Headline"
                         android:textColor="@color/carbon_textColorPrimary_dark" />
 
                     <carbon.widget.LinearLayout

@@ -68,6 +68,7 @@ import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
+import carbon.view.TextAppearanceView;
 import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
 import carbon.view.ValidStateView;
@@ -121,7 +122,8 @@ public class TextView extends android.widget.TextView
         AutoSizeTextView,
         RevealView,
         VisibleView,
-        MarginView {
+        MarginView,
+        TextAppearanceView {
 
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
@@ -218,7 +220,7 @@ public class TextView extends android.widget.TextView
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
         if (ap != -1)
-            Carbon.setTextAppearance(this, ap, a.hasValue(R.styleable.TextView_android_textColor));
+            Carbon.setTextAppearance(this, ap, a.hasValue(R.styleable.TextView_android_textColor), false);
 
         int textStyle = a.getInt(R.styleable.TextView_android_textStyle, 0);
         int fontWeight = a.getInt(R.styleable.TextView_carbon_fontWeight, 400);
@@ -290,12 +292,12 @@ public class TextView extends android.widget.TextView
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        Carbon.setTextAppearance(this, resid, false);
+        Carbon.setTextAppearance(this, resid, false, false);
     }
 
     public void setTextAppearance(int resid) {
         super.setTextAppearance(getContext(), resid);
-        Carbon.setTextAppearance(this, resid, false);
+        Carbon.setTextAppearance(this, resid, false, false);
     }
 
     @Override
