@@ -1,7 +1,9 @@
 package carbon.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.Layout;
@@ -11,15 +13,17 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import carbon.Carbon;
 import carbon.R;
+import carbon.view.TextAppearanceView;
 
 public class TextMarker extends View {
-    TextPaint paint;
+    TextPaint textPaint;
     Rect rect = new Rect();
     Rect rect2 = new Rect();
-    CharSequence text = "I";
+    CharSequence text = "H";
     private int id;
-    private int baseline;
+    private int baseline = 0;
     private StaticLayout layout;
 
     public TextMarker(Context context) {
@@ -55,14 +59,6 @@ public class TextMarker extends View {
         }
     }
 
-    public Paint getPaint() {
-        return paint;
-    }
-
-    public void setPaint(TextPaint paint) {
-        this.paint = paint;
-    }
-
     public CharSequence getText() {
         return text;
     }
@@ -75,21 +71,21 @@ public class TextMarker extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (id != 0) {
-            android.widget.TextView textView = ((ViewGroup) getParent()).findViewById(id);
+            TextAppearanceView textView = ((ViewGroup) getParent()).findViewById(id);
             if (text == null)
                 text = textView.getText();
-            paint = textView.getPaint();
+            textPaint = textView.getPaint();
 
             if (layout == null)
-                layout = new StaticLayout(text, paint, getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+                layout = new StaticLayout(text, textPaint, getMeasuredWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
 
             String firstLine = text.subSequence(0, layout.getLineEnd(0)).toString();
-            paint.getTextBounds(firstLine, 0, firstLine.length(), rect);
+            textPaint.getTextBounds(firstLine, 0, firstLine.length(), rect);
             baseline = Math.abs(rect.top);
             rect.top = -layout.getLineAscent(0) + rect.top;
 
             String lastLine = text.subSequence(layout.getLineStart(layout.getLineCount() - 1), layout.getLineEnd(layout.getLineCount() - 1)).toString();
-            paint.getTextBounds(lastLine, 0, lastLine.length(), rect2);
+            textPaint.getTextBounds(lastLine, 0, lastLine.length(), rect2);
             rect.bottom = layout.getHeight() - layout.getLineDescent(layout.getLineCount() - 1) + rect2.bottom;
 
             setMeasuredDimension(getMeasuredWidth(), rect.height() + getPaddingTop() + getPaddingBottom());
@@ -101,4 +97,12 @@ public class TextMarker extends View {
         return baseline + getPaddingTop();
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (isInEditMode()) {
+            @SuppressLint("DrawAllocation") Paint paint = new Paint();
+            paint.setColor(Carbon.getThemeColor(getContext(), R.attr.carbon_colorError));
+            canvas.drawLine(0, getBaseline(), getWidth(), getBaseline(), paint);
+        }
+    }
 }

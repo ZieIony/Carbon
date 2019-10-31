@@ -85,7 +85,7 @@ public class AutoCompleteEditText extends EditText {
     }
 
     protected TextWatcher autoCompleteTextWatcher;
-    SearchDataProvider dataProvider;
+    SearchAdapter dataProvider;
 
     public AutoCompleteEditText(Context context) {
         super(context);
@@ -114,7 +114,7 @@ public class AutoCompleteEditText extends EditText {
         initAutoCompleteEditText();
     }
 
-    public void setDataProvider(SearchDataProvider dataProvider) {
+    public void setDataProvider(SearchAdapter dataProvider) {
         this.dataProvider = dataProvider;
     }
 

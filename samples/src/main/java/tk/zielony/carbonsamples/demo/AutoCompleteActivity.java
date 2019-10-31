@@ -2,8 +2,8 @@ package tk.zielony.carbonsamples.demo;
 
 import android.os.Bundle;
 
+import carbon.widget.ArraySearchAdapter;
 import carbon.widget.AutoCompleteLayout;
-import carbon.widget.SearchDataProvider;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
@@ -20,17 +20,7 @@ public class AutoCompleteActivity extends ThemedActivity {
         initToolbar();
 
         AutoCompleteLayout autoCompleteLayout = findViewById(R.id.autoComplete);
-        autoCompleteLayout.setDataProvider(new SearchDataProvider<String>() {
-
-            @Override
-            public int getItemCount() {
-                return fruits.length;
-            }
-
-            @Override
-            public String getItem(int i) {
-                return fruits[i];
-            }
+        autoCompleteLayout.setDataProvider(new ArraySearchAdapter<String>(fruits) {
 
             @Override
             public String[] getItemWords(String item) {

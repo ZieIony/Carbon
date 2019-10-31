@@ -34,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:background="?attr/colorPrimary"
             android:scaleType="center"
-            android:src="@raw/ic_shopping_cart_24px"
+            app:carbon_src="@raw/ic_shopping_cart_24px"
             app:carbon_cornerCutTopStart="16dp"
             app:carbon_elevation="@dimen/carbon_elevationButton" />
     </carbon.widget.RelativeLayout>

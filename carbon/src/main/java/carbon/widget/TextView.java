@@ -46,6 +46,8 @@ import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -285,7 +287,7 @@ public class TextView extends android.widget.TextView
     }
 
     @Override
-    public void setTextColor(ColorStateList colors) {
+    public void setTextColor(@NotNull ColorStateList colors) {
         super.setTextColor(animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors);
     }
 

@@ -65,7 +65,7 @@ public class AutoCompleteLayout extends LinearLayout {
         adapter.setOnItemClickedListener((view, item, position) -> search.performCompletion(item.text.toString()));
     }
 
-    public void setDataProvider(SearchDataProvider dataProvider) {
+    public void setDataProvider(SearchAdapter dataProvider) {
         search.setDataProvider(dataProvider);
     }
 

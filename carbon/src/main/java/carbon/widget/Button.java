@@ -185,7 +185,7 @@ public class Button extends android.widget.Button
 
         int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
         if (ap != -1)
-            setTextAppearanceInternal(ap, a.hasValue(R.styleable.Button_android_textColor));
+            Carbon.setTextAppearance(this, ap, a.hasValue(R.styleable.Button_android_textColor), false);
 
         int textStyle = a.getInt(R.styleable.Button_android_textStyle, 0);
         int fontWeight = a.getInt(R.styleable.Button_carbon_fontWeight, 400);
@@ -234,39 +234,19 @@ public class Button extends android.widget.Button
     }
 
     @Override
-    public void setTextColor(ColorStateList colors) {
+    public void setTextColor(@NonNull ColorStateList colors) {
         super.setTextColor(animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors);
     }
 
     @Override
     public void setTextAppearance(@NonNull Context context, int resid) {
         super.setTextAppearance(context, resid);
-        setTextAppearanceInternal(resid, false);
+        Carbon.setTextAppearance(this, resid, false, false);
     }
 
     public void setTextAppearance(int resid) {
         super.setTextAppearance(getContext(), resid);
-        setTextAppearanceInternal(resid, false);
-    }
-
-    private void setTextAppearanceInternal(int resid, boolean hasTextColor) {
-        TypedArray appearance = getContext().obtainStyledAttributes(resid, R.styleable.TextAppearance);
-
-        int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
-        int fontWeight = appearance.getInt(R.styleable.TextAppearance_carbon_fontWeight, 400);
-
-        for (int i = 0; i < appearance.getIndexCount(); i++) {
-            int attr = appearance.getIndex(i);
-            if (attr == R.styleable.TextAppearance_carbon_font) {
-                Carbon.handleFontAttribute(this, appearance, textStyle, fontWeight, attr);
-            } else if (attr == R.styleable.TextAppearance_android_textAllCaps) {
-                setAllCaps(appearance.getBoolean(attr, true));
-            } else if (!hasTextColor && attr == R.styleable.TextAppearance_android_textColor) {
-                Carbon.initDefaultTextColor(this, appearance, attr);
-            }
-        }
-
-        appearance.recycle();
+        Carbon.setTextAppearance(this, resid, false, false);
     }
 
     RevealAnimator revealAnimator;

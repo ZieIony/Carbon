@@ -1,22 +1,20 @@
 package carbon.widget;
 
-import java.util.List;
+public class ArraySearchAdapter<Type> extends SearchAdapter<Type> {
+    private Type[] data;
 
-public class ListSearchDataProvider<Type> implements SearchDataProvider<Type> {
-    private List<Type> data;
-
-    public ListSearchDataProvider(List<Type> data) {
+    public ArraySearchAdapter(Type[] data) {
         this.data = data;
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.length;
     }
 
     @Override
     public Type getItem(int i) {
-        return data.get(i);
+        return data[i];
     }
 
     @Override

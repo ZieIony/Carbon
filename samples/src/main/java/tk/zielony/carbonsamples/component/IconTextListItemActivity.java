@@ -20,7 +20,7 @@ import carbon.drawable.DefaultColorControlStateList;
 import carbon.drawable.VectorDrawable;
 import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.RowListAdapter;
-import carbon.widget.ArraySearchDataProvider;
+import carbon.widget.ArraySearchAdapter;
 import carbon.widget.RecyclerView;
 import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
@@ -41,7 +41,7 @@ public class IconTextListItemActivity extends ThemedActivity {
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconTextItem.class, IconTextRow::new);
         adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow<>(parent, new ArraySearchDataProvider<>(new String[]{}), filterResults -> {
+        adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow<>(parent, new ArraySearchAdapter<>(new String[]{}), filterResults -> {
         }));
         recycler.setAdapter(adapter);
 

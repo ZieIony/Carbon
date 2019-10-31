@@ -241,6 +241,8 @@
         <attr name="android:textColor" />
         <attr name="android:textAllCaps" />
         <attr name="android:textAppearance" />
+        <attr name="android:gravity" />
+        <attr name="carbon_htmlText" />
     </declare-styleable>
 
 
@@ -1140,6 +1142,8 @@
 
     <!-- SearchEditText -->
     <attr name="carbon_searchEditTextStyle" format="reference" />
+
+    <attr name="carbon_badgeStyle" format="reference" />
 
     <attr name="carbon_dropDownStyle" format="reference" />
     <declare-styleable name="DropDown">

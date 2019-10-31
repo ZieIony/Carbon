@@ -34,8 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_bottomNavigationViewHeight"
         android:layout_marginBottom="@dimen/carbon_margin"
-        app:carbon_itemLayout="@layout/item_bottombar"
-        app:carbon_menu="@menu/menu_navigation" />
+        app:carbon_itemLayout="@layout/item_bottombar" />
 
     <carbon.widget.Label
         style="@style/sectionDescription"

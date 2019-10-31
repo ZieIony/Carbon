@@ -22,17 +22,23 @@
         <carbon.widget.ImageView
             android:id="@+id/carbon_avatar"
             style="@style/carbon_ImageView.Avatar"
-            tools:src="@tools:sample/avatars"
             android:layout_marginStart="@dimen/carbon_windowPadding"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginTop="@dimen/carbon_margin"
-            android:src="@{data.getAvatar()}" />
+            android:src="@{data.getAvatar()}"
+            tools:src="@tools:sample/avatars" />
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:layout_marginLeft="@dimen/carbon_contentPadding"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="@dimen/carbon_marginHalf"
+            android:layout_marginRight="@dimen/carbon_marginHalf"
+            android:layout_toStartOf="@+id/carbon_date"
+            android:layout_toLeftOf="@+id/carbon_date"
             app:carbon_text="Ip"
             app:carbon_textView="@+id/carbon_text" />
 
@@ -49,13 +55,17 @@
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker3"
-            android:layout_width="match_parent"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="@dimen/carbon_windowPadding"
+            android:layout_marginRight="@dimen/carbon_windowPadding"
             app:carbon_text="Ip"
             app:carbon_textView="@+id/carbon_date" />
 
-        <carbon.widget.TextView
+        <carbon.widget.Label
             android:id="@+id/carbon_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,7 +97,7 @@
             android:rating="@{data.rating}"
             tools:rating="3" />
 
-        <carbon.widget.TextView
+        <carbon.widget.Label
             android:id="@+id/carbon_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,7 +111,7 @@
             android:textAppearance="?attr/carbon_textAppearanceCaption"
             tools:text="@tools:sample/date/ddmmyy" />
 
-        <carbon.widget.TextView
+        <carbon.widget.Label
             android:id="@+id/carbon_subtext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,10 +119,8 @@
             android:layout_marginLeft="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:layout_marginBottom="@dimen/carbon_margin"
-            android:gravity="fill"
             android:text="@{data.subtext}"
             android:textAppearance="?attr/carbon_textAppearanceBody1"
-            android:textColor="?android:attr/textColorSecondary"
             tools:maxLines="3"
             tools:text="@tools:sample/lorem/random" />
 

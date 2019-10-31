@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
 import carbon.databinding.CarbonRowIconsearchBinding
-import carbon.widget.SearchDataProvider
+import carbon.widget.SearchAdapter
 import carbon.widget.SearchEditText
 import java.io.Serializable
 
@@ -32,8 +32,8 @@ class DefaultIconSearchItem : IconSearchItem {
 
 class IconSearchRow<Type : IconSearchItem> : DataBindingComponent<Type> {
 
-    constructor(parent: ViewGroup, dataProvider: SearchDataProvider<*>, listener: SearchEditText.OnFilterListener<*>) : super(parent, R.layout.carbon_row_iconsearch) {
-        (binding as CarbonRowIconsearchBinding).carbonQuery.setDataProvider(dataProvider)
+    constructor(parent: ViewGroup, adapter: SearchAdapter<*>, listener: SearchEditText.OnFilterListener<*>) : super(parent, R.layout.carbon_row_iconsearch) {
+        (binding as CarbonRowIconsearchBinding).carbonQuery.setDataProvider(adapter)
         (binding as CarbonRowIconsearchBinding).carbonQuery.setOnFilterListener(listener)
     }
 

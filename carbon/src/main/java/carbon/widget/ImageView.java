@@ -157,20 +157,19 @@ public class ImageView extends android.widget.ImageView
     private void initImageView(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, R.style.carbon_ImageView);
 
-        for (int i = 0; i < a.getIndexCount(); i++) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.ImageView_carbon_src) {
-                int resId = a.getResourceId(attr, 0);
-                if (resId != 0) {
-                    if (getContext().getResources().getResourceTypeName(resId).equals("raw")) {
-                        if (!isInEditMode()) {
-                            setImageDrawable(new VectorDrawable(getResources(), resId));
-                        } else {
-                            setImageResource(R.drawable.carbon_iconplaceholder);
-                        }
-                    } else {
-                        setImageDrawable(AppCompatResources.getDrawable(getContext(), resId));
-                    }
+        int resId = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
+        if (resId != 0) {
+            if (getContext().getResources().getResourceTypeName(resId).equals("raw")) {
+                if (!isInEditMode()) {
+                    setImageDrawable(new VectorDrawable(getResources(), resId));
+                } else {
+                    setImageResource(R.drawable.carbon_iconplaceholder);
+                }
+            } else {
+                if (!isInEditMode()) {
+                    setImageDrawable(AppCompatResources.getDrawable(getContext(), resId));
+                } else {
+                    setImageResource(resId);
                 }
             }
         }

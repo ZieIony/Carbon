@@ -14,9 +14,9 @@
 
     <carbon.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/carbon_Toolbar.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:background="?attr/colorPrimary"
         app:carbon_inAnimation="fade"
         app:carbon_outAnimation="fade" />
 
@@ -26,7 +26,7 @@
         android:layout_height="@dimen/carbon_fabSize"
         android:layout_gravity="right|bottom"
         android:layout_margin="@dimen/carbon_padding"
-        android:src="@raw/ic_dns_24px"
+        app:carbon_src="@raw/ic_dns_24px"
         app:carbon_inAnimation="fly"
         app:carbon_outAnimation="fly" />
 </carbon.widget.FrameLayout>

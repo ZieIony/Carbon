@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.R;
-import carbon.internal.SearchHelper;
 import carbon.internal.SimpleTextWatcher;
 
 /**
@@ -26,13 +25,21 @@ public class SearchEditText extends EditText {
         START, ADJACENT, NONADJACENT
     }
 
+    public static class SearchSettings {
+        SearchSettings() {
+        }
+
+        public boolean afterTextChanged = true;
+        public int searchThreshold = 2;
+        public MatchMode matchMode = MatchMode.ADJACENT;
+    }
+
     private OnFilterListener onFilterListener;
     private String prevText = "";
-    private MatchMode matchMode = MatchMode.ADJACENT;
-    private int searchThreshold = 2;
 
     protected TextWatcher searchTextWatcher;
-    SearchDataProvider dataProvider;
+    SearchAdapter dataProvider;
+    SearchSettings settings = new SearchSettings();
 
     public SearchEditText(Context context) {
         super(context, null, R.attr.carbon_searchEditTextStyle);
@@ -51,13 +58,13 @@ public class SearchEditText extends EditText {
     }
 
     public SearchEditText(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, R.attr.carbon_searchEditTextStyle);
+        super(context, attrs, defStyle);
         initSearchEditText();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public SearchEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, R.attr.carbon_searchEditTextStyle, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initSearchEditText();
     }
 
@@ -66,7 +73,7 @@ public class SearchEditText extends EditText {
 
             @Override
             public void afterTextChanged(Editable text) {
-                if (!prevText.equals(text.toString()))
+                if (settings.afterTextChanged && !prevText.equals(text.toString()))
                     filter();
                 prevText = text.toString();
             }
@@ -74,20 +81,24 @@ public class SearchEditText extends EditText {
         addTextChangedListener(searchTextWatcher);
     }
 
-    public <Type> void setDataProvider(SearchDataProvider<Type> dataProvider) {
+    public <Type> void setDataProvider(SearchAdapter<Type> dataProvider) {
         this.dataProvider = dataProvider;
     }
 
     public void setMatchMode(MatchMode mode) {
-        this.matchMode = mode;
+        settings.matchMode = mode;
+    }
+
+    public MatchMode getMatchMode(){
+        return settings.matchMode;
     }
 
     public void setSearchThreshold(int threshold) {
-        this.searchThreshold = threshold;
+        settings.searchThreshold = threshold;
     }
 
     public int getSearchThreshold() {
-        return searchThreshold;
+        return settings.searchThreshold;
     }
 
     private void fireOnFilterEvent(List filteredItems) {
@@ -122,32 +133,17 @@ public class SearchEditText extends EditText {
         }
 
         filteredItems.clear();
-        if (query.length() < searchThreshold) {
+        if (query.length() < settings.searchThreshold) {
             fireOnFilterEvent(null);
             return;
         }
 
         for (int i = 0; i < dataProvider.getItemCount(); i++) {
-            String[] itemWords = dataProvider.getItemWords(dataProvider.getItem(i));
-            matchItem(query, i, itemWords);
+            Object item = dataProvider.getItem(i);
+            if (dataProvider.filterItem(settings, query, item))
+                filteredItems.add(item);
         }
         fireOnFilterEvent(filteredItems);
-    }
-
-    private void matchItem(String query, int i, String[] itemWords) {
-        for (String itemWord : itemWords) {
-            String itemText = itemWord.toLowerCase();
-            if (matchMode == MatchMode.START && itemText.indexOf(query) == 0) {
-                filteredItems.add(dataProvider.getItem(i));
-                return;
-            } else if (matchMode == MatchMode.ADJACENT && itemText.contains(query)) {
-                filteredItems.add(dataProvider.getItem(i));
-                return;
-            } else if (matchMode == MatchMode.NONADJACENT && SearchHelper.nonadjacentMatch(itemText, query)) {
-                filteredItems.add(dataProvider.getItem(i));
-                return;
-            }
-        }
     }
 
     public interface OnFilterListener<Type> {

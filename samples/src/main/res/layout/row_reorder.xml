@@ -23,5 +23,5 @@
         style="@style/carbon_ImageView.Icon"
         android:layout_width="@dimen/carbon_toolbarHeight"
         android:layout_height="@dimen/carbon_toolbarHeight"
-        android:src="@raw/ic_reorder_24px" />
+        app:carbon_src="@raw/ic_reorder_24px" />
 </carbon.widget.LinearLayout>

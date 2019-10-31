@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:paddingTop="@dimen/carbon_padding"
-    android:paddingBottom="@dimen/carbon_padding">
+    android:paddingTop="@dimen/carbon_padding">
 
     <carbon.widget.LinearLayout
         android:id="@+id/powerOff"
@@ -27,11 +26,11 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:padding="@dimen/carbon_paddingHalf"
-            app:carbon_src="@drawable/ic_power_settings_new_black_24dp"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
+            app:carbon_src="@drawable/ic_power_settings_new_black_24dp"
             app:carbon_tint="@color/carbon_iconColor_dark" />
 
         <carbon.widget.TextView
@@ -64,11 +63,11 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:padding="@dimen/carbon_paddingHalf"
-            app:carbon_src="@raw/ic_refresh_24px"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
+            app:carbon_src="@raw/ic_refresh_24px"
             app:carbon_tint="@color/carbon_iconColor_dark" />
 
         <carbon.widget.TextView
@@ -101,11 +100,11 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:padding="@dimen/carbon_paddingHalf"
-            app:carbon_src="@raw/ic_airplanemode_off_24px"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
+            app:carbon_src="@raw/ic_airplanemode_off_24px"
             app:carbon_tint="@color/carbon_iconColor_dark" />
 
         <FrameLayout
@@ -140,7 +139,9 @@
     <carbon.widget.Divider
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_padding"
+        android:layout_marginLeft="@dimen/carbon_padding"
+        android:layout_marginTop="@dimen/carbon_padding"
+        android:layout_marginRight="@dimen/carbon_padding"
         android:tag="animate"
         app:carbon_inAnimation="pop" />
 
@@ -148,7 +149,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/carbon_padding"
+        android:paddingBottom="@dimen/carbon_padding">
 
         <carbon.widget.FloatingActionButton
             android:id="@+id/vibration"
@@ -157,11 +160,11 @@
             android:layout_marginRight="@dimen/carbon_padding"
             android:background="?attr/carbon_colorBackground"
             android:padding="@dimen/carbon_paddingHalf"
-            app:carbon_src="@raw/ic_vibration_24px"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
+            app:carbon_src="@raw/ic_vibration_24px"
             app:carbon_tint="?attr/carbon_iconColor" />
 
         <carbon.widget.FloatingActionButton
@@ -170,11 +173,11 @@
             android:layout_marginRight="@dimen/carbon_padding"
             android:background="?attr/carbon_colorBackgroundInverse"
             android:padding="@dimen/carbon_paddingHalf"
-            app:carbon_src="@raw/ic_volume_up_24px"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
+            app:carbon_src="@raw/ic_volume_up_24px"
             app:carbon_tint="?attr/carbon_iconColorInverse" />
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

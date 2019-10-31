@@ -50,6 +50,7 @@
         <item name="carbon_autoCompleteLayoutStyle">@style/carbon_AutoCompleteLayout</item>
         <item name="carbon_bottomNavigationViewStyle">@style/carbon_BottomNavigationView</item>
         <item name="carbon_labelStyle">@style/carbon_Label</item>
+        <item name="carbon_badgeStyle">@style/carbon_Badge</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Dark</item>
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Light</item>
@@ -126,6 +127,7 @@
 
         <item name="android:windowBackground">@drawable/carbon_windowbackground_dark</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="carbon_font">@null</item>
     </style>
 
     <style name="carbon_ThemeOverlay.Dark" parent="ThemeOverlay.MaterialComponents">

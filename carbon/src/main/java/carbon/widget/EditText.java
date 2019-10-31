@@ -493,7 +493,7 @@ public class EditText extends android.widget.EditText
     }
 
     @Override
-    public void setTextColor(ColorStateList colors) {
+    public void setTextColor(@NonNull ColorStateList colors) {
         super.setTextColor(animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors);
     }
 

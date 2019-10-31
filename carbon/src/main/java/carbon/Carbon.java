@@ -194,7 +194,7 @@ public class Carbon {
     public static void initDefaultTextColor(TextAppearanceView view, TypedArray a, int id) {
         ColorStateList color = getDefaultColorStateList((View) view, a, id);
         if (color != null)
-            view.setTextColor(AnimatedColorStateList.fromList(color, animation -> ((View) view).postInvalidate()));
+            view.setTextColor(color);
     }
 
     public static void initRippleDrawable(RippleView rippleView, TypedArray a, int[] ids) {
@@ -341,7 +341,7 @@ public class Carbon {
         }
     }
 
-    public static void initHtmlText(android.widget.TextView textView, TypedArray a, int id) {
+    public static void initHtmlText(TextAppearanceView textView, TypedArray a, int id) {
         String string = a.getString(id);
         if (string != null)
             textView.setText(Html.fromHtml(string));
@@ -580,6 +580,18 @@ public class Carbon {
         int textStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, 0);
         int fontWeight = appearance.getInt(R.styleable.TextAppearance_carbon_fontWeight, 400);
 
+        if (readAll) {
+            for (int i = 0; i < appearance.getIndexCount(); i++) {
+                int attr = appearance.getIndex(i);
+                if (attr == R.styleable.TextAppearance_android_textSize) {
+                    tv.setTextSize(appearance.getDimension(attr, 12));
+                } else if (attr == R.styleable.TextAppearance_android_textColor) {
+                    if (appearance.getColor(attr, 0) != ((View)tv).getResources().getColor(R.color.carbon_defaultColor))
+                        tv.setTextColor(appearance.getColorStateList(attr));
+                }
+            }
+        }
+
         for (int i = 0; i < appearance.getIndexCount(); i++) {
             int attr = appearance.getIndex(i);
             if (attr == R.styleable.TextAppearance_carbon_font) {
@@ -588,15 +600,6 @@ public class Carbon {
                 tv.setAllCaps(appearance.getBoolean(attr, true));
             } else if (!hasTextColor && attr == R.styleable.TextAppearance_android_textColor) {
                 Carbon.initDefaultTextColor(tv, appearance, attr);
-            }
-        }
-
-        if (readAll) {
-            for (int i = 0; i < appearance.getIndexCount(); i++) {
-                int attr = appearance.getIndex(i);
-                if (attr == R.styleable.TextAppearance_android_textSize) {
-                    tv.setTextSize(appearance.getDimension(attr, 12));
-                }
             }
         }
 

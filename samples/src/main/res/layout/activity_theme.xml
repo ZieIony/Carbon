@@ -23,7 +23,7 @@
 
             <carbon.widget.ImageView
                 style="@style/carbon_ImageView.IconButton"
-                android:src="@raw/ic_search_24px" />
+                app:carbon_src="@raw/ic_search_24px" />
         </carbon.widget.Toolbar>
 
         <carbon.widget.Button
@@ -72,7 +72,7 @@
 
             <carbon.widget.ImageView
                 style="@style/carbon_ImageView.IconButton"
-                android:src="@raw/ic_search_24px" />
+                app:carbon_src="@raw/ic_search_24px" />
         </carbon.widget.Toolbar>
 
         <carbon.widget.Button

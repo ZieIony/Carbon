@@ -52,4 +52,5 @@ public class BindingAdapters {
     public static void setAnimateColorChangesEnabled(View view, boolean enabled) {
         ((TintedView) view).setAnimateColorChangesEnabled(enabled);
     }
+
 }

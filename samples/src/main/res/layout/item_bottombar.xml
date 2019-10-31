@@ -4,9 +4,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="data"
-            type="carbon.widget.BottomNavigationView.Item" />
+            type="tk.zielony.carbonsamples.widget.BadgeItem" />
     </data>
 
     <carbon.widget.FrameLayout
@@ -26,5 +28,13 @@
             android:duplicateParentState="true"
             android:src="@{data.icon}"
             app:carbon_tint="@color/carbon_defaultIconColorPrimary" />
+
+        <carbon.widget.Badge
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="4dp"
+            android:text="@{String.valueOf(data.notificationCount)}"
+            android:visibility="@{data.notificationCount>0?View.VISIBLE:View.GONE}" />
     </carbon.widget.FrameLayout>
 </layout>
