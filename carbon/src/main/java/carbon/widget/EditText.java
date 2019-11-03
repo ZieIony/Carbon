@@ -252,7 +252,7 @@ public class EditText extends android.widget.EditText
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
         Carbon.initAutoSizeText(this, a, autoSizeTextIds);
 
-        if (a.getResourceId(R.styleable.EditText_android_background, 0) == R.color.carbon_defaultColor) {
+        if (a.getResourceId(R.styleable.EditText_android_background, 0) == R.color.carbon_colorUnderline) {
             float underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
             UnderlineDrawable underlineDrawable = new UnderlineDrawable();
             underlineDrawable.setThickness(underlineWidth);

@@ -89,7 +89,7 @@ public class SearchEditText extends EditText {
         settings.matchMode = mode;
     }
 
-    public MatchMode getMatchMode(){
+    public MatchMode getMatchMode() {
         return settings.matchMode;
     }
 

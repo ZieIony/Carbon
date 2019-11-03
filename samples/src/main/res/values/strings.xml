@@ -112,5 +112,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.]]></string>
+    <string name="barChartActivity_title">Bar chart</string>
+    <string name="chartsActivity_title">Charts</string>
+    <string name="lineChartActivity_title">Line chart</string>
 
 </resources>

@@ -31,7 +31,7 @@ class MusicPlayerActivity : ThemedActivity() {
         )
 
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = RowListAdapter(songs, RowFactory { parent->DataBindingComponent<SongItem>(parent, R.layout.row_player_song) })
+        recycler.adapter = RowListAdapter(songs, RowFactory { parent -> DataBindingComponent<SongItem>(parent, R.layout.row_player_song) })
     }
 
     override fun applyTheme() {
@@ -40,7 +40,7 @@ class MusicPlayerActivity : ThemedActivity() {
     }
 }
 
-class SongItem(val id: Int, val name: String, val duration: Int):Serializable {
+class SongItem(val id: Int, val name: String, val duration: Int) : Serializable {
     fun getDurationString(): String {
         return String.format("%d:%02d", duration / 60, duration % 60)
     }

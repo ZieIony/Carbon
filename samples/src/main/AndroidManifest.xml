@@ -71,6 +71,9 @@
         <activity android:name=".library.PicassoActivity" />
         <activity android:name=".library.ConstraintLayoutActivity" />
 
+        <activity android:name=".graph.BarChartActivity" />
+        <activity android:name=".graph.LineChartActivity" />
+
         <activity android:name=".demo.PowerMenuActivity" />
         <activity android:name=".demo.QuickReturnActivity" />
         <activity android:name=".demo.AutoCompleteActivity" />
@@ -123,6 +126,7 @@
         <activity android:name=".WidgetsActivity" />
         <activity android:name=".DialogsActivity" />
         <activity android:name=".ThemesActivity" />
+        <activity android:name=".ChartsActivity" />
 
         <activity android:name=".ColorsActivity" />
         <activity android:name=".CodeActivity" />

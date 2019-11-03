@@ -31,7 +31,7 @@
     </style>
 
     <style name="carbon_FloatingActionButton.Accent">
-        <item name="android:background">@color/carbon_defaultColorAccent</item>
+        <item name="android:background">@color/carbon_defaultColorSecondary</item>
     </style>
 
     <style name="carbon_FloatingActionButton.Accent.Inverse">

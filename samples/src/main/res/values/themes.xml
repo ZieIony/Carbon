@@ -13,7 +13,8 @@
         <item name="colorPrimaryDark">#4e0d3a</item>
         <item name="colorSecondary">#e30425</item>
         <item name="carbon_font">@font/raleway_regular</item>
-    </style>ac
+    </style>
+    ac
 
     <color name="basilBackground">#fffffbe6</color>
 

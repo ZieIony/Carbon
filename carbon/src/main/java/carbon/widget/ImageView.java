@@ -32,7 +32,6 @@ import android.view.ViewOutlineProvider;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.view.ViewCompat;
 
 import com.google.android.material.shape.CutCornerTreatment;
@@ -46,6 +45,7 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
+import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -157,22 +157,9 @@ public class ImageView extends android.widget.ImageView
     private void initImageView(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, R.style.carbon_ImageView);
 
-        int resId = a.getResourceId(R.styleable.ImageView_carbon_src, 0);
-        if (resId != 0) {
-            if (getContext().getResources().getResourceTypeName(resId).equals("raw")) {
-                if (!isInEditMode()) {
-                    setImageDrawable(new VectorDrawable(getResources(), resId));
-                } else {
-                    setImageResource(R.drawable.carbon_iconplaceholder);
-                }
-            } else {
-                if (!isInEditMode()) {
-                    setImageDrawable(AppCompatResources.getDrawable(getContext(), resId));
-                } else {
-                    setImageResource(resId);
-                }
-            }
-        }
+        Drawable d = Carbon.getDrawable(this, a, R.styleable.ImageView_carbon_src, R.drawable.carbon_iconplaceholder);
+        if (d != null)
+            setImageDrawable(d);
 
         Carbon.initDefaultBackground(this, a, R.styleable.ImageView_android_background);
 
@@ -184,6 +171,7 @@ public class ImageView extends android.widget.ImageView
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
+        AnimUtils.setupSaturationAnimator(stateAnimator, this);
 
         a.recycle();
     }

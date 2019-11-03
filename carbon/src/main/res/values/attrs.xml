@@ -154,8 +154,8 @@
         <enum name="center_vertical" value="0x00000010" />
     </attr>
 
-    <attr name="carbon_layout_marginHorizontal" format="dimension"/>
-    <attr name="carbon_layout_marginVertical" format="dimension"/>
+    <attr name="carbon_layout_marginHorizontal" format="dimension" />
+    <attr name="carbon_layout_marginVertical" format="dimension" />
 
     <attr name="carbon_autoSizeText" format="enum">
         <enum name="none" value="0" />
@@ -1040,7 +1040,6 @@
     <attr name="carbon_inputLayoutContainerStyle" format="reference" />
     <attr name="carbon_inputLayoutButtonStyle" format="reference" />
     <declare-styleable name="InputLayout">
-        <attr name="android:theme"/>
         <attr name="carbon_error" format="string" />
 
         <attr name="carbon_errorMode" format="enum">
@@ -1318,6 +1317,24 @@
     <declare-styleable name="Banner">
         <attr name="carbon_icon" />
         <attr name="android:text" />
+    </declare-styleable>
+
+    <attr name="carbon_chartViewStyle" format="reference" />
+    <declare-styleable name="ChartView">
+        <attr name="carbon_itemColor" format="color" />
+        <attr name="carbon_itemSpacing" format="dimension" />
+        <attr name="carbon_barCornerRadius" format="dimension" />
+        <attr name="carbon_linesThickness" format="dimension" />
+        <attr name="carbon_chartPadding" format="dimension" />
+        <attr name="carbon_axesColor" format="color" />
+        <attr name="carbon_axesThickness" format="dimension" />
+        <attr name="carbon_chartType" format="enum">
+            <enum name="Bar" value="0" />
+            <enum name="Line" value="1" />
+        </attr>
+        <attr name="carbon_gridDensity" format="dimension" />
+        <attr name="carbon_gridColor" format="color" />
+        <attr name="carbon_gridThickness" format="dimension" />
     </declare-styleable>
 
     <!-- Drawable used to show animated touch feedback. -->

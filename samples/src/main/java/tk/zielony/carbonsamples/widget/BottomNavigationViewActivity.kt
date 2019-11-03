@@ -1,7 +1,7 @@
 package tk.zielony.carbonsamples.widget
 
 import android.os.Bundle
-import carbon.drawable.DefaultIconColorAccentStateList
+import carbon.drawable.ColorStateListFactory
 import carbon.widget.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_bottomnavigationview.*
 import tk.zielony.carbonsamples.ActivityAnnotation
@@ -23,18 +23,18 @@ class BottomNavigationViewActivity : ThemedActivity() {
                 BadgeItem().apply {
                     icon = resources.getDrawable(R.drawable.ic_android_black_24dp)
                     title = "Android"
-                    iconTintList = DefaultIconColorAccentStateList(this@BottomNavigationViewActivity)
+                    iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                 },
                 BadgeItem().apply {
                     icon = resources.getDrawable(R.drawable.ic_calendar_black_24dp)
                     title = "Calendar"
-                    iconTintList = DefaultIconColorAccentStateList(this@BottomNavigationViewActivity)
+                    iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                     notificationCount = 346
                 },
                 BadgeItem().apply {
                     icon = resources.getDrawable(R.drawable.ic_comment_black_24dp)
                     title = "Comment"
-                    iconTintList = DefaultIconColorAccentStateList(this@BottomNavigationViewActivity)
+                    iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                     notificationCount = 1
                 })
 
@@ -42,17 +42,17 @@ class BottomNavigationViewActivity : ThemedActivity() {
                 BottomNavigationView.Item().apply {
                     icon = resources.getDrawable(R.drawable.ic_android_black_24dp)
                     title = "Android"
-                    iconTintList = DefaultIconColorAccentStateList(this@BottomNavigationViewActivity)
+                    iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                 },
                 BottomNavigationView.Item().apply {
                     icon = resources.getDrawable(R.drawable.ic_calendar_black_24dp)
                     title = "Calendar"
-                    iconTintList = DefaultIconColorAccentStateList(this@BottomNavigationViewActivity)
+                    iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                 },
                 BottomNavigationView.Item().apply {
                     icon = resources.getDrawable(R.drawable.ic_comment_black_24dp)
                     title = "Comment"
-                    iconTintList = DefaultIconColorAccentStateList(this@BottomNavigationViewActivity)
+                    iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                 })
     }
 }

@@ -47,7 +47,7 @@
                 android:layout_height="@dimen/carbon_toolbarHeight"
                 android:layout_marginLeft="@dimen/carbon_contentPadding"
                 android:layout_marginRight="@dimen/carbon_contentPadding"
-                android:hint="search" />
+                android:hint="Search" />
 
             <carbon.widget.ImageView
                 android:id="@+id/clear"

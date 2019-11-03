@@ -82,7 +82,7 @@
             android:maxLines="2"
             android:text="@{data.subtext}"
             android:textAppearance="?attr/carbon_textAppearanceBody1"
-            android:textColor="?android:attr/textColorSecondary" />
+            android:textColor="@color/carbon_defaultTextSecondaryColor" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_date"

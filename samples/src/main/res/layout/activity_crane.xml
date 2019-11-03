@@ -19,7 +19,7 @@
         <carbon.widget.ImageView
             android:id="@+id/crane_search"
             style="@style/carbon_ImageView.IconButton"
-            android:src="@drawable/carbon_search" />
+            app:carbon_src="@drawable/carbon_search" />
     </carbon.widget.Toolbar>
 
     <carbon.widget.BackdropLayout

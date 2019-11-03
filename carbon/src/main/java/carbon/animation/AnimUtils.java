@@ -372,4 +372,35 @@ public class AnimUtils {
         }
     }
 
+    public static void setupSaturationAnimator(StateAnimator stateAnimator, final ImageView view) {
+        {
+            ColorMatrix matrix = new ColorMatrix();
+
+            final ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+            animator.setDuration(200);
+            animator.setInterpolator(new FastOutSlowInInterpolator());
+            Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
+            };
+            animator.addUpdateListener(animation -> {
+                matrix.setSaturation((Float) animation.getAnimatedValue());
+                view.setColorFilter(new ColorMatrixColorFilter(matrix));
+            });
+            stateAnimator.addState(new int[]{android.R.attr.state_enabled}, animator, animatorListener);
+        }
+        {
+            ColorMatrix matrix = new ColorMatrix();
+
+            final ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
+            animator.setDuration(200);
+            animator.setInterpolator(new FastOutSlowInInterpolator());
+            Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
+            };
+            animator.addUpdateListener(animation -> {
+                matrix.setSaturation((Float) animation.getAnimatedValue());
+                view.setColorFilter(new ColorMatrixColorFilter(matrix));
+            });
+            stateAnimator.addState(new int[]{-android.R.attr.state_enabled}, animator, animatorListener);
+        }
+    }
+
 }

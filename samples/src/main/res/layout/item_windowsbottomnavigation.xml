@@ -22,6 +22,6 @@
             android:layout_gravity="center"
             android:duplicateParentState="true"
             android:src="@{data.icon}"
-            app:carbon_tint="@color/carbon_defaultIconColorAccent" />
+            app:carbon_tint="@color/carbon_defaultIconColorSecondary" />
     </carbon.widget.FrameLayout>
 </layout>

@@ -1,6 +1,5 @@
 package tk.zielony.carbonsamples.component;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,8 +14,6 @@ import carbon.component.IconSearchRow;
 import carbon.component.IconTextRow;
 import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
-import carbon.drawable.ColorStateListDrawable;
-import carbon.drawable.DefaultColorControlStateList;
 import carbon.drawable.VectorDrawable;
 import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.RowListAdapter;
@@ -45,8 +42,7 @@ public class IconTextListItemActivity extends ThemedActivity {
         }));
         recycler.setAdapter(adapter);
 
-        Drawable dividerDrawable = new ColorStateListDrawable(new DefaultColorControlStateList(this));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable, getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this);
         dividerItemDecoration.setDrawAfter(position -> adapter.getItem(position) instanceof DefaultIconSearchItem);
         recycler.addItemDecoration(dividerItemDecoration);
 

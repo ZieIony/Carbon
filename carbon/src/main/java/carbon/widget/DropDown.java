@@ -25,7 +25,6 @@ import android.widget.Checkable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -107,8 +106,7 @@ public class DropDown extends EditText {
         setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.SingleSelect.ordinal())]);
         dropDownMenu.setOnItemClickedListener(onItemClickedListener);
 
-        int drawableId = a.getResourceId(R.styleable.DropDown_android_button, R.drawable.carbon_dropdown);
-        setButtonDrawable(ContextCompat.getDrawable(getContext(), drawableId));
+        setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.DropDown_android_button, R.drawable.carbon_dropdown));
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

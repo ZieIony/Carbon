@@ -84,11 +84,11 @@
 
                 <carbon.widget.DropDown
                     android:id="@+id/dropDown"
+                    style="@style/carbon_DropDown.Underlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
-                    android:background="@color/carbon_defaultColor"
                     android:paddingBottom="@dimen/carbon_padding" />
 
                 <carbon.widget.EditText

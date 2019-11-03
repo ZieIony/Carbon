@@ -11,6 +11,8 @@ import tk.zielony.carbonsamples.demo.SearchToolbarActivity;
 import tk.zielony.carbonsamples.feature.GestureDetectorActivity;
 import tk.zielony.carbonsamples.feature.ShadowActivity;
 import tk.zielony.carbonsamples.feature.XmlFontActivity;
+import tk.zielony.carbonsamples.graph.BarChartActivity;
+import tk.zielony.carbonsamples.graph.LineChartActivity;
 import tk.zielony.carbonsamples.widget.BackdropActivity;
 import tk.zielony.carbonsamples.widget.BannerActivity;
 import tk.zielony.carbonsamples.widget.BottomNavigationViewActivity;
@@ -38,6 +40,8 @@ public class NewSamplesActivity extends SampleListActivity {
                 new SampleActivityItem(BottomNavigationViewActivity.class),
                 new SampleActivityItem(XmlFontActivity.class, R.drawable.ic_font_download_black_24dp),
                 new SampleActivityItem(BackdropActivity.class),
+                new SampleActivityItem(BarChartActivity.class, 0, true),
+                new SampleActivityItem(LineChartActivity.class, 0, true),
                 new SampleActivityItem(SearchToolbarActivity.class, R.drawable.carbon_search),
                 new SampleActivityItem(MusicPlayerActivity.class, R.drawable.ic_play_arrow_black_24dp, true),
                 new SampleActivityItem(ProfileActivity.class, R.drawable.ic_person_black_24dp),

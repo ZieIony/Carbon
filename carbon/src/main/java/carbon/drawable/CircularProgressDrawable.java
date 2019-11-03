@@ -13,9 +13,6 @@ import androidx.core.graphics.drawable.TintAwareDrawable;
 
 import carbon.widget.ProgressBar;
 
-/**
- * Created by Mbarin on 2015-02-08.
- */
 public class CircularProgressDrawable extends ProgressDrawable implements TintAwareDrawable {
     private static final long DEFAULT_SWEEP_DURATION = 3000;
     private static final long DEFAULT_ANGLE_DURATION = 1000;

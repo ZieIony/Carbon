@@ -120,6 +120,7 @@
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:layout_marginBottom="@dimen/carbon_margin"
             android:text="@{data.subtext}"
+            android:textColor="@color/carbon_defaultTextSecondaryColor"
             android:textAppearance="?attr/carbon_textAppearanceBody1"
             tools:maxLines="3"
             tools:text="@tools:sample/lorem/random" />

@@ -1,5 +1,6 @@
 package carbon.recycler;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -7,6 +8,9 @@ import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import carbon.R;
+import carbon.drawable.ColorStateListDrawable;
+import carbon.drawable.ColorStateListFactory;
 import carbon.widget.RecyclerView;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
@@ -18,6 +22,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable drawable;
     private int height;
     private DrawRules drawBeforeRules, drawAfterRules;
+
+    public DividerItemDecoration(Context context) {
+        drawable = new ColorStateListDrawable(ColorStateListFactory.INSTANCE.makeControl(context));
+        height = context.getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight);
+    }
 
     public DividerItemDecoration(Drawable drawable, int height) {
         this.drawable = drawable;

@@ -18,6 +18,6 @@ public class RoundedCornersActivity extends ThemedActivity {
         initToolbar();
 
         ImageView view = findViewById(R.id.image);
-        view.setImageDrawable(new DrawableImageGenerator(this).next(null));
+        view.setImageDrawable(new DrawableImageGenerator(this).next());
     }
 }

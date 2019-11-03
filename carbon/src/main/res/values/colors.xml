@@ -62,21 +62,28 @@
     <color name="carbon_tooltip">#e5616161</color>
 
 
-    <color name="carbon_defaultColor">#12345678</color>
+    <color name="carbon_colorUnderline">#12345678</color>
+
     <color name="carbon_defaultColorPrimary">#12345678</color>
-    <color name="carbon_defaultColorAccent">#12345678</color>
+    <color name="carbon_defaultColorPrimaryInverse">#12345678</color>
+    <color name="carbon_defaultColorSecondary">#12345678</color>
+    <color name="carbon_defaultColorSecondaryInverse">#12345678</color>
 
     <color name="carbon_defaultColorControl">#12345678</color>
     <color name="carbon_defaultColorControlInverse">#12345678</color>
+    <color name="carbon_defaultColorControlPrimary">#12345678</color>
+    <color name="carbon_defaultColorControlPrimaryInverse">#12345678</color>
+    <color name="carbon_defaultColorControlSecondary">#12345678</color>
+    <color name="carbon_defaultColorControlSecondaryInverse">#12345678</color>
 
     <color name="carbon_defaultHighlightColor">#12345678</color>
-    <color name="carbon_defaultHighlightColorAccent">#12345678</color>
     <color name="carbon_defaultHighlightColorPrimary">#12345678</color>
+    <color name="carbon_defaultHighlightColorSecondary">#12345678</color>
 
     <color name="carbon_defaultIconColor">#12345678</color>
     <color name="carbon_defaultIconColorInverse">#12345678</color>
-    <color name="carbon_defaultIconColorAccent">#12345678</color>
-    <color name="carbon_defaultIconColorAccentInverse">#12345678</color>
+    <color name="carbon_defaultIconColorSecondary">#12345678</color>
+    <color name="carbon_defaultIconColorSecondaryInverse">#12345678</color>
     <color name="carbon_defaultIconColorPrimary">#12345678</color>
     <color name="carbon_defaultIconColorPrimaryInverse">#12345678</color>
 
@@ -86,9 +93,9 @@
     <color name="carbon_defaultTextSecondaryColorInverse">#12345678</color>
     <color name="carbon_defaultTextColorPrimary">#12345678</color>
     <color name="carbon_defaultTextColorPrimaryInverse">#12345678</color>
-    <color name="carbon_defaultTextColorAccent">#12345678</color>
-    <color name="carbon_defaultTextColorAccentInverse">#12345678</color>
+    <color name="carbon_defaultTextColorSecondary">#12345678</color>
+    <color name="carbon_defaultTextColorSecondaryInverse">#12345678</color>
 
     <color name="carbon_defaultRippleColorPrimary">#12345678</color>
-    <color name="carbon_defaultRippleColorAccent">#12345678</color>
+    <color name="carbon_defaultRippleColorSecondary">#12345678</color>
 </resources>

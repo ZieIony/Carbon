@@ -82,7 +82,7 @@
         <item name="android:paddingTop">@dimen/carbon_paddingHalf</item>
         <item name="carbon_cornerRadius">4dp</item>
         <item name="carbon_strokeWidth">1dp</item>
-        <item name="carbon_stroke">@color/carbon_defaultColorAccent</item>
+        <item name="carbon_stroke">@color/carbon_defaultColorSecondary</item>
         <item name="android:layout_marginBottom">@dimen/carbon_marginHalf</item>
     </style>
 

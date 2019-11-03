@@ -21,7 +21,6 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -59,8 +58,7 @@ public class RadioButton extends TextView implements Checkable {
     public void initRadioButton(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, defStyleRes);
 
-        int drawableId = a.getResourceId(R.styleable.RadioButton_android_button, R.drawable.carbon_radiobutton);
-        setButtonDrawable(ContextCompat.getDrawable(getContext(), drawableId));
+        setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.RadioButton_android_button, R.drawable.carbon_radiobutton));
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

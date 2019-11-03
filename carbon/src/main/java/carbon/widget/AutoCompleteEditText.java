@@ -27,7 +27,7 @@ import carbon.internal.SimpleTextWatcher;
  * This class can be used to create new material search fields with drop down menus separated by a
  * seam.
  */
-public class AutoCompleteEditText extends EditText {
+public class AutoCompleteEditText extends SearchEditText {
 
     public static final int FILTERING_START = 0, FILTERING_PARTIAL = 1;
 
@@ -128,7 +128,7 @@ public class AutoCompleteEditText extends EditText {
                 prevText = text.toString();
             }
         };
-        addTextChangedListener(autoCompleteTextWatcher);
+        //addTextChangedListener(autoCompleteTextWatcher);
         setOnEditorActionListener((textView, actionId, keyEvent) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 autoCompleting = true;
@@ -288,6 +288,13 @@ public class AutoCompleteEditText extends EditText {
 
     List<FilterResult> filteredItems = new ArrayList<>();
 
+    @Override
+    public void filter() {
+        Word currentWord = getCurrentWord();
+        if (currentWord != null)
+            super.filter(currentWord.toString());
+    }
+
     public void filter(AutoCompleteEditText.Word word) {
         filteredItems.clear();
         if (word.length() == 0)
@@ -375,15 +382,4 @@ public class AutoCompleteEditText extends EditText {
         autoCompleting = false;
     }
 
-    public interface OnFilterListener {
-        void onFilter(List<FilterResult> filterResults);
-    }
-
-    public void setOnFilterListener(OnFilterListener onFilterListener) {
-        this.onFilterListener = onFilterListener;
-    }
-
-    public List<FilterResult> getFilteredItems() {
-        return filteredItems;
-    }
 }

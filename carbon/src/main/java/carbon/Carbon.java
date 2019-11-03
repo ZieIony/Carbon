@@ -42,28 +42,8 @@ import carbon.animation.AnimatedView;
 import carbon.drawable.AlphaDrawable;
 import carbon.drawable.AlphaWithParentDrawable;
 import carbon.drawable.ColorStateListDrawable;
-import carbon.drawable.DefaultAccentColorStateList;
-import carbon.drawable.DefaultColorControlInverseStateList;
-import carbon.drawable.DefaultColorControlStateList;
-import carbon.drawable.DefaultColorStateList;
-import carbon.drawable.DefaultHighlightColorAccentStateList;
-import carbon.drawable.DefaultHighlightColorPrimaryStateList;
-import carbon.drawable.DefaultHighlightColorStateList;
-import carbon.drawable.DefaultIconColorAccentInverseStateList;
-import carbon.drawable.DefaultIconColorAccentStateList;
-import carbon.drawable.DefaultIconColorInverseStateList;
-import carbon.drawable.DefaultIconColorPrimaryInverseStateList;
-import carbon.drawable.DefaultIconColorPrimaryStateList;
-import carbon.drawable.DefaultIconColorStateList;
-import carbon.drawable.DefaultPrimaryColorStateList;
-import carbon.drawable.DefaultTextColorAccentInverseStateList;
-import carbon.drawable.DefaultTextColorAccentStateList;
-import carbon.drawable.DefaultTextColorPrimaryInverseStateList;
-import carbon.drawable.DefaultTextColorPrimaryStateList;
-import carbon.drawable.DefaultTextPrimaryColorInverseStateList;
-import carbon.drawable.DefaultTextPrimaryColorStateList;
-import carbon.drawable.DefaultTextSecondaryColorInverseStateList;
-import carbon.drawable.DefaultTextSecondaryColorStateList;
+import carbon.drawable.ColorStateListFactory;
+import carbon.drawable.VectorDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.view.AutoSizeTextView;
@@ -107,7 +87,7 @@ public class Carbon {
         if (!a.hasValue(id))
             return null;
         try {
-            if (a.getColor(id, 0) != view.getResources().getColor(R.color.carbon_defaultColor))
+            if (a.getColor(id, 0) != view.getResources().getColor(R.color.carbon_defaultColorControl))
                 return null;
         } catch (Resources.NotFoundException e) {
             return null;
@@ -116,57 +96,69 @@ public class Carbon {
         Context context = view.getContext();
         int resourceId = a.getResourceId(id, 0);
 
-        if (resourceId == R.color.carbon_defaultColor) {
-            return new DefaultColorStateList(context);
-        } else if (resourceId == R.color.carbon_defaultColorPrimary) {
-            return new DefaultPrimaryColorStateList(context);
-        } else if (resourceId == R.color.carbon_defaultColorAccent) {
-            return new DefaultAccentColorStateList(context);
+        if (resourceId == R.color.carbon_defaultColorPrimary) {
+            return ColorStateListFactory.INSTANCE.makePrimary(context);
+        } else if (resourceId == R.color.carbon_defaultColorPrimaryInverse) {
+            return ColorStateListFactory.INSTANCE.makePrimaryInverse(context);
+        } else if (resourceId == R.color.carbon_defaultColorSecondary) {
+            return ColorStateListFactory.INSTANCE.makeSecondary(context);
+        } else if (resourceId == R.color.carbon_defaultColorSecondaryInverse) {
+            return ColorStateListFactory.INSTANCE.makeSecondaryInverse(context);
 
         } else if (resourceId == R.color.carbon_defaultColorControl) {
-            return new DefaultColorControlStateList(context);
+            return ColorStateListFactory.INSTANCE.makeControl(context);
         } else if (resourceId == R.color.carbon_defaultColorControlInverse) {
-            return new DefaultColorControlInverseStateList(context);
+            return ColorStateListFactory.INSTANCE.makeControlInverse(context);
+        } else if (resourceId == R.color.carbon_defaultColorControlPrimary) {
+            return ColorStateListFactory.INSTANCE.makeControlPrimary(context);
+        } else if (resourceId == R.color.carbon_defaultColorControlPrimaryInverse) {
+            return ColorStateListFactory.INSTANCE.makeControlPrimaryInverse(context);
+        } else if (resourceId == R.color.carbon_defaultColorControlSecondary) {
+            return ColorStateListFactory.INSTANCE.makeControlSecondary(context);
+        } else if (resourceId == R.color.carbon_defaultColorControlSecondaryInverse) {
+            return ColorStateListFactory.INSTANCE.makeControlSecondaryInverse(context);
 
         } else if (resourceId == R.color.carbon_defaultHighlightColor) {
-            return new DefaultHighlightColorStateList(context);
-        } else if (resourceId == R.color.carbon_defaultHighlightColorAccent) {
-            return new DefaultHighlightColorAccentStateList(context);
+            return ColorStateListFactory.INSTANCE.makeHighlight(context);
+        } else if (resourceId == R.color.carbon_defaultHighlightColorSecondary) {
+            return ColorStateListFactory.INSTANCE.makeHighlightSecondary(context);
         } else if (resourceId == R.color.carbon_defaultHighlightColorPrimary) {
-            return new DefaultHighlightColorPrimaryStateList(context);
+            return ColorStateListFactory.INSTANCE.makeHighlightPrimary(context);
 
         } else if (resourceId == R.color.carbon_defaultIconColor) {
-            return new DefaultIconColorStateList(context);
+            return ColorStateListFactory.INSTANCE.makeIcon(context);
         } else if (resourceId == R.color.carbon_defaultIconColorInverse) {
-            return new DefaultIconColorInverseStateList(context);
-        } else if (resourceId == R.color.carbon_defaultIconColorAccent) {
-            return new DefaultIconColorAccentStateList(context);
-        } else if (resourceId == R.color.carbon_defaultIconColorAccentInverse) {
-            return new DefaultIconColorAccentInverseStateList(context);
+            return ColorStateListFactory.INSTANCE.makeIconInverse(context);
+        } else if (resourceId == R.color.carbon_defaultIconColorSecondary) {
+            return ColorStateListFactory.INSTANCE.makeIconSecondary(context);
+        } else if (resourceId == R.color.carbon_defaultIconColorSecondaryInverse) {
+            return ColorStateListFactory.INSTANCE.makeIconSecondaryInverse(context);
         } else if (resourceId == R.color.carbon_defaultIconColorPrimary) {
-            return new DefaultIconColorPrimaryStateList(context);
+            return ColorStateListFactory.INSTANCE.makeIconPrimary(context);
         } else if (resourceId == R.color.carbon_defaultIconColorPrimaryInverse) {
-            return new DefaultIconColorPrimaryInverseStateList(context);
+            return ColorStateListFactory.INSTANCE.makeIconPrimaryInverse(context);
+
         } else if (resourceId == R.color.carbon_defaultTextPrimaryColor) {
-            return new DefaultTextPrimaryColorStateList(context);
+            return ColorStateListFactory.INSTANCE.makePrimaryText(context);
         } else if (resourceId == R.color.carbon_defaultTextSecondaryColor) {
-            return new DefaultTextSecondaryColorStateList(context);
+            return ColorStateListFactory.INSTANCE.makeSecondaryText(context);
         } else if (resourceId == R.color.carbon_defaultTextPrimaryColorInverse) {
-            return new DefaultTextPrimaryColorInverseStateList(context);
+            return ColorStateListFactory.INSTANCE.makePrimaryTextInverse(context);
         } else if (resourceId == R.color.carbon_defaultTextSecondaryColorInverse) {
-            return new DefaultTextSecondaryColorInverseStateList(context);
+            return ColorStateListFactory.INSTANCE.makeSecondaryTextInverse(context);
         } else if (resourceId == R.color.carbon_defaultTextColorPrimary) {
-            return new DefaultTextColorPrimaryStateList(context);
+            return ColorStateListFactory.INSTANCE.makeTextPrimary(context);
         } else if (resourceId == R.color.carbon_defaultTextColorPrimaryInverse) {
-            return new DefaultTextColorPrimaryInverseStateList(context);
-        } else if (resourceId == R.color.carbon_defaultTextColorAccent) {
-            return new DefaultTextColorAccentStateList(context);
-        } else if (resourceId == R.color.carbon_defaultTextColorAccentInverse) {
-            return new DefaultTextColorAccentInverseStateList(context);
+            return ColorStateListFactory.INSTANCE.makeTextPrimaryInverse(context);
+        } else if (resourceId == R.color.carbon_defaultTextColorSecondary) {
+            return ColorStateListFactory.INSTANCE.makeTextSecondary(context);
+        } else if (resourceId == R.color.carbon_defaultTextColorSecondaryInverse) {
+            return ColorStateListFactory.INSTANCE.makeTextSecondaryInverse(context);
+
         } else if (resourceId == R.color.carbon_defaultRippleColorPrimary) {
             int c = Carbon.getThemeColor(context, R.attr.colorPrimary);
             return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
-        } else if (resourceId == R.color.carbon_defaultRippleColorAccent) {
+        } else if (resourceId == R.color.carbon_defaultRippleColorSecondary) {
             int c = Carbon.getThemeColor(context, R.attr.colorSecondary);
             return ColorStateList.valueOf(0x12000000 | (c & 0xffffff));
         }
@@ -174,11 +166,18 @@ public class Carbon {
         return null;
     }
 
+    public static ColorStateList getColorStateList(View view, TypedArray a, int id) {
+        ColorStateList color = getDefaultColorStateList(view, a, id);
+        if (color == null)
+            color = a.getColorStateList(id);
+        return color;
+    }
+
     public static Drawable getDefaultColorDrawable(View view, TypedArray a, int id) {
         ColorStateList color = getDefaultColorStateList(view, a, id);
         if (color != null) {
             Drawable d = new ColorStateListDrawable(AnimatedColorStateList.fromList(color, animation -> view.postInvalidate()));
-            if (color instanceof AlphaWithParentDrawable.Marker)
+            if (color instanceof AlphaWithParentDrawable.AlphaWithParentColorStateList)
                 return new AlphaWithParentDrawable(view, d);
             return d;
         }
@@ -207,9 +206,7 @@ public class Carbon {
         if (view.isInEditMode())
             return;
 
-        ColorStateList color = getDefaultColorStateList(view, a, carbon_rippleColor);
-        if (color == null)
-            color = a.getColorStateList(carbon_rippleColor);
+        ColorStateList color = getColorStateList(view, a, carbon_rippleColor);
 
         if (color != null) {
             RippleDrawable.Style style = RippleDrawable.Style.values()[a.getInt(carbon_rippleStyle, RippleDrawable.Style.Background.ordinal())];
@@ -364,6 +361,27 @@ public class Carbon {
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(attr, typedValue, true);
         return typedValue.resourceId != 0 ? ContextCompat.getDrawable(context, typedValue.resourceId) : null;
+    }
+
+    public static Drawable getDrawable(View view, TypedArray a, int attr, int defaultValue) {
+        if (!view.isInEditMode()) {
+            int resId = a.getResourceId(attr, 0);
+            if (resId != 0) {
+                if (view.getContext().getResources().getResourceTypeName(resId).equals("raw")) {
+                    return new VectorDrawable(view.getResources(), resId);
+                } else {
+                    return ContextCompat.getDrawable(view.getContext(), resId);
+                }
+            }
+        } else {
+            try {
+                return a.getDrawable(attr);
+            } catch (Exception e) {
+                return view.getResources().getDrawable(defaultValue);
+            }
+        }
+
+        return null;
     }
 
     public static Context getThemedContext(Context context, AttributeSet attributeSet, int[] attrs, int defStyleAttr, int attr) {
@@ -586,7 +604,7 @@ public class Carbon {
                 if (attr == R.styleable.TextAppearance_android_textSize) {
                     tv.setTextSize(appearance.getDimension(attr, 12));
                 } else if (attr == R.styleable.TextAppearance_android_textColor) {
-                    if (appearance.getColor(attr, 0) != ((View)tv).getResources().getColor(R.color.carbon_defaultColor))
+                    if (appearance.getColor(attr, 0) != ((View) tv).getResources().getColor(R.color.carbon_defaultColorControl))
                         tv.setTextColor(appearance.getColorStateList(attr));
                 }
             }

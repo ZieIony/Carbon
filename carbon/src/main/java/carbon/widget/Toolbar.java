@@ -166,13 +166,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, R.style.carbon_Toolbar);
         setTitle(a.getString(R.styleable.Toolbar_android_text));
-        int iconRes = a.getResourceId(R.styleable.Toolbar_carbon_icon, 0);
-        if (iconRes != 0) {
-            if (!isInEditMode())
-                setIcon(iconRes);
-        } else {
-            setIconVisible(false);
-        }
+        setIcon(Carbon.getDrawable(this, a, R.styleable.Toolbar_carbon_icon, 0));
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initMaxSize(this, a, maxSizeIds);

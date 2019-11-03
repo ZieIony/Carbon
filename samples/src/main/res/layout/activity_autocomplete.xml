@@ -9,11 +9,37 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.AutoCompleteLayout
-        android:id="@+id/autoComplete"
+    <carbon.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|start"
-        android:background="?attr/carbon_colorForeground" />
+        android:layout_height="match_parent">
+
+        <carbon.widget.ImageView
+            android:id="@+id/searchIcon"
+            style="@style/carbon_ImageView.Icon"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            app:carbon_src="@drawable/carbon_search"
+            app:layout_constraintBottom_toBottomOf="@+id/autoComplete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/autoComplete" />
+
+        <carbon.widget.AutoCompleteEditText
+            android:id="@+id/autoComplete"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carbon_listItemHeight"
+            android:layout_gravity="top|start"
+            android:layout_marginStart="@dimen/carbon_contentPadding"
+            android:layout_marginLeft="@dimen/carbon_contentPadding" />
+
+        <carbon.widget.Divider
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/autoComplete" />
+
+        <carbon.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </carbon.widget.ConstraintLayout>
 
 </carbon.widget.LinearLayout>

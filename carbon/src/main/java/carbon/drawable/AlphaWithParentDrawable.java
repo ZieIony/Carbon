@@ -1,6 +1,7 @@
 package carbon.drawable;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Rect;
@@ -12,7 +13,10 @@ import androidx.annotation.Nullable;
 
 public class AlphaWithParentDrawable extends Drawable {
 
-    public interface Marker {
+    public static class AlphaWithParentColorStateList extends ColorStateList {
+        public AlphaWithParentColorStateList(int[][] states, int[] colors) {
+            super(states, colors);
+        }
     }
 
     private View owner;

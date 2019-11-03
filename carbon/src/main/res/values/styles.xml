@@ -24,7 +24,6 @@
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="carbon_animateColorChanges">true</item>
-        <item name="carbon_tint">@color/carbon_defaultColor</item>
 
         <item name="carbon_autoSizeStepGranularity">1sp</item>
 
@@ -114,52 +113,6 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="carbon_ImageView">
-        <item name="carbon_rippleColor">@null</item>
-        <item name="carbon_rippleStyle">over</item>
-        <item name="carbon_inAnimation">brightnessSaturationFade</item>
-        <item name="carbon_outAnimation">brightnessSaturationFade</item>
-        <item name="carbon_animateColorChanges">true</item>
-    </style>
-
-    <style name="carbon_ImageView.Icon">
-        <item name="android:scaleType">center</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColor</item>
-        <item name="android:layout_width">@dimen/carbon_iconSize</item>
-        <item name="android:layout_height">@dimen/carbon_iconSize</item>
-    </style>
-
-    <style name="carbon_ImageView.Icon.Inverse">
-        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
-    </style>
-
-    <style name="carbon_ImageView.IconButton">
-        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
-        <item name="carbon_rippleStyle">borderless</item>
-        <item name="android:scaleType">center</item>
-        <item name="android:clickable">true</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColor</item>
-        <item name="android:layout_width">@dimen/carbon_toolbarItemSize</item>
-        <item name="android:layout_height">@dimen/carbon_toolbarItemSize</item>
-    </style>
-
-    <style name="carbon_ImageView.IconButton.Inverse">
-        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
-    </style>
-
-    <style name="carbon_ImageView.Avatar">
-        <item name="android:scaleType">centerCrop</item>
-        <item name="android:layout_width">@dimen/carbon_avatarSize</item>
-        <item name="android:layout_height">@dimen/carbon_avatarSize</item>
-        <item name="carbon_cornerRadius">@dimen/carbon_avatarSizeHalf</item>
-        <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
-        <item name="carbon_strokeWidth">0.5dp</item>
-    </style>
-
-    <style name="carbon_ImageView.Avatar.Square">
-        <item name="carbon_cornerRadius">@dimen/carbon_cornerRadiusImage</item>
-    </style>
-
     <style name="carbon_RecyclerView">
         <item name="android:scrollbars">vertical</item>
         <item name="android:scrollbarSize">8dp</item>
@@ -206,7 +159,6 @@
         <item name="android:paddingBottom">0dp</item>
         <item name="carbon_cursorColor">?attr/colorSecondary</item>
         <item name="carbon_animateColorChanges">true</item>
-        <item name="carbon_tint">@color/carbon_defaultColor</item>
         <item name="carbon_tintMode">src_in</item>
         <item name="carbon_backgroundTint">@null</item>
         <item name="carbon_backgroundTintMode">src_in</item>
@@ -217,9 +169,9 @@
     </style>
 
     <style name="carbon_EditText.Underlined">
-        <item name="android:background">@color/carbon_defaultColor</item>
+        <item name="android:background">@color/carbon_colorUnderline</item>
         <item name="android:paddingBottom">@dimen/carbon_padding</item>
-        <item name="carbon_backgroundTint">@color/carbon_defaultColor</item>
+        <item name="carbon_backgroundTint">@color/carbon_defaultColorControlPrimary</item>
     </style>
 
     <style name="carbon_SearchEditText" parent="carbon_EditText">
@@ -242,14 +194,14 @@
         <item name="carbon_popupTheme">?attr/carbon_dropDownPopupTheme</item>
         <item name="carbon_buttonGravity">end</item>
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorAccent</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorSecondary</item>
         <item name="android:button">@drawable/carbon_dropdown</item>
     </style>
 
     <style name="carbon_DropDown.Underlined">
-        <item name="android:background">@color/carbon_defaultColor</item>
+        <item name="android:background">@color/carbon_colorUnderline</item>
         <item name="android:paddingBottom">@dimen/carbon_padding</item>
-        <item name="carbon_backgroundTint">@color/carbon_defaultColor</item>
+        <item name="carbon_backgroundTint">@color/carbon_defaultColorControlPrimary</item>
     </style>
 
     <style name="carbon_TabLayout" parent="carbon_HorizontalScrollView">
@@ -298,7 +250,7 @@
         <item name="carbon_rippleHotspot">true</item>
         <item name="carbon_rippleRadius">25dp</item>
         <item name="carbon_rippleStyle">borderless</item>
-        <item name="carbon_tint">@color/carbon_defaultColorAccent</item>
+        <item name="carbon_tint">@color/carbon_defaultColorSecondary</item>
         <item name="android:background">@null</item>
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:clickable">true</item>
@@ -354,6 +306,23 @@
         <item name="android:paddingLeft">4dp</item>
         <item name="android:paddingRight">4dp</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="carbon_ChartView">
+        <item name="carbon_rippleColor">@null</item>
+        <item name="carbon_animateColorChanges">true</item>
+        <item name="carbon_itemColor">@color/carbon_defaultColorControlPrimary</item>
+        <item name="carbon_itemSpacing">8dp</item>
+        <item name="carbon_barCornerRadius">2dp</item>
+        <item name="carbon_linesThickness">2dp</item>
+        <item name="carbon_chartPadding">@dimen/carbon_paddingHalf</item>
+        <item name="carbon_axesColor">@color/carbon_defaultColorControl</item>
+        <item name="carbon_axesThickness">2dp</item>
+        <item name="carbon_chartType">Bar</item>
+        <item name="carbon_gridDensity">64dp</item>
+        <item name="carbon_gridColor">@color/carbon_defaultColorControl</item>
+        <item name="carbon_gridThickness">1dp</item>
+        <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
     </style>
 
 </resources>

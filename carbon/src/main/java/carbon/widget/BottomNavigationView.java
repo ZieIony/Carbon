@@ -34,7 +34,10 @@ public class BottomNavigationView extends LinearLayout {
         }
 
         public Item(MenuItem menuItem) {
-            this.icon = menuItem.getIcon();
+            try {   // breaks preview
+                this.icon = menuItem.getIcon();
+            } catch (Exception e) {
+            }
             this.text = menuItem.getTitle();
             iconTint = MenuItemCompat.getIconTintList(menuItem);
         }
@@ -135,17 +138,22 @@ public class BottomNavigationView extends LinearLayout {
         setWeightSum(items.length);
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), itemLayoutId, this, false);
-            int finalI = i;
-            binding.getRoot().setOnClickListener(v -> {
-                if (binding.getRoot() == activeView)
-                    return;
-                selectItem(binding.getRoot());
-                if (listener != null)
-                    listener.onItemClicked(binding.getRoot(), item, finalI);
-            });
-            binding.setVariable(BR.data, item);
-            addView(binding.getRoot(), new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+            if (!isInEditMode()) {
+                ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), itemLayoutId, this, false);
+                int finalI = i;
+                binding.getRoot().setOnClickListener(v -> {
+                    if (binding.getRoot() == activeView)
+                        return;
+                    selectItem(binding.getRoot());
+                    if (listener != null)
+                        listener.onItemClicked(binding.getRoot(), item, finalI);
+                });
+                binding.setVariable(BR.data, item);
+                addView(binding.getRoot(), new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+            } else {
+                View view = new LinearLayout(getContext());
+                addView(view, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+            }
         }
     }
 

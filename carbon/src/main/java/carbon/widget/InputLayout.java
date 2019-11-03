@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
-import carbon.drawable.DefaultAccentColorStateList;
 import carbon.view.InputView;
 
 public class InputLayout extends RelativeLayout {
@@ -78,11 +77,9 @@ public class InputLayout extends RelativeLayout {
         View.inflate(getContext(), R.layout.carbon_inputlayout, this);
 
         errorTextView = findViewById(R.id.carbon_error);
-        errorTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         errorTextView.setValid(false);
         counterTextView = findViewById(R.id.carbon_counter);
         labelTextView = findViewById(R.id.carbon_label);
-        labelTextView.setTextColor(new DefaultAccentColorStateList(getContext()));
         labelTextView.setGravity(gravity);
         clearImageView = findViewById(R.id.carbon_clear);
         showPasswordImageView = findViewById(R.id.carbon_showPassword);
@@ -122,7 +119,7 @@ public class InputLayout extends RelativeLayout {
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (!"inputLayout".equals(child.getTag())) {
             setInputChild(child);
-            container.addView(child, index==-1?-1:index + 1, new LinearLayout.LayoutParams(params));
+            container.addView(child, index == -1 ? -1 : index + 1, new LinearLayout.LayoutParams(params));
         } else {
             // Carry on adding the View...
             super.addView(child, index, params);

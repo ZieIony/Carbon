@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.widget.Checkable;
 
+import carbon.Carbon;
 import carbon.R;
 
 public class Chip extends LinearLayout implements Checkable {
@@ -85,7 +86,7 @@ public class Chip extends LinearLayout implements Checkable {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, R.style.carbon_Chip);
 
         setText(a.getString(R.styleable.Chip_android_text));
-        setIcon(a.getResourceId(R.styleable.Chip_carbon_icon, 0));
+        setIcon(Carbon.getDrawable(this, a, R.styleable.Chip_carbon_icon, 0));
         setRemovable(a.getBoolean(R.styleable.Chip_carbon_removable, false));
         setChecked(a.getBoolean(R.styleable.Chip_android_checked, false));
 

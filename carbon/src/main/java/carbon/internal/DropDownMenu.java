@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,8 +24,6 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.drawable.ColorStateListDrawable;
-import carbon.drawable.DefaultColorControlStateList;
 import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.ListAdapter;
 import carbon.widget.DropDown;
@@ -58,8 +55,7 @@ public class DropDownMenu extends PopupWindow {
             }
             return false;
         });
-        Drawable dividerDrawable = new ColorStateListDrawable(new DefaultColorControlStateList(context));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable, context.getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context);
         dividerItemDecoration.setDrawAfter(position -> getAdapter().getItem(position) == customItem);
         recycler.addItemDecoration(dividerItemDecoration);
 

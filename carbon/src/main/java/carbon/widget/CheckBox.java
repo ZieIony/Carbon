@@ -21,7 +21,6 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -62,8 +61,7 @@ public class CheckBox extends TextView implements Checkable {
     public void initCheckBox(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, defStyleRes);
 
-        int drawableId = a.getResourceId(R.styleable.CheckBox_android_button, R.drawable.carbon_checkbox);
-        setButtonDrawable(ContextCompat.getDrawable(getContext(), drawableId));
+        setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.CheckBox_android_button, R.drawable.carbon_checkbox));
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

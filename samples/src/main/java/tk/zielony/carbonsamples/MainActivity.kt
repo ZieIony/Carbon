@@ -26,12 +26,13 @@ class MainActivity : SampleListActivity() {
                 SampleActivityGroup(AnimationsActivity::class.java),
                 SampleActivityGroup(ComponentsActivity::class.java, R.drawable.ic_view_compact_black_24dp),
                 SampleActivityGroup(DemosActivity::class.java),
-                SampleActivityGroup(DialogsActivity::class.java),
-                SampleActivityGroup(FeaturesActivity::class.java),
-                SampleActivityGroup(GuidelinesActivity::class.java),
-                SampleActivityGroup(LibrariesActivity::class.java),
                 SampleActivityGroup(WidgetsActivity::class.java, R.drawable.ic_widgets_black_24dp),
+                SampleActivityGroup(ChartsActivity::class.java, R.drawable.ic_show_chart_black_24dp),
+                SampleActivityGroup(FeaturesActivity::class.java),
+                SampleActivityGroup(GuidelinesActivity::class.java, R.drawable.ic_android_black_24dp),
+                SampleActivityGroup(LibrariesActivity::class.java),
                 SampleActivityGroup(ThemesActivity::class.java),
+                SampleActivityGroup(DialogsActivity::class.java),
                 PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         ))
     }

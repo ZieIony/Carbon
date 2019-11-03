@@ -1,0 +1,49 @@
+<resources>
+
+    <style name="carbon_ImageView">
+        <item name="carbon_rippleColor">@null</item>
+        <item name="carbon_rippleStyle">over</item>
+        <item name="carbon_inAnimation">brightnessSaturationFade</item>
+        <item name="carbon_outAnimation">brightnessSaturationFade</item>
+        <item name="carbon_animateColorChanges">true</item>
+    </style>
+
+    <style name="carbon_ImageView.Icon">
+        <item name="android:scaleType">center</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+        <item name="android:layout_width">@dimen/carbon_iconSize</item>
+        <item name="android:layout_height">@dimen/carbon_iconSize</item>
+    </style>
+
+    <style name="carbon_ImageView.Icon.Inverse">
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
+    </style>
+
+    <style name="carbon_ImageView.IconButton">
+        <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
+        <item name="carbon_rippleStyle">borderless</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:clickable">true</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+        <item name="android:layout_width">@dimen/carbon_toolbarItemSize</item>
+        <item name="android:layout_height">@dimen/carbon_toolbarItemSize</item>
+    </style>
+
+    <style name="carbon_ImageView.IconButton.Inverse">
+        <item name="android:theme">?attr/carbon_themeOverlayInverse</item>
+    </style>
+
+    <style name="carbon_ImageView.Avatar">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_width">@dimen/carbon_avatarSize</item>
+        <item name="android:layout_height">@dimen/carbon_avatarSize</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_avatarSizeHalf</item>
+        <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
+        <item name="carbon_strokeWidth">0.5dp</item>
+    </style>
+
+    <style name="carbon_ImageView.Avatar.Square">
+        <item name="carbon_cornerRadius">@dimen/carbon_cornerRadiusImage</item>
+    </style>
+
+</resources>

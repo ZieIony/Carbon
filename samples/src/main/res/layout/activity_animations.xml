@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <carbon.widget.rx.Button
+            <carbon.widget.Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -29,7 +29,7 @@
                 app:carbon_outAnimation="fly"
                 tools:ignore="HardcodedText" />
 
-            <carbon.widget.rx.Button
+            <carbon.widget.Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <carbon.widget.rx.FloatingActionButton
+            <carbon.widget.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="@dimen/carbon_fabSize"
                 android:layout_height="@dimen/carbon_fabSize"
@@ -50,7 +50,7 @@
                 app:carbon_src="@raw/ic_shopping_cart_24px" />
 
 
-            <carbon.widget.rx.Button
+            <carbon.widget.Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -73,7 +73,7 @@
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusCard"
                 app:carbon_elevation="@dimen/carbon_elevationCard" />
 
-            <carbon.widget.rx.Button
+            <carbon.widget.Button
                 android:id="@+id/reveal"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"

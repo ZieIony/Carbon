@@ -79,13 +79,9 @@ public class Label extends View implements TextAppearanceView {
         setGravity(a.getInt(R.styleable.Label_android_gravity, Gravity.START));
         Carbon.initHtmlText(this, a, R.styleable.Label_carbon_htmlText);
 
-        if (a.hasValue(R.styleable.Label_android_textColor)) {
-            if (a.getColor(R.styleable.Label_android_textColor, 0) != getResources().getColor(R.color.carbon_defaultColor)) {
-                setTextColor(a.getColorStateList(R.styleable.Label_android_textColor));
-            } else {
-                Carbon.initDefaultTextColor(this, a, R.styleable.Label_android_textColor);
-            }
-        }
+        ColorStateList textColor = Carbon.getDefaultColorStateList(this, a, R.styleable.Label_android_textColor);
+        if (textColor != null)
+            setTextColor(textColor);
 
         a.recycle();
     }
