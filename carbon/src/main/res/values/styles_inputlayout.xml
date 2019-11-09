@@ -17,6 +17,8 @@
         <item name="android:layout_width">@dimen/carbon_iconSize</item>
         <item name="android:layout_height">@dimen/carbon_iconSize</item>
         <item name="android:layout_marginBottom">@dimen/carbon_margin</item>
+        <item name="android:layout_marginRight">@dimen/carbon_marginHalf</item>
+        <item name="android:layout_marginEnd">@dimen/carbon_marginHalf</item>
     </style>
 
     <style name="carbon_InputLayoutContainerTheme">
@@ -39,9 +41,11 @@
 
     <style name="carbon_ImageView.InputLayout.Box">
         <item name="android:layout_marginBottom">@dimen/carbon_marginHalf</item>
+        <item name="android:layout_marginRight">@dimen/carbon_margin</item>
+        <item name="android:layout_marginEnd">@dimen/carbon_margin</item>
     </style>
 
-    <style name="carbon_InputLayoutContainerTheme.Box" parent="">
+    <style name="carbon_InputLayoutContainerTheme.Box">
         <item name="android:editTextStyle">@style/carbon_EditText.InputLayout.Box</item>
         <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout.Box</item>
         <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer.Box</item>
@@ -68,9 +72,11 @@
 
     <style name="carbon_ImageView.InputLayout.Stroke">
         <item name="android:layout_marginBottom">@dimen/carbon_margin</item>
+        <item name="android:layout_marginRight">@dimen/carbon_margin</item>
+        <item name="android:layout_marginEnd">@dimen/carbon_margin</item>
     </style>
 
-    <style name="carbon_InputLayoutContainerTheme.Stroke" parent="">
+    <style name="carbon_InputLayoutContainerTheme.Stroke">
         <item name="android:editTextStyle">@style/carbon_EditText.InputLayout.Stroke</item>
         <item name="carbon_inputLayoutButtonStyle">@style/carbon_ImageView.InputLayout.Stroke</item>
         <item name="carbon_inputLayoutContainerStyle">@style/carbon_InputLayoutContainer.Stroke

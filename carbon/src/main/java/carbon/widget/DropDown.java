@@ -277,7 +277,7 @@ public class DropDown extends EditText {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.carbon_popupmenu_item, parent, false);
+            View view = inflater.inflate(R.layout.carbon_dropdown_item, parent, false);
             return new ViewHolder(view);
         }
 
@@ -504,13 +504,13 @@ public class DropDown extends EditText {
             final int top;
             switch (verticalGravity) {
                 case Gravity.BOTTOM:
-                    top = getHeight() - drawableHeight;
+                    top = Math.max(getPaddingTop(), getHeight() - drawableHeight - getPaddingBottom());
                     break;
                 case Gravity.CENTER_VERTICAL:
-                    top = (getHeight() - drawableHeight) / 2;
+                    top = Math.max(getPaddingTop(), (getHeight() - drawableHeight) / 2);
                     break;
                 default:
-                    top = 0;
+                    top = getPaddingTop();
             }
             final int bottom = top + drawableHeight;
             final int left = isButtonOnTheLeft() ? getPaddingLeft() : getWidth() - drawableWidth - getPaddingRight();
@@ -519,7 +519,7 @@ public class DropDown extends EditText {
             buttonDrawable.setBounds(left, top, right, bottom);
 
             final Drawable background = getBackground();
-            if (background != null && background instanceof RippleDrawable) {
+            if (background instanceof RippleDrawable) {
                 //TODO: hotspotBounds
                 // ((RippleDrawable)background).setHotspotBounds(left, top, right, bottom);
             }
@@ -528,6 +528,7 @@ public class DropDown extends EditText {
         super.onDraw(canvas);
 
         if (buttonDrawable != null) {
+            // TODO: get rid of invalidate() loop
             if (animateColorChanges && tint != null && tintMode != null)
                 buttonDrawable.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(buttonDrawable.getState(), tint.getDefaultColor()), tintMode));
 

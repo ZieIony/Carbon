@@ -1,4 +1,4 @@
-package carbon.internal;
+package carbon.view;
 
 import android.content.Context;
 import android.graphics.Rect;

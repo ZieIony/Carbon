@@ -51,6 +51,7 @@
         <item name="carbon_bottomNavigationViewStyle">@style/carbon_BottomNavigationView</item>
         <item name="carbon_labelStyle">@style/carbon_Label</item>
         <item name="carbon_badgeStyle">@style/carbon_Badge</item>
+        <item name="carbon_menuStripStyle">@style/carbon_MenuStrip</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Light</item>
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Dark</item>

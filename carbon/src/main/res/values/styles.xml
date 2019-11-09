@@ -171,6 +171,8 @@
     <style name="carbon_EditText.Underlined">
         <item name="android:background">@color/carbon_colorUnderline</item>
         <item name="android:paddingBottom">@dimen/carbon_padding</item>
+        <item name="android:paddingRight">@dimen/carbon_paddingHalf</item>
+        <item name="android:paddingEnd">@dimen/carbon_paddingHalf</item>
         <item name="carbon_backgroundTint">@color/carbon_defaultColorControlPrimary</item>
     </style>
 
@@ -194,13 +196,13 @@
         <item name="carbon_popupTheme">?attr/carbon_dropDownPopupTheme</item>
         <item name="carbon_buttonGravity">end</item>
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
-        <item name="carbon_tint">@color/carbon_defaultIconColorSecondary</item>
+        <item name="carbon_tint">@color/carbon_defaultIconColorPrimary</item>
         <item name="android:button">@drawable/carbon_dropdown</item>
     </style>
 
     <style name="carbon_DropDown.Underlined">
         <item name="android:background">@color/carbon_colorUnderline</item>
-        <item name="android:paddingBottom">@dimen/carbon_padding</item>
+        <item name="android:paddingBottom">120dp</item>
         <item name="carbon_backgroundTint">@color/carbon_defaultColorControlPrimary</item>
     </style>
 
@@ -323,6 +325,19 @@
         <item name="carbon_gridColor">@color/carbon_defaultColorControl</item>
         <item name="carbon_gridThickness">1dp</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
+    </style>
+
+    <style name="carbon_MenuStrip" parent="carbon_RecyclerView">
+        <item name="android:paddingTop">@dimen/carbon_paddingHalf</item>
+        <item name="android:paddingBottom">@dimen/carbon_paddingHalf</item>
+        <item name="android:fadeScrollbars">false</item>
+    </style>
+
+    <style name="carbon_MenuStrip.Tools">
+        <item name="android:paddingTop">@null</item>
+        <item name="android:paddingBottom">@null</item>
+        <item name="carbon_itemLayout">@layout/carbon_menustrip_tools_item</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
 </resources>

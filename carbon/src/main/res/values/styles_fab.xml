@@ -15,7 +15,7 @@
         <item name="android:minWidth">@dimen/carbon_fabSize</item>
         <item name="android:minHeight">@dimen/carbon_fabSize</item>
         <item name="carbon_cornerRadius">@dimen/carbon_fabSizeHalf</item>
-        <item name="android:scaleType">center</item>
+        <item name="android:scaleType">centerInside</item>
     </style>
 
     <style name="carbon_FloatingActionButton.Inverse">

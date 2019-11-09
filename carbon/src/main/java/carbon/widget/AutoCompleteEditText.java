@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import carbon.internal.SimpleTextWatcher;
+import carbon.view.SimpleTextWatcher;
 
 /**
  * This implementation extends EditText directly and uses TextWatcher for tracking text changes.

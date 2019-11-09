@@ -25,7 +25,7 @@ import androidx.core.view.ViewCompat;
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
-import carbon.internal.AllCapsTransformationMethod;
+import carbon.view.AllCapsTransformationMethod;
 import carbon.view.TextAppearanceView;
 import carbon.view.View;
 

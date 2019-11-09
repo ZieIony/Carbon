@@ -1,4 +1,4 @@
-package carbon.internal;
+package carbon.view;
 
 import android.text.Editable;
 import android.text.TextWatcher;

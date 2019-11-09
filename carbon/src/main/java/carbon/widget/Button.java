@@ -54,7 +54,7 @@ import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.internal.AllCapsTransformationMethod;
+import carbon.view.AllCapsTransformationMethod;
 import carbon.internal.RevealAnimator;
 import carbon.view.AutoSizeTextView;
 import carbon.view.MarginView;

@@ -1040,6 +1040,7 @@
     <attr name="carbon_inputLayoutContainerStyle" format="reference" />
     <attr name="carbon_inputLayoutButtonStyle" format="reference" />
     <declare-styleable name="InputLayout">
+        <attr name="android:theme" format="reference" />
         <attr name="carbon_error" format="string" />
 
         <attr name="carbon_errorMode" format="enum">
@@ -1335,6 +1336,14 @@
         <attr name="carbon_gridDensity" format="dimension" />
         <attr name="carbon_gridColor" format="color" />
         <attr name="carbon_gridThickness" format="dimension" />
+    </declare-styleable>
+
+    <attr name="carbon_menuStripStyle" format="reference" />
+    <declare-styleable name="MenuStrip">
+        <attr name="android:orientation" />
+        <attr name="carbon_menu" />
+        <attr name="carbon_itemLayout" />
+        <attr name="carbon_separatorLayout" />
     </declare-styleable>
 
     <!-- Drawable used to show animated touch feedback. -->

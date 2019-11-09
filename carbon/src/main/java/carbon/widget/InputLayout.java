@@ -59,17 +59,17 @@ public class InputLayout extends RelativeLayout {
     }
 
     public InputLayout(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_inputLayoutStyle);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, R.attr.carbon_inputLayoutStyle, R.styleable.InputLayout_android_theme), attrs, R.attr.carbon_inputLayoutStyle);
         initInputLayout(attrs, R.attr.carbon_inputLayoutStyle);
     }
 
     public InputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, R.attr.carbon_inputLayoutStyle, R.styleable.InputLayout_android_theme), attrs, defStyleAttr);
         initInputLayout(attrs, defStyleAttr);
     }
 
     public InputLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, R.attr.carbon_inputLayoutStyle, R.styleable.InputLayout_android_theme), attrs, defStyleAttr, defStyleRes);
         initInputLayout(attrs, defStyleAttr);
     }
 
@@ -283,7 +283,7 @@ public class InputLayout extends RelativeLayout {
 
     public void setLabel(String label) {
         this.label = label;
-        labelTextView.setText(label + (child instanceof EditText && ((EditText) child).isRequired() ? " *" : ""));
+        labelTextView.setText((label != null ? label : "") + (child instanceof EditText && ((EditText) child).isRequired() ? " *" : ""));
         if (child != null)
             updateHint(child);
     }

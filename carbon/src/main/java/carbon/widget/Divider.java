@@ -7,15 +7,15 @@ import android.os.Build;
 import android.util.AttributeSet;
 
 import carbon.R;
+import carbon.view.Orientation;
 import carbon.view.View;
 
 /**
  * A very simple class of a divider. Just place it in your layout to get a material divider.
  */
 public class Divider extends View {
-    public static final int HORIZONTAL = 0, VERTICAL = 1;
 
-    private int orientation = HORIZONTAL;
+    private Orientation orientation = Orientation.HORIZONTAL;
 
     public Divider(Context context) {
         super(context, null, R.attr.carbon_dividerStyle);
@@ -41,14 +41,14 @@ public class Divider extends View {
 
     public void initDivider(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Divider, defStyleAttr, defStyleRes);
-        orientation = a.getInt(R.styleable.Divider_android_orientation, 0);
+        orientation = Orientation.values()[a.getInt(R.styleable.Divider_android_orientation, Orientation.HORIZONTAL.ordinal())];
         a.recycle();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (orientation == HORIZONTAL) {
+        if (orientation == Orientation.HORIZONTAL) {
             setMeasuredDimension(getMeasuredWidth(), getContext().getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight));
         } else {
             setMeasuredDimension(getContext().getResources().getDimensionPixelSize(R.dimen.carbon_dividerHeight), getMeasuredHeight());

@@ -30,6 +30,7 @@ import carbon.recycler.RowListAdapter;
 
 public class NavigationView extends RecyclerView {
     public static class Item implements Serializable {
+        int id;
         private Drawable icon;
         private ColorStateList tint;
         private int groupId;
@@ -38,11 +39,26 @@ public class NavigationView extends RecyclerView {
         public Item() {
         }
 
+        public Item(int id, Drawable icon, CharSequence title) {
+            this.id = id;
+            this.icon = icon;
+            this.title = title;
+        }
+
         public Item(MenuItem item) {
+            id = item.getItemId();
             icon = item.getIcon();
             tint = MenuItemCompat.getIconTintList(item);
             groupId = item.getGroupId();
             title = item.getTitle();
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
         }
 
         public void setIcon(Drawable icon) {

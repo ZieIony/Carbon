@@ -28,45 +28,41 @@
 
     </carbon.widget.LinearLayout>
 
-    <carbon.widget.ImageView
-        android:id="@+id/carbon_clear"
-        style="?attr/carbon_inputLayoutButtonStyle"
+    <carbon.widget.FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/carbon_inputLayoutContainer"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
-        android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
-        android:tag="inputLayout"
-        app:carbon_src="@drawable/carbon_clear" />
+        android:paddingStart="@dimen/carbon_paddingHalf"
+        android:paddingLeft="@dimen/carbon_paddingHalf"
+        android:tag="inputLayout">
 
-    <carbon.widget.ImageView
-        android:id="@+id/carbon_showPassword"
-        style="?attr/carbon_inputLayoutButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/carbon_inputLayoutContainer"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
-        android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
-        android:tag="inputLayout"
-        app:carbon_src="@drawable/carbon_visibility"
-        tools:style="@style/carbon_ImageView.InputLayout" />
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_clear"
+            style="?attr/carbon_inputLayoutButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:carbon_src="@drawable/carbon_clear" />
 
-    <carbon.widget.ImageView
-        android:id="@+id/carbon_voiceInput"
-        style="?attr/carbon_inputLayoutButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/carbon_inputLayoutContainer"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="?attr/carbon_inputLayoutBoxPadding"
-        android:layout_marginRight="?attr/carbon_inputLayoutBoxPadding"
-        android:tag="inputLayout"
-        app:carbon_src="@drawable/carbon_voice" />
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_showPassword"
+            style="?attr/carbon_inputLayoutButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:carbon_src="@drawable/carbon_visibility" />
+
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_voiceInput"
+            style="?attr/carbon_inputLayoutButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:carbon_src="@drawable/carbon_voice" />
+    </carbon.widget.FrameLayout>
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"

@@ -24,6 +24,7 @@
         <item name="carbon_rippleStyle">borderless</item>
         <item name="android:scaleType">center</item>
         <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
         <item name="android:layout_width">@dimen/carbon_toolbarItemSize</item>
         <item name="android:layout_height">@dimen/carbon_toolbarItemSize</item>

@@ -66,7 +66,7 @@ public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extend
         this.onItemClickedListener = onItemClickedListener;
     }
 
-    public void setOnItemClickedListener(Class<? extends I> type, carbon.widget.RecyclerView.OnItemClickedListener<I> onItemClickedListener) {
+    public <ItemType extends I> void setOnItemClickedListener(Class<ItemType> type, carbon.widget.RecyclerView.OnItemClickedListener<ItemType> onItemClickedListener) {
         this.onItemClickedListeners.put(type, onItemClickedListener);
     }
 

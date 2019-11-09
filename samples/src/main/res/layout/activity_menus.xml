@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_debugtoolbar" />
+
+    <carbon.widget.Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/carbon_margin"
+        android:text="show menu" />
+
+    <carbon.widget.MenuStrip
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/carbon_margin"
+        android:background="?attr/carbon_colorForeground"
+        app:carbon_cornerRadius="@dimen/carbon_cornerRadiusMenu"
+        app:carbon_elevation="@dimen/carbon_elevationMenu"
+        app:carbon_menu="@menu/menu_navigation" />
+
+    <carbon.widget.MenuStrip
+        style="@style/carbon_MenuStrip.Tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/carbon_margin"
+        android:background="?attr/carbon_colorForeground"
+        app:carbon_cornerRadius="@dimen/carbon_cornerRadiusCard"
+        app:carbon_elevation="@dimen/carbon_elevationToolbar"
+        app:carbon_menu="@menu/menu_news" />
+</LinearLayout>

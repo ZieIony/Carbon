@@ -18,6 +18,7 @@ import tk.zielony.carbonsamples.widget.ExpansionPanelActivity;
 import tk.zielony.carbonsamples.widget.FABActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
 import tk.zielony.carbonsamples.widget.NavigationViewActivity;
+import tk.zielony.carbonsamples.widget.MenusActivity;
 import tk.zielony.carbonsamples.widget.ProgressBarsActivity;
 import tk.zielony.carbonsamples.widget.RecyclerActivity;
 import tk.zielony.carbonsamples.widget.SeekBarActivity;
@@ -43,6 +44,7 @@ public class WidgetsActivity extends SampleListActivity {
                 new SampleActivityItem(ButtonsActivity.class),
                 new SampleActivityItem(FABActivity.class, R.drawable.ic_add_circle_black_24dp),
                 new SampleActivityItem(CircularProgressActivity.class),
+                new SampleActivityItem(MenusActivity.class, R.drawable.ic_menu_black_24dp),
                 new SampleActivityItem(ProgressBarsActivity.class),
                 new SampleActivityItem(SnackbarActivity.class),
                 new SampleActivityItem(TextFieldsActivity.class, R.drawable.ic_text_fields_black_24dp),

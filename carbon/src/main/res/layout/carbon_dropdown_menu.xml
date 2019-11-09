@@ -16,9 +16,12 @@
         android:background="?attr/carbon_colorForeground"
         app:carbon_elevation="@dimen/carbon_elevationDropDown">
 
-        <carbon.widget.MenuStrip
-            android:id="@+id/menuStrip"
+        <carbon.widget.RecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:fadeScrollbars="false"
+            android:paddingBottom="@dimen/carbon_paddingHalf"
+            android:paddingTop="@dimen/carbon_paddingHalf" />
     </carbon.widget.FrameLayout>
 </carbon.widget.FrameLayout>

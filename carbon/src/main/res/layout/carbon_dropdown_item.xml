@@ -16,5 +16,5 @@
         android:layout_width="match_parent"
         android:singleLine="true"
         android:maxLines="1"
-        android:layout_height="@dimen/carbon_listItemHeight" />
+        android:layout_height="@dimen/carbon_dropdownMenuItemHeight" />
 </carbon.widget.FrameLayout>

@@ -64,9 +64,9 @@ import carbon.animation.StateAnimator;
 import carbon.drawable.UnderlineDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.internal.AllCapsTransformationMethod;
+import carbon.view.AllCapsTransformationMethod;
 import carbon.internal.RevealAnimator;
-import carbon.internal.SimpleTextWatcher;
+import carbon.view.SimpleTextWatcher;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InputView;
 import carbon.view.MarginView;
@@ -339,7 +339,7 @@ public class EditText extends android.widget.EditText
             drawable2.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.SRC_IN));
             mCursorDrawable[1] = drawable2;
         } catch (Exception e) {
-            Carbon.logReflectionError(e);
+            //Carbon.logReflectionError(e);
         }
     }
 

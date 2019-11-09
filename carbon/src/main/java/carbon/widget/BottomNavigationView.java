@@ -26,6 +26,7 @@ import carbon.R;
 
 public class BottomNavigationView extends LinearLayout {
     public static class Item {
+        private int id;
         private Drawable icon;
         private CharSequence text;
         private ColorStateList iconTint;
@@ -33,13 +34,28 @@ public class BottomNavigationView extends LinearLayout {
         public Item() {
         }
 
+        public Item(int id, Drawable icon, CharSequence text) {
+            this.id = id;
+            this.icon = icon;
+            this.text = text;
+        }
+
         public Item(MenuItem menuItem) {
+            id = menuItem.getItemId();
             try {   // breaks preview
                 this.icon = menuItem.getIcon();
             } catch (Exception e) {
             }
             this.text = menuItem.getTitle();
             iconTint = MenuItemCompat.getIconTintList(menuItem);
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
         }
 
         public void setIcon(Drawable icon) {

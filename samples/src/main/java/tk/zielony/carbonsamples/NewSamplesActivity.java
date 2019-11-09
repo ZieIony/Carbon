@@ -21,6 +21,7 @@ import tk.zielony.carbonsamples.widget.CheckBoxRadioActivity;
 import tk.zielony.carbonsamples.widget.FABActivity;
 import tk.zielony.carbonsamples.widget.FlowLayoutActivity;
 import tk.zielony.carbonsamples.widget.NavigationViewActivity;
+import tk.zielony.carbonsamples.widget.MenusActivity;
 
 @ActivityAnnotation(title = R.string.newSamplesActivity_title, layout = R.layout.activity_samplelist)
 public class NewSamplesActivity extends SampleListActivity {
@@ -40,6 +41,7 @@ public class NewSamplesActivity extends SampleListActivity {
                 new SampleActivityItem(BottomNavigationViewActivity.class),
                 new SampleActivityItem(XmlFontActivity.class, R.drawable.ic_font_download_black_24dp),
                 new SampleActivityItem(BackdropActivity.class),
+                new SampleActivityItem(MenusActivity.class, R.drawable.ic_menu_black_24dp),
                 new SampleActivityItem(BarChartActivity.class, 0, true),
                 new SampleActivityItem(LineChartActivity.class, 0, true),
                 new SampleActivityItem(SearchToolbarActivity.class, R.drawable.carbon_search),

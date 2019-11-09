@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/carbon_padding"
-                android:gravity="right"
+                android:gravity="center_horizontal"
                 app:carbon_actionButton="clear"
                 app:carbon_error="it's not an email"
                 app:carbon_errorMode="whenInvalid"
@@ -56,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:hint="your email"
                     android:maxLines="1"
+                    android:paddingTop="@dimen/carbon_paddingHalf"
                     android:tag="enable"
                     android:text="email@gmail.com"
                     app:carbon_minCharacters="3"
@@ -81,23 +82,31 @@
                     app:carbon_minCharacters="3" />
             </carbon.widget.InputLayout>
 
+            <carbon.widget.EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_margin"
+                android:hint="Amount"
+                android:inputType="numberDecimal"
+                android:tag="enable"
+                android:text="20"
+                app:carbon_prefix="$" />
+
             <carbon.widget.InputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_margin"
                 app:carbon_actionButton="clear"
-                android:layout_margin="@dimen/carbon_padding"
-                app:carbon_label="Amount"
+                app:carbon_label="multiline"
                 app:carbon_labelMode="ifNotEmpty">
 
                 <carbon.widget.EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:tag="enable"
-                    android:text="20"
-                    app:carbon_prefix="$" />
+                    android:layout_margin="@dimen/carbon_padding"
+                    android:maxLines="@null"
+                    android:text="multi\nline" />
             </carbon.widget.InputLayout>
-
         </carbon.widget.LinearLayout>
     </carbon.widget.ScrollView>
 </carbon.widget.LinearLayout>

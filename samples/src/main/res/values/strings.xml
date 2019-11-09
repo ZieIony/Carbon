@@ -115,5 +115,6 @@ limitations under the License.]]></string>
     <string name="barChartActivity_title">Bar chart</string>
     <string name="chartsActivity_title">Charts</string>
     <string name="lineChartActivity_title">Line chart</string>
+    <string name="menusActivity_title">Menus</string>
 
 </resources>

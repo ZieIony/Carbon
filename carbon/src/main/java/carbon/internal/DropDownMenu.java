@@ -42,7 +42,7 @@ public class DropDownMenu extends PopupWindow {
     private Serializable customItem;
 
     public DropDownMenu(Context context) {
-        super(View.inflate(context, R.layout.carbon_popupmenu, null));
+        super(View.inflate(context, R.layout.carbon_dropdown_menu, null));
         getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         recycler = getContentView().findViewById(R.id.recycler);
@@ -105,7 +105,7 @@ public class DropDownMenu extends PopupWindow {
         final Resources res = getContentView().getContext().getResources();
 
         int margin = (int) res.getDimension(R.dimen.carbon_margin);
-        int itemHeight = (int) res.getDimension(R.dimen.carbon_listItemHeight);
+        int itemHeight = (int) res.getDimension(R.dimen.carbon_dropdownMenuItemHeight);
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
         int selectedItem = 0;
