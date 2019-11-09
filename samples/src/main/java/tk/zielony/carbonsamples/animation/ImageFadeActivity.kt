@@ -25,7 +25,7 @@ class ImageFadeActivity : ThemedActivity() {
 
         val handler = Handler()
 
-        imageFade_button.setOnClickListener { view ->
+        imageFade_button.setOnClickListener {
             imageFade_grid.views.map { it as ImageView }.forEachIndexed { i, imageView ->
                 handler.postDelayed({ imageView.animateVisibility(if (imageView.isVisible) View.INVISIBLE else View.VISIBLE) }, (i * 50).toLong())
             }

@@ -331,6 +331,7 @@
         <item name="android:paddingTop">@dimen/carbon_paddingHalf</item>
         <item name="android:paddingBottom">@dimen/carbon_paddingHalf</item>
         <item name="android:fadeScrollbars">false</item>
+        <item name="carbon_overScroll">ifContentScrolls</item>
     </style>
 
     <style name="carbon_MenuStrip.Tools">
