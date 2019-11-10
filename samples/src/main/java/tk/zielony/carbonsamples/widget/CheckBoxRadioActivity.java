@@ -13,7 +13,10 @@ import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.carbonsamples.databinding.ActivityCheckboxRadioBinding;
 
-@ActivityAnnotation(title = R.string.checkBoxRadioActivity_title)
+@ActivityAnnotation(
+        title = R.string.checkBoxRadioActivity_title,
+        icon = R.drawable.carbon_checkbox_checked
+)
 public class CheckBoxRadioActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

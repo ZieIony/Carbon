@@ -7,7 +7,11 @@ import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_dropdown, title = R.string.dropDownActivityActivity_title)
+@ActivityAnnotation(
+        layout = R.layout.activity_dropdown,
+        title = R.string.dropDownActivityActivity_title,
+        icon = R.drawable.carbon_dropdown
+)
 public class DropDownActivity extends ThemedActivity {
     private static String[] months = new String[]{
             "Jan", "Feb", "Mar",

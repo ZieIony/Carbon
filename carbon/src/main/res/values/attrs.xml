@@ -167,6 +167,9 @@
 
     <attr name="carbon_itemLayout" format="reference" />
 
+    <attr name="carbon_menuSelectionRadius" format="dimension" />
+    <attr name="carbon_menuSelectionInset" format="dimension" />
+
 
     <!-- Component -->
     <declare-styleable name="ComponentView">

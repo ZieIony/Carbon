@@ -2,6 +2,7 @@ package carbon.drawable
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import carbon.Carbon
 import carbon.R
 
@@ -113,6 +114,21 @@ object ColorStateListFactory {
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorError) and 0xffffff))
     )
+
+    fun makeMenuSelection(context: Context): Drawable = MenuSelectionDrawable(
+            Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionRadius),
+            Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionInset),
+            makeHighlight(context))
+
+    fun makeMenuSelectionPrimary(context: Context): Drawable = MenuSelectionDrawable(
+            Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionRadius),
+            Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionInset),
+            makeHighlightPrimary(context))
+
+    fun makeMenuSelectionSecondary(context: Context): Drawable = MenuSelectionDrawable(
+            Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionRadius),
+            Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionInset),
+            makeHighlightSecondary(context))
 
     fun makePrimary(context: Context): ColorStateList = makeAlpha2(context,
             Carbon.getThemeColor(context, R.attr.colorPrimary),

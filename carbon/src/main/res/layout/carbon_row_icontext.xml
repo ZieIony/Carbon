@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/carbon_windowPadding"
             android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:src="@{data.getIcon()}"
+            app:carbon_src="@{data.getIcon()}"
             tools:src="@drawable/carbon_iconplaceholder" />
 
         <carbon.widget.TextMarker
@@ -43,10 +43,10 @@
             android:layout_marginStart="@dimen/carbon_contentPadding"
             android:layout_marginLeft="@dimen/carbon_contentPadding"
             android:layout_marginEnd="@dimen/carbon_windowPadding"
-            tools:text="@tools:sample/lorem"
             android:layout_marginRight="@dimen/carbon_windowPadding"
             android:text="@{data.text}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+            android:textAppearance="?attr/carbon_textAppearanceSubhead"
+            tools:text="@tools:sample/lorem" />
 
     </carbon.widget.RelativeLayout>
 </layout>

@@ -11,7 +11,11 @@ import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 import java.io.Serializable
 
-@ActivityAnnotation(layout = R.layout.activity_musicplayer, title = R.string.musicPlayerActivity_title)
+@ActivityAnnotation(
+        layout = R.layout.activity_musicplayer,
+        title = R.string.musicPlayerActivity_title,
+        icon = R.drawable.ic_play_arrow_black_24dp
+)
 class MusicPlayerActivity : ThemedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -134,4 +134,7 @@
     <dimen name="carbon_progressSize">40dp</dimen>
 
     <dimen name="carbon_moveEpsilon">4dp</dimen>
+
+    <dimen name="carbon_menuSelectionRadius">4dp</dimen>
+    <dimen name="carbon_menuSelectionInset">8dp</dimen>
 </resources>

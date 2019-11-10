@@ -180,6 +180,16 @@ public class Carbon {
             if (color instanceof AlphaWithParentDrawable.AlphaWithParentColorStateList)
                 return new AlphaWithParentDrawable(view, d);
             return d;
+        } else {
+            Context context = view.getContext();
+            int resourceId = a.getResourceId(id, 0);
+            if (resourceId == R.color.carbon_defaultMenuSelectionDrawable) {
+                return ColorStateListFactory.INSTANCE.makeMenuSelection(context);
+            } else if (resourceId == R.color.carbon_defaultMenuSelectionDrawablePrimary) {
+                return ColorStateListFactory.INSTANCE.makeMenuSelectionPrimary(context);
+            } else if (resourceId == R.color.carbon_defaultMenuSelectionDrawableSecondary) {
+                return ColorStateListFactory.INSTANCE.makeMenuSelectionSecondary(context);
+            }
         }
         return null;
     }
@@ -477,6 +487,13 @@ public class Carbon {
         view.setMinTextSize(a.getDimension(carbon_autoSizeMinTextSize, 0));
         view.setMaxTextSize(a.getDimension(carbon_autoSizeMaxTextSize, 0));
         view.setAutoSizeStepGranularity(a.getDimension(carbon_autoSizeStepGranularity, 1));
+    }
+
+    public static float getThemeDimen(Context context, int attr) {
+        Resources.Theme theme = context.getTheme();
+        TypedValue typedValueAttr = new TypedValue();
+        theme.resolveAttribute(attr, typedValueAttr, true);
+        return typedValueAttr.getDimension(context.getResources().getDisplayMetrics());
     }
 
     public static int getThemeResId(Context context, int attr) {

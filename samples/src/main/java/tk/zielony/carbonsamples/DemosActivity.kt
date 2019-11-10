@@ -15,13 +15,13 @@ class DemosActivity : SampleListActivity() {
         setItems(listOf(
                 PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "The most popular problem solutions and other fun ideas implemented with Carbon's widgets and features",
-                SampleActivityItem(PowerMenuActivity::class.java, R.drawable.ic_power_settings_new_black_24dp),
-                SampleActivityItem(AutoCompleteActivity::class.java, 0, true),
+                SampleActivityItem(PowerMenuActivity::class.java),
+                SampleActivityItem(AutoCompleteActivity::class.java, true),
                 SampleActivityItem(QuickReturnActivity::class.java),
-                SampleActivityItem(SearchToolbarActivity::class.java, R.drawable.carbon_search),
-                SampleActivityItem(ShareToolbarActivity::class.java, R.drawable.ic_share_black_24dp, true),
-                SampleActivityItem(ProfileActivity::class.java, R.drawable.ic_person_black_24dp),
-                SampleActivityItem(MusicPlayerActivity::class.java, R.drawable.ic_play_arrow_black_24dp, true),
+                SampleActivityItem(SearchToolbarActivity::class.java),
+                SampleActivityItem(ShareToolbarActivity::class.java, true),
+                SampleActivityItem(ProfileActivity::class.java),
+                SampleActivityItem(MusicPlayerActivity::class.java, true),
                 PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         ))
     }

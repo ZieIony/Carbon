@@ -25,17 +25,17 @@ class MainActivity : SampleListActivity() {
         val items = mutableListOf(
                 PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "New and starred",
-                SampleActivityGroup(NewSamplesActivity::class.java, R.drawable.ic_new_releases_black_24dp),
-                SampleActivityGroup(FavouritesActivity::class.java, R.drawable.ic_star_black_24dp),
+                SampleActivityGroup(NewSamplesActivity::class.java),
+                SampleActivityGroup(FavouritesActivity::class.java),
                 DividerItem(),
                 "All samples grouped by category",
                 SampleActivityGroup(AnimationsActivity::class.java),
-                SampleActivityGroup(ComponentsActivity::class.java, R.drawable.ic_view_compact_black_24dp),
+                SampleActivityGroup(ComponentsActivity::class.java),
                 SampleActivityGroup(DemosActivity::class.java),
-                SampleActivityGroup(WidgetsActivity::class.java, R.drawable.ic_widgets_black_24dp),
-                SampleActivityGroup(ChartsActivity::class.java, R.drawable.ic_show_chart_black_24dp),
+                SampleActivityGroup(WidgetsActivity::class.java),
+                SampleActivityGroup(ChartsActivity::class.java),
                 SampleActivityGroup(FeaturesActivity::class.java),
-                SampleActivityGroup(GuidelinesActivity::class.java, R.drawable.ic_android_black_24dp),
+                SampleActivityGroup(GuidelinesActivity::class.java),
                 SampleActivityGroup(LibrariesActivity::class.java),
                 SampleActivityGroup(ThemesActivity::class.java),
                 SampleActivityGroup(DialogsActivity::class.java),
@@ -47,7 +47,7 @@ class MainActivity : SampleListActivity() {
         recentlyUsed?.let {
             items.addAll(1, listOf(
                     "The most recently used sample",
-                    SampleActivityGroup(Class.forName(it) as Class<out Activity>, R.drawable.ic_access_time_black_24dp),
+                    SampleActivityGroup(Class.forName(it) as Class<out Activity>),
                     DividerItem()
             ))
         }

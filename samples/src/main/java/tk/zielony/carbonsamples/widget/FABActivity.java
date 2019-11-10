@@ -14,7 +14,11 @@ import tk.zielony.carbonsamples.ColorsActivity;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_fab, title = R.string.fabActivity_title)
+@ActivityAnnotation(
+        layout = R.layout.activity_fab,
+        title = R.string.fabActivity_title,
+        icon = R.drawable.ic_add_circle_black_24dp
+)
 public class FABActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

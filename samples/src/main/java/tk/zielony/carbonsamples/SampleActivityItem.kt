@@ -12,11 +12,13 @@ open class SampleActivityGroup : Serializable {
         private set
 
     @JvmOverloads
-    constructor(activityClass: Class<out Activity>, icon: Int = 0) : super(
+    constructor(activityClass: Class<out Activity>) : super(
     ) {
         this.activityClass = activityClass
-        this.name = activityClass.getAnnotation(ActivityAnnotation::class.java)?.title
-        this.icon = icon
+        activityClass.getAnnotation(ActivityAnnotation::class.java)?.let {
+            this.name = it.title
+            this.icon = it.icon
+        }
     }
 }
 
@@ -26,7 +28,7 @@ class SampleActivityItem : SampleActivityGroup {
     var isStarred: Boolean = false
 
     @JvmOverloads
-    constructor(activityClass: Class<out Activity>, icon: Int = 0, beta: Boolean = false) : super(activityClass, icon) {
+    constructor(activityClass: Class<out Activity>, beta: Boolean = false) : super(activityClass) {
         this.isBeta = beta
     }
 }

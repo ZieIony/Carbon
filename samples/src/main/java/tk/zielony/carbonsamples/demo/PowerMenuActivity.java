@@ -24,7 +24,11 @@ import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_powermenu, title = R.string.powerMenuActivity_title)
+@ActivityAnnotation(
+        layout = R.layout.activity_powermenu,
+        title = R.string.powerMenuActivity_title,
+        icon = R.drawable.ic_power_settings_new_black_24dp
+)
 public class PowerMenuActivity extends ThemedActivity {
     boolean vibration = false, volume = true, airplaneMode = false;
 

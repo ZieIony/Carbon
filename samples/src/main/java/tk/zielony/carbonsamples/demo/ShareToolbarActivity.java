@@ -15,7 +15,11 @@ import tk.zielony.carbonsamples.ActivityAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_share_toolbar, title = R.string.shareToolbarActivity_title)
+@ActivityAnnotation(
+        layout = R.layout.activity_share_toolbar,
+        title = R.string.shareToolbarActivity_title,
+        icon = R.drawable.ic_share_black_24dp
+)
 public class ShareToolbarActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

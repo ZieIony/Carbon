@@ -27,9 +27,9 @@ abstract class SamplesActivity : AppCompatActivity() {
                 title = getString(it.title)
         }
 
-        if(this !is SampleListActivity) {
+        if (this !is SampleListActivity && this !is ColorsActivity && this !is CodeActivity && this !is AboutActivity) {
             val preferences = getSharedPreferences("samples", Context.MODE_PRIVATE)
-            preferences.edit().putString(RECENTLY_USED, javaClass.name).commit()
+            preferences.edit().putString(RECENTLY_USED, javaClass.name).apply()
         }
     }
 

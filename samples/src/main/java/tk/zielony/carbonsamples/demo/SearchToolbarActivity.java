@@ -31,7 +31,11 @@ import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
-@ActivityAnnotation(layout = R.layout.activity_searchtoolbar, title = R.string.searchToolbarActivity_title)
+@ActivityAnnotation(
+        layout = R.layout.activity_searchtoolbar,
+        title = R.string.searchToolbarActivity_title,
+        icon = R.drawable.carbon_search
+)
 public class SearchToolbarActivity extends ThemedActivity {
 
     SearchEditText searchEditText;

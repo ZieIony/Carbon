@@ -10,7 +10,11 @@ import java.util.Map;
 
 import carbon.component.PaddingItem;
 
-@ActivityAnnotation(title = R.string.favouritesActivity_title, layout = R.layout.activity_samplelist)
+@ActivityAnnotation(
+        title = R.string.favouritesActivity_title,
+        layout = R.layout.activity_samplelist,
+        icon = R.drawable.ic_star_black_24dp
+)
 public class FavouritesActivity extends SampleListActivity {
 
     @Override

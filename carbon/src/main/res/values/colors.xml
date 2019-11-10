@@ -80,6 +80,10 @@
     <color name="carbon_defaultHighlightColorPrimary">#12345678</color>
     <color name="carbon_defaultHighlightColorSecondary">#12345678</color>
 
+    <color name="carbon_defaultMenuSelectionDrawable">#12345678</color>
+    <color name="carbon_defaultMenuSelectionDrawablePrimary">#12345678</color>
+    <color name="carbon_defaultMenuSelectionDrawableSecondary">#12345678</color>
+
     <color name="carbon_defaultIconColor">#12345678</color>
     <color name="carbon_defaultIconColorInverse">#12345678</color>
     <color name="carbon_defaultIconColorSecondary">#12345678</color>

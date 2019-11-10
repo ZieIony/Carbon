@@ -8,7 +8,11 @@ import tk.zielony.carbonsamples.CodeActivity
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 
-@ActivityAnnotation(layout = R.layout.activity_xmlfont, title = R.string.xmlFontActivity_title)
+@ActivityAnnotation(
+        layout = R.layout.activity_xmlfont,
+        title = R.string.xmlFontActivity_title,
+        icon = R.drawable.ic_font_download_black_24dp
+)
 class XmlFontActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

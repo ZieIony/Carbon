@@ -8,8 +8,12 @@ import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 
 
-@ActivityAnnotation(layout = R.layout.activity_menus, title = R.string.menusActivity_title)
-class MenusActivity: ThemedActivity() {
+@ActivityAnnotation(
+        layout = R.layout.activity_menus,
+        title = R.string.menusActivity_title,
+        icon = R.drawable.ic_menu_black_24dp
+)
+class MenusActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
