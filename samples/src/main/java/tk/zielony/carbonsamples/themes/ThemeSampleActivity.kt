@@ -70,8 +70,8 @@ open class ThemeSampleActivity : SamplesActivity() {
             DataBindingComponent<DefaultAvatarTextRatingSubtextDateItem>(it, R.layout.row_windowsnews)
         })
 
-        adapter.addFactory(PaddingItem::class.java, { PaddingRow(it) })
-        adapter.addFactory(DefaultHeaderItem::class.java, { PaddedHeaderRow(it) })
+        adapter.putFactory(PaddingItem::class.java, { PaddingRow(it) })
+        adapter.putFactory(DefaultHeaderItem::class.java, { PaddedHeaderRow(it) })
 
 
         recycler.adapter = adapter

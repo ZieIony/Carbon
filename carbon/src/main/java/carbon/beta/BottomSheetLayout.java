@@ -153,9 +153,10 @@ public class BottomSheetLayout extends LinearLayout {
             items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
         }
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<>(Item.class, style == Style.List ? BottomSheetRow::new : BottomSheetCell::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(DividerItem.class, DividerRow::new);
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>();
+        adapter.putFactory(Item.class, style == Style.List ? BottomSheetRow::new : BottomSheetCell::new);
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(DividerItem.class, DividerRow::new);
         adapter.setItems(items);
 
         recycler.setAdapter(adapter);

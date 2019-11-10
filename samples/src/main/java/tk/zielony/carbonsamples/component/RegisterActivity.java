@@ -37,10 +37,10 @@ public class RegisterActivity extends ThemedActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconEditTextItem.class, IconEditTextRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(DividerItem.class, DividerRow::new);
-        adapter.addFactory(DefaultIconPasswordItem.class, IconPasswordRow::new);
-        adapter.addFactory(DefaultIconDropDownItem.class, IconDropDownRow::new);
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(DividerItem.class, DividerRow::new);
+        adapter.putFactory(DefaultIconPasswordItem.class, IconPasswordRow::new);
+        adapter.putFactory(DefaultIconDropDownItem.class, IconDropDownRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(Arrays.asList(
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),

@@ -46,7 +46,7 @@ public class SearchToolbarActivity extends ThemedActivity {
         List<Serializable> items = generateItems();
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
         adapter.setItems(items);
 
         RecyclerView recyclerView = findViewById(R.id.recycler);

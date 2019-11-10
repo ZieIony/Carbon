@@ -81,7 +81,8 @@ open class MenuStrip : RecyclerView {
     private inner class ItemComponent(parent: ViewGroup) : DataBindingComponent<Item>(parent, itemLayoutId) {
         override fun bind(data: Item) {
             super.bind(data)
-            view.isSelected = selectedItems.contains(data)
+            if (selectionMode != SelectionMode.NONE)
+                view.isSelected = selectedItems.contains(data)
         }
     }
 
@@ -110,8 +111,12 @@ open class MenuStrip : RecyclerView {
             initItems()
         }
 
-    lateinit var adapter: RowListAdapter<Serializable>
-    lateinit var selectionMode: SelectionMode
+    var adapter: RowListAdapter<Serializable> = RowListAdapter(Item::class.java, RowFactory<Item> { ItemComponent(it) })
+    var selectionMode: SelectionMode
+        get() = adapter.selectionMode
+        set(value) {
+            adapter.selectionMode = value
+        }
 
     private var _onItemClickedListener: OnItemClickedListener<Item>? = null
     var onItemClickedListener
@@ -129,18 +134,17 @@ open class MenuStrip : RecyclerView {
             initItems()
         }
 
-    var selectedItems
-        get() = selectedIndices.map { items!![it] }
+    var selectedItems: List<Serializable>
+        get() = adapter.selectedItems
         set(value) {
-            selectedIndices = value.map { items!!.indexOf(it) }
+            adapter.selectedItems = value
+            initItems()
         }
 
-    private val _selectedIndices = arrayListOf<Int>()
     var selectedIndices: List<Int>
-        get() = _selectedIndices
+        get() = adapter.selectedIndices
         set(value) {
-            _selectedIndices.clear()
-            _selectedIndices.addAll(value)
+            adapter.selectedIndices = value
             initItems()
         }
 
@@ -201,35 +205,9 @@ open class MenuStrip : RecyclerView {
             separatorLayoutId = if (vertical) R.layout.carbon_menustrip_hseparator_item else R.layout.carbon_menustrip_vseparator_item
 
         layoutManager = LinearLayoutManager(context, if (vertical) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL, false)
-        adapter = RowListAdapter(Item::class.java, RowFactory<Item> { ItemComponent(it) })
-        adapter.addFactory(DividerItem::class.java, { SeparatorComponent(it, separatorLayoutId) })
+        adapter.putFactory(DividerItem::class.java, { SeparatorComponent(it, separatorLayoutId) })
 
-        adapter.setOnItemClickedListener(Item::class.java, { view, item, position ->
-            when (selectionMode) {
-                SelectionMode.SINGLE -> {
-                    if (_selectedIndices.isNotEmpty()) {
-                        val deselectedItem = items!![_selectedIndices[0]]
-                        _selectedIndices.remove(_selectedIndices[0])
-                        adapter.notifyItemChanged(adapter.items.indexOf(deselectedItem), false)
-                    }
-                    val selectedIndex = items!!.indexOf(item)
-                    _selectedIndices.add(selectedIndex)
-                    adapter.notifyItemChanged(position, true)
-                }
-                SelectionMode.MULTI -> {
-                    var selectedIndex = selectedItems.indexOf(item)
-                    if (selectedIndex != -1) {
-                        _selectedIndices.removeAt(selectedIndex)
-                        adapter.notifyItemChanged(position, false)
-                    } else {
-                        selectedIndex = items!!.indexOf(item)
-                        _selectedIndices.add(selectedIndex)
-                        adapter.notifyItemChanged(position, true)
-                    }
-                }
-            }
-            onItemClickedListener?.onItemClicked(view, item, position)
-        })
+        adapter.setOnItemClickedListener(Item::class.java, onItemClickedListener)
 
         setAdapter(adapter)
     }
@@ -241,7 +219,7 @@ open class MenuStrip : RecyclerView {
         val ss = SavedState(superState)
         //end
 
-        ss.selectedIndices = _selectedIndices
+        ss.selectedIndices = ArrayList(selectedIndices)
 
         return ss
     }

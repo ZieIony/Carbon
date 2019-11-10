@@ -3,9 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
+    android:layout_marginRight="@dimen/carbon_toolbarItemMargin"
     android:background="?attr/carbon_colorBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="horizontal"
     app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+    <carbon.widget.CheckBox
+        android:id="@+id/checkBox"
+        style="@style/carbon_CheckBox.IconButton"
+        android:clickable="false"
+        android:focusable="false" />
 
     <carbon.widget.TextView
         android:id="@+id/text"
@@ -21,7 +31,7 @@
     <carbon.widget.ImageView
         android:id="@+id/reorder"
         style="@style/carbon_ImageView.Icon"
-        android:layout_width="@dimen/carbon_toolbarHeight"
-        android:layout_height="@dimen/carbon_toolbarHeight"
+        android:layout_width="@dimen/carbon_toolbarItemSize"
+        android:layout_height="@dimen/carbon_toolbarItemSize"
         app:carbon_src="@raw/ic_reorder_24px" />
 </carbon.widget.LinearLayout>

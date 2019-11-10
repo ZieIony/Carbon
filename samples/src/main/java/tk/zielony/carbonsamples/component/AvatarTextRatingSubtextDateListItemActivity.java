@@ -73,8 +73,8 @@ public class AvatarTextRatingSubtextDateListItemActivity extends ThemedActivity 
 
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultAvatarTextRatingSubtextDateItem.class, AvatarTextRatingSubtextDateRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow::new);
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(DefaultHeaderItem.class, PaddedHeaderRow::new);
 
 
         recycler.setAdapter(adapter);

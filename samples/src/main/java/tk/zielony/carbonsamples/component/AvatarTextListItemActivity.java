@@ -72,8 +72,8 @@ public class AvatarTextListItemActivity extends ThemedActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(DividerItem.class, DividerRow::new);
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(DividerItem.class, DividerRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(items);
     }

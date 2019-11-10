@@ -173,9 +173,9 @@ public class NavigationView extends RecyclerView {
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(Item.class, parent -> new DataBindingComponent<Item>(NavigationView.this, itemLayoutId) {
         });
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(DividerItem.class, DividerRow::new);
-        adapter.addFactory(CustomHeaderItem.class, parent -> new CustomHeaderRow(header));
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(DividerItem.class, DividerRow::new);
+        adapter.putFactory(CustomHeaderItem.class, parent -> new CustomHeaderRow(header));
         adapter.setOnItemClickedListener(Item.class, (view, menuItem, position) -> {
             if (onItemClickedListener != null)
                 onItemClickedListener.onItemClicked(view, menuItem, position);

@@ -63,8 +63,8 @@ class BackdropActivity : ThemedActivity() {
 
 
             val adapter: RowListAdapter<Serializable> = RowListAdapter(DefaultAvatarTextRatingSubtextDateItem::class.java, RowFactory<DefaultAvatarTextRatingSubtextDateItem> { AvatarTextRatingSubtextDateRow(it) })
-            adapter.addFactory(PaddingItem::class.java, { PaddingRow(it) })
-            adapter.addFactory(DefaultHeaderItem::class.java, { PaddedHeaderRow(it) })
+            adapter.putFactory(PaddingItem::class.java, { PaddingRow(it) })
+            adapter.putFactory(DefaultHeaderItem::class.java, { PaddedHeaderRow(it) })
 
 
             backdrop_contentRecycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)

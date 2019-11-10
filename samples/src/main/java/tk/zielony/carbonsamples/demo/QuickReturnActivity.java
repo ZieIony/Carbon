@@ -72,8 +72,8 @@ public class QuickReturnActivity extends ThemedActivity {
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(DefaultHeaderItem.class, PaddedHeaderRow::new);
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(DefaultHeaderItem.class, PaddedHeaderRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(items);
 

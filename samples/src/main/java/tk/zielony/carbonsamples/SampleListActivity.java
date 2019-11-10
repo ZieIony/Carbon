@@ -31,8 +31,9 @@ public class SampleListActivity extends ThemedActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RowArrayAdapter<>(SampleActivityGroup.class, parent -> new DataBindingComponent<>(parent, R.layout.row_main));
-        adapter.addFactory(SampleActivityItem.class, parent -> {
+        adapter = new RowArrayAdapter<>();
+        adapter.putFactory(SampleActivityGroup.class, parent -> new DataBindingComponent<>(parent, R.layout.row_main));
+        adapter.putFactory(SampleActivityItem.class, parent -> {
             return new DataBindingComponent<SampleActivityItem>(parent, R.layout.row_sample) {
                 @Override
                 public void bind(SampleActivityItem data) {
@@ -54,8 +55,8 @@ public class SampleListActivity extends ThemedActivity {
                 }
             };
         });
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));
         adapter.setOnItemClickedListener((view, item, position) -> {
             if (item instanceof SampleActivityGroup) {
                 Class activityClass = ((SampleActivityGroup) item).getActivityClass();

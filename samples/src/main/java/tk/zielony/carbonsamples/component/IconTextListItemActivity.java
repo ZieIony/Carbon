@@ -37,8 +37,8 @@ public class IconTextListItemActivity extends ThemedActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultIconTextItem.class, IconTextRow::new);
-        adapter.addFactory(PaddingItem.class, PaddingRow::new);
-        adapter.addFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow<>(parent, new ArraySearchAdapter<>(new String[]{}), filterResults -> {
+        adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(DefaultIconSearchItem.class, parent -> new IconSearchRow<>(parent, new ArraySearchAdapter<>(new String[]{}), filterResults -> {
         }));
         recycler.setAdapter(adapter);
 

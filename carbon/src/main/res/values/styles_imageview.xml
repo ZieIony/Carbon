@@ -9,7 +9,7 @@
     </style>
 
     <style name="carbon_ImageView.Icon">
-        <item name="android:scaleType">center</item>
+        <item name="android:scaleType">centerInside</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
         <item name="android:layout_width">@dimen/carbon_iconSize</item>
         <item name="android:layout_height">@dimen/carbon_iconSize</item>

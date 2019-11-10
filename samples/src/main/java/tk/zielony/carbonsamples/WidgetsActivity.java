@@ -49,7 +49,7 @@ public class WidgetsActivity extends SampleListActivity {
                 new SampleActivityItem(SnackbarActivity.class),
                 new SampleActivityItem(TextFieldsActivity.class, R.drawable.ic_text_fields_black_24dp),
                 new SampleActivityItem(TabsActivity.class),
-                new SampleActivityItem(RecyclerActivity.class),
+                new SampleActivityItem(RecyclerActivity.class, R.drawable.ic_view_stream_black_24dp),
                 new SampleActivityItem(ExpandableRecyclerActivity.class),
                 new SampleActivityItem(ExpansionPanelActivity.class),
                 new SampleActivityItem(DropDownActivity.class, R.drawable.carbon_dropdown),
