@@ -24,6 +24,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/carbon_margin"
             android:layout_marginLeft="@dimen/carbon_margin"
+            android:duplicateParentState="true"
             app:carbon_src="@{data.icon}"
             app:carbon_tint="@{data.iconTintList}" />
 
@@ -35,6 +36,7 @@
             android:layout_marginLeft="@dimen/carbon_margin"
             android:layout_marginEnd="@dimen/carbon_margin"
             android:layout_marginRight="@dimen/carbon_margin"
+            android:duplicateParentState="true"
             android:text="@{data.title}"
             android:textAppearance="?attr/carbon_textAppearanceBody1"
             android:textColor="@{data.iconTintList??ColorStateListFactory.INSTANCE.makePrimaryText(context)}" />

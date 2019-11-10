@@ -133,6 +133,9 @@
     </style>
 
     <style name="carbon_Divider">
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="carbon_rippleColor">@null</item>
         <item name="android:background">@color/carbon_defaultColorControl</item>
         <item name="android:orientation">horizontal</item>
     </style>

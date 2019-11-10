@@ -1344,6 +1344,11 @@
         <attr name="carbon_menu" />
         <attr name="carbon_itemLayout" />
         <attr name="carbon_separatorLayout" />
+        <attr name="carbon_selectionMode" format="enum">
+            <enum name="none" value="0" />
+            <enum name="single" value="1" />
+            <enum name="multi" value="2" />
+        </attr>
     </declare-styleable>
 
     <!-- Drawable used to show animated touch feedback. -->

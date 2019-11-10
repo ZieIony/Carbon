@@ -15,13 +15,15 @@
         android:text="show menu" />
 
     <carbon.widget.MenuStrip
+        android:id="@+id/menuStrip"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/carbon_margin"
         android:background="?attr/carbon_colorForeground"
         app:carbon_cornerRadius="@dimen/carbon_cornerRadiusMenu"
         app:carbon_elevation="@dimen/carbon_elevationMenu"
-        app:carbon_menu="@menu/menu_navigation" />
+        app:carbon_menu="@menu/menu_navigation"
+        app:carbon_selectionMode="multi" />
 
     <carbon.widget.MenuStrip
         style="@style/carbon_MenuStrip.Tools"
@@ -31,5 +33,6 @@
         android:background="?attr/carbon_colorForeground"
         app:carbon_cornerRadius="@dimen/carbon_cornerRadiusCard"
         app:carbon_elevation="@dimen/carbon_elevationToolbar"
-        app:carbon_menu="@menu/menu_news" />
+        app:carbon_menu="@menu/menu_news"
+        app:carbon_selectionMode="single" />
 </LinearLayout>

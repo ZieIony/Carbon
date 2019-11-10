@@ -3,6 +3,8 @@ package carbon.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.*
 import androidx.core.view.MenuItemCompat
@@ -14,8 +16,8 @@ import carbon.component.DataBindingComponent
 import carbon.component.DividerItem
 import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
+import carbon.view.SelectionMode
 import java.io.Serializable
-import java.util.*
 
 open class MenuStrip : RecyclerView {
 
@@ -44,6 +46,26 @@ open class MenuStrip : RecyclerView {
             iconTintList = MenuItemCompat.getIconTintList(menuItem)
             groupId = menuItem.groupId
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Item
+
+            if (id != other.id) return false
+            if (title != other.title) return false
+            if (groupId != other.groupId) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = id
+            result = 31 * result + (title?.hashCode() ?: 0)
+            result = 31 * result + groupId
+            return result
+        }
     }
 
     private class SeparatorComponent : Component<DividerItem> {
@@ -56,27 +78,69 @@ open class MenuStrip : RecyclerView {
         override fun getView(): View = view
     }
 
+    private inner class ItemComponent(parent: ViewGroup) : DataBindingComponent<Item>(parent, itemLayoutId) {
+        override fun bind(data: Item) {
+            super.bind(data)
+            view.isSelected = selectedItems.contains(data)
+        }
+    }
 
-    private var items: Array<Item>? = null
-    private var itemLayoutId: Int = 0
-    private var separatorLayoutId: Int = 0
+
+    private var _itemLayoutId: Int = 0
+    var itemLayoutId: Int
+        get() = _itemLayoutId
+        set(value) {
+            _itemLayoutId = value
+            initItems()
+        }
+
+    private var _separatorLayoutId: Int = 0
+    var separatorLayoutId: Int
+        get() = _separatorLayoutId
+        set(value) {
+            _separatorLayoutId = value
+            initItems()
+        }
 
     private lateinit var _orientation: carbon.view.Orientation
     var orientation: carbon.view.Orientation
         get() = _orientation
-        set(orientation) {
-            _orientation = orientation
+        set(value) {
+            _orientation = value
             initItems()
         }
 
     lateinit var adapter: RowListAdapter<Serializable>
+    lateinit var selectionMode: SelectionMode
 
-    private var onItemClickedListener: OnItemClickedListener<Item>? = null
+    private var _onItemClickedListener: OnItemClickedListener<Item>? = null
+    var onItemClickedListener
+        get() = _onItemClickedListener
+        set(value) {
+            _onItemClickedListener = value
+            initItems()
+        }
 
+    private var items: Array<Item>? = null
     var menuItems: Array<Item>?
         get() = items
-        set(items) {
-            this.items = items
+        set(value) {
+            this.items = value
+            initItems()
+        }
+
+    var selectedItems
+        get() = selectedIndices.map { items!![it] }
+        set(value) {
+            selectedIndices = value.map { items!!.indexOf(it) }
+        }
+
+    private val _selectedIndices = arrayListOf<Int>()
+    var selectedIndices: List<Int>
+        get() = _selectedIndices
+        set(value) {
+            _selectedIndices.clear()
+            _selectedIndices.addAll(value)
             initItems()
         }
 
@@ -98,6 +162,7 @@ open class MenuStrip : RecyclerView {
         orientation = carbon.view.Orientation.values()[a.getInt(R.styleable.MenuStrip_android_orientation, carbon.view.Orientation.VERTICAL.ordinal)]
         itemLayoutId = a.getResourceId(R.styleable.MenuStrip_carbon_itemLayout, R.layout.carbon_menustrip_item)
         separatorLayoutId = a.getResourceId(R.styleable.MenuStrip_carbon_separatorLayout, 0)
+        selectionMode = SelectionMode.values()[a.getInt(R.styleable.MenuStrip_carbon_selectionMode, SelectionMode.NONE.ordinal)]
         val menuId = a.getResourceId(R.styleable.MenuStrip_carbon_menu, 0)
         if (menuId != 0)
             setMenu(menuId)
@@ -105,27 +170,10 @@ open class MenuStrip : RecyclerView {
         a.recycle()
     }
 
-    fun setMenu(resId: Int) {
-        setMenu(Carbon.getMenu(context, resId))
-    }
+    fun setMenu(resId: Int) = setMenu(Carbon.getMenu(context, resId))
 
     fun setMenu(menu: Menu) {
         items = (0 until menu.size()).map { Item(menu.getItem(it)) }.toTypedArray()
-        initItems()
-    }
-
-    fun setItemLayout(itemLayoutId: Int) {
-        this.itemLayoutId = itemLayoutId
-        initItems()
-    }
-
-    fun setSeparatorLayout(separatorLayoutId: Int) {
-        this.separatorLayoutId = separatorLayoutId
-        initItems()
-    }
-
-    fun setOnItemClickedListener(onItemClickedListener: OnItemClickedListener<Item>) {
-        this.onItemClickedListener = onItemClickedListener
         initItems()
     }
 
@@ -135,7 +183,7 @@ open class MenuStrip : RecyclerView {
 
         initAdapter()
 
-        val items: ArrayList<Serializable> = arrayListOf(*this.items!!)
+        val items: ArrayList<Serializable> = arrayListOf(*items!!)
         var i = 0
         while (i < items.size - 1) {
             if ((items[i] as Item).groupId != (items[i + 1] as Item).groupId)
@@ -153,13 +201,107 @@ open class MenuStrip : RecyclerView {
             separatorLayoutId = if (vertical) R.layout.carbon_menustrip_hseparator_item else R.layout.carbon_menustrip_vseparator_item
 
         layoutManager = LinearLayoutManager(context, if (vertical) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL, false)
-        adapter = RowListAdapter(Item::class.java, RowFactory<Item> { DataBindingComponent<Item>(it, itemLayoutId) })
+        adapter = RowListAdapter(Item::class.java, RowFactory<Item> { ItemComponent(it) })
         adapter.addFactory(DividerItem::class.java, { SeparatorComponent(it, separatorLayoutId) })
 
         adapter.setOnItemClickedListener(Item::class.java, { view, item, position ->
+            when (selectionMode) {
+                SelectionMode.SINGLE -> {
+                    if (_selectedIndices.isNotEmpty()) {
+                        val deselectedItem = items!![_selectedIndices[0]]
+                        _selectedIndices.remove(_selectedIndices[0])
+                        adapter.notifyItemChanged(adapter.items.indexOf(deselectedItem), false)
+                    }
+                    val selectedIndex = items!!.indexOf(item)
+                    _selectedIndices.add(selectedIndex)
+                    adapter.notifyItemChanged(position, true)
+                }
+                SelectionMode.MULTI -> {
+                    var selectedIndex = selectedItems.indexOf(item)
+                    if (selectedIndex != -1) {
+                        _selectedIndices.removeAt(selectedIndex)
+                        adapter.notifyItemChanged(position, false)
+                    } else {
+                        selectedIndex = items!!.indexOf(item)
+                        _selectedIndices.add(selectedIndex)
+                        adapter.notifyItemChanged(position, true)
+                    }
+                }
+            }
             onItemClickedListener?.onItemClicked(view, item, position)
         })
 
         setAdapter(adapter)
     }
+
+    public override fun onSaveInstanceState(): Parcelable? {
+        //begin boilerplate code that allows parent classes to save state
+        val superState = super.onSaveInstanceState()
+
+        val ss = SavedState(superState)
+        //end
+
+        ss.selectedIndices = _selectedIndices
+
+        return ss
+    }
+
+    public override fun onRestoreInstanceState(state: Parcelable) {
+        //begin boilerplate code so parent classes can restore state
+        if (state !is SavedState) {
+            super.onRestoreInstanceState(state)
+            return
+        }
+
+        super.onRestoreInstanceState(state.superState)
+        //end
+
+        selectedIndices = state.selectedIndices
+    }
+
+    private open class SavedState : Parcelable {
+
+        lateinit var selectedIndices: ArrayList<Int>
+
+        var superState: Parcelable? = null
+
+        constructor() {
+            superState = null
+        }
+
+        constructor(superState: Parcelable?) {
+            this.superState = if (superState !== EMPTY_STATE) superState else null
+        }
+
+        private constructor(parcel: Parcel) {
+            val superState = parcel.readParcelable<Parcelable>(BottomNavigationView::class.java.classLoader)
+            this.superState = superState ?: EMPTY_STATE
+            this.selectedIndices = parcel.readSerializable() as ArrayList<Int>
+        }
+
+        override fun describeContents(): Int = 0
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            out.writeParcelable(superState, flags)
+            out.writeSerializable(this.selectedIndices)
+        }
+
+        companion object {
+            val EMPTY_STATE: SavedState = object : MenuStrip.SavedState() {
+            }
+
+            //required field that makes Parcelables from a Parcel
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(`in`: Parcel): SavedState {
+                    return SavedState(`in`)
+                }
+
+                override fun newArray(size: Int): Array<SavedState?> {
+                    return arrayOfNulls(size)
+                }
+            }
+        }
+    }
+
 }
