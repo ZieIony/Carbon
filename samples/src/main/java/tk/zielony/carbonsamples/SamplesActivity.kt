@@ -1,5 +1,6 @@
 package tk.zielony.carbonsamples
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -24,6 +25,11 @@ abstract class SamplesActivity : AppCompatActivity() {
                 setContentView(it.layout)
             if (it.title != 0)
                 title = getString(it.title)
+        }
+
+        if(this !is SampleListActivity) {
+            val preferences = getSharedPreferences("samples", Context.MODE_PRIVATE)
+            preferences.edit().putString(RECENTLY_USED, javaClass.name).commit()
         }
     }
 
@@ -117,4 +123,7 @@ abstract class SamplesActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        const val RECENTLY_USED = "recentlyUsed"
+    }
 }

@@ -9,17 +9,20 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import carbon.component.DataBindingComponent;
+import carbon.component.DividerItem;
+import carbon.component.DividerRow;
 import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
-import carbon.recycler.RowArrayAdapter;
+import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 
 public class SampleListActivity extends ThemedActivity {
 
-    RowArrayAdapter<Serializable> adapter;
+    RowListAdapter<Serializable> adapter;
     Map<String, String> allPreferences;
 
     @Override
@@ -31,7 +34,7 @@ public class SampleListActivity extends ThemedActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RowArrayAdapter<>();
+        adapter = new RowListAdapter<>();
         adapter.putFactory(SampleActivityGroup.class, parent -> new DataBindingComponent<>(parent, R.layout.row_main));
         adapter.putFactory(SampleActivityItem.class, parent -> {
             return new DataBindingComponent<SampleActivityItem>(parent, R.layout.row_sample) {
@@ -46,7 +49,7 @@ public class SampleListActivity extends ThemedActivity {
                             preferences.edit().remove(data.getActivityClass().getName()).commit();
                         }
                         for (int i = 0; i < adapter.getItemCount(); i++) {
-                            if (adapter.getItems()[i] == data) {
+                            if (adapter.getItems().get(i) == data) {
                                 adapter.notifyItemChanged(i);
                                 break;
                             }
@@ -56,6 +59,7 @@ public class SampleListActivity extends ThemedActivity {
             };
         });
         adapter.putFactory(PaddingItem.class, PaddingRow::new);
+        adapter.putFactory(DividerItem.class, DividerRow::new);
         adapter.putFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));
         adapter.setOnItemClickedListener((view, item, position) -> {
             if (item instanceof SampleActivityGroup) {
@@ -67,7 +71,7 @@ public class SampleListActivity extends ThemedActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    protected void setItems(Serializable[] items) {
+    protected void setItems(List<Serializable> items) {
         for (Serializable item : items) {
             if (item instanceof SampleActivityItem) {
                 SampleActivityItem sampleItem = (SampleActivityItem) item;

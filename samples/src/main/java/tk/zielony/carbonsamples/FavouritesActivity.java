@@ -31,9 +31,7 @@ public class FavouritesActivity extends SampleListActivity {
         }
         favourites.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
 
-        Serializable[] items = new Serializable[favourites.size()];
-        favourites.toArray(items);
-        setItems(items);
+        setItems(favourites);
     }
 
 }
