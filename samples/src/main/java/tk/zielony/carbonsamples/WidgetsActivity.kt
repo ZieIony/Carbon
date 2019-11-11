@@ -4,10 +4,10 @@ import android.os.Bundle
 import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.widget.*
 
-@ActivityAnnotation(
-        title = R.string.widgetsActivity_title,
-        layout = R.layout.activity_samplelist,
-        icon = R.drawable.ic_widgets_black_24dp
+@SampleAnnotation(
+        titleId = R.string.widgetsActivity_title,
+        layoutId = R.layout.activity_samplelist,
+        iconId = R.drawable.ic_widgets_black_24dp
 )
 class WidgetsActivity : SampleListActivity() {
 

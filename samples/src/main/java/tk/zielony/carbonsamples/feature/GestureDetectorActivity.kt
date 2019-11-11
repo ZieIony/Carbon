@@ -7,14 +7,14 @@ import android.view.MotionEvent
 import carbon.gesture.GestureDetector
 import carbon.gesture.OnGestureListener
 import kotlinx.android.synthetic.main.activity_gesturedetector.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 
-@ActivityAnnotation(
-        layout = R.layout.activity_gesturedetector,
-        title = R.string.gestureDetectorActivity_title,
-        icon = R.drawable.ic_gesture_black_24dp
+@SampleAnnotation(
+        layoutId = R.layout.activity_gesturedetector,
+        titleId = R.string.gestureDetectorActivity_title,
+        iconId = R.drawable.ic_gesture_black_24dp
 )
 class GestureDetectorActivity : ThemedActivity(), OnGestureListener {
 

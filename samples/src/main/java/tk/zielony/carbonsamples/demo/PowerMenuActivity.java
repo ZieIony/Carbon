@@ -20,14 +20,14 @@ import carbon.widget.FrameLayout;
 import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
 import carbon.widget.TextView;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(
-        layout = R.layout.activity_powermenu,
-        title = R.string.powerMenuActivity_title,
-        icon = R.drawable.ic_power_settings_new_black_24dp
+@SampleAnnotation(
+        layoutId = R.layout.activity_powermenu,
+        titleId = R.string.powerMenuActivity_title,
+        iconId = R.drawable.ic_power_settings_new_black_24dp
 )
 public class PowerMenuActivity extends ThemedActivity {
     boolean vibration = false, volume = true, airplaneMode = false;

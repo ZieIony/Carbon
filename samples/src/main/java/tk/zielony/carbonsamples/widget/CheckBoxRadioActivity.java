@@ -8,14 +8,14 @@ import androidx.databinding.ViewDataBinding;
 
 import carbon.drawable.CheckedState;
 import carbon.widget.CheckBox;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.carbonsamples.databinding.ActivityCheckboxRadioBinding;
 
-@ActivityAnnotation(
-        title = R.string.checkBoxRadioActivity_title,
-        icon = R.drawable.carbon_checkbox_checked
+@SampleAnnotation(
+        titleId = R.string.checkBoxRadioActivity_title,
+        iconId = R.drawable.carbon_checkbox_checked
 )
 public class CheckBoxRadioActivity extends ThemedActivity {
     @Override

@@ -11,14 +11,14 @@ import carbon.Carbon;
 import carbon.animation.AnimUtils;
 import carbon.internal.MathUtils;
 import carbon.widget.LinearLayout;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(
-        layout = R.layout.activity_share_toolbar,
-        title = R.string.shareToolbarActivity_title,
-        icon = R.drawable.ic_share_black_24dp
+@SampleAnnotation(
+        layoutId = R.layout.activity_share_toolbar,
+        titleId = R.string.shareToolbarActivity_title,
+        iconId = R.drawable.ic_share_black_24dp
 )
 public class ShareToolbarActivity extends ThemedActivity {
     @Override

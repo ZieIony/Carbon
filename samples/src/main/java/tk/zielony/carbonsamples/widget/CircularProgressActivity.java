@@ -5,11 +5,11 @@ import android.os.Handler;
 import android.view.View;
 
 import carbon.widget.ProgressBar;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_circular_progress, title = R.string.circularProgressActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_circular_progress, titleId = R.string.circularProgressActivity_title)
 public class CircularProgressActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -12,10 +12,10 @@ import tk.zielony.carbonsamples.graph.BarChartActivity
 import tk.zielony.carbonsamples.graph.LineChartActivity
 import tk.zielony.carbonsamples.widget.*
 
-@ActivityAnnotation(
-        title = R.string.newSamplesActivity_title,
-        layout = R.layout.activity_samplelist,
-        icon = R.drawable.ic_new_releases_black_24dp
+@SampleAnnotation(
+        titleId = R.string.newSamplesActivity_title,
+        layoutId = R.layout.activity_samplelist,
+        iconId = R.drawable.ic_new_releases_black_24dp
 )
 class NewSamplesActivity : SampleListActivity() {
 

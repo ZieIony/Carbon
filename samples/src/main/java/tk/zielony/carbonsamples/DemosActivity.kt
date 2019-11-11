@@ -4,7 +4,7 @@ import android.os.Bundle
 import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.demo.*
 
-@ActivityAnnotation(title = R.string.demosActivity_title, layout = R.layout.activity_samplelist)
+@SampleAnnotation(titleId = R.string.demosActivity_title, layoutId = R.layout.activity_samplelist)
 class DemosActivity : SampleListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

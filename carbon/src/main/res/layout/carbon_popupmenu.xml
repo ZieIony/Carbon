@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/carbon_popupContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/carbon_marginHalf"
-    android:visibility="invisible"
+    android:id="@+id/carbon_popupContent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/carbon_colorForeground"
+    app:carbon_cornerRadius="@dimen/carbon_cornerRadiusMenu"
+    app:carbon_elevation="@dimen/carbon_elevationMenu"
     app:carbon_inAnimation="fade"
     app:carbon_outAnimation="fade">
 
-    <carbon.widget.FrameLayout
-        android:id="@+id/carbon_popupContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/carbon_colorForeground"
-        app:carbon_elevation="@dimen/carbon_elevationDropDown">
-
-        <carbon.widget.MenuStrip
-            android:id="@+id/menuStrip"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </carbon.widget.FrameLayout>
+    <carbon.widget.MenuStrip
+        android:id="@+id/carbon_menuStrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="112dp"
+        app:carbon_maxWidth="280dp" />
 </carbon.widget.FrameLayout>
+

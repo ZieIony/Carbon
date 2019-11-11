@@ -961,7 +961,7 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
     // insets
     // -------------------------------
 
-    int insetLeft = INSET_NULL, insetTop = INSET_NULL, insetRight = INSET_NULL, insetBottom = INSET_NULL;
+    int insetLeft = InsetView.INSET_NULL, insetTop = InsetView.INSET_NULL, insetRight = InsetView.INSET_NULL, insetBottom = InsetView.INSET_NULL;
     int insetColor;
     private OnInsetsChangedListener onInsetsChangedListener;
 
@@ -1014,13 +1014,13 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
 
     @Override
     protected boolean fitSystemWindows(@NonNull Rect insets) {
-        if (insetLeft == INSET_NULL)
+        if (insetLeft == InsetView.INSET_NULL)
             insetLeft = insets.left;
-        if (insetTop == INSET_NULL)
+        if (insetTop == InsetView.INSET_NULL)
             insetTop = insets.top;
-        if (insetRight == INSET_NULL)
+        if (insetRight == InsetView.INSET_NULL)
             insetRight = insets.right;
-        if (insetBottom == INSET_NULL)
+        if (insetBottom == InsetView.INSET_NULL)
             insetBottom = insets.bottom;
         insets.set(insetLeft, insetTop, insetRight, insetBottom);
         if (onInsetsChangedListener != null)

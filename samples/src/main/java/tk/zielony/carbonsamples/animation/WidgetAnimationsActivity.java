@@ -6,11 +6,11 @@ import android.view.View;
 import carbon.widget.FrameLayout;
 import carbon.widget.rx.Button;
 import carbon.widget.rx.FloatingActionButton;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_animations, title = R.string.widgetAnimationsActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_animations, titleId = R.string.widgetAnimationsActivity_title)
 public class WidgetAnimationsActivity extends ThemedActivity {
 
     @Override

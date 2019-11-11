@@ -3,14 +3,14 @@ package tk.zielony.carbonsamples.widget;
 import android.os.Bundle;
 
 import carbon.widget.DropDown;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(
-        layout = R.layout.activity_dropdown,
-        title = R.string.dropDownActivityActivity_title,
-        icon = R.drawable.carbon_dropdown
+@SampleAnnotation(
+        layoutId = R.layout.activity_dropdown,
+        titleId = R.string.dropDownActivityActivity_title,
+        iconId = R.drawable.carbon_dropdown
 )
 public class DropDownActivity extends ThemedActivity {
     private static String[] months = new String[]{

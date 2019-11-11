@@ -10,10 +10,10 @@ import java.util.Map;
 
 import carbon.component.PaddingItem;
 
-@ActivityAnnotation(
-        title = R.string.favouritesActivity_title,
-        layout = R.layout.activity_samplelist,
-        icon = R.drawable.ic_star_black_24dp
+@SampleAnnotation(
+        titleId = R.string.favouritesActivity_title,
+        layoutId = R.layout.activity_samplelist,
+        iconId = R.drawable.ic_star_black_24dp
 )
 public class FavouritesActivity extends SampleListActivity {
 
@@ -25,7 +25,7 @@ public class FavouritesActivity extends SampleListActivity {
 
         List<Serializable> favourites = new ArrayList<>();
         favourites.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
-        favourites.add("Tap the star icon next to a sample to add it to this list");
+        favourites.add("Tap the star iconId next to a sample to add it to this list");
         for (Map.Entry<String, String> entry : allPreferences.entrySet()) {
             try {
                 favourites.add(new SampleActivityItem((Class<? extends Activity>) Class.forName(entry.getKey())));

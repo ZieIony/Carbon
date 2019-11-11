@@ -11,11 +11,11 @@ import carbon.widget.RelativeLayout;
 import carbon.widget.TabLayout;
 import carbon.widget.ViewPager;
 import carbon.widget.ViewPagerIndicator;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_tabs, title = R.string.tabsActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_tabs, titleId = R.string.tabsActivity_title)
 public class TabsActivity extends ThemedActivity {
 
     @Override

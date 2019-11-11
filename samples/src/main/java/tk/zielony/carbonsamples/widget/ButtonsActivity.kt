@@ -2,12 +2,12 @@ package tk.zielony.carbonsamples.widget
 
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_buttons.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.CodeActivity
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 
-@ActivityAnnotation(layout = R.layout.activity_buttons, title = R.string.buttonsActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_buttons, titleId = R.string.buttonsActivity_title)
 class ButtonsActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

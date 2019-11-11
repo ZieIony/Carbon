@@ -10,11 +10,11 @@ import carbon.widget.CheckBox;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.RelativeLayout;
 import carbon.widget.Snackbar;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_snackbar, title = R.string.snackbarActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_snackbar, titleId = R.string.snackbarActivity_title)
 public class SnackbarActivity extends ThemedActivity {
 
     @Override

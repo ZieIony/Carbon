@@ -8,11 +8,11 @@ import androidx.annotation.Nullable;
 
 import carbon.dialog.ProgressDialog;
 import carbon.widget.EditText;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_progressdialog, title = R.string.progressDialogActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_progressdialog, titleId = R.string.progressDialogActivity_title)
 public class ProgressDialogActivity extends ThemedActivity {
 
     @Override

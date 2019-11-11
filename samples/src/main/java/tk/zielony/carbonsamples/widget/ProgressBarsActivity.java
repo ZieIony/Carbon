@@ -5,11 +5,11 @@ import android.os.Handler;
 import android.view.View;
 
 import carbon.widget.ProgressBar;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_progress_bars, title = R.string.progressBarsActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_progress_bars, titleId = R.string.progressBarsActivity_title)
 public class ProgressBarsActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

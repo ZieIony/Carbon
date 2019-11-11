@@ -20,11 +20,11 @@ abstract class SamplesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
-        javaClass.getAnnotation(ActivityAnnotation::class.java)?.let {
-            if (it.layout != 0)
-                setContentView(it.layout)
-            if (it.title != 0)
-                title = getString(it.title)
+        javaClass.getAnnotation(SampleAnnotation::class.java)?.let {
+            if (it.layoutId != 0)
+                setContentView(it.layoutId)
+            if (it.titleId != 0)
+                title = getString(it.titleId)
         }
 
         if (this !is SampleListActivity && this !is ColorsActivity && this !is CodeActivity && this !is AboutActivity) {
@@ -34,9 +34,9 @@ abstract class SamplesActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        javaClass.getAnnotation(ActivityAnnotation::class.java)?.let {
-            if (it.menu != 0)
-                menuInflater.inflate(it.menu, menu)
+        javaClass.getAnnotation(SampleAnnotation::class.java)?.let {
+            if (it.menuId != 0)
+                menuInflater.inflate(it.menuId, menu)
         }
 
         return super.onCreateOptionsMenu(menu)

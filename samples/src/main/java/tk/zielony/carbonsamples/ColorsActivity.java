@@ -13,7 +13,7 @@ import java.io.Serializable;
 import carbon.internal.ResourcesCompat;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
-@ActivityAnnotation(title = R.string.colorsActivity_title)
+@SampleAnnotation(titleId = R.string.colorsActivity_title)
 public class ColorsActivity extends ThemedActivity {
 
     public static final String SECONDARY = "secondary";

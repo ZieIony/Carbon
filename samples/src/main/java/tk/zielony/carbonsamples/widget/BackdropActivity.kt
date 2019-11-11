@@ -6,7 +6,7 @@ import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import carbon.widget.BackdropLayout
 import kotlinx.android.synthetic.main.activity_backdrop.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 import tk.zielony.randomdata.RandomData
@@ -17,7 +17,7 @@ import tk.zielony.randomdata.person.DrawableAvatarGenerator
 import tk.zielony.randomdata.person.StringNameGenerator
 import java.io.Serializable
 
-@ActivityAnnotation(layout = R.layout.activity_backdrop, title = R.string.backdropActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_backdrop, titleId = R.string.backdropActivity_title)
 class BackdropActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

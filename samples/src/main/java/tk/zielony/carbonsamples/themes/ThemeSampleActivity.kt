@@ -8,7 +8,7 @@ import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import carbon.widget.TabLayout
 import kotlinx.android.synthetic.main.activity_theme2.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.ColorsActivity
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.SamplesActivity
@@ -79,7 +79,7 @@ open class ThemeSampleActivity : SamplesActivity() {
     }
 }
 
-@ActivityAnnotation(title = R.string.currentThemeActivity_title, layout = R.layout.activity_theme2)
+@SampleAnnotation(titleId = R.string.currentThemeActivity_title, layoutId = R.layout.activity_theme2)
 class CurrentThemeActivity : ThemeSampleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         applyTheme()
@@ -94,5 +94,5 @@ class CurrentThemeActivity : ThemeSampleActivity() {
     }
 }
 
-@ActivityAnnotation(title = R.string.windowsThemeActivity_title, layout = R.layout.activity_theme2)
+@SampleAnnotation(titleId = R.string.windowsThemeActivity_title, layoutId = R.layout.activity_theme2)
 class WindowsThemeActivity : ThemeSampleActivity()

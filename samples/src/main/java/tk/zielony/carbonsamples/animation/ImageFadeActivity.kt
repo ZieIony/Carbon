@@ -5,13 +5,13 @@ import android.os.Handler
 import android.view.View
 import carbon.widget.ImageView
 import kotlinx.android.synthetic.main.activity_imagefade.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 import tk.zielony.randomdata.DataContext
 import tk.zielony.randomdata.common.DrawableImageGenerator
 
-@ActivityAnnotation(layout = R.layout.activity_imagefade, title = R.string.imageFadeActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_imagefade, titleId = R.string.imageFadeActivity_title)
 class ImageFadeActivity : ThemedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

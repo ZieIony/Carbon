@@ -5,10 +5,10 @@ import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.graph.BarChartActivity
 import tk.zielony.carbonsamples.graph.LineChartActivity
 
-@ActivityAnnotation(
-        title = R.string.chartsActivity_title,
-        layout = R.layout.activity_samplelist,
-        icon = R.drawable.ic_show_chart_black_24dp
+@SampleAnnotation(
+        titleId = R.string.chartsActivity_title,
+        layoutId = R.layout.activity_samplelist,
+        iconId = R.drawable.ic_show_chart_black_24dp
 )
 class ChartsActivity : SampleListActivity() {
 

@@ -1,15 +1,12 @@
 package carbon.widget;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,14 +19,13 @@ import carbon.recycler.ListAdapter;
 public class PopupMenu extends PopupWindow {
 
     protected MenuStrip menuStrip;
-    private android.view.View anchorView;
     private DropDown.PopupMode popupMode;
 
     public PopupMenu(Context context) {
-        super(android.view.View.inflate(context, R.layout.carbon_popupmenu, null));
-        getContentView().setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        super(context);
 
-        menuStrip = getContentView().findViewById(R.id.menuStrip);
+        View view = LayoutInflater.from(context).inflate(R.layout.carbon_popupmenu, (ViewGroup) getContentView(), false);
+        menuStrip = view.findViewById(R.id.carbon_menuStrip);
         menuStrip.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_UP &&
                     (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK)) {
@@ -39,42 +35,11 @@ public class PopupMenu extends PopupWindow {
             return false;
         });
 
-        setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
-
-        setTouchable(true);
-        setFocusable(true);
-        setOutsideTouchable(true);
-        setAnimationStyle(0);
-    }
-
-    public boolean show(android.view.View anchor) {
-        anchorView = anchor;
-
-        super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
-
-        update();
-
-        carbon.widget.FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
-        content.animateVisibility(android.view.View.VISIBLE);
-
-        return true;
-    }
-
-    public boolean showImmediate(android.view.View anchor) {
-        anchorView = anchor;
-
-        super.showAtLocation(anchor, Gravity.START | Gravity.TOP, 0, 0);
-
-        update();
-
-        carbon.widget.FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
-        content.setVisibility(android.view.View.VISIBLE);
-
-        return true;
+        setContentView(view);
     }
 
     public void update() {
-        if (anchorView == null)
+        if (getAnchorView() == null)
             return;
 
         setClippingEnabled(popupMode == DropDown.PopupMode.Fit);
@@ -88,8 +53,8 @@ public class PopupMenu extends PopupWindow {
         int selectedItem = 0;
         ListAdapter adapter = (ListAdapter) menuStrip.getAdapter();
 
-        if (anchorView instanceof android.widget.TextView) {
-            android.widget.TextView textView = (TextView) anchorView;
+        if (getAnchorView() instanceof android.widget.TextView) {
+            android.widget.TextView textView = (TextView) getAnchorView();
             String text = textView.getText().toString();
             for (int i = 0; i < adapter.getItemCount(); i++) {
                 if (adapter.getItem(i).toString().equals(text)) {
@@ -100,12 +65,12 @@ public class PopupMenu extends PopupWindow {
         }
 
         Rect windowRect = new Rect();
-        anchorView.getWindowVisibleDisplayFrame(windowRect);
+        getAnchorView().getWindowVisibleDisplayFrame(windowRect);
         int hWindow = windowRect.bottom - windowRect.top;
         int wWindow = windowRect.right - windowRect.left;
 
         int[] location = new int[2];
-        anchorView.getLocationInWindow(location);
+        getAnchorView().getLocationInWindow(location);
 
         if (popupMode == DropDown.PopupMode.Over) {
             int maxHeightAbove = location[1] - windowRect.top - marginHalf * 2;
@@ -117,9 +82,9 @@ public class PopupMenu extends PopupWindow {
             int itemsAbove = Math.min(selectedItem, maxItemsAbove);
 
             int popupX = location[0] - margin - marginHalf;
-            int popupY = location[1] - marginHalf * 2 - itemsAbove * itemHeight - (itemHeight - (anchorView.getHeight() - anchorView.getPaddingTop() -
-                    anchorView.getPaddingBottom())) / 2 + anchorView.getPaddingTop();
-            int popupWidth = anchorView.getWidth() + margin * 2 + marginHalf * 2 - anchorView.getPaddingLeft() - anchorView.getPaddingRight();
+            int popupY = location[1] - marginHalf * 2 - itemsAbove * itemHeight - (itemHeight - (getAnchorView().getHeight() - getAnchorView().getPaddingTop() -
+                    getAnchorView().getPaddingBottom())) / 2 + getAnchorView().getPaddingTop();
+            int popupWidth = getAnchorView().getWidth() + margin * 2 + marginHalf * 2 - getAnchorView().getPaddingLeft() - getAnchorView().getPaddingRight();
             int popupHeight = marginHalf * 4 + Math.max(1, itemsAbove + itemsBelow) * itemHeight;
 
             popupWidth = Math.min(popupWidth, wWindow - marginHalf * 2);
@@ -143,8 +108,8 @@ public class PopupMenu extends PopupWindow {
             int maxItems = (hWindow - marginHalf * 2 - margin * 2) / itemHeight;
 
             int popupX = location[0] - margin - marginHalf;
-            int popupY = location[1] - marginHalf * 2 - (itemHeight - (anchorView.getHeight() - anchorView.getPaddingTop() - anchorView.getPaddingBottom())) / 2 + anchorView.getPaddingTop();
-            int popupWidth = anchorView.getWidth() + margin * 2 + marginHalf * 2 - anchorView.getPaddingLeft() - anchorView.getPaddingRight();
+            int popupY = location[1] - marginHalf * 2 - (itemHeight - (getAnchorView().getHeight() - getAnchorView().getPaddingTop() - getAnchorView().getPaddingBottom())) / 2 + getAnchorView().getPaddingTop();
+            int popupWidth = getAnchorView().getWidth() + margin * 2 + marginHalf * 2 - getAnchorView().getPaddingLeft() - getAnchorView().getPaddingRight();
             int popupHeight = marginHalf * 4 + Math.min(menuStrip.getAdapter().getItemCount(), maxItems) * itemHeight;
 
             LinearLayoutManager manager = (LinearLayoutManager) menuStrip.getLayoutManager();
@@ -154,21 +119,6 @@ public class PopupMenu extends PopupWindow {
         }
 
         super.update();
-    }
-
-    @Override
-    public void dismiss() {
-        carbon.widget.FrameLayout content = getContentView().findViewById(R.id.carbon_popupContainer);
-        content.animateVisibility(android.view.View.INVISIBLE).addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                PopupMenu.super.dismiss();
-            }
-        });
-    }
-
-    public void dismissImmediate() {
-        super.dismiss();
     }
 
     public void setOnMenuItemClickListener(RecyclerView.OnItemClickedListener<MenuStrip.Item> listener) {

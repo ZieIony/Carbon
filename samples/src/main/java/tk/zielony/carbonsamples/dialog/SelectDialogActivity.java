@@ -13,12 +13,12 @@ import carbon.dialog.MultiSelectDialog;
 import carbon.dialog.SingleSelectDialog;
 import carbon.widget.DropDown;
 import carbon.widget.EditText;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.food.StringFruitGenerator;
 
-@ActivityAnnotation(layout = R.layout.activity_selectdialog, title = R.string.selectDialogActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_selectdialog, titleId = R.string.selectDialogActivity_title)
 public class SelectDialogActivity extends ThemedActivity {
 
     private String selectedItem;

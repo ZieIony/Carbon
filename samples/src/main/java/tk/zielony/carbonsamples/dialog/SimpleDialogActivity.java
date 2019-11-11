@@ -6,11 +6,11 @@ import androidx.annotation.Nullable;
 
 import carbon.dialog.TextDialog;
 import carbon.widget.EditText;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_simpledialog, title = R.string.simpleDialogActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_simpledialog, titleId = R.string.simpleDialogActivity_title)
 public class SimpleDialogActivity extends ThemedActivity {
 
     @Override

@@ -15,9 +15,9 @@ open class SampleActivityGroup : Serializable {
     constructor(activityClass: Class<out Activity>) : super(
     ) {
         this.activityClass = activityClass
-        activityClass.getAnnotation(ActivityAnnotation::class.java)?.let {
-            this.name = it.title
-            this.icon = it.icon
+        activityClass.getAnnotation(SampleAnnotation::class.java)?.let {
+            this.name = it.titleId
+            this.icon = it.iconId
         }
     }
 }

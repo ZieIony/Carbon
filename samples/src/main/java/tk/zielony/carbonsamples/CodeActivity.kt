@@ -11,7 +11,7 @@ import com.annimon.stream.Stream
 import kotlinx.android.synthetic.main.activity_code.*
 import java.util.regex.Pattern
 
-@ActivityAnnotation(layout = R.layout.activity_code, title = R.string.codeActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_code, titleId = R.string.codeActivity_title)
 class CodeActivity : ThemedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

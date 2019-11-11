@@ -7,7 +7,7 @@ import carbon.component.ImageTextSubtextRow
 import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import kotlinx.android.synthetic.main.activity_crane.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.SamplesActivity
 import tk.zielony.randomdata.RandomData
@@ -15,7 +15,7 @@ import tk.zielony.randomdata.common.DrawableImageGenerator
 import tk.zielony.randomdata.common.TextGenerator
 import tk.zielony.randomdata.place.StringCityGenerator
 
-@ActivityAnnotation(layout = R.layout.activity_crane, title = R.string.craneActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_crane, titleId = R.string.craneActivity_title)
 class CraneActivity : SamplesActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -21,11 +21,11 @@ import carbon.component.PaddingRow;
 import carbon.drawable.VectorDrawable;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_register, title = R.string.registerActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_register, titleId = R.string.registerActivity_title)
 public class RegisterActivity extends ThemedActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

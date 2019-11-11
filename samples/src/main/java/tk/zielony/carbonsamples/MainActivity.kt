@@ -8,7 +8,7 @@ import carbon.component.DividerItem
 import carbon.component.PaddingItem
 import kotlinx.android.synthetic.main.activity_main.*
 
-@ActivityAnnotation(layout = R.layout.activity_main)
+@SampleAnnotation(layoutId = R.layout.activity_main)
 class MainActivity : SampleListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

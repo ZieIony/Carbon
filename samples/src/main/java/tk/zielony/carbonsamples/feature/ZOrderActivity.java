@@ -5,11 +5,11 @@ import android.widget.FrameLayout;
 
 import carbon.view.ShadowView;
 import carbon.widget.Button;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_zorder, title = R.string.zOrderActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_zorder, titleId = R.string.zOrderActivity_title)
 public class ZOrderActivity extends ThemedActivity {
     boolean flag = false;
 

@@ -7,7 +7,7 @@ import tk.zielony.carbonsamples.dialog.ProgressDialogActivity
 import tk.zielony.carbonsamples.dialog.SelectDialogActivity
 import tk.zielony.carbonsamples.dialog.SimpleDialogActivity
 
-@ActivityAnnotation(title = R.string.dialogsActivity_title, layout = R.layout.activity_samplelist)
+@SampleAnnotation(titleId = R.string.dialogsActivity_title, layoutId = R.layout.activity_samplelist)
 class DialogsActivity : SampleListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

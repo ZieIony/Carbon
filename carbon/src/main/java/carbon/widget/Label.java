@@ -62,11 +62,6 @@ public class Label extends View implements TextAppearanceView {
     }
 
     public void initLabel(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        if (attrs == null) {
-            setTextColor(null);
-            return;
-        }
-
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Label, defStyleAttr, defStyleRes);
 
         int ap = a.getResourceId(R.styleable.Label_android_textAppearance, -1);

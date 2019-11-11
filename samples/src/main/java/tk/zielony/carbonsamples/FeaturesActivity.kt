@@ -5,7 +5,7 @@ import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.feature.*
 import tk.zielony.carbonsamples.widget.SVGActivity
 
-@ActivityAnnotation(title = R.string.featuresActivity_title, layout = R.layout.activity_samplelist)
+@SampleAnnotation(titleId = R.string.featuresActivity_title, layoutId = R.layout.activity_samplelist)
 class FeaturesActivity : SampleListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

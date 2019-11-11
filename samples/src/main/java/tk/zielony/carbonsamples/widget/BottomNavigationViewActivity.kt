@@ -4,15 +4,15 @@ import android.os.Bundle
 import carbon.drawable.ColorStateListFactory
 import carbon.widget.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_bottomnavigationview.*
-import tk.zielony.carbonsamples.ActivityAnnotation
 import tk.zielony.carbonsamples.R
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.ThemedActivity
 
 class BadgeItem : BottomNavigationView.Item() {
     var notificationCount: Int = 0
 }
 
-@ActivityAnnotation(layout = R.layout.activity_bottomnavigationview, title = R.string.bottomNavigationViewActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_bottomnavigationview, titleId = R.string.bottomNavigationViewActivity_title)
 class BottomNavigationViewActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

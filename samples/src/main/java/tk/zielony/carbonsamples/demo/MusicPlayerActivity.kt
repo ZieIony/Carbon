@@ -6,15 +6,15 @@ import carbon.component.DataBindingComponent
 import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import kotlinx.android.synthetic.main.activity_musicplayer.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 import java.io.Serializable
 
-@ActivityAnnotation(
-        layout = R.layout.activity_musicplayer,
-        title = R.string.musicPlayerActivity_title,
-        icon = R.drawable.ic_play_arrow_black_24dp
+@SampleAnnotation(
+        layoutId = R.layout.activity_musicplayer,
+        titleId = R.string.musicPlayerActivity_title,
+        iconId = R.drawable.ic_play_arrow_black_24dp
 )
 class MusicPlayerActivity : ThemedActivity() {
 

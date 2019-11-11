@@ -2,16 +2,16 @@ package tk.zielony.carbonsamples.feature
 
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_xmlfont.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.CodeActivity
 
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 
-@ActivityAnnotation(
-        layout = R.layout.activity_xmlfont,
-        title = R.string.xmlFontActivity_title,
-        icon = R.drawable.ic_font_download_black_24dp
+@SampleAnnotation(
+        layoutId = R.layout.activity_xmlfont,
+        titleId = R.string.xmlFontActivity_title,
+        iconId = R.drawable.ic_font_download_black_24dp
 )
 class XmlFontActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

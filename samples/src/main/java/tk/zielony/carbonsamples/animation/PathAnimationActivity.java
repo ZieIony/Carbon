@@ -13,12 +13,12 @@ import carbon.internal.MathUtils;
 import carbon.internal.NURBS;
 import carbon.widget.ImageView;
 import carbon.widget.LinearLayout;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
 
-@ActivityAnnotation(layout = R.layout.activity_pathanimation, title = R.string.pathAnimationActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_pathanimation, titleId = R.string.pathAnimationActivity_title)
 public class PathAnimationActivity extends ThemedActivity {
 
     boolean expanded = false;

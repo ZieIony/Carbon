@@ -11,14 +11,14 @@ import java.util.List;
 
 import carbon.recycler.ItemTouchHelper;
 import carbon.widget.RecyclerView;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(
-        layout = R.layout.activity_recycler,
-        title = R.string.recyclerViewActivity_title,
-        icon = R.drawable.ic_view_stream_black_24dp
+@SampleAnnotation(
+        layoutId = R.layout.activity_recycler,
+        titleId = R.string.recyclerViewActivity_title,
+        iconId = R.drawable.ic_view_stream_black_24dp
 )
 public class RecyclerActivity extends ThemedActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));

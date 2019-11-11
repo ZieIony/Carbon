@@ -9,15 +9,15 @@ import android.widget.Toast;
 import carbon.Carbon;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.FloatingActionMenu;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.ColorsActivity;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(
-        layout = R.layout.activity_fab,
-        title = R.string.fabActivity_title,
-        icon = R.drawable.ic_add_circle_black_24dp
+@SampleAnnotation(
+        layoutId = R.layout.activity_fab,
+        titleId = R.string.fabActivity_title,
+        iconId = R.drawable.ic_add_circle_black_24dp
 )
 public class FABActivity extends ThemedActivity {
     @Override

@@ -23,7 +23,7 @@ import carbon.widget.FrameLayout;
 import carbon.widget.ListSearchAdapter;
 import carbon.widget.RecyclerView;
 import carbon.widget.SearchEditText;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.Generator;
@@ -31,10 +31,10 @@ import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
-@ActivityAnnotation(
-        layout = R.layout.activity_searchtoolbar,
-        title = R.string.searchToolbarActivity_title,
-        icon = R.drawable.carbon_search
+@SampleAnnotation(
+        layoutId = R.layout.activity_searchtoolbar,
+        titleId = R.string.searchToolbarActivity_title,
+        iconId = R.drawable.carbon_search
 )
 public class SearchToolbarActivity extends ThemedActivity {
 

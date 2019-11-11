@@ -14,11 +14,11 @@ import java.util.List;
 import carbon.component.TextRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 
-@ActivityAnnotation(layout = R.layout.activity_pagination, title = R.string.paginationActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_pagination, titleId = R.string.paginationActivity_title)
 public class PaginationActivity extends ThemedActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
     RowListAdapter<String> fruitAdapter;

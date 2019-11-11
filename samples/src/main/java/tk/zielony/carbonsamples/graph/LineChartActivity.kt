@@ -3,7 +3,7 @@ package tk.zielony.carbonsamples.graph
 import android.os.Bundle
 import carbon.beta.ChartView
 import kotlinx.android.synthetic.main.activity_barchart.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 import tk.zielony.randomdata.RandomData
@@ -11,7 +11,7 @@ import tk.zielony.randomdata.common.FloatGenerator
 import tk.zielony.randomdata.food.StringFruitGenerator
 
 
-@ActivityAnnotation(layout = R.layout.activity_linechart, title = R.string.lineChartActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_linechart, titleId = R.string.lineChartActivity_title)
 class LineChartActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

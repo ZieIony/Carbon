@@ -6,7 +6,7 @@ import tk.zielony.carbonsamples.feature.ThemeActivity
 import tk.zielony.carbonsamples.themes.CurrentThemeActivity
 import tk.zielony.carbonsamples.themes.WindowsThemeActivity
 
-@ActivityAnnotation(title = R.string.themesActivity_title, layout = R.layout.activity_samplelist)
+@SampleAnnotation(titleId = R.string.themesActivity_title, layoutId = R.layout.activity_samplelist)
 class ThemesActivity : SampleListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -49,6 +49,7 @@ import carbon.drawable.ripple.RippleView;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InsetView;
 import carbon.view.MaxSizeView;
+import carbon.view.RevealView;
 import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
@@ -57,8 +58,6 @@ import carbon.view.TextAppearanceView;
 import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
 import carbon.widget.AutoSizeTextMode;
-
-import static carbon.view.RevealView.MAX_RADIUS;
 
 public class Carbon {
     private static final long DEFAULT_REVEAL_DURATION = 200;
@@ -514,7 +513,7 @@ public class Carbon {
     public static float getRevealRadius(View view, int x, int y, float radius) {
         if (radius >= 0)
             return radius;
-        if (radius != MAX_RADIUS)
+        if (radius != RevealView.MAX_RADIUS)
             throw new InvalidParameterException("radius should be RevealView.MAX_RADIUS, 0.0f or a positive float");
         int w = Math.max(view.getWidth() - x, x);
         int h = Math.max(view.getHeight() - y, y);

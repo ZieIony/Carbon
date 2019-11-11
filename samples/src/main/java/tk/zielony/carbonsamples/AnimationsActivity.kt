@@ -7,7 +7,7 @@ import tk.zielony.carbonsamples.animation.PathAnimationActivity
 import tk.zielony.carbonsamples.animation.RippleActivity
 import tk.zielony.carbonsamples.animation.WidgetAnimationsActivity
 
-@ActivityAnnotation(title = R.string.animationsActivity_title, layout = R.layout.activity_samplelist)
+@SampleAnnotation(titleId = R.string.animationsActivity_title, layoutId = R.layout.activity_samplelist)
 class AnimationsActivity : SampleListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

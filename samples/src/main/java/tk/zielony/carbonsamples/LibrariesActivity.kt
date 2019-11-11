@@ -5,7 +5,7 @@ import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.library.ConstraintLayoutActivity
 import tk.zielony.carbonsamples.library.PicassoActivity
 
-@ActivityAnnotation(title = R.string.librariesActivity_title, layout = R.layout.activity_samplelist)
+@SampleAnnotation(titleId = R.string.librariesActivity_title, layoutId = R.layout.activity_samplelist)
 class LibrariesActivity : SampleListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

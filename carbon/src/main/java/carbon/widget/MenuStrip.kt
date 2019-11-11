@@ -152,11 +152,11 @@ open class MenuStrip : RecyclerView {
         initMenuStrip(null, R.attr.carbon_menuStripStyle)
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs, R.attr.carbon_menuStripStyle) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs, R.attr.carbon_menuStripStyle) {
         initMenuStrip(attrs, R.attr.carbon_menuStripStyle)
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initMenuStrip(attrs, defStyleAttr)
     }
 

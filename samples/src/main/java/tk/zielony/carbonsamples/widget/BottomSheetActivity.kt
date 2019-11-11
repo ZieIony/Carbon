@@ -4,11 +4,11 @@ import android.os.Bundle
 import carbon.beta.BottomSheetLayout
 import carbon.widget.DropDown
 import kotlinx.android.synthetic.main.activity_bottomsheet.*
-import tk.zielony.carbonsamples.ActivityAnnotation
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.ThemedActivity
 
-@ActivityAnnotation(layout = R.layout.activity_bottomsheet, title = R.string.bottomSheetActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_bottomsheet, titleId = R.string.bottomSheetActivity_title)
 class BottomSheetActivity : ThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

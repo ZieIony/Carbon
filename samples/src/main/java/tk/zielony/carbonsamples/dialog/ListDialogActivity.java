@@ -12,7 +12,7 @@ import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
 import carbon.dialog.ListDialog;
 import carbon.widget.EditText;
-import tk.zielony.carbonsamples.ActivityAnnotation;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.randomdata.Generator;
@@ -22,7 +22,7 @@ import tk.zielony.randomdata.common.StringDateGenerator;
 import tk.zielony.randomdata.common.TextGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
 
-@ActivityAnnotation(layout = R.layout.activity_listdialog, title = R.string.listDialogActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_listdialog, titleId = R.string.listDialogActivity_title)
 public class ListDialogActivity extends ThemedActivity {
 
     @Override

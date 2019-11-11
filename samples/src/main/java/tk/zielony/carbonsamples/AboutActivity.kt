@@ -5,7 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_about.*
 
-@ActivityAnnotation(layout = R.layout.activity_about, title = R.string.aboutActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_about, titleId = R.string.aboutActivity_title)
 class AboutActivity : ThemedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
