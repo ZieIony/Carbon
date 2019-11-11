@@ -21,11 +21,14 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -49,6 +52,7 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
+import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -216,6 +220,7 @@ public class Button extends android.widget.Button
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
         Carbon.initAutoSizeText(this, a, autoSizeTextIds);
+        setTooltipText(a.getText(R.styleable.Button_carbon_tooltipText));
 
         a.recycle();
     }
@@ -1470,5 +1475,25 @@ public class Button extends android.widget.Button
         setSize(width, height);
         setTranslationX(x);
         setTranslationY(y);
+    }
+
+
+    // -------------------------------
+    // tooltip
+    // -------------------------------
+
+    public void setTooltipText(CharSequence text) {
+        if (text != null) {
+            setOnLongClickListener(v -> {
+                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                tooltip.setText(text);
+                PopupWindow window = new PopupWindow(tooltip);
+                window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                new Handler(Looper.getMainLooper()).postDelayed(window::dismiss, AnimUtils.TOOLTIP_DURATION);
+                return true;
+            });
+        } else if (isLongClickable()) {
+            setOnLongClickListener(null);
+        }
     }
 }

@@ -280,10 +280,12 @@
         <item name="android:paddingLeft">@dimen/carbon_tooltipPadding</item>
         <item name="android:paddingRight">@dimen/carbon_tooltipPadding</item>
         <item name="android:background">@color/carbon_tooltip</item>
-        <item name="android:textColor">@color/carbon_defaultTextPrimaryColorInverse</item>
+        <item name="android:textColor">@color/carbon_textColorPrimary_dark</item>
         <item name="android:textSize">@dimen/carbon_tooltipTextSize</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="carbon_elevation">@dimen/carbon_elevationTooltip</item>
+        <item name="carbon_inAnimation">pop</item>
+        <item name="carbon_outAnimation">fade</item>
     </style>
 
     <style name="carbon_AutoCompleteLayout" parent="carbon_LinearLayout">

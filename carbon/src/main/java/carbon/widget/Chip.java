@@ -6,7 +6,10 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewDebug;
@@ -14,6 +17,7 @@ import android.widget.Checkable;
 
 import carbon.Carbon;
 import carbon.R;
+import carbon.animation.AnimUtils;
 
 public class Chip extends LinearLayout implements Checkable {
 
@@ -89,6 +93,7 @@ public class Chip extends LinearLayout implements Checkable {
         setIcon(Carbon.getDrawable(this, a, R.styleable.Chip_carbon_icon, 0));
         setRemovable(a.getBoolean(R.styleable.Chip_carbon_removable, false));
         setChecked(a.getBoolean(R.styleable.Chip_android_checked, false));
+        setTooltipText(a.getText(R.styleable.Chip_carbon_tooltipText));
 
         a.recycle();
     }
@@ -211,4 +216,23 @@ public class Chip extends LinearLayout implements Checkable {
         this.onRemoveListener = onRemoveListener;
     }
 
+
+    // -------------------------------
+    // tooltip
+    // -------------------------------
+
+    public void setTooltipText(CharSequence text) {
+        if (text != null) {
+            setOnLongClickListener(v -> {
+                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                tooltip.setText(text);
+                PopupWindow window = new PopupWindow(tooltip);
+                window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                new Handler(Looper.getMainLooper()).postDelayed(window::dismiss, AnimUtils.TOOLTIP_DURATION);
+                return true;
+            });
+        } else if (isLongClickable()) {
+            setOnLongClickListener(null);
+        }
+    }
 }

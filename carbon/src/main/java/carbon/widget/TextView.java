@@ -21,6 +21,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.DynamicLayout;
 import android.text.Layout;
 import android.text.Spannable;
@@ -29,6 +31,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -55,13 +58,14 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
+import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.view.AllCapsTransformationMethod;
 import carbon.internal.RevealAnimator;
+import carbon.view.AllCapsTransformationMethod;
 import carbon.view.AutoSizeTextView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
@@ -135,29 +139,29 @@ public class TextView extends android.widget.TextView
 
     public TextView(Context context) {
         super(CarbonContextWrapper.wrap(context));
-        initTextView(null, android.R.attr.textViewStyle);
+        initTextView(null, android.R.attr.textViewStyle, R.style.carbon_TextView);
     }
 
     public TextView(Context context, String text) {
         super(CarbonContextWrapper.wrap(context));
-        initTextView(null, android.R.attr.textViewStyle);
+        initTextView(null, android.R.attr.textViewStyle, R.style.carbon_TextView);
         setText(text);
     }
 
     public TextView(Context context, AttributeSet attrs) {
         super(CarbonContextWrapper.wrap(context), attrs);
-        initTextView(attrs, android.R.attr.textViewStyle);
+        initTextView(attrs, android.R.attr.textViewStyle, R.style.carbon_TextView);
     }
 
     public TextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
-        initTextView(attrs, defStyleAttr);
+        initTextView(attrs, defStyleAttr, R.style.carbon_TextView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
-        initTextView(attrs, defStyleAttr);
+        initTextView(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -217,8 +221,8 @@ public class TextView extends android.widget.TextView
             R.styleable.TextView_carbon_autoSizeStepGranularity
     };
 
-    private void initTextView(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, R.style.carbon_TextView);
+    private void initTextView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, defStyleRes);
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
         if (ap != -1)
@@ -253,6 +257,7 @@ public class TextView extends android.widget.TextView
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
         Carbon.initAutoSizeText(this, a, autoSizeTextIds);
+        setTooltipText(a.getText(R.styleable.TextView_carbon_tooltipText));
 
         a.recycle();
 
@@ -1607,5 +1612,25 @@ public class TextView extends android.widget.TextView
         setSize(width, height);
         setTranslationX(x);
         setTranslationY(y);
+    }
+
+
+    // -------------------------------
+    // tooltip
+    // -------------------------------
+
+    public void setTooltipText(CharSequence text) {
+        if (text != null) {
+            setOnLongClickListener(v -> {
+                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                tooltip.setText(text);
+                PopupWindow window = new PopupWindow(tooltip);
+                window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                new Handler(Looper.getMainLooper()).postDelayed(window::dismiss, AnimUtils.TOOLTIP_DURATION);
+                return true;
+            });
+        } else if (isLongClickable()) {
+            setOnLongClickListener(null);
+        }
     }
 }

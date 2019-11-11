@@ -22,7 +22,10 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -172,6 +175,7 @@ public class ImageView extends android.widget.ImageView
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
         AnimUtils.setupSaturationAnimator(stateAnimator, this);
+        setTooltipText(a.getText(R.styleable.ImageView_carbon_tooltipText));
 
         a.recycle();
     }
@@ -1205,5 +1209,25 @@ public class ImageView extends android.widget.ImageView
         setSize(width, height);
         setTranslationX(x);
         setTranslationY(y);
+    }
+
+
+    // -------------------------------
+    // tooltip
+    // -------------------------------
+
+    public void setTooltipText(CharSequence text) {
+        if (text != null) {
+            setOnLongClickListener(v -> {
+                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                tooltip.setText(text);
+                PopupWindow window = new PopupWindow(tooltip);
+                window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                new Handler(Looper.getMainLooper()).postDelayed(window::dismiss, AnimUtils.TOOLTIP_DURATION);
+                return true;
+            });
+        } else if (isLongClickable()) {
+            setOnLongClickListener(null);
+        }
     }
 }

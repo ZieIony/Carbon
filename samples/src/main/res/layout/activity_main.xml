@@ -15,12 +15,14 @@
         <carbon.widget.ImageView
             android:id="@+id/colors"
             style="@style/carbon_ImageView.IconButton"
-            app:carbon_src="@drawable/ic_color_lens_black_24dp" />
+            app:carbon_src="@drawable/ic_color_lens_black_24dp"
+            app:carbon_tooltipText="Change theme" />
 
         <carbon.widget.ImageView
             android:id="@+id/about"
             style="@style/carbon_ImageView.IconButton"
-            app:carbon_src="@drawable/ic_help_outline_black_24dp" />
+            app:carbon_src="@drawable/ic_help_outline_black_24dp"
+            app:carbon_tooltipText="About" />
     </carbon.widget.Toolbar>
 
     <carbon.widget.RecyclerView

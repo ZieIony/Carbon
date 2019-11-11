@@ -170,6 +170,8 @@
     <attr name="carbon_menuSelectionRadius" format="dimension" />
     <attr name="carbon_menuSelectionInset" format="dimension" />
 
+    <attr name="carbon_tooltipText" format="string" />
+
 
     <!-- Component -->
     <declare-styleable name="ComponentView">
@@ -236,6 +238,8 @@
 
         <attr name="carbon_stroke" />
         <attr name="carbon_strokeWidth" />
+
+        <attr name="carbon_tooltipText" />
     </declare-styleable>
 
     <attr name="carbon_labelStyle" />
@@ -311,6 +315,8 @@
         <attr name="carbon_autoSizeMinTextSize" />
         <attr name="carbon_autoSizeMaxTextSize" />
         <attr name="carbon_autoSizeStepGranularity" />
+
+        <attr name="carbon_tooltipText" />
     </declare-styleable>
 
 
@@ -376,6 +382,8 @@
         <attr name="carbon_autoSizeMinTextSize" />
         <attr name="carbon_autoSizeMaxTextSize" />
         <attr name="carbon_autoSizeStepGranularity" />
+
+        <attr name="carbon_tooltipText" />
     </declare-styleable>
 
     <!-- TextMarker -->
@@ -953,6 +961,7 @@
         <attr name="carbon_icon" />
         <attr name="carbon_removable" format="boolean" />
         <attr name="android:checked" />
+        <attr name="carbon_tooltipText" />
     </declare-styleable>
 
     <attr name="carbon_bottomNavigationViewStyle" format="reference" />
@@ -1009,6 +1018,8 @@
 
         <attr name="carbon_stroke" />
         <attr name="carbon_strokeWidth" />
+
+        <attr name="carbon_tooltipText" />
     </declare-styleable>
 
     <attr name="carbon_dividerStyle" format="reference" />
@@ -1141,6 +1152,8 @@
         <attr name="carbon_autoSizeMinTextSize" />
         <attr name="carbon_autoSizeMaxTextSize" />
         <attr name="carbon_autoSizeStepGranularity" />
+
+        <attr name="carbon_tooltipText" />
     </declare-styleable>
 
     <!-- SearchEditText -->
@@ -1339,6 +1352,7 @@
         <attr name="carbon_gridDensity" format="dimension" />
         <attr name="carbon_gridColor" format="color" />
         <attr name="carbon_gridThickness" format="dimension" />
+        <attr name="carbon_tooltipText" />
     </declare-styleable>
 
     <attr name="carbon_menuStripStyle" format="reference" />

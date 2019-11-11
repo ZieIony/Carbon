@@ -23,6 +23,10 @@ import carbon.view.ShadowView;
 import carbon.widget.ProgressBar;
 
 public class AnimUtils {
+    public static final long TOOLTIP_DURATION = 3000;
+    private static final int SHORT_ANIMATION_DURATION = 150;
+    private static final int LONG_ANIMATION_DURATION = 500;
+    
     private AnimUtils() {
     }
 
@@ -66,7 +70,7 @@ public class AnimUtils {
                 view.setAlpha(0);
             float start = view.getAlpha();
             animator.setFloatValues(start, 1);
-            animator.setDuration((long) (200 * (1 - start)));
+            animator.setDuration((long) (SHORT_ANIMATION_DURATION * (1 - start)));
         });
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
@@ -82,7 +86,7 @@ public class AnimUtils {
             View view = animator.getTarget();
             float start = view.getAlpha();
             animator.setFloatValues(start, 0);
-            animator.setDuration((long) (200 * start));
+            animator.setDuration((long) (SHORT_ANIMATION_DURATION * start));
         });
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
@@ -100,7 +104,7 @@ public class AnimUtils {
                 view.setAlpha(0);
             float start = view.getAlpha();
             animator.setFloatValues(start, 1);
-            animator.setDuration((long) (200 * (1 - start)));
+            animator.setDuration((long) (SHORT_ANIMATION_DURATION * (1 - start)));
         });
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
@@ -118,7 +122,7 @@ public class AnimUtils {
             View view = animator.getTarget();
             float start = view.getAlpha();
             animator.setFloatValues(start, 0);
-            animator.setDuration((long) (200 * start));
+            animator.setDuration((long) (SHORT_ANIMATION_DURATION * start));
         });
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
@@ -138,7 +142,7 @@ public class AnimUtils {
                 view.setAlpha(0);
             float start = view.getAlpha();
             animator.setFloatValues(start, 1);
-            animator.setDuration((long) (200 * (1 - start)));
+            animator.setDuration((long) (SHORT_ANIMATION_DURATION * (1 - start)));
         });
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
@@ -155,7 +159,7 @@ public class AnimUtils {
             View view = animator.getTarget();
             float start = view.getAlpha();
             animator.setFloatValues(start, 0);
-            animator.setDuration((long) (200 * start));
+            animator.setDuration((long) (SHORT_ANIMATION_DURATION * start));
         });
         animator.addUpdateListener(valueAnimator -> {
             View view = animator.getTarget();
@@ -175,7 +179,7 @@ public class AnimUtils {
             ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
             if (layoutParams != null && layoutParams instanceof ViewGroup.MarginLayoutParams)
                 height += ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
-            long duration = (long) (200 * Math.abs(view.getTranslationY() / height));
+            long duration = (long) (SHORT_ANIMATION_DURATION * Math.abs(view.getTranslationY() / height));
             animator.setDuration(duration);
         });
         animator.addUpdateListener(valueAnimator -> {
@@ -200,7 +204,7 @@ public class AnimUtils {
             if (layoutParams != null && layoutParams instanceof ViewGroup.MarginLayoutParams)
                 height += top ? ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin : ((ViewGroup.MarginLayoutParams) layoutParams).topMargin;
             animator.setFloatValues(view.getTranslationY(), top ? height : -height);
-            long duration = (long) (200 * (1 - Math.abs(view.getTranslationY() / height)));
+            long duration = (long) (SHORT_ANIMATION_DURATION * (1 - Math.abs(view.getTranslationY() / height)));
             animator.setDuration(duration);
         });
         animator.addUpdateListener(valueAnimator -> {
@@ -255,7 +259,7 @@ public class AnimUtils {
         animator.setInterpolator(interpolator);
         animator.setOnSetupValuesListener(() -> {
             animator.setFloatValues(0, 1);  // TODO: start values
-            animator.setDuration(800);
+            animator.setDuration(LONG_ANIMATION_DURATION);
         });
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             ColorMatrix saturationMatrix = new ColorMatrix();
@@ -285,7 +289,7 @@ public class AnimUtils {
         animator.setInterpolator(interpolator);
         animator.setOnSetupValuesListener(() -> {
             animator.setFloatValues(1, 0);
-            animator.setDuration(800);
+            animator.setDuration(LONG_ANIMATION_DURATION);
         });
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             ColorMatrix saturationMatrix = new ColorMatrix();
@@ -320,7 +324,7 @@ public class AnimUtils {
     public static void setupElevationAnimator(StateAnimator stateAnimator, final ShadowView view) {
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
-            animator.setDuration(200);
+            animator.setDuration(SHORT_ANIMATION_DURATION);
             animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
@@ -333,7 +337,7 @@ public class AnimUtils {
         }
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
-            animator.setDuration(200);
+            animator.setDuration(SHORT_ANIMATION_DURATION);
             animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
@@ -346,7 +350,7 @@ public class AnimUtils {
         }
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
-            animator.setDuration(200);
+            animator.setDuration(SHORT_ANIMATION_DURATION);
             animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
@@ -359,7 +363,7 @@ public class AnimUtils {
         }
         {
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 0);
-            animator.setDuration(200);
+            animator.setDuration(SHORT_ANIMATION_DURATION);
             animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
                 @Override
@@ -377,7 +381,7 @@ public class AnimUtils {
             ColorMatrix matrix = new ColorMatrix();
 
             final ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-            animator.setDuration(200);
+            animator.setDuration(SHORT_ANIMATION_DURATION);
             animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
             };
@@ -391,7 +395,7 @@ public class AnimUtils {
             ColorMatrix matrix = new ColorMatrix();
 
             final ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
-            animator.setDuration(200);
+            animator.setDuration(SHORT_ANIMATION_DURATION);
             animator.setInterpolator(new FastOutSlowInInterpolator());
             Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
             };

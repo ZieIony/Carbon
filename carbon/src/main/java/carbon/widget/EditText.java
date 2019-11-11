@@ -23,6 +23,8 @@ import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -58,6 +60,7 @@ import java.util.regex.Pattern;
 import carbon.Carbon;
 import carbon.CarbonContextWrapper;
 import carbon.R;
+import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -251,6 +254,7 @@ public class EditText extends android.widget.EditText
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
         Carbon.initAutoSizeText(this, a, autoSizeTextIds);
+        setTooltipText(a.getText(R.styleable.EditText_carbon_tooltipText));
 
         if (a.getResourceId(R.styleable.EditText_android_background, 0) == R.color.carbon_colorUnderline) {
             float underlineWidth = getResources().getDimensionPixelSize(R.dimen.carbon_1dip);
@@ -1835,5 +1839,25 @@ public class EditText extends android.widget.EditText
         setSize(width, height);
         setTranslationX(x);
         setTranslationY(y);
+    }
+
+
+    // -------------------------------
+    // tooltip
+    // -------------------------------
+
+    public void setTooltipText(CharSequence text) {
+        if (text != null) {
+            setOnLongClickListener(v -> {
+                carbon.widget.TextView tooltip = new carbon.widget.TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                tooltip.setText(text);
+                carbon.widget.PopupWindow window = new carbon.widget.PopupWindow(tooltip);
+                window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                new Handler(Looper.getMainLooper()).postDelayed(window::dismiss, AnimUtils.TOOLTIP_DURATION);
+                return true;
+            });
+        } else if (isLongClickable()) {
+            setOnLongClickListener(null);
+        }
     }
 }

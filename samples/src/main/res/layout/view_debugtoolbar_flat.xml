@@ -12,10 +12,12 @@
     <carbon.widget.ImageView
         android:id="@+id/debug"
         style="@style/carbon_ImageView.IconButton"
-        app:carbon_src="@drawable/ic_bug_report_black_24dp" />
+        app:carbon_src="@drawable/ic_bug_report_black_24dp"
+        app:carbon_tooltipText="Show debug options" />
 
     <carbon.widget.CheckBox
         android:id="@+id/enabled"
         style="@style/carbon_CheckBox.IconButton"
-        android:checked="true" />
+        android:checked="true"
+        app:carbon_tooltipText="Enable/disable views" />
 </carbon.widget.Toolbar>
