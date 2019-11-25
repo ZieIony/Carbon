@@ -43,7 +43,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -91,17 +90,17 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
     private OnTouchListener onDispatchTouchListener;
 
     public GridLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_gridLayoutStyle);
+        super(context, null, R.attr.carbon_gridLayoutStyle);
         initGridLayout(null, R.attr.carbon_gridLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_gridLayoutStyle);
+        super(context, attrs, R.attr.carbon_gridLayoutStyle);
         initGridLayout(attrs, R.attr.carbon_gridLayoutStyle);
     }
 
     public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initGridLayout(attrs, defStyleAttr);
     }
 

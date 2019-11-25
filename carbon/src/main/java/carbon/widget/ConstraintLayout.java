@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -88,17 +87,17 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
     private OnTouchListener onDispatchTouchListener;
 
     public ConstraintLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_constraintLayoutStyle);
+        super(context, null, R.attr.carbon_constraintLayoutStyle);
         initConstraintLayout(null, R.attr.carbon_constraintLayoutStyle);
     }
 
     public ConstraintLayout(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_constraintLayoutStyle);
+        super(context, attrs, R.attr.carbon_constraintLayoutStyle);
         initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle);
     }
 
     public ConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle);
     }
 

@@ -1,5 +1,6 @@
 package tk.zielony.carbonsamples.feature;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,11 +17,10 @@ import carbon.component.DefaultAvatarTextItem;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
 import carbon.widget.RelativeLayout;
-import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.ThemedActivity;
 import tk.zielony.landscapeview.LandscapeView;
-import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
@@ -38,10 +38,8 @@ public class BehaviorActivity extends ThemedActivity {
         List<DefaultAvatarTextItem> items = Stream.generate(DefaultAvatarTextItem::new).limit(10).collect(Collectors.toList());
 
         RandomData randomData = new RandomData();
-        randomData.addGenerators(new Generator[]{
-                new DrawableAvatarGenerator(this),
-                new StringNameGenerator().withMatcher(f -> f.getName().equals("text"))
-        });
+        randomData.addGenerator(Drawable.class, new DrawableAvatarGenerator(this));
+        randomData.addGenerator(String.class, new StringNameGenerator().withMatcher(f -> f.getName().equals("text")));
         randomData.fill(items);
 
         adapter.setItems(items);

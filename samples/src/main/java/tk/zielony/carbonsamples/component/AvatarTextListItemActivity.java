@@ -1,5 +1,6 @@
 package tk.zielony.carbonsamples.component;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -17,10 +18,9 @@ import carbon.component.PaddingItem;
 import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.RecyclerView;
-import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.ThemedActivity;
-import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
@@ -62,10 +62,8 @@ public class AvatarTextListItemActivity extends ThemedActivity {
                 new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
 
         RandomData randomData = new RandomData();
-        randomData.addGenerators(new Generator[]{
-                new DrawableAvatarGenerator(this),
-                new StringNameGenerator().withMatcher(f -> f.getName().equals("text"))
-        });
+        randomData.addGenerator(Drawable.class, new DrawableAvatarGenerator(this));
+        randomData.addGenerator(String.class, new StringNameGenerator().withMatcher(f -> f.getName().equals("text")));
         randomData.fill(items);
 
         RecyclerView recycler = findViewById(R.id.recycler);

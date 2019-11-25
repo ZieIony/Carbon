@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -93,23 +92,23 @@ public class RelativeLayout extends android.widget.RelativeLayout
     private OnTouchListener onDispatchTouchListener;
 
     public RelativeLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_relativeLayoutStyle);
+        super(context, null, R.attr.carbon_relativeLayoutStyle);
         initRelativeLayout(null, R.attr.carbon_relativeLayoutStyle);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_relativeLayoutStyle);
+        super(context, attrs, R.attr.carbon_relativeLayoutStyle);
         initRelativeLayout(attrs, R.attr.carbon_relativeLayoutStyle);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initRelativeLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initRelativeLayout(attrs, defStyleAttr);
     }
 

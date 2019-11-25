@@ -33,6 +33,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -58,7 +59,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
@@ -67,9 +67,8 @@ import carbon.animation.StateAnimator;
 import carbon.drawable.UnderlineDrawable;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.view.AllCapsTransformationMethod;
 import carbon.internal.RevealAnimator;
-import carbon.view.SimpleTextWatcher;
+import carbon.view.AllCapsTransformationMethod;
 import carbon.view.AutoSizeTextView;
 import carbon.view.InputView;
 import carbon.view.MarginView;
@@ -77,6 +76,7 @@ import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
 import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
+import carbon.view.SimpleTextWatcher;
 import carbon.view.StateAnimatorView;
 import carbon.view.StrokeView;
 import carbon.view.TextAppearanceView;
@@ -130,23 +130,23 @@ public class EditText extends android.widget.EditText
     private boolean clearFocusOnTouchOutside = false;
 
     public EditText(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initEditText(null, android.R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initEditText(attrs, android.R.attr.editTextStyle);
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initEditText(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public EditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initEditText(attrs, defStyleAttr);
     }
 
@@ -718,8 +718,6 @@ public class EditText extends android.widget.EditText
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
-        if (animateColorChanges)
-            drawableStateChanged();
         super.draw(canvas);
         if (prefixLayout != null) {
             canvas.translate(getPaddingLeft() - prefixPadding - prefixTextPadding, 0);
@@ -1376,7 +1374,7 @@ public class EditText extends android.widget.EditText
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -1423,13 +1421,12 @@ public class EditText extends android.widget.EditText
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
-        if (!(getTextColors() instanceof AnimatedColorStateList))
-            setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
+        setTextColor(getTextColors());
     }
 
 
@@ -1849,7 +1846,7 @@ public class EditText extends android.widget.EditText
     public void setTooltipText(CharSequence text) {
         if (text != null) {
             setOnLongClickListener(v -> {
-                carbon.widget.TextView tooltip = new carbon.widget.TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                Label tooltip = (Label) LayoutInflater.from(getContext()).inflate(R.layout.carbon_tooltip, null);
                 tooltip.setText(text);
                 carbon.widget.PopupWindow window = new carbon.widget.PopupWindow(tooltip);
                 window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);

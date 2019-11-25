@@ -26,11 +26,11 @@ import android.os.Looper;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.widget.Toast;
 
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
@@ -55,9 +54,9 @@ import carbon.animation.StateAnimator;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.RevealAnimator;
+import carbon.widget.Label;
 import carbon.widget.OnTransformationChangedListener;
 import carbon.widget.PopupWindow;
-import carbon.widget.TextView;
 
 /**
  * Basic View class for making views from scratch
@@ -81,23 +80,23 @@ public abstract class View extends android.view.View
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public View(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initView(null, 0);
     }
 
     public View(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initView(attrs, 0);
     }
 
     public View(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public View(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initView(attrs, defStyleAttr);
     }
 
@@ -888,7 +887,7 @@ public abstract class View extends android.view.View
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -935,11 +934,11 @@ public abstract class View extends android.view.View
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
     }
 
 
@@ -1173,7 +1172,7 @@ public abstract class View extends android.view.View
     public void setTooltipText(CharSequence text) {
         if (text != null) {
             setOnLongClickListener(v -> {
-                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                Label tooltip = (Label) LayoutInflater.from(getContext()).inflate(R.layout.carbon_tooltip, null);
                 tooltip.setText(text);
                 PopupWindow window = new PopupWindow(tooltip);
                 window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);

@@ -42,7 +42,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -90,23 +89,23 @@ public class LinearLayout extends android.widget.LinearLayout
     private OnTouchListener onDispatchTouchListener;
 
     public LinearLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_linearLayoutStyle);
+        super(context, null, R.attr.carbon_linearLayoutStyle);
         initLinearLayout(null, R.attr.carbon_linearLayoutStyle);
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_linearLayoutStyle);
+        super(context, attrs, R.attr.carbon_linearLayoutStyle);
         initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle);
     }
 
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initLinearLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initLinearLayout(attrs, defStyleAttr);
     }
 

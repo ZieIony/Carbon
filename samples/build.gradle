@@ -39,14 +39,16 @@ dependencies {
     implementation project(':rxcarbon')
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.annimon:stream:1.2.1'
+    implementation "androidx.vectordrawable:vectordrawable:1.1.0"
+    implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.1.0-beta01'
-    implementation 'com.github.ZieIony:randomdata:4e90951628'
-    compileOnly 'com.github.ZieIony.RandomData:person:4e90951628'
+    implementation 'com.github.ZieIony:randomdata:0b65680d4c'
+    compileOnly 'com.github.ZieIony.RandomData:person:0b65680d4c'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'

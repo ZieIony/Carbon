@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -83,17 +82,17 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
     private OnTouchListener onDispatchTouchListener;
 
     public CoordinatorLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initCoordinatorLayout(null, R.attr.carbon_coordinatorLayoutStyle);
     }
 
     public CoordinatorLayout(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initCoordinatorLayout(attrs, R.attr.carbon_coordinatorLayoutStyle);
     }
 
     public CoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initCoordinatorLayout(attrs, defStyleAttr);
     }
 

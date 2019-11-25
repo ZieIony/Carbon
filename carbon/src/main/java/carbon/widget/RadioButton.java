@@ -58,7 +58,7 @@ public class RadioButton extends TextView implements Checkable {
     public void initRadioButton(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, defStyleRes);
 
-        setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.RadioButton_android_button, R.drawable.carbon_radiobutton));
+        setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.RadioButton_android_button, R.drawable.carbon_radio_anim));
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

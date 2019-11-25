@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.animation.AnimatedView;
@@ -118,17 +117,17 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
     private OnTouchListener onDispatchTouchListener;
 
     public RecyclerView(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_recyclerViewStyle);
+        super(context, null, R.attr.carbon_recyclerViewStyle);
         initRecycler(null, R.attr.carbon_recyclerViewStyle);
     }
 
     public RecyclerView(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_recyclerViewStyle);
+        super(context, attrs, R.attr.carbon_recyclerViewStyle);
         initRecycler(attrs, R.attr.carbon_recyclerViewStyle);
     }
 
     public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initRecycler(attrs, defStyleAttr);
     }
 
@@ -1169,7 +1168,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -1210,11 +1209,11 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
     }
 
 

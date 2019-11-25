@@ -29,6 +29,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -50,7 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
@@ -100,30 +100,30 @@ public class Button extends android.widget.Button
     protected TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public Button(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initButton(null, android.R.attr.buttonStyle, R.style.carbon_Button);
     }
 
     public Button(Context context, String text, OnClickListener listener) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initButton(null, android.R.attr.buttonStyle, R.style.carbon_Button);
         setText(text);
         setOnClickListener(listener);
     }
 
     public Button(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initButton(attrs, android.R.attr.buttonStyle, R.style.carbon_Button);
     }
 
     public Button(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initButton(attrs, defStyleAttr, R.style.carbon_Button);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initButton(attrs, defStyleAttr, defStyleRes);
     }
 
@@ -386,8 +386,6 @@ public class Button extends android.widget.Button
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
-        if (animateColorChanges)
-            drawableStateChanged();
         super.draw(canvas);
         if (stroke != null)
             drawStroke(canvas);
@@ -1013,7 +1011,7 @@ public class Button extends android.widget.Button
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -1060,13 +1058,12 @@ public class Button extends android.widget.Button
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
-        if (!(getTextColors() instanceof AnimatedColorStateList))
-            setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
+        setTextColor(getTextColors());
     }
 
 
@@ -1485,7 +1482,7 @@ public class Button extends android.widget.Button
     public void setTooltipText(CharSequence text) {
         if (text != null) {
             setOnLongClickListener(v -> {
-                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                Label tooltip = (Label) LayoutInflater.from(getContext()).inflate(R.layout.carbon_tooltip, null);
                 tooltip.setText(text);
                 PopupWindow window = new PopupWindow(tooltip);
                 window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);

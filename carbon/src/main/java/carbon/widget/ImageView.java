@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -46,7 +47,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
@@ -86,23 +86,23 @@ public class ImageView extends android.widget.ImageView
         MarginView {
 
     public ImageView(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_imageViewStyle);
+        super(context, null, R.attr.carbon_imageViewStyle);
         initImageView(null, R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_imageViewStyle);
+        super(context, attrs, R.attr.carbon_imageViewStyle);
         initImageView(attrs, R.attr.carbon_imageViewStyle);
     }
 
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initImageView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initImageView(attrs, defStyleAttr);
     }
 
@@ -174,7 +174,6 @@ public class ImageView extends android.widget.ImageView
         Carbon.initMaxSize(this, a, maxSizeIds);
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
-        AnimUtils.setupSaturationAnimator(stateAnimator, this);
         setTooltipText(a.getText(R.styleable.ImageView_carbon_tooltipText));
 
         a.recycle();
@@ -335,9 +334,6 @@ public class ImageView extends android.widget.ImageView
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
-        if (animateColorChanges && getDrawable() != null && tint != null && tintMode != null)
-            getDrawable().setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getDrawable().getState(), tint.getDefaultColor()), tintMode));
-
         super.draw(canvas);
         if (stroke != null)
             drawStroke(canvas);
@@ -884,18 +880,25 @@ public class ImageView extends android.widget.ImageView
     ColorStateList backgroundTint;
     PorterDuff.Mode backgroundTintMode;
     boolean animateColorChanges;
+
     ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
         updateTint();
+        if (getDrawable() != null && tint != null && tintMode != null)
+            getDrawable().setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getDrawable().getState(), tint.getDefaultColor()), tintMode));
         ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
         updateBackgroundTint();
+        if (getBackground() != null && backgroundTint != null && backgroundTintMode != null)
+            getBackground().setColorFilter(new PorterDuffColorFilter(backgroundTint.getColorForState(getBackground().getState(), backgroundTint.getDefaultColor()), backgroundTintMode));
         ViewCompat.postInvalidateOnAnimation(this);
     };
 
     @Override
     public void setTintList(ColorStateList list) {
         this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
+        if (tint == null)
+            AnimUtils.setupSaturationAnimator(stateAnimator, this);
         updateTint();
     }
 
@@ -937,7 +940,7 @@ public class ImageView extends android.widget.ImageView
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -981,11 +984,11 @@ public class ImageView extends android.widget.ImageView
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
     }
 
 
@@ -1219,7 +1222,7 @@ public class ImageView extends android.widget.ImageView
     public void setTooltipText(CharSequence text) {
         if (text != null) {
             setOnLongClickListener(v -> {
-                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                Label tooltip = (Label) LayoutInflater.from(getContext()).inflate(R.layout.carbon_tooltip, null);
                 tooltip.setText(text);
                 PopupWindow window = new PopupWindow(tooltip);
                 window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);

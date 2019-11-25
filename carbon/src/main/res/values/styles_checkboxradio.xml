@@ -12,7 +12,7 @@
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
         <item name="carbon_tint">@color/carbon_defaultIconColorSecondary</item>
         <item name="android:background">@null</item>
-        <item name="android:button">@drawable/carbon_checkbox</item>
+        <item name="android:button">@drawable/carbon_checkbox_anim</item>
     </style>
 
     <style name="carbon_CheckBox.IconButton">
@@ -24,7 +24,7 @@
         <item name="android:layout_height">@dimen/carbon_toolbarItemSize</item>
         <item name="android:paddingLeft">@null</item>
         <item name="android:paddingRight">@null</item>
-        <item name="android:padding">@dimen/carbon_toolbarItemPadding</item>
+        <item name="android:padding">8dp</item>
         <item name="android:drawablePadding">0dp</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
     </style>
@@ -49,7 +49,7 @@
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
         <item name="carbon_tint">@color/carbon_defaultIconColorSecondary</item>
         <item name="android:background">@null</item>
-        <item name="android:button">@drawable/carbon_radiobutton</item>
+        <item name="android:button">@drawable/carbon_radio_anim</item>
     </style>
 
     <style name="carbon_RadioButton.IconButton">
@@ -61,7 +61,7 @@
         <item name="android:layout_height">@dimen/carbon_toolbarItemSize</item>
         <item name="android:paddingLeft">@null</item>
         <item name="android:paddingRight">@null</item>
-        <item name="android:padding">@dimen/carbon_toolbarItemPadding</item>
+        <item name="android:padding">8dp</item>
         <item name="android:drawablePadding">0dp</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
     </style>

@@ -11,9 +11,7 @@ open class SampleActivityGroup : Serializable {
     var icon = 0
         private set
 
-    @JvmOverloads
-    constructor(activityClass: Class<out Activity>) : super(
-    ) {
+    constructor(activityClass: Class<out Activity>) : super() {
         this.activityClass = activityClass
         activityClass.getAnnotation(SampleAnnotation::class.java)?.let {
             this.name = it.titleId

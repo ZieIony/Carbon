@@ -21,7 +21,6 @@ import androidx.core.view.NestedScrollingParent;
 import androidx.core.view.ViewCompat;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.EdgeEffect;
@@ -43,23 +42,23 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
     public static final int OVER_SCROLL_NEVER = 2;
 
     public ScrollView(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initScrollView(null, android.R.attr.scrollViewStyle);
     }
 
     public ScrollView(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initScrollView(attrs, android.R.attr.scrollViewStyle);
     }
 
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initScrollView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initScrollView(attrs, defStyleAttr);
     }
 
@@ -259,7 +258,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -300,11 +299,11 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
     }
 
 

@@ -18,9 +18,9 @@
         app:carbon_inAnimation="fade"
         app:carbon_outAnimation="fade">
 
-        <carbon.widget.TextView
+        <carbon.widget.Label
             android:id="@+id/carbon_tooltip"
-            style="@style/carbon_TextView.Tooltip"
+            style="@style/carbon_Label.Tooltip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

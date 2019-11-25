@@ -274,7 +274,7 @@
 
     <style name="carbon_NavigationView" />
 
-    <style name="carbon_TextView.Tooltip">
+    <style name="carbon_Label.Tooltip">
         <item name="android:minHeight">@dimen/carbon_tooltipHeight</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingLeft">@dimen/carbon_tooltipPadding</item>

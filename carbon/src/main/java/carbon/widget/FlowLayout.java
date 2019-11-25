@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -94,23 +93,23 @@ public class FlowLayout extends android.widget.FrameLayout
     private OnTouchListener onDispatchTouchListener;
 
     public FlowLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_flowLayoutStyle);
+        super(context, null, R.attr.carbon_flowLayoutStyle);
         initFlowLayout(null, R.attr.carbon_flowLayoutStyle);
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_flowLayoutStyle);
+        super(context, attrs, R.attr.carbon_flowLayoutStyle);
         initFlowLayout(attrs, R.attr.carbon_flowLayoutStyle);
     }
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initFlowLayout(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initFlowLayout(attrs, defStyleAttr);
     }
 

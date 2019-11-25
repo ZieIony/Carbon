@@ -59,17 +59,17 @@ public class InputLayout extends RelativeLayout {
     }
 
     public InputLayout(Context context, AttributeSet attrs) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, R.attr.carbon_inputLayoutStyle, R.styleable.InputLayout_android_theme), attrs, R.attr.carbon_inputLayoutStyle);
+        super(context, attrs, R.attr.carbon_inputLayoutStyle);
         initInputLayout(attrs, R.attr.carbon_inputLayoutStyle);
     }
 
     public InputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, R.attr.carbon_inputLayoutStyle, R.styleable.InputLayout_android_theme), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initInputLayout(attrs, defStyleAttr);
     }
 
     public InputLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(Carbon.getThemedContext(context, attrs, R.styleable.InputLayout, R.attr.carbon_inputLayoutStyle, R.styleable.InputLayout_android_theme), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initInputLayout(attrs, defStyleAttr);
     }
 
@@ -278,7 +278,7 @@ public class InputLayout extends RelativeLayout {
     }
 
     public void setLabel(CharSequence label) {
-        setLabel(label.toString());
+        setLabel(String.valueOf(label));
     }
 
     public void setLabel(String label) {

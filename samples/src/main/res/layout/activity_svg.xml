@@ -11,7 +11,7 @@
 
     <carbon.widget.Label
         style="@style/sectionDescription"
-        app:carbon_htmlText="Carbon supports SVGs instead of Android vector files. You can render more complex icons and images with transformations, gradients, text, clipping and other features. SVGs can be exported directly from Inkscape or Illustrator. SVG files have to be in &lt;i>res/raw&lt;/i> folder." />
+        app:carbon_htmlText="In addition to Android vector files, Carbon supports SVGs. You can render more complex icons and images with transformations, gradients, text, clipping and other features. SVGs can be exported directly from Inkscape or Illustrator. SVG files have to be in &lt;i>res/raw&lt;/i> folder." />
 
     <carbon.widget.LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         android:orientation="horizontal">
 
         <carbon.widget.ImageView
-            style="@style/carbon_ImageView.Icon"
+            style="@style/carbon_ImageView.IconButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"

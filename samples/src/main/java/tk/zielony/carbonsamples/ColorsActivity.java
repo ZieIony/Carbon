@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import carbon.internal.ResourcesCompat;
 import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
@@ -170,6 +171,29 @@ public class ColorsActivity extends ThemedActivity {
             Item item = fonts[preferences.getInt(FONT, 0)];
             binding.font.setTypeface(ResourcesCompat.getFont(this, item.color));
         }
+
+        binding.randomTheme.setOnClickListener(view -> {
+            SharedPreferences preferences = ColorsActivity.this.getSharedPreferences(THEME, Context.MODE_PRIVATE);
+            Random random = new Random();
+
+            binding.style.setSelectedIndex(random.nextInt(styles.length));
+            Item item = styles[binding.style.getSelectedIndex()];
+            preferences.edit().putInt(STYLE, binding.style.getSelectedIndex()).commit();
+            binding.themebg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
+
+            binding.primary.setSelectedIndex(random.nextInt(primary.length));
+            item = primary[binding.primary.getSelectedIndex()];
+            preferences.edit().putInt(PRIMARY, binding.primary.getSelectedIndex()).commit();
+            binding.primarybg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
+
+            binding.secondary.setSelectedIndex(random.nextInt(secondary.length));
+            item = secondary[binding.secondary.getSelectedIndex()];
+            preferences.edit().putInt(SECONDARY, binding.secondary.getSelectedIndex()).commit();
+            binding.accentbg.setImageDrawable(new ColorDrawable(getResources().getColor(item.color)));
+
+            binding.font.setSelectedIndex(random.nextInt(fonts.length));
+            preferences.edit().putInt(FONT, binding.font.getSelectedIndex()).commit();
+        });
     }
 
     @Override

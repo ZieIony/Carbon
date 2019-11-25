@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.EdgeEffect;
@@ -42,23 +41,23 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
     public static final int OVER_SCROLL_NEVER = 2;
 
     public HorizontalScrollView(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initHorizontalScrollView(null, android.R.attr.horizontalScrollViewStyle);
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initHorizontalScrollView(attrs, android.R.attr.horizontalScrollViewStyle);
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initHorizontalScrollView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initHorizontalScrollView(attrs, defStyleAttr);
     }
 
@@ -283,7 +282,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -324,11 +323,11 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
     }
 
 

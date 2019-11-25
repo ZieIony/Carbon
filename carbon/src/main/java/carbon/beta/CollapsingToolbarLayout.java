@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -82,17 +81,17 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
     private OnTouchListener onDispatchTouchListener;
 
     public CollapsingToolbarLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initCollapsingToolbarLayout(null, R.attr.carbon_collapsingToolbarLayoutStyle);
     }
 
     public CollapsingToolbarLayout(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initCollapsingToolbarLayout(attrs, R.attr.carbon_collapsingToolbarLayoutStyle);
     }
 
     public CollapsingToolbarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initCollapsingToolbarLayout(attrs, defStyleAttr);
     }
 

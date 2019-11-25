@@ -1,5 +1,6 @@
 package tk.zielony.carbonsamples.guidelines
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import carbon.component.DefaultImageTextSubtextItem
@@ -7,8 +8,8 @@ import carbon.component.ImageTextSubtextRow
 import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import kotlinx.android.synthetic.main.activity_crane.*
-import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.SamplesActivity
 import tk.zielony.randomdata.RandomData
 import tk.zielony.randomdata.common.DrawableImageGenerator
@@ -22,12 +23,11 @@ class CraneActivity : SamplesActivity() {
 
         crane_search.setOnClickListener { crane_backdropLayout.toggleLayout() }
 
-        val randomData = RandomData()
-        randomData.addGenerators(arrayOf(
-                DrawableImageGenerator(this),
-                StringCityGenerator().withMatcher { f -> f.name == "text" },
-                TextGenerator().withMatcher { f -> f.name == "subtext" }
-        ))
+        val randomData = RandomData().apply {
+            addGenerator(Drawable::class.java, DrawableImageGenerator(this@CraneActivity))
+            addGenerator(String::class.java, StringCityGenerator().withMatcher { f -> f.name == "text" })
+            addGenerator(String::class.java, TextGenerator().withMatcher { f -> f.name == "subtext" })
+        }
         val items = randomData.generateList(DefaultImageTextSubtextItem::class.java, 4)
 
         crane_recycler.layoutManager = LinearLayoutManager(this)

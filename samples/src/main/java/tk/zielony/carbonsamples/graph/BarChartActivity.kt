@@ -6,21 +6,19 @@ import android.os.Bundle
 import carbon.beta.ChartView
 import carbon.drawable.ColorStateListFactory
 import kotlinx.android.synthetic.main.activity_barchart.*
-import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.ThemedActivity
 import tk.zielony.randomdata.DataContext
 import tk.zielony.randomdata.Generator
 import tk.zielony.randomdata.Matcher
 import tk.zielony.randomdata.RandomData
 import tk.zielony.randomdata.common.FloatGenerator
-import tk.zielony.randomdata.common.IntegerRGBColorGenerator
 import tk.zielony.randomdata.food.StringFruitGenerator
 
 
 class ColorGenerator(val context: Context) : Generator<ColorStateList>() {
-    var colorGenerator = IntegerRGBColorGenerator()
-    override fun nextInternal(dataContext: DataContext?): ColorStateList? {
+    override fun next(dataContext: DataContext?): ColorStateList? {
         return ColorStateListFactory.makeControlPrimary(context)
     }
 
@@ -38,9 +36,9 @@ class BarChartActivity : ThemedActivity() {
         initToolbar()
 
         val randomData = RandomData()
-        randomData.addGenerator(StringFruitGenerator())
-        randomData.addGenerator(FloatGenerator(0f, 100f).withMatcher { field -> field.name == "value" })
-        randomData.addGenerator(ColorGenerator(this))
+        randomData.addGenerator(String::class.java, StringFruitGenerator())
+        randomData.addGenerator(Float::class.java, FloatGenerator(0f, 100f).withMatcher { field -> field.name == "value" })
+        randomData.addGenerator(ColorStateList::class.java, ColorGenerator(this))
 
         val items = randomData.generateArray(ChartView.Item::class.java, 10)
 

@@ -61,7 +61,7 @@ public class CheckBox extends TextView implements Checkable {
     public void initCheckBox(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, defStyleRes);
 
-        setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.CheckBox_android_button, R.drawable.carbon_checkbox));
+        setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.CheckBox_android_button, R.drawable.carbon_checkbox_anim));
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

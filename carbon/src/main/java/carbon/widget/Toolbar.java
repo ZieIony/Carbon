@@ -46,7 +46,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -93,17 +92,17 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
     private OnTouchListener onDispatchTouchListener;
 
     public Toolbar(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.toolbarStyle);
+        super(context, null, R.attr.toolbarStyle);
         initToolbar(null, R.attr.toolbarStyle);
     }
 
     public Toolbar(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.toolbarStyle);
+        super(context, attrs, R.attr.toolbarStyle);
         initToolbar(attrs, R.attr.toolbarStyle);
     }
 
     public Toolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initToolbar(attrs, defStyleAttr);
     }
 

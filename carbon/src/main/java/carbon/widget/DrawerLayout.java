@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
@@ -88,17 +87,17 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
     private OnTouchListener onDispatchTouchListener;
 
     public DrawerLayout(Context context) {
-        super(CarbonContextWrapper.wrap(context), null, R.attr.carbon_drawerLayoutStyle);
+        super(context, null, R.attr.carbon_drawerLayoutStyle);
         initDrawerLayout(null, R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs, R.attr.carbon_drawerLayoutStyle);
+        super(context, attrs, R.attr.carbon_drawerLayoutStyle);
         initDrawerLayout(attrs, R.attr.carbon_drawerLayoutStyle);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initDrawerLayout(attrs, defStyleAttr);
     }
 

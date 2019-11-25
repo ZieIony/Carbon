@@ -1,5 +1,6 @@
 package tk.zielony.carbonsamples.demo;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,15 +21,15 @@ import carbon.recycler.RowListAdapter;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
-import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.ThemedActivity;
-import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
+import tk.zielony.randomdata.common.DateGenerator;
 import tk.zielony.randomdata.common.DrawableImageGenerator;
-import tk.zielony.randomdata.common.StringDateGenerator;
 import tk.zielony.randomdata.common.TextGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
+import tk.zielony.randomdata.transformer.DateToStringTransformer;
 
 @SampleAnnotation(layoutId = R.layout.activity_quickreturn, titleId = R.string.quickReturnActivity_title)
 public class QuickReturnActivity extends ThemedActivity {
@@ -61,12 +62,10 @@ public class QuickReturnActivity extends ThemedActivity {
                 new DefaultImageTextSubtextDateItem());
 
         RandomData randomData = new RandomData();
-        randomData.addGenerators(new Generator[]{
-                new DrawableImageGenerator(this),
-                new StringNameGenerator().withMatcher(f -> f.getName().equals("text") && f.getDeclaringClass().equals(DefaultImageTextSubtextDateItem.class)),
-                new TextGenerator().withMatcher(f -> f.getName().equals("subtext")),
-                new StringDateGenerator()
-        });
+        randomData.addGenerator(Drawable.class, new DrawableImageGenerator(this));
+        randomData.addGenerator(String.class, new StringNameGenerator().withMatcher(f -> f.getName().equals("text") && f.getDeclaringClass().equals(DefaultImageTextSubtextDateItem.class)));
+        randomData.addGenerator(String.class, new TextGenerator().withMatcher(f -> f.getName().equals("subtext")));
+        randomData.addGenerator(String.class, new DateGenerator().withTransformer(new DateToStringTransformer()));
         randomData.fill(items);
 
         RecyclerView recycler = findViewById(R.id.recycler);

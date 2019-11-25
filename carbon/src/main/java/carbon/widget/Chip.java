@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewDebug;
@@ -224,7 +225,7 @@ public class Chip extends LinearLayout implements Checkable {
     public void setTooltipText(CharSequence text) {
         if (text != null) {
             setOnLongClickListener(v -> {
-                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                Label tooltip = (Label) LayoutInflater.from(getContext()).inflate(R.layout.carbon_tooltip, null);
                 tooltip.setText(text);
                 PopupWindow window = new PopupWindow(tooltip);
                 window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);

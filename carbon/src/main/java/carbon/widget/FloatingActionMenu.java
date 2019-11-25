@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.component.FloatingActionMenuLeftRow;
@@ -98,7 +97,7 @@ public class FloatingActionMenu extends PopupWindow {
     private RowArrayAdapter<Item> adapter;
 
     public FloatingActionMenu(Context context) {
-        super(new RecyclerView(CarbonContextWrapper.wrap(context)), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        super(new RecyclerView(context), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         content = (RecyclerView) getContentView();
         content.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         content.setLayoutManager(new LinearLayoutManager(context));

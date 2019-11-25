@@ -19,7 +19,6 @@
         <carbon.widget.FloatingActionButton
             android:id="@+id/carbon_fab"
             style="@style/carbon_FloatingActionButton.Small"
-            app:carbon_src="@{data.icon}"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/carbon_paddingHalf"
             android:layout_marginRight="@dimen/carbon_paddingHalf"
@@ -27,11 +26,12 @@
             android:clickable="false"
             android:duplicateParentState="true"
             android:enabled="@{data.enabled}"
-            android:focusable="false" />
+            android:focusable="false"
+            app:carbon_src="@{data.icon}" />
 
-        <carbon.widget.TextView
+        <carbon.widget.Label
             android:id="@+id/carbon_tooltip"
-            style="@style/carbon_TextView.Tooltip"
+            style="@style/carbon_Label.Tooltip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

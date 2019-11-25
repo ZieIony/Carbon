@@ -32,6 +32,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -56,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimUtils;
 import carbon.animation.AnimatedColorStateList;
@@ -138,29 +138,29 @@ public class TextView extends android.widget.TextView
     private boolean valid = true;
 
     public TextView(Context context) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initTextView(null, android.R.attr.textViewStyle, R.style.carbon_TextView);
     }
 
     public TextView(Context context, String text) {
-        super(CarbonContextWrapper.wrap(context));
+        super(context);
         initTextView(null, android.R.attr.textViewStyle, R.style.carbon_TextView);
         setText(text);
     }
 
     public TextView(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initTextView(attrs, android.R.attr.textViewStyle, R.style.carbon_TextView);
     }
 
     public TextView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
         initTextView(attrs, defStyleAttr, R.style.carbon_TextView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(CarbonContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         initTextView(attrs, defStyleAttr, defStyleRes);
     }
 
@@ -1137,7 +1137,7 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -1184,13 +1184,12 @@ public class TextView extends android.widget.TextView
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
-        if (!(getTextColors() instanceof AnimatedColorStateList))
-            setTextColor(AnimatedColorStateList.fromList(getTextColors(), textColorAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
+        setTextColor(getTextColors());
     }
 
 
@@ -1622,7 +1621,7 @@ public class TextView extends android.widget.TextView
     public void setTooltipText(CharSequence text) {
         if (text != null) {
             setOnLongClickListener(v -> {
-                TextView tooltip = new TextView(getContext(), null, 0, R.style.carbon_TextView_Tooltip);
+                Label tooltip = (Label) LayoutInflater.from(getContext()).inflate(R.layout.carbon_tooltip, null);
                 tooltip.setText(text);
                 PopupWindow window = new PopupWindow(tooltip);
                 window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);

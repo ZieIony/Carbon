@@ -75,8 +75,13 @@ public class Label extends View implements TextAppearanceView {
         Carbon.initHtmlText(this, a, R.styleable.Label_carbon_htmlText);
 
         ColorStateList textColor = Carbon.getDefaultColorStateList(this, a, R.styleable.Label_android_textColor);
-        if (textColor != null)
+        if (textColor != null) {
             setTextColor(textColor);
+        } else {
+            textColor = a.getColorStateList(R.styleable.Label_android_textColor);
+            if (textColor != null)
+                setTextColor(textColor);
+        }
 
         a.recycle();
     }
@@ -237,9 +242,9 @@ public class Label extends View implements TextAppearanceView {
 
     @Override
     public int getBaseline() {
-        if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.CENTER_VERTICAL) {
+        if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.CENTER_VERTICAL && layout != null) {
             return (int) (baseline + (getHeight() - getPaddingTop() - getPaddingBottom() - layout.getHeight()) / 2.0f + getPaddingTop());
-        } else if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM) {
+        } else if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM && layout != null) {
             return baseline + getHeight() - getPaddingBottom() - layout.getHeight();
         } else {
             return baseline + getPaddingTop();

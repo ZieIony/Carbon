@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.view.SupportMenuInflater;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.core.content.ContextCompat;
@@ -281,7 +282,7 @@ public class Carbon {
             if (color == null)
                 color = a.getColorStateList(carbon_tint);
             if (color != null)
-                view.setTintList(AnimatedColorStateList.fromList(color, animation -> ((View) view).postInvalidate()));
+                view.setTintList(color);
         }
         view.setTintMode(TintedView.modes[a.getInt(carbon_tintMode, 1)]);
 
@@ -290,7 +291,7 @@ public class Carbon {
             if (color == null)
                 color = a.getColorStateList(carbon_backgroundTint);
             if (color != null)
-                view.setBackgroundTintList(AnimatedColorStateList.fromList(color, animation -> ((View) view).postInvalidate()));
+                view.setBackgroundTintList(color);
         }
         view.setBackgroundTintMode(TintedView.modes[a.getInt(carbon_backgroundTintMode, 1)]);
 
@@ -398,7 +399,7 @@ public class Carbon {
         if (a.hasValue(attr)) {
             int themeId = a.getResourceId(attr, 0);
             a.recycle();
-            return new CarbonContextThemeWrapper(context, themeId);
+            return new ContextThemeWrapper(context, themeId);
         }
         return context;
     }
@@ -503,7 +504,7 @@ public class Carbon {
     }
 
     public static Menu getMenu(Context context, int resId) {
-        Context contextWrapper = CarbonContextWrapper.wrap(context);
+        Context contextWrapper = context;
         Menu menu = new MenuBuilder(contextWrapper);
         MenuInflater inflater = new SupportMenuInflater(contextWrapper);
         inflater.inflate(resId, menu);

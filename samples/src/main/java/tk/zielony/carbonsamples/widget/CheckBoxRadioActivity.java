@@ -15,7 +15,7 @@ import tk.zielony.carbonsamples.databinding.ActivityCheckboxRadioBinding;
 
 @SampleAnnotation(
         titleId = R.string.checkBoxRadioActivity_title,
-        iconId = R.drawable.carbon_checkbox_checked
+        iconId = R.drawable.ic_check_box_black_24dp
 )
 public class CheckBoxRadioActivity extends ThemedActivity {
     @Override

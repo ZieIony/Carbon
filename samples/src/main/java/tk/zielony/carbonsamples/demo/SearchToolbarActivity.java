@@ -2,6 +2,7 @@ package tk.zielony.carbonsamples.demo;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,10 +24,9 @@ import carbon.widget.FrameLayout;
 import carbon.widget.ListSearchAdapter;
 import carbon.widget.RecyclerView;
 import carbon.widget.SearchEditText;
-import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.ThemedActivity;
-import tk.zielony.randomdata.Generator;
 import tk.zielony.randomdata.RandomData;
 import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.StringNameGenerator;
@@ -121,10 +121,8 @@ public class SearchToolbarActivity extends ThemedActivity {
     @NotNull
     private List<Serializable> generateItems() {
         RandomData randomData = new RandomData();
-        randomData.addGenerators(new Generator[]{
-                new DrawableAvatarGenerator(this),
-                new StringNameGenerator().withMatcher(f -> f.getName().equals("text"))
-        });
+        randomData.addGenerator(Drawable.class, new DrawableAvatarGenerator(this));
+        randomData.addGenerator(String.class, new StringNameGenerator().withMatcher(f -> f.getName().equals("text")));
         List<Serializable> items = new ArrayList<>();
         items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
         items.addAll(randomData.generateList(DefaultAvatarTextItem.class, 20));

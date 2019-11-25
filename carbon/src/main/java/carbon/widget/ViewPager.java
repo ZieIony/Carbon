@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carbon.Carbon;
-import carbon.CarbonContextWrapper;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.EdgeEffect;
@@ -75,17 +74,17 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
     }
 
     public ViewPager(Context context) {
-        super(CarbonContextWrapper.wrap(context), null);
+        super(context, null);
         initViewPager(null, R.attr.carbon_viewPagerStyle);
     }
 
     public ViewPager(Context context, AttributeSet attrs) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initViewPager(attrs, R.attr.carbon_viewPagerStyle);
     }
 
     public ViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(CarbonContextWrapper.wrap(context), attrs);
+        super(context, attrs);
         initViewPager(attrs, defStyleAttr);
     }
 
@@ -312,7 +311,7 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
 
     @Override
     public void setBackgroundTintList(ColorStateList list) {
-        this.backgroundTint = animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
+        this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
         updateBackgroundTint();
     }
 
@@ -353,11 +352,11 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
     }
 
     public void setAnimateColorChangesEnabled(boolean animateColorChanges) {
+        if (this.animateColorChanges == animateColorChanges)
+            return;
         this.animateColorChanges = animateColorChanges;
-        if (tint != null && !(tint instanceof AnimatedColorStateList))
-            setTintList(AnimatedColorStateList.fromList(tint, tintAnimatorListener));
-        if (backgroundTint != null && !(backgroundTint instanceof AnimatedColorStateList))
-            setBackgroundTintList(AnimatedColorStateList.fromList(backgroundTint, backgroundTintAnimatorListener));
+        setTintList(tint);
+        setBackgroundTintList(backgroundTint);
     }
 
 
