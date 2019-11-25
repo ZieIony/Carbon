@@ -44,6 +44,7 @@
             android:layout_height="@dimen/carbon_fabSize"
             android:layout_gravity="top|right"
             android:layout_margin="@dimen/carbon_padding"
+            android:enabled="false"
             android:padding="@dimen/carbon_padding"
             android:tag="enable"
             app:carbon_menu="@menu/menu_fab"

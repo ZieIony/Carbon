@@ -972,6 +972,7 @@
 
     <attr name="carbon_imageViewStyle" format="reference" />
     <declare-styleable name="ImageView">
+        <attr name="android:enabled" />
         <attr name="android:background" />
 
         <attr name="carbon_rippleColor" />

@@ -175,6 +175,7 @@ public class ImageView extends android.widget.ImageView
         Carbon.initStroke(this, a, strokeIds);
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
         setTooltipText(a.getText(R.styleable.ImageView_carbon_tooltipText));
+        setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled, true));
 
         a.recycle();
     }
