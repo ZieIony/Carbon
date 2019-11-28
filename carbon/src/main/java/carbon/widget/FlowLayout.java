@@ -179,6 +179,8 @@ public class FlowLayout extends android.widget.FrameLayout
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
 
         gravity = a.getInt(R.styleable.FlowLayout_android_gravity, Gravity.START);
+        horizontalSpacing = a.getDimensionPixelSize(R.styleable.FlowLayout_carbon_spacingHorizontal, 0);
+        verticalSpacing = a.getDimensionPixelSize(R.styleable.FlowLayout_carbon_spacingVertical, 0);
 
         a.recycle();
 
@@ -189,6 +191,7 @@ public class FlowLayout extends android.widget.FrameLayout
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private boolean drawCalled = false;
     RevealAnimator revealAnimator;
+    private int horizontalSpacing, verticalSpacing;
 
     public Point getLocationOnScreen() {
         int[] outLocation = new int[2];
@@ -371,6 +374,11 @@ public class FlowLayout extends android.widget.FrameLayout
         }
     }
 
+    public void setSpacing(int horizontalSpacing, int verticalSpacing) {
+        this.horizontalSpacing = horizontalSpacing;
+        this.verticalSpacing = verticalSpacing;
+    }
+
     private void layoutFlowingViews(int width) {
         int gravity = GravityCompat.getAbsoluteGravity(this.gravity, ViewCompat.getLayoutDirection(this));
         if ((gravity & Gravity.RIGHT) == Gravity.RIGHT) {
@@ -411,26 +419,27 @@ public class FlowLayout extends android.widget.FrameLayout
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             LayoutParams params = (LayoutParams) child.getLayoutParams();
-            if (child.getVisibility() != GONE) {
-                if (currentX != width - getPaddingRight() && currentX - params.leftMargin - child.getMeasuredWidth() - params.rightMargin < getPaddingLeft()) {
-                    currentX = width - getPaddingRight();
-                    currentY = nextY;
-                    relayoutLine(currentLine);
-                    currentLine.clear();
-                }
+            if (child.getVisibility() == GONE)
+                continue;
 
-                currentLine.add(0, child);
-                int left = params.fill ? getPaddingLeft() + params.leftMargin : currentX - params.rightMargin - child.getMeasuredWidth();
-                child.layout(left, currentY + params.topMargin, currentX - params.rightMargin, currentY + params.topMargin + child.getMeasuredHeight());
-                currentX -= params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
-                nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+            if (currentX != width - getPaddingRight() && currentX - params.leftMargin - child.getMeasuredWidth() - params.rightMargin < getPaddingLeft()) {
+                currentX = width - getPaddingRight();
+                currentY = nextY + verticalSpacing;
+                relayoutLine(currentLine);
+                currentLine.clear();
+            }
 
-                if (params.fill) {
-                    currentX = width - getPaddingRight();
-                    currentY = nextY;
-                    relayoutLine(currentLine);
-                    currentLine.clear();
-                }
+            currentLine.add(0, child);
+            int left = params.fill ? getPaddingLeft() + params.leftMargin : currentX - params.rightMargin - child.getMeasuredWidth();
+            child.layout(left, currentY + params.topMargin, currentX - params.rightMargin, currentY + params.topMargin + child.getMeasuredHeight());
+            currentX -= params.leftMargin + child.getMeasuredWidth() + params.rightMargin - horizontalSpacing;
+            nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+
+            if (params.fill) {
+                currentX = width - getPaddingRight();
+                currentY = nextY + verticalSpacing;
+                relayoutLine(currentLine);
+                currentLine.clear();
             }
         }
         relayoutLine(currentLine);
@@ -444,26 +453,27 @@ public class FlowLayout extends android.widget.FrameLayout
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             LayoutParams params = (LayoutParams) child.getLayoutParams();
-            if (child.getVisibility() != GONE) {
-                if (currentX != getPaddingLeft() && currentX + params.leftMargin + child.getMeasuredWidth() + params.rightMargin > width - getPaddingRight()) {
-                    currentX = getPaddingLeft();
-                    currentY = nextY;
-                    relayoutLine(currentLine);
-                    currentLine.clear();
-                }
+            if (child.getVisibility() == GONE)
+                continue;
 
-                currentLine.add(child);
-                int right = params.fill ? width - getPaddingRight() - params.rightMargin : currentX + params.leftMargin + child.getMeasuredWidth();
-                child.layout(currentX + params.leftMargin, currentY + params.topMargin, right, currentY + params.topMargin + child.getMeasuredHeight());
-                currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
-                nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+            if (currentX != getPaddingLeft() && currentX + params.leftMargin + child.getMeasuredWidth() + params.rightMargin > width - getPaddingRight()) {
+                currentX = getPaddingLeft();
+                currentY = nextY + verticalSpacing;
+                relayoutLine(currentLine);
+                currentLine.clear();
+            }
 
-                if (params.fill) {
-                    currentX = getPaddingLeft();
-                    currentY = nextY;
-                    relayoutLine(currentLine);
-                    currentLine.clear();
-                }
+            currentLine.add(child);
+            int right = params.fill ? width - getPaddingRight() - params.rightMargin : currentX + params.leftMargin + child.getMeasuredWidth();
+            child.layout(currentX + params.leftMargin, currentY + params.topMargin, right, currentY + params.topMargin + child.getMeasuredHeight());
+            currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin + horizontalSpacing;
+            nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+
+            if (params.fill) {
+                currentX = getPaddingLeft();
+                currentY = nextY + verticalSpacing;
+                relayoutLine(currentLine);
+                currentLine.clear();
             }
         }
         relayoutLine(currentLine);
@@ -474,9 +484,8 @@ public class FlowLayout extends android.widget.FrameLayout
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             LayoutParams params = (LayoutParams) child.getLayoutParams();
-            if (child.getVisibility() != GONE) {
-                currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
-            }
+            if (child.getVisibility() != GONE)
+                currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin + horizontalSpacing;
         }
 
         return currentX + getPaddingRight();
@@ -489,21 +498,22 @@ public class FlowLayout extends android.widget.FrameLayout
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             LayoutParams params = (LayoutParams) child.getLayoutParams();
-            if (child.getVisibility() != GONE) {
-                if (currentX != getPaddingLeft() && currentX + params.leftMargin + child.getMeasuredWidth() + params.rightMargin > width - getPaddingRight()) {
-                    currentX = getPaddingLeft();
-                    currentY = nextY;
-                }
+            if (child.getVisibility() == GONE)
+                continue;
 
-                if (params.fill)
-                    child.measure(MeasureSpec.makeMeasureSpec(width - getPaddingRight() - params.leftMargin - params.rightMargin - currentX, MeasureSpec.EXACTLY), child.getMeasuredHeightAndState());
-                currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin;
-                nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+            if (currentX != getPaddingLeft() && currentX + params.leftMargin + child.getMeasuredWidth() + params.rightMargin > width - getPaddingRight()) {
+                currentX = getPaddingLeft();
+                currentY = nextY + verticalSpacing;
+            }
 
-                if (params.fill) {
-                    currentX = getPaddingLeft();
-                    currentY = nextY;
-                }
+            if (params.fill)
+                child.measure(MeasureSpec.makeMeasureSpec(width - getPaddingRight() - params.leftMargin - params.rightMargin - currentX, MeasureSpec.EXACTLY), child.getMeasuredHeightAndState());
+            currentX += params.leftMargin + child.getMeasuredWidth() + params.rightMargin + horizontalSpacing;
+            nextY = Math.max(nextY, currentY + params.topMargin + child.getMeasuredHeight() + params.bottomMargin);
+
+            if (params.fill) {
+                currentX = getPaddingLeft();
+                currentY = nextY + verticalSpacing;
             }
         }
         return nextY + getPaddingBottom();
@@ -1413,7 +1423,7 @@ public class FlowLayout extends android.widget.FrameLayout
 
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
-        return new LayoutParams(super.generateDefaultLayoutParams());
+        return new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override

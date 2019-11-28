@@ -703,6 +703,9 @@
         <attr name="carbon_strokeWidth" />
 
         <attr name="android:gravity" />
+
+        <attr name="carbon_spacingHorizontal" format="dimension" />
+        <attr name="carbon_spacingVertical" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="FlowLayout_Layout">
