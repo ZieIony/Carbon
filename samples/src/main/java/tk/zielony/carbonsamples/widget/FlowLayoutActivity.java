@@ -18,7 +18,7 @@ import tk.zielony.randomdata.person.DrawableAvatarGenerator;
 import tk.zielony.randomdata.person.Gender;
 import tk.zielony.randomdata.person.StringFirstNameGenerator;
 
-@SampleAnnotation(layoutId = R.layout.activity_flowlayout, titleId = R.string.flowLayoutActivity_title)
+@SampleAnnotation(layoutId = R.layout.activity_flowlayout, titleId = R.string.flowLayoutActivity_title, iconId = R.drawable.ic_wrap_text_black_24dp)
 public class FlowLayoutActivity extends ThemedActivity {
 
     @Override

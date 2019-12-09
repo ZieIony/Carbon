@@ -36,7 +36,7 @@ public class Chip extends LinearLayout implements Checkable {
         void onCheckedChanged(Chip chip, boolean isChecked);
     }
 
-    private ImageView icon;
+    private FrameLayout content;
     private ImageView check;
     private TextView title;
     private ImageView close;
@@ -82,7 +82,7 @@ public class Chip extends LinearLayout implements Checkable {
     private void initChip(AttributeSet attrs, int defStyleAttr) {
         inflate(getContext(), R.layout.carbon_chip, this);
         title = findViewById(R.id.carbon_chipText);
-        icon = findViewById(R.id.carbon_chipIcon);
+        content = findViewById(R.id.carbon_chipContent);
         check = findViewById(R.id.carbon_chipCheck);
         close = findViewById(R.id.carbon_chipClose);
 
@@ -189,26 +189,69 @@ public class Chip extends LinearLayout implements Checkable {
     }
 
     public void setIcon(int iconRes) {
+        content.removeAllViews();
+        if (iconRes == 0) {
+            content.setVisibility(GONE);
+            return;
+        }
+        content.setVisibility(VISIBLE);
+        ImageView icon = new ImageView(getContext());
+        content.addView(icon);
         icon.setImageResource(iconRes);
-        icon.setVisibility(iconRes != 0 ? VISIBLE : GONE);
     }
 
     public void setIcon(Drawable drawable) {
+        content.removeAllViews();
+        if (drawable == null) {
+            content.setVisibility(GONE);
+            return;
+        }
+        content.setVisibility(VISIBLE);
+        ImageView icon = new ImageView(getContext());
+        content.addView(icon);
         icon.setImageDrawable(drawable);
-        icon.setVisibility(drawable != null ? VISIBLE : GONE);
     }
 
     public void setIcon(Bitmap bitmap) {
+        content.removeAllViews();
+        if (bitmap == null) {
+            content.setVisibility(GONE);
+            return;
+        }
+        content.setVisibility(VISIBLE);
+        ImageView icon = new ImageView(getContext());
+        content.addView(icon);
         icon.setImageBitmap(bitmap);
-        icon.setVisibility(bitmap != null ? VISIBLE : GONE);
     }
 
+    @Deprecated
     public Drawable getIcon() {
-        return icon.getDrawable();
+        if (content.getChildCount() > 0 && content.getChildAt(0) instanceof android.widget.ImageView)
+            return ((android.widget.ImageView) content.getChildAt(0)).getDrawable();
+        return null;
     }
 
+    @Deprecated
     public View getIconView() {
-        return icon;
+        if (content.getChildCount() > 0 && content.getChildAt(0) instanceof android.widget.ImageView)
+            return content.getChildAt(0);
+        return null;
+    }
+
+    public View getContentView() {
+        if (content.getChildCount() > 0)
+            return content.getChildAt(0);
+        return null;
+    }
+
+    public void setContentView(View view) {
+        content.removeAllViews();
+        if (view != null) {
+            content.setVisibility(VISIBLE);
+            content.addView(view);
+        } else {
+            content.setVisibility(GONE);
+        }
     }
 
     public void setRemovable(boolean removable) {

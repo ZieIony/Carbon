@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical">
 
-        <carbon.widget.ImageView
-            android:id="@+id/carbon_chipIcon"
+        <carbon.widget.FrameLayout
+            android:id="@+id/carbon_chipContent"
             android:layout_width="@dimen/carbon_iconSize"
             android:layout_height="@dimen/carbon_iconSize"
             android:layout_margin="@dimen/carbon_chipCloseMargin"
-            android:visibility="gone"
-            app:carbon_cornerRadius="@dimen/carbon_iconSizeHalf" />
+            app:carbon_cornerRadius="@dimen/carbon_iconSizeHalf"
+            tools:visibility="gone" />
 
         <carbon.widget.ImageView
             android:id="@+id/carbon_chipCheck"
