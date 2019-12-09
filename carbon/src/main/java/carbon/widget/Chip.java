@@ -57,6 +57,12 @@ public class Chip extends LinearLayout implements Checkable {
         initChip(null, R.attr.carbon_chipStyle);
     }
 
+    public Chip(Context context, CharSequence text) {
+        super(context, null, R.attr.carbon_chipStyle);
+        initChip(null, R.attr.carbon_chipStyle);
+        setText(text);
+    }
+
     public Chip(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_chipStyle);
         initChip(attrs, R.attr.carbon_chipStyle);

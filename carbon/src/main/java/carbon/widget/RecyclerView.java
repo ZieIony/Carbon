@@ -87,6 +87,10 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         void onItemClicked(View view, Type type, int position);
     }
 
+    public interface OnItemClickedListener2<Type> {
+        void onItemClicked(Type type);
+    }
+
     public class EdgeEffectFactory extends androidx.recyclerview.widget.RecyclerView.EdgeEffectFactory {
         @NonNull
         @Override

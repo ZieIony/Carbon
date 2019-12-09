@@ -74,8 +74,22 @@ public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extend
         this.onItemClickedListener = onItemClickedListener;
     }
 
+    public void setOnItemClickedListener(carbon.widget.RecyclerView.OnItemClickedListener2<I> onItemClickedListener) {
+        this.onItemClickedListener = (view, item, position) -> {
+            if (onItemClickedListener != null)
+                onItemClickedListener.onItemClicked(item);
+        };
+    }
+
     public <ItemType extends I> void setOnItemClickedListener(Class<ItemType> type, carbon.widget.RecyclerView.OnItemClickedListener<ItemType> onItemClickedListener) {
         this.onItemClickedListeners.put(type, onItemClickedListener);
+    }
+
+    public <ItemType extends I> void setOnItemClickedListener(Class<ItemType> type, carbon.widget.RecyclerView.OnItemClickedListener2<ItemType> onItemClickedListener) {
+        this.onItemClickedListeners.put(type, (carbon.widget.RecyclerView.OnItemClickedListener<ItemType>) (view, item, position) -> {
+            if (onItemClickedListener != null)
+                onItemClickedListener.onItemClicked(item);
+        });
     }
 
     protected void fireOnItemClickedEvent(View view, int position) {
