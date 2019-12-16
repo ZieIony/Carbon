@@ -29,7 +29,7 @@ public class SearchEditText extends EditText {
         SearchSettings() {
         }
 
-        public boolean afterTextChanged = true;
+        public boolean afterTextChanged = true, matchCase = false;
         public int searchThreshold = 2;
         public MatchMode matchMode = MatchMode.ADJACENT;
     }

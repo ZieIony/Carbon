@@ -37,32 +37,31 @@ public class ImageTextSubtextDateListItemActivity extends ThemedActivity {
 
         initToolbar();
 
-        List<Serializable> items = Arrays.asList(
-                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
-                new DefaultHeaderItem("Header"),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultHeaderItem("Header"),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultHeaderItem("Header"),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultHeaderItem("Header"),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new DefaultImageTextSubtextDateItem(),
-                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
-
         RandomData randomData = new RandomData();
         randomData.addGenerator(Drawable.class, new DrawableImageGenerator(this));
         randomData.addGenerator(String.class, new StringNameGenerator().withMatcher(f -> f.getName().equals("text") && f.getDeclaringClass().equals(DefaultImageTextSubtextDateItem.class)));
         randomData.addGenerator(String.class, new TextGenerator().withMatcher(f -> f.getName().equals("subtext")));
-        randomData.addGenerator(String.class, new DateGenerator().withTransformer(new DateToStringTransformer()));
-        randomData.fill(items);
+        randomData.addGenerator(String.class, new DateGenerator().withTransformer(new DateToStringTransformer()).withMatcher(f->f.getName().equals("date")));
+
+        List<Serializable> items = Arrays.asList(
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
+                new DefaultHeaderItem("Header"),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                new DefaultHeaderItem("Header"),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                new DefaultHeaderItem("Header"),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                new DefaultHeaderItem("Header"),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                randomData.generate(DefaultImageTextSubtextDateItem.class),
+                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
 
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));

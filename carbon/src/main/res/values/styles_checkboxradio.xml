@@ -5,8 +5,6 @@
         <item name="android:focusable">true</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="carbon_buttonGravity">start</item>
-        <item name="android:paddingLeft">@dimen/carbon_padding</item>
-        <item name="android:paddingRight">@dimen/carbon_padding</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
@@ -42,8 +40,6 @@
         <item name="android:focusable">true</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="carbon_buttonGravity">start</item>
-        <item name="android:paddingLeft">@dimen/carbon_padding</item>
-        <item name="android:paddingRight">@dimen/carbon_padding</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceBody1</item>
         <item name="android:drawablePadding">@dimen/carbon_padding</item>
