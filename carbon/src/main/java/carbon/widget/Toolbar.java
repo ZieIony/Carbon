@@ -274,6 +274,12 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         return title;
     }
 
+    @Override
+    public void setNavigationIcon(int resId) {
+        setIcon(resId);
+    }
+
+    @Deprecated
     public void setIcon(int iconRes) {
         if (icon == null)
             initLayout();
@@ -281,6 +287,12 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         setIconVisible(iconRes != 0);
     }
 
+    @Override
+    public void setNavigationIcon(@Nullable Drawable icon) {
+        setIcon(icon);
+    }
+
+    @Deprecated
     public void setIcon(Drawable drawable) {
         if (icon == null)
             initLayout();
@@ -288,6 +300,11 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         setIconVisible(drawable != null);
     }
 
+    public void setNavigationIcon(@Nullable Bitmap icon) {
+        setIcon(icon);
+    }
+
+    @Deprecated
     public void setIcon(Bitmap bitmap) {
         if (icon == null)
             initLayout();
@@ -295,12 +312,29 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         setIconVisible(bitmap != null);
     }
 
+    @Nullable
+    @Override
+    public Drawable getNavigationIcon() {
+        return getIcon();
+    }
+
+    @Deprecated
     public Drawable getIcon() {
         return icon.getDrawable();
     }
 
+    public View getNavigationIconView() {
+        return icon;
+    }
+
+    @Deprecated
     public View getIconView() {
         return icon;
+    }
+
+    @Deprecated
+    public void setNavigationIconVisible(boolean visible) {
+        setIconVisible(visible);
     }
 
     public void setIconVisible(boolean visible) {
@@ -309,6 +343,14 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         icon.setVisibility(visible ? VISIBLE : GONE);
     }
 
+    @Override
+    public void setNavigationOnClickListener(OnClickListener listener) {
+        getIconView().setOnClickListener(listener);
+    }
+
+    public int getCurrentContentInsetStart() {
+        return getContentInsetStart();
+    }
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
