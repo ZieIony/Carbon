@@ -14,8 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import carbon.R;
 
-public class ComponentView<Type extends Component> extends FrameLayout {
-    Type component;
+public class ComponentView extends FrameLayout {
+    Component component;
 
     public ComponentView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,7 +40,6 @@ public class ComponentView<Type extends Component> extends FrameLayout {
         int layout = a.getResourceId(R.styleable.ComponentView_carbon_layout, 0);
         String type = a.getString(R.styleable.ComponentView_carbon_type);
         try {
-            Component component = null;
             if (layout != 0 && type == null) {
                 component = new DataBindingComponent(this, layout);
             } else if (type != null) {
@@ -68,7 +67,7 @@ public class ComponentView<Type extends Component> extends FrameLayout {
         a.recycle();
     }
 
-    public Type getComponent() {
-        return component;
+    public <Type extends Component> Type getComponent() {
+        return (Type) component;
     }
 }
