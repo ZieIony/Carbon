@@ -1,0 +1,51 @@
+<resources>
+
+    <style name="carbon_ProgressBar">
+        <item name="carbon_rippleColor">@null</item>
+        <item name="carbon_progressStyle">bar_indeterminate</item>
+        <item name="carbon_tint">?attr/colorPrimary</item>
+        <item name="carbon_barWidth">@dimen/carbon_progressBarWidth</item>
+        <item name="carbon_inAnimation">progressWidth</item>
+        <item name="carbon_outAnimation">progressWidth</item>
+    </style>
+
+    <style name="carbon_ProgressBar.Bar.Indeterminate" parent="carbon_ProgressBar">
+        <item name="carbon_progressStyle">bar_indeterminate</item>
+        <item name="android:minHeight">@dimen/carbon_progressBarWidth</item>
+    </style>
+
+    <style name="carbon_ProgressBar.Bar.Determinate" parent="carbon_ProgressBar">
+        <item name="carbon_progressStyle">bar_determinate</item>
+        <item name="android:minHeight">@dimen/carbon_progressBarWidth</item>
+    </style>
+
+    <style name="carbon_ProgressBar.Bar.Query" parent="carbon_ProgressBar">
+        <item name="carbon_progressStyle">bar_query</item>
+        <item name="android:minHeight">@dimen/carbon_progressBarWidth</item>
+    </style>
+
+    <style name="carbon_ProgressBar.Circular.Indeterminate" parent="carbon_ProgressBar">
+        <item name="carbon_progressStyle">circular_indeterminate</item>
+        <item name="android:minWidth">@dimen/carbon_progressSize</item>
+        <item name="android:minHeight">@dimen/carbon_progressSize</item>
+    </style>
+
+    <style name="carbon_ProgressBar.Circular.Indeterminate.Small" parent="carbon_ProgressBar">
+        <item name="carbon_progressStyle">circular_indeterminate</item>
+        <item name="android:minWidth">@dimen/carbon_smallProgressSize</item>
+        <item name="android:minHeight">@dimen/carbon_smallProgressSize</item>
+    </style>
+
+    <style name="carbon_ProgressBar.Circular.Determinate" parent="carbon_ProgressBar">
+        <item name="carbon_progressStyle">circular_determinate</item>
+        <item name="android:minWidth">@dimen/carbon_progressSize</item>
+        <item name="android:minHeight">@dimen/carbon_progressSize</item>
+    </style>
+
+    <style name="carbon_ProgressBar.Circular.Determinate.Small" parent="carbon_ProgressBar">
+        <item name="carbon_progressStyle">circular_determinate</item>
+        <item name="android:minWidth">@dimen/carbon_smallProgressSize</item>
+        <item name="android:minHeight">@dimen/carbon_smallProgressSize</item>
+    </style>
+
+</resources>

@@ -93,6 +93,8 @@ public abstract class ArrayAdapter<VH extends RecyclerView.ViewHolder, I> extend
     }
 
     protected void fireOnItemClickedEvent(View view, int position) {
+        if (position < 0 || position > items.length)
+            return;
         I item = items[position];
         if (selectionMode != SelectionMode.NONE && view.isFocusable() && view.isClickable())
             selectItem(item);

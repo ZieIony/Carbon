@@ -92,6 +92,8 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
     }
 
     protected void fireOnItemClickedEvent(View view, int position) {
+        if (position < 0 || position > items.size())
+            return;
         I item = items.get(position);
         if (selectionMode != SelectionMode.NONE && view.isFocusable() && view.isClickable())
             selectItem(item);

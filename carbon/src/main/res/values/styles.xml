@@ -140,14 +140,6 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
-    <style name="carbon_ProgressBar">
-        <item name="carbon_progressStyle">bar_indeterminate</item>
-        <item name="carbon_tint">?attr/colorPrimary</item>
-        <item name="carbon_barWidth">3dp</item>
-        <item name="carbon_inAnimation">progressWidth</item>
-        <item name="carbon_outAnimation">progressWidth</item>
-    </style>
-
     <style name="carbon_CardView" parent="carbon_LinearLayout">
         <item name="android:background">?attr/carbon_colorForeground</item>
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
