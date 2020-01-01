@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:gravity="center">
 
-        <carbon.widget.ProgressBar
+        <carbon.widget.ProgressView
             android:id="@+id/progress"
             android:layout_width="@dimen/carbon_smallFabSize"
             android:layout_height="@dimen/carbon_smallFabSize"

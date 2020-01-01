@@ -9,7 +9,7 @@ import android.view.animation.Interpolator;
 
 import androidx.annotation.NonNull;
 
-import carbon.widget.ProgressBar;
+import carbon.widget.ProgressView;
 
 public class ProgressBarDrawable extends ProgressDrawable {
     private static final long DEFAULT_SWEEP_DURATION = 800;
@@ -25,16 +25,21 @@ public class ProgressBarDrawable extends ProgressDrawable {
     }
 
     @Override
+    public int getMinimumHeight() {
+        return (int) getBarWidth();
+    }
+
+    @Override
     public void draw(@NonNull Canvas canvas) {
         Rect bounds = getBounds();
 
-        if (style == ProgressBar.Style.BarIndeterminate) {
+        if (style == ProgressView.Style.BarIndeterminate) {
             long time = (System.currentTimeMillis() - startTime) % (sweepDuration + sweepDelay);
             float t = (float) (time) / (sweepDuration);
             float t2 = Math.max(0, (float) (time - sweepDelay) / sweepDuration);
             float end = interpolator.getInterpolation(t2);
             canvas.drawRect(end * bounds.width(), getBarPadding(), t * bounds.width(), bounds.height(), forePaint);
-        } else if (style == ProgressBar.Style.BarQuery) {
+        } else if (style == ProgressView.Style.BarQuery) {
             long time = (System.currentTimeMillis() - startTime) % (sweepDuration + sweepDelay);
             float t = 1 - (float) (time) / (sweepDuration);
             float t2 = Math.max(0, (float) (time - sweepDelay) / sweepDuration);

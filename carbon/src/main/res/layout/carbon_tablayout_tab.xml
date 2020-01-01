@@ -10,31 +10,26 @@
             type="carbon.widget.TabLayout.Item" />
     </data>
 
-    <carbon.widget.RelativeLayout
+    <carbon.widget.FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/carbon_tabLayoutHeight"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
+        android:paddingBottom="2dp"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         tools:background="?attr/colorPrimary">
-
-        <TextView
-            android:id="@+id/carbon_marker"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:textSize="1sp" />
 
         <carbon.widget.TextView
             android:id="@+id/carbon_tabText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/carbon_marker"
+            android:layout_gravity="center_vertical"
             android:duplicateParentState="true"
             android:gravity="center"
+            android:maxLines="1"
             android:text="@{data.title}"
-            android:textAppearance="@style/carbon_TextAppearance.Button"
+            android:textAppearance="?attr/carbon_textAppearanceButton"
             tools:text="@tools:sample/lorem" />
-    </carbon.widget.RelativeLayout>
+    </carbon.widget.FrameLayout>
 </layout>

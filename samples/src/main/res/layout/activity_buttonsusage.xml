@@ -136,7 +136,7 @@
                         android:text="11.64 MB"
                         android:textSize="30sp" />
 
-                    <carbon.widget.ProgressBar
+                    <carbon.widget.ProgressView
                         android:id="@+id/progress"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"

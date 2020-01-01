@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
 
-import carbon.widget.ProgressBar;
+import carbon.widget.ProgressView;
 
 public abstract class ProgressDrawable extends Drawable {
     private static final long DEFAULT_SWEEP_DURATION = 800;
@@ -28,7 +28,7 @@ public abstract class ProgressDrawable extends Drawable {
     float progress;
     float barPadding;
 
-    ProgressBar.Style style;
+    ProgressView.Style style;
 
     @Override
     public void setAlpha(int alpha) {
@@ -82,11 +82,11 @@ public abstract class ProgressDrawable extends Drawable {
         this.width = width;
     }
 
-    public ProgressBar.Style getStyle() {
+    public ProgressView.Style getStyle() {
         return style;
     }
 
-    public void setStyle(ProgressBar.Style style) {
+    public void setStyle(ProgressView.Style style) {
         this.style = style;
     }
 

@@ -136,7 +136,7 @@ public class TabLayout extends HorizontalScrollView {
         ViewCompat.setLayoutDirection(this, ViewCompat.LAYOUT_DIRECTION_LTR);
         content = new LinearLayout(getContext());
         ViewCompat.setLayoutDirection(content, layoutDirection);
-        addView(content, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        addView(content, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TabLayout, defStyleAttr, R.style.carbon_TabLayout);
 
@@ -156,11 +156,10 @@ public class TabLayout extends HorizontalScrollView {
         if (viewPager != null)
             viewPager.removeOnPageChangeListener(pageChangeListener);
         this.viewPager = viewPager;
-        items = null;
         if (viewPager != null) {
             viewPager.addOnPageChangeListener(pageChangeListener);
             PagerAdapter adapter = viewPager.getAdapter();
-            if (adapter != null)
+            if (adapter != null && items == null)
                 items = Stream.range(0, adapter.getCount()).map(it -> new Item(adapter.getPageTitle(it))).toArray(Item[]::new);
         }
         initTabs();
@@ -181,7 +180,7 @@ public class TabLayout extends HorizontalScrollView {
         for (int i = 0; i < items.length; i++) {
             ViewDataBinding tab = DataBindingUtil.inflate(inflater, itemLayoutId, this, false);
             tab.setVariable(carbon.BR.data, items[i]);
-            content.addView(tab.getRoot(), new LinearLayout.LayoutParams(fixed ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+            content.addView(tab.getRoot(), new LinearLayout.LayoutParams(fixed ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
             tab.getRoot().setSelected(i == 0);
             final int finalI = i;
             tab.getRoot().setOnClickListener(__ -> {

@@ -20,7 +20,7 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import carbon.R;
 import carbon.internal.MathUtils;
 import carbon.view.ShadowView;
-import carbon.widget.ProgressBar;
+import carbon.widget.ProgressView;
 
 public class AnimUtils {
     public static final long TOOLTIP_DURATION = 3000;
@@ -218,14 +218,14 @@ public class AnimUtils {
         ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new LinearOutSlowInInterpolator());
         animator.setOnSetupValuesListener(() -> {
-            ProgressBar circularProgress = (ProgressBar) animator.getTarget();
+            ProgressView circularProgress = (ProgressView) animator.getTarget();
             final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
             float start = circularProgress.getBarWidth();
             animator.setFloatValues(circularProgress.getBarWidth(), arcWidth);
             animator.setDuration((long) (100 * (arcWidth - start)));
         });
         animator.addUpdateListener(valueAnimator -> {
-            ProgressBar circularProgress = (ProgressBar) animator.getTarget();
+            ProgressView circularProgress = (ProgressView) animator.getTarget();
             final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
             float value = (Float) valueAnimator.getAnimatedValue();
             circularProgress.setBarWidth(value);
@@ -238,13 +238,13 @@ public class AnimUtils {
         ViewAnimator animator = new ViewAnimator();
         animator.setInterpolator(new FastOutLinearInInterpolator());
         animator.setOnSetupValuesListener(() -> {
-            ProgressBar circularProgress = (ProgressBar) animator.getTarget();
+            ProgressView circularProgress = (ProgressView) animator.getTarget();
             float start = circularProgress.getBarWidth();
             animator.setFloatValues(start, 0);
             animator.setDuration((long) (100 * start));
         });
         animator.addUpdateListener(valueAnimator -> {
-            ProgressBar circularProgress = (ProgressBar) animator.getTarget();
+            ProgressView circularProgress = (ProgressView) animator.getTarget();
             final float arcWidth = circularProgress.getBarPadding() + circularProgress.getBarWidth();
             float value = (Float) valueAnimator.getAnimatedValue();
             circularProgress.setBarWidth(value);

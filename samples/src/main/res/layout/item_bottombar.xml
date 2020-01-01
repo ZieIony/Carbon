@@ -13,9 +13,10 @@
 
     <carbon.widget.FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:minWidth="@dimen/carbon_bottomNavigationViewInactiveMinWidth"
+        android:minHeight="@dimen/carbon_bottomNavigationViewHeight"
         app:carbon_maxWidth="@dimen/carbon_bottomNavigationViewInactiveMaxWidth"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless">
@@ -26,7 +27,7 @@
             android:layout_height="@dimen/carbon_iconSize"
             android:layout_gravity="center"
             android:duplicateParentState="true"
-            android:src="@{data.icon}"
+            app:carbon_src="@{data.icon}"
             app:carbon_tint="@color/carbon_defaultIconColorPrimary" />
 
         <carbon.widget.Badge

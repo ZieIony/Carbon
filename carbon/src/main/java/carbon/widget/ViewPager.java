@@ -18,6 +18,8 @@ import android.view.ViewParent;
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,11 +67,11 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
     /**
      * @param listener page changed listener
      */
-    public void addOnPageChangeListener(OnPageChangeListener listener) {
+    public void addOnPageChangeListener(@NotNull OnPageChangeListener listener) {
         pageChangeListenerList.add(listener);
     }
 
-    public void removeOnPageChangeListener(OnPageChangeListener listener) {
+    public void removeOnPageChangeListener(@NotNull OnPageChangeListener listener) {
         pageChangeListenerList.remove(listener);
     }
 

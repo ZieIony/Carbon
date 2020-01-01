@@ -165,10 +165,10 @@ public class BottomNavigationView extends LinearLayout {
                         listener.onItemClicked(binding.getRoot(), item, finalI);
                 });
                 binding.setVariable(BR.data, item);
-                addView(binding.getRoot(), new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+                addView(binding.getRoot(), new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             } else {
                 View view = new LinearLayout(getContext());
-                addView(view, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+                addView(view, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             }
         }
     }

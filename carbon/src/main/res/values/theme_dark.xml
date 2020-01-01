@@ -8,7 +8,7 @@
         <item name="android:buttonStyle">@style/carbon_Button.Colored.Inverse</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
-        <item name="android:progressBarStyle">@style/carbon_ProgressBar</item>
+        <item name="android:progressBarStyle">@style/carbon_ProgressView.Circular.Indeterminate</item>
         <item name="android:editTextStyle">@style/carbon_EditText.Underlined</item>
         <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
         <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
@@ -52,6 +52,7 @@
         <item name="carbon_labelStyle">@style/carbon_Label</item>
         <item name="carbon_badgeStyle">@style/carbon_Badge</item>
         <item name="carbon_menuStripStyle">@style/carbon_MenuStrip</item>
+        <item name="carbon_progressViewStyle">?android:attr/progressBarStyle</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Dark</item>
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Light</item>

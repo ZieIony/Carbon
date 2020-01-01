@@ -21,7 +21,7 @@
     <carbon.widget.BottomNavigationView
         android:id="@+id/bottomBar3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_bottomNavigationViewHeight"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/carbon_margin"
         android:background="?attr/colorPrimary" />
 
@@ -32,7 +32,7 @@
     <carbon.widget.BottomNavigationView
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_bottomNavigationViewHeight"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/carbon_margin"
         app:carbon_itemLayout="@layout/item_bottombar" />
 
@@ -43,7 +43,7 @@
     <carbon.widget.BottomNavigationView
         android:id="@+id/bottomBar2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_bottomNavigationViewHeight"
+        android:layout_height="wrap_content"
         android:background="?attr/carbon_colorBackground"
         app:carbon_elevation="8dp"
         app:carbon_menu="@menu/menu_navigation" />

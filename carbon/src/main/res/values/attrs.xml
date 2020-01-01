@@ -1031,7 +1031,8 @@
         <attr name="android:orientation" />
     </declare-styleable>
 
-    <declare-styleable name="ProgressBar">
+    <attr name="carbon_progressViewStyle" format="reference" />
+    <declare-styleable name="ProgressView">
         <attr name="carbon_progressStyle" format="enum">
             <enum name="bar_determinate" value="0" />
             <enum name="bar_indeterminate" value="1" />

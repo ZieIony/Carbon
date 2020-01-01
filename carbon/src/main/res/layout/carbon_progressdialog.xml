@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:padding="@dimen/carbon_dialogPadding">
 
-    <carbon.widget.ProgressBar
+    <carbon.widget.ProgressView
         android:layout_width="@dimen/carbon_progressSize"
         android:layout_height="@dimen/carbon_progressSize"
         app:carbon_progressStyle="circular_indeterminate" />

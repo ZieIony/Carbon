@@ -49,7 +49,7 @@
         </carbon.widget.LinearLayout>
     </carbon.widget.FrameLayout>
 
-    <carbon.widget.ProgressBar
+    <carbon.widget.ProgressView
         android:layout_width="match_parent"
         android:layout_height="4dp"
         app:carbon_progress="0.3"
