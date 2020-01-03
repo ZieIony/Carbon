@@ -44,18 +44,39 @@
 
         <carbon.widget.ExpansionPanel
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="?attr/carbon_colorForeground">
 
-            <carbon.widget.FrameLayout
+            <carbon.widget.ExpansionPanel_Header
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="@dimen/carbon_listItemHeight"
+                app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-                <carbon.widget.Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/carbon_margin"
-                    android:text="button" />
-            </carbon.widget.FrameLayout>
+                <carbon.widget.TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/carbon_margin"
+                    android:layout_marginRight="@dimen/carbon_margin"
+                    android:gravity="center_vertical"
+                    android:text="Expand me"
+                    android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+            </carbon.widget.ExpansionPanel_Header>
+
+            <carbon.widget.ExpansionPanel_Content
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <carbon.widget.FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <carbon.widget.Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/carbon_margin"
+                        android:text="button" />
+                </carbon.widget.FrameLayout>
+            </carbon.widget.ExpansionPanel_Content>
         </carbon.widget.ExpansionPanel>
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

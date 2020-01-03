@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_panelExpandedIndicator"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="@dimen/carbon_windowPadding"
+        android:layout_marginRight="@dimen/carbon_windowPadding"
+        app:carbon_src="@drawable/carbon_arrow_down"
+        app:carbon_tint="?attr/carbon_iconColor" />
+
+</merge>
