@@ -105,6 +105,7 @@
         <activity android:name=".component.ImageTextSubtextDateListItemActivity" />
         <activity android:name=".component.AvatarTextRatingSubtextDateListItemActivity" />
         <activity android:name=".component.RegisterActivity" />
+        <activity android:name=".component.ComponentViewActivity" />
 
         <activity android:name=".dialog.ListDialogActivity" />
         <activity android:name=".dialog.ProgressDialogActivity" />

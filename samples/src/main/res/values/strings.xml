@@ -77,6 +77,7 @@
     <string name="imageTextSubtextDateListItemActivity_title">Image, text, subtext and date list item</string>
     <string name="avatarTextRatingSubtextDateListItemActivity_title">Avatar, text, rating, subtext and date list item</string>
     <string name="registerActivity_title">Registration form</string>
+    <string name="componentViewActivity_title">ComponentView</string>
 
     <string name="widgetAnimationsActivity_title">Widget animations</string>
     <string name="imageFadeActivity_title">Image fade</string>

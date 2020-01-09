@@ -24,6 +24,7 @@ class ComponentsActivity : SampleListActivity() {
                 SampleActivityItem(ImageTextSubtextDateListItemActivity::class.java),
                 SampleActivityItem(AvatarTextRatingSubtextDateListItemActivity::class.java),
                 SampleActivityItem(RegisterActivity::class.java),
+                SampleActivityItem(ComponentViewActivity::class.java),
                 PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         ))
     }

@@ -15,21 +15,43 @@ open class ExpansionPanel : LinearLayout {
     }
 
     private var expandedIndicator: ImageView? = null
-    private var expanded = true
+    private var _expanded = true
 
-    var onExpandedStateChangedListerner:OnExpandedStateChangedListerner? = null
+    var isExpanded
+        get() = _expanded
+        set(expanded) {
+            expandedIndicator?.rotation = if (expanded) 180.0f else 0.0f
+            this.content?.visibility = if (expanded) View.VISIBLE else View.GONE
+            this._expanded = expanded
+        }
+
+    var onExpandedStateChangedListerner: OnExpandedStateChangedListerner? = null
 
     private var header: ExpansionPanel_Header? = null
     private var content: ExpansionPanel_Content? = null
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(context: Context) : super(context) {
+        initExpansionPanel(null, 0, 0)
+    }
 
-    init {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        initExpansionPanel(attrs, 0, 0)
+    }
+
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initExpansionPanel(attrs, defStyleAttr, 0)
+    }
+
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        initExpansionPanel(attrs, defStyleAttr, defStyleRes)
+    }
+
+    private fun initExpansionPanel(attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
         orientation = android.widget.LinearLayout.VERTICAL
-        setExpanded(true)
+
+        val a = context.obtainStyledAttributes(attrs, R.styleable.ExpansionPanel, defStyleAttr, defStyleRes)
+        isExpanded = a.getBoolean(R.styleable.ExpansionPanel_carbon_expanded, true)
+        a.recycle()
     }
 
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
@@ -38,14 +60,14 @@ open class ExpansionPanel : LinearLayout {
             expandedIndicator = child.findViewById(R.id.carbon_panelExpandedIndicator)
             child.setOnClickListener {
                 toggle()
-                onExpandedStateChangedListerner?.onExpandedStateChanged(expanded)
+                onExpandedStateChangedListerner?.onExpandedStateChanged(_expanded)
             }
-            setExpanded(expanded)
+            isExpanded = _expanded
             super.addView(child, index, params)
         }
         if (child is ExpansionPanel_Content && this.content == null) {
             this.content = child
-            setExpanded(expanded)
+            isExpanded = _expanded
             super.addView(child, index, params)
         }
     }
@@ -62,7 +84,7 @@ open class ExpansionPanel : LinearLayout {
         }
         animator.start()
         this.content!!.visibility = View.VISIBLE
-        expanded = true
+        _expanded = true
     }
 
     fun collapse() {
@@ -77,25 +99,15 @@ open class ExpansionPanel : LinearLayout {
         }
         animator.start()
         this.content!!.visibility = View.GONE
-        expanded = false
+        _expanded = false
     }
 
     fun toggle() {
-        if (isExpanded()) {
+        if (isExpanded) {
             collapse()
         } else {
             expand()
         }
-    }
-
-    fun setExpanded(expanded: Boolean) {
-        expandedIndicator?.rotation = if (expanded) 180.0f else 0.0f
-        this.content?.visibility = if (expanded) View.VISIBLE else View.GONE
-        this.expanded = expanded
-    }
-
-    fun isExpanded(): Boolean {
-        return expanded
     }
 }
 

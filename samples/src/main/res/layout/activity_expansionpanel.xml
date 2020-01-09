@@ -45,7 +45,8 @@
         <carbon.widget.ExpansionPanel
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/carbon_colorForeground">
+            android:background="?attr/carbon_colorForeground"
+            app:carbon_expanded="true">
 
             <carbon.widget.ExpansionPanel_Header
                 android:layout_width="match_parent"
