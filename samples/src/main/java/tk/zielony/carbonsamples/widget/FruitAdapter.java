@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import carbon.recycler.ItemTouchHelper;
 import carbon.recycler.ListAdapter;
 import carbon.view.SelectionMode;
 import carbon.widget.CheckBox;
@@ -18,17 +16,17 @@ import carbon.widget.TextView;
 import tk.zielony.carbonsamples.R;
 
 public class FruitAdapter extends ListAdapter<FruitAdapter.ViewHolder, String> {
-    private ItemTouchHelper helper;
+    private View.OnTouchListener onTouchListener;
 
     public FruitAdapter(List<String> fruits) {
         super(fruits);
         setSelectionMode(SelectionMode.SINGLE);
     }
 
-    public FruitAdapter(List<String> fruits, ItemTouchHelper helper) {
+    public FruitAdapter(List<String> fruits, View.OnTouchListener onTouchListener) {
         super(fruits);
         setSelectionMode(SelectionMode.SINGLE);
-        this.helper = helper;
+        this.onTouchListener = onTouchListener;
     }
 
     @NotNull
@@ -44,14 +42,7 @@ public class FruitAdapter extends ListAdapter<FruitAdapter.ViewHolder, String> {
         super.onBindViewHolder(holder, position);
         holder.tv.setText(getItem(position));
         holder.checkBox.setChecked(getSelectedIndices().contains(position));
-
-        if (helper != null) {
-            holder.reorder.setOnTouchListener((view, motionEvent) -> {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                    helper.startDrag(holder);
-                return true;
-            });
-        }
+        holder.reorder.setOnTouchListener(onTouchListener);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

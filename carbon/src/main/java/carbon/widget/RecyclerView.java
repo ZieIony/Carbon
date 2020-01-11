@@ -84,11 +84,11 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         MarginView {
 
     public interface OnItemClickedListener<Type> {
-        void onItemClicked(View view, Type type, int position);
+        void onItemClicked(View view, Type item, int position);
     }
 
     public interface OnItemClickedListener2<Type> {
-        void onItemClicked(Type type);
+        void onItemClicked(Type item);
     }
 
     public class EdgeEffectFactory extends androidx.recyclerview.widget.RecyclerView.EdgeEffectFactory {

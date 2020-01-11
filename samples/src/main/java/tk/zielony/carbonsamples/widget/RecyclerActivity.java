@@ -1,6 +1,7 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -9,10 +10,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import carbon.recycler.ItemTouchHelper;
+import carbon.recycler.DragTouchHelper;
+import carbon.recycler.SwipeTouchHelper;
 import carbon.widget.RecyclerView;
-import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.ThemedActivity;
 
 @SampleAnnotation(
@@ -33,39 +35,24 @@ public class RecyclerActivity extends ThemedActivity {
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public int getMovementFlags(androidx.recyclerview.widget.RecyclerView recyclerView, androidx.recyclerview.widget.RecyclerView.ViewHolder viewHolder) {
-                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-                int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
-                return makeMovementFlags(dragFlags, swipeFlags);
-
-            }
-
-            @Override
-            public boolean onMove(androidx.recyclerview.widget.RecyclerView recyclerView, androidx.recyclerview.widget.RecyclerView.ViewHolder viewHolder, androidx.recyclerview.widget.RecyclerView.ViewHolder target) {
-                Collections.swap(fruits, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                fruitAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                return true;
-            }
-
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                fruits.remove(viewHolder.getAdapterPosition());
-                fruitAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-            }
-
-            @Override
-            public void onSelectedChanged(androidx.recyclerview.widget.RecyclerView.ViewHolder viewHolder, int actionState) {
-                super.onSelectedChanged(viewHolder, actionState);
-            }
-        };
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        fruitAdapter = new FruitAdapter(fruits, itemTouchHelper);
+        DragTouchHelper<String> dragTouchHelper = new DragTouchHelper<>(recyclerView, fruitAdapter);
+        fruitAdapter = new FruitAdapter(fruits, (v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN)
+                dragTouchHelper.startDrag(v);
+            return true;
+        });
         recyclerView.setAdapter(fruitAdapter);
+
+        dragTouchHelper.setOnItemMovedListener((item, position, targetPosition) -> {
+            Collections.swap(fruits, position, targetPosition);
+            fruitAdapter.notifyItemMoved(position, targetPosition);
+            return true;
+        });
+
+        SwipeTouchHelper<String> swipeTouchHelper = new SwipeTouchHelper<>(recyclerView, fruitAdapter);
+        swipeTouchHelper.setOnItemSwipedListener((item, position) -> {
+            fruits.remove(position);
+            fruitAdapter.notifyItemRemoved(position);
+        });
     }
 }
