@@ -2,6 +2,8 @@ package carbon.widget
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -108,6 +110,60 @@ open class ExpansionPanel : LinearLayout {
         } else {
             expand()
         }
+    }
+
+    internal class SavedState : BaseSavedState {
+        var expanded: Boolean = false
+
+        /**
+         * Constructor called from [ExpansionPanel.onSaveInstanceState]
+         */
+        constructor(superState: Parcelable?) : super(superState) {}
+
+        /**
+         * Constructor called from [.CREATOR]
+         */
+        private constructor(`in`: Parcel) : super(`in`) {
+            expanded = `in`.readInt() == 1
+        }
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeInt(if (expanded) 1 else 0)
+        }
+
+        override fun toString(): String {
+            return ("ExpansionPanel.SavedState{"
+                    + Integer.toHexString(System.identityHashCode(this))
+                    + " expanded=" + expanded + "}")
+        }
+
+        companion object {
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(`in`: Parcel): SavedState? {
+                    return SavedState(`in`)
+                }
+
+                override fun newArray(size: Int): Array<SavedState?> {
+                    return arrayOfNulls(size)
+                }
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        val superState = super.onSaveInstanceState()
+        val ss = SavedState(superState)
+        ss.expanded = isExpanded
+        return ss
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable) {
+        val ss = state as SavedState
+        super.onRestoreInstanceState(ss.superState)
+        isExpanded = ss.expanded
+        requestLayout()
     }
 }
 

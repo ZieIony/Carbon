@@ -151,13 +151,13 @@ public class Snackbar {
 
     public void setStyle(Snackbar.Style style) {
         this.style = style;
-        SnackbarView snackbarView = snackbarLayout.getView();
         if (style == Snackbar.Style.Auto)
             this.style = context.getResources().getBoolean(R.bool.carbon_isPhone) ? Snackbar.Style.Docked : Snackbar.Style.Floating;
+        SnackbarView snackbarView = snackbarLayout.getView();
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
         if (layoutParams == null)
             layoutParams = snackbarLayout.generateDefaultLayoutParams();
-        if (style == Snackbar.Style.Floating) {
+        if (this.style == Snackbar.Style.Floating) {
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             int margin = (int) context.getResources().getDimension(R.dimen.carbon_margin);
