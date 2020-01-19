@@ -11,6 +11,8 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Outline;
 import android.graphics.Paint;
@@ -37,11 +39,14 @@ import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.google.android.material.shape.CutCornerTreatment;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.google.android.material.shape.ShapeAppearanceModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +72,8 @@ import carbon.view.TintedView;
 import carbon.view.TouchMarginView;
 import carbon.view.TransformationView;
 import carbon.view.VisibleView;
+
+import static carbon.animation.AnimUtils.SHORT_ANIMATION_DURATION;
 
 @SuppressLint("AppCompatCustomView")
 public class ImageView extends android.widget.ImageView
@@ -176,14 +183,48 @@ public class ImageView extends android.widget.ImageView
         Carbon.initCornerCutRadius(this, a, cornerCutRadiusIds);
         setTooltipText(a.getText(R.styleable.ImageView_carbon_tooltipText));
         setEnabled(a.getBoolean(R.styleable.ImageView_android_enabled, true));
+        if (a.getBoolean(R.styleable.ImageView_carbon_animateEnabledState, false))
+            setupSaturationAnimator();
 
         a.recycle();
+    }
+
+    private void setupSaturationAnimator() {
+        stateAnimator = new StateAnimator(this);
+        {
+            ColorMatrix matrix = new ColorMatrix();
+
+            final ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+            animator.setDuration(SHORT_ANIMATION_DURATION);
+            animator.setInterpolator(new FastOutSlowInInterpolator());
+            Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
+            };
+            animator.addUpdateListener(animation -> {
+                matrix.setSaturation((Float) animation.getAnimatedValue());
+                setColorFilter(new ColorMatrixColorFilter(matrix));
+            });
+            stateAnimator.addState(new int[]{android.R.attr.state_enabled}, animator, animatorListener);
+        }
+        {
+            ColorMatrix matrix = new ColorMatrix();
+
+            final ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
+            animator.setDuration(SHORT_ANIMATION_DURATION);
+            animator.setInterpolator(new FastOutSlowInInterpolator());
+            Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
+            };
+            animator.addUpdateListener(animation -> {
+                matrix.setSaturation((Float) animation.getAnimatedValue());
+                setColorFilter(new ColorMatrixColorFilter(matrix));
+            });
+            stateAnimator.addState(new int[]{-android.R.attr.state_enabled}, animator, animatorListener);
+        }
     }
 
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
-        updateTint();
+        applyTint();
     }
 
     @Override
@@ -192,14 +233,14 @@ public class ImageView extends android.widget.ImageView
             setImageDrawable(new VectorDrawable(getResources(), resId));
         } else {
             super.setImageResource(resId);
-            updateTint();
+            applyTint();
         }
     }
 
     @Override
     public void setImageDrawable(@Nullable Drawable drawable) {
         super.setImageDrawable(drawable);
-        updateTint();
+        applyTint();
     }
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
@@ -217,6 +258,7 @@ public class ImageView extends android.widget.ImageView
         return new Point(outLocation[0], outLocation[1]);
     }
 
+    @NotNull
     public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
         int[] location = new int[2];
         hotspot.getLocationOnScreen(location);
@@ -225,6 +267,7 @@ public class ImageView extends android.widget.ImageView
         return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
     }
 
+    @NotNull
     @Override
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
@@ -266,6 +309,7 @@ public class ImageView extends android.widget.ImageView
     private RectF boundsRect = new RectF();
     private Path cornersMask = new Path();
 
+    @NotNull
     public ShapeAppearanceModel getShapeModel() {
         return shapeModel;
     }
@@ -289,7 +333,7 @@ public class ImageView extends android.widget.ImageView
     }
 
     @Override
-    public void setShapeModel(ShapeAppearanceModel model) {
+    public void setShapeModel(@NotNull ShapeAppearanceModel model) {
         this.shapeModel = model;
         shadowDrawable = new MaterialShapeDrawable(shapeModel);
         if (getWidth() > 0 && getHeight() > 0)
@@ -522,7 +566,7 @@ public class ImageView extends android.widget.ImageView
             rippleDrawable = null;
         }
         super.setBackgroundDrawable(background);
-        updateBackgroundTint();
+        applyBackgroundTint();
     }
 
 
@@ -593,7 +637,7 @@ public class ImageView extends android.widget.ImageView
     }
 
     @Override
-    public void drawShadow(Canvas canvas) {
+    public void drawShadow(@NotNull Canvas canvas) {
         float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
@@ -735,6 +779,7 @@ public class ImageView extends android.widget.ImageView
         touchMargin.bottom = margin;
     }
 
+    @NotNull
     @Override
     public Rect getTouchMargin() {
         return touchMargin;
@@ -765,6 +810,7 @@ public class ImageView extends android.widget.ImageView
 
     private StateAnimator stateAnimator = new StateAnimator(this);
 
+    @NotNull
     @Override
     public StateAnimator getStateAnimator() {
         return stateAnimator;
@@ -884,23 +930,17 @@ public class ImageView extends android.widget.ImageView
 
     ValueAnimator.AnimatorUpdateListener tintAnimatorListener = animation -> {
         updateTint();
-        if (getDrawable() != null && tint != null && tintMode != null)
-            getDrawable().setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getDrawable().getState(), tint.getDefaultColor()), tintMode));
         ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
         updateBackgroundTint();
-        if (getBackground() != null && backgroundTint != null && backgroundTintMode != null)
-            getBackground().setColorFilter(new PorterDuffColorFilter(backgroundTint.getColorForState(getBackground().getState(), backgroundTint.getDefaultColor()), backgroundTintMode));
         ViewCompat.postInvalidateOnAnimation(this);
     };
 
     @Override
     public void setTintList(ColorStateList list) {
         this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
-        if (tint == null)
-            AnimUtils.setupSaturationAnimator(stateAnimator, this);
-        updateTint();
+        applyTint();
     }
 
     @Override
@@ -913,7 +953,13 @@ public class ImageView extends android.widget.ImageView
         return tint;
     }
 
-    private void updateTint() {
+    protected void updateTint() {
+        Drawable drawable = getDrawable();
+        if (drawable != null && tint != null && tintMode != null)
+            drawable.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getDrawableState(), tint.getDefaultColor()), tintMode));
+    }
+
+    protected void applyTint() {
         Drawable drawable = getDrawable();
         if (drawable == null)
             return;
@@ -921,17 +967,19 @@ public class ImageView extends android.widget.ImageView
         if (tint != null && tintMode != null) {
             Carbon.setTintListMode(drawable, tint, tintMode);
         } else {
-            Carbon.setTintList(drawable, null);
+            Carbon.clearTint(drawable);
         }
 
         if (drawable.isStateful())
             drawable.setState(getDrawableState());
+        if (tint != null && tint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) tint).setState(getDrawableState());
     }
 
     @Override
     public void setTintMode(@NonNull PorterDuff.Mode mode) {
         this.tintMode = mode;
-        updateTint();
+        applyTint();
     }
 
     @Override
@@ -942,7 +990,7 @@ public class ImageView extends android.widget.ImageView
     @Override
     public void setBackgroundTintList(ColorStateList list) {
         this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
-        updateBackgroundTint();
+        applyBackgroundTint();
     }
 
     @Override
@@ -955,24 +1003,37 @@ public class ImageView extends android.widget.ImageView
         return backgroundTint;
     }
 
-    private void updateBackgroundTint() {
+    protected void updateBackgroundTint() {
+        Drawable background = getBackground();
+        if (background instanceof RippleDrawable)
+            background = ((RippleDrawable) background).getBackground();
+        if (background != null && backgroundTint != null && backgroundTintMode != null)
+            background.setColorFilter(new PorterDuffColorFilter(backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor()), backgroundTintMode));
+    }
+
+    protected void applyBackgroundTint() {
         Drawable background = getBackground();
         if (background instanceof RippleDrawable)
             background = ((RippleDrawable) background).getBackground();
         if (background == null)
             return;
 
-        Carbon.setTintList(background, backgroundTint);
-        Carbon.setTintMode(background, backgroundTintMode);
+        if (backgroundTint != null && backgroundTintMode != null) {
+            Carbon.setTintListMode(background, backgroundTint, backgroundTintMode);
+        } else {
+            Carbon.clearTint(background);
+        }
 
         if (background.isStateful())
             background.setState(getDrawableState());
+        if (backgroundTint != null && backgroundTint instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) backgroundTint).setState(getDrawableState());
     }
 
     @Override
     public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
-        updateBackgroundTint();
+        applyBackgroundTint();
     }
 
     @Override

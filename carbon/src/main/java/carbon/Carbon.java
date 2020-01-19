@@ -543,21 +543,13 @@ public class Carbon {
         }
     }
 
-    public static void setTintList(Drawable drawable, ColorStateList tint) {
+    public static void clearTint(Drawable drawable) {
         if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
-            drawable.setTintList(tint);
+            drawable.setTintList(null);
         } else if (drawable instanceof TintAwareDrawable) {
-            ((TintAwareDrawable) drawable).setTintList(tint);
+            ((TintAwareDrawable) drawable).setTintList(null);
         } else {
-            drawable.setColorFilter(tint == null ? null : new PorterDuffColorFilter(tint.getColorForState(drawable.getState(), tint.getDefaultColor()), PorterDuff.Mode.MULTIPLY));
-        }
-    }
-
-    public static void setTintMode(Drawable drawable, PorterDuff.Mode mode) {
-        if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
-            drawable.setTintMode(mode);
-        } else if (drawable instanceof TintAwareDrawable) {
-            ((TintAwareDrawable) drawable).setTintMode(mode);
+            drawable.setColorFilter(null);
         }
     }
 

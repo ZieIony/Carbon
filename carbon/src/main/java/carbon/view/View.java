@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -41,6 +42,8 @@ import com.google.android.material.shape.CutCornerTreatment;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.google.android.material.shape.ShapeAppearanceModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,6 +185,7 @@ public abstract class View extends android.view.View
         return new Point(outLocation[0], outLocation[1]);
     }
 
+    @NotNull
     public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
         int[] location = new int[2];
         hotspot.getLocationOnScreen(location);
@@ -190,6 +194,7 @@ public abstract class View extends android.view.View
         return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
     }
 
+    @NotNull
     @Override
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
@@ -231,6 +236,7 @@ public abstract class View extends android.view.View
     private RectF boundsRect = new RectF();
     private Path cornersMask = new Path();
 
+    @NotNull
     public ShapeAppearanceModel getShapeModel() {
         return shapeModel;
     }
@@ -254,7 +260,7 @@ public abstract class View extends android.view.View
     }
 
     @Override
-    public void setShapeModel(ShapeAppearanceModel model) {
+    public void setShapeModel(@NotNull ShapeAppearanceModel model) {
         this.shapeModel = model;
         shadowDrawable = new MaterialShapeDrawable(shapeModel);
         if (getWidth() > 0 && getHeight() > 0)
@@ -558,7 +564,7 @@ public abstract class View extends android.view.View
     }
 
     @Override
-    public void drawShadow(Canvas canvas) {
+    public void drawShadow(@NotNull Canvas canvas) {
         float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
@@ -700,6 +706,7 @@ public abstract class View extends android.view.View
         touchMargin.bottom = margin;
     }
 
+    @NotNull
     @Override
     public Rect getTouchMargin() {
         return touchMargin;
@@ -730,6 +737,7 @@ public abstract class View extends android.view.View
 
     private StateAnimator stateAnimator = new StateAnimator(this);
 
+    @NotNull
     @Override
     public StateAnimator getStateAnimator() {
         return stateAnimator;
@@ -858,7 +866,7 @@ public abstract class View extends android.view.View
     @Override
     public void setTintList(ColorStateList list) {
         this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
-        updateTint();
+        applyTint();
     }
 
     @Override
@@ -874,10 +882,14 @@ public abstract class View extends android.view.View
     protected void updateTint() {
     }
 
+    protected void applyTint() {
+        updateTint();
+    }
+
     @Override
     public void setTintMode(@NonNull PorterDuff.Mode mode) {
         this.tintMode = mode;
-        updateTint();
+        applyTint();
     }
 
     @Override
@@ -888,7 +900,7 @@ public abstract class View extends android.view.View
     @Override
     public void setBackgroundTintList(ColorStateList list) {
         this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
-        updateBackgroundTint();
+        applyBackgroundTint();
     }
 
     @Override
@@ -901,7 +913,17 @@ public abstract class View extends android.view.View
         return backgroundTint;
     }
 
-    private void updateBackgroundTint() {
+    protected void updateBackgroundTint() {
+        Drawable background = getBackground();
+        if (background instanceof RippleDrawable)
+            background = ((RippleDrawable) background).getBackground();
+        if (background != null && backgroundTint != null && backgroundTintMode != null) {
+            background.setColorFilter(new PorterDuffColorFilter(backgroundTint.getColorForState(background.getState(), backgroundTint.getDefaultColor()), backgroundTintMode));
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+    }
+
+    private void applyBackgroundTint() {
         Drawable background = getBackground();
         if (background instanceof RippleDrawable)
             background = ((RippleDrawable) background).getBackground();
@@ -911,17 +933,18 @@ public abstract class View extends android.view.View
         if (backgroundTint != null && backgroundTintMode != null) {
             Carbon.setTintListMode(background, backgroundTint, backgroundTintMode);
         } else {
-            Carbon.setTintList(background, null);
+            Carbon.clearTint(background);
         }
 
         if (background.isStateful())
             background.setState(getDrawableState());
+        updateBackgroundTint();
     }
 
     @Override
     public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
-        updateBackgroundTint();
+        applyBackgroundTint();
     }
 
     @Override

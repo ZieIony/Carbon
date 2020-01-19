@@ -17,6 +17,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -39,6 +40,8 @@ import com.google.android.material.shape.CutCornerTreatment;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.google.android.material.shape.ShapeAppearanceModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -323,6 +326,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         return new Point(outLocation[0], outLocation[1]);
     }
 
+    @NotNull
     public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
         int[] location = new int[2];
         hotspot.getLocationOnScreen(location);
@@ -331,6 +335,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
     }
 
+    @NotNull
     @Override
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
@@ -484,6 +489,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
     private RectF boundsRect = new RectF();
     private Path cornersMask = new Path();
 
+    @NotNull
     public ShapeAppearanceModel getShapeModel() {
         return shapeModel;
     }
@@ -507,7 +513,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
     }
 
     @Override
-    public void setShapeModel(ShapeAppearanceModel model) {
+    public void setShapeModel(@NotNull ShapeAppearanceModel model) {
         this.shapeModel = model;
         shadowDrawable = new MaterialShapeDrawable(shapeModel);
         if (getWidth() > 0 && getHeight() > 0)
@@ -814,7 +820,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
     }
 
     @Override
-    public void drawShadow(Canvas canvas) {
+    public void drawShadow(@NotNull Canvas canvas) {
         float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
@@ -956,6 +962,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         touchMargin.bottom = margin;
     }
 
+    @NotNull
     @Override
     public Rect getTouchMargin() {
         return touchMargin;
@@ -986,6 +993,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 
     private StateAnimator stateAnimator = new StateAnimator(this);
 
+    @NotNull
     @Override
     public StateAnimator getStateAnimator() {
         return stateAnimator;
@@ -1125,8 +1133,13 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
-        updateBackgroundTint();
-        ViewCompat.postInvalidateOnAnimation(this);
+        Drawable background = getBackground();
+        if (background instanceof RippleDrawable)
+            background = ((RippleDrawable) background).getBackground();
+        if (background != null && backgroundTint != null && backgroundTintMode != null) {
+            background.setColorFilter(new PorterDuffColorFilter(backgroundTint.getColorForState(background.getState(), backgroundTint.getDefaultColor()), backgroundTintMode));
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
     };
 
     @Override
@@ -1193,8 +1206,14 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         if (background == null)
             return;
 
-        Carbon.setTintList(background, backgroundTint);
-        Carbon.setTintMode(background, backgroundTintMode);
+        if (backgroundTint != null && backgroundTintMode != null) {
+            Carbon.setTintListMode(background, backgroundTint, backgroundTintMode);
+        } else {
+            Carbon.clearTint(background);
+        }
+
+        if (background.isStateful())
+            background.setState(getDrawableState());
     }
 
     @Override

@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 
 interface StrokeView {
 
-    var stroke: ColorStateList
+    var stroke: ColorStateList?
 
     fun setStroke(color: Int)
 

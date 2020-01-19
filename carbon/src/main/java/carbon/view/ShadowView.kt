@@ -13,17 +13,17 @@ interface ShadowView {
 
     var translationZ: Float
 
-    var elevationShadowColor: ColorStateList
+    var elevationShadowColor: ColorStateList?
 
     fun setElevationShadowColor(color: Int)
 
     var outlineAmbientShadowColor: Int
 
-    fun setOutlineAmbientShadowColor(color: ColorStateList)
+    fun setOutlineAmbientShadowColor(color: ColorStateList?)
 
     var outlineSpotShadowColor: Int
 
-    fun setOutlineSpotShadowColor(color: ColorStateList)
+    fun setOutlineSpotShadowColor(color: ColorStateList?)
 
     fun hasShadow(): Boolean
 

@@ -24,6 +24,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimatedColorStateList;
 import carbon.drawable.EdgeEffect;
+import carbon.drawable.ripple.RippleDrawable;
 import carbon.view.MarginView;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
@@ -215,8 +216,13 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
         ViewCompat.postInvalidateOnAnimation(this);
     };
     ValueAnimator.AnimatorUpdateListener backgroundTintAnimatorListener = animation -> {
-        updateBackgroundTint();
-        ViewCompat.postInvalidateOnAnimation(this);
+        Drawable background = getBackground();
+        if (background instanceof RippleDrawable)
+            background = ((RippleDrawable) background).getBackground();
+        if (background != null && backgroundTint != null && backgroundTintMode != null) {
+            background.setColorFilter(new PorterDuffColorFilter(backgroundTint.getColorForState(background.getState(), backgroundTint.getDefaultColor()), backgroundTintMode));
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
     };
 
     @Override

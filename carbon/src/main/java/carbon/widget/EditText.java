@@ -53,6 +53,8 @@ import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -271,7 +273,7 @@ public class EditText extends android.widget.EditText
 
         addTextChangedListener(new SimpleTextWatcher() {
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void afterTextChanged(@NotNull Editable editable) {
                 if (!skipValidate)
                     validateInternalEvent();
             }
@@ -543,6 +545,7 @@ public class EditText extends android.widget.EditText
         return new Point(outLocation[0], outLocation[1]);
     }
 
+    @NotNull
     public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
         int[] location = new int[2];
         hotspot.getLocationOnScreen(location);
@@ -551,6 +554,7 @@ public class EditText extends android.widget.EditText
         return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
     }
 
+    @NotNull
     @Override
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
@@ -649,6 +653,7 @@ public class EditText extends android.widget.EditText
     private RectF boundsRect = new RectF();
     private Path cornersMask = new Path();
 
+    @NotNull
     public ShapeAppearanceModel getShapeModel() {
         return shapeModel;
     }
@@ -672,7 +677,7 @@ public class EditText extends android.widget.EditText
     }
 
     @Override
-    public void setShapeModel(ShapeAppearanceModel model) {
+    public void setShapeModel(@NotNull ShapeAppearanceModel model) {
         this.shapeModel = model;
         shadowDrawable = new MaterialShapeDrawable(shapeModel);
         if (getWidth() > 0 && getHeight() > 0)
@@ -1007,7 +1012,7 @@ public class EditText extends android.widget.EditText
     }
 
     @Override
-    public void drawShadow(Canvas canvas) {
+    public void drawShadow(@NotNull Canvas canvas) {
         float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
@@ -1149,6 +1154,7 @@ public class EditText extends android.widget.EditText
         touchMargin.bottom = margin;
     }
 
+    @NotNull
     @Override
     public Rect getTouchMargin() {
         return touchMargin;
@@ -1179,6 +1185,7 @@ public class EditText extends android.widget.EditText
 
     private StateAnimator stateAnimator = new StateAnimator(this);
 
+    @NotNull
     @Override
     public StateAnimator getStateAnimator() {
         return stateAnimator;
@@ -1352,7 +1359,7 @@ public class EditText extends android.widget.EditText
         } else {
             for (Drawable drawable : drawables) {
                 if (drawable != null) {
-                    Carbon.setTintList(drawable, null);
+                    Carbon.clearTint(drawable);
 
                     if (drawable.isStateful())
                         drawable.setState(getDrawableState());
@@ -1398,7 +1405,7 @@ public class EditText extends android.widget.EditText
         if (backgroundTint != null && backgroundTintMode != null) {
             Carbon.setTintListMode(background, backgroundTint, backgroundTintMode);
         } else {
-            Carbon.setTintList(background, null);
+            Carbon.clearTint(background);
         }
 
         if (background.isStateful())

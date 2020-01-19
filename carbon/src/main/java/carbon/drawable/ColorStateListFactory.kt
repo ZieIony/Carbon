@@ -2,7 +2,6 @@ package carbon.drawable
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
 import carbon.Carbon
 import carbon.R
 
@@ -95,170 +94,170 @@ object ColorStateListFactory {
         )
     }
 
-    fun makeHighlight(context: Context): ColorStateList = make(context,
+    fun makeHighlight(context: Context) = make(context,
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorControlActivated) and 0xffffff)),
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorError) and 0xffffff)))
 
-    fun makeHighlightPrimary(context: Context): ColorStateList = make(context,
+    fun makeHighlightPrimary(context: Context) = make(context,
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorPrimary) and 0xffffff)),
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorError) and 0xffffff))
     )
 
-    fun makeHighlightSecondary(context: Context): ColorStateList = make(context,
+    fun makeHighlightSecondary(context: Context) = make(context,
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorSecondary) and 0xffffff)),
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorError) and 0xffffff))
     )
 
-    fun makeMenuSelection(context: Context): Drawable = MenuSelectionDrawable(
+    fun makeMenuSelection(context: Context) = MenuSelectionDrawable(
             Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionRadius),
             Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionInset),
             makeHighlight(context))
 
-    fun makeMenuSelectionPrimary(context: Context): Drawable = MenuSelectionDrawable(
+    fun makeMenuSelectionPrimary(context: Context) = MenuSelectionDrawable(
             Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionRadius),
             Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionInset),
             makeHighlightPrimary(context))
 
-    fun makeMenuSelectionSecondary(context: Context): Drawable = MenuSelectionDrawable(
+    fun makeMenuSelectionSecondary(context: Context) = MenuSelectionDrawable(
             Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionRadius),
             Carbon.getThemeDimen(context, R.attr.carbon_menuSelectionInset),
             makeHighlightSecondary(context))
 
-    fun makePrimary(context: Context): ColorStateList = makeAlpha2(context,
+    fun makePrimary(context: Context) = makeAlpha2(context,
             Carbon.getThemeColor(context, R.attr.colorPrimary),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabled)
     )
 
-    fun makePrimaryInverse(context: Context): ColorStateList = makeAlpha2(context,
+    fun makePrimaryInverse(context: Context) = makeAlpha2(context,
             Carbon.getThemeColor(context, R.attr.colorPrimary),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabledInverse)
     )
 
-    fun makeSecondary(context: Context): ColorStateList = makeAlpha2(context,
+    fun makeSecondary(context: Context) = makeAlpha2(context,
             Carbon.getThemeColor(context, R.attr.colorSecondary),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabled)
     )
 
-    fun makeSecondaryInverse(context: Context): ColorStateList = makeAlpha2(context,
+    fun makeSecondaryInverse(context: Context) = makeAlpha2(context,
             Carbon.getThemeColor(context, R.attr.colorSecondary),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabledInverse)
     )
 
 
-    fun makeControl(context: Context): ColorStateList = makeAlpha(context,
+    fun makeControl(context: Context) = makeAlpha(context,
             Carbon.getThemeColor(context, R.attr.carbon_colorControl),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlActivated),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabled)
     )
 
-    fun makeControlInverse(context: Context): ColorStateList = makeAlpha(context,
+    fun makeControlInverse(context: Context) = makeAlpha(context,
             Carbon.getThemeColor(context, R.attr.carbon_colorControlInverse),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlActivatedInverse),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabledInverse)
     )
 
-    fun makeControlPrimary(context: Context): ColorStateList = makeAlpha(context,
+    fun makeControlPrimary(context: Context) = makeAlpha(context,
             Carbon.getThemeColor(context, R.attr.carbon_colorControl),
             Carbon.getThemeColor(context, R.attr.colorPrimary),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabled)
     )
 
-    fun makeControlPrimaryInverse(context: Context): ColorStateList = makeAlpha(context,
+    fun makeControlPrimaryInverse(context: Context) = makeAlpha(context,
             Carbon.getThemeColor(context, R.attr.carbon_colorControlInverse),
             Carbon.getThemeColor(context, R.attr.colorPrimary),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabledInverse)
     )
 
-    fun makeControlSecondary(context: Context): ColorStateList = makeAlpha(context,
+    fun makeControlSecondary(context: Context) = makeAlpha(context,
             Carbon.getThemeColor(context, R.attr.carbon_colorControl),
             Carbon.getThemeColor(context, R.attr.colorSecondary),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabled)
     )
 
-    fun makeControlSecondaryInverse(context: Context): ColorStateList = makeAlpha(context,
+    fun makeControlSecondaryInverse(context: Context) = makeAlpha(context,
             Carbon.getThemeColor(context, R.attr.carbon_colorControlInverse),
             Carbon.getThemeColor(context, R.attr.colorSecondary),
             Carbon.getThemeColor(context, R.attr.carbon_colorControlDisabledInverse)
     )
 
 
-    fun makeTextSecondary(context: Context): ColorStateList = make2(context,
+    fun makeTextSecondary(context: Context) = make2(context,
             Carbon.getThemeColor(context, R.attr.colorSecondary),
             Carbon.getThemeColor(context, android.R.attr.textColorTertiary)
     )
 
-    fun makeTextSecondaryInverse(context: Context): ColorStateList = make2(context,
+    fun makeTextSecondaryInverse(context: Context) = make2(context,
             Carbon.getThemeColor(context, R.attr.colorSecondary),
             Carbon.getThemeColor(context, android.R.attr.textColorTertiaryInverse)
     )
 
-    fun makeTextPrimary(context: Context): ColorStateList = make2(context,
+    fun makeTextPrimary(context: Context) = make2(context,
             Carbon.getThemeColor(context, R.attr.colorPrimary),
             Carbon.getThemeColor(context, android.R.attr.textColorTertiary)
     )
 
-    fun makeTextPrimaryInverse(context: Context): ColorStateList = make2(context,
+    fun makeTextPrimaryInverse(context: Context) = make2(context,
             Carbon.getThemeColor(context, R.attr.colorPrimary),
             Carbon.getThemeColor(context, android.R.attr.textColorTertiaryInverse)
     )
 
 
-    fun makePrimaryText(context: Context): ColorStateList = make2(context,
+    fun makePrimaryText(context: Context) = make2(context,
             Carbon.getThemeColor(context, android.R.attr.textColorPrimary),
             Carbon.getThemeColor(context, android.R.attr.textColorTertiary)
     )
 
-    fun makePrimaryTextInverse(context: Context): ColorStateList = make2(context,
+    fun makePrimaryTextInverse(context: Context) = make2(context,
             Carbon.getThemeColor(context, android.R.attr.textColorPrimaryInverse),
             Carbon.getThemeColor(context, android.R.attr.textColorTertiaryInverse)
     )
 
-    fun makeSecondaryText(context: Context): ColorStateList = make2(context,
+    fun makeSecondaryText(context: Context) = make2(context,
             Carbon.getThemeColor(context, android.R.attr.textColorSecondary),
             Carbon.getThemeColor(context, android.R.attr.textColorTertiary)
     )
 
-    fun makeSecondaryTextInverse(context: Context): ColorStateList = make2(context,
+    fun makeSecondaryTextInverse(context: Context) = make2(context,
             Carbon.getThemeColor(context, android.R.attr.textColorSecondaryInverse),
             Carbon.getThemeColor(context, android.R.attr.textColorTertiaryInverse)
     )
 
 
-    fun makeIcon(context: Context): ColorStateList = make2(context,
+    fun makeIcon(context: Context) = make2(context,
             Carbon.getThemeColor(context, R.attr.carbon_iconColor),
             Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabled)
     )
 
-    fun makeIconInverse(context: Context): ColorStateList = make2(context,
+    fun makeIconInverse(context: Context) = make2(context,
             Carbon.getThemeColor(context, R.attr.carbon_iconColorInverse),
             Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabledInverse)
     )
 
-    fun makeIconPrimary(context: Context): ColorStateList = make(context,
+    fun makeIconPrimary(context: Context) = make(context,
             Carbon.getThemeColor(context, R.attr.carbon_iconColor),
             Carbon.getThemeColor(context, R.attr.colorPrimary),
             Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabled)
     )
 
-    fun makeIconPrimaryInverse(context: Context): ColorStateList = make(context,
+    fun makeIconPrimaryInverse(context: Context) = make(context,
             Carbon.getThemeColor(context, R.attr.carbon_iconColorInverse),
             Carbon.getThemeColor(context, R.attr.colorPrimary),
             Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabledInverse)
     )
 
-    fun makeIconSecondary(context: Context): ColorStateList = make(context,
+    fun makeIconSecondary(context: Context) = make(context,
             Carbon.getThemeColor(context, R.attr.carbon_iconColor),
             Carbon.getThemeColor(context, R.attr.colorSecondary),
             Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabled)
     )
 
-    fun makeIconSecondaryInverse(context: Context): ColorStateList = make(context,
+    fun makeIconSecondaryInverse(context: Context) = make(context,
             Carbon.getThemeColor(context, R.attr.carbon_iconColorInverse),
             Carbon.getThemeColor(context, R.attr.colorSecondary),
             Carbon.getThemeColor(context, R.attr.carbon_iconColorDisabledInverse)

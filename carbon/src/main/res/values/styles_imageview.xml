@@ -41,6 +41,7 @@
         <item name="carbon_cornerRadius">@dimen/carbon_avatarSizeHalf</item>
         <item name="carbon_stroke">@color/carbon_defaultColorControl</item>
         <item name="carbon_strokeWidth">0.5dp</item>
+        <item name="carbon_animateEnabledState">true</item>
     </style>
 
     <style name="carbon_ImageView.Avatar.Square">

@@ -40,6 +40,8 @@ import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -205,6 +207,7 @@ public class FlowLayout extends android.widget.FrameLayout
         return new Point(outLocation[0], outLocation[1]);
     }
 
+    @NotNull
     public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
         int[] location = new int[2];
         hotspot.getLocationOnScreen(location);
@@ -213,6 +216,7 @@ public class FlowLayout extends android.widget.FrameLayout
         return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
     }
 
+    @NotNull
     @Override
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
@@ -535,6 +539,7 @@ public class FlowLayout extends android.widget.FrameLayout
     private RectF boundsRect = new RectF();
     private Path cornersMask = new Path();
 
+    @NotNull
     public ShapeAppearanceModel getShapeModel() {
         return shapeModel;
     }
@@ -558,7 +563,7 @@ public class FlowLayout extends android.widget.FrameLayout
     }
 
     @Override
-    public void setShapeModel(ShapeAppearanceModel model) {
+    public void setShapeModel(@NotNull ShapeAppearanceModel model) {
         this.shapeModel = model;
         shadowDrawable = new MaterialShapeDrawable(shapeModel);
         if (getWidth() > 0 && getHeight() > 0)
@@ -865,7 +870,7 @@ public class FlowLayout extends android.widget.FrameLayout
     }
 
     @Override
-    public void drawShadow(Canvas canvas) {
+    public void drawShadow(@NotNull Canvas canvas) {
         float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
@@ -1007,6 +1012,7 @@ public class FlowLayout extends android.widget.FrameLayout
         touchMargin.bottom = margin;
     }
 
+    @NotNull
     @Override
     public Rect getTouchMargin() {
         return touchMargin;
@@ -1037,6 +1043,7 @@ public class FlowLayout extends android.widget.FrameLayout
 
     private StateAnimator stateAnimator = new StateAnimator(this);
 
+    @NotNull
     @Override
     public StateAnimator getStateAnimator() {
         return stateAnimator;

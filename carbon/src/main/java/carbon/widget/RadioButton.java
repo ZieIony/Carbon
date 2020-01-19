@@ -2,10 +2,8 @@ package carbon.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -20,7 +18,6 @@ import android.widget.Checkable;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -190,7 +187,7 @@ public class RadioButton extends TextView implements Checkable {
                 }
                 d.setVisible(getVisibility() == VISIBLE, false);
                 setMinHeight(d.getIntrinsicHeight());
-                updateButtonTint();
+                applyTint();
             }
         }
     }
@@ -204,33 +201,20 @@ public class RadioButton extends TextView implements Checkable {
     }
 
     @Override
-    public void setTintList(ColorStateList list) {
-        super.setTintList(list);
-        updateButtonTint();
-    }
-
-    @Deprecated
-    public void setTint(@Nullable ColorStateList list) {
-        super.setTintList(list);
-        updateButtonTint();
+    protected void updateTint() {
+        super.updateTint();
+        if (drawable != null && tint != null && tintMode != null)
+            drawable.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getDrawableState(), tint.getDefaultColor()), tintMode));
     }
 
     @Override
-    public void setTint(int color) {
-        setTintList(ColorStateList.valueOf(color));
-    }
-
-    public void setTintMode(@NonNull PorterDuff.Mode mode) {
-        super.setTintMode(mode);
-        updateButtonTint();
-    }
-
-    private void updateButtonTint() {
+    protected void applyTint() {
+        super.applyTint();
         if (drawable != null) {
             if (tint != null && tintMode != null) {
                 Carbon.setTintListMode(drawable, tint, tintMode);
             } else {
-                Carbon.setTintList(drawable, null);
+                Carbon.clearTint(drawable);
             }
 
             // The drawable (or one of its children) may not have been
@@ -314,9 +298,6 @@ public class RadioButton extends TextView implements Checkable {
         super.onDraw(canvas);
 
         if (buttonDrawable != null) {
-            if (animateColorChanges && tint != null && tintMode != null)
-                buttonDrawable.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(buttonDrawable.getState(), tint.getDefaultColor()), tintMode));
-
             final int scrollX = getScrollX();
             final int scrollY = getScrollY();
             if (scrollX == 0 && scrollY == 0) {

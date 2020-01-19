@@ -1007,6 +1007,7 @@
         <attr name="carbon_animateColorChanges" />
 
         <attr name="carbon_src" format="reference" />
+        <attr name="carbon_animateEnabledState" format="boolean" />
 
         <attr name="carbon_cornerRadiusTopStart" />
         <attr name="carbon_cornerRadiusTopEnd" />

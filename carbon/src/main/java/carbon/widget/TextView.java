@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -276,6 +277,8 @@ public class TextView extends android.widget.TextView
             });
         } catch (Exception ignored) {
         }
+
+        refreshDrawableState();
     }
 
     /**
@@ -293,7 +296,10 @@ public class TextView extends android.widget.TextView
 
     @Override
     public void setTextColor(@NotNull ColorStateList colors) {
-        super.setTextColor(animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors);
+        ColorStateList textColors = animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors;
+        super.setTextColor(textColors);
+        if (textColors instanceof AnimatedColorStateList)
+            ((AnimatedColorStateList) textColors).setState(getDrawableState());
     }
 
     @Override
@@ -338,6 +344,7 @@ public class TextView extends android.widget.TextView
         return new Point(outLocation[0], outLocation[1]);
     }
 
+    @NotNull
     public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
         int[] location = new int[2];
         hotspot.getLocationOnScreen(location);
@@ -346,6 +353,7 @@ public class TextView extends android.widget.TextView
         return createCircularReveal(location[0] - myLocation[0] + hotspot.getWidth() / 2, location[1] - myLocation[1] + hotspot.getHeight() / 2, startRadius, finishRadius);
     }
 
+    @NotNull
     @Override
     public Animator createCircularReveal(int x, int y, float startRadius, float finishRadius) {
         startRadius = Carbon.getRevealRadius(this, x, y, startRadius);
@@ -387,6 +395,7 @@ public class TextView extends android.widget.TextView
     private RectF boundsRect = new RectF();
     private Path cornersMask = new Path();
 
+    @NotNull
     public ShapeAppearanceModel getShapeModel() {
         return shapeModel;
     }
@@ -410,7 +419,7 @@ public class TextView extends android.widget.TextView
     }
 
     @Override
-    public void setShapeModel(ShapeAppearanceModel model) {
+    public void setShapeModel(@NotNull ShapeAppearanceModel model) {
         this.shapeModel = model;
         shadowDrawable = new MaterialShapeDrawable(shapeModel);
         if (getWidth() > 0 && getHeight() > 0)
@@ -496,8 +505,6 @@ public class TextView extends android.widget.TextView
     }
 
     public void drawInternal(@NonNull Canvas canvas) {
-        if (animateColorChanges)
-            drawableStateChanged();
         super.draw(canvas);
         if (stroke != null)
             drawStroke(canvas);
@@ -689,7 +696,7 @@ public class TextView extends android.widget.TextView
             rippleDrawable = null;
         }
         super.setBackgroundDrawable(background);
-        updateBackgroundTint();
+        applyBackgroundTint();
     }
 
     @Override
@@ -699,7 +706,7 @@ public class TextView extends android.widget.TextView
                 top != null ? DrawableCompat.wrap(top) : null,
                 right != null ? DrawableCompat.wrap(right) : null,
                 bottom != null ? DrawableCompat.wrap(bottom) : null);
-        updateTint();
+        applyTint();
     }
 
 
@@ -770,7 +777,7 @@ public class TextView extends android.widget.TextView
     }
 
     @Override
-    public void drawShadow(Canvas canvas) {
+    public void drawShadow(@NotNull Canvas canvas) {
         float alpha = getAlpha() * Carbon.getBackgroundTintAlpha(this) / 255.0f;
         if (alpha == 0 || !hasShadow())
             return;
@@ -912,6 +919,7 @@ public class TextView extends android.widget.TextView
         touchMargin.bottom = margin;
     }
 
+    @NotNull
     @Override
     public Rect getTouchMargin() {
         return touchMargin;
@@ -942,6 +950,7 @@ public class TextView extends android.widget.TextView
 
     private StateAnimator stateAnimator = new StateAnimator(this);
 
+    @NotNull
     @Override
     public StateAnimator getStateAnimator() {
         return stateAnimator;
@@ -1088,7 +1097,7 @@ public class TextView extends android.widget.TextView
     @Override
     public void setTintList(ColorStateList list) {
         this.tint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, tintAnimatorListener) : list;
-        updateTint();
+        applyTint();
     }
 
     @Override
@@ -1101,7 +1110,17 @@ public class TextView extends android.widget.TextView
         return tint;
     }
 
-    private void updateTint() {
+    protected void updateTint(){
+        Drawable[] drawables = getCompoundDrawables();
+        if (tint != null && tintMode != null) {
+            for (Drawable drawable : drawables) {
+                if (drawable != null)
+                    drawable.setColorFilter(new PorterDuffColorFilter(tint.getColorForState(getDrawableState(), tint.getDefaultColor()), tintMode));
+            }
+        }
+    }
+
+    protected void applyTint() {
         Drawable[] drawables = getCompoundDrawables();
         if (tint != null && tintMode != null) {
             for (Drawable drawable : drawables) {
@@ -1115,7 +1134,7 @@ public class TextView extends android.widget.TextView
         } else {
             for (Drawable drawable : drawables) {
                 if (drawable != null) {
-                    Carbon.setTintList(drawable, null);
+                    Carbon.clearTint(drawable);
 
                     if (drawable.isStateful())
                         drawable.setState(getDrawableState());
@@ -1127,7 +1146,7 @@ public class TextView extends android.widget.TextView
     @Override
     public void setTintMode(@NonNull PorterDuff.Mode mode) {
         this.tintMode = mode;
-        updateTint();
+        applyTint();
     }
 
     @Override
@@ -1138,7 +1157,7 @@ public class TextView extends android.widget.TextView
     @Override
     public void setBackgroundTintList(ColorStateList list) {
         this.backgroundTint = list == null ? null : animateColorChanges && !(list instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(list, backgroundTintAnimatorListener) : list;
-        updateBackgroundTint();
+        applyBackgroundTint();
     }
 
     @Override
@@ -1151,7 +1170,15 @@ public class TextView extends android.widget.TextView
         return backgroundTint;
     }
 
-    private void updateBackgroundTint() {
+    protected void updateBackgroundTint(){
+        Drawable background = getBackground();
+        if (background instanceof RippleDrawable)
+            background = ((RippleDrawable) background).getBackground();
+        if (background != null && backgroundTint != null && backgroundTintMode != null)
+            background.setColorFilter(new PorterDuffColorFilter(backgroundTint.getColorForState(getDrawableState(), backgroundTint.getDefaultColor()), backgroundTintMode));
+    }
+
+    protected void applyBackgroundTint() {
         Drawable background = getBackground();
         if (background instanceof RippleDrawable)
             background = ((RippleDrawable) background).getBackground();
@@ -1161,7 +1188,7 @@ public class TextView extends android.widget.TextView
         if (backgroundTint != null && backgroundTintMode != null) {
             Carbon.setTintListMode(background, backgroundTint, backgroundTintMode);
         } else {
-            Carbon.setTintList(background, null);
+            Carbon.clearTint(background);
         }
 
         if (background.isStateful())
@@ -1171,7 +1198,7 @@ public class TextView extends android.widget.TextView
     @Override
     public void setBackgroundTintMode(@Nullable PorterDuff.Mode mode) {
         this.backgroundTintMode = mode;
-        updateBackgroundTint();
+        applyBackgroundTint();
     }
 
     @Override

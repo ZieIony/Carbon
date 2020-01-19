@@ -445,7 +445,7 @@ public class DropDown extends EditText {
             if (tint != null && tintMode != null) {
                 Carbon.setTintListMode(drawable, tint, tintMode);
             } else {
-                Carbon.setTintList(drawable, null);
+                Carbon.clearTint(drawable);
             }
 
             // The drawable (or one of its children) may not have been
