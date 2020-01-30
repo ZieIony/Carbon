@@ -8,7 +8,8 @@
         <item name="android:buttonStyle">@style/carbon_Button.Colored</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>
-        <item name="android:progressBarStyle">@style/carbon_ProgressView.Circular.Indeterminate</item>
+        <item name="android:progressBarStyle">@style/carbon_ProgressView.Circular.Indeterminate
+        </item>
         <item name="android:editTextStyle">@style/carbon_EditText.Underlined</item>
         <item name="android:checkboxStyle">@style/carbon_CheckBox</item>
         <item name="android:radioButtonStyle">@style/carbon_RadioButton</item>
@@ -223,6 +224,7 @@
 
     <style name="carbon_ThemeOverlay.Light.Dialog">
         <item name="android:windowBackground">?attr/carbon_colorForeground</item>
+        <item name="android:windowAnimationStyle">@style/carbon_DialogAnimation</item>
     </style>
 
 </resources>

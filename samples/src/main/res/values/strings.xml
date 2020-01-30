@@ -88,6 +88,7 @@
     <string name="progressDialogActivity_title">Progress dialog</string>
     <string name="selectDialogActivity_title">Select dialog</string>
     <string name="simpleDialogActivity_title">Simple dialog</string>
+    <string name="dialogFragmentActivity_title">Dialog fragment</string>
 
     <string name="buttonsUsageActivity_title">Buttons/Usage</string>
     <string name="menusBehaviorActivity_title">Menus/Behavior</string>

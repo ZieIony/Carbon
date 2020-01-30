@@ -223,6 +223,7 @@
 
     <style name="carbon_ThemeOverlay.Dark.Dialog">
         <item name="android:windowBackground">?attr/carbon_colorForeground</item>
+        <item name="android:windowAnimationStyle">@style/carbon_DialogAnimation</item>
     </style>
 
 </resources>

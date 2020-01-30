@@ -18,10 +18,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingTop="@dimen/carbon_paddingHalf"
-        android:paddingRight="@dimen/carbon_padding"
-        android:paddingBottom="@dimen/carbon_paddingHalf"
+        android:padding="@dimen/carbon_paddingHalf"
         android:visibility="gone"
         tools:visibility="visible" />
 </carbon.widget.LinearLayout>

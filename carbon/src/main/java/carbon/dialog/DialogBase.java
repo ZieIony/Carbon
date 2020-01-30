@@ -1,7 +1,5 @@
 package carbon.dialog;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -137,24 +135,6 @@ public abstract class DialogBase extends android.app.Dialog {
         });
         buttonContainer.addView(button);
         buttonContainer.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void show() {
-        container.requestLayout();
-        container.setVisibility(View.INVISIBLE);
-        super.show();
-        container.animateVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void dismiss() {
-        container.animateVisibility(View.INVISIBLE).addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                DialogBase.super.dismiss();
-            }
-        });
     }
 
     public boolean hasButtons() {

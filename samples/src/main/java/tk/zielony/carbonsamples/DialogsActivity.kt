@@ -2,10 +2,7 @@ package tk.zielony.carbonsamples
 
 import android.os.Bundle
 import carbon.component.PaddingItem
-import tk.zielony.carbonsamples.dialog.ListDialogActivity
-import tk.zielony.carbonsamples.dialog.ProgressDialogActivity
-import tk.zielony.carbonsamples.dialog.SelectDialogActivity
-import tk.zielony.carbonsamples.dialog.SimpleDialogActivity
+import tk.zielony.carbonsamples.dialog.*
 
 @SampleAnnotation(titleId = R.string.dialogsActivity_title, layoutId = R.layout.activity_samplelist)
 class DialogsActivity : SampleListActivity() {
@@ -22,6 +19,7 @@ class DialogsActivity : SampleListActivity() {
                 SampleActivityItem(ProgressDialogActivity::class.java),
                 SampleActivityItem(SelectDialogActivity::class.java),
                 SampleActivityItem(SimpleDialogActivity::class.java),
+                SampleActivityItem(DialogFragmentActivity::class.java),
                 PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
         ))
     }

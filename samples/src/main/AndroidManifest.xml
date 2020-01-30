@@ -111,6 +111,7 @@
         <activity android:name=".dialog.ProgressDialogActivity" />
         <activity android:name=".dialog.SelectDialogActivity" />
         <activity android:name=".dialog.SimpleDialogActivity" />
+        <activity android:name=".dialog.DialogFragmentActivity" />
 
         <activity android:name=".themes.CurrentThemeActivity" />
         <activity

@@ -57,6 +57,7 @@ public class SelectDialogActivity extends ThemedActivity {
                     if (titleText.length() > 0)
                         dialog.setTitle(titleText.getText());
                     dialog.setItems(items);
+                    dialog.addButton("ok", null);
                     dialog.setOnDismissListener(dialogInterface -> selectedItems = dialog.getSelectedItems());
                     dialog.setSelectedItems(selectedItems);
                     dialog.show();

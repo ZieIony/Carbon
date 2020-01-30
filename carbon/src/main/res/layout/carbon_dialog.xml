@@ -13,8 +13,6 @@
         android:background="?android:attr/windowBackground"
         android:minWidth="@dimen/carbon_dialogMinimumWidth"
         android:id="@+id/carbon_windowContent"
-        app:carbon_inAnimation="fade"
-        app:carbon_outAnimation="fade"
         android:orientation="vertical"
         app:carbon_cornerRadius="2dp"
         app:carbon_elevation="@dimen/carbon_elevationDialog" />

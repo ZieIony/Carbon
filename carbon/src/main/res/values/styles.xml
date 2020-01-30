@@ -237,9 +237,9 @@
         <item name="carbon_tint">?attr/colorPrimary</item>
     </style>
 
-    <style name="carbon_PopupAnimation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/carbon_popup_show</item>
-        <item name="android:windowExitAnimation">@anim/carbon_popup_hide</item>
+    <style name="carbon_DialogAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/carbon_dialog_show</item>
+        <item name="android:windowExitAnimation">@anim/carbon_dialog_hide</item>
     </style>
 
     <style name="carbon_SeekBar" parent="android:Widget.SeekBar">

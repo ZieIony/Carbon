@@ -21,13 +21,11 @@
 
         <carbon.widget.RadioButton
             android:id="@+id/carbon_radioButton"
-            android:layout_width="@dimen/carbon_iconSize"
-            android:layout_height="@dimen/carbon_iconSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/carbon_dialogPadding"
-            android:layout_marginLeft="@dimen/carbon_dialogPadding"
-            android:layout_marginTop="@dimen/carbon_toolbarItemPadding"
-            android:paddingStart="@null"
-            android:paddingLeft="@null" />
+            android:layout_marginLeft="@dimen/carbon_dialogPadding" />
 
         <carbon.widget.TextMarker
             android:id="@+id/carbon_marker"
