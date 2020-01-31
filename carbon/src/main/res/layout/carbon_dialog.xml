@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/carbon_window"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <carbon.widget.LinearLayout
+        android:id="@+id/carbon_windowContent"
+        style="?attr/carbon_dialogStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="40dp"
-        android:background="?android:attr/windowBackground"
-        android:minWidth="@dimen/carbon_dialogMinimumWidth"
-        android:id="@+id/carbon_windowContent"
-        android:orientation="vertical"
-        app:carbon_cornerRadius="2dp"
-        app:carbon_elevation="@dimen/carbon_elevationDialog" />
+        android:orientation="vertical" />
 </carbon.widget.FrameLayout>

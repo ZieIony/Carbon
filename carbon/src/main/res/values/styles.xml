@@ -242,6 +242,13 @@
         <item name="android:windowExitAnimation">@anim/carbon_dialog_hide</item>
     </style>
 
+    <style name="carbon_Dialog" parent="carbon_LinearLayout">
+        <item name="android:background">?android:attr/windowBackground</item>
+        <item name="android:minWidth">@dimen/carbon_dialogMinimumWidth</item>
+        <item name="carbon_cornerRadius">@dimen/carbon_cornerRadiusDialog</item>
+        <item name="carbon_elevation">@dimen/carbon_elevationDialog</item>
+    </style>
+
     <style name="carbon_SeekBar" parent="android:Widget.SeekBar">
         <item name="carbon_rippleColor">?attr/carbon_rippleColor</item>
         <item name="carbon_rippleHotspot">true</item>

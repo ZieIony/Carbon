@@ -91,6 +91,7 @@
     <dimen name="carbon_cornerRadiusCard">2dp</dimen>
     <dimen name="carbon_cornerRadiusMenu">4dp</dimen>
     <dimen name="carbon_cornerRadiusSnackbar">2dp</dimen>
+    <dimen name="carbon_cornerRadiusDialog">2dp</dimen>
 
     <dimen name="carbon_fabSize">56dp</dimen>
     <dimen name="carbon_fabSizeHalf">28dp</dimen>

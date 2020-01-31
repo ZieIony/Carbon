@@ -29,7 +29,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text=""
-        android:textAppearance="?attr/carbon_textAppearanceHeadline"
+        android:textAppearance="?attr/carbon_textAppearanceTitle"
         tools:text="Toolbar" />
 
     <carbon.widget.LinearLayout

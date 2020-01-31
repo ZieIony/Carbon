@@ -172,6 +172,7 @@
 
     <attr name="carbon_tooltipText" format="string" />
 
+    <attr name="carbon_dialogStyle" format="reference" />
 
     <!-- Component -->
     <declare-styleable name="ComponentView">

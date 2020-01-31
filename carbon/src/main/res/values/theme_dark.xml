@@ -53,6 +53,7 @@
         <item name="carbon_badgeStyle">@style/carbon_Badge</item>
         <item name="carbon_menuStripStyle">@style/carbon_MenuStrip</item>
         <item name="carbon_progressViewStyle">?android:attr/progressBarStyle</item>
+        <item name="carbon_dialogStyle">@style/carbon_Dialog</item>
 
         <item name="carbon_editMenuTheme">@style/carbon_ThemeOverlay.Dark</item>
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Light</item>
