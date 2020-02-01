@@ -54,19 +54,18 @@ public class Snackbar {
     private int gravity = Gravity.START | Gravity.BOTTOM;
 
     private SnackbarLayout snackbarLayout;
+    private SnackbarView snackbarView;
 
     private static List<Snackbar> next = new ArrayList<>();
-
-    public Snackbar(Context context) {
-        this.context = context;
-        handler = new Handler();
-    }
 
     public Snackbar(Context context, String message, int duration) {
         this.context = context;
         handler = new Handler();
         snackbarLayout = new SnackbarLayout(context);
-        snackbarLayout.getView().setMessage(message);
+        snackbarView = snackbarLayout.getView();
+        snackbarView.setMessage(message);
+        snackbarView.setInAnimator(AnimUtils.getSlideInAnimator());
+        snackbarView.setOutAnimator(AnimUtils.getSlideOutAnimator(gravity));
         setDuration(duration);
         setTapOutsideToDismissEnabled(false);
     }
@@ -77,7 +76,6 @@ public class Snackbar {
             if (!next.contains(this))
                 next.add(this);
             if (next.indexOf(this) == 0) {
-                SnackbarView snackbarView = snackbarLayout.getView();
                 Rect windowFrame = new Rect();
                 container.getWindowVisibleDisplayFrame(windowFrame);
                 Rect drawingRect = new Rect();
@@ -85,10 +83,6 @@ public class Snackbar {
                 //setPaddingBottom(0, 0, 0, drawingRect.bottom - windowFrame.bottom);
                 if (style == null)
                     setStyle(Style.Auto);
-                if (snackbarView.getInAnimator() == null)
-                    snackbarView.setInAnimator(AnimUtils.getSlideInAnimator());
-                if (snackbarView.getOutAnimator() == null)
-                    snackbarView.setOutAnimator(AnimUtils.getSlideOutAnimator(gravity));
                 container.addView(snackbarLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 snackbarView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
                 ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
@@ -116,7 +110,6 @@ public class Snackbar {
     public void dismiss() {
         synchronized (SnackbarLayout.class) {
             handler.removeCallbacks(hideRunnable);
-            SnackbarView snackbarView = snackbarLayout.getView();
             snackbarView.getOutAnimator().addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -138,8 +131,7 @@ public class Snackbar {
             if (snackbarLayout.getParent() == null)
                 return;
             ((ViewGroup) snackbarLayout.getParent()).removeView(snackbarLayout);
-            if (next.contains(this))
-                next.remove(this);
+            next.remove(this);
             if (next.size() != 0)
                 next.get(0).show();
         }
@@ -153,7 +145,6 @@ public class Snackbar {
         this.style = style;
         if (style == Snackbar.Style.Auto)
             this.style = context.getResources().getBoolean(R.bool.carbon_isPhone) ? Snackbar.Style.Docked : Snackbar.Style.Floating;
-        SnackbarView snackbarView = snackbarLayout.getView();
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
         if (layoutParams == null)
             layoutParams = snackbarLayout.generateDefaultLayoutParams();
@@ -204,32 +195,31 @@ public class Snackbar {
     }
 
     public void setInAnimator(Animator inAnim) {
-        snackbarLayout.getView().setInAnimator(inAnim);
+        snackbarView.setInAnimator(inAnim);
     }
 
     public Animator getInAnimator() {
-        return snackbarLayout.getView().getInAnimator();
+        return snackbarView.getInAnimator();
     }
 
     public void setOutAnimator(Animator outAnim) {
-        snackbarLayout.getView().setOutAnimator(outAnim);
+        snackbarView.setOutAnimator(outAnim);
     }
 
     public Animator getOutAnimator() {
-        return snackbarLayout.getView().getOutAnimator();
+        return snackbarView.getOutAnimator();
     }
 
     public View getView() {
-        return snackbarLayout.getView();
+        return snackbarView;
     }
 
     public void setAction(String text, OnActionListener listener) {
-        snackbarLayout.getView().setAction(text, listener);
+        snackbarView.setAction(text, listener);
     }
 
     public void setGravity(int gravity) {
         this.gravity = gravity;
-        SnackbarView snackbarView = snackbarLayout.getView();
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
         if (layoutParams == null)
             layoutParams = snackbarLayout.generateDefaultLayoutParams();
