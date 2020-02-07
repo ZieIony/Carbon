@@ -151,6 +151,8 @@ public class BottomNavigationView extends LinearLayout {
 
     private void initItems() {
         removeAllViews();
+        int width = getOrientation() == HORIZONTAL ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT;
+        int height = getOrientation() != HORIZONTAL ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT;
         setWeightSum(items.length);
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
@@ -165,10 +167,10 @@ public class BottomNavigationView extends LinearLayout {
                         listener.onItemClicked(binding.getRoot(), item, finalI);
                 });
                 binding.setVariable(BR.data, item);
-                addView(binding.getRoot(), new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+                addView(binding.getRoot(), new LinearLayout.LayoutParams(width, height, 1));
             } else {
                 View view = new LinearLayout(getContext());
-                addView(view, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+                addView(view, new LinearLayout.LayoutParams(width, height, 1));
             }
         }
     }

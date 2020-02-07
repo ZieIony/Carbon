@@ -9,21 +9,17 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <carbon.widget.Label
         style="@style/sectionDescription"
         android:text="Items can be provided from code as an array of BottomNavigationView.Item objects" />
 
     <carbon.widget.BottomNavigationView
         android:id="@+id/bottomBar3"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/carbon_margin"
-        android:background="?attr/colorPrimary" />
+        android:background="?attr/colorPrimary"
+        android:orientation="vertical" />
 
     <carbon.widget.Label
         style="@style/sectionDescription"

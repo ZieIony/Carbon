@@ -11,44 +11,49 @@
         <import type="carbon.drawable.ColorStateListFactory" />
     </data>
 
-    <carbon.widget.RelativeLayout
+    <carbon.widget.FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:clickable="true"
         android:minHeight="@dimen/carbon_bottomNavigationViewHeight"
         app:carbon_rippleColor="?attr/carbon_rippleColor"
         app:carbon_rippleStyle="borderless">
 
-        <carbon.widget.TextView
-            android:id="@+id/carbon_bottomText"
-            android:layout_width="wrap_content"
+        <carbon.widget.RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/carbon_bottomTextMarker"
-            android:layout_centerHorizontal="true"
-            android:duplicateParentState="true"
-            android:text="@{data.title}"
-            android:textAppearance="@style/carbon_TextAppearance.Body1"
-            android:textColor="@{data.iconTintList??ColorStateListFactory.INSTANCE.makeIconSecondary(context)}"
-            android:textSize="12sp" />
+            android:layout_gravity="center">
 
-        <carbon.widget.ImageView
-            android:id="@+id/carbon_bottomIcon"
-            android:layout_width="@dimen/carbon_iconSize"
-            android:layout_height="@dimen/carbon_iconSize"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:duplicateParentState="true"
-            android:src="@{data.icon}"
-            app:carbon_tint="@{data.iconTintList??ColorStateListFactory.INSTANCE.makeIconSecondary(context)}" />
+            <carbon.widget.TextView
+                android:id="@+id/carbon_bottomText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/carbon_bottomTextMarker"
+                android:layout_centerHorizontal="true"
+                android:duplicateParentState="true"
+                android:text="@{data.title}"
+                android:textAppearance="@style/carbon_TextAppearance.Body1"
+                android:textColor="@{data.iconTintList??ColorStateListFactory.INSTANCE.makeIconSecondary(context)}"
+                android:textSize="12sp" />
 
-        <carbon.widget.TextMarker
-            android:id="@+id/carbon_bottomTextMarker"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/carbon_bottomIcon"
-            app:carbon_text="I"
-            app:carbon_textView="@+id/carbon_bottomText" />
-    </carbon.widget.RelativeLayout>
+            <carbon.widget.ImageView
+                android:id="@+id/carbon_bottomIcon"
+                android:layout_width="@dimen/carbon_iconSize"
+                android:layout_height="@dimen/carbon_iconSize"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:duplicateParentState="true"
+                android:src="@{data.icon}"
+                app:carbon_tint="@{data.iconTintList??ColorStateListFactory.INSTANCE.makeIconSecondary(context)}" />
+
+            <carbon.widget.TextMarker
+                android:id="@+id/carbon_bottomTextMarker"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/carbon_bottomIcon"
+                app:carbon_text="I"
+                app:carbon_textView="@+id/carbon_bottomText" />
+        </carbon.widget.RelativeLayout>
+    </carbon.widget.FrameLayout>
 </layout>

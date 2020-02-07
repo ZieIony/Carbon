@@ -46,7 +46,7 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-beta02'
+    implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.github.ZieIony:randomdata:2734da711b'
     compileOnly 'com.github.ZieIony.RandomData:person:2734da711b'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'
