@@ -95,13 +95,13 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
         if (position < 0 || position > items.size())
             return;
         I item = items.get(position);
-        if (selectionMode != SelectionMode.NONE && view.isFocusable() && view.isClickable())
-            selectItem(item);
         carbon.widget.RecyclerView.OnItemClickedListener<I> typeSpecificListener = (carbon.widget.RecyclerView.OnItemClickedListener<I>) onItemClickedListeners.get(item.getClass());
         if (typeSpecificListener != null)
             typeSpecificListener.onItemClicked(view, item, position);
         if (onItemClickedListener != null)
             onItemClickedListener.onItemClicked(view, item, position);
+        if (selectionMode != SelectionMode.NONE && view.isFocusable() && view.isClickable())
+            selectItem(item);
     }
 
     public void setDiffEnabled(boolean useDiff) {

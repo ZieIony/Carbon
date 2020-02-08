@@ -22,7 +22,9 @@
         <carbon.widget.RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding">
 
             <carbon.widget.TextView
                 android:id="@+id/carbon_bottomText"
