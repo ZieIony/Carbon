@@ -43,6 +43,7 @@ public class FruitAdapter extends ListAdapter<FruitAdapter.ViewHolder, String> {
         holder.tv.setText(getItem(position));
         holder.checkBox.setChecked(getSelectedIndices().contains(position));
         holder.reorder.setOnTouchListener(onTouchListener);
+        holder.itemView.setSelected(getSelectedIndices().contains(position));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

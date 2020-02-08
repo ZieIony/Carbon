@@ -12,6 +12,7 @@ import java.util.Map;
 
 import carbon.component.Component;
 import carbon.component.ItemTransformer;
+import carbon.view.SelectionMode;
 
 public class RowListAdapter<Type extends Serializable> extends ListAdapter<RowViewHolder<Type>, Type> {
     private SparseArray<RowDescriptor<? extends Type, ? extends Type>> factories = new SparseArray<>();
@@ -61,6 +62,8 @@ public class RowListAdapter<Type extends Serializable> extends ListAdapter<RowVi
         Component<Type> component = holder.getComponent();
         ItemTransformer transformer = factories.get(getItemViewType(position)).transformer;
         component.bind((Type) transformer.transform(data));
+        if (getSelectionMode() != SelectionMode.NONE)
+            component.getView().setSelected(getSelectedIndices().contains(position));
     }
 
     @Override
@@ -70,6 +73,8 @@ public class RowListAdapter<Type extends Serializable> extends ListAdapter<RowVi
         Component<Type> component = holder.getComponent();
         ItemTransformer transformer = factories.get(getItemViewType(position)).transformer;
         component.bind((Type) transformer.transform(data));
+        if (getSelectionMode() != SelectionMode.NONE)
+            component.getView().setSelected(getSelectedIndices().contains(position));
     }
 
     @Override

@@ -3,17 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/carbon_toolbarItemMargin"
-    android:layout_marginRight="@dimen/carbon_toolbarItemMargin"
-    android:background="?attr/carbon_colorBackground"
+    android:background="@color/carbon_defaultHighlightColorPrimary"
+    android:baselineAligned="false"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal"
+    android:paddingLeft="@dimen/carbon_toolbarItemMargin"
+    android:paddingRight="@dimen/carbon_toolbarItemMargin"
     app:carbon_rippleColor="?attr/carbon_rippleColor">
 
     <carbon.widget.CheckBox
         android:id="@+id/checkBox"
         style="@style/carbon_CheckBox.IconButton"
+        android:layout_gravity="center"
         android:clickable="false"
         android:focusable="false" />
 
@@ -33,5 +35,6 @@
         style="@style/carbon_ImageView.Icon"
         android:layout_width="@dimen/carbon_toolbarItemSize"
         android:layout_height="@dimen/carbon_toolbarItemSize"
-        app:carbon_src="@raw/ic_reorder_24px" />
+        android:layout_gravity="center"
+        app:carbon_src="@drawable/ic_drag_handle_black_24dp" />
 </carbon.widget.LinearLayout>

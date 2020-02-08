@@ -25,6 +25,7 @@ import tk.zielony.carbonsamples.ThemedActivity;
 public class RecyclerActivity extends ThemedActivity {
     private static List<String> fruits = new ArrayList<>(Arrays.asList("Strawberry", "Apple", "Orange", "Lemon", "Beer", "Lime", "Watermelon", "Blueberry", "Plum"));
     FruitAdapter fruitAdapter;
+    DragTouchHelper<String> dragTouchHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +36,12 @@ public class RecyclerActivity extends ThemedActivity {
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        DragTouchHelper<String> dragTouchHelper = new DragTouchHelper<>(recyclerView, fruitAdapter);
         fruitAdapter = new FruitAdapter(fruits, (v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN)
                 dragTouchHelper.startDrag(v);
             return true;
         });
+        dragTouchHelper = new DragTouchHelper<>(recyclerView, fruitAdapter);
         recyclerView.setAdapter(fruitAdapter);
 
         dragTouchHelper.setOnItemMovedListener((item, position, targetPosition) -> {
