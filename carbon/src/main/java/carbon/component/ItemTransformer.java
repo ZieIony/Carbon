@@ -1,8 +1,6 @@
 package carbon.component;
 
-import java.io.Serializable;
-
-public interface ItemTransformer<TypeFrom extends Serializable, TypeTo extends Serializable> {
+public interface ItemTransformer<TypeFrom, TypeTo> {
     ItemTransformer EMPTY = item -> item;
 
     TypeTo transform(TypeFrom item);

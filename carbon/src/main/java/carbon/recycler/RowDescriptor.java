@@ -1,10 +1,8 @@
 package carbon.recycler;
 
-import java.io.Serializable;
-
 import carbon.component.ItemTransformer;
 
-class RowDescriptor<TypeFrom extends Serializable, TypeTo extends Serializable> {
+class RowDescriptor<TypeFrom, TypeTo> {
     ItemTransformer<TypeFrom, TypeTo> transformer;
     RowFactory<TypeTo> factory;
 

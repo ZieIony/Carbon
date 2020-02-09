@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import carbon.component.Component;
 import carbon.component.ItemTransformer;
 import carbon.view.SelectionMode;
 
-public class RowListAdapter<Type extends Serializable> extends ListAdapter<RowViewHolder<Type>, Type> {
+public class RowListAdapter<Type> extends ListAdapter<RowViewHolder<Type>, Type> {
     private SparseArray<RowDescriptor<? extends Type, ? extends Type>> factories = new SparseArray<>();
     private Map<Class<? extends Type>, Integer> types = new HashMap<>();
 
