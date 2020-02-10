@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.annimon.stream.Stream;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +22,7 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
     private DiffListCallback<I> diffCallback;
 
     private SelectionMode selectionMode = SelectionMode.NONE;
-    private ArrayList<I> selectedItems;
+    private ArrayList<I> selectedItems = new ArrayList<>();
 
     public ListAdapter() {
         items = new ArrayList<>();
@@ -46,7 +48,6 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
     }
 
     public void setItems(@NonNull List<I> items) {
-        setSelectionMode(selectionMode);
         List<I> newItems = new ArrayList<>(items);
         if (!diff) {
             this.items = newItems;
@@ -58,6 +59,7 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
         this.items = newItems;
         diffResult.dispatchUpdatesTo(this);
+        setSelectionMode(selectionMode);
     }
 
     public List<I> getItems() {
@@ -120,11 +122,7 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
     @Override
     public void setSelectionMode(@NonNull SelectionMode selectionMode) {
         this.selectionMode = selectionMode;
-        if (selectionMode == SelectionMode.NONE) {
-            selectedItems = null;
-        } else {
-            selectedItems = new ArrayList<>();
-        }
+        setSelectedItems(selectedItems);
     }
 
     @Override
@@ -134,25 +132,29 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, I> extends
 
     @Override
     public void setSelectedIndices(List<Integer> selectedIndices) {
-        this.selectedItems.clear();
-        for (int index : selectedIndices)
-            selectedItems.add(items.get(index));
-        notifyDataSetChanged();
+        setSelectedItems(Stream.of(selectedIndices).map(it -> items.get(it)).toList());
     }
 
     @Override
     public List<Integer> getSelectedIndices() {
-        ArrayList<Integer> selectedIndices = new ArrayList<>();
-        for (I item : selectedItems)
-            selectedIndices.add(items.indexOf(item));
-        return selectedIndices;
+        return Stream.of(selectedItems).map(items::indexOf).toList();
     }
 
     @Override
     public void setSelectedItems(List<I> selectedItems) {
-        this.selectedItems.clear();
-        this.selectedItems.addAll(selectedItems);
-        notifyDataSetChanged();
+        ArrayList<I> prevSelectedItems = this.selectedItems;
+        this.selectedItems = new ArrayList<>();
+        for (I item : prevSelectedItems)
+            notifyItemChanged(items.indexOf(item), false);
+        if (selectionMode != SelectionMode.NONE) {
+            for (I item : selectedItems) {
+                int index = items.indexOf(item);
+                if (index != -1) {
+                    this.selectedItems.add(item);
+                    notifyItemChanged(index, true);
+                }
+            }
+        }
     }
 
     @Override

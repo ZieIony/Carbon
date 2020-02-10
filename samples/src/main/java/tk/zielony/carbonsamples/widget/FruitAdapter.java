@@ -40,10 +40,11 @@ public class FruitAdapter extends ListAdapter<FruitAdapter.ViewHolder, String> {
     @Override
     public void onBindViewHolder(@NotNull final ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
-        holder.tv.setText(getItem(position));
-        holder.checkBox.setChecked(getSelectedIndices().contains(position));
+        String item = getItem(position);
+        holder.tv.setText(item);
+        holder.checkBox.setChecked(getSelectedItems().contains(item));
         holder.reorder.setOnTouchListener(onTouchListener);
-        holder.itemView.setSelected(getSelectedIndices().contains(position));
+        holder.itemView.setSelected(getSelectedItems().contains(item));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

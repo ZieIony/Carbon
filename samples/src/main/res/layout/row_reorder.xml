@@ -1,40 +1,47 @@
-<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/carbon_defaultHighlightColorPrimary"
-    android:baselineAligned="false"
+    android:background="?attr/carbon_colorForeground"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/carbon_toolbarItemMargin"
-    android:paddingRight="@dimen/carbon_toolbarItemMargin"
     app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-    <carbon.widget.CheckBox
-        android:id="@+id/checkBox"
-        style="@style/carbon_CheckBox.IconButton"
-        android:layout_gravity="center"
-        android:clickable="false"
-        android:focusable="false" />
+    <carbon.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/carbon_defaultHighlightColorPrimary"
+        android:baselineAligned="false"
+        android:duplicateParentState="true"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/carbon_toolbarItemMargin"
+        android:paddingRight="@dimen/carbon_toolbarItemMargin">
 
-    <carbon.widget.TextView
-        android:id="@+id/text"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/carbon_toolbarHeight"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:textAppearance="?attr/carbon_textAppearanceBody2"
-        tools:text="item name" />
+        <carbon.widget.CheckBox
+            android:id="@+id/checkBox"
+            style="@style/carbon_CheckBox.IconButton"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false" />
 
-    <carbon.widget.ImageView
-        android:id="@+id/reorder"
-        style="@style/carbon_ImageView.Icon"
-        android:layout_width="@dimen/carbon_toolbarItemSize"
-        android:layout_height="@dimen/carbon_toolbarItemSize"
-        android:layout_gravity="center"
-        app:carbon_src="@drawable/ic_drag_handle_black_24dp" />
-</carbon.widget.LinearLayout>
+        <carbon.widget.TextView
+            android:id="@+id/text"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/carbon_toolbarHeight"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/carbon_padding"
+            android:paddingRight="@dimen/carbon_padding"
+            android:textAppearance="?attr/carbon_textAppearanceBody2"
+            tools:text="item name" />
+
+        <carbon.widget.ImageView
+            android:id="@+id/reorder"
+            style="@style/carbon_ImageView.Icon"
+            android:layout_width="@dimen/carbon_toolbarItemSize"
+            android:layout_height="@dimen/carbon_toolbarItemSize"
+            android:layout_gravity="center"
+            app:carbon_src="@drawable/ic_drag_handle_black_24dp" />
+    </carbon.widget.LinearLayout>
+</carbon.widget.FrameLayout>
