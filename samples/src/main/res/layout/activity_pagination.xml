@@ -18,9 +18,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:carbon_headerMinHeight="@dimen/carbon_toolbarHeight"
-            app:carbon_headerParallax="0.5"
-            app:carbon_headerTint="?attr/colorPrimary"
             app:carbon_overScroll="always" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </carbon.widget.LinearLayout>

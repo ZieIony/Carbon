@@ -154,6 +154,7 @@
         <enum name="center_vertical" value="0x00000010" />
     </attr>
 
+    <attr name="carbon_layout_fill" format="boolean" />
     <attr name="carbon_layout_marginHorizontal" format="dimension" />
     <attr name="carbon_layout_marginVertical" format="dimension" />
 
@@ -1216,9 +1217,6 @@
         <attr name="carbon_animateColorChanges" />
 
         <attr name="carbon_overScroll" />
-        <attr name="carbon_headerTint" />
-        <attr name="carbon_headerMinHeight" />
-        <attr name="carbon_headerParallax" />
     </declare-styleable>
 
     <attr name="carbon_horizontalScrollViewStyle" format="reference" />
@@ -1265,9 +1263,6 @@
         <attr name="carbon_animateColorChanges" />
 
         <attr name="carbon_overScroll" />
-        <attr name="carbon_headerTint" />
-        <attr name="carbon_headerMinHeight" />
-        <attr name="carbon_headerParallax" />
         <attr name="android:divider" />
         <attr name="android:dividerHeight" />
 
@@ -1367,7 +1362,7 @@
         <attr name="android:orientation" />
         <attr name="carbon_menu" />
         <attr name="carbon_itemLayout" />
-        <attr name="carbon_separatorLayout" />
+        <attr name="carbon_separatorLayout" format="reference" />
         <attr name="carbon_selectionMode" format="enum">
             <enum name="none" value="0" />
             <enum name="single" value="1" />
