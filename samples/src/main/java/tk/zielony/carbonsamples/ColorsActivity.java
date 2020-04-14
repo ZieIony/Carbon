@@ -1,18 +1,9 @@
 package tk.zielony.carbonsamples;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.databinding.DataBindingUtil;
-
 import java.io.Serializable;
-import java.util.Random;
-
-import carbon.internal.ResourcesCompat;
-import tk.zielony.carbonsamples.databinding.ActivityColordemoBinding;
 
 @SampleAnnotation(titleId = R.string.colorsActivity_title)
 public class ColorsActivity extends ThemedActivity {
@@ -116,7 +107,7 @@ public class ColorsActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityColordemoBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_colordemo);
+       /* ActivityColordemoBinding binding = ActivityColordemoBinding.setContentView(this, R.layout.activity_colordemo);
 
         initToolbar();
 
@@ -193,7 +184,7 @@ public class ColorsActivity extends ThemedActivity {
 
             binding.font.setSelectedIndex(random.nextInt(fonts.length));
             preferences.edit().putInt(FONT, binding.font.getSelectedIndex()).commit();
-        });
+        });*/
     }
 
     @Override

@@ -2,6 +2,8 @@ package carbon.component
 
 import android.view.ViewGroup
 import carbon.R
+import carbon.databinding.CarbonRowHeaderBinding
+import carbon.databinding.CarbonRowPaddedheaderBinding
 import java.io.Serializable
 
 interface HeaderItem : Serializable {
@@ -18,5 +20,20 @@ open class DefaultHeaderItem : HeaderItem {
     }
 }
 
-open class HeaderRow<Type : DefaultHeaderItem>(parent: ViewGroup) : DataBindingComponent<Type>(parent, R.layout.carbon_row_header)
-open class PaddedHeaderRow<Type : DefaultHeaderItem>(parent: ViewGroup) : DataBindingComponent<Type>(parent, R.layout.carbon_row_paddedheader)
+open class HeaderRow<Type : DefaultHeaderItem>(parent: ViewGroup) : LayoutComponent<Type>(parent, R.layout.carbon_row_header) {
+    private val binding = CarbonRowHeaderBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonText.text = data.text.toString()
+    }
+}
+
+open class PaddedHeaderRow<Type : DefaultHeaderItem>(parent: ViewGroup) : LayoutComponent<Type>(parent, R.layout.carbon_row_paddedheader) {
+    private val binding = CarbonRowPaddedheaderBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonText.text = data.text.toString()
+    }
+}

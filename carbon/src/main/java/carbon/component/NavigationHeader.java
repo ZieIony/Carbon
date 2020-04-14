@@ -5,14 +5,12 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-
 import carbon.R;
+import carbon.databinding.CarbonNavigationHeaderBinding;
 import carbon.widget.FrameLayout;
 
 public class NavigationHeader extends FrameLayout {
-    private ViewDataBinding binding;
+    private CarbonNavigationHeaderBinding binding;
 
     public static class Item {
         private final Drawable icon;
@@ -58,10 +56,12 @@ public class NavigationHeader extends FrameLayout {
     }
 
     private void initNavigationHeader(AttributeSet attrs, int defStyleAttr) {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.carbon_navigation_header, this, true);
+        binding = CarbonNavigationHeaderBinding.inflate(LayoutInflater.from(getContext()));
     }
 
     public void setItem(Item item) {
-        binding.setVariable(carbon.BR.data, item);
+        binding.carbonAvatar.setImageDrawable(item.icon);
+        binding.carbonText.setText(item.text);
+        binding.carbonSubtext.setText(item.subtext);
     }
 }

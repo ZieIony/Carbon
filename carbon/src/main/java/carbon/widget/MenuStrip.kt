@@ -13,7 +13,9 @@ import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import carbon.Carbon
 import carbon.R
-import carbon.component.DataBindingComponent
+import carbon.component.LayoutComponent
+import carbon.databinding.CarbonMenustripItemBinding
+import carbon.drawable.ColorStateListFactory
 import carbon.recycler.RowArrayAdapter
 import carbon.recycler.RowFactory
 import carbon.view.SelectionMode
@@ -68,21 +70,32 @@ open class MenuStrip : RecyclerView {
         }
     }
 
-    private inner class ItemComponent(parent: ViewGroup) : DataBindingComponent<Item>(parent, itemLayoutId) {
+    private inner class ItemComponent(parent: ViewGroup) : LayoutComponent<Item>(parent, R.layout.carbon_menustrip_item) {
+        private val binding = CarbonMenustripItemBinding.bind(view)
+
         override fun bind(data: Item) {
             super.bind(data)
+            binding.carbonIcon.setImageDrawable(data.icon)
+            binding.carbonIcon.setTintList(data.iconTintList)
+            binding.carbonText.text = data.title
+            binding.carbonText.textColor = data.iconTintList
+                    ?: ColorStateListFactory.makePrimaryText(context)
+
             if (selectionMode != SelectionMode.NONE)
                 view.isSelected = selectedItems.contains(data)
         }
     }
 
 
-    private var _itemLayoutId: Int = 0
-    var itemLayoutId: Int
-        get() = _itemLayoutId
+    @Deprecated("Use itemFactory instead")
+    var itemLayoutId: Int = 0
+
+    private lateinit var _itemFactory: RowFactory<Item>
+    var itemFactory: RowFactory<Item>
+        get() = _itemFactory
         set(value) {
-            _itemLayoutId = value
-            initItems()
+            adapter.putFactory(Item::class.java, value)
+            _itemFactory = value
         }
 
     private lateinit var _orientation: carbon.view.Orientation
@@ -93,7 +106,7 @@ open class MenuStrip : RecyclerView {
             initItems()
         }
 
-    var adapter: RowArrayAdapter<Serializable> = RowArrayAdapter(Item::class.java, RowFactory<Item> { ItemComponent(it) })
+    var adapter: RowArrayAdapter<Serializable> = RowArrayAdapter()
     var selectionMode: SelectionMode
         get() = adapter.selectionMode
         set(value) {
@@ -146,7 +159,7 @@ open class MenuStrip : RecyclerView {
         val a = context.obtainStyledAttributes(attrs, R.styleable.MenuStrip, defStyleAttr, R.style.carbon_MenuStrip)
 
         orientation = carbon.view.Orientation.values()[a.getInt(R.styleable.MenuStrip_android_orientation, carbon.view.Orientation.VERTICAL.ordinal)]
-        itemLayoutId = a.getResourceId(R.styleable.MenuStrip_carbon_itemLayout, R.layout.carbon_menustrip_item)
+        itemFactory = RowFactory<Item> { ItemComponent(this) }
         selectionMode = SelectionMode.values()[a.getInt(R.styleable.MenuStrip_carbon_selectionMode, SelectionMode.NONE.ordinal)]
         val menuId = a.getResourceId(R.styleable.MenuStrip_carbon_menu, 0)
         if (menuId != 0)

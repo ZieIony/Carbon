@@ -3,7 +3,8 @@ package carbon.component
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
-
+import carbon.databinding.CarbonRowAvatartextsubtext2dateBinding
+import carbon.databinding.CarbonRowAvatartextsubtextdateBinding
 import java.io.Serializable
 
 interface AvatarTextSubtextDateItem : Serializable {
@@ -29,5 +30,28 @@ open class DefaultAvatarTextSubtextDateItem : AvatarTextSubtextDateItem {
     }
 }
 
-open class AvatarTextSubtextDateRow(parent: ViewGroup) : DataBindingComponent<AvatarTextItem>(parent, R.layout.carbon_row_avatartextsubtextdate)
-open class AvatarTextSubtext2DateRow<Type : AvatarTextSubtextDateItem>(parent: ViewGroup) : DataBindingComponent<Type>(parent, R.layout.carbon_row_avatartextsubtext2date)
+open class AvatarTextSubtextDateRow<Type : AvatarTextSubtextDateItem>(parent: ViewGroup) : LayoutComponent<Type>(parent, R.layout.carbon_row_avatartextsubtextdate) {
+    private val binding = CarbonRowAvatartextsubtextdateBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonAvatar.setImageDrawable(data.avatar)
+        binding.carbonDate.text = data.date ?: ""
+        binding.carbonText.text = data.text ?: ""
+        binding.carbonSubtext.text = data.subtext ?: ""
+        binding.carbonMarker2.setText(data.subtext)
+    }
+}
+
+open class AvatarTextSubtext2DateRow<Type : AvatarTextSubtextDateItem>(parent: ViewGroup) : LayoutComponent<Type>(parent, R.layout.carbon_row_avatartextsubtext2date) {
+    private val binding = CarbonRowAvatartextsubtext2dateBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonAvatar.setImageDrawable(data.avatar)
+        binding.carbonDate.text = data.date ?: ""
+        binding.carbonText.text = data.text ?: ""
+        binding.carbonSubtext.text = data.subtext ?: ""
+        binding.carbonMarker2.setText(data.subtext)
+    }
+}

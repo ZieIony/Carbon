@@ -65,12 +65,10 @@
     <style name="WindowsTheme.TabLayout" parent="carbon_TabLayout">
         <item name="carbon_fixedTabs">false</item>
         <item name="carbon_indicatorWidth">0dp</item>
-        <item name="carbon_itemLayout">@layout/item_windowstab</item>
     </style>
 
     <style name="WindowsTheme.BottomNavigationView" parent="carbon_BottomNavigationView">
         <item name="android:background">@color/carbon_black</item>
-        <item name="carbon_itemLayout">@layout/item_windowsbottomnavigation</item>
     </style>
 
     <style name="WindowsTheme" parent="carbon_Theme.Dark.DarkPrimaryColor.NoActionBar">

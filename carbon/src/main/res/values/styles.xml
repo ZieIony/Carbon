@@ -342,7 +342,6 @@
     <style name="carbon_MenuStrip.Tools">
         <item name="android:paddingTop">@null</item>
         <item name="android:paddingBottom">@null</item>
-        <item name="carbon_itemLayout">@layout/carbon_menustrip_tools_item</item>
         <item name="android:orientation">horizontal</item>
     </style>
 

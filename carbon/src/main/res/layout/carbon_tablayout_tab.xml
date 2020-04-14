@@ -1,35 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/carbon_tabLayoutHeight"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingBottom="2dp"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
+    tools:background="?attr/colorPrimary">
 
-    <data>
-
-        <variable
-            name="data"
-            type="carbon.widget.TabLayout.Item" />
-    </data>
-
-    <carbon.widget.FrameLayout
-        android:layout_width="wrap_content"
+    <carbon.widget.TextView
+        android:id="@+id/carbon_tabText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/carbon_tabLayoutHeight"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="2dp"
-        app:carbon_rippleColor="?attr/carbon_rippleColor"
-        tools:background="?attr/colorPrimary">
-
-        <carbon.widget.TextView
-            android:id="@+id/carbon_tabText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:duplicateParentState="true"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@{data.title}"
-            android:textAppearance="?attr/carbon_textAppearanceButton"
-            tools:text="@tools:sample/lorem" />
-    </carbon.widget.FrameLayout>
-</layout>
+        android:layout_gravity="center_vertical"
+        android:duplicateParentState="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textAppearance="?attr/carbon_textAppearanceButton"
+        tools:text="@tools:sample/lorem" />
+</carbon.widget.FrameLayout>

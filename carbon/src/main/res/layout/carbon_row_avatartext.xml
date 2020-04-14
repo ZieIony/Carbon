@@ -1,52 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="?attr/carbon_colorForeground"
+    android:clickable="true"
+    android:focusable="true"
+    app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-    <data>
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_avatar"
+        style="@style/carbon_ImageView.Avatar"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        tools:src="@tools:sample/avatars" />
 
-        <variable
-            name="data"
-            type="carbon.component.AvatarTextItem" />
-
-    </data>
-
-    <carbon.widget.RelativeLayout
+    <carbon.widget.TextMarker
+        android:id="@+id/carbon_marker"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="?attr/carbon_colorForeground"
-        android:clickable="true"
-        android:focusable="true"
-        app:carbon_rippleColor="?attr/carbon_rippleColor">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:carbon_text="Ip"
+        app:carbon_textView="@+id/carbon_text" />
 
-        <carbon.widget.ImageView
-            style="@style/carbon_ImageView.Avatar"
-            android:layout_centerVertical="true"
-            tools:src="@tools:sample/avatars"
-            android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:src="@{data.getAvatar()}" />
+    <carbon.widget.TextView
+        android:id="@+id/carbon_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/carbon_marker"
+        android:layout_marginStart="@dimen/carbon_contentPadding"
+        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:layout_marginEnd="@dimen/carbon_windowPadding"
+        android:layout_marginRight="@dimen/carbon_windowPadding"
+        android:textAppearance="?attr/carbon_textAppearanceSubhead"
+        tools:text="@tools:sample/lorem" />
 
-        <carbon.widget.TextMarker
-            android:id="@+id/carbon_marker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_text" />
-
-        <carbon.widget.TextView
-            android:id="@+id/carbon_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/carbon_marker"
-            android:layout_marginStart="@dimen/carbon_contentPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:text="@{data.text}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead"
-            tools:text="@tools:sample/lorem" />
-
-    </carbon.widget.RelativeLayout>
-</layout>
+</carbon.widget.RelativeLayout>

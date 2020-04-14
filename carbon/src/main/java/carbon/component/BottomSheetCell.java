@@ -5,19 +5,22 @@ import android.view.ViewGroup;
 import carbon.R;
 import carbon.beta.BottomSheetLayout;
 import carbon.databinding.CarbonBottomsheetCellBinding;
-import carbon.widget.ImageView;
 
-public class BottomSheetCell extends DataBindingComponent<BottomSheetLayout.Item> {
+public class BottomSheetCell extends LayoutComponent<BottomSheetLayout.Item> {
+
+    private final CarbonBottomsheetCellBinding binding;
 
     public BottomSheetCell(ViewGroup parent) {
         super(parent, R.layout.carbon_bottomsheet_cell);
+        binding = CarbonBottomsheetCellBinding.bind(getView());
     }
 
     @Override
     public void bind(BottomSheetLayout.Item data) {
         super.bind(data);
-        ImageView itemIcon = ((CarbonBottomsheetCellBinding) this.getBinding()).carbonItemIcon;
+        binding.carbonItemIcon.setImageDrawable(data.getIcon());
         if (data.getIconTintList() != null)
-            itemIcon.setTintList(data.getIconTintList());
+            binding.carbonItemIcon.setTintList(data.getIconTintList());
+        binding.carbonItemText.setText(data.getTitle());
     }
 }

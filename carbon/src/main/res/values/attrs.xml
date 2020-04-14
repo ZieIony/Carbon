@@ -166,8 +166,6 @@
     <attr name="carbon_autoSizeMaxTextSize" format="dimension" />
     <attr name="carbon_autoSizeStepGranularity" format="dimension" />
 
-    <attr name="carbon_itemLayout" format="reference" />
-
     <attr name="carbon_menuSelectionRadius" format="dimension" />
     <attr name="carbon_menuSelectionInset" format="dimension" />
 
@@ -973,7 +971,6 @@
     <attr name="carbon_bottomNavigationViewStyle" format="reference" />
     <declare-styleable name="BottomNavigationView">
         <attr name="carbon_menu" />
-        <attr name="carbon_itemLayout" />
     </declare-styleable>
 
     <attr name="carbon_imageViewStyle" format="reference" />
@@ -1054,7 +1051,6 @@
     <attr name="carbon_navigationViewStyle" format="reference" />
     <declare-styleable name="NavigationView">
         <attr name="carbon_menu" />
-        <attr name="carbon_itemLayout" />
     </declare-styleable>
 
     <attr name="carbon_cardViewStyle" format="reference" />
@@ -1194,7 +1190,6 @@
     <declare-styleable name="TabLayout">
         <attr name="carbon_indicatorWidth" format="dimension" />
         <attr name="carbon_fixedTabs" format="boolean" />
-        <attr name="carbon_itemLayout" />
     </declare-styleable>
 
     <attr name="carbon_viewPagerIndicatorStyle" format="reference" />
@@ -1362,7 +1357,6 @@
     <declare-styleable name="MenuStrip">
         <attr name="android:orientation" />
         <attr name="carbon_menu" />
-        <attr name="carbon_itemLayout" />
         <attr name="carbon_selectionMode" format="enum">
             <enum name="none" value="0" />
             <enum name="single" value="1" />

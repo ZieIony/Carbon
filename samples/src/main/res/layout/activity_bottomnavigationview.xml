@@ -29,8 +29,7 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/carbon_margin"
-        app:carbon_itemLayout="@layout/item_bottombar" />
+        android:layout_marginBottom="@dimen/carbon_margin" />
 
     <carbon.widget.Label
         style="@style/sectionDescription"

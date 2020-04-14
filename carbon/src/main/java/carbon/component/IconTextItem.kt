@@ -3,6 +3,7 @@ package carbon.component
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
+import carbon.databinding.CarbonRowIcontextBinding
 
 import java.io.Serializable
 
@@ -23,4 +24,14 @@ open class DefaultIconTextItem : IconTextItem {
     }
 }
 
-open class IconTextRow<Type : IconTextItem>(parent: ViewGroup) : DataBindingComponent<Type>(parent, R.layout.carbon_row_icontext)
+open class IconTextRow<Type : IconTextItem>(parent: ViewGroup)
+    : LayoutComponent<Type>(parent, R.layout.carbon_row_icontext) {
+    private val binding = CarbonRowIcontextBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+
+        binding.carbonIcon.setImageDrawable(data.icon)
+        binding.carbonText.text = data.text ?: ""
+    }
+}

@@ -1,59 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
 
-    <data>
-
-        <variable
-            name="data"
-            type="carbon.component.NavigationHeader.Item" />
-    </data>
-
-    <carbon.widget.FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginTop="@dimen/carbon_margin"
+        android:layout_marginEnd="@dimen/carbon_margin"
+        android:layout_marginRight="@dimen/carbon_margin"
+        android:layout_marginBottom="@dimen/carbon_margin">
+
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_avatar"
+            style="@style/carbon_ImageView.Avatar"
+            tools:src="@tools:sample/avatars" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:layout_marginTop="@dimen/carbon_margin"
-            android:layout_marginEnd="@dimen/carbon_margin"
-            android:layout_marginRight="@dimen/carbon_margin"
-            android:layout_marginBottom="@dimen/carbon_margin">
+            android:layout_marginStart="@dimen/carbon_margin"
+            android:layout_marginLeft="@dimen/carbon_margin"
+            android:orientation="vertical">
 
-            <carbon.widget.ImageView
-                style="@style/carbon_ImageView.Avatar"
-                app:carbon_src="@{data.icon}"
-                tools:src="@tools:sample/avatars" />
-
-            <LinearLayout
+            <carbon.widget.TextView
+                android:id="@+id/carbon_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/carbon_margin"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:orientation="vertical">
+                android:maxLines="1"
+                android:textAppearance="@style/carbon_TextAppearance.Subhead"
+                tools:text="@tools:sample/first_names" />
 
-                <carbon.widget.TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@{data.text}"
-                    android:textAppearance="@style/carbon_TextAppearance.Subhead"
-                    tools:text="@tools:sample/first_names" />
-
-                <carbon.widget.TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@{data.subtext}"
-                    android:textAppearance="@style/carbon_TextAppearance.Body1"
-                    tools:text="@tools:sample/lorem/random" />
-            </LinearLayout>
+            <carbon.widget.TextView
+                android:id="@+id/carbon_subtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textAppearance="@style/carbon_TextAppearance.Body1"
+                tools:text="@tools:sample/lorem/random" />
         </LinearLayout>
+    </LinearLayout>
 
-    </carbon.widget.FrameLayout>
-</layout>
+</carbon.widget.FrameLayout>

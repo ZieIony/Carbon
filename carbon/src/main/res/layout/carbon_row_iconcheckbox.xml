@@ -1,50 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/carbon_listItemHeight"
+    android:background="?attr/carbon_colorForeground"
+    app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-    <data>
+    <carbon.widget.CheckBox
+        android:id="@+id/carbon_checkBox"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        app:carbon_tint="?attr/carbon_iconColor" />
 
-        <variable
-            name="data"
-            type="carbon.component.CheckBoxItem" />
-
-    </data>
-
-    <carbon.widget.RelativeLayout
+    <carbon.widget.TextMarker
+        android:id="@+id/carbon_marker"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_listItemHeight"
-        android:background="?attr/carbon_colorForeground"
-        app:carbon_rippleColor="?attr/carbon_rippleColor">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:carbon_text="Ip"
+        app:carbon_textView="@+id/carbon_label" />
 
-        <carbon.widget.CheckBox
-            android:id="@+id/carbon_checkBox"
-            android:layout_width="@dimen/carbon_iconSize"
-            android:layout_height="@dimen/carbon_iconSize"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:checked="@{data.checked}"
-            app:carbon_tint="?attr/carbon_iconColor" />
+    <carbon.widget.TextView
+        android:id="@+id/carbon_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/carbon_marker"
+        android:layout_marginStart="@dimen/carbon_contentPadding"
+        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:layout_marginEnd="@dimen/carbon_windowPadding"
+        android:layout_marginRight="@dimen/carbon_windowPadding"
+        android:maxLines="1" />
 
-        <carbon.widget.TextMarker
-            android:id="@+id/carbon_marker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_label" />
-
-        <carbon.widget.TextView
-            android:id="@+id/carbon_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/carbon_marker"
-            android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:layout_marginStart="@dimen/carbon_contentPadding"
-            android:maxLines="1"
-            android:text="@{data.text}" />
-
-    </carbon.widget.RelativeLayout>
-</layout>
+</carbon.widget.RelativeLayout>

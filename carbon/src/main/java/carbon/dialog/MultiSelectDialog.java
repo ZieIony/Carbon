@@ -9,10 +9,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import carbon.R;
-import carbon.component.DataBindingComponent;
+import carbon.component.LayoutComponent;
+import carbon.databinding.CarbonRowDialogCheckboxtextBinding;
 import carbon.recycler.RowFactory;
 import carbon.view.SelectionMode;
-import carbon.widget.CheckBox;
 import carbon.widget.RecyclerView;
 
 public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Type> {
@@ -43,28 +43,32 @@ public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Typ
     }
 
     public void setItems(Type[] items) {
-        super.setItems(items, parent -> new DataBindingComponent<Type>(parent, R.layout.carbon_row_dialog_checkboxtext) {
+        super.setItems(items, parent -> new LayoutComponent<Type>(parent, R.layout.carbon_row_dialog_checkboxtext) {
+            private CarbonRowDialogCheckboxtextBinding binding = CarbonRowDialogCheckboxtextBinding.bind(getView());
+
             @Override
             public void bind(Type data) {
                 super.bind(data);
                 if (getSelectedItems().contains(data)) {
-                    CheckBox checkBox = getView().findViewById(R.id.carbon_checkBox);
-                    checkBox.setChecked(true);
+                    binding.carbonCheckBox.setChecked(true);
                 }
+                binding.carbonText.setText(data.toString());
             }
         });
         adapter.setSelectionMode(SelectionMode.MULTI);
     }
 
     public void setItems(List<Type> items) {
-        super.setItems(items, parent -> new DataBindingComponent<Type>(parent, R.layout.carbon_row_dialog_checkboxtext) {
+        super.setItems(items, parent -> new LayoutComponent<Type>(parent, R.layout.carbon_row_dialog_checkboxtext) {
+            private CarbonRowDialogCheckboxtextBinding binding = CarbonRowDialogCheckboxtextBinding.bind(getView());
+
             @Override
             public void bind(Type data) {
                 super.bind(data);
                 if (getSelectedItems().contains(data)) {
-                    CheckBox checkBox = getView().findViewById(R.id.carbon_checkBox);
-                    checkBox.setChecked(true);
+                    binding.carbonCheckBox.setChecked(true);
                 }
+                binding.carbonText.setText(data.toString());
             }
         });
         adapter.setSelectionMode(SelectionMode.MULTI);

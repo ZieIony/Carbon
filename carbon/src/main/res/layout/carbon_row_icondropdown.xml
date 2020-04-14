@@ -1,53 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="?attr/carbon_colorForeground">
 
-    <data>
+    <carbon.widget.ImageView
+        style="@style/carbon_ImageView.Icon"
+        android:id="@+id/carbon_icon"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        tools:src="@drawable/carbon_iconplaceholder" />
 
-        <variable
-            name="data"
-            type="carbon.component.IconDropDownItem" />
-
-    </data>
-
-    <carbon.widget.RelativeLayout
+    <carbon.widget.TextMarker
+        android:id="@+id/carbon_marker"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:background="?attr/carbon_colorForeground">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:carbon_text="Ip"
+        app:carbon_textView="@+id/carbon_dropDown" />
 
-        <carbon.widget.ImageView
-            style="@style/carbon_ImageView.Icon"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:src="@{data.getIcon()}"
-            tools:src="@drawable/carbon_iconplaceholder" />
+    <carbon.widget.InputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/carbon_input"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/carbon_marker"
+        android:layout_marginStart="@dimen/carbon_contentPadding"
+        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:layout_marginEnd="@dimen/carbon_windowPadding"
+        android:layout_marginRight="@dimen/carbon_windowPadding">
 
-        <carbon.widget.TextMarker
-            android:id="@+id/carbon_marker"
+        <carbon.widget.DropDown
+            android:id="@+id/carbon_dropDown"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_dropDown" />
+            android:layout_height="wrap_content" />
+    </carbon.widget.InputLayout>
 
-        <carbon.widget.InputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/carbon_marker"
-            android:layout_marginStart="@dimen/carbon_contentPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:label="@{data.hint}">
-
-            <carbon.widget.DropDown
-                android:id="@+id/carbon_dropDown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(data.selectedItem)}" />
-        </carbon.widget.InputLayout>
-
-    </carbon.widget.RelativeLayout>
-</layout>
+</carbon.widget.RelativeLayout>

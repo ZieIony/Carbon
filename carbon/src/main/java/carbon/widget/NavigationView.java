@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +22,9 @@ import java.util.List;
 import carbon.Carbon;
 import carbon.R;
 import carbon.component.Component;
-import carbon.component.DataBindingComponent;
+import carbon.component.LayoutComponent;
+import carbon.databinding.CarbonNavigationRowBinding;
+import carbon.recycler.RowFactory;
 import carbon.recycler.RowListAdapter;
 import carbon.recycler.ViewItemDecoration;
 
@@ -87,10 +90,26 @@ public class NavigationView extends RecyclerView {
         }
     }
 
+    private static class ItemComponent extends LayoutComponent<Item> {
+        ItemComponent(ViewGroup parent) {
+            super(parent, R.layout.carbon_navigation_row);
+        }
+
+        private CarbonNavigationRowBinding binding = CarbonNavigationRowBinding.bind(getView());
+
+        @Override
+        public void bind(Item data) {
+            super.bind(data);
+            binding.carbonItemIcon.setImageDrawable(data.icon);
+            binding.carbonItemIcon.setTintList(data.getIconTintList());
+            binding.carbonItemText.setText(data.title);
+        }
+    }
+
     private OnItemClickedListener onItemClickedListener;
     private Item[] items;
     private View header;
-    private int itemLayoutId;
+    private RowFactory<Item> itemFactory;
 
     private static class CustomHeaderItem implements Serializable {
     }
@@ -138,7 +157,7 @@ public class NavigationView extends RecyclerView {
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationView, defStyleAttr, defStyleRes);
 
-        itemLayoutId = a.getResourceId(R.styleable.NavigationView_carbon_itemLayout, R.layout.carbon_navigation_row);
+        itemFactory = ItemComponent::new;
         int menuId = a.getResourceId(R.styleable.NavigationView_carbon_menu, 0);
         if (menuId != 0)
             setMenu(menuId);
@@ -170,8 +189,7 @@ public class NavigationView extends RecyclerView {
         if (items == null)
             return;
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<>(Item.class, parent -> new DataBindingComponent<Item>(NavigationView.this, itemLayoutId) {
-        });
+        RowListAdapter<Serializable> adapter = new RowListAdapter<>(Item.class, itemFactory);
         adapter.putFactory(CustomHeaderItem.class, parent -> new CustomHeaderRow(header));
         adapter.setOnItemClickedListener(Item.class, (view, menuItem, position) -> {
             if (onItemClickedListener != null)
@@ -218,8 +236,12 @@ public class NavigationView extends RecyclerView {
         initItems();
     }
 
-    public void setItemLayout(int resId) {
-        itemLayoutId = resId;
+    @Deprecated
+    public void setItemLayout(int itemLayoutId) {
+    }
+
+    public void setItemFactory(RowFactory<Item> factory) {
+        this.itemFactory = factory;
         initItems();
     }
 }

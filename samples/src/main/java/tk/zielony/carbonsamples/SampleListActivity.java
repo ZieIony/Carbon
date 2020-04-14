@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import carbon.component.DataBindingComponent;
 import carbon.recycler.RowListAdapter;
 import carbon.recycler.ViewItemDecoration;
 import carbon.widget.RecyclerView;
@@ -32,7 +31,7 @@ public class SampleListActivity extends ThemedActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RowListAdapter<>();
-        adapter.putFactory(SampleActivityGroup.class, parent -> new DataBindingComponent<>(parent, R.layout.row_main));
+        /*adapter.putFactory(SampleActivityGroup.class, parent -> new DataBindingComponent<>(parent, R.layout.row_main));
         adapter.putFactory(SampleActivityItem.class, parent -> {
             return new DataBindingComponent<SampleActivityItem>(parent, R.layout.row_sample) {
                 @Override
@@ -55,7 +54,7 @@ public class SampleListActivity extends ThemedActivity {
                 }
             };
         });
-        adapter.putFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));
+        adapter.putFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));*/
         adapter.setOnItemClickedListener((view, item, position) -> {
             if (item instanceof SampleActivityGroup) {
                 Class activityClass = ((SampleActivityGroup) item).getActivityClass();

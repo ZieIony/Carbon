@@ -3,6 +3,7 @@ package carbon.component
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
+import carbon.databinding.CarbonRowImagetextsubtextBinding
 
 import java.io.Serializable
 
@@ -26,4 +27,14 @@ open class DefaultImageTextSubtextItem : ImageTextSubtextItem {
     }
 }
 
-open class ImageTextSubtextRow<Type : ImageTextSubtextItem>(parent: ViewGroup) : DataBindingComponent<Type>(parent, R.layout.carbon_row_imagetextsubtext)
+open class ImageTextSubtextRow<Type : ImageTextSubtextItem>(parent: ViewGroup)
+    : LayoutComponent<Type>(parent, R.layout.carbon_row_imagetextsubtext) {
+    private val binding = CarbonRowImagetextsubtextBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonAvatar.setImageDrawable(data.image)
+        binding.carbonText.text = data.text ?: ""
+        binding.carbonSubtext.text = data.subtext ?: ""
+    }
+}

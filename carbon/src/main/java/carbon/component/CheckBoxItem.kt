@@ -2,6 +2,7 @@ package carbon.component
 
 import android.view.ViewGroup
 import carbon.R
+import carbon.databinding.CarbonRowIconcheckboxBinding
 import java.io.Serializable
 
 interface CheckBoxItem : Serializable {
@@ -21,4 +22,11 @@ open class DefaultCheckBoxItem : CheckBoxItem {
     }
 }
 
-open class CheckBoxRow(parent: ViewGroup) : DataBindingComponent<CheckBoxItem>(parent, R.layout.carbon_row_iconcheckbox)
+open class CheckBoxRow<Type : CheckBoxItem>(parent: ViewGroup) : LayoutComponent<Type>(parent, R.layout.carbon_row_iconcheckbox) {
+    private val binding = CarbonRowIconcheckboxBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonCheckBox.isChecked = data.isChecked
+    }
+}

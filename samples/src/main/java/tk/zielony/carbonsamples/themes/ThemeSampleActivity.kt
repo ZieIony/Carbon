@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import carbon.component.DataBindingComponent
 import carbon.component.DefaultAvatarTextRatingSubtextDateItem
 import carbon.component.DefaultHeaderItem
 import carbon.component.PaddedHeaderRow
@@ -68,7 +67,7 @@ open class ThemeSampleActivity : SamplesActivity() {
         recycler.layoutManager = LinearLayoutManager(this)
 
 
-        val adapter: RowListAdapter<Serializable> = RowListAdapter(DefaultAvatarTextRatingSubtextDateItem::class.java, RowFactory {
+     /*   val adapter: RowListAdapter<Serializable> = RowListAdapter(DefaultAvatarTextRatingSubtextDateItem::class.java, RowFactory {
             DataBindingComponent<DefaultAvatarTextRatingSubtextDateItem>(it, R.layout.row_windowsnews)
         })
 
@@ -76,7 +75,7 @@ open class ThemeSampleActivity : SamplesActivity() {
 
 
         recycler.adapter = adapter
-        adapter.items = items
+        adapter.items = items*/
     }
 }
 

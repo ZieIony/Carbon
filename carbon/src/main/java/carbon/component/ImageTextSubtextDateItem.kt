@@ -3,7 +3,7 @@ package carbon.component
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
-
+import carbon.databinding.CarbonRowImagetextsubtextdateBinding
 import java.io.Serializable
 
 interface ImageTextSubtextDateItem : Serializable {
@@ -29,4 +29,16 @@ open class DefaultImageTextSubtextDateItem : ImageTextSubtextDateItem {
     }
 }
 
-open class ImageTextSubtextDateRow<Type : ImageTextSubtextDateItem>(parent: ViewGroup) : DataBindingComponent<Type>(parent, R.layout.carbon_row_imagetextsubtextdate)
+open class ImageTextSubtextDateRow<Type : ImageTextSubtextDateItem>(parent: ViewGroup)
+    : LayoutComponent<Type>(parent, R.layout.carbon_row_imagetextsubtextdate) {
+    private val binding = CarbonRowImagetextsubtextdateBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonAvatar.setImageDrawable(data.image)
+        binding.carbonText.text = data.text ?: ""
+        binding.carbonSubtext.text = data.subtext ?: ""
+        binding.carbonDate.text = data.date ?: ""
+    }
+}
+

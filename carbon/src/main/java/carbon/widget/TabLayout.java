@@ -11,7 +11,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -19,13 +18,15 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.annimon.stream.Stream;
 
 import carbon.R;
+import carbon.component.Component;
+import carbon.component.LayoutComponent;
+import carbon.databinding.CarbonTablayoutTabBinding;
+import carbon.recycler.RowFactory;
 
 public class TabLayout extends HorizontalScrollView {
 
@@ -41,6 +42,20 @@ public class TabLayout extends HorizontalScrollView {
         }
     }
 
+    private static class ItemComponent extends LayoutComponent<Item> {
+        ItemComponent(ViewGroup parent) {
+            super(parent, R.layout.carbon_tablayout_tab);
+        }
+
+        private CarbonTablayoutTabBinding binding = CarbonTablayoutTabBinding.bind(getView());
+
+        @Override
+        public void bind(Item data) {
+            super.bind(data);
+            binding.carbonTabText.setText(data.title);
+        }
+    }
+
     ViewPager viewPager;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     LinearLayout content;
@@ -50,8 +65,8 @@ public class TabLayout extends HorizontalScrollView {
     float indicatorHeight;
     DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator();
     boolean fixed = false;
-    int itemLayoutId;
     Item[] items;
+    private RowFactory<Item> itemFactory;
 
     private ValueAnimator animator, animator2;
 
@@ -142,7 +157,7 @@ public class TabLayout extends HorizontalScrollView {
 
         setIndicatorHeight(a.getDimension(R.styleable.TabLayout_carbon_indicatorWidth, 2));
         setFixed(a.getBoolean(R.styleable.TabLayout_carbon_fixedTabs, true));
-        itemLayoutId = a.getResourceId(R.styleable.TabLayout_carbon_itemLayout, R.layout.carbon_tablayout_tab);
+        itemFactory = ItemComponent::new;
 
         a.recycle();
 
@@ -165,6 +180,15 @@ public class TabLayout extends HorizontalScrollView {
         initTabs();
     }
 
+    @Deprecated
+    public void setItemLayout(int itemLayoutId) {
+    }
+
+    public void setItemFactory(RowFactory<Item> factory) {
+        this.itemFactory = factory;
+        initTabs();
+    }
+
     public void setItems(Item[] items) {
         this.items = items;
         initTabs();
@@ -176,14 +200,13 @@ public class TabLayout extends HorizontalScrollView {
         if (items == null)
             return;
 
-        LayoutInflater inflater = LayoutInflater.from(getContext());
         for (int i = 0; i < items.length; i++) {
-            ViewDataBinding tab = DataBindingUtil.inflate(inflater, itemLayoutId, this, false);
-            tab.setVariable(carbon.BR.data, items[i]);
-            content.addView(tab.getRoot(), new LinearLayout.LayoutParams(fixed ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-            tab.getRoot().setSelected(i == 0);
+            Component<Item> component = itemFactory.create(this);
+            component.bind(items[i]);
+            content.addView(component.getView(), new LinearLayout.LayoutParams(fixed ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            component.getView().setSelected(i == 0);
             final int finalI = i;
-            tab.getRoot().setOnClickListener(__ -> {
+            component.getView().setOnClickListener(__ -> {
                 if (viewPager != null) {
                     viewPager.setCurrentItem(finalI);
                 } else {

@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <variable
-            name="data"
-            type="carbon.widget.MenuStrip.Item" />
-
-    </data>
-
-    <carbon.widget.ImageView
-        style="@style/carbon_ImageView.IconButton"
-        android:layout_gravity="center_vertical"
-        app:carbon_src="@{data.icon}"
-        app:carbon_tint="@{data.iconTintList}" />
-
-</layout>
+<carbon.widget.ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/carbon_ImageView.IconButton"
+    android:layout_gravity="center_vertical" />

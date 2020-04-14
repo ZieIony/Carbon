@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/carbon_colorForeground"
+    android:orientation="horizontal"
+    app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-    <data>
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_itemIcon"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginEnd="@dimen/carbon_padding"
+        android:layout_marginRight="@dimen/carbon_padding" />
 
-        <variable
-            name="data"
-            type="carbon.beta.BottomSheetLayout.Item" />
-    </data>
-
-    <carbon.widget.LinearLayout
+    <carbon.widget.TextView
+        android:id="@+id/carbon_itemText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/carbon_colorForeground"
-        android:orientation="horizontal"
-        app:carbon_rippleColor="?attr/carbon_rippleColor">
-
-        <carbon.widget.ImageView
-            android:id="@+id/carbon_itemIcon"
-            android:layout_width="@dimen/carbon_iconSize"
-            android:layout_height="@dimen/carbon_iconSize"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:layout_marginEnd="@dimen/carbon_padding"
-            android:layout_marginRight="@dimen/carbon_padding"
-            app:carbon_src="@{data.icon}" />
-
-        <carbon.widget.TextView
-            android:id="@+id/carbon_itemText"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/carbon_listItemHeight"
-            android:layout_marginLeft="@dimen/carbon_padding"
-            android:layout_marginRight="@dimen/carbon_padding"
-            android:gravity="center_vertical"
-            android:text="@{data.title}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead" />
-    </carbon.widget.LinearLayout>
-</layout>
+        android:layout_height="@dimen/carbon_listItemHeight"
+        android:layout_marginLeft="@dimen/carbon_padding"
+        android:layout_marginRight="@dimen/carbon_padding"
+        android:gravity="center_vertical"
+        android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+</carbon.widget.LinearLayout>

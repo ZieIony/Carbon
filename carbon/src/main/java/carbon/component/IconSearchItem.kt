@@ -30,11 +30,19 @@ class DefaultIconSearchItem : IconSearchItem {
     }
 }
 
-class IconSearchRow<Type : IconSearchItem> : DataBindingComponent<Type> {
+class IconSearchRow<Type : IconSearchItem>(
+        parent: ViewGroup,
+        val adapter: SearchAdapter<*>,
+        val listener: SearchEditText.OnFilterListener<*>
+) : LayoutComponent<Type>(parent, R.layout.carbon_row_iconsearch) {
 
-    constructor(parent: ViewGroup, adapter: SearchAdapter<*>, listener: SearchEditText.OnFilterListener<*>) : super(parent, R.layout.carbon_row_iconsearch) {
-        (binding as CarbonRowIconsearchBinding).carbonQuery.setDataProvider(adapter)
-        (binding as CarbonRowIconsearchBinding).carbonQuery.setOnFilterListener(listener)
+    private val binding = CarbonRowIconsearchBinding.bind(view)
+
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonIcon.setImageDrawable(data.icon)
+        binding.carbonQuery.setDataProvider(adapter)
+        binding.carbonQuery.setOnFilterListener(listener)
     }
 
 }

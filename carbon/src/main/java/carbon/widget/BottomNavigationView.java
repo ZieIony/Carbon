@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +16,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuItemCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 
-import carbon.BR;
 import carbon.Carbon;
 import carbon.R;
+import carbon.component.Component;
+import carbon.component.LayoutComponent;
+import carbon.databinding.CarbonBottomnavigationviewItemBinding;
+import carbon.drawable.ColorStateListFactory;
+import carbon.recycler.RowFactory;
 
 public class BottomNavigationView extends LinearLayout {
     public static class Item {
@@ -83,9 +84,26 @@ public class BottomNavigationView extends LinearLayout {
         }
     }
 
+    private static class ItemComponent extends LayoutComponent<Item> {
+        ItemComponent(ViewGroup parent) {
+            super(parent, R.layout.carbon_bottomnavigationview_item);
+        }
+
+        private CarbonBottomnavigationviewItemBinding binding = CarbonBottomnavigationviewItemBinding.bind(getView());
+
+        @Override
+        public void bind(Item data) {
+            super.bind(data);
+            binding.carbonBottomIcon.setImageDrawable(data.icon);
+            binding.carbonBottomIcon.setTintList(data.getIconTintList() != null ? data.getIconTintList() : ColorStateListFactory.INSTANCE.makeIconSecondary(getView().getContext()));
+            binding.carbonBottomText.setText(data.text);
+            binding.carbonBottomText.setTextColor(data.getIconTintList() != null ? data.getIconTintList() : ColorStateListFactory.INSTANCE.makeIconSecondary(getView().getContext()));
+        }
+    }
+
     private Item[] items;
     private View activeView;
-    private int itemLayoutId;
+    private RowFactory<Item> itemFactory;
 
     RecyclerView.OnItemClickedListener<Item> listener;
 
@@ -113,7 +131,7 @@ public class BottomNavigationView extends LinearLayout {
     private void initBottomNavigationView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.BottomNavigationView, defStyleAttr, defStyleRes);
 
-        itemLayoutId = a.getResourceId(R.styleable.BottomNavigationView_carbon_itemLayout, R.layout.carbon_bottomnavigationview_item);
+        itemFactory = ItemComponent::new;
         int menuId = a.getResourceId(R.styleable.BottomNavigationView_carbon_menu, 0);
         if (menuId != 0)
             setMenu(menuId);
@@ -141,8 +159,12 @@ public class BottomNavigationView extends LinearLayout {
         initItems();
     }
 
+    @Deprecated
     public void setItemLayout(int itemLayoutId) {
-        this.itemLayoutId = itemLayoutId;
+    }
+
+    public void setItemFactory(RowFactory<Item> factory) {
+        this.itemFactory = factory;
         initItems();
     }
 
@@ -154,17 +176,17 @@ public class BottomNavigationView extends LinearLayout {
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
             if (!isInEditMode()) {
-                ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), itemLayoutId, this, false);
+                Component<Item> component = itemFactory.create(this);
                 int finalI = i;
-                binding.getRoot().setOnClickListener(v -> {
-                    if (binding.getRoot() == activeView)
+                component.getView().setOnClickListener(v -> {
+                    if (component.getView() == activeView)
                         return;
-                    selectItem(binding.getRoot());
+                    selectItem(component.getView());
                     if (listener != null)
-                        listener.onItemClicked(binding.getRoot(), item, finalI);
+                        listener.onItemClicked(component.getView(), item, finalI);
                 });
-                binding.setVariable(BR.data, item);
-                addView(binding.getRoot(), new LinearLayout.LayoutParams(width, height, 1));
+                component.bind(item);
+                addView(component.getView(), new LinearLayout.LayoutParams(width, height, 1));
             } else {
                 View view = new LinearLayout(getContext());
                 addView(view, new LinearLayout.LayoutParams(width, height, 1));

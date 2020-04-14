@@ -3,8 +3,7 @@ package carbon.component
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
-import carbon.widget.DropDown
-
+import carbon.databinding.CarbonRowIcondropdownBinding
 import java.io.Serializable
 
 interface IconDropDownItem : Serializable {
@@ -30,22 +29,21 @@ open class DefaultIconDropDownItem<Type : Serializable> : IconDropDownItem {
     }
 }
 
-open class IconDropDownRow<Type : IconDropDownItem, ItemType : Serializable> : DataBindingComponent<Type> {
+open class IconDropDownRow<Type : IconDropDownItem, ItemType : Serializable>(parent: ViewGroup) : LayoutComponent<Type>(parent, R.layout.carbon_row_icondropdown) {
 
-    val dropDown: DropDown
+    private val binding = CarbonRowIcondropdownBinding.bind(view)
 
     var selectedItem: ItemType
-        get() = dropDown.getSelectedItem()
+        get() = binding.carbonDropDown.getSelectedItem()
         set(value) {
-            dropDown.setSelectedItem(value)
+            binding.carbonDropDown.setSelectedItem(value)
         }
-
-    constructor(parent: ViewGroup) : super(parent, R.layout.carbon_row_icondropdown) {
-        dropDown = view.findViewById(R.id.carbon_dropDown)
-    }
 
     override fun bind(data: Type) {
         super.bind(data)
-        dropDown.setItems(data.items)
+        binding.carbonIcon.setImageDrawable(data.icon)
+        binding.carbonInput.label = data.hint
+        binding.carbonDropDown.setItems(data.items)
+        binding.carbonDropDown.text = data.selectedItem.toString()
     }
 }

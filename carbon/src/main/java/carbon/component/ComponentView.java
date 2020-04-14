@@ -41,11 +41,7 @@ public class ComponentView extends FrameLayout {
         String type = a.getString(R.styleable.ComponentView_carbon_type);
         try {
             if (layout != 0 && type == null) {
-                if (isInEditMode()) {
-                    component = new LayoutComponent(this, layout);
-                } else {
-                    component = new DataBindingComponent(this, layout);
-                }
+                component = new LayoutComponent(this, layout);
             } else if (type != null) {
                 Constructor<?> constructor = Class.forName(type).getConstructor(ViewGroup.class);
                 component = (Component) constructor.newInstance(this);

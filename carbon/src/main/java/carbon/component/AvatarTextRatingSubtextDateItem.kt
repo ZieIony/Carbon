@@ -3,8 +3,7 @@ package carbon.component
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
-import carbon.widget.TextMarker
-
+import carbon.databinding.CarbonRowAvatartextratingsubtextdateBinding
 import java.io.Serializable
 
 interface AvatarTextRatingSubtextDateItem : Serializable {
@@ -33,11 +32,16 @@ open class DefaultAvatarTextRatingSubtextDateItem : AvatarTextRatingSubtextDateI
     }
 }
 
-open class AvatarTextRatingSubtextDateRow<Type : AvatarTextRatingSubtextDateItem>(parent: ViewGroup) : DataBindingComponent<Type>(parent, R.layout.carbon_row_avatartextratingsubtextdate) {
+open class AvatarTextRatingSubtextDateRow<Type : AvatarTextRatingSubtextDateItem>(parent: ViewGroup) : LayoutComponent<Type>(parent, R.layout.carbon_row_avatartextratingsubtextdate) {
+    private val binding = CarbonRowAvatartextratingsubtextdateBinding.bind(view)
 
     override fun bind(data: Type) {
         super.bind(data)
-        val marker = view.findViewById<TextMarker>(R.id.carbon_marker2)
-        marker.setText(data.subtext)
+        binding.carbonAvatar.setImageDrawable(data.avatar)
+        binding.carbonDate.text = data.date
+        binding.carbonRating.rating = data.rating.toFloat()
+        binding.carbonText.text = data.text
+        binding.carbonSubtext.text = data.subtext
+        binding.carbonMarker2.setText(data.subtext)
     }
 }

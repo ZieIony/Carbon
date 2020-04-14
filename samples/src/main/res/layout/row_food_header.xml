@@ -1,41 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/carbon_colorForeground">
 
-    <data>
+    <carbon.widget.ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginTop="@dimen/carbon_marginHalf"
+        android:layout_marginBottom="@dimen/carbon_marginHalf"
+        android:scaleType="centerCrop"
+        app:carbon_cornerRadius="@dimen/carbon_cornerRadiusImage"
+        tools:carbon_src="@tools:sample/backgrounds/scenic" />
 
-        <variable
-            name="data"
-            type="tk.zielony.carbonsamples.demo.FoodHeaderItem" />
-    </data>
-
-    <FrameLayout
+    <carbon.widget.TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/carbon_colorForeground">
-
-        <carbon.widget.ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:layout_marginTop="@dimen/carbon_marginHalf"
-            android:layout_marginBottom="@dimen/carbon_marginHalf"
-            android:scaleType="centerCrop"
-            app:carbon_cornerRadius="@dimen/carbon_cornerRadiusImage"
-            app:carbon_src="@{data.image}"
-            tools:carbon_src="@tools:sample/backgrounds/scenic" />
-
-        <carbon.widget.TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:paddingTop="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_windowPadding"
-            android:paddingBottom="@dimen/carbon_padding"
-            android:text="@{data.text}"
-            android:textAppearance="?attr/carbon_textAppearanceHeadline"
-            tools:text="description" />
-    </FrameLayout>
-</layout>
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:paddingTop="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_windowPadding"
+        android:paddingBottom="@dimen/carbon_padding"
+        android:textAppearance="?attr/carbon_textAppearanceHeadline"
+        tools:text="description" />
+</FrameLayout>

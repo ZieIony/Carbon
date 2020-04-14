@@ -1,17 +1,10 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-
-import carbon.drawable.CheckedState;
-import carbon.widget.CheckBox;
-import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.R;
+import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.ThemedActivity;
-import tk.zielony.carbonsamples.databinding.ActivityCheckboxRadioBinding;
 
 @SampleAnnotation(
         titleId = R.string.checkBoxRadioActivity_title,
@@ -21,7 +14,7 @@ public class CheckBoxRadioActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewDataBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.activity_checkbox_radio, null, false);
+      /*  ViewDataBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.activity_checkbox_radio, null, false);
         setContentView(viewDataBinding.getRoot());
         ActivityCheckboxRadioBinding binding = (ActivityCheckboxRadioBinding) viewDataBinding;
 
@@ -44,6 +37,6 @@ public class CheckBoxRadioActivity extends ThemedActivity {
             }
         };
         binding.checkBoxChild1.setOnCheckedChangeListener(listener);
-        binding.checkBoxChild2.setOnCheckedChangeListener(listener);
+        binding.checkBoxChild2.setOnCheckedChangeListener(listener);*/
     }
 }

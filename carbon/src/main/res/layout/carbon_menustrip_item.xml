@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/carbon_menuItemHeight"
+    android:background="@color/carbon_defaultMenuSelectionDrawable"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-    <data>
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_icon"
+        style="@style/carbon_ImageView.Icon"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/carbon_margin"
+        android:layout_marginLeft="@dimen/carbon_margin"
+        android:duplicateParentState="true" />
 
-        <variable
-            name="data"
-            type="carbon.widget.MenuStrip.Item" />
-
-        <import type="carbon.drawable.ColorStateListFactory" />
-    </data>
-
-    <carbon.widget.LinearLayout
+    <carbon.widget.Label
+        android:id="@+id/carbon_text"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/carbon_menuItemHeight"
-        android:background="@color/carbon_defaultMenuSelectionDrawable"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal"
-        app:carbon_rippleColor="?attr/carbon_rippleColor">
-
-        <carbon.widget.ImageView
-            style="@style/carbon_ImageView.Icon"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/carbon_margin"
-            android:layout_marginLeft="@dimen/carbon_margin"
-            android:duplicateParentState="true"
-            app:carbon_src="@{data.icon}"
-            app:carbon_tint="@{data.iconTintList}" />
-
-        <carbon.widget.Label
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/carbon_margin"
-            android:layout_marginLeft="@dimen/carbon_margin"
-            android:layout_marginEnd="@dimen/carbon_margin"
-            android:layout_marginRight="@dimen/carbon_margin"
-            android:duplicateParentState="true"
-            android:text="@{data.title}"
-            android:textAppearance="?attr/carbon_textAppearanceBody1"
-            android:textColor="@{data.iconTintList??ColorStateListFactory.INSTANCE.makePrimaryText(context)}" />
-    </carbon.widget.LinearLayout>
-</layout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/carbon_margin"
+        android:layout_marginLeft="@dimen/carbon_margin"
+        android:layout_marginEnd="@dimen/carbon_margin"
+        android:layout_marginRight="@dimen/carbon_margin"
+        android:duplicateParentState="true"
+        android:textAppearance="?attr/carbon_textAppearanceBody1" />
+</carbon.widget.LinearLayout>

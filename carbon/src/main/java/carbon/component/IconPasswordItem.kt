@@ -4,8 +4,7 @@ import android.graphics.drawable.Drawable
 import android.text.method.PasswordTransformationMethod
 import android.view.ViewGroup
 import carbon.R
-import carbon.widget.EditText
-
+import carbon.databinding.CarbonRowIconpasswordBinding
 import java.io.Serializable
 
 interface IconPasswordItem : Serializable {
@@ -28,17 +27,19 @@ open class DefaultIconPasswordItem : IconPasswordItem {
     }
 }
 
-open class IconPasswordRow<Type : IconPasswordItem> : DataBindingComponent<Type> {
-
-    val editText: EditText
+open class IconPasswordRow<Type : IconPasswordItem>(parent: ViewGroup) : LayoutComponent<Type>(parent, R.layout.carbon_row_iconpassword) {
+    private val binding = CarbonRowIconpasswordBinding.bind(view)
 
     var text: String
-        get() = editText.text.toString()
-        set(text) = editText.setText(text)
+        get() = binding.carbonText.text.toString()
+        set(text) = binding.carbonText.setText(text)
 
-    constructor(parent: ViewGroup) : super(parent, R.layout.carbon_row_iconpassword) {
-        editText = view.findViewById(R.id.carbon_text)
-        editText.transformationMethod = PasswordTransformationMethod()
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonIcon.setImageDrawable(data.icon)
+        binding.carbonInput.label = data.hint
+        binding.carbonText.transformationMethod = PasswordTransformationMethod()
+        binding.carbonText.text = data.text ?: ""
     }
 
 }

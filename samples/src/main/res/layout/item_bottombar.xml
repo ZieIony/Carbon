@@ -1,41 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:minWidth="@dimen/carbon_bottomNavigationViewInactiveMinWidth"
+    android:minHeight="@dimen/carbon_bottomNavigationViewHeight"
+    app:carbon_maxWidth="@dimen/carbon_bottomNavigationViewInactiveMaxWidth"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
+    app:carbon_rippleStyle="borderless">
 
-    <data>
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_bottomIcon"
+        android:layout_width="@dimen/carbon_iconSize"
+        android:layout_height="@dimen/carbon_iconSize"
+        android:layout_gravity="center"
+        android:duplicateParentState="true"
+        app:carbon_tint="@color/carbon_defaultIconColorPrimary" />
 
-        <import type="android.view.View" />
-
-        <variable
-            name="data"
-            type="tk.zielony.carbonsamples.widget.BadgeItem" />
-    </data>
-
-    <carbon.widget.FrameLayout
-        android:layout_width="match_parent"
+    <carbon.widget.Badge
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:minWidth="@dimen/carbon_bottomNavigationViewInactiveMinWidth"
-        android:minHeight="@dimen/carbon_bottomNavigationViewHeight"
-        app:carbon_maxWidth="@dimen/carbon_bottomNavigationViewInactiveMaxWidth"
-        app:carbon_rippleColor="?attr/carbon_rippleColor"
-        app:carbon_rippleStyle="borderless">
-
-        <carbon.widget.ImageView
-            android:id="@+id/carbon_bottomIcon"
-            android:layout_width="@dimen/carbon_iconSize"
-            android:layout_height="@dimen/carbon_iconSize"
-            android:layout_gravity="center"
-            android:duplicateParentState="true"
-            app:carbon_src="@{data.icon}"
-            app:carbon_tint="@color/carbon_defaultIconColorPrimary" />
-
-        <carbon.widget.Badge
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="4dp"
-            android:text="@{String.valueOf(data.notificationCount)}"
-            android:visibility="@{data.notificationCount>0?View.VISIBLE:View.GONE}" />
-    </carbon.widget.FrameLayout>
-</layout>
+        android:layout_gravity="end"
+        android:layout_margin="4dp" />
+</carbon.widget.FrameLayout>

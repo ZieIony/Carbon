@@ -3,8 +3,7 @@ package carbon.component
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import carbon.R
-import carbon.widget.EditText
-
+import carbon.databinding.CarbonRowIconedittextBinding
 import java.io.Serializable
 
 interface IconEditTextItem : Serializable {
@@ -27,16 +26,19 @@ open class DefaultIconEditTextItem : IconEditTextItem {
     }
 }
 
-open class IconEditTextRow<Type : IconEditTextItem> : DataBindingComponent<Type> {
+open class IconEditTextRow<Type : IconEditTextItem>(parent: ViewGroup)
+    : LayoutComponent<Type>(parent, R.layout.carbon_row_iconedittext) {
 
-    val editText: EditText
+    private var binding = CarbonRowIconedittextBinding.bind(view)
 
     var text: String
-        get() = editText.text.toString()
-        set(text) = editText.setText(text)
+        get() = binding.carbonText.text.toString()
+        set(text) = binding.carbonText.setText(text)
 
-    constructor(parent: ViewGroup) : super(parent, R.layout.carbon_row_iconedittext) {
-        this.editText = view.findViewById(R.id.carbon_text)
+    override fun bind(data: Type) {
+        super.bind(data)
+        binding.carbonIcon.setImageDrawable(data.icon)
+        binding.carbonInput.label = data.hint
+        binding.carbonText.text = data.text ?: ""
     }
-
 }

@@ -1,143 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/carbon_colorForeground"
+    android:clickable="true"
+    android:focusable="true">
 
-    <data>
+    <carbon.widget.ImageView
+        android:id="@+id/carbon_avatar"
+        style="@style/carbon_ImageView.Avatar.Square"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginTop="@dimen/carbon_margin"
+        tools:src="@tools:sample/avatars" />
 
-        <variable
-            name="data"
-            type="carbon.component.AvatarTextRatingSubtextDateItem" />
-
-    </data>
-
-    <carbon.widget.RelativeLayout
+    <carbon.widget.TextMarker
+        android:id="@+id/carbon_marker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/carbon_colorForeground"
-        android:clickable="true"
-        android:focusable="true">
+        android:layout_marginTop="20dp"
+        app:carbon_text="Ip"
+        app:carbon_textView="@+id/carbon_text" />
 
-        <carbon.widget.ImageView
-            android:id="@+id/carbon_avatar"
-            style="@style/carbon_ImageView.Avatar.Square"
-            android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:layout_marginTop="@dimen/carbon_margin"
-            android:src="@{data.getAvatar()}"
-            tools:src="@tools:sample/avatars" />
+    <carbon.widget.TextMarker
+        android:id="@+id/carbon_marker2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/carbon_avatar"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginTop="@dimen/carbon_margin"
+        android:layout_marginRight="@dimen/carbon_windowPadding"
+        android:paddingBottom="@dimen/carbon_margin"
+        app:carbon_textView="@+id/carbon_subtext" />
 
-        <carbon.widget.TextMarker
-            android:id="@+id/carbon_marker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_text" />
+    <carbon.widget.TextMarker
+        android:id="@+id/carbon_marker3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:carbon_text="Ip"
+        app:carbon_textView="@+id/carbon_date" />
 
-        <carbon.widget.TextMarker
-            android:id="@+id/carbon_marker2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/carbon_avatar"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:layout_marginTop="@dimen/carbon_margin"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:paddingBottom="@dimen/carbon_margin"
-            app:carbon_textView="@+id/carbon_subtext" />
+    <carbon.widget.TextView
+        android:id="@+id/carbon_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/carbon_marker"
+        android:layout_marginStart="@dimen/carbon_contentPadding"
+        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:layout_marginEnd="@dimen/carbon_marginHalf"
+        android:layout_marginRight="@dimen/carbon_marginHalf"
+        android:layout_toStartOf="@+id/carbon_date"
+        android:layout_toLeftOf="@+id/carbon_date"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="?attr/carbon_textAppearanceSubhead"
+        tools:text="@tools:sample/full_names" />
 
-        <carbon.widget.TextMarker
-            android:id="@+id/carbon_marker3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:carbon_text="Ip"
-            app:carbon_textView="@+id/carbon_date" />
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/carbon_rating"
+        style="?attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/carbon_avatar"
+        android:layout_marginStart="@dimen/carbon_contentPadding"
+        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:layout_marginEnd="@dimen/carbon_marginHalf"
+        android:layout_marginRight="@dimen/carbon_marginHalf"
+        android:isIndicator="true"
+        android:numStars="5"
+        tools:rating="3" />
 
-        <carbon.widget.TextView
-            android:id="@+id/carbon_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/carbon_marker"
-            android:layout_marginStart="@dimen/carbon_contentPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:layout_marginEnd="@dimen/carbon_marginHalf"
-            android:layout_marginRight="@dimen/carbon_marginHalf"
-            android:layout_toStartOf="@+id/carbon_date"
-            android:layout_toLeftOf="@+id/carbon_date"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@{data.text}"
-            android:textAppearance="?attr/carbon_textAppearanceSubhead"
-            tools:text="@tools:sample/full_names" />
+    <carbon.widget.TextView
+        android:id="@+id/carbon_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/carbon_marker3"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/carbon_windowPadding"
+        android:layout_marginRight="@dimen/carbon_windowPadding"
+        android:maxLines="1"
+        android:textAppearance="?attr/carbon_textAppearanceCaption"
+        tools:text="@tools:sample/date/ddmmyy" />
 
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/carbon_rating"
-            style="?attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/carbon_avatar"
-            android:layout_marginStart="@dimen/carbon_contentPadding"
-            android:layout_marginLeft="@dimen/carbon_contentPadding"
-            android:layout_marginEnd="@dimen/carbon_marginHalf"
-            android:layout_marginRight="@dimen/carbon_marginHalf"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="@{data.rating}"
-            tools:rating="3" />
+    <carbon.widget.TextView
+        android:id="@+id/carbon_subtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/carbon_marker2"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginRight="@dimen/carbon_windowPadding"
+        android:layout_marginBottom="@dimen/carbon_margin"
+        android:gravity="fill"
+        android:textAppearance="?attr/carbon_textAppearanceBody1"
+        android:textColor="?android:attr/textColorSecondary"
+        tools:maxLines="5"
+        tools:text="@tools:sample/lorem/random" />
 
-        <carbon.widget.TextView
-            android:id="@+id/carbon_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/carbon_marker3"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:maxLines="1"
-            android:text="@{data.date}"
-            android:textAppearance="?attr/carbon_textAppearanceCaption"
-            tools:text="@tools:sample/date/ddmmyy" />
+    <carbon.widget.Button
+        android:id="@+id/like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carbon_subtext"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginBottom="@dimen/carbon_margin"
+        android:layout_toStartOf="@id/share"
+        android:layout_toLeftOf="@+id/share"
+        android:text="like" />
 
-        <carbon.widget.TextView
-            android:id="@+id/carbon_subtext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/carbon_marker2"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:layout_marginBottom="@dimen/carbon_margin"
-            android:gravity="fill"
-            android:text="@{data.subtext}"
-            android:textAppearance="?attr/carbon_textAppearanceBody1"
-            android:textColor="?android:attr/textColorSecondary"
-            tools:maxLines="5"
-            tools:text="@tools:sample/lorem/random" />
-
-        <carbon.widget.Button
-            android:id="@+id/like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/carbon_subtext"
-            android:layout_marginStart="@dimen/carbon_windowPadding"
-            android:layout_marginLeft="@dimen/carbon_windowPadding"
-            android:layout_marginBottom="@dimen/carbon_margin"
-            android:layout_toStartOf="@id/share"
-            android:layout_toLeftOf="@+id/share"
-            android:text="like" />
-
-        <carbon.widget.Button
-            android:id="@+id/share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/carbon_subtext"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="@dimen/carbon_margin"
-            android:layout_marginLeft="@dimen/carbon_margin"
-            android:layout_marginEnd="@dimen/carbon_windowPadding"
-            android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:layout_marginBottom="@dimen/carbon_margin"
-            android:text="share" />
-    </carbon.widget.RelativeLayout>
-</layout>
+    <carbon.widget.Button
+        android:id="@+id/share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carbon_subtext"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="@dimen/carbon_margin"
+        android:layout_marginLeft="@dimen/carbon_margin"
+        android:layout_marginEnd="@dimen/carbon_windowPadding"
+        android:layout_marginRight="@dimen/carbon_windowPadding"
+        android:layout_marginBottom="@dimen/carbon_margin"
+        android:text="share" />
+</carbon.widget.RelativeLayout>

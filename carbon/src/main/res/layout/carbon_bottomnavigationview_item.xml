@@ -1,61 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:minHeight="@dimen/carbon_bottomNavigationViewHeight"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
+    app:carbon_rippleStyle="borderless">
 
-    <data>
-
-        <variable
-            name="data"
-            type="carbon.widget.BottomNavigationView.Item" />
-
-        <import type="carbon.drawable.ColorStateListFactory" />
-    </data>
-
-    <carbon.widget.FrameLayout
+    <carbon.widget.RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:minHeight="@dimen/carbon_bottomNavigationViewHeight"
-        app:carbon_rippleColor="?attr/carbon_rippleColor"
-        app:carbon_rippleStyle="borderless">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding">
 
-        <carbon.widget.RelativeLayout
-            android:layout_width="match_parent"
+        <carbon.widget.TextView
+            android:id="@+id/carbon_bottomText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="@dimen/carbon_padding"
-            android:paddingRight="@dimen/carbon_padding">
+            android:layout_alignBaseline="@id/carbon_bottomTextMarker"
+            android:layout_centerHorizontal="true"
+            android:duplicateParentState="true"
+            android:textAppearance="@style/carbon_TextAppearance.Body1"
+            android:textSize="12sp" />
 
-            <carbon.widget.TextView
-                android:id="@+id/carbon_bottomText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/carbon_bottomTextMarker"
-                android:layout_centerHorizontal="true"
-                android:duplicateParentState="true"
-                android:text="@{data.title}"
-                android:textAppearance="@style/carbon_TextAppearance.Body1"
-                android:textColor="@{data.iconTintList??ColorStateListFactory.INSTANCE.makeIconSecondary(context)}"
-                android:textSize="12sp" />
+        <carbon.widget.ImageView
+            android:id="@+id/carbon_bottomIcon"
+            android:layout_width="@dimen/carbon_iconSize"
+            android:layout_height="@dimen/carbon_iconSize"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:duplicateParentState="true" />
 
-            <carbon.widget.ImageView
-                android:id="@+id/carbon_bottomIcon"
-                android:layout_width="@dimen/carbon_iconSize"
-                android:layout_height="@dimen/carbon_iconSize"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp"
-                android:duplicateParentState="true"
-                android:src="@{data.icon}"
-                app:carbon_tint="@{data.iconTintList??ColorStateListFactory.INSTANCE.makeIconSecondary(context)}" />
-
-            <carbon.widget.TextMarker
-                android:id="@+id/carbon_bottomTextMarker"
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/carbon_bottomIcon"
-                app:carbon_text="I"
-                app:carbon_textView="@+id/carbon_bottomText" />
-        </carbon.widget.RelativeLayout>
-    </carbon.widget.FrameLayout>
-</layout>
+        <carbon.widget.TextMarker
+            android:id="@+id/carbon_bottomTextMarker"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/carbon_bottomIcon"
+            app:carbon_text="I"
+            app:carbon_textView="@+id/carbon_bottomText" />
+    </carbon.widget.RelativeLayout>
+</carbon.widget.FrameLayout>
