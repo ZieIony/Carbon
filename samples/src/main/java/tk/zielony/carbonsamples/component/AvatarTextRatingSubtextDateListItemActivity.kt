@@ -3,8 +3,12 @@ package tk.zielony.carbonsamples.component
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import carbon.component.*
+import carbon.component.AvatarTextRatingSubtextDateRow
+import carbon.component.DefaultAvatarTextRatingSubtextDateItem
+import carbon.component.DefaultHeaderItem
+import carbon.component.PaddedHeaderRow
 import carbon.recycler.RowListAdapter
+import carbon.recycler.ViewItemDecoration
 import kotlinx.android.synthetic.main.activity_listcomponent.*
 import tk.zielony.carbonsamples.R
 import tk.zielony.carbonsamples.SampleAnnotation
@@ -35,12 +39,10 @@ class AvatarTextRatingSubtextDateListItemActivity : ThemedActivity() {
 
         val adapter = RowListAdapter<Serializable>().apply {
             putFactory(DefaultAvatarTextRatingSubtextDateItem::class.java, { AvatarTextRatingSubtextDateRow(it) })
-            putFactory(PaddingItem::class.java, { PaddingRow(it) })
             putFactory(DefaultHeaderItem::class.java, { PaddedHeaderRow(it) })
         }
 
         adapter.items = listOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 DefaultHeaderItem("Header"),
                 randomData.generate(DefaultAvatarTextRatingSubtextDateItem::class.java),
                 randomData.generate(DefaultAvatarTextRatingSubtextDateItem::class.java),
@@ -57,10 +59,14 @@ class AvatarTextRatingSubtextDateListItemActivity : ThemedActivity() {
                 randomData.generate(DefaultAvatarTextRatingSubtextDateItem::class.java),
                 DefaultHeaderItem("Header"),
                 randomData.generate(DefaultAvatarTextRatingSubtextDateItem::class.java),
-                randomData.generate(DefaultAvatarTextRatingSubtextDateItem::class.java),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)))
+                randomData.generate(DefaultAvatarTextRatingSubtextDateItem::class.java))
 
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
+
+        val paddingItemDecoration = ViewItemDecoration(this, R.layout.carbon_row_padding)
+        paddingItemDecoration.setDrawBefore { it == 0 }
+        paddingItemDecoration.setDrawAfter { it == adapter.itemCount - 1 }
+        recycler.addItemDecoration(paddingItemDecoration)
     }
 }

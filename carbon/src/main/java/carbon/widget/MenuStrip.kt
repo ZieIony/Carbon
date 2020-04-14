@@ -6,16 +6,16 @@ import android.graphics.drawable.Drawable
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.ViewGroup
 import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import carbon.Carbon
 import carbon.R
-import carbon.component.Component
 import carbon.component.DataBindingComponent
-import carbon.component.DividerItem
+import carbon.recycler.RowArrayAdapter
 import carbon.recycler.RowFactory
-import carbon.recycler.RowListAdapter
 import carbon.view.SelectionMode
 import java.io.Serializable
 
@@ -68,16 +68,6 @@ open class MenuStrip : RecyclerView {
         }
     }
 
-    private class SeparatorComponent : Component<DividerItem> {
-        private var view: View
-
-        constructor(parent: ViewGroup, layoutId: Int) {
-            this.view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
-        }
-
-        override fun getView(): View = view
-    }
-
     private inner class ItemComponent(parent: ViewGroup) : DataBindingComponent<Item>(parent, itemLayoutId) {
         override fun bind(data: Item) {
             super.bind(data)
@@ -95,14 +85,6 @@ open class MenuStrip : RecyclerView {
             initItems()
         }
 
-    private var _separatorLayoutId: Int = 0
-    var separatorLayoutId: Int
-        get() = _separatorLayoutId
-        set(value) {
-            _separatorLayoutId = value
-            initItems()
-        }
-
     private lateinit var _orientation: carbon.view.Orientation
     var orientation: carbon.view.Orientation
         get() = _orientation
@@ -111,7 +93,7 @@ open class MenuStrip : RecyclerView {
             initItems()
         }
 
-    var adapter: RowListAdapter<Serializable> = RowListAdapter(Item::class.java, RowFactory<Item> { ItemComponent(it) })
+    var adapter: RowArrayAdapter<Serializable> = RowArrayAdapter(Item::class.java, RowFactory<Item> { ItemComponent(it) })
     var selectionMode: SelectionMode
         get() = adapter.selectionMode
         set(value) {
@@ -165,7 +147,6 @@ open class MenuStrip : RecyclerView {
 
         orientation = carbon.view.Orientation.values()[a.getInt(R.styleable.MenuStrip_android_orientation, carbon.view.Orientation.VERTICAL.ordinal)]
         itemLayoutId = a.getResourceId(R.styleable.MenuStrip_carbon_itemLayout, R.layout.carbon_menustrip_item)
-        separatorLayoutId = a.getResourceId(R.styleable.MenuStrip_carbon_separatorLayout, 0)
         selectionMode = SelectionMode.values()[a.getInt(R.styleable.MenuStrip_carbon_selectionMode, SelectionMode.NONE.ordinal)]
         val menuId = a.getResourceId(R.styleable.MenuStrip_carbon_menu, 0)
         if (menuId != 0)
@@ -187,29 +168,26 @@ open class MenuStrip : RecyclerView {
 
         initAdapter()
 
-        val items: ArrayList<Serializable> = arrayListOf(*items!!)
-        var i = 0
-        while (i < items.size - 1) {
-            if ((items[i] as Item).groupId != (items[i + 1] as Item).groupId)
-                items.add(++i, DividerItem())
-            i++
-        }
         adapter.items = items
     }
 
     private fun initAdapter() {
         val vertical = orientation == carbon.view.Orientation.VERTICAL
 
-        var separatorLayoutId = this.separatorLayoutId
-        if (separatorLayoutId == 0)
-            separatorLayoutId = if (vertical) R.layout.carbon_menustrip_hseparator_item else R.layout.carbon_menustrip_vseparator_item
-
         layoutManager = LinearLayoutManager(context, if (vertical) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL, false)
-        adapter.putFactory(DividerItem::class.java, { SeparatorComponent(it, separatorLayoutId) })
 
         adapter.setOnItemClickedListener(Item::class.java, onItemClickedListener)
 
         setAdapter(adapter)
+    }
+
+    override fun setDivider(divider: Drawable?, height: Int) {
+        /*val decoration = DividerItemDecoration(context, divider, height)
+        decoration.setDrawAfter { i ->
+            val items = this.items
+            items != null && i < items.size - 1 && (items[i].groupId != items[i + 1].groupId)
+        }
+        addItemDecoration(decoration)*/
     }
 
     public override fun onSaveInstanceState(): Parcelable? {

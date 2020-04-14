@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import carbon.Carbon;
 import carbon.R;
 import carbon.internal.MathUtils;
-import carbon.recycler.ListAdapter;
+import carbon.recycler.ArrayAdapter;
 
 public class PopupMenu extends PopupWindow {
 
@@ -51,7 +51,7 @@ public class PopupMenu extends PopupWindow {
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
         int selectedItem = 0;
-        ListAdapter adapter = menuStrip.getAdapter();
+        ArrayAdapter adapter = menuStrip.getAdapter();
 
         if (getAnchorView() instanceof android.widget.TextView) {
             android.widget.TextView textView = (TextView) getAnchorView();

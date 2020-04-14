@@ -167,7 +167,8 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, R.style.carbon_Toolbar);
         setTitle(a.getString(R.styleable.Toolbar_android_text));
-        setIcon(Carbon.getDrawable(this, a, R.styleable.Toolbar_carbon_icon, 0));
+        setNavigationIcon(Carbon.getDrawable(this, a, R.styleable.Toolbar_carbon_navigationIcon, 0));
+        setNavigationIconContentDescription(a.getString(R.styleable.Toolbar_carbon_navigationIconContentDescription));
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
@@ -304,10 +305,6 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         setIconVisible(drawable != null);
     }
 
-    public void setNavigationIcon(@Nullable Bitmap icon) {
-        setIcon(icon);
-    }
-
     @Deprecated
     public void setIcon(Bitmap bitmap) {
         if (icon == null)
@@ -334,6 +331,18 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
     @Deprecated
     public View getIconView() {
         return icon;
+    }
+
+    public void setNavigationIconContentDescription(CharSequence description) {
+        icon.setContentDescription(description);
+    }
+
+    public CharSequence getNavigationIconContentDescription() {
+        return icon.getContentDescription();
+    }
+
+    public void setNavigationIcon(@Nullable Bitmap icon) {
+        setIcon(icon);
     }
 
     @Deprecated

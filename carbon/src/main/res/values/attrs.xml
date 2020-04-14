@@ -946,7 +946,8 @@
 
         <attr name="android:background" />
         <attr name="android:text" />
-        <attr name="carbon_icon" />
+        <attr name="carbon_navigationIcon" format="reference" />
+        <attr name="carbon_navigationIconContentDescription" format="string" />
 
         <attr name="carbon_cornerRadiusTopStart" />
         <attr name="carbon_cornerRadiusTopEnd" />
@@ -1362,7 +1363,6 @@
         <attr name="android:orientation" />
         <attr name="carbon_menu" />
         <attr name="carbon_itemLayout" />
-        <attr name="carbon_separatorLayout" format="reference" />
         <attr name="carbon_selectionMode" format="enum">
             <enum name="none" value="0" />
             <enum name="single" value="1" />

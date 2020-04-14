@@ -346,7 +346,7 @@
             style="@style/carbon_Toolbar.Flat"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
-            app:carbon_icon="@drawable/carbon_uparrow"
+            app:carbon_navigationIcon="@drawable/carbon_uparrow"
             tools:text="test title">
 
             <carbon.widget.ImageView

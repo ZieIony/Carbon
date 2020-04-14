@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples
 
 import android.os.Bundle
-import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.widget.*
 
 @SampleAnnotation(
@@ -17,7 +16,6 @@ class WidgetsActivity : SampleListActivity() {
         initToolbar()
 
         setItems(listOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Widgets with sample styles, data and applications",
                 SampleActivityItem(BannerActivity::class.java),
                 SampleActivityItem(CheckBoxRadioActivity::class.java),
@@ -39,8 +37,7 @@ class WidgetsActivity : SampleListActivity() {
                 SampleActivityItem(TableLayoutActivity::class.java),
                 SampleActivityItem(BottomNavigationViewActivity::class.java),
                 SampleActivityItem(BottomSheetActivity::class.java, true),
-                SampleActivityItem(BackdropActivity::class.java),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+                SampleActivityItem(BackdropActivity::class.java)
         ))
     }
 

@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples
 
 import android.os.Bundle
-import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.graph.BarChartActivity
 import tk.zielony.carbonsamples.graph.LineChartActivity
 
@@ -18,11 +17,9 @@ class ChartsActivity : SampleListActivity() {
         initToolbar()
 
         setItems(listOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Charts",
                 SampleActivityItem(BarChartActivity::class.java, true),
-                SampleActivityItem(LineChartActivity::class.java, true),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+                SampleActivityItem(LineChartActivity::class.java, true)
         ))
     }
 

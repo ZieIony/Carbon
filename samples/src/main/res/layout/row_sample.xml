@@ -51,12 +51,13 @@
                 style="@style/carbon_ImageView.Icon"
                 android:layout_width="@dimen/carbon_toolbarItemSize"
                 android:layout_height="@dimen/carbon_toolbarItemSize"
-                app:carbon_src="@drawable/ic_warning_black_24dp"
-                android:visibility="@{data.beta?View.VISIBLE:View.GONE}" />
+                android:visibility="@{data.beta?View.VISIBLE:View.GONE}"
+                app:carbon_src="@drawable/ic_warning_black_24dp" />
 
             <carbon.widget.ImageView
                 android:id="@+id/star"
                 style="@style/carbon_ImageView.IconButton"
+                android:contentDescription="favourite sample"
                 android:src="@{data.starred?@drawable/ic_star_black_24dp:@drawable/ic_star_border_black_24dp}"
                 tools:src="@drawable/ic_star_border_black_24dp" />
         </carbon.widget.LinearLayout>

@@ -22,11 +22,8 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.component.Component;
 import carbon.component.DataBindingComponent;
-import carbon.component.DividerItem;
-import carbon.component.DividerRow;
-import carbon.component.PaddingItem;
-import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
+import carbon.recycler.ViewItemDecoration;
 
 public class NavigationView extends RecyclerView {
     public static class Item implements Serializable {
@@ -173,8 +170,6 @@ public class NavigationView extends RecyclerView {
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(Item.class, parent -> new DataBindingComponent<Item>(NavigationView.this, itemLayoutId) {
         });
-        adapter.putFactory(PaddingItem.class, PaddingRow::new);
-        adapter.putFactory(DividerItem.class, DividerRow::new);
         adapter.putFactory(CustomHeaderItem.class, parent -> new CustomHeaderRow(header));
         adapter.setOnItemClickedListener(Item.class, (view, menuItem, position) -> {
             if (onItemClickedListener != null)
@@ -182,12 +177,21 @@ public class NavigationView extends RecyclerView {
         });
 
         List<Serializable> items = new ArrayList<>(Arrays.asList(this.items));
-        for (int i = 0; i < items.size() - 1; i++) {
-            if (((Item) items.get(i)).getGroupId() != ((Item) items.get(i + 1)).getGroupId())
-                items.add(++i, new DividerItem());
-        }
-        items.add(0, new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
-        items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
+
+        for (int i = 0; i < getItemDecorationCount(); i++)
+            removeItemDecorationAt(0);
+
+        ViewItemDecoration dividerItemDecoration = new ViewItemDecoration(getContext(), R.layout.carbon_menustrip_hseparator_item);
+        dividerItemDecoration.setDrawAfter(position -> position < items.size() - 1 &&
+                items.get(position) instanceof Item &&
+                items.get(position + 1) instanceof Item &&
+                ((Item) items.get(position)).getGroupId() != ((Item) items.get(position + 1)).getGroupId());
+        addItemDecoration(dividerItemDecoration);
+
+        ViewItemDecoration paddingItemDecoration = new ViewItemDecoration(getContext(), R.layout.carbon_row_padding);
+        paddingItemDecoration.setDrawBefore(position -> position == 0);
+        paddingItemDecoration.setDrawAfter(position -> position == items.size() - 1);
+        addItemDecoration(paddingItemDecoration);
 
         if (header != null) {
             items.add(0, new CustomHeaderItem());

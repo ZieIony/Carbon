@@ -20,17 +20,25 @@ import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
 public class VectorDrawable extends Drawable implements AlphaDrawable, TintAwareDrawable {
-    private VectorState state;
+    private VectorDrawableState state;
+
+    // TODO: move bitmap to constant state
     private Bitmap bitmap;
 
     private static SparseArray<SVG> cache = new SparseArray<>();
+    private boolean mutated = false;
 
     public static void clearCache() {
         cache.clear();
     }
 
+    public VectorDrawable(VectorDrawableState state){
+        this.state = state;
+        setBounds(0, 0, state.intWidth, state.intHeight);
+    }
+
     public VectorDrawable(SVG svg, int intWidth, int intHeight) {
-        state = new VectorState(svg, intWidth, intHeight);
+        state = new VectorDrawableState(svg, intWidth, intHeight);
         setBounds(0, 0, state.intWidth, state.intHeight);
     }
 
@@ -50,7 +58,7 @@ public class VectorDrawable extends Drawable implements AlphaDrawable, TintAware
 
             int intWidth = (int) (width * density);
             int intHeight = (int) (height * density);
-            state = new VectorState(svg, intWidth, intHeight);
+            state = new VectorDrawableState(svg, intWidth, intHeight);
             setBounds(0, 0, state.intWidth, state.intHeight);
         } catch (SVGParseException e) {
 
@@ -165,10 +173,14 @@ public class VectorDrawable extends Drawable implements AlphaDrawable, TintAware
     @NonNull
     @Override
     public Drawable mutate() {
-        return new VectorDrawable(state.svg, state.intWidth, state.intHeight);
+        if (!mutated) {
+            state = new VectorDrawableState(state);
+            mutated = true;
+        }
+        return this;
     }
 
-    private class VectorState extends ConstantState {
+    private static class VectorDrawableState extends ConstantState {
         SVG svg;
         private Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
         int intWidth, intHeight;
@@ -176,13 +188,13 @@ public class VectorDrawable extends Drawable implements AlphaDrawable, TintAware
         public ColorStateList tint;
         public PorterDuff.Mode tintMode = PorterDuff.Mode.SRC_IN;
 
-        public VectorState(SVG svg, int intWidth, int intHeight) {
+        public VectorDrawableState(SVG svg, int intWidth, int intHeight) {
             this.svg = svg;
             this.intWidth = intWidth;
             this.intHeight = intHeight;
         }
 
-        public VectorState(VectorState state) {
+        public VectorDrawableState(VectorDrawableState state) {
             svg = state.svg;
             intWidth = state.intWidth;
             intHeight = state.intHeight;
@@ -195,7 +207,7 @@ public class VectorDrawable extends Drawable implements AlphaDrawable, TintAware
         @NonNull
         @Override
         public Drawable newDrawable() {
-            return new VectorDrawable(svg, intWidth, intHeight);
+            return new VectorDrawable(this);
         }
 
         @Override

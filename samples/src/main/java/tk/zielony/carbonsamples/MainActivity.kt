@@ -4,8 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import carbon.component.DividerItem
-import carbon.component.PaddingItem
+import carbon.recycler.ViewItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 
 @SampleAnnotation(layoutId = R.layout.activity_main)
@@ -23,11 +22,9 @@ class MainActivity : SampleListActivity() {
         }
 
         val items = mutableListOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "New and starred",
                 SampleActivityGroup(NewSamplesActivity::class.java),
                 SampleActivityGroup(FavouritesActivity::class.java),
-                DividerItem(),
                 "All samples grouped by category",
                 SampleActivityGroup(AnimationsActivity::class.java),
                 SampleActivityGroup(ComponentsActivity::class.java),
@@ -38,19 +35,21 @@ class MainActivity : SampleListActivity() {
                 SampleActivityGroup(GuidelinesActivity::class.java),
                 SampleActivityGroup(LibrariesActivity::class.java),
                 SampleActivityGroup(ThemesActivity::class.java),
-                SampleActivityGroup(DialogsActivity::class.java),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+                SampleActivityGroup(DialogsActivity::class.java)
         )
 
         val preferences = getSharedPreferences("samples", Context.MODE_PRIVATE)
         val recentlyUsed = preferences.getString(RECENTLY_USED, null)
         recentlyUsed?.let {
-            items.addAll(1, listOf(
+            items.addAll(0, listOf(
                     "The most recently used sample",
-                    SampleActivityGroup(Class.forName(it) as Class<out Activity>),
-                    DividerItem()
+                    SampleActivityGroup(Class.forName(it) as Class<out Activity>)
             ))
         }
+
+        val decoration = ViewItemDecoration(this, R.layout.carbon_row_divider)
+        decoration.setDrawBefore { position -> position > 0 && items[position] is String }
+        recycler.addItemDecoration(decoration)
 
         setItems(items)
     }

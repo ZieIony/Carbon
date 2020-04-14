@@ -15,8 +15,6 @@ import carbon.component.DefaultHeaderItem;
 import carbon.component.DefaultImageTextSubtextDateItem;
 import carbon.component.ImageTextSubtextDateRow;
 import carbon.component.PaddedHeaderRow;
-import carbon.component.PaddingItem;
-import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.FloatingActionButton;
 import carbon.widget.RecyclerView;
@@ -39,7 +37,7 @@ public class QuickReturnActivity extends ThemedActivity {
         super.onCreate(savedInstanceState);
 
         List<Serializable> items = Arrays.asList(
-                new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_toolbarHeight) + getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
+                //new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_toolbarHeight) + getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 new DefaultHeaderItem("Header"),
                 new DefaultImageTextSubtextDateItem(),
                 new DefaultImageTextSubtextDateItem(),
@@ -71,7 +69,6 @@ public class QuickReturnActivity extends ThemedActivity {
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultImageTextSubtextDateItem.class, ImageTextSubtextDateRow::new);
-        adapter.putFactory(PaddingItem.class, PaddingRow::new);
         adapter.putFactory(DefaultHeaderItem.class, PaddedHeaderRow::new);
         recycler.setAdapter(adapter);
         adapter.setItems(items);

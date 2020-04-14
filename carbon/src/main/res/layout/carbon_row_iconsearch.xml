@@ -41,9 +41,7 @@
             android:layout_marginLeft="@dimen/carbon_contentPadding"
             android:layout_marginEnd="@dimen/carbon_windowPadding"
             android:layout_marginRight="@dimen/carbon_windowPadding"
-            android:background="@null"
             android:hint="@{data.hint}"
-            android:padding="0dp"
             android:text="@{data.query}"
             tools:text="@tools:sample/lorem" />
 

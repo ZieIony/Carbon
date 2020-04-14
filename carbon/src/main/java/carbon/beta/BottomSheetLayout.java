@@ -20,12 +20,10 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.component.BottomSheetCell;
 import carbon.component.BottomSheetRow;
-import carbon.component.DividerItem;
-import carbon.component.DividerRow;
-import carbon.component.PaddingItem;
-import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
+import carbon.recycler.ViewItemDecoration;
 import carbon.widget.LinearLayout;
+import carbon.widget.NavigationView;
 import carbon.widget.RecyclerView;
 import carbon.widget.TextView;
 
@@ -146,17 +144,23 @@ public class BottomSheetLayout extends LinearLayout {
                 items.add(new Item(menu.getItem(i)));
         }
         if (style == Style.List) {
-            for (int i = 0; i < items.size() - 1; i++) {
-                if (((Item) items.get(i)).getGroupId() != ((Item) items.get(i + 1)).getGroupId())
-                    items.add(++i, new DividerItem());
-            }
-            items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
+            for (int i = 0; i < recycler.getItemDecorationCount(); i++)
+                recycler.removeItemDecorationAt(0);
+
+            ViewItemDecoration dividerItemDecoration = new ViewItemDecoration(getContext(), R.layout.carbon_menustrip_hseparator_item);
+            dividerItemDecoration.setDrawAfter(position -> position < items.size() - 1 &&
+                    items.get(position) instanceof NavigationView.Item &&
+                    items.get(position + 1) instanceof NavigationView.Item &&
+                    ((NavigationView.Item) items.get(position)).getGroupId() != ((NavigationView.Item) items.get(position + 1)).getGroupId());
+            recycler.addItemDecoration(dividerItemDecoration);
+
+            ViewItemDecoration paddingItemDecoration = new ViewItemDecoration(getContext(), R.layout.carbon_row_padding);
+            paddingItemDecoration.setDrawAfter(position -> position == items.size() - 1);
+            recycler.addItemDecoration(paddingItemDecoration);
         }
 
         RowListAdapter<Serializable> adapter = new RowListAdapter<>();
         adapter.putFactory(Item.class, style == Style.List ? BottomSheetRow::new : BottomSheetCell::new);
-        adapter.putFactory(PaddingItem.class, PaddingRow::new);
-        adapter.putFactory(DividerItem.class, DividerRow::new);
         adapter.setItems(items);
 
         recycler.setAdapter(adapter);

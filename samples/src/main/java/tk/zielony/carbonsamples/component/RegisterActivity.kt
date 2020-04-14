@@ -20,20 +20,16 @@ class RegisterActivity : ThemedActivity() {
 
         val adapter = RowListAdapter<Serializable>().apply {
             putFactory(DefaultIconEditTextItem::class.java, { IconEditTextRow(it) })
-            putFactory(PaddingItem::class.java, { PaddingRow(it) })
-            putFactory(DividerItem::class.java, { DividerRow(it) })
             putFactory(DefaultIconPasswordItem::class.java, { IconPasswordRow(it) })
             putFactory(DefaultIconDropDownItem::class.java, { IconDropDownRow<DefaultIconDropDownItem<*>, String>(it) })
         }
 
         adapter.items = listOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 DefaultIconEditTextItem(VectorDrawable(resources, R.raw.profile), "login", ""),
                 DefaultIconEditTextItem(VectorDrawable(resources, R.raw.email), "email", ""),
                 DefaultIconPasswordItem(VectorDrawable(resources, R.raw.lock), "password", ""),
                 DefaultIconPasswordItem(null, "retype password", ""),
-                DefaultIconDropDownItem(VectorDrawable(resources, R.raw.gender), "sex", arrayOf("Male", "Female"), "Male"),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)))
+                DefaultIconDropDownItem(VectorDrawable(resources, R.raw.gender), "sex", arrayOf("Male", "Female"), "Male"))
 
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter

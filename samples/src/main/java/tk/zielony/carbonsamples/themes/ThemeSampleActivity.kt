@@ -4,7 +4,10 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import carbon.component.*
+import carbon.component.DataBindingComponent
+import carbon.component.DefaultAvatarTextRatingSubtextDateItem
+import carbon.component.DefaultHeaderItem
+import carbon.component.PaddedHeaderRow
 import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import carbon.widget.TabLayout
@@ -35,7 +38,6 @@ open class ThemeSampleActivity : SamplesActivity() {
         ))
 
         val items = listOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 DefaultHeaderItem("Today"),
                 DefaultAvatarTextRatingSubtextDateItem(),
                 DefaultAvatarTextRatingSubtextDateItem(),
@@ -52,8 +54,7 @@ open class ThemeSampleActivity : SamplesActivity() {
                 DefaultAvatarTextRatingSubtextDateItem(),
                 DefaultHeaderItem("Tuesday"),
                 DefaultAvatarTextRatingSubtextDateItem(),
-                DefaultAvatarTextRatingSubtextDateItem(),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)))
+                DefaultAvatarTextRatingSubtextDateItem())
 
         val randomData = RandomData().apply {
             addGenerator(Drawable::class.java, DrawableAvatarGenerator(this@ThemeSampleActivity))
@@ -71,7 +72,6 @@ open class ThemeSampleActivity : SamplesActivity() {
             DataBindingComponent<DefaultAvatarTextRatingSubtextDateItem>(it, R.layout.row_windowsnews)
         })
 
-        adapter.putFactory(PaddingItem::class.java, { PaddingRow(it) })
         adapter.putFactory(DefaultHeaderItem::class.java, { PaddedHeaderRow(it) })
 
 

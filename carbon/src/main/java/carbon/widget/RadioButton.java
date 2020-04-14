@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.SoundEffectConstants;
 import android.view.ViewDebug;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
@@ -225,19 +226,22 @@ public class RadioButton extends TextView implements Checkable {
     }
 
     @Override
-    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-        super.onInitializeAccessibilityEvent(event);
-        event.setClassName(RadioButton.class.getName());
-        event.setChecked(checked);
+    public CharSequence getAccessibilityClassName() {
+        return RadioButton.class.getSimpleName();
     }
 
-    /*@Override
+    @Override
+    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
+        super.onInitializeAccessibilityEvent(event);
+        event.setChecked(isChecked());
+    }
+
+    @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
-        info.setClassName(RadioButton.class.getName());
         info.setCheckable(true);
-        info.setChecked(checked);
-    }*/
+        info.setChecked(isChecked());
+    }
 
     @Override
     public int getCompoundPaddingLeft() {

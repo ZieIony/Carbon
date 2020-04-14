@@ -41,7 +41,6 @@ class BackdropActivity : ThemedActivity() {
 
         run {
             val items = listOf(
-                    PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                     DefaultHeaderItem("Header"),
                     DefaultAvatarTextRatingSubtextDateItem(),
                     DefaultAvatarTextRatingSubtextDateItem(),
@@ -56,8 +55,7 @@ class BackdropActivity : ThemedActivity() {
                     DefaultHeaderItem("Header"),
                     DefaultAvatarTextRatingSubtextDateItem(),
                     DefaultAvatarTextRatingSubtextDateItem(),
-                    DefaultAvatarTextRatingSubtextDateItem(),
-                    PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)))
+                    DefaultAvatarTextRatingSubtextDateItem())
 
             val randomData = RandomData().apply {
                 addGenerator(Drawable::class.java, DrawableAvatarGenerator(this@BackdropActivity))
@@ -70,7 +68,6 @@ class BackdropActivity : ThemedActivity() {
 
 
             val adapter: RowListAdapter<Serializable> = RowListAdapter(DefaultAvatarTextRatingSubtextDateItem::class.java, RowFactory<DefaultAvatarTextRatingSubtextDateItem> { AvatarTextRatingSubtextDateRow(it) })
-            adapter.putFactory(PaddingItem::class.java, { PaddingRow(it) })
             adapter.putFactory(DefaultHeaderItem::class.java, { PaddedHeaderRow(it) })
 
 

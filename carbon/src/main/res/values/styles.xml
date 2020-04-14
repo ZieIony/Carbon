@@ -79,7 +79,7 @@
         <item name="android:padding">0dp</item>
         <item name="navigationIcon">@null</item>
         <item name="collapseIcon">@null</item>
-        <item name="carbon_icon">@null</item>
+        <item name="carbon_navigationIcon">@null</item>
     </style>
 
     <style name="carbon_Toolbar.Flat">
@@ -90,7 +90,8 @@
     <style name="carbon_Toolbar.ActionBar">
         <item name="android:theme">?attr/actionBarTheme</item>
         <item name="android:background">?attr/colorPrimary</item>
-        <item name="carbon_icon">@drawable/carbon_uparrow</item>
+        <item name="carbon_navigationIcon">@drawable/carbon_uparrow</item>
+        <item name="carbon_navigationIconContentDescription">@string/carbon_contentDescription_navigationIconUpButton</item>
     </style>
 
     <style name="carbon_Toolbar.ActionBar.Flat">

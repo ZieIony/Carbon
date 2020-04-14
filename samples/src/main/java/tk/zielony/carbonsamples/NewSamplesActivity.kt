@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples
 
 import android.os.Bundle
-import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.demo.MusicPlayerActivity
 import tk.zielony.carbonsamples.demo.ProfileActivity
 import tk.zielony.carbonsamples.demo.SearchToolbarActivity
@@ -25,7 +24,6 @@ class NewSamplesActivity : SampleListActivity() {
         initToolbar()
 
         setItems(listOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "These samples are new or have significant changes since the previous release",
                 SampleActivityItem(ButtonsActivity::class.java),
                 SampleActivityItem(FlowLayoutActivity::class.java),
@@ -43,8 +41,7 @@ class NewSamplesActivity : SampleListActivity() {
                 SampleActivityItem(GestureDetectorActivity::class.java),
                 SampleActivityItem(FABActivity::class.java),
                 SampleActivityItem(BannerActivity::class.java),
-                SampleActivityItem(NavigationViewActivity::class.java, true),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+                SampleActivityItem(NavigationViewActivity::class.java, true)
         ))
     }
 

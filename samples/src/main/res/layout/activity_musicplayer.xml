@@ -59,7 +59,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:carbon_icon="@drawable/carbon_uparrow">
+        app:carbon_navigationIcon="@drawable/carbon_uparrow">
 
         <carbon.widget.ImageView
             style="@style/carbon_ImageView.IconButton"

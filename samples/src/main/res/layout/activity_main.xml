@@ -10,17 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        app:carbon_icon="@null">
+        app:carbon_navigationIcon="@null">
 
         <carbon.widget.ImageView
             android:id="@+id/colors"
             style="@style/carbon_ImageView.IconButton"
+            android:contentDescription="Change theme"
             app:carbon_src="@drawable/ic_color_lens_black_24dp"
             app:carbon_tooltipText="Change theme" />
 
         <carbon.widget.ImageView
             android:id="@+id/about"
             style="@style/carbon_ImageView.IconButton"
+            android:contentDescription="About"
             app:carbon_src="@drawable/ic_help_outline_black_24dp"
             app:carbon_tooltipText="About" />
     </carbon.widget.Toolbar>

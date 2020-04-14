@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityEvent;
 import android.widget.Checkable;
 
 import androidx.annotation.NonNull;
@@ -456,18 +455,9 @@ public class DropDown extends EditText {
     }
 
     @Override
-    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-        super.onInitializeAccessibilityEvent(event);
-        event.setClassName(DropDown.class.getName());
+    public CharSequence getAccessibilityClassName() {
+        return DropDown.class.getSimpleName();
     }
-
-    /*@Override
-    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-        super.onInitializeAccessibilityNodeInfo(info);
-        info.setClassName(DropDown.class.getName());
-        info.setCheckable(true);
-        info.setChecked(mChecked);
-    }*/
 
     @Override
     public int getCompoundPaddingLeft() {

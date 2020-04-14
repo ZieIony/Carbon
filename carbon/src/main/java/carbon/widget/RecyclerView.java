@@ -21,8 +21,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,11 +56,10 @@ import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
 import carbon.recycler.DividerItemDecoration;
-import carbon.recycler.SelectableItemsAdapter;
+import carbon.recycler.ViewItemDecoration;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
 import carbon.view.RevealView;
-import carbon.view.SelectionMode;
 import carbon.view.ShadowView;
 import carbon.view.ShapeModelView;
 import carbon.view.StateAnimatorView;
@@ -122,6 +119,8 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
     private EdgeEffect leftGlow, rightGlow, topGlow, bottomGlow;
 
     private OnTouchListener onDispatchTouchListener;
+
+    private ArrayList<ViewItemDecoration> viewItemDecorations = new ArrayList<>();
 
     public RecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
@@ -211,6 +210,20 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         DividerItemDecoration decoration = new DividerItemDecoration(divider, height);
         decoration.setDrawBefore(position -> position > 0);
         addItemDecoration(decoration);
+    }
+
+    @Override
+    public void addItemDecoration(@NonNull ItemDecoration decor, int index) {
+        super.addItemDecoration(decor, index);
+        if (decor instanceof ViewItemDecoration)
+            viewItemDecorations.add((ViewItemDecoration) decor);
+    }
+
+    @Override
+    public void removeItemDecoration(@NonNull ItemDecoration decor) {
+        super.removeItemDecoration(decor);
+        if (decor instanceof ViewItemDecoration)
+            viewItemDecorations.remove(decor);
     }
 
     @Override
@@ -536,6 +549,9 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
+
+        for(ViewItemDecoration itemDecoration:viewItemDecorations)
+            itemDecoration.layout(this);
     }
 
     private void updateCorners() {
@@ -1327,6 +1343,8 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
+        for(ViewItemDecoration itemDecoration:viewItemDecorations)
+            itemDecoration.measure(this);
     }
 
 

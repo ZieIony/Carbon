@@ -1,3 +1,7 @@
 <resources>
     <string name="carbon_rowsPerPage">Rows per page:</string>
+
+    <string name="carbon_contentDescription_navigationIconUpButton">up</string>
+    <string name="carbon_contentDescription_checkBox">unlabelled checkbox</string>
+    <string name="carbon_contentDescription_radioButton">unlabelled radiobutton</string>
 </resources>

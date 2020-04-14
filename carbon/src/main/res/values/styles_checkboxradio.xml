@@ -25,6 +25,7 @@
         <item name="android:padding">8dp</item>
         <item name="android:drawablePadding">0dp</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+        <item name="android:contentDescription">@string/carbon_contentDescription_checkBox</item>
     </style>
 
     <style name="carbon_CheckBox.IconButton.Colored">
@@ -60,6 +61,7 @@
         <item name="android:padding">8dp</item>
         <item name="android:drawablePadding">0dp</item>
         <item name="carbon_tint">@color/carbon_defaultIconColor</item>
+        <item name="android:contentDescription">@string/carbon_contentDescription_radioButton</item>
     </style>
 
     <style name="carbon_RadioButton.IconButton.Colored">

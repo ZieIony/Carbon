@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import carbon.component.PaddingItem;
-
 @SampleAnnotation(
         titleId = R.string.favouritesActivity_title,
         layoutId = R.layout.activity_samplelist,
@@ -24,7 +22,6 @@ public class FavouritesActivity extends SampleListActivity {
         initToolbar();
 
         List<Serializable> favourites = new ArrayList<>();
-        favourites.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
         favourites.add("Tap the star iconId next to a sample to add it to this list");
         for (Map.Entry<String, String> entry : allPreferences.entrySet()) {
             try {
@@ -33,7 +30,6 @@ public class FavouritesActivity extends SampleListActivity {
                 e.printStackTrace();
             }
         }
-        favourites.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
 
         setItems(favourites);
     }

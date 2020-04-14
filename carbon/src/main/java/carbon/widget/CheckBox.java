@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.SoundEffectConstants;
 import android.view.ViewDebug;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
@@ -230,19 +231,22 @@ public class CheckBox extends TextView implements Checkable {
     }
 
     @Override
+    public CharSequence getAccessibilityClassName() {
+        return CheckBox.class.getSimpleName();
+    }
+
+    @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
-        event.setClassName(CheckBox.class.getName());
         event.setChecked(isChecked());
     }
 
-    /*@Override
+    @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
-        info.setClassName(CheckBox.class.getName());
         info.setCheckable(true);
-        info.setChecked(mChecked);
-    }*/
+        info.setChecked(isChecked());
+    }
 
     @Override
     public int getCompoundPaddingLeft() {

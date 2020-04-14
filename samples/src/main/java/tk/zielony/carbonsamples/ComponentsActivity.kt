@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples
 
 import android.os.Bundle
-import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.component.*
 
 @SampleAnnotation(
@@ -17,15 +16,13 @@ class ComponentsActivity : SampleListActivity() {
         initToolbar()
 
         setItems(listOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "Lists and forms composed of reusable components with data binding",
                 SampleActivityItem(IconTextListItemActivity::class.java),
                 SampleActivityItem(AvatarTextListItemActivity::class.java),
                 SampleActivityItem(ImageTextSubtextDateListItemActivity::class.java),
                 SampleActivityItem(AvatarTextRatingSubtextDateListItemActivity::class.java),
                 SampleActivityItem(RegisterActivity::class.java),
-                SampleActivityItem(ComponentViewActivity::class.java),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+                SampleActivityItem(ComponentViewActivity::class.java)
         ))
     }
 

@@ -24,8 +24,8 @@ import java.util.List;
 
 import carbon.Carbon;
 import carbon.R;
-import carbon.recycler.DividerItemDecoration;
 import carbon.recycler.ListAdapter;
+import carbon.recycler.ViewItemDecoration;
 import carbon.widget.DropDown;
 import carbon.widget.FrameLayout;
 import carbon.widget.RecyclerView;
@@ -55,9 +55,14 @@ public class DropDownMenu extends PopupWindow {
             }
             return false;
         });
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context);
+        ViewItemDecoration dividerItemDecoration = new ViewItemDecoration(context, R.layout.carbon_menustrip_hseparator_item);
         dividerItemDecoration.setDrawAfter(position -> getAdapter().getItem(position) == customItem);
         recycler.addItemDecoration(dividerItemDecoration);
+
+        ViewItemDecoration paddingItemDecoration = new ViewItemDecoration(context, R.layout.carbon_row_padding);
+        paddingItemDecoration.setDrawBefore(position -> position == 0);
+        paddingItemDecoration.setDrawAfter(position -> position == recycler.getAdapter().getItemCount() - 1);
+        recycler.addItemDecoration(paddingItemDecoration);
 
         defaultAdapter = new DropDown.Adapter<>();
         recycler.setAdapter(defaultAdapter);

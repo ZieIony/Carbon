@@ -13,11 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import carbon.component.DataBindingComponent;
-import carbon.component.DividerItem;
-import carbon.component.DividerRow;
-import carbon.component.PaddingItem;
-import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
+import carbon.recycler.ViewItemDecoration;
 import carbon.widget.RecyclerView;
 
 public class SampleListActivity extends ThemedActivity {
@@ -58,8 +55,6 @@ public class SampleListActivity extends ThemedActivity {
                 }
             };
         });
-        adapter.putFactory(PaddingItem.class, PaddingRow::new);
-        adapter.putFactory(DividerItem.class, DividerRow::new);
         adapter.putFactory(String.class, parent -> new DataBindingComponent<>(parent, R.layout.row_description));
         adapter.setOnItemClickedListener((view, item, position) -> {
             if (item instanceof SampleActivityGroup) {
@@ -69,6 +64,11 @@ public class SampleListActivity extends ThemedActivity {
             }
         });
         recyclerView.setAdapter(adapter);
+
+        ViewItemDecoration itemDecoration = new ViewItemDecoration(this, R.layout.carbon_row_padding);
+        itemDecoration.setDrawBefore(position -> position == 0);
+        itemDecoration.setDrawAfter(position -> position == adapter.getItemCount() - 1);
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
     protected void setItems(List<Serializable> items) {

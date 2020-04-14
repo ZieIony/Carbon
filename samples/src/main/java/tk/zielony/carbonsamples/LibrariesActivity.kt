@@ -1,7 +1,6 @@
 package tk.zielony.carbonsamples
 
 import android.os.Bundle
-import carbon.component.PaddingItem
 import tk.zielony.carbonsamples.library.ConstraintLayoutActivity
 import tk.zielony.carbonsamples.library.PicassoActivity
 
@@ -14,11 +13,9 @@ class LibrariesActivity : SampleListActivity() {
         initToolbar()
 
         setItems(listOf(
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf)),
                 "The most popular libraries used with Carbon",
                 SampleActivityItem(PicassoActivity::class.java),
-                SampleActivityItem(ConstraintLayoutActivity::class.java),
-                PaddingItem(resources.getDimensionPixelSize(R.dimen.carbon_paddingHalf))
+                SampleActivityItem(ConstraintLayoutActivity::class.java)
         ))
     }
 

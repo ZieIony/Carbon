@@ -11,14 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import carbon.component.AvatarTextRow;
 import carbon.component.DefaultAvatarTextItem;
-import carbon.component.PaddingItem;
-import carbon.component.PaddingRow;
 import carbon.recycler.RowListAdapter;
 import carbon.widget.FrameLayout;
 import carbon.widget.ListSearchAdapter;
@@ -47,29 +44,23 @@ public class SearchToolbarActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        List<Serializable> items = generateItems();
+        List<DefaultAvatarTextItem> items = generateItems();
 
-        RowListAdapter<Serializable> adapter = new RowListAdapter<>(DefaultAvatarTextItem.class, AvatarTextRow::new);
-        adapter.putFactory(PaddingItem.class, PaddingRow::new);
-        adapter.setItems(items);
+        RowListAdapter<DefaultAvatarTextItem> adapter = new RowListAdapter<>(items, AvatarTextRow::new);
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         searchEditText = findViewById(R.id.searchEditText);
-        searchEditText.setDataProvider(new ListSearchAdapter<Serializable>(items) {
+        searchEditText.setDataProvider(new ListSearchAdapter<DefaultAvatarTextItem>(items) {
+            @NotNull
             @Override
-            public String[] getItemWords(Serializable item) {
-                return item instanceof DefaultAvatarTextItem ? new String[]{((DefaultAvatarTextItem) item).getText()} : null;
-            }
-
-            @Override
-            public boolean filterItem(SearchEditText.SearchSettings settings, String query, Serializable item) {
-                return item instanceof PaddingItem || super.filterItem(settings, query, item);
+            public String[] getItemWords(DefaultAvatarTextItem item) {
+                return new String[]{item.getText()};
             }
         });
-        searchEditText.setOnFilterListener((SearchEditText.OnFilterListener<Serializable>) filterResults -> {
+        searchEditText.setOnFilterListener((SearchEditText.OnFilterListener<DefaultAvatarTextItem>) filterResults -> {
             if (filterResults == null) {
                 adapter.setItems(items);
             } else if (filterResults.size() == 2) {
@@ -119,14 +110,10 @@ public class SearchToolbarActivity extends ThemedActivity {
     }
 
     @NotNull
-    private List<Serializable> generateItems() {
+    private List<DefaultAvatarTextItem> generateItems() {
         RandomData randomData = new RandomData();
         randomData.addGenerator(Drawable.class, new DrawableAvatarGenerator(this));
         randomData.addGenerator(String.class, new StringNameGenerator().withMatcher(f -> f.getName().equals("text")));
-        List<Serializable> items = new ArrayList<>();
-        items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
-        items.addAll(randomData.generateList(DefaultAvatarTextItem.class, 20));
-        items.add(new PaddingItem(getResources().getDimensionPixelSize(R.dimen.carbon_paddingHalf)));
-        return items;
+        return randomData.generateList(DefaultAvatarTextItem.class, 20);
     }
 }

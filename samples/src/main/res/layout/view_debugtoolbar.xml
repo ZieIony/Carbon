@@ -11,6 +11,7 @@
     <carbon.widget.ImageView
         android:id="@+id/debug"
         style="@style/carbon_ImageView.IconButton"
+        android:contentDescription="Show debug options"
         app:carbon_src="@drawable/ic_bug_report_black_24dp"
         app:carbon_tooltipText="Show debug options" />
 
@@ -18,5 +19,6 @@
         android:id="@+id/enabled"
         style="@style/carbon_CheckBox.IconButton"
         android:checked="true"
+        android:contentDescription="Enable/disable views"
         app:carbon_tooltipText="Enable/disable views" />
 </carbon.widget.Toolbar>

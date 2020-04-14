@@ -131,6 +131,8 @@
 
     <dimen name="carbon_dividerWidth">1dp</dimen>
     <dimen name="carbon_dividerHeight">1dp</dimen>
+    <dimen name="carbon_dividerPaddingTop">7dp</dimen>
+    <dimen name="carbon_dividerPaddingBottom">8dp</dimen>
 
     <dimen name="carbon_smallProgressSize">24dp</dimen>
     <dimen name="carbon_progressSize">40dp</dimen>
