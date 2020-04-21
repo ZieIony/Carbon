@@ -92,23 +92,23 @@ public class LinearLayout extends android.widget.LinearLayout
 
     public LinearLayout(Context context) {
         super(context, null, R.attr.carbon_linearLayoutStyle);
-        initLinearLayout(null, R.attr.carbon_linearLayoutStyle);
+        initLinearLayout(null, R.attr.carbon_linearLayoutStyle, R.style.carbon_LinearLayout);
     }
 
     public LinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_linearLayoutStyle);
-        initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle);
+        initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle, R.style.carbon_LinearLayout);
     }
 
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initLinearLayout(attrs, defStyleAttr);
+        initLinearLayout(attrs, defStyleAttr, R.style.carbon_LinearLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initLinearLayout(attrs, defStyleAttr);
+        initLinearLayout(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -163,8 +163,8 @@ public class LinearLayout extends android.widget.LinearLayout
             R.styleable.LinearLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initLinearLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, R.style.carbon_LinearLayout);
+    private void initLinearLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.LinearLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);

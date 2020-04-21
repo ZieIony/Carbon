@@ -90,17 +90,22 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
 
     public ConstraintLayout(Context context) {
         super(context, null, R.attr.carbon_constraintLayoutStyle);
-        initConstraintLayout(null, R.attr.carbon_constraintLayoutStyle);
+        initConstraintLayout(null, R.attr.carbon_constraintLayoutStyle, R.style.carbon_ConstraintLayout);
     }
 
     public ConstraintLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_constraintLayoutStyle);
-        initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle);
+        initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle, R.style.carbon_ConstraintLayout);
     }
 
     public ConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle);
+        initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle, R.style.carbon_ConstraintLayout);
+    }
+
+    public ConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+        initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -155,8 +160,8 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
             R.styleable.ConstraintLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initConstraintLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ConstraintLayout, defStyleAttr, R.style.carbon_ConstraintLayout);
+    private void initConstraintLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ConstraintLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.ConstraintLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);

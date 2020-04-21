@@ -124,17 +124,22 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 
     public RecyclerView(Context context) {
         super(context, null, R.attr.carbon_recyclerViewStyle);
-        initRecycler(null, R.attr.carbon_recyclerViewStyle);
+        initRecycler(null, R.attr.carbon_recyclerViewStyle, R.style.carbon_RecyclerView);
     }
 
     public RecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_recyclerViewStyle);
-        initRecycler(attrs, R.attr.carbon_recyclerViewStyle);
+        initRecycler(attrs, R.attr.carbon_recyclerViewStyle, R.style.carbon_RecyclerView);
     }
 
     public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initRecycler(attrs, defStyleAttr);
+        initRecycler(attrs, defStyleAttr, R.style.carbon_RecyclerView);
+    }
+
+    public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+        initRecycler(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] animationIds = new int[]{
@@ -175,8 +180,8 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             R.styleable.RecyclerView_carbon_elevationSpotShadowColor
     };
 
-    private void initRecycler(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, R.style.carbon_RecyclerView);
+    private void initRecycler(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, defStyleRes);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

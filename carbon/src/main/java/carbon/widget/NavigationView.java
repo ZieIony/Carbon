@@ -115,26 +115,28 @@ public class NavigationView extends RecyclerView {
 
     public NavigationView(Context context) {
         super(context);
-        initNavigationView(null, R.attr.carbon_navigationViewStyle);
+        initNavigationView(null, R.attr.carbon_navigationViewStyle, R.style.carbon_NavigationView);
     }
 
     public NavigationView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initNavigationView(attrs, R.attr.carbon_navigationViewStyle);
+        initNavigationView(attrs, R.attr.carbon_navigationViewStyle, R.style.carbon_NavigationView);
     }
 
     public NavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initNavigationView(attrs, defStyleAttr);
+        initNavigationView(attrs, defStyleAttr, R.style.carbon_NavigationView);
     }
 
-    private void initNavigationView(AttributeSet attrs, int defStyleAttr) {
+    public NavigationView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+        initNavigationView(attrs, defStyleAttr, defStyleRes);
+    }
+
+    private void initNavigationView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (attrs == null)
-            return;
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationView, defStyleAttr, R.style.carbon_NavigationView);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationView, defStyleAttr, defStyleRes);
 
         itemLayoutId = a.getResourceId(R.styleable.NavigationView_carbon_itemLayout, R.layout.carbon_navigation_row);
         int menuId = a.getResourceId(R.styleable.NavigationView_carbon_menu, 0);

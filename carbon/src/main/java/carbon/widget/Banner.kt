@@ -11,18 +11,18 @@ import android.widget.Button
 import carbon.R
 
 open class Banner : LinearLayout {
-    constructor(context: Context?) : super(context)
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        initBanner(attrs)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        initBanner(attrs, R.attr.carbon_bannerStyle, 0)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initBanner(attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initBanner(attrs, defStyleAttr, 0)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initBanner(attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        initBanner(attrs, defStyleAttr, defStyleRes)
     }
 
     private val buttonContainer: LinearLayout
@@ -40,8 +40,8 @@ open class Banner : LinearLayout {
         textTextView = findViewById(R.id.carbon_bannerText)
     }
 
-    private fun initBanner(attrs: AttributeSet?) {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.Banner)
+    private fun initBanner(attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
+        val a = context.obtainStyledAttributes(attrs, R.styleable.Banner, defStyleAttr, defStyleRes)
 
         setIcon(a.getDrawable(R.styleable.Banner_carbon_icon))
         setText(a.getString(R.styleable.Banner_android_text))

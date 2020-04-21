@@ -25,27 +25,27 @@ public class ProgressView extends View {
 
     public ProgressView(Context context) {
         super(context);
-        initProgressBar(null, R.attr.carbon_progressViewStyle);
+        initProgressBar(null, R.attr.carbon_progressViewStyle, R.style.carbon_ProgressView);
     }
 
     public ProgressView(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_progressViewStyle);
-        initProgressBar(attrs, R.attr.carbon_progressViewStyle);
+        initProgressBar(attrs, R.attr.carbon_progressViewStyle, R.style.carbon_ProgressView);
     }
 
     public ProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initProgressBar(attrs, defStyleAttr);
+        initProgressBar(attrs, defStyleAttr, R.style.carbon_ProgressView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initProgressBar(attrs, defStyleAttr);
+        initProgressBar(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initProgressBar(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressView, defStyleAttr, R.style.carbon_ProgressView);
+    private void initProgressBar(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressView, defStyleAttr, defStyleRes);
         Style style = Style.values()[a.getInt(R.styleable.ProgressView_carbon_progressStyle, 0)];
         if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {
             setDrawable(new ProgressBarDrawable());

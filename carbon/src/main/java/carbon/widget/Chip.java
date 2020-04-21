@@ -54,32 +54,32 @@ public class Chip extends LinearLayout implements Checkable {
 
     public Chip(Context context) {
         super(context, null, R.attr.carbon_chipStyle);
-        initChip(null, R.attr.carbon_chipStyle);
+        initChip(null, R.attr.carbon_chipStyle, R.style.carbon_Chip);
     }
 
     public Chip(Context context, CharSequence text) {
         super(context, null, R.attr.carbon_chipStyle);
-        initChip(null, R.attr.carbon_chipStyle);
+        initChip(null, R.attr.carbon_chipStyle, R.style.carbon_Chip);
         setText(text);
     }
 
     public Chip(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_chipStyle);
-        initChip(attrs, R.attr.carbon_chipStyle);
+        initChip(attrs, R.attr.carbon_chipStyle, R.style.carbon_Chip);
     }
 
     public Chip(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initChip(attrs, defStyleAttr);
+        initChip(attrs, defStyleAttr, R.style.carbon_Chip);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Chip(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initChip(attrs, defStyleAttr);
+        initChip(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initChip(AttributeSet attrs, int defStyleAttr) {
+    private void initChip(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         inflate(getContext(), R.layout.carbon_chip, this);
         title = findViewById(R.id.carbon_chipText);
         content = findViewById(R.id.carbon_chipContent);
@@ -91,10 +91,7 @@ public class Chip extends LinearLayout implements Checkable {
                 onRemoveListener.onDismiss();
         });
 
-        if (attrs == null)
-            return;
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, R.style.carbon_Chip);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Chip, defStyleAttr, defStyleRes);
 
         setText(a.getString(R.styleable.Chip_android_text));
         setIcon(Carbon.getDrawable(this, a, R.styleable.Chip_carbon_icon, 0));

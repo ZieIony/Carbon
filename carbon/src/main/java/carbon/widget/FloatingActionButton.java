@@ -19,32 +19,29 @@ public class FloatingActionButton extends ImageView {
 
     public FloatingActionButton(Context context) {
         super(context, null, R.attr.carbon_fabStyle);
-        initFloatingActionButton(null, R.attr.carbon_fabStyle);
+        initFloatingActionButton(null, R.attr.carbon_fabStyle, R.style.carbon_FloatingActionButton);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_fabStyle);
-        initFloatingActionButton(attrs, R.attr.carbon_fabStyle);
+        initFloatingActionButton(attrs, R.attr.carbon_fabStyle, R.style.carbon_FloatingActionButton);
     }
 
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initFloatingActionButton(attrs, defStyleAttr);
+        initFloatingActionButton(attrs, defStyleAttr, R.style.carbon_FloatingActionButton);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initFloatingActionButton(attrs, defStyleAttr);
+        initFloatingActionButton(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initFloatingActionButton(AttributeSet attrs, int defStyleAttr) {
+    private void initFloatingActionButton(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         AnimUtils.setupElevationAnimator(getStateAnimator(), this);
 
-        if (attrs == null)
-            return;
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, R.style.carbon_FloatingActionButton);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, defStyleRes);
 
         if (a.hasValue(R.styleable.FloatingActionButton_carbon_menu)) {
             int resId = a.getResourceId(R.styleable.FloatingActionButton_carbon_menu, 0);

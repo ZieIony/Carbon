@@ -90,17 +90,22 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
 
     public DrawerLayout(Context context) {
         super(context, null, R.attr.carbon_drawerLayoutStyle);
-        initDrawerLayout(null, R.attr.carbon_drawerLayoutStyle);
+        initDrawerLayout(null, R.attr.carbon_drawerLayoutStyle, R.style.carbon_DrawerLayout);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_drawerLayoutStyle);
-        initDrawerLayout(attrs, R.attr.carbon_drawerLayoutStyle);
+        initDrawerLayout(attrs, R.attr.carbon_drawerLayoutStyle, R.style.carbon_DrawerLayout);
     }
 
     public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initDrawerLayout(attrs, defStyleAttr);
+        initDrawerLayout(attrs, defStyleAttr, R.style.carbon_DrawerLayout);
+    }
+
+    public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+        initDrawerLayout(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -155,8 +160,8 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
             R.styleable.DrawerLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initDrawerLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, R.style.carbon_DrawerLayout);
+    private void initDrawerLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.DrawerLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);

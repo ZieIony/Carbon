@@ -112,33 +112,33 @@ public class TabLayout extends HorizontalScrollView {
 
     public TabLayout(Context context) {
         super(context, null, R.attr.carbon_tabLayoutStyle);
-        initPagerTabStrip(null, R.attr.carbon_tabLayoutStyle);
+        initPagerTabStrip(null, R.attr.carbon_tabLayoutStyle, R.style.carbon_TabLayout);
     }
 
     public TabLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_tabLayoutStyle);
-        initPagerTabStrip(attrs, R.attr.carbon_tabLayoutStyle);
+        initPagerTabStrip(attrs, R.attr.carbon_tabLayoutStyle, R.style.carbon_TabLayout);
     }
 
     public TabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initPagerTabStrip(attrs, defStyleAttr);
+        initPagerTabStrip(attrs, defStyleAttr, R.style.carbon_TabLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public TabLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initPagerTabStrip(attrs, defStyleAttr);
+        initPagerTabStrip(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initPagerTabStrip(AttributeSet attrs, int defStyleAttr) {
+    private void initPagerTabStrip(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         int layoutDirection = ViewCompat.getLayoutDirection(this);
         ViewCompat.setLayoutDirection(this, ViewCompat.LAYOUT_DIRECTION_LTR);
         content = new LinearLayout(getContext());
         ViewCompat.setLayoutDirection(content, layoutDirection);
         addView(content, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TabLayout, defStyleAttr, R.style.carbon_TabLayout);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TabLayout, defStyleAttr, defStyleRes);
 
         setIndicatorHeight(a.getDimension(R.styleable.TabLayout_carbon_indicatorWidth, 2));
         setFixed(a.getBoolean(R.styleable.TabLayout_carbon_fixedTabs, true));

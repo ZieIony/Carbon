@@ -29,6 +29,10 @@ public class ExpandableRecyclerView extends RecyclerView {
         super(context, attrs, defStyleAttr);
     }
 
+    public ExpandableRecyclerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
     @Override
     public Parcelable onSaveInstanceState() {
         //begin boilerplate code that allows parent classes to save state

@@ -77,17 +77,22 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
 
     public ViewPager(Context context) {
         super(context, null);
-        initViewPager(null, R.attr.carbon_viewPagerStyle);
+        initViewPager(null, R.attr.carbon_viewPagerStyle, R.style.carbon_ViewPager);
     }
 
     public ViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initViewPager(attrs, R.attr.carbon_viewPagerStyle);
+        initViewPager(attrs, R.attr.carbon_viewPagerStyle, R.style.carbon_ViewPager);
     }
 
     public ViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs);
-        initViewPager(attrs, defStyleAttr);
+        initViewPager(attrs, defStyleAttr, R.style.carbon_ViewPager);
+    }
+
+    public ViewPager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs);
+        initViewPager(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] tintIds = new int[]{
@@ -98,13 +103,13 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
             R.styleable.ViewPager_carbon_animateColorChanges
     };
 
-    private void initViewPager(AttributeSet attrs, int defStyleAttr) {
+    private void initViewPager(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super.setOnPageChangeListener(internalOnPageChangeListener);
 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ViewPager, defStyleAttr, R.style.carbon_ViewPager);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ViewPager, defStyleAttr, defStyleRes);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

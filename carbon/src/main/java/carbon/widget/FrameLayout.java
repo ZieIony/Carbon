@@ -95,23 +95,23 @@ public class FrameLayout extends android.widget.FrameLayout
 
     public FrameLayout(Context context) {
         super(context, null, R.attr.carbon_frameLayoutStyle);
-        initFrameLayout(null, R.attr.carbon_frameLayoutStyle);
+        initFrameLayout(null, R.attr.carbon_frameLayoutStyle, R.style.carbon_FrameLayout);
     }
 
     public FrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_frameLayoutStyle);
-        initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle);
+        initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle, R.style.carbon_FrameLayout);
     }
 
     public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initFrameLayout(attrs, defStyleAttr);
+        initFrameLayout(attrs, defStyleAttr, R.style.carbon_FrameLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initFrameLayout(attrs, defStyleAttr);
+        initFrameLayout(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -166,8 +166,8 @@ public class FrameLayout extends android.widget.FrameLayout
             R.styleable.FrameLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initFrameLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, R.style.carbon_FrameLayout);
+    private void initFrameLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.FrameLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);

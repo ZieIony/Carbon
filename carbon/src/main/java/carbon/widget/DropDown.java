@@ -75,31 +75,31 @@ public class DropDown extends EditText {
 
     public DropDown(Context context) {
         super(context, null, R.attr.carbon_dropDownStyle);
-        initDropDown(context, null, R.attr.carbon_dropDownStyle);
+        initDropDown(null, R.attr.carbon_dropDownStyle, R.style.carbon_DropDown);
     }
 
     public DropDown(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_dropDownStyle);
-        initDropDown(context, attrs, R.attr.carbon_dropDownStyle);
+        initDropDown(attrs, R.attr.carbon_dropDownStyle, R.style.carbon_DropDown);
     }
 
     public DropDown(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initDropDown(context, attrs, defStyleAttr);
+        initDropDown(attrs, defStyleAttr, R.style.carbon_DropDown);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public DropDown(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initDropDown(context, attrs, defStyleAttr);
+        initDropDown(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initDropDown(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DropDown, defStyleAttr, R.style.carbon_DropDown);
+    private void initDropDown(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DropDown, defStyleAttr, defStyleRes);
 
         int theme = a.getResourceId(R.styleable.DropDown_carbon_popupTheme, -1);
 
-        dropDownMenu = new DropDownMenu(new ContextThemeWrapper(context, theme));
+        dropDownMenu = new DropDownMenu(new ContextThemeWrapper(getContext(), theme));
         dropDownMenu.setOnDismissListener(() -> isShowingPopup = false);
         dropDownMenu.setPopupMode(PopupMode.values()[a.getInt(R.styleable.DropDown_carbon_popupMode, PopupMode.Over.ordinal())]);
         setMode(Mode.values()[a.getInt(R.styleable.DropDown_carbon_mode, Mode.SingleSelect.ordinal())]);

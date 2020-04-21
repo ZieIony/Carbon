@@ -133,23 +133,23 @@ public class EditText extends android.widget.EditText
 
     public EditText(Context context) {
         super(context);
-        initEditText(null, android.R.attr.editTextStyle);
+        initEditText(null, android.R.attr.editTextStyle, R.style.carbon_EditText);
     }
 
     public EditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initEditText(attrs, android.R.attr.editTextStyle);
+        initEditText(attrs, android.R.attr.editTextStyle, R.style.carbon_EditText);
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initEditText(attrs, defStyleAttr);
+        initEditText(attrs, defStyleAttr, R.style.carbon_EditText);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public EditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initEditText(attrs, defStyleAttr);
+        initEditText(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -209,8 +209,8 @@ public class EditText extends android.widget.EditText
             R.styleable.EditText_carbon_autoSizeStepGranularity
     };
 
-    private void initEditText(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, R.style.carbon_EditText);
+    private void initEditText(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EditText, defStyleAttr, defStyleRes);
 
         int ap = a.getResourceId(R.styleable.EditText_android_textAppearance, -1);
         if (ap != -1)

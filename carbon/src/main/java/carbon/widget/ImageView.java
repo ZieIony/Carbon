@@ -94,23 +94,23 @@ public class ImageView extends android.widget.ImageView
 
     public ImageView(Context context) {
         super(context, null, R.attr.carbon_imageViewStyle);
-        initImageView(null, R.attr.carbon_imageViewStyle);
+        initImageView(null, R.attr.carbon_imageViewStyle, R.style.carbon_ImageView);
     }
 
     public ImageView(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_imageViewStyle);
-        initImageView(attrs, R.attr.carbon_imageViewStyle);
+        initImageView(attrs, R.attr.carbon_imageViewStyle, R.style.carbon_ImageView);
     }
 
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initImageView(attrs, defStyleAttr);
+        initImageView(attrs, defStyleAttr, R.style.carbon_ImageView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initImageView(attrs, defStyleAttr);
+        initImageView(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -164,8 +164,8 @@ public class ImageView extends android.widget.ImageView
             R.styleable.ImageView_carbon_elevationSpotShadowColor
     };
 
-    private void initImageView(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, R.style.carbon_ImageView);
+    private void initImageView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, defStyleRes);
 
         Drawable d = Carbon.getDrawable(this, a, R.styleable.ImageView_carbon_src, R.drawable.carbon_iconplaceholder);
         if (d != null)

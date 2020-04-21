@@ -44,23 +44,23 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
 
     public ScrollView(Context context) {
         super(context);
-        initScrollView(null, android.R.attr.scrollViewStyle);
+        initScrollView(null, android.R.attr.scrollViewStyle, R.style.carbon_ScrollView);
     }
 
     public ScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initScrollView(attrs, android.R.attr.scrollViewStyle);
+        initScrollView(attrs, android.R.attr.scrollViewStyle, R.style.carbon_ScrollView);
     }
 
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initScrollView(attrs, defStyleAttr);
+        initScrollView(attrs, defStyleAttr, R.style.carbon_ScrollView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initScrollView(attrs, defStyleAttr);
+        initScrollView(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] tintIds = new int[]{
@@ -71,11 +71,11 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
             R.styleable.ScrollView_carbon_animateColorChanges
     };
 
-    private void initScrollView(AttributeSet attrs, int defStyleAttr) {
+    private void initScrollView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, R.style.carbon_ScrollView);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ScrollView, defStyleAttr, defStyleRes);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

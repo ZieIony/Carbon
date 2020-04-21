@@ -55,25 +55,25 @@ public class InputLayout extends RelativeLayout {
 
     public InputLayout(Context context) {
         super(context, null, R.attr.carbon_inputLayoutStyle);
-        initInputLayout(null, R.attr.carbon_inputLayoutStyle);
+        initInputLayout(null, R.attr.carbon_inputLayoutStyle, R.style.carbon_InputLayout);
     }
 
     public InputLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_inputLayoutStyle);
-        initInputLayout(attrs, R.attr.carbon_inputLayoutStyle);
+        initInputLayout(attrs, R.attr.carbon_inputLayoutStyle, R.style.carbon_InputLayout);
     }
 
     public InputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initInputLayout(attrs, defStyleAttr);
+        initInputLayout(attrs, defStyleAttr, R.style.carbon_InputLayout);
     }
 
     public InputLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initInputLayout(attrs, defStyleAttr);
+        initInputLayout(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initInputLayout(AttributeSet attrs, int defStyleAttr) {
+    private void initInputLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         View.inflate(getContext(), R.layout.carbon_inputlayout, this);
 
         errorTextView = findViewById(R.id.carbon_error);
@@ -88,10 +88,7 @@ public class InputLayout extends RelativeLayout {
 
         setAddStatesFromChildren(true);
 
-        if (attrs == null)
-            return;
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.InputLayout, defStyleAttr, R.style.carbon_InputLayout);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.InputLayout, defStyleAttr, defStyleRes);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

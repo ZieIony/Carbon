@@ -85,17 +85,22 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
 
     public CoordinatorLayout(Context context) {
         super(context);
-        initCoordinatorLayout(null, R.attr.carbon_coordinatorLayoutStyle);
+        initCoordinatorLayout(null, R.attr.carbon_coordinatorLayoutStyle, R.style.carbon_CoordinatorLayout);
     }
 
     public CoordinatorLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initCoordinatorLayout(attrs, R.attr.carbon_coordinatorLayoutStyle);
+        initCoordinatorLayout(attrs, R.attr.carbon_coordinatorLayoutStyle, R.style.carbon_CoordinatorLayout);
     }
 
     public CoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initCoordinatorLayout(attrs, defStyleAttr);
+        initCoordinatorLayout(attrs, defStyleAttr, R.style.carbon_CoordinatorLayout);
+    }
+
+    public CoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+        initCoordinatorLayout(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -150,8 +155,8 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
             R.styleable.CoordinatorLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initCoordinatorLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CoordinatorLayout, defStyleAttr, 0);
+    private void initCoordinatorLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CoordinatorLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.CoordinatorLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);

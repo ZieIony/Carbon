@@ -42,23 +42,23 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
 
     public HorizontalScrollView(Context context) {
         super(context);
-        initHorizontalScrollView(null, android.R.attr.horizontalScrollViewStyle);
+        initHorizontalScrollView(null, android.R.attr.horizontalScrollViewStyle, R.style.carbon_HorizontalScrollView);
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initHorizontalScrollView(attrs, android.R.attr.horizontalScrollViewStyle);
+        initHorizontalScrollView(attrs, android.R.attr.horizontalScrollViewStyle, R.style.carbon_HorizontalScrollView);
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initHorizontalScrollView(attrs, defStyleAttr);
+        initHorizontalScrollView(attrs, defStyleAttr, R.style.carbon_HorizontalScrollView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initHorizontalScrollView(attrs, defStyleAttr);
+        initHorizontalScrollView(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] tintIds = new int[]{
@@ -69,11 +69,11 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
             R.styleable.HorizontalScrollView_carbon_animateColorChanges
     };
 
-    private void initHorizontalScrollView(AttributeSet attrs, int defStyleAttr) {
+    private void initHorizontalScrollView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalScrollView, defStyleAttr, R.style.carbon_HorizontalScrollView);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalScrollView, defStyleAttr, defStyleRes);
 
         for (int i = 0; i < a.getIndexCount(); i++) {
             int attr = a.getIndex(i);

@@ -55,26 +55,26 @@ public class SeekBar extends View {
 
     public SeekBar(Context context) {
         super(context, null, android.R.attr.seekBarStyle);
-        initSeekBar(null, android.R.attr.seekBarStyle);
+        initSeekBar(null, android.R.attr.seekBarStyle, R.style.carbon_SeekBar);
     }
 
     public SeekBar(Context context, AttributeSet attrs) {
         super(context, attrs, android.R.attr.seekBarStyle);
-        initSeekBar(attrs, android.R.attr.seekBarStyle);
+        initSeekBar(attrs, android.R.attr.seekBarStyle, R.style.carbon_SeekBar);
     }
 
     public SeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initSeekBar(attrs, defStyleAttr);
+        initSeekBar(attrs, defStyleAttr, R.style.carbon_SeekBar);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public SeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initSeekBar(attrs, defStyleAttr);
+        initSeekBar(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initSeekBar(AttributeSet attrs, int defStyleAttr) {
+    private void initSeekBar(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         if (isInEditMode())
             return;
 
@@ -84,7 +84,7 @@ public class SeekBar extends View {
         THUMB_RADIUS_DRAGGED = Carbon.getDip(getContext()) * 10;
         STROKE_WIDTH = Carbon.getDip(getContext()) * 2;
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, R.style.carbon_SeekBar);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SeekBar, defStyleAttr, defStyleRes);
 
         setStyle(Style.values()[a.getInt(R.styleable.SeekBar_carbon_barStyle, 0)]);
         setMin(a.getFloat(R.styleable.SeekBar_carbon_min, 0));

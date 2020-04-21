@@ -94,24 +94,24 @@ public class RelativeLayout extends android.widget.RelativeLayout
     private OnTouchListener onDispatchTouchListener;
 
     public RelativeLayout(Context context) {
-        super(context, null, R.attr.carbon_relativeLayoutStyle);
-        initRelativeLayout(null, R.attr.carbon_relativeLayoutStyle);
+        super(context, null, R.attr.carbon_relativeLayoutStyle, R.style.carbon_RelativeLayout);
+        initRelativeLayout(null, R.attr.carbon_relativeLayoutStyle, R.style.carbon_RelativeLayout);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_relativeLayoutStyle);
-        initRelativeLayout(attrs, R.attr.carbon_relativeLayoutStyle);
+        initRelativeLayout(attrs, R.attr.carbon_relativeLayoutStyle, R.style.carbon_RelativeLayout);
     }
 
     public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initRelativeLayout(attrs, defStyleAttr);
+        initRelativeLayout(attrs, defStyleAttr, R.style.carbon_RelativeLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initRelativeLayout(attrs, defStyleAttr);
+        initRelativeLayout(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -166,8 +166,8 @@ public class RelativeLayout extends android.widget.RelativeLayout
             R.styleable.RelativeLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initRelativeLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, R.style.carbon_RelativeLayout);
+    private void initRelativeLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.FrameLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);

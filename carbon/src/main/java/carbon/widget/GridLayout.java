@@ -93,17 +93,22 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
 
     public GridLayout(Context context) {
         super(context, null, R.attr.carbon_gridLayoutStyle);
-        initGridLayout(null, R.attr.carbon_gridLayoutStyle);
+        initGridLayout(null, R.attr.carbon_gridLayoutStyle, R.style.carbon_GridLayout);
     }
 
     public GridLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_gridLayoutStyle);
-        initGridLayout(attrs, R.attr.carbon_gridLayoutStyle);
+        initGridLayout(attrs, R.attr.carbon_gridLayoutStyle, R.style.carbon_GridLayout);
     }
 
     public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initGridLayout(attrs, defStyleAttr);
+        initGridLayout(attrs, defStyleAttr, R.style.carbon_GridLayout);
+    }
+
+    public GridLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+        initGridLayout(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -158,8 +163,8 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
             R.styleable.GridLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initGridLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, R.style.carbon_GridLayout);
+    private void initGridLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.GridLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);

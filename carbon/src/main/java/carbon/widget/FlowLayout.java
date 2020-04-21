@@ -96,23 +96,23 @@ public class FlowLayout extends android.widget.FrameLayout
 
     public FlowLayout(Context context) {
         super(context, null, R.attr.carbon_flowLayoutStyle);
-        initFlowLayout(null, R.attr.carbon_flowLayoutStyle);
+        initFlowLayout(null, R.attr.carbon_flowLayoutStyle, R.style.carbon_FlowLayout);
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_flowLayoutStyle);
-        initFlowLayout(attrs, R.attr.carbon_flowLayoutStyle);
+        initFlowLayout(attrs, R.attr.carbon_flowLayoutStyle, R.style.carbon_FlowLayout);
     }
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initFlowLayout(attrs, defStyleAttr);
+        initFlowLayout(attrs, defStyleAttr, R.style.carbon_FlowLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initFlowLayout(attrs, defStyleAttr);
+        initFlowLayout(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
@@ -167,8 +167,8 @@ public class FlowLayout extends android.widget.FrameLayout
             R.styleable.FlowLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initFlowLayout(AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FlowLayout, defStyleAttr, R.style.carbon_FlowLayout);
+    private void initFlowLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FlowLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.FlowLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);

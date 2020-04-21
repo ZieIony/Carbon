@@ -95,17 +95,22 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
 
     public Toolbar(Context context) {
         super(context, null, R.attr.toolbarStyle);
-        initToolbar(null, R.attr.toolbarStyle);
+        initToolbar(null, R.attr.toolbarStyle, R.style.carbon_Toolbar);
     }
 
     public Toolbar(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.toolbarStyle);
-        initToolbar(attrs, R.attr.toolbarStyle);
+        initToolbar(attrs, R.attr.toolbarStyle, R.style.carbon_Toolbar);
     }
 
     public Toolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initToolbar(attrs, defStyleAttr);
+        initToolbar(attrs, defStyleAttr, R.style.carbon_Toolbar);
+    }
+
+    public Toolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+        initToolbar(attrs, defStyleAttr, defStyleRes);
     }
 
     private static int[] animationIds = new int[]{
@@ -161,11 +166,11 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         });
     }
 
-    private void initToolbar(AttributeSet attrs, int defStyleAttr) {
+    private void initToolbar(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         if (title == null)
             initLayout();
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, R.style.carbon_Toolbar);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, defStyleRes);
         setTitle(a.getString(R.styleable.Toolbar_android_text));
         setNavigationIcon(Carbon.getDrawable(this, a, R.styleable.Toolbar_carbon_navigationIcon, 0));
         setNavigationIconContentDescription(a.getString(R.styleable.Toolbar_carbon_navigationIconContentDescription));

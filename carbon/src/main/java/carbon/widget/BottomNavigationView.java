@@ -91,30 +91,27 @@ public class BottomNavigationView extends LinearLayout {
 
     public BottomNavigationView(Context context) {
         super(context, null, R.attr.carbon_bottomNavigationViewStyle);
-        initBottomNavigationView(null, R.attr.carbon_bottomNavigationViewStyle);
+        initBottomNavigationView(null, R.attr.carbon_bottomNavigationViewStyle, R.style.carbon_BottomNavigationView);
     }
 
     public BottomNavigationView(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.carbon_bottomNavigationViewStyle);
-        initBottomNavigationView(attrs, R.attr.carbon_bottomNavigationViewStyle);
+        initBottomNavigationView(attrs, R.attr.carbon_bottomNavigationViewStyle, R.style.carbon_BottomNavigationView);
     }
 
     public BottomNavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initBottomNavigationView(attrs, defStyleAttr);
+        initBottomNavigationView(attrs, defStyleAttr, R.style.carbon_BottomNavigationView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public BottomNavigationView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initBottomNavigationView(attrs, defStyleAttr);
+        initBottomNavigationView(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initBottomNavigationView(AttributeSet attrs, int defStyleAttr) {
-        if (attrs == null)
-            return;
-
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.BottomNavigationView, defStyleAttr, R.style.carbon_BottomNavigationView);
+    private void initBottomNavigationView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.BottomNavigationView, defStyleAttr, defStyleRes);
 
         itemLayoutId = a.getResourceId(R.styleable.BottomNavigationView_carbon_itemLayout, R.layout.carbon_bottomnavigationview_item);
         int menuId = a.getResourceId(R.styleable.BottomNavigationView_carbon_menu, 0);
