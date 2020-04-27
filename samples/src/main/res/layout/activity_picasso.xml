@@ -9,7 +9,7 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.rx.Button
+    <carbon.widget.Button
         android:id="@+id/button"
         android:text="load"
         android:layout_margin="@dimen/carbon_padding"

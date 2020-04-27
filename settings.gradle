@@ -1,1 +1,1 @@
-include ':carbon', ':samples', ':rxcarbon'
+include ':carbon', ':samples', ':component'

@@ -1,6 +1,8 @@
 package tk.zielony.carbonsamples.widget
 
 import android.os.Bundle
+import carbon.recycler.RowFactory
+import carbon.widget.MenuStrip
 import carbon.widget.PopupMenu
 import kotlinx.android.synthetic.main.activity_menus.*
 import tk.zielony.carbonsamples.R
@@ -24,5 +26,7 @@ class MenusActivity : ThemedActivity() {
             popupMenu.setMenu(R.menu.menu_news)
             popupMenu.show(button)
         }
+
+        tools.itemFactory = RowFactory { MenuStrip.ToolItemComponent(it) }
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+    <carbon.widget.CheckBox
+        android:id="@+id/carbon_itemCheckText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/carbon_dropdownMenuItemHeight"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/carbon_padding"
+        android:paddingRight="@dimen/carbon_padding"
+        android:singleLine="true"
+        android:textAppearance="?attr/carbon_textAppearanceSubhead" />
+
+</carbon.widget.FrameLayout>

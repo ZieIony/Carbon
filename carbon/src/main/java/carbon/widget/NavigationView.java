@@ -23,7 +23,6 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.component.Component;
 import carbon.component.LayoutComponent;
-import carbon.databinding.CarbonNavigationRowBinding;
 import carbon.recycler.RowFactory;
 import carbon.recycler.RowListAdapter;
 import carbon.recycler.ViewItemDecoration;
@@ -91,18 +90,20 @@ public class NavigationView extends RecyclerView {
     }
 
     private static class ItemComponent extends LayoutComponent<Item> {
+
+        private ImageView carbonItemIcon = getView().findViewById(R.id.carbon_itemIcon);
+        private Label carbonItemText = getView().findViewById(R.id.carbon_itemText);
+
         ItemComponent(ViewGroup parent) {
             super(parent, R.layout.carbon_navigation_row);
         }
 
-        private CarbonNavigationRowBinding binding = CarbonNavigationRowBinding.bind(getView());
-
         @Override
         public void bind(Item data) {
             super.bind(data);
-            binding.carbonItemIcon.setImageDrawable(data.icon);
-            binding.carbonItemIcon.setTintList(data.getIconTintList());
-            binding.carbonItemText.setText(data.title);
+            carbonItemIcon.setImageDrawable(data.icon);
+            carbonItemIcon.setTintList(data.getIconTintList());
+            carbonItemText.setText(data.title);
         }
     }
 

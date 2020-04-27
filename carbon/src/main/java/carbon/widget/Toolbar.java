@@ -22,6 +22,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -30,6 +31,7 @@ import android.view.ViewOutlineProvider;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -1323,6 +1325,14 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
             }
         }
         return result;
+    }
+
+    public View inflate(@LayoutRes int id) {
+        return LayoutInflater.from(getContext()).inflate(id, this);
+    }
+
+    public View inflate(@LayoutRes int id, boolean attach) {
+        return LayoutInflater.from(getContext()).inflate(id, this, attach);
     }
 
 

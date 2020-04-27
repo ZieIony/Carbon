@@ -7,7 +7,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion = '29.0.2'
 
-    viewBinding {
+    dataBinding {
         enabled = true
     }
     defaultConfig {
@@ -36,13 +36,12 @@ android {
 
 dependencies {
     implementation project(':carbon')
-    implementation project(':rxcarbon')
+    implementation project(':component')
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.annimon:stream:1.2.1'
     implementation "androidx.vectordrawable:vectordrawable:1.1.0"
     implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'

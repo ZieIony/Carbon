@@ -20,6 +20,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -27,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import androidx.annotation.FloatRange;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.shape.CutCornerTreatment;
@@ -1182,6 +1184,14 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
             }
         }
         return result;
+    }
+
+    public View inflate(@LayoutRes int id) {
+        return LayoutInflater.from(getContext()).inflate(id, this);
+    }
+
+    public View inflate(@LayoutRes int id, boolean attach) {
+        return LayoutInflater.from(getContext()).inflate(id, this, attach);
     }
 
 

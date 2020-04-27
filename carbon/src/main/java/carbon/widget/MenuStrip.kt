@@ -15,6 +15,7 @@ import carbon.Carbon
 import carbon.R
 import carbon.component.LayoutComponent
 import carbon.databinding.CarbonMenustripItemBinding
+import carbon.databinding.CarbonMenustripToolsItemBinding
 import carbon.drawable.ColorStateListFactory
 import carbon.recycler.RowArrayAdapter
 import carbon.recycler.RowFactory
@@ -70,22 +71,32 @@ open class MenuStrip : RecyclerView {
         }
     }
 
-    private inner class ItemComponent(parent: ViewGroup) : LayoutComponent<Item>(parent, R.layout.carbon_menustrip_item) {
+    class ItemComponent(val parent: ViewGroup) : LayoutComponent<Item>(parent, R.layout.carbon_menustrip_item) {
         private val binding = CarbonMenustripItemBinding.bind(view)
 
         override fun bind(data: Item) {
             super.bind(data)
-            binding.carbonIcon.setImageDrawable(data.icon)
-            binding.carbonIcon.setTintList(data.iconTintList)
-            binding.carbonText.text = data.title
-            binding.carbonText.textColor = data.iconTintList
-                    ?: ColorStateListFactory.makePrimaryText(context)
-
-            if (selectionMode != SelectionMode.NONE)
-                view.isSelected = selectedItems.contains(data)
+            with(binding) {
+                carbonIcon.setImageDrawable(data.icon)
+                carbonIcon.setTintList(data.iconTintList)
+                carbonText.text = data.title
+                carbonText.textColor = data.iconTintList
+                        ?: ColorStateListFactory.makePrimaryText(parent.context)
+            }
         }
     }
 
+    class ToolItemComponent(val parent: ViewGroup) : LayoutComponent<Item>(parent, R.layout.carbon_menustrip_tools_item) {
+        private val binding = CarbonMenustripToolsItemBinding.bind(view)
+
+        override fun bind(data: Item) {
+            super.bind(data)
+            with(binding) {
+                carbonIcon.setImageDrawable(data.icon)
+                carbonIcon.setTintList(data.iconTintList)
+            }
+        }
+    }
 
     @Deprecated("Use itemFactory instead")
     var itemLayoutId: Int = 0
@@ -159,7 +170,7 @@ open class MenuStrip : RecyclerView {
         val a = context.obtainStyledAttributes(attrs, R.styleable.MenuStrip, defStyleAttr, R.style.carbon_MenuStrip)
 
         orientation = carbon.view.Orientation.values()[a.getInt(R.styleable.MenuStrip_android_orientation, carbon.view.Orientation.VERTICAL.ordinal)]
-        itemFactory = RowFactory<Item> { ItemComponent(this) }
+        itemFactory = RowFactory { ItemComponent(this) }
         selectionMode = SelectionMode.values()[a.getInt(R.styleable.MenuStrip_carbon_selectionMode, SelectionMode.NONE.ordinal)]
         val menuId = a.getResourceId(R.styleable.MenuStrip_carbon_menu, 0)
         if (menuId != 0)

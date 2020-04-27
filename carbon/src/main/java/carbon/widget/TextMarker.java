@@ -63,7 +63,7 @@ public class TextMarker extends View {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(CharSequence text) {
         this.text = text;
     }
 

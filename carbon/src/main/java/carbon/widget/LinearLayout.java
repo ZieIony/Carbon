@@ -22,6 +22,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -29,6 +30,7 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import androidx.annotation.FloatRange;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 
 import com.annimon.stream.Stream;
@@ -1197,6 +1199,14 @@ public class LinearLayout extends android.widget.LinearLayout
             }
         }
         return result;
+    }
+
+    public View inflate(@LayoutRes int id) {
+        return LayoutInflater.from(getContext()).inflate(id, this);
+    }
+
+    public View inflate(@LayoutRes int id, boolean attach) {
+        return LayoutInflater.from(getContext()).inflate(id, this, attach);
     }
 
 

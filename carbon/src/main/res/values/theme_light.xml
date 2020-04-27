@@ -224,7 +224,7 @@
     </style>
 
     <style name="carbon_ThemeOverlay.Light.Dialog">
-        <item name="android:windowBackground">?attr/carbon_colorForeground</item>
+        <item name="android:windowBackground">@color/carbon_black_12</item>
         <item name="android:windowAnimationStyle">@style/carbon_DialogAnimation</item>
     </style>
 

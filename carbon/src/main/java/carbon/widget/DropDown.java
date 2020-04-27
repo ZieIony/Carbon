@@ -27,6 +27,8 @@ import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -273,6 +275,7 @@ public class DropDown extends EditText {
 
     public static class Adapter<Type> extends ListAdapter<ViewHolder, Type> {
 
+        @NotNull
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -304,10 +307,11 @@ public class DropDown extends EditText {
             this.selectedIndices = selectedIndices;
         }
 
+        @NotNull
         @Override
         public CheckableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.carbon_popupmenu_checkableitem, parent, false);
+            View view = inflater.inflate(R.layout.carbon_dropdown_checkableitem, parent, false);
             return new CheckableViewHolder(view);
         }
 

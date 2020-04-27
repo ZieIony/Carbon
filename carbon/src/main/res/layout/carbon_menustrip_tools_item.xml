@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/carbon_icon"
     style="@style/carbon_ImageView.IconButton"
     android:layout_gravity="center_vertical" />

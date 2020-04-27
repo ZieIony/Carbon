@@ -1,12 +1,10 @@
 package carbon.dialog;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -72,11 +70,6 @@ public abstract class DialogBase extends android.app.Dialog {
 
     private void initLayout() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Window window = getWindow();
-        if (window != null) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-            window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        }
 
         dialogLayout = getLayoutInflater().inflate(R.layout.carbon_dialog, null);
         container = dialogLayout.findViewById(R.id.carbon_windowContent);

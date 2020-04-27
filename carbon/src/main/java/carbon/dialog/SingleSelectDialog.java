@@ -1,6 +1,7 @@
 package carbon.dialog;
 
 import android.content.Context;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
@@ -15,6 +16,22 @@ import carbon.recycler.RowFactory;
 import carbon.view.SelectionMode;
 
 public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Type> {
+
+    private class ItemRow extends LayoutComponent<Type> {
+
+        private final CarbonRowDialogRadiotextBinding binding = CarbonRowDialogRadiotextBinding.bind(getView());
+
+        ItemRow(ViewGroup parent) {
+            super(parent, R.layout.carbon_row_dialog_radiotext);
+        }
+
+        @Override
+        public void bind(Type data) {
+            super.bind(data);
+            binding.carbonRadioButton.setChecked(getSelectedItem() == data);
+            binding.carbonText.setText(data.toString());
+        }
+    }
 
     public SingleSelectDialog(@NonNull Context context) {
         super(context);
@@ -35,34 +52,12 @@ public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Ty
     }
 
     public void setItems(Type[] items) {
-        super.setItems(items, parent -> new LayoutComponent<Type>(parent, R.layout.carbon_row_dialog_radiotext) {
-            private CarbonRowDialogRadiotextBinding binding = CarbonRowDialogRadiotextBinding.bind(getView());
-
-            @Override
-            public void bind(Type data) {
-                super.bind(data);
-                if (getSelectedItem() == data) {
-                    binding.carbonRadioButton.setChecked(true);
-                }
-                binding.carbonText.setText(data.toString());
-            }
-        });
+        super.setItems(items, ItemRow::new);
         adapter.setSelectionMode(SelectionMode.SINGLE);
     }
 
     public void setItems(List<Type> items) {
-        super.setItems(items, parent -> new LayoutComponent<Type>(parent, R.layout.carbon_row_dialog_radiotext) {
-            private CarbonRowDialogRadiotextBinding binding = CarbonRowDialogRadiotextBinding.bind(getView());
-
-            @Override
-            public void bind(Type data) {
-                super.bind(data);
-                if (getSelectedItem() == data) {
-                    binding.carbonRadioButton.setChecked(true);
-                }
-                binding.carbonText.setText(data.toString());
-            }
-        });
+        super.setItems(items, ItemRow::new);
         adapter.setSelectionMode(SelectionMode.SINGLE);
     }
 

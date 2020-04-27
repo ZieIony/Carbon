@@ -27,7 +27,7 @@
             android:layout_marginLeft="@dimen/carbon_margin"
             android:orientation="vertical">
 
-            <carbon.widget.TextView
+            <carbon.widget.Label
                 android:id="@+id/carbon_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:textAppearance="@style/carbon_TextAppearance.Subhead"
                 tools:text="@tools:sample/first_names" />
 
-            <carbon.widget.TextView
+            <carbon.widget.Label
                 android:id="@+id/carbon_subtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

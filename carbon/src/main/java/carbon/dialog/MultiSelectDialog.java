@@ -1,6 +1,7 @@
 package carbon.dialog;
 
 import android.content.Context;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
@@ -16,6 +17,22 @@ import carbon.view.SelectionMode;
 import carbon.widget.RecyclerView;
 
 public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Type> {
+
+    private class ItemRow extends LayoutComponent<Type> {
+
+        private final CarbonRowDialogCheckboxtextBinding binding = CarbonRowDialogCheckboxtextBinding.bind(getView());
+
+        ItemRow(ViewGroup parent) {
+            super(parent, R.layout.carbon_row_dialog_checkboxtext);
+        }
+
+        @Override
+        public void bind(Type data) {
+            super.bind(data);
+            binding.carbonCheckBox.setChecked(getSelectedItems().contains(data));
+            binding.carbonText.setText(data.toString());
+        }
+    }
 
     public MultiSelectDialog(@NonNull Context context) {
         super(context);
@@ -43,34 +60,12 @@ public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Typ
     }
 
     public void setItems(Type[] items) {
-        super.setItems(items, parent -> new LayoutComponent<Type>(parent, R.layout.carbon_row_dialog_checkboxtext) {
-            private CarbonRowDialogCheckboxtextBinding binding = CarbonRowDialogCheckboxtextBinding.bind(getView());
-
-            @Override
-            public void bind(Type data) {
-                super.bind(data);
-                if (getSelectedItems().contains(data)) {
-                    binding.carbonCheckBox.setChecked(true);
-                }
-                binding.carbonText.setText(data.toString());
-            }
-        });
+        super.setItems(items, ItemRow::new);
         adapter.setSelectionMode(SelectionMode.MULTI);
     }
 
     public void setItems(List<Type> items) {
-        super.setItems(items, parent -> new LayoutComponent<Type>(parent, R.layout.carbon_row_dialog_checkboxtext) {
-            private CarbonRowDialogCheckboxtextBinding binding = CarbonRowDialogCheckboxtextBinding.bind(getView());
-
-            @Override
-            public void bind(Type data) {
-                super.bind(data);
-                if (getSelectedItems().contains(data)) {
-                    binding.carbonCheckBox.setChecked(true);
-                }
-                binding.carbonText.setText(data.toString());
-            }
-        });
+        super.setItems(items, ItemRow::new);
         adapter.setSelectionMode(SelectionMode.MULTI);
     }
 

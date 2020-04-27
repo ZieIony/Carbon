@@ -26,6 +26,7 @@
         app:carbon_selectionMode="multi" />
 
     <carbon.widget.MenuStrip
+        android:id="@+id/tools"
         style="@style/carbon_MenuStrip.Tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

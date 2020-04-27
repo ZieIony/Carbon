@@ -1,49 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/carbon_colorForeground"
-    android:orientation="horizontal"
-    app:carbon_rippleColor="?attr/carbon_rippleColor">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <carbon.widget.ImageView
-        style="@style/carbon_ImageView.Icon"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/carbon_windowPadding"
-        android:layout_marginLeft="@dimen/carbon_windowPadding"
-        tools:src="@drawable/ic_android_black_24dp" />
+    <data>
 
-    <carbon.widget.LinearLayout
+        <variable
+            name="data"
+            type="tk.zielony.carbonsamples.SampleActivityItem" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <carbon.widget.FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/carbon_colorForeground"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/carbon_contentPadding"
-        android:paddingLeft="@dimen/carbon_contentPadding"
-        android:paddingEnd="@dimen/carbon_toolbarItemMargin"
-        android:paddingRight="@dimen/carbon_toolbarItemMargin"
         app:carbon_rippleColor="?attr/carbon_rippleColor">
 
-        <carbon.widget.TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/carbon_listItemHeight"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            tools:text="item name" />
-
         <carbon.widget.ImageView
-            android:id="@+id/beta"
             style="@style/carbon_ImageView.Icon"
-            android:layout_width="@dimen/carbon_toolbarItemSize"
-            android:layout_height="@dimen/carbon_toolbarItemSize"
-            app:carbon_src="@drawable/ic_warning_black_24dp" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/carbon_windowPadding"
+            android:layout_marginLeft="@dimen/carbon_windowPadding"
+            android:src="@{data.icon!=0?context.getResources().getDrawable(data.icon):null}"
+            tools:src="@drawable/ic_android_black_24dp" />
 
-        <carbon.widget.ImageView
-            android:id="@+id/star"
-            style="@style/carbon_ImageView.IconButton"
-            android:contentDescription="favourite sample"
-            tools:src="@drawable/ic_star_border_black_24dp" />
-    </carbon.widget.LinearLayout>
-</carbon.widget.FrameLayout>
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/carbon_contentPadding"
+            android:paddingLeft="@dimen/carbon_contentPadding"
+            android:paddingEnd="@dimen/carbon_toolbarItemMargin"
+            android:paddingRight="@dimen/carbon_toolbarItemMargin"
+            app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+            <carbon.widget.TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/carbon_listItemHeight"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@{context.getString(data.name)}"
+                tools:text="item name" />
+
+            <carbon.widget.ImageView
+                android:id="@+id/beta"
+                style="@style/carbon_ImageView.Icon"
+                android:layout_width="@dimen/carbon_toolbarItemSize"
+                android:layout_height="@dimen/carbon_toolbarItemSize"
+                android:visibility="@{data.beta?View.VISIBLE:View.GONE}"
+                app:carbon_src="@drawable/ic_warning_black_24dp" />
+
+            <carbon.widget.ImageView
+                android:id="@+id/star"
+                style="@style/carbon_ImageView.IconButton"
+                android:contentDescription="favourite sample"
+                android:src="@{data.starred?@drawable/ic_star_black_24dp:@drawable/ic_star_border_black_24dp}"
+                tools:src="@drawable/ic_star_border_black_24dp" />
+        </carbon.widget.LinearLayout>
+    </carbon.widget.FrameLayout>
+</layout>

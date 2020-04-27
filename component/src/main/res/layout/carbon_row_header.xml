@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/carbon_listItemHeight"
+    android:background="?attr/carbon_colorForeground">
+
+    <carbon.widget.TextMarker
+        android:id="@+id/carbon_marker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:carbon_text="Ip"
+        app:carbon_textView="@+id/carbon_text" />
+
+    <carbon.widget.Label
+        android:id="@+id/carbon_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/carbon_marker"
+        android:layout_marginStart="@dimen/carbon_windowPadding"
+        android:layout_marginLeft="@dimen/carbon_windowPadding"
+        android:layout_marginEnd="@dimen/carbon_windowPadding"
+        android:layout_marginRight="@dimen/carbon_windowPadding"
+        android:textAppearance="?attr/carbon_textAppearanceListHeader" />
+
+</carbon.widget.RelativeLayout>
