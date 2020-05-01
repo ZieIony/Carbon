@@ -35,7 +35,6 @@ open class AvatarTextRatingSubtextDateRow<Type : AvatarTextRatingSubtextDateItem
     private val binding = CarbonRowAvatartextratingsubtextdateBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonAvatar.setImageDrawable(data.avatar)
         binding.carbonDate.text = data.date
         binding.carbonRating.rating = data.rating.toFloat()

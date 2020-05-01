@@ -27,7 +27,6 @@ public class SingleSelectDialog<Type extends Serializable> extends ListDialog<Ty
 
         @Override
         public void bind(Type data) {
-            super.bind(data);
             binding.carbonRadioButton.setChecked(getSelectedItem() == data);
             binding.carbonText.setText(data.toString());
         }

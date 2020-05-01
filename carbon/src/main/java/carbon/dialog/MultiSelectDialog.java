@@ -28,7 +28,6 @@ public class MultiSelectDialog<Type extends Serializable> extends ListDialog<Typ
 
         @Override
         public void bind(Type data) {
-            super.bind(data);
             binding.carbonCheckBox.setChecked(getSelectedItems().contains(data));
             binding.carbonText.setText(data.toString());
         }

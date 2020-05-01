@@ -33,7 +33,6 @@ open class AvatarTextSubtextDateRow<Type : AvatarTextSubtextDateItem>(parent: Vi
     private val binding = CarbonRowAvatartextsubtextdateBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonAvatar.setImageDrawable(data.avatar)
         binding.carbonDate.text = data.date ?: ""
         binding.carbonText.text = data.text ?: ""
@@ -46,7 +45,6 @@ open class AvatarTextSubtext2DateRow<Type : AvatarTextSubtextDateItem>(parent: V
     private val binding = CarbonRowAvatartextsubtext2dateBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonAvatar.setImageDrawable(data.avatar)
         binding.carbonDate.text = data.date ?: ""
         binding.carbonText.text = data.text ?: ""

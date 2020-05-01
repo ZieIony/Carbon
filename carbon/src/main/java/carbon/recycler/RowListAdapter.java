@@ -67,7 +67,7 @@ public class RowListAdapter<Type> extends ListAdapter<RowViewHolder<Type>, Type>
 
     @Override
     public void onBindViewHolder(@NonNull RowViewHolder<Type> holder, int position, @NonNull List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
+        super.onBindViewHolder(holder, position);
         Type data = getItem(position);
         Component<Type> component = holder.getComponent();
         ItemTransformer transformer = factories.get(getItemViewType(position)).transformer;

@@ -100,7 +100,6 @@ public class NavigationView extends RecyclerView {
 
         @Override
         public void bind(Item data) {
-            super.bind(data);
             carbonItemIcon.setImageDrawable(data.icon);
             carbonItemIcon.setTintList(data.getIconTintList());
             carbonItemText.setText(data.title);

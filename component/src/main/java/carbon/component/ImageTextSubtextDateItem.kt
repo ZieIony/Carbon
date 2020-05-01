@@ -33,7 +33,6 @@ open class ImageTextSubtextDateRow<Type : ImageTextSubtextDateItem>(parent: View
     private val binding = CarbonRowImagetextsubtextdateBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonAvatar.setImageDrawable(data.image)
         binding.carbonText.text = data.text ?: ""
         binding.carbonSubtext.text = data.subtext ?: ""

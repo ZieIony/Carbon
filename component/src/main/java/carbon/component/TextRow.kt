@@ -8,7 +8,6 @@ open class TextRow<String>(parent: ViewGroup) : LayoutComponent<String>(parent, 
     private val binding = CarbonRowTextBinding.bind(view)
 
     override fun bind(data: String) {
-        super.bind(data)
         binding.carbonText.text = data.toString()
     }
 }

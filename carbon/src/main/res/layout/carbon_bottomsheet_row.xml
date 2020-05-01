@@ -17,7 +17,7 @@
         android:layout_marginEnd="@dimen/carbon_padding"
         android:layout_marginRight="@dimen/carbon_padding" />
 
-    <carbon.widget.TextView
+    <carbon.widget.Label
         android:id="@+id/carbon_itemText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/carbon_listItemHeight"

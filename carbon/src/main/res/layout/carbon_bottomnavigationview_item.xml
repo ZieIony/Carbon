@@ -15,7 +15,7 @@
         android:paddingLeft="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_padding">
 
-        <carbon.widget.TextView
+        <carbon.widget.Label
             android:id="@+id/carbon_bottomText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

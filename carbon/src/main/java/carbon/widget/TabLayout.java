@@ -51,7 +51,6 @@ public class TabLayout extends HorizontalScrollView {
 
         @Override
         public void bind(Item data) {
-            super.bind(data);
             binding.carbonTabText.setText(data.title);
         }
     }

@@ -34,7 +34,6 @@ open class IconPasswordRow<Type : IconPasswordItem>(parent: ViewGroup) : LayoutC
         set(text) = binding.carbonText.setText(text)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonIcon.setImageDrawable(data.icon)
         binding.carbonInput.label = data.hint
         binding.carbonText.transformationMethod = PasswordTransformationMethod()

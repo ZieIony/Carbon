@@ -21,6 +21,7 @@ import carbon.Carbon;
 import carbon.R;
 import carbon.component.Component;
 import carbon.component.LayoutComponent;
+import carbon.databinding.CarbonBottomnavigationviewItemBinding;
 import carbon.drawable.ColorStateListFactory;
 import carbon.recycler.RowFactory;
 
@@ -88,16 +89,14 @@ public class BottomNavigationView extends LinearLayout {
             super(parent, R.layout.carbon_bottomnavigationview_item);
         }
 
-        private final ImageView carbonBottomIcon = getView().findViewById(R.id.carbon_bottomIcon);
-        private final Label carbonBottomText = getView().findViewById(R.id.carbon_bottomText);
+        private final CarbonBottomnavigationviewItemBinding binding = CarbonBottomnavigationviewItemBinding.bind(getView());
 
         @Override
         public void bind(Item data) {
-            super.bind(data);
-            carbonBottomIcon.setImageDrawable(data.icon);
-            carbonBottomIcon.setTintList(data.getIconTintList() != null ? data.getIconTintList() : ColorStateListFactory.INSTANCE.makeIconSecondary(getView().getContext()));
-            carbonBottomText.setText(data.text);
-            carbonBottomText.setTextColor(data.getIconTintList() != null ? data.getIconTintList() : ColorStateListFactory.INSTANCE.makeIconSecondary(getView().getContext()));
+            binding.carbonBottomIcon.setImageDrawable(data.icon);
+            binding.carbonBottomIcon.setTintList(data.getIconTintList() != null ? data.getIconTintList() : ColorStateListFactory.INSTANCE.makeIconSecondary(getView().getContext()));
+            binding.carbonBottomText.setText(data.text);
+            binding.carbonBottomText.setTextColor(data.getIconTintList() != null ? data.getIconTintList() : ColorStateListFactory.INSTANCE.makeIconSecondary(getView().getContext()));
         }
     }
 

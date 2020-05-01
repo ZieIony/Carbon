@@ -42,7 +42,6 @@ open class IconDropDownRow<Type : IconDropDownItem, ItemType : Serializable>(par
         }
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonIcon.setImageDrawable(data.icon)
         binding.carbonInput.label = data.hint
         binding.carbonDropDown.setItems(data.items)

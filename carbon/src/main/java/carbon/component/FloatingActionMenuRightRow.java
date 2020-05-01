@@ -17,7 +17,6 @@ public class FloatingActionMenuRightRow extends  LayoutComponent<FloatingActionM
 
     @Override
     public void bind(FloatingActionMenu.Item data) {
-        super.bind(data);
         binding.carbonFab.setImageDrawable(data.getIcon());
         binding.carbonFab.setEnabled(data.isEnabled());
         binding.carbonTooltip.setText(data.getTitle());

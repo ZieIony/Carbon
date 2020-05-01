@@ -23,7 +23,6 @@ open class HeaderRow<Type : DefaultHeaderItem>(parent: ViewGroup) : LayoutCompon
     private val binding = CarbonRowHeaderBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonText.text = data.text.toString()
     }
 }
@@ -32,7 +31,6 @@ open class PaddedHeaderRow<Type : DefaultHeaderItem>(parent: ViewGroup) : Layout
     private val binding = CarbonRowPaddedheaderBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonText.text = data.text.toString()
     }
 }

@@ -37,7 +37,6 @@ class IconSearchRow<Type : IconSearchItem>(
     private val binding = CarbonRowIconsearchBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonIcon.setImageDrawable(data.icon)
         binding.carbonQuery.setDataProvider(adapter)
         binding.carbonQuery.setOnFilterListener(listener)

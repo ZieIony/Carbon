@@ -25,7 +25,6 @@ open class CheckBoxRow<Type : CheckBoxItem>(parent: ViewGroup) : LayoutComponent
     private val binding = CarbonRowIconcheckboxBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonCheckBox.isChecked = data.isChecked
     }
 }

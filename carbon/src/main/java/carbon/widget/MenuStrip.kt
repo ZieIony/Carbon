@@ -75,7 +75,6 @@ open class MenuStrip : RecyclerView {
         private val binding = CarbonMenustripItemBinding.bind(view)
 
         override fun bind(data: Item) {
-            super.bind(data)
             with(binding) {
                 carbonIcon.setImageDrawable(data.icon)
                 carbonIcon.setTintList(data.iconTintList)
@@ -90,7 +89,6 @@ open class MenuStrip : RecyclerView {
         private val binding = CarbonMenustripToolsItemBinding.bind(view)
 
         override fun bind(data: Item) {
-            super.bind(data)
             with(binding) {
                 carbonIcon.setImageDrawable(data.icon)
                 carbonIcon.setTintList(data.iconTintList)

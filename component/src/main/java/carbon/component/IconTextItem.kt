@@ -27,8 +27,6 @@ open class IconTextRow<Type : IconTextItem>(parent: ViewGroup)
     private val binding = CarbonRowIcontextBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
-
         binding.carbonIcon.setImageDrawable(data.icon)
         binding.carbonText.text = data.text ?: ""
     }

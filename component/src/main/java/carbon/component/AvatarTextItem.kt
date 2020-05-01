@@ -27,7 +27,6 @@ open class AvatarTextRow<Type : AvatarTextItem>(parent: ViewGroup) : LayoutCompo
     private val binding = CarbonRowAvatartextBinding.bind(view)
 
     override fun bind(data: Type) {
-        super.bind(data)
         binding.carbonText.text = data.text.toString()
         binding.carbonAvatar.setImageDrawable(data.avatar)
     }
