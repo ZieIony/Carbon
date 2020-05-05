@@ -28,9 +28,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -132,12 +134,12 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         initRecycler(attrs, R.attr.carbon_recyclerViewStyle, R.style.carbon_RecyclerView);
     }
 
-    public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RecyclerView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initRecycler(attrs, defStyleAttr, R.style.carbon_RecyclerView);
     }
 
-    public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public RecyclerView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr);
         initRecycler(attrs, defStyleAttr, defStyleRes);
     }
@@ -180,7 +182,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             R.styleable.RecyclerView_carbon_elevationSpotShadowColor
     };
 
-    private void initRecycler(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initRecycler(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyleAttr, defStyleRes);
 
         for (int i = 0; i < a.getIndexCount(); i++) {

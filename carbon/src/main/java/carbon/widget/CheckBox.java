@@ -18,7 +18,9 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -45,18 +47,18 @@ public class CheckBox extends TextView implements Checkable {
         initCheckBox(attrs, android.R.attr.checkboxStyle, R.style.carbon_CheckBox);
     }
 
-    public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CheckBox(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initCheckBox(attrs, defStyleAttr, R.style.carbon_CheckBox);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CheckBox(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initCheckBox(attrs, defStyleAttr, defStyleRes);
     }
 
-    public void initCheckBox(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public void initCheckBox(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, defStyleRes);
 
         setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.CheckBox_android_button, R.drawable.carbon_checkbox_anim));

@@ -3,6 +3,9 @@ package carbon.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 /**
  * @deprecated Class renamed to {@link ProgressView}
  */
@@ -16,11 +19,11 @@ public class ProgressBar extends ProgressView {
         super(context, attrs);
     }
 
-    public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ProgressBar(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ProgressBar(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 }

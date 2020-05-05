@@ -15,7 +15,9 @@ import android.view.MotionEvent;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import carbon.Carbon;
 import carbon.R;
@@ -66,18 +68,18 @@ public class RangeSeekBar extends View {
         initSeekBar(attrs, android.R.attr.seekBarStyle, R.style.carbon_SeekBar);
     }
 
-    public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RangeSeekBar(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initSeekBar(attrs, defStyleAttr, R.style.carbon_SeekBar);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public RangeSeekBar(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initSeekBar(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initSeekBar(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initSeekBar(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         if (isInEditMode())
             return;
 

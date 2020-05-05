@@ -13,7 +13,9 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -109,7 +111,7 @@ public class AutoCompleteEditText extends SearchEditText {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public AutoCompleteEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AutoCompleteEditText(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAutoCompleteEditText();
     }

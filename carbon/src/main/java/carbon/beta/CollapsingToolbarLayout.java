@@ -27,6 +27,7 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -94,7 +95,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
         initCollapsingToolbarLayout(attrs, R.attr.carbon_collapsingToolbarLayoutStyle);
     }
 
-    public CollapsingToolbarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CollapsingToolbarLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initCollapsingToolbarLayout(attrs, defStyleAttr);
     }
@@ -151,7 +152,7 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
             R.styleable.CollapsingToolbarLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initCollapsingToolbarLayout(AttributeSet attrs, int defStyleAttr) {
+    private void initCollapsingToolbarLayout(AttributeSet attrs, @AttrRes int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CollapsingToolbarLayout, defStyleAttr, 0);
 
         Carbon.initDefaultBackground(this, a, R.styleable.CollapsingToolbarLayout_android_background);

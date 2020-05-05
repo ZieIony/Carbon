@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -22,13 +25,13 @@ public class ComponentView extends FrameLayout {
         init(attrs);
     }
 
-    public ComponentView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ComponentView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ComponentView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ComponentView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }

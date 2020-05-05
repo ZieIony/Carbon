@@ -22,8 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Checkable;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -85,18 +87,18 @@ public class DropDown extends EditText {
         initDropDown(attrs, R.attr.carbon_dropDownStyle, R.style.carbon_DropDown);
     }
 
-    public DropDown(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DropDown(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initDropDown(attrs, defStyleAttr, R.style.carbon_DropDown);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DropDown(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DropDown(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initDropDown(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initDropDown(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initDropDown(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DropDown, defStyleAttr, defStyleRes);
 
         int theme = a.getResourceId(R.styleable.DropDown_carbon_popupTheme, -1);

@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -142,17 +144,17 @@ public class NavigationView extends RecyclerView {
         initNavigationView(attrs, R.attr.carbon_navigationViewStyle, R.style.carbon_NavigationView);
     }
 
-    public NavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NavigationView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initNavigationView(attrs, defStyleAttr, R.style.carbon_NavigationView);
     }
 
-    public NavigationView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public NavigationView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr);
         initNavigationView(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initNavigationView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initNavigationView(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         setLayoutManager(new LinearLayoutManager(getContext()));
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationView, defStyleAttr, defStyleRes);

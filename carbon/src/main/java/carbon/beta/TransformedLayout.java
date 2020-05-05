@@ -6,7 +6,9 @@ import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import carbon.widget.FrameLayout;
 
@@ -23,11 +25,11 @@ public class TransformedLayout extends FrameLayout {
         super(context, attrs);
     }
 
-    public TransformedLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TransformedLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public TransformedLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TransformedLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

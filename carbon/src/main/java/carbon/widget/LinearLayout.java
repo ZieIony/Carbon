@@ -29,9 +29,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import com.annimon.stream.Stream;
 import com.google.android.material.shape.CutCornerTreatment;
@@ -102,13 +104,13 @@ public class LinearLayout extends android.widget.LinearLayout
         initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle, R.style.carbon_LinearLayout);
     }
 
-    public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LinearLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initLinearLayout(attrs, defStyleAttr, R.style.carbon_LinearLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public LinearLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initLinearLayout(attrs, defStyleAttr, defStyleRes);
     }
@@ -165,7 +167,7 @@ public class LinearLayout extends android.widget.LinearLayout
             R.styleable.LinearLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initLinearLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initLinearLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.LinearLayout_android_background);

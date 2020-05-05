@@ -5,6 +5,9 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import carbon.databinding.CarbonNavigationHeaderBinding;
 import carbon.widget.FrameLayout;
 
@@ -44,12 +47,12 @@ public class NavigationHeader extends FrameLayout {
         initNavigationHeader();
     }
 
-    public NavigationHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NavigationHeader(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initNavigationHeader();
     }
 
-    public NavigationHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public NavigationHeader(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initNavigationHeader();
     }

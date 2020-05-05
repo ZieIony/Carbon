@@ -27,9 +27,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import com.annimon.stream.Stream;
 import com.google.android.material.shape.CutCornerTreatment;
@@ -100,12 +102,12 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
         initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle, R.style.carbon_ConstraintLayout);
     }
 
-    public ConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ConstraintLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle, R.style.carbon_ConstraintLayout);
     }
 
-    public ConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ConstraintLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr);
         initConstraintLayout(attrs, R.attr.carbon_constraintLayoutStyle, defStyleRes);
     }
@@ -162,7 +164,7 @@ public class ConstraintLayout extends androidx.constraintlayout.widget.Constrain
             R.styleable.ConstraintLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initConstraintLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initConstraintLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ConstraintLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.ConstraintLayout_android_background);

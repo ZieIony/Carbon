@@ -6,6 +6,9 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import carbon.R;
 import carbon.view.Orientation;
 import carbon.view.View;
@@ -27,19 +30,19 @@ public class Divider extends View {
         initDivider(attrs, R.attr.carbon_dividerStyle, R.style.carbon_Divider);
     }
 
-    public Divider(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Divider(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         initDivider(attrs, defStyleAttr, R.style.carbon_Divider);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Divider(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Divider(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initDivider(attrs, defStyleAttr, defStyleRes);
     }
 
-    public void initDivider(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public void initDivider(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Divider, defStyleAttr, defStyleRes);
         orientation = Orientation.values()[a.getInt(R.styleable.Divider_android_orientation, Orientation.HORIZONTAL.ordinal())];
         a.recycle();

@@ -12,6 +12,9 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import java.util.Arrays;
 
 import carbon.Carbon;
@@ -83,18 +86,18 @@ public class ChartView extends View {
         initChartView(attrs, R.attr.carbon_chartViewStyle, R.style.carbon_ChartView);
     }
 
-    public ChartView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ChartView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initChartView(attrs, defStyleAttr, R.style.carbon_ChartView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ChartView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ChartView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initChartView(attrs, defStyleAttr, defStyleRes);
     }
 
-    public void initChartView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public void initChartView(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ChartView, defStyleAttr, defStyleRes);
 
         /*int ap = a.getResourceId(R.styleable.Label_android_textAppearance, -1);

@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import carbon.R;
 import carbon.recycler.ArrayAdapter;
@@ -25,11 +27,11 @@ public class ExpandableRecyclerView extends RecyclerView {
         super(context, attrs);
     }
 
-    public ExpandableRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ExpandableRecyclerView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public ExpandableRecyclerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ExpandableRecyclerView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

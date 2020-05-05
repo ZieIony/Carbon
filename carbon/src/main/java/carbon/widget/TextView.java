@@ -40,9 +40,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -154,13 +156,13 @@ public class TextView extends android.widget.TextView
         initTextView(attrs, android.R.attr.textViewStyle, R.style.carbon_TextView);
     }
 
-    public TextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TextView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initTextView(attrs, defStyleAttr, R.style.carbon_TextView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public TextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TextView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initTextView(attrs, defStyleAttr, defStyleRes);
     }
@@ -222,7 +224,7 @@ public class TextView extends android.widget.TextView
             R.styleable.TextView_carbon_autoSizeStepGranularity
     };
 
-    private void initTextView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initTextView(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextView, defStyleAttr, defStyleRes);
 
         int ap = a.getResourceId(R.styleable.TextView_android_textAppearance, -1);
@@ -303,14 +305,14 @@ public class TextView extends android.widget.TextView
     }
 
     @Override
-    public void setTextAppearance(@NonNull Context context, int resid) {
-        super.setTextAppearance(context, resid);
-        Carbon.setTextAppearance(this, resid, false, false);
+    public void setTextAppearance(@NonNull Context context, @StyleRes int resId) {
+        super.setTextAppearance(context, resId);
+        Carbon.setTextAppearance(this, resId, false, false);
     }
 
-    public void setTextAppearance(int resid) {
-        super.setTextAppearance(getContext(), resid);
-        Carbon.setTextAppearance(this, resid, false, false);
+    public void setTextAppearance(@StyleRes int resId) {
+        super.setTextAppearance(getContext(), resId);
+        Carbon.setTextAppearance(this, resId, false, false);
     }
 
     @Override

@@ -13,6 +13,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.AttrRes;
+
 import carbon.Carbon;
 import carbon.R;
 import carbon.view.TextAppearanceView;
@@ -36,13 +38,13 @@ public class TextMarker extends View {
         init(attrs, 0);
     }
 
-    public TextMarker(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TextMarker(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         init(attrs, defStyleAttr);
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    private void init(AttributeSet attrs, @AttrRes int defStyleAttr) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextMarker, defStyleAttr, 0);
 

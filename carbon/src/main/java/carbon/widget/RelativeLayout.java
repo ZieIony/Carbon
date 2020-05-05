@@ -30,9 +30,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 
@@ -105,13 +107,13 @@ public class RelativeLayout extends android.widget.RelativeLayout
         initRelativeLayout(attrs, R.attr.carbon_relativeLayoutStyle, R.style.carbon_RelativeLayout);
     }
 
-    public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RelativeLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initRelativeLayout(attrs, defStyleAttr, R.style.carbon_RelativeLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public RelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public RelativeLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initRelativeLayout(attrs, defStyleAttr, defStyleRes);
     }
@@ -168,7 +170,7 @@ public class RelativeLayout extends android.widget.RelativeLayout
             R.styleable.RelativeLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initRelativeLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initRelativeLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RelativeLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.FrameLayout_android_background);

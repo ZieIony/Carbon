@@ -28,6 +28,7 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -147,7 +148,7 @@ public class AppBarLayout extends com.google.android.material.appbar.AppBarLayou
             R.styleable.AppBarLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initAppBarLayout(AttributeSet attrs, int defStyleAttr) {
+    private void initAppBarLayout(AttributeSet attrs, @AttrRes int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarLayout, defStyleAttr, 0);
 
         Carbon.initDefaultBackground(this, a, R.styleable.AppBarLayout_android_background);

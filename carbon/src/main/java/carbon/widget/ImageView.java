@@ -35,9 +35,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import androidx.core.view.ViewCompat;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
@@ -102,13 +104,13 @@ public class ImageView extends android.widget.ImageView
         initImageView(attrs, R.attr.carbon_imageViewStyle, R.style.carbon_ImageView);
     }
 
-    public ImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ImageView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initImageView(attrs, defStyleAttr, R.style.carbon_ImageView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ImageView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initImageView(attrs, defStyleAttr, defStyleRes);
     }
@@ -164,7 +166,7 @@ public class ImageView extends android.widget.ImageView
             R.styleable.ImageView_carbon_elevationSpotShadowColor
     };
 
-    private void initImageView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initImageView(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageView, defStyleAttr, defStyleRes);
 
         Drawable d = Carbon.getDrawable(this, a, R.styleable.ImageView_carbon_src, R.drawable.carbon_iconplaceholder);

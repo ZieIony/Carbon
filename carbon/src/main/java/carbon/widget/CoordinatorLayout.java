@@ -27,9 +27,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import com.annimon.stream.Stream;
 import com.google.android.material.shape.CutCornerTreatment;
@@ -95,12 +97,12 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
         initCoordinatorLayout(attrs, R.attr.carbon_coordinatorLayoutStyle, R.style.carbon_CoordinatorLayout);
     }
 
-    public CoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CoordinatorLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initCoordinatorLayout(attrs, defStyleAttr, R.style.carbon_CoordinatorLayout);
     }
 
-    public CoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CoordinatorLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr);
         initCoordinatorLayout(attrs, defStyleAttr, defStyleRes);
     }
@@ -157,7 +159,7 @@ public class CoordinatorLayout extends androidx.coordinatorlayout.widget.Coordin
             R.styleable.CoordinatorLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initCoordinatorLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initCoordinatorLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CoordinatorLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.CoordinatorLayout_android_background);

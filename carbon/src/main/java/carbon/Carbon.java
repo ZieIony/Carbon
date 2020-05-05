@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.view.SupportMenuInflater;
@@ -394,7 +395,7 @@ public class Carbon {
         return null;
     }
 
-    public static Context getThemedContext(Context context, AttributeSet attributeSet, int[] attrs, int defStyleAttr, int attr) {
+    public static Context getThemedContext(Context context, AttributeSet attributeSet, int[] attrs, @AttrRes int defStyleAttr, int attr) {
         TypedArray a = context.obtainStyledAttributes(attributeSet, attrs, defStyleAttr, 0);
         if (a.hasValue(attr)) {
             int themeId = a.getResourceId(attr, 0);

@@ -36,9 +36,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -60,8 +62,8 @@ import carbon.animation.AnimatedView;
 import carbon.animation.StateAnimator;
 import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
-import carbon.view.AllCapsTransformationMethod;
 import carbon.internal.RevealAnimator;
+import carbon.view.AllCapsTransformationMethod;
 import carbon.view.AutoSizeTextView;
 import carbon.view.MarginView;
 import carbon.view.MaxSizeView;
@@ -118,13 +120,13 @@ public class Button extends android.widget.Button
         initButton(attrs, android.R.attr.buttonStyle, R.style.carbon_Button);
     }
 
-    public Button(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Button(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initButton(attrs, defStyleAttr, R.style.carbon_Button);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Button(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initButton(attrs, defStyleAttr, defStyleRes);
     }
@@ -186,7 +188,7 @@ public class Button extends android.widget.Button
             R.styleable.Button_carbon_autoSizeStepGranularity
     };
 
-    private void initButton(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initButton(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Button, defStyleAttr, defStyleRes);
 
         int ap = a.getResourceId(R.styleable.Button_android_textAppearance, -1);
@@ -246,14 +248,14 @@ public class Button extends android.widget.Button
     }
 
     @Override
-    public void setTextAppearance(@NonNull Context context, int resid) {
-        super.setTextAppearance(context, resid);
-        Carbon.setTextAppearance(this, resid, false, false);
+    public void setTextAppearance(@NonNull Context context, @StyleRes int resId) {
+        super.setTextAppearance(context, resId);
+        Carbon.setTextAppearance(this, resId, false, false);
     }
 
-    public void setTextAppearance(int resid) {
-        super.setTextAppearance(getContext(), resid);
-        Carbon.setTextAppearance(this, resid, false, false);
+    public void setTextAppearance(@StyleRes int resId) {
+        super.setTextAppearance(getContext(), resId);
+        Carbon.setTextAppearance(this, resId, false, false);
     }
 
     RevealAnimator revealAnimator;

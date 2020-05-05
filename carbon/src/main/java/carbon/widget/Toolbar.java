@@ -29,6 +29,7 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
@@ -105,12 +106,12 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         initToolbar(attrs, R.attr.toolbarStyle, R.style.carbon_Toolbar);
     }
 
-    public Toolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public Toolbar(Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initToolbar(attrs, defStyleAttr, R.style.carbon_Toolbar);
     }
 
-    public Toolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Toolbar(Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr);
         initToolbar(attrs, defStyleAttr, defStyleRes);
     }
@@ -168,7 +169,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         });
     }
 
-    private void initToolbar(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initToolbar(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         if (title == null)
             initLayout();
 

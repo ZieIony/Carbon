@@ -28,9 +28,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 
@@ -103,12 +105,12 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
         initGridLayout(attrs, R.attr.carbon_gridLayoutStyle, R.style.carbon_GridLayout);
     }
 
-    public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GridLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initGridLayout(attrs, defStyleAttr, R.style.carbon_GridLayout);
     }
 
-    public GridLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public GridLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr);
         initGridLayout(attrs, defStyleAttr, defStyleRes);
     }
@@ -165,7 +167,7 @@ public class GridLayout extends androidx.gridlayout.widget.GridLayout
             R.styleable.GridLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initGridLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initGridLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GridLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.GridLayout_android_background);

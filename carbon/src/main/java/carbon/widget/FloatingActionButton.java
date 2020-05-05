@@ -7,6 +7,9 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Menu;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import carbon.R;
 import carbon.animation.AnimUtils;
 
@@ -27,18 +30,18 @@ public class FloatingActionButton extends ImageView {
         initFloatingActionButton(attrs, R.attr.carbon_fabStyle, R.style.carbon_FloatingActionButton);
     }
 
-    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FloatingActionButton(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initFloatingActionButton(attrs, defStyleAttr, R.style.carbon_FloatingActionButton);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public FloatingActionButton(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initFloatingActionButton(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initFloatingActionButton(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initFloatingActionButton(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         AnimUtils.setupElevationAnimator(getStateAnimator(), this);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, defStyleAttr, defStyleRes);

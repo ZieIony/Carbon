@@ -16,7 +16,9 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.NestedScrollingParent;
 import androidx.core.view.ViewCompat;
 
@@ -52,13 +54,13 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
         initScrollView(attrs, android.R.attr.scrollViewStyle, R.style.carbon_ScrollView);
     }
 
-    public ScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ScrollView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initScrollView(attrs, defStyleAttr, R.style.carbon_ScrollView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ScrollView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initScrollView(attrs, defStyleAttr, defStyleRes);
     }
@@ -71,7 +73,7 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
             R.styleable.ScrollView_carbon_animateColorChanges
     };
 
-    private void initScrollView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initScrollView(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 

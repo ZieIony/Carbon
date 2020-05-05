@@ -18,7 +18,9 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 
@@ -42,18 +44,18 @@ public class RadioButton extends TextView implements Checkable {
         initRadioButton(attrs, android.R.attr.radioButtonStyle, R.style.carbon_RadioButton);
     }
 
-    public RadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RadioButton(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initRadioButton(attrs, defStyleAttr, R.style.carbon_RadioButton);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public RadioButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public RadioButton(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initRadioButton(attrs, defStyleAttr, defStyleRes);
     }
 
-    public void initRadioButton(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public void initRadioButton(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, defStyleRes);
 
         setButtonDrawable(Carbon.getDrawable(this, a, R.styleable.RadioButton_android_button, R.drawable.carbon_radio_anim));

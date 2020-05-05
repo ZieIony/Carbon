@@ -3,6 +3,9 @@ package carbon.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 /**
  * @deprecated Class renamed to {@link BottomNavigationView}
  */
@@ -16,11 +19,11 @@ public class BottomBar extends BottomNavigationView {
         super(context, attrs);
     }
 
-    public BottomBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BottomBar(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public BottomBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BottomBar(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 }

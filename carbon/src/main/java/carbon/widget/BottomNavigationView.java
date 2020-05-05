@@ -14,7 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.MenuItemCompat;
 
 import carbon.Carbon;
@@ -116,18 +118,18 @@ public class BottomNavigationView extends LinearLayout {
         initBottomNavigationView(attrs, R.attr.carbon_bottomNavigationViewStyle, R.style.carbon_BottomNavigationView);
     }
 
-    public BottomNavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BottomNavigationView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initBottomNavigationView(attrs, defStyleAttr, R.style.carbon_BottomNavigationView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public BottomNavigationView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BottomNavigationView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initBottomNavigationView(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initBottomNavigationView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initBottomNavigationView(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.BottomNavigationView, defStyleAttr, defStyleRes);
 
         itemFactory = ItemComponent::new;

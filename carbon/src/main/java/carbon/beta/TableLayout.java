@@ -7,6 +7,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import carbon.R;
 import carbon.widget.DropDown;
 import carbon.widget.LinearLayout;
@@ -30,13 +33,13 @@ public class TableLayout extends LinearLayout {
         initTableLayout();
     }
 
-    public TableLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TableLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initTableLayout();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public TableLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TableLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initTableLayout();
     }

@@ -8,6 +8,9 @@ import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +66,7 @@ public class SearchEditText extends EditText {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public SearchEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SearchEditText(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initSearchEditText();
     }

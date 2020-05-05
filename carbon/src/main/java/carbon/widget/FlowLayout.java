@@ -30,9 +30,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 
@@ -106,13 +108,13 @@ public class FlowLayout extends android.widget.FrameLayout
         initFlowLayout(attrs, R.attr.carbon_flowLayoutStyle, R.style.carbon_FlowLayout);
     }
 
-    public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FlowLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initFlowLayout(attrs, defStyleAttr, R.style.carbon_FlowLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public FlowLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initFlowLayout(attrs, defStyleAttr, defStyleRes);
     }
@@ -169,7 +171,7 @@ public class FlowLayout extends android.widget.FrameLayout
             R.styleable.FlowLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initFlowLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initFlowLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FlowLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.FlowLayout_android_background);

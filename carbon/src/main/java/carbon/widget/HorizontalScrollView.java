@@ -16,7 +16,9 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.ViewCompat;
 
 import carbon.Carbon;
@@ -50,13 +52,13 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
         initHorizontalScrollView(attrs, android.R.attr.horizontalScrollViewStyle, R.style.carbon_HorizontalScrollView);
     }
 
-    public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public HorizontalScrollView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initHorizontalScrollView(attrs, defStyleAttr, R.style.carbon_HorizontalScrollView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public HorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public HorizontalScrollView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initHorizontalScrollView(attrs, defStyleAttr, defStyleRes);
     }
@@ -69,7 +71,7 @@ public class HorizontalScrollView extends android.widget.HorizontalScrollView im
             R.styleable.HorizontalScrollView_carbon_animateColorChanges
     };
 
-    private void initHorizontalScrollView(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initHorizontalScrollView(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
 

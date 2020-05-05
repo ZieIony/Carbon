@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
@@ -31,12 +33,12 @@ public class AutoCompleteLayout extends LinearLayout {
         initAutoCompleteLayout();
     }
 
-    public AutoCompleteLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AutoCompleteLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAutoCompleteLayout();
     }
 
-    public AutoCompleteLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AutoCompleteLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAutoCompleteLayout();
     }

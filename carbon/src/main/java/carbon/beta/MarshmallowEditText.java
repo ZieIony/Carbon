@@ -16,7 +16,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.appcompat.view.ContextThemeWrapper;
 
 import java.lang.reflect.Field;
@@ -47,7 +49,7 @@ public class MarshmallowEditText extends EditText {
         initActionModeCallback();
     }
 
-    public MarshmallowEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public MarshmallowEditText(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initActionModeCallback();
     }

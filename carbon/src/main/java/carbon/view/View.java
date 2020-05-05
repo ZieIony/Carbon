@@ -33,9 +33,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import androidx.core.view.ViewCompat;
 
 import com.google.android.material.shape.CutCornerTreatment;
@@ -92,13 +94,13 @@ public abstract class View extends android.view.View
         initView(attrs, 0);
     }
 
-    public View(Context context, AttributeSet attrs, int defStyleAttr) {
+    public View(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public View(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public View(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initView(attrs, defStyleAttr);
     }
@@ -154,7 +156,7 @@ public abstract class View extends android.view.View
             R.styleable.View_carbon_elevationSpotShadowColor
     };
 
-    private void initView(AttributeSet attrs, int defStyleAttr) {
+    private void initView(AttributeSet attrs, @AttrRes int defStyleAttr) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.View, defStyleAttr, 0);
 
         Carbon.initDefaultBackground(this, a, R.styleable.View_android_background);

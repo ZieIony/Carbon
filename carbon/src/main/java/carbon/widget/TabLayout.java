@@ -16,7 +16,9 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
@@ -134,18 +136,18 @@ public class TabLayout extends HorizontalScrollView {
         initPagerTabStrip(attrs, R.attr.carbon_tabLayoutStyle, R.style.carbon_TabLayout);
     }
 
-    public TabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TabLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initPagerTabStrip(attrs, defStyleAttr, R.style.carbon_TabLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public TabLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TabLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initPagerTabStrip(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initPagerTabStrip(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initPagerTabStrip(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         int layoutDirection = ViewCompat.getLayoutDirection(this);
         ViewCompat.setLayoutDirection(this, ViewCompat.LAYOUT_DIRECTION_LTR);
         content = new LinearLayout(getContext());

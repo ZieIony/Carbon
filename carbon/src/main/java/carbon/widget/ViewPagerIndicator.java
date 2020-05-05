@@ -10,7 +10,9 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import carbon.R;
 import carbon.view.View;
@@ -65,12 +67,12 @@ public class ViewPagerIndicator extends View {
         super(context, attrs, R.attr.carbon_viewPagerIndicatorStyle);
     }
 
-    public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ViewPagerIndicator(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ViewPagerIndicator(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

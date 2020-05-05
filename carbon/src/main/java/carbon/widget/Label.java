@@ -18,9 +18,13 @@ import android.view.Gravity;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
+
+import org.jetbrains.annotations.NotNull;
 
 import carbon.Carbon;
 import carbon.R;
@@ -50,18 +54,18 @@ public class Label extends View implements TextAppearanceView {
         initLabel(attrs, R.attr.carbon_labelStyle, R.style.carbon_Label);
     }
 
-    public Label(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Label(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initLabel(attrs, defStyleAttr, R.style.carbon_Label);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Label(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Label(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initLabel(attrs, defStyleAttr, defStyleRes);
     }
 
-    public void initLabel(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initLabel(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Label, defStyleAttr, defStyleRes);
 
         int ap = a.getResourceId(R.styleable.Label_android_textAppearance, -1);
@@ -95,11 +99,12 @@ public class Label extends View implements TextAppearanceView {
         return gravity;
     }
 
-    public void setText(CharSequence text) {
+    public void setText(@NotNull CharSequence text) {
         this.text = text;
         layout = null;
     }
 
+    @NotNull
     public CharSequence getText() {
         return text;
     }
@@ -127,18 +132,19 @@ public class Label extends View implements TextAppearanceView {
     }
 
     @Override
-    public void setTypeface(Typeface typeface, int style) {
+    public void setTypeface(@NotNull Typeface typeface, int style) {
         paint.setTypeface(typeface);
     }
 
-    public void setTextAppearance(@NonNull Context context, int resid) {
-        Carbon.setTextAppearance(this, resid, false, true);
+    public void setTextAppearance(@NonNull Context context, @StyleRes int resId) {
+        Carbon.setTextAppearance(this, resId, false, true);
     }
 
-    public void setTextAppearance(int resid) {
-        Carbon.setTextAppearance(this, resid, false, true);
+    public void setTextAppearance(@StyleRes int resId) {
+        Carbon.setTextAppearance(this, resId, false, true);
     }
 
+    @NotNull
     @Override
     public TextPaint getPaint() {
         return paint;
@@ -209,13 +215,14 @@ public class Label extends View implements TextAppearanceView {
         int width = getPaddingLeft() + getPaddingRight();
         int height = getPaddingTop() + getPaddingBottom();
 
+        CharSequence transformedText = transformationMethod != null ? transformationMethod.getTransformation(text, this) : text;
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
         } else {
-            layout = new StaticLayout(transformationMethod != null ? transformationMethod.getTransformation(text, this) : text, paint, Integer.MAX_VALUE, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+            layout = new StaticLayout(transformedText, paint, Integer.MAX_VALUE, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
             int maxWidth = 0;
             for (int i = 0; i < layout.getLineCount(); i++)
-                maxWidth = (int) Math.max(maxWidth, layout.getLineWidth(i));
+                maxWidth = (int) Math.ceil(Math.max(maxWidth, layout.getLineWidth(i)));
             width += maxWidth;
 
             width = Math.max(width, getSuggestedMinimumWidth());
@@ -226,7 +233,7 @@ public class Label extends View implements TextAppearanceView {
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else {
-            layout = new StaticLayout(transformationMethod != null ? transformationMethod.getTransformation(text, this) : text, paint, width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+            layout = new StaticLayout(transformedText, paint, width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
             height += layout.getHeight();
             height = Math.max(height, getSuggestedMinimumHeight());
             if (heightMode == MeasureSpec.AT_MOST)

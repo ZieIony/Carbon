@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.AttrRes;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.text.Format;
@@ -32,7 +33,7 @@ public class TableView extends RecyclerView {
         initTableView(context);
     }
 
-    public TableView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TableView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initTableView(context);
     }

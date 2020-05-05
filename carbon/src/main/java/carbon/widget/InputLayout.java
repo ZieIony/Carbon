@@ -9,7 +9,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import carbon.Carbon;
 import carbon.R;
@@ -63,17 +65,17 @@ public class InputLayout extends RelativeLayout {
         initInputLayout(attrs, R.attr.carbon_inputLayoutStyle, R.style.carbon_InputLayout);
     }
 
-    public InputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public InputLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initInputLayout(attrs, defStyleAttr, R.style.carbon_InputLayout);
     }
 
-    public InputLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public InputLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initInputLayout(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initInputLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initInputLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         View.inflate(getContext(), R.layout.carbon_inputlayout, this);
 
         errorTextView = findViewById(R.id.carbon_error);

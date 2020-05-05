@@ -5,6 +5,9 @@ import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import carbon.gesture.GestureDetector;
 import carbon.gesture.OnGestureListener;
 import carbon.widget.FrameLayout;
@@ -28,12 +31,12 @@ public class TransformationLayout extends FrameLayout implements OnGestureListen
         initTransformationLayout();
     }
 
-    public TransformationLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TransformationLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initTransformationLayout();
     }
 
-    public TransformationLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TransformationLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initTransformationLayout();
     }

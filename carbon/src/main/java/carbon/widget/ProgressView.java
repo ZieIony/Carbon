@@ -8,7 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import carbon.R;
 import carbon.drawable.CircularProgressDrawable;
@@ -33,18 +35,18 @@ public class ProgressView extends View {
         initProgressBar(attrs, R.attr.carbon_progressViewStyle, R.style.carbon_ProgressView);
     }
 
-    public ProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ProgressView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initProgressBar(attrs, defStyleAttr, R.style.carbon_ProgressView);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ProgressView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initProgressBar(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initProgressBar(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initProgressBar(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressView, defStyleAttr, defStyleRes);
         Style style = Style.values()[a.getInt(R.styleable.ProgressView_carbon_progressStyle, 0)];
         if (style == Style.BarDeterminate || style == Style.BarIndeterminate || style == Style.BarQuery) {

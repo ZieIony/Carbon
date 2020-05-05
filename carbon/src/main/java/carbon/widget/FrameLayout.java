@@ -30,9 +30,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 
@@ -105,13 +107,13 @@ public class FrameLayout extends android.widget.FrameLayout
         initFrameLayout(attrs, R.attr.carbon_frameLayoutStyle, R.style.carbon_FrameLayout);
     }
 
-    public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FrameLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initFrameLayout(attrs, defStyleAttr, R.style.carbon_FrameLayout);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public FrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public FrameLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initFrameLayout(attrs, defStyleAttr, defStyleRes);
     }
@@ -168,7 +170,7 @@ public class FrameLayout extends android.widget.FrameLayout
             R.styleable.FrameLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initFrameLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initFrameLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FrameLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.FrameLayout_android_background);

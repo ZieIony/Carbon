@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.core.view.ViewCompat;
 
 import org.jetbrains.annotations.NotNull;
@@ -85,12 +87,12 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
         initViewPager(attrs, R.attr.carbon_viewPagerStyle, R.style.carbon_ViewPager);
     }
 
-    public ViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ViewPager(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs);
         initViewPager(attrs, defStyleAttr, R.style.carbon_ViewPager);
     }
 
-    public ViewPager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ViewPager(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs);
         initViewPager(attrs, defStyleAttr, defStyleRes);
     }
@@ -103,7 +105,7 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
             R.styleable.ViewPager_carbon_animateColorChanges
     };
 
-    private void initViewPager(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initViewPager(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super.setOnPageChangeListener(internalOnPageChangeListener);
 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());

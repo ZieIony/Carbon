@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.widget.Checkable;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
+
 import carbon.Carbon;
 import carbon.R;
 import carbon.animation.AnimUtils;
@@ -68,18 +71,18 @@ public class Chip extends LinearLayout implements Checkable {
         initChip(attrs, R.attr.carbon_chipStyle, R.style.carbon_Chip);
     }
 
-    public Chip(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Chip(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initChip(attrs, defStyleAttr, R.style.carbon_Chip);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Chip(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Chip(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initChip(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void initChip(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initChip(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         inflate(getContext(), R.layout.carbon_chip, this);
         title = findViewById(R.id.carbon_chipText);
         content = findViewById(R.id.carbon_chipContent);

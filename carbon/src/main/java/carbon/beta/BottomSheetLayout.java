@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -82,12 +84,12 @@ public class BottomSheetLayout extends LinearLayout {
         initBottomSheet();
     }
 
-    public BottomSheetLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BottomSheetLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initBottomSheet();
     }
 
-    public BottomSheetLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BottomSheetLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initBottomSheet();
     }

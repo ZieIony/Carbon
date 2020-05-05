@@ -27,9 +27,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import com.annimon.stream.Stream;
 import com.google.android.material.shape.CutCornerTreatment;
@@ -100,12 +102,12 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
         initDrawerLayout(attrs, R.attr.carbon_drawerLayoutStyle, R.style.carbon_DrawerLayout);
     }
 
-    public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DrawerLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initDrawerLayout(attrs, defStyleAttr, R.style.carbon_DrawerLayout);
     }
 
-    public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DrawerLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr);
         initDrawerLayout(attrs, defStyleAttr, defStyleRes);
     }
@@ -162,7 +164,7 @@ public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
             R.styleable.DrawerLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initDrawerLayout(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initDrawerLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, defStyleRes);
 
         Carbon.initDefaultBackground(this, a, R.styleable.DrawerLayout_android_background);
