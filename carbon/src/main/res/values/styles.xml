@@ -50,6 +50,10 @@
         <item name="carbon_rippleColor">@null</item>
     </style>
 
+    <style name="carbon_MotionLayout">
+        <item name="carbon_rippleColor">@null</item>
+    </style>
+
     <style name="carbon_FlowLayout">
         <item name="carbon_rippleColor">@null</item>
     </style>

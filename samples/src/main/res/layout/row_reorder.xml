@@ -23,7 +23,8 @@
             style="@style/carbon_CheckBox.IconButton"
             android:layout_gravity="center"
             android:clickable="false"
-            android:focusable="false" />
+            android:focusable="false"
+            app:carbon_rippleColor="@null" />
 
         <carbon.widget.TextView
             android:id="@+id/text"

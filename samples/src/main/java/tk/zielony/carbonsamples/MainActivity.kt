@@ -13,12 +13,11 @@ class MainActivity : SampleListActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        about.setOnClickListener {
-            startActivity(Intent(this, AboutActivity::class.java))
-        }
-
-        colors.setOnClickListener {
-            startActivity(Intent(this, ColorsActivity::class.java))
+        toolbar.setOnMenuItemClicked { view, item, position ->
+            when (view.id) {
+                R.id.about -> startActivity(Intent(this, AboutActivity::class.java))
+                R.id.colors -> startActivity(Intent(this, ColorsActivity::class.java))
+            }
         }
 
         val items = mutableListOf(

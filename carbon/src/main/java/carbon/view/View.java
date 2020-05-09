@@ -1204,7 +1204,7 @@ public abstract class View extends android.view.View
                 Label tooltip = (Label) LayoutInflater.from(getContext()).inflate(R.layout.carbon_tooltip, null);
                 tooltip.setText(text);
                 PopupWindow window = new PopupWindow(tooltip);
-                window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                window.show(this, Gravity.LEFT | Gravity.TOP);
                 new Handler(Looper.getMainLooper()).postDelayed(window::dismiss, AnimUtils.TOOLTIP_DURATION);
                 return true;
             });

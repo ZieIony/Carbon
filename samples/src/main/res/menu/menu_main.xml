@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/colors"
+        android:contentDescription="Change theme"
+        android:icon="@drawable/ic_color_lens_black_24dp"
+        android:title="Change theme" />
+
+    <item
+        android:id="@+id/about"
+        android:contentDescription="About"
+        android:icon="@drawable/ic_help_outline_black_24dp"
+        android:title="About" />
+</menu>

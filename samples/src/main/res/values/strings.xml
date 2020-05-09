@@ -58,6 +58,7 @@
     <string name="autoCompleteActivity_title">Auto Complete</string>
     <string name="profileActivity_title">Profile</string>
     <string name="foodActivity_title">Food</string>
+    <string name="collapsingToolbarActivity_title">Collapsing toolbar</string>
     <string name="musicPlayerActivity_title">Music player</string>
     <string name="quickReturnActivity_title">Quick Return</string>
     <string name="calculatorActivity_title">Calculator</string>

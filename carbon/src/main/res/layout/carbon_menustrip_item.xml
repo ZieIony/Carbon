@@ -22,9 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/carbon_margin"
         android:layout_marginLeft="@dimen/carbon_margin"
-        android:layout_marginEnd="@dimen/carbon_margin"
         android:layout_marginRight="@dimen/carbon_margin"
         android:duplicateParentState="true"
         android:textAppearance="?attr/carbon_textAppearanceBody1" />

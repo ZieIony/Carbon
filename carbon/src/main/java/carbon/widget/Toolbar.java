@@ -23,6 +23,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -61,6 +62,7 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
+import carbon.recycler.RowFactory;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
@@ -92,8 +94,9 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         MarginView {
 
     private ViewGroup content;
-    private ImageView icon;
     private TextView title;
+    private ImageView icon;
+    private MenuStrip menuStrip;
     private OnTouchListener onDispatchTouchListener;
 
     public Toolbar(Context context) {
@@ -154,6 +157,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         content = findViewById(R.id.carbon_toolbarContent);
         title = findViewById(R.id.carbon_toolbarTitle);
         icon = findViewById(R.id.carbon_toolbarIcon);
+        menuStrip = findViewById(R.id.carbon_toolbarMenu);
 
         icon.setOnClickListener(view -> {
             if (getContext() == null)
@@ -167,6 +171,9 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
                 ((Activity) context).onBackPressed();
             }
         });
+
+        menuStrip.setItemFactory(MenuStrip.ToolItemComponent::new);
+        menuStrip.setCheckableItemFactory(MenuStrip.CheckableToolItemComponent::new);
     }
 
     private void initToolbar(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
@@ -177,6 +184,9 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         setTitle(a.getString(R.styleable.Toolbar_android_text));
         setNavigationIcon(Carbon.getDrawable(this, a, R.styleable.Toolbar_carbon_navigationIcon, 0));
         setNavigationIconContentDescription(a.getString(R.styleable.Toolbar_carbon_navigationIconContentDescription));
+        int menuId = a.getResourceId(R.styleable.Toolbar_carbon_menu, 0);
+        if (menuId != 0)
+            setMenu(menuId);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initAnimations(this, a, animationIds);
         Carbon.initMaxSize(this, a, maxSizeIds);
@@ -187,6 +197,18 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
 
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
+    }
+
+    public void setMenu(int resId) {
+        menuStrip.setMenu(resId);
+    }
+
+    public void setMenu(Menu menu) {
+        menuStrip.setMenu(menu);
+    }
+
+    public void setOnMenuItemClicked(RecyclerView.OnItemClickedListener<MenuStrip.Item> listener){
+        menuStrip.setOnItemClickedListener(listener);
     }
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
@@ -1567,12 +1589,12 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
     private List<Behavior> behaviors = new ArrayList<>();
 
     @Override
-    public void addBehavior(Behavior behavior) {
+    public void addBehavior(@NotNull Behavior behavior) {
         behaviors.add(behavior);
     }
 
     @Override
-    public void removeBehavior(Behavior behavior) {
+    public void removeBehavior(@NotNull Behavior behavior) {
         behaviors.remove(behavior);
     }
 

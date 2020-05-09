@@ -1569,12 +1569,12 @@ public class RelativeLayout extends android.widget.RelativeLayout
     private List<Behavior> behaviors = new ArrayList<>();
 
     @Override
-    public void addBehavior(Behavior behavior) {
+    public void addBehavior(@NotNull Behavior behavior) {
         behaviors.add(behavior);
     }
 
     @Override
-    public void removeBehavior(Behavior behavior) {
+    public void removeBehavior(@NotNull Behavior behavior) {
         behaviors.remove(behavior);
     }
 

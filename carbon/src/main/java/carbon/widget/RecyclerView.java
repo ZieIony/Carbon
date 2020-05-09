@@ -22,6 +22,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -33,8 +34,8 @@ import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.shape.CutCornerTreatment;
 import com.google.android.material.shape.MaterialShapeDrawable;
@@ -113,12 +114,71 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         }
     }
 
+    public static class LinearLayoutManager extends androidx.recyclerview.widget.LinearLayoutManager {
+        private int gravity;
+
+        public LinearLayoutManager(Context context) {
+            super(context);
+        }
+
+        public LinearLayoutManager(Context context, int orientation, boolean reverseLayout, int gravity) {
+            super(context, orientation, reverseLayout);
+            this.gravity = gravity;
+        }
+
+        public LinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        public int getGravity() {
+            return gravity;
+        }
+
+        public void setGravity(int gravity) {
+            this.gravity = gravity;
+        }
+
+        @Override
+        public void layoutDecoratedWithMargins(@NonNull View child, int left, int top, int right, int bottom) {
+            if (getOrientation() == androidx.recyclerview.widget.RecyclerView.VERTICAL) {
+                int absoluteGravity = GravityCompat.getAbsoluteGravity(gravity, getLayoutDirection());
+                if ((absoluteGravity & Gravity.CENTER_HORIZONTAL) != 0) {
+                    int width = right - left;
+                    right = (getWidth() + width) / 2;
+                    left = (getWidth() - width) / 2;
+                } else if ((absoluteGravity & Gravity.RIGHT) != 0) {
+                    int width = right - left;
+                    right = getWidth();
+                    left = right - width;
+                }
+            } else {
+                int absoluteGravity = GravityCompat.getAbsoluteGravity(gravity, getLayoutDirection());
+                if ((absoluteGravity & Gravity.CENTER_VERTICAL) != 0) {
+                    int height = bottom - top;
+                    bottom = (getHeight() + height) / 2;
+                    top = (getHeight() - height) / 2;
+                } else if ((absoluteGravity & Gravity.BOTTOM) != 0) {
+                    int height = bottom - top;
+                    bottom = getHeight();
+                    top = bottom - height;
+                }
+            }
+            super.layoutDecoratedWithMargins(child, left, top, right, bottom);
+        }
+
+        @Override
+        public void layoutDecorated(@NonNull View child, int left, int top, int right, int bottom) {
+            super.layoutDecorated(child, left, top, right, bottom);
+        }
+    }
+
     private boolean childDrawingOrderCallbackSet = false;
 
     private int scrollX = 0;
     private int scrollY = 0;
 
     private EdgeEffect leftGlow, rightGlow, topGlow, bottomGlow;
+    private DividerItemDecoration dividerItemDecoration;
 
     private OnTouchListener onDispatchTouchListener;
 
@@ -213,10 +273,22 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         setEdgeEffectFactory(new EdgeEffectFactory());
     }
 
-    public void setDivider(Drawable divider, int height) {
-        DividerItemDecoration decoration = new DividerItemDecoration(divider, height);
-        decoration.setDrawBefore(position -> position > 0);
-        addItemDecoration(decoration);
+    public DividerItemDecoration setDivider(Drawable divider, int height) {
+        if (divider == null && dividerItemDecoration != null) {
+            removeItemDecoration(dividerItemDecoration);
+            dividerItemDecoration = null;
+        }else {
+            dividerItemDecoration = new DividerItemDecoration(divider, height);
+            dividerItemDecoration.setDrawBefore(position -> position > 0);
+            addItemDecoration(dividerItemDecoration);
+        }
+        return dividerItemDecoration;
+    }
+
+    public void clearItemDecorations() {
+        dividerItemDecoration = null;
+        for (int i = 0; i < getItemDecorationCount(); i++)
+            removeItemDecorationAt(i);
     }
 
     @Override
@@ -278,14 +350,14 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
     }
 
     public static abstract class Pagination extends OnScrollListener {
-        private LinearLayoutManager layoutManager;
+        private androidx.recyclerview.widget.LinearLayoutManager layoutManager;
 
-        public Pagination(LinearLayoutManager layoutManager) {
+        public Pagination(androidx.recyclerview.widget.LinearLayoutManager layoutManager) {
             this.layoutManager = layoutManager;
         }
 
         @Override
-        public void onScrolled(androidx.recyclerview.widget.RecyclerView recyclerView, int dx, int dy) {
+        public void onScrolled(@NotNull androidx.recyclerview.widget.RecyclerView recyclerView, int dx, int dy) {
             int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
             if (!isLoading() && !isLastPage()) {
@@ -557,7 +629,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
 
-        for(ViewItemDecoration itemDecoration:viewItemDecorations)
+        for (ViewItemDecoration itemDecoration : viewItemDecorations)
             itemDecoration.layout(this);
     }
 
@@ -1350,7 +1422,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
-        for(ViewItemDecoration itemDecoration:viewItemDecorations)
+        for (ViewItemDecoration itemDecoration : viewItemDecorations)
             itemDecoration.measure(this);
     }
 

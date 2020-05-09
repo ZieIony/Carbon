@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/debug"
+        android:icon="@drawable/ic_bug_report_black_24dp"
+        android:title="Show debug options" />
+
+    <item
+        android:id="@+id/enabled"
+        android:checked="true"
+        android:title="Enable/disable views" />
+</menu>

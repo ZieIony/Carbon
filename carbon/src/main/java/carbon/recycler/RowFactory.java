@@ -2,8 +2,11 @@ package carbon.recycler;
 
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+
 import carbon.component.Component;
 
 public interface RowFactory<Type> {
-    Component<Type> create(ViewGroup parent);
+    @NonNull
+    Component<Type> create(@NonNull ViewGroup parent);
 }

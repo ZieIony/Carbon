@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.text.Layout;
@@ -40,8 +39,6 @@ public class Label extends View implements TextAppearanceView {
     private StaticLayout layout;
     private TransformationMethod transformationMethod;
     private int gravity;
-    Rect rect = new Rect();
-    private int baseline = 0;
     ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = animation -> postInvalidate();
 
     public Label(Context context) {
@@ -180,16 +177,7 @@ public class Label extends View implements TextAppearanceView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (layout == null) {
-            Layout.Alignment alignment = Layout.Alignment.ALIGN_NORMAL;
-            if ((GravityCompat.getAbsoluteGravity(gravity, ViewCompat.getLayoutDirection(this)) & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.RIGHT) {
-                alignment = Layout.Alignment.ALIGN_OPPOSITE;
-            } else if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.CENTER_HORIZONTAL) {
-                alignment = Layout.Alignment.ALIGN_CENTER;
-            }
-            CharSequence transformedText = transformationMethod != null ? transformationMethod.getTransformation(text, this) : text;
-            layout = new StaticLayout(transformedText, paint, getWidth() - getPaddingLeft() - getPaddingRight(), alignment, 1.0f, 0.0f, false);
-        }
+        ensureLayout();
 
         int saveCount = canvas.save();
         if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.CENTER_VERTICAL) {
@@ -203,6 +191,19 @@ public class Label extends View implements TextAppearanceView {
             paint.setColor(textColor.getColorForState(getDrawableState(), textColor.getDefaultColor()));
         layout.draw(canvas);
         canvas.restoreToCount(saveCount);
+    }
+
+    private void ensureLayout() {
+        if (layout == null) {
+            Layout.Alignment alignment = Layout.Alignment.ALIGN_NORMAL;
+            if ((GravityCompat.getAbsoluteGravity(gravity, ViewCompat.getLayoutDirection(this)) & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.RIGHT) {
+                alignment = Layout.Alignment.ALIGN_OPPOSITE;
+            } else if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.CENTER_HORIZONTAL) {
+                alignment = Layout.Alignment.ALIGN_CENTER;
+            }
+            CharSequence transformedText = transformationMethod != null ? transformationMethod.getTransformation(text, this) : text;
+            layout = new StaticLayout(transformedText, paint, getWidth() - getPaddingLeft() - getPaddingRight(), alignment, 1.0f, 0.0f, false);
+        }
     }
 
     @Override
@@ -240,15 +241,13 @@ public class Label extends View implements TextAppearanceView {
                 height = Math.min(height, heightSize);
         }
 
-        String firstLine = text.subSequence(0, layout.getLineEnd(0)).toString();
-        paint.getTextBounds(firstLine, 0, firstLine.length(), rect);
-        baseline = Math.abs(rect.top);
-
         setMeasuredDimension(width, height);
     }
 
     @Override
     public int getBaseline() {
+        ensureLayout();
+        int baseline = layout.getLineBaseline(0);
         if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.CENTER_VERTICAL && layout != null) {
             return (int) (baseline + (getHeight() - getPaddingTop() - getPaddingBottom() - layout.getHeight()) / 2.0f + getPaddingTop());
         } else if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM && layout != null) {

@@ -20,30 +20,30 @@ public class RowArrayAdapter<Type> extends ArrayAdapter<RowViewHolder<Type>, Typ
     public RowArrayAdapter() {
     }
 
-    public <ItemType extends Type> RowArrayAdapter(Class<ItemType> type, RowFactory<ItemType> factory) {
+    public <ItemType extends Type> RowArrayAdapter(@NonNull Class<ItemType> type, @NonNull RowFactory<ItemType> factory) {
         putFactory(type, factory);
     }
 
-    public <ItemType extends Type> RowArrayAdapter(Type[] items, RowFactory<ItemType> factory) {
+    public <ItemType extends Type> RowArrayAdapter(@NonNull ItemType[] items, @NonNull RowFactory<ItemType> factory) {
         super(items);
         putFactory((Class<ItemType>) items[0].getClass(), factory);
     }
 
-    public <ItemType extends Type, FactoryType extends Type> RowArrayAdapter(Class<ItemType> type, ItemTransformer<ItemType, FactoryType> transformer, RowFactory<FactoryType> factory) {
+    public <ItemType extends Type, FactoryType extends Type> RowArrayAdapter(@NonNull Class<ItemType> type, @NonNull ItemTransformer<ItemType, FactoryType> transformer, @NonNull RowFactory<FactoryType> factory) {
         putFactory(type, transformer, factory);
     }
 
-    public <ItemType extends Type, FactoryType extends Type> RowArrayAdapter(Type[] items, ItemTransformer<ItemType, FactoryType> transformer, RowFactory<FactoryType> factory) {
+    public <ItemType extends Type, FactoryType extends Type> RowArrayAdapter(@NonNull ItemType[] items, @NonNull ItemTransformer<ItemType, FactoryType> transformer, @NonNull RowFactory<FactoryType> factory) {
         super(items);
         putFactory((Class<ItemType>) items[0].getClass(), transformer, factory);
     }
 
-    public <ItemType extends Type> void putFactory(Class<ItemType> type, RowFactory<ItemType> factory) {
+    public <ItemType extends Type> void putFactory(@NonNull Class<ItemType> type, @NonNull RowFactory<ItemType> factory) {
         putFactory(type, ItemTransformer.EMPTY, factory);
     }
 
-    public <ItemType extends Type, FactoryType extends Type> void putFactory(Class<ItemType> type, ItemTransformer<ItemType, FactoryType> transformer, RowFactory<FactoryType> factory) {
-        int viewType = types.size();
+    public <ItemType extends Type, FactoryType extends Type> void putFactory(@NonNull Class<ItemType> type, @NonNull ItemTransformer<ItemType, FactoryType> transformer, @NonNull RowFactory<FactoryType> factory) {
+        int viewType = types.containsKey(type) ? types.get(type) : types.size();
         factories.put(viewType, new RowDescriptor<>(transformer, factory));
         types.put(type, viewType);
     }

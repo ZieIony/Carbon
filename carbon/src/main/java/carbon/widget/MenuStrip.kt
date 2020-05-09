@@ -6,17 +6,21 @@ import android.graphics.drawable.Drawable
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.core.view.MenuItemCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import carbon.Carbon
 import carbon.R
 import carbon.component.LayoutComponent
 import carbon.databinding.CarbonMenustripItemBinding
+import carbon.databinding.CarbonMenustripItemCheckableBinding
 import carbon.databinding.CarbonMenustripToolsItemBinding
+import carbon.databinding.CarbonMenustripToolsItemCheckableBinding
+import carbon.drawable.CheckedState
 import carbon.drawable.ColorStateListFactory
+import carbon.recycler.DividerItemDecoration
 import carbon.recycler.RowArrayAdapter
 import carbon.recycler.RowFactory
 import carbon.view.SelectionMode
@@ -25,11 +29,12 @@ import java.io.Serializable
 open class MenuStrip : RecyclerView {
 
     open class Item : Serializable {
-        var id: Int = 0
+        var id = 0
         var icon: Drawable? = null
         var title: CharSequence? = null
         var iconTintList: ColorStateList? = null
-        var groupId: Int = 0
+        var groupId = 0
+        var isEnabled = false
 
         constructor()
 
@@ -48,6 +53,7 @@ open class MenuStrip : RecyclerView {
             this.title = menuItem.title
             iconTintList = MenuItemCompat.getIconTintList(menuItem)
             groupId = menuItem.groupId
+            isEnabled = menuItem.isEnabled
         }
 
         override fun equals(other: Any?): Boolean {
@@ -71,11 +77,25 @@ open class MenuStrip : RecyclerView {
         }
     }
 
+    open class CheckableItem : Item {
+        var isChecked: Boolean = false
+
+        constructor()
+
+        constructor(id: Int, icon: Drawable, text: CharSequence) : super(id, icon, text)
+
+        constructor(menuItem: MenuItem) : super(menuItem) {
+            isChecked = menuItem.isChecked
+        }
+    }
+
     class ItemComponent(val parent: ViewGroup) : LayoutComponent<Item>(parent, R.layout.carbon_menustrip_item) {
         private val binding = CarbonMenustripItemBinding.bind(view)
 
         override fun bind(data: Item) {
             with(binding) {
+                root.id = data.id
+                root.isEnabled = data.isEnabled
                 carbonIcon.setImageDrawable(data.icon)
                 carbonIcon.setTintList(data.iconTintList)
                 carbonText.text = data.title
@@ -85,13 +105,54 @@ open class MenuStrip : RecyclerView {
         }
     }
 
+    class CheckableItemComponent(val parent: ViewGroup) : LayoutComponent<CheckableItem>(parent, R.layout.carbon_menustrip_item_checkable) {
+        private val binding = CarbonMenustripItemCheckableBinding.bind(view)
+
+        override fun bind(data: CheckableItem) {
+            with(binding) {
+                root.id = data.id
+                root.isEnabled = data.isEnabled
+                carbonCheckBox.isChecked = data.isChecked
+                carbonCheckBox.setTintList(data.iconTintList)
+                carbonCheckBox.text = data.title.toString()
+                carbonCheckBox.setTextColor(data.iconTintList
+                        ?: ColorStateListFactory.makePrimaryText(parent.context))
+                carbonCheckBox.setOnCheckedChangeListener { buttonView, isChecked -> data.isChecked = isChecked == CheckedState.CHECKED }
+            }
+        }
+    }
+
     class ToolItemComponent(val parent: ViewGroup) : LayoutComponent<Item>(parent, R.layout.carbon_menustrip_tools_item) {
         private val binding = CarbonMenustripToolsItemBinding.bind(view)
 
         override fun bind(data: Item) {
             with(binding) {
+                root.id = data.id
+                root.isEnabled = data.isEnabled
+                try {
+                    root.tooltipText = data.title
+                } catch (e: java.lang.Exception) {
+                }
                 carbonIcon.setImageDrawable(data.icon)
                 carbonIcon.setTintList(data.iconTintList)
+            }
+        }
+    }
+
+    class CheckableToolItemComponent(val parent: ViewGroup) : LayoutComponent<CheckableItem>(parent, R.layout.carbon_menustrip_tools_item_checkable) {
+        private val binding = CarbonMenustripToolsItemCheckableBinding.bind(view)
+
+        override fun bind(data: CheckableItem) {
+            with(binding) {
+                root.id = data.id
+                root.isEnabled = data.isEnabled
+                try {
+                    root.tooltipText = data.title
+                } catch (e: java.lang.Exception) {
+                }
+                carbonCheckBox.isChecked = data.isChecked
+                carbonCheckBox.setTintList(data.iconTintList)
+                carbonCheckBox.setOnCheckedChangeListener { buttonView, isChecked -> data.isChecked = isChecked == CheckedState.CHECKED }
             }
         }
     }
@@ -99,12 +160,24 @@ open class MenuStrip : RecyclerView {
     @Deprecated("Use itemFactory instead")
     var itemLayoutId: Int = 0
 
+    open fun <ItemType : Item> putFactory(type: Class<ItemType>, factory: RowFactory<ItemType>) {
+        adapter.putFactory(type, factory)
+    }
+
     private lateinit var _itemFactory: RowFactory<Item>
     var itemFactory: RowFactory<Item>
         get() = _itemFactory
         set(value) {
             adapter.putFactory(Item::class.java, value)
             _itemFactory = value
+        }
+
+    private lateinit var _checkableItemFactory: RowFactory<CheckableItem>
+    var checkableItemFactory: RowFactory<CheckableItem>
+        get() = _checkableItemFactory
+        set(value) {
+            adapter.putFactory(CheckableItem::class.java, value)
+            _checkableItemFactory = value
         }
 
     private lateinit var _orientation: carbon.view.Orientation
@@ -115,7 +188,7 @@ open class MenuStrip : RecyclerView {
             initItems()
         }
 
-    var adapter: RowArrayAdapter<Serializable> = RowArrayAdapter()
+    var adapter: RowArrayAdapter<Item> = RowArrayAdapter()
     var selectionMode: SelectionMode
         get() = adapter.selectionMode
         set(value) {
@@ -138,7 +211,7 @@ open class MenuStrip : RecyclerView {
             initItems()
         }
 
-    var selectedItems: List<Serializable>
+    var selectedItems: List<Item>
         get() = adapter.selectedItems
         set(value) {
             adapter.selectedItems = value
@@ -168,6 +241,7 @@ open class MenuStrip : RecyclerView {
         val a = context.obtainStyledAttributes(attrs, R.styleable.MenuStrip, defStyleAttr, R.style.carbon_MenuStrip)
 
         orientation = carbon.view.Orientation.values()[a.getInt(R.styleable.MenuStrip_android_orientation, carbon.view.Orientation.VERTICAL.ordinal)]
+        checkableItemFactory = RowFactory { CheckableItemComponent(this) }
         itemFactory = RowFactory { ItemComponent(this) }
         selectionMode = SelectionMode.values()[a.getInt(R.styleable.MenuStrip_carbon_selectionMode, SelectionMode.NONE.ordinal)]
         val menuId = a.getResourceId(R.styleable.MenuStrip_carbon_menu, 0)
@@ -180,7 +254,10 @@ open class MenuStrip : RecyclerView {
     fun setMenu(resId: Int) = setMenu(Carbon.getMenu(context, resId))
 
     fun setMenu(menu: Menu) {
-        items = (0 until menu.size()).map { Item(menu.getItem(it)) }.toTypedArray()
+        items = (0 until menu.size()).map {
+            val item = menu.getItem(it)
+            if (item.isCheckable || item.isChecked) CheckableItem(item) else Item(item)
+        }.toTypedArray()
         initItems()
     }
 
@@ -196,20 +273,20 @@ open class MenuStrip : RecyclerView {
     private fun initAdapter() {
         val vertical = orientation == carbon.view.Orientation.VERTICAL
 
-        layoutManager = LinearLayoutManager(context, if (vertical) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL, false)
+        layoutManager = LinearLayoutManager(context, if (vertical) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL, false, Gravity.CENTER)
 
-        adapter.setOnItemClickedListener(Item::class.java, onItemClickedListener)
+        adapter.setOnItemClickedListener(onItemClickedListener)
 
         setAdapter(adapter)
     }
 
-    override fun setDivider(divider: Drawable?, height: Int) {
-        /*val decoration = DividerItemDecoration(context, divider, height)
-        decoration.setDrawAfter { i ->
+    override fun setDivider(divider: Drawable?, height: Int): DividerItemDecoration? {
+        val decoration = super.setDivider(divider, height)
+        decoration.setDrawBefore { i ->
             val items = this.items
-            items != null && i < items.size - 1 && (items[i].groupId != items[i + 1].groupId)
+            items != null && i > 0 && (items[i].groupId != items[i - 1].groupId)
         }
-        addItemDecoration(decoration)*/
+        return decoration
     }
 
     public override fun onSaveInstanceState(): Parcelable? {

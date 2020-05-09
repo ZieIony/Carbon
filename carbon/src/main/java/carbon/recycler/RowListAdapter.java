@@ -5,6 +5,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,42 +23,42 @@ public class RowListAdapter<Type> extends ListAdapter<RowViewHolder<Type>, Type>
     public RowListAdapter() {
     }
 
-    public <ItemType extends Type> RowListAdapter(Class<ItemType> type, RowFactory<ItemType> factory) {
+    public <ItemType extends Type> RowListAdapter(@NonNull Class<ItemType> type, @NonNull RowFactory<ItemType> factory) {
         putFactory(type, factory);
     }
 
-    public <ItemType extends Type> RowListAdapter(List<Type> items, RowFactory<ItemType> factory) {
-        super(items);
+    public <ItemType extends Type> RowListAdapter(@NonNull List<ItemType> items, @NonNull RowFactory<ItemType> factory) {
+        super(new ArrayList<>(items));
         putFactory((Class<ItemType>) items.get(0).getClass(), factory);
     }
 
-    public <ItemType extends Type, FactoryType extends Type> RowListAdapter(Class<ItemType> type, ItemTransformer<ItemType, FactoryType> transformer, RowFactory<FactoryType> factory) {
+    public <ItemType extends Type, FactoryType extends Type> RowListAdapter(@NonNull Class<ItemType> type, @NonNull ItemTransformer<ItemType, FactoryType> transformer, @NonNull RowFactory<FactoryType> factory) {
         putFactory(type, transformer, factory);
     }
 
-    public <ItemType extends Type, FactoryType extends Type> RowListAdapter(List<Type> items, ItemTransformer<ItemType, FactoryType> transformer, RowFactory<FactoryType> factory) {
-        super(items);
+    public <ItemType extends Type, FactoryType extends Type> RowListAdapter(@NonNull List<ItemType> items, @NonNull ItemTransformer<ItemType, FactoryType> transformer, @NonNull RowFactory<FactoryType> factory) {
+        super(new ArrayList<>(items));
         putFactory((Class<ItemType>) items.get(0).getClass(), transformer, factory);
     }
 
-    public <ItemType extends Type> void putFactory(Class<ItemType> type, RowFactory<ItemType> factory) {
+    public <ItemType extends Type> void putFactory(@NonNull Class<ItemType> type, @NonNull RowFactory<ItemType> factory) {
         putFactory(type, ItemTransformer.EMPTY, factory);
     }
 
-    public <ItemType extends Type, FactoryType extends Type> void putFactory(Class<ItemType> type, ItemTransformer<ItemType, FactoryType> transformer, RowFactory<FactoryType> factory) {
-        int viewType = types.size();
+    public <ItemType extends Type, FactoryType extends Type> void putFactory(@NonNull Class<ItemType> type, @NonNull ItemTransformer<ItemType, FactoryType> transformer, @NonNull RowFactory<FactoryType> factory) {
+        int viewType = types.containsKey(type) ? types.get(type) : types.size();
         factories.put(viewType, new RowDescriptor<>(transformer, factory));
         types.put(type, viewType);
     }
 
     @Override
-    public RowViewHolder<Type> onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RowViewHolder<Type> onCreateViewHolder(@NotNull ViewGroup viewGroup, int viewType) {
         Component<Type> component = (Component<Type>) factories.get(viewType).factory.create(viewGroup);
         return new RowViewHolder<>(component);
     }
 
     @Override
-    public void onBindViewHolder(final RowViewHolder<Type> holder, final int position) {
+    public void onBindViewHolder(@NotNull final RowViewHolder<Type> holder, final int position) {
         super.onBindViewHolder(holder, position);
         Type data = getItem(position);
         Component<Type> component = holder.getComponent();

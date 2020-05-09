@@ -19,7 +19,8 @@ class DemosActivity : SampleListActivity() {
                 SampleActivityItem(SearchToolbarActivity::class.java),
                 SampleActivityItem(ShareToolbarActivity::class.java, true),
                 SampleActivityItem(ProfileActivity::class.java),
-                SampleActivityItem(MusicPlayerActivity::class.java, true)
+                SampleActivityItem(MusicPlayerActivity::class.java, true),
+                SampleActivityItem(CollapsingToolbarActivity::class.java)
         ))
     }
 

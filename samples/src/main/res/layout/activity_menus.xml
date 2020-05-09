@@ -29,7 +29,7 @@
         android:id="@+id/tools"
         style="@style/carbon_MenuStrip.Tools"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_margin="@dimen/carbon_margin"
         android:background="?attr/carbon_colorForeground"
         app:carbon_cornerRadius="@dimen/carbon_cornerRadiusCard"

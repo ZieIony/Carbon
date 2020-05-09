@@ -25,6 +25,7 @@
         <item name="carbon_snackbarStyle">@style/carbon_Snackbar</item>
         <item name="carbon_frameLayoutStyle">@style/carbon_FrameLayout</item>
         <item name="carbon_constraintLayoutStyle">@style/carbon_ConstraintLayout</item>
+        <item name="carbon_motionLayoutStyle">@style/carbon_MotionLayout</item>
         <item name="carbon_flowLayoutStyle">@style/carbon_FlowLayout</item>
         <item name="carbon_gridLayoutStyle">@style/carbon_GridLayout</item>
         <item name="carbon_relativeLayoutStyle">@style/carbon_RelativeLayout</item>

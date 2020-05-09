@@ -1858,7 +1858,7 @@ public class EditText extends android.widget.EditText
                 Label tooltip = (Label) LayoutInflater.from(getContext()).inflate(R.layout.carbon_tooltip, null);
                 tooltip.setText(text);
                 carbon.widget.PopupWindow window = new carbon.widget.PopupWindow(tooltip);
-                window.show(this, Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                window.show(this, Gravity.LEFT | Gravity.TOP);
                 new Handler(Looper.getMainLooper()).postDelayed(window::dismiss, AnimUtils.TOOLTIP_DURATION);
                 return true;
             });

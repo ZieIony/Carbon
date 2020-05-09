@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -20,7 +19,6 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -72,10 +70,10 @@ import carbon.view.TransformationView;
 import carbon.view.VisibleView;
 
 /**
- * A LinearLayout implementation with support for material features including shadows, ripples,
+ * A MotionLayout implementation with support for material features including shadows, ripples,
  * rounded corners, insets, custom drawing order, touch margins, state animators and others.
  */
-public class LinearLayout extends android.widget.LinearLayout
+public class MotionLayout extends androidx.constraintlayout.motion.widget.MotionLayout
         implements
         ShadowView,
         RippleView,
@@ -94,83 +92,82 @@ public class LinearLayout extends android.widget.LinearLayout
 
     private OnTouchListener onDispatchTouchListener;
 
-    public LinearLayout(Context context) {
-        super(context, null, R.attr.carbon_linearLayoutStyle);
-        initLinearLayout(null, R.attr.carbon_linearLayoutStyle, R.style.carbon_LinearLayout);
+    public MotionLayout(Context context) {
+        super(context, null, R.attr.carbon_motionLayoutStyle);
+        initMotionLayout(null, R.attr.carbon_motionLayoutStyle, R.style.carbon_MotionLayout);
     }
 
-    public LinearLayout(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.carbon_linearLayoutStyle);
-        initLinearLayout(attrs, R.attr.carbon_linearLayoutStyle, R.style.carbon_LinearLayout);
+    public MotionLayout(Context context, AttributeSet attrs) {
+        super(context, attrs, R.attr.carbon_motionLayoutStyle);
+        initMotionLayout(attrs, R.attr.carbon_motionLayoutStyle, R.style.carbon_MotionLayout);
     }
 
-    public LinearLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public MotionLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initLinearLayout(attrs, defStyleAttr, R.style.carbon_LinearLayout);
+        initMotionLayout(attrs, R.attr.carbon_motionLayoutStyle, R.style.carbon_MotionLayout);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public LinearLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initLinearLayout(attrs, defStyleAttr, defStyleRes);
+    public MotionLayout(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+        initMotionLayout(attrs, R.attr.carbon_motionLayoutStyle, defStyleRes);
     }
 
     private static int[] rippleIds = new int[]{
-            R.styleable.LinearLayout_carbon_rippleColor,
-            R.styleable.LinearLayout_carbon_rippleStyle,
-            R.styleable.LinearLayout_carbon_rippleHotspot,
-            R.styleable.LinearLayout_carbon_rippleRadius
+            R.styleable.MotionLayout_carbon_rippleColor,
+            R.styleable.MotionLayout_carbon_rippleStyle,
+            R.styleable.MotionLayout_carbon_rippleHotspot,
+            R.styleable.MotionLayout_carbon_rippleRadius
     };
     private static int[] animationIds = new int[]{
-            R.styleable.LinearLayout_carbon_inAnimation,
-            R.styleable.LinearLayout_carbon_outAnimation
+            R.styleable.MotionLayout_carbon_inAnimation,
+            R.styleable.MotionLayout_carbon_outAnimation
     };
     private static int[] touchMarginIds = new int[]{
-            R.styleable.LinearLayout_carbon_touchMargin,
-            R.styleable.LinearLayout_carbon_touchMarginLeft,
-            R.styleable.LinearLayout_carbon_touchMarginTop,
-            R.styleable.LinearLayout_carbon_touchMarginRight,
-            R.styleable.LinearLayout_carbon_touchMarginBottom
+            R.styleable.MotionLayout_carbon_touchMargin,
+            R.styleable.MotionLayout_carbon_touchMarginLeft,
+            R.styleable.MotionLayout_carbon_touchMarginTop,
+            R.styleable.MotionLayout_carbon_touchMarginRight,
+            R.styleable.MotionLayout_carbon_touchMarginBottom
     };
     private static int[] insetIds = new int[]{
-            R.styleable.LinearLayout_carbon_inset,
-            R.styleable.LinearLayout_carbon_insetLeft,
-            R.styleable.LinearLayout_carbon_insetTop,
-            R.styleable.LinearLayout_carbon_insetRight,
-            R.styleable.LinearLayout_carbon_insetBottom,
-            R.styleable.LinearLayout_carbon_insetColor
+            R.styleable.MotionLayout_carbon_inset,
+            R.styleable.MotionLayout_carbon_insetLeft,
+            R.styleable.MotionLayout_carbon_insetTop,
+            R.styleable.MotionLayout_carbon_insetRight,
+            R.styleable.MotionLayout_carbon_insetBottom,
+            R.styleable.MotionLayout_carbon_insetColor
     };
     private static int[] strokeIds = new int[]{
-            R.styleable.LinearLayout_carbon_stroke,
-            R.styleable.LinearLayout_carbon_strokeWidth
+            R.styleable.MotionLayout_carbon_stroke,
+            R.styleable.MotionLayout_carbon_strokeWidth
     };
     private static int[] cornerCutRadiusIds = new int[]{
-            R.styleable.LinearLayout_carbon_cornerRadiusTopStart,
-            R.styleable.LinearLayout_carbon_cornerRadiusTopEnd,
-            R.styleable.LinearLayout_carbon_cornerRadiusBottomStart,
-            R.styleable.LinearLayout_carbon_cornerRadiusBottomEnd,
-            R.styleable.LinearLayout_carbon_cornerRadius,
-            R.styleable.LinearLayout_carbon_cornerCutTopStart,
-            R.styleable.LinearLayout_carbon_cornerCutTopEnd,
-            R.styleable.LinearLayout_carbon_cornerCutBottomStart,
-            R.styleable.LinearLayout_carbon_cornerCutBottomEnd,
-            R.styleable.LinearLayout_carbon_cornerCut
+            R.styleable.MotionLayout_carbon_cornerRadiusTopStart,
+            R.styleable.MotionLayout_carbon_cornerRadiusTopEnd,
+            R.styleable.MotionLayout_carbon_cornerRadiusBottomStart,
+            R.styleable.MotionLayout_carbon_cornerRadiusBottomEnd,
+            R.styleable.MotionLayout_carbon_cornerRadius,
+            R.styleable.MotionLayout_carbon_cornerCutTopStart,
+            R.styleable.MotionLayout_carbon_cornerCutTopEnd,
+            R.styleable.MotionLayout_carbon_cornerCutBottomStart,
+            R.styleable.MotionLayout_carbon_cornerCutBottomEnd,
+            R.styleable.MotionLayout_carbon_cornerCut
     };
     private static int[] maxSizeIds = new int[]{
-            R.styleable.LinearLayout_carbon_maxWidth,
-            R.styleable.LinearLayout_carbon_maxHeight,
+            R.styleable.MotionLayout_carbon_maxWidth,
+            R.styleable.MotionLayout_carbon_maxHeight,
     };
     private static int[] elevationIds = new int[]{
-            R.styleable.LinearLayout_carbon_elevation,
-            R.styleable.LinearLayout_carbon_elevationShadowColor,
-            R.styleable.LinearLayout_carbon_elevationAmbientShadowColor,
-            R.styleable.LinearLayout_carbon_elevationSpotShadowColor
+            R.styleable.MotionLayout_carbon_elevation,
+            R.styleable.MotionLayout_carbon_elevationShadowColor,
+            R.styleable.MotionLayout_carbon_elevationAmbientShadowColor,
+            R.styleable.MotionLayout_carbon_elevationSpotShadowColor
     };
 
-    private void initLinearLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LinearLayout, defStyleAttr, defStyleRes);
+    private void initMotionLayout(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MotionLayout, defStyleAttr, defStyleRes);
 
-        Carbon.initDefaultBackground(this, a, R.styleable.LinearLayout_android_background);
+        Carbon.initDefaultBackground(this, a, R.styleable.MotionLayout_android_background);
         Carbon.initElevation(this, a, elevationIds);
         Carbon.initRippleDrawable(this, a, rippleIds);
         Carbon.initAnimations(this, a, animationIds);
@@ -203,7 +200,7 @@ public class LinearLayout extends android.widget.LinearLayout
     }
 
     @NotNull
-    public Animator createCircularReveal(android.view.View hotspot, float startRadius, float finishRadius) {
+    public Animator createCircularReveal(View hotspot, float startRadius, float finishRadius) {
         int[] location = new int[2];
         hotspot.getLocationOnScreen(location);
         int[] myLocation = new int[2];
@@ -246,7 +243,7 @@ public class LinearLayout extends android.widget.LinearLayout
     }
 
     @Override
-    protected void dispatchDraw(@NonNull Canvas canvas) {
+    public void dispatchDraw(@NonNull Canvas canvas) {
         boolean r = revealAnimator != null && revealAnimator.isRunning();
         boolean c = !Carbon.isShapeRect(shapeModel, boundsRect);
 
@@ -327,7 +324,6 @@ public class LinearLayout extends android.widget.LinearLayout
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, @NonNull View child, long drawingTime) {
-        // TODO: why isShown() returns false after being reattached?
         if (child instanceof ShadowView && (!Carbon.IS_LOLLIPOP_OR_HIGHER || ((ShadowView) child).getElevationShadowColor() != null && !Carbon.IS_PIE_OR_HIGHER)) {
             ShadowView shadowView = (ShadowView) child;
             shadowView.drawShadow(canvas);
@@ -1266,39 +1262,34 @@ public class LinearLayout extends android.widget.LinearLayout
     // -------------------------------
 
     @Override
-    protected LayoutParams generateDefaultLayoutParams() {
-        return new LayoutParams(super.generateDefaultLayoutParams());
+    protected MotionLayout.LayoutParams generateDefaultLayoutParams() {
+        return new MotionLayout.LayoutParams(super.generateDefaultLayoutParams());
     }
 
     @Override
-    public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return new LayoutParams(getContext(), attrs);
+    public MotionLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new MotionLayout.LayoutParams(getContext(), attrs);
     }
 
     @Override
-    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-        return new LayoutParams(p);
+    protected MotionLayout.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        return new MotionLayout.LayoutParams(p);
     }
 
-    public static class LayoutParams extends android.widget.LinearLayout.LayoutParams {
-
+    public static class LayoutParams extends androidx.constraintlayout.motion.widget.MotionLayout.LayoutParams {
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
 
-            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.LinearLayout_Layout);
-            if (a.hasValue(R.styleable.LinearLayout_Layout_carbon_layout_marginHorizontal))
-                leftMargin = rightMargin = a.getDimensionPixelSize(R.styleable.LinearLayout_Layout_carbon_layout_marginHorizontal, 0);
-            if (a.hasValue(R.styleable.LinearLayout_Layout_carbon_layout_marginVertical))
-                topMargin = bottomMargin = a.getDimensionPixelSize(R.styleable.LinearLayout_Layout_carbon_layout_marginVertical, 0);
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.MotionLayout_Layout);
+            if (a.hasValue(R.styleable.MotionLayout_Layout_carbon_layout_marginHorizontal))
+                leftMargin = rightMargin = a.getDimensionPixelSize(R.styleable.MotionLayout_Layout_carbon_layout_marginHorizontal, 0);
+            if (a.hasValue(R.styleable.MotionLayout_Layout_carbon_layout_marginVertical))
+                topMargin = bottomMargin = a.getDimensionPixelSize(R.styleable.MotionLayout_Layout_carbon_layout_marginVertical, 0);
             a.recycle();
         }
 
         public LayoutParams(int w, int h) {
             super(w, h);
-        }
-
-        public LayoutParams(int width, int height, float weight) {
-            super(width, height, weight);
         }
 
         /**
@@ -1311,15 +1302,15 @@ public class LinearLayout extends android.widget.LinearLayout
         /**
          * {@inheritDoc}
          */
-        public LayoutParams(ViewGroup.MarginLayoutParams source) {
+        public LayoutParams(MarginLayoutParams source) {
             super(source);
         }
 
-        public LayoutParams(android.widget.LinearLayout.LayoutParams source) {
+        public LayoutParams(androidx.constraintlayout.motion.widget.MotionLayout.LayoutParams source) {
             super((MarginLayoutParams) source);
         }
 
-        public LayoutParams(LayoutParams source) {
+        public LayoutParams(MotionLayout.LayoutParams source) {
             super((MarginLayoutParams) source);
         }
     }
@@ -1359,11 +1350,6 @@ public class LinearLayout extends android.widget.LinearLayout
         if (getMeasuredWidth() > maxWidth || getMeasuredHeight() > maxHeight) {
             if (getMeasuredWidth() > maxWidth)
                 widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.EXACTLY);
-            if (getMeasuredHeight() > maxHeight)
-                heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        }
-        if (getMeasuredHeight() > maxHeight) {
             if (getMeasuredHeight() > maxHeight)
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);

@@ -654,6 +654,60 @@
         <attr name="carbon_layout_marginVertical" />
     </declare-styleable>
 
+    <attr name="carbon_motionLayoutStyle" format="reference" />
+    <declare-styleable name="MotionLayout">
+        <attr name="android:background" />
+
+        <attr name="carbon_rippleColor" />
+        <attr name="carbon_rippleHotspot" />
+        <attr name="carbon_rippleStyle" />
+        <attr name="carbon_rippleRadius" />
+
+        <attr name="carbon_inAnimation" />
+        <attr name="carbon_outAnimation" />
+
+        <attr name="carbon_touchMargin" />
+        <attr name="carbon_touchMarginLeft" />
+        <attr name="carbon_touchMarginTop" />
+        <attr name="carbon_touchMarginRight" />
+        <attr name="carbon_touchMarginBottom" />
+
+        <attr name="carbon_inset" />
+        <attr name="carbon_insetLeft" />
+        <attr name="carbon_insetTop" />
+        <attr name="carbon_insetRight" />
+        <attr name="carbon_insetBottom" />
+        <attr name="carbon_insetColor" />
+
+        <attr name="carbon_maxWidth" />
+        <attr name="carbon_maxHeight" />
+
+        <attr name="carbon_elevation" />
+        <attr name="carbon_elevationShadowColor" />
+        <attr name="carbon_elevationAmbientShadowColor" />
+        <attr name="carbon_elevationSpotShadowColor" />
+
+        <attr name="carbon_cornerRadiusTopStart" />
+        <attr name="carbon_cornerRadiusTopEnd" />
+        <attr name="carbon_cornerRadiusBottomStart" />
+        <attr name="carbon_cornerRadiusBottomEnd" />
+        <attr name="carbon_cornerRadius" />
+
+        <attr name="carbon_cornerCutTopStart" />
+        <attr name="carbon_cornerCutTopEnd" />
+        <attr name="carbon_cornerCutBottomStart" />
+        <attr name="carbon_cornerCutBottomEnd" />
+        <attr name="carbon_cornerCut" />
+
+        <attr name="carbon_stroke" />
+        <attr name="carbon_strokeWidth" />
+    </declare-styleable>
+
+    <declare-styleable name="MotionLayout_Layout">
+        <attr name="carbon_layout_marginHorizontal" />
+        <attr name="carbon_layout_marginVertical" />
+    </declare-styleable>
+
     <attr name="carbon_flowLayoutStyle" format="reference" />
     <declare-styleable name="FlowLayout">
         <attr name="android:background" />
@@ -946,6 +1000,7 @@
         <attr name="android:text" />
         <attr name="carbon_navigationIcon" format="reference" />
         <attr name="carbon_navigationIconContentDescription" format="string" />
+        <attr name="carbon_menu" />
 
         <attr name="carbon_cornerRadiusTopStart" />
         <attr name="carbon_cornerRadiusTopEnd" />

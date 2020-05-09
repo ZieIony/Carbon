@@ -33,7 +33,7 @@ interface InsetView {
      */
     fun setInset(left: Int, top: Int, right: Int, bottom: Int)
 
-    fun setOnInsetsChangedListener(onInsetsChangedListener: OnInsetsChangedListener)
+    fun setOnInsetsChangedListener(onInsetsChangedListener: OnInsetsChangedListener?)
 
     companion object {
         /**
