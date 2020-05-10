@@ -135,7 +135,7 @@ public class InputLayout extends RelativeLayout {
             final EditText editText = (EditText) child;
             if (labelTextView.getText().length() == 0)
                 setLabel(editText.getHint());
-            editText.addOnValidateListener(valid -> {
+            editText.addOnValidChangedListener(valid -> {
                 updateError(valid);
                 updateCounter(editText);
             });
@@ -167,7 +167,7 @@ public class InputLayout extends RelativeLayout {
             errorTextView.setOutAnimator(AnimUtils.getFadeOutAnimator());
         } else if (child instanceof InputView) {
             InputView inputView = (InputView) child;
-            inputView.addOnValidateListener(this::updateError);
+            inputView.addOnValidChangedListener(this::updateError);
 
             labelTextView.setInAnimator(null);
             labelTextView.setOutAnimator(null);

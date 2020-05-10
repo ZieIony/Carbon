@@ -41,9 +41,8 @@
             tools:text="Toolbar" />
     </carbon.widget.FrameLayout>
 
-    <carbon.widget.MenuStrip
+    <carbon.widget.ToolStrip
         android:id="@+id/carbon_toolbarMenu"
-        style="@style/carbon_MenuStrip.Tools"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/carbon_toolbarHeight"
         android:paddingStart="@dimen/carbon_toolbarItemPadding"

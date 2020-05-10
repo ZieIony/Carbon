@@ -62,7 +62,6 @@ import carbon.drawable.ripple.RippleDrawable;
 import carbon.drawable.ripple.RippleView;
 import carbon.internal.ElevationComparator;
 import carbon.internal.RevealAnimator;
-import carbon.recycler.RowFactory;
 import carbon.view.BehaviorView;
 import carbon.view.InsetView;
 import carbon.view.MarginView;
@@ -96,7 +95,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
     private ViewGroup content;
     private TextView title;
     private ImageView icon;
-    private MenuStrip menuStrip;
+    private ToolStrip toolStrip;
     private OnTouchListener onDispatchTouchListener;
 
     public Toolbar(Context context) {
@@ -157,7 +156,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         content = findViewById(R.id.carbon_toolbarContent);
         title = findViewById(R.id.carbon_toolbarTitle);
         icon = findViewById(R.id.carbon_toolbarIcon);
-        menuStrip = findViewById(R.id.carbon_toolbarMenu);
+        toolStrip = findViewById(R.id.carbon_toolbarMenu);
 
         icon.setOnClickListener(view -> {
             if (getContext() == null)
@@ -171,9 +170,6 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
                 ((Activity) context).onBackPressed();
             }
         });
-
-        menuStrip.setItemFactory(MenuStrip.ToolItemComponent::new);
-        menuStrip.setCheckableItemFactory(MenuStrip.CheckableToolItemComponent::new);
     }
 
     private void initToolbar(AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
@@ -200,15 +196,15 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
     }
 
     public void setMenu(int resId) {
-        menuStrip.setMenu(resId);
+        toolStrip.setMenu(resId);
     }
 
     public void setMenu(Menu menu) {
-        menuStrip.setMenu(menu);
+        toolStrip.setMenu(menu);
     }
 
     public void setOnMenuItemClicked(RecyclerView.OnItemClickedListener<MenuStrip.Item> listener){
-        menuStrip.setOnItemClickedListener(listener);
+        toolStrip.setOnItemClickedListener(listener);
     }
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);

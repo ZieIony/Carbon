@@ -1408,6 +1408,8 @@
         <attr name="carbon_tooltipText" />
     </declare-styleable>
 
+    <attr name="carbon_toolStripStyle" format="reference" />
+
     <attr name="carbon_menuStripStyle" format="reference" />
     <declare-styleable name="MenuStrip">
         <attr name="android:orientation" />

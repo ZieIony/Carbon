@@ -1,5 +1,9 @@
 package carbon.widget
 
 interface OnValidateListener {
-    fun onValidate(valid: Boolean)
+    fun onValidate(): Boolean
+}
+
+interface OnValidChangedListener {
+    fun onValidChanged(valid: Boolean)
 }

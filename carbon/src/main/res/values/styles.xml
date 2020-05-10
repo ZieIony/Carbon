@@ -343,10 +343,11 @@
         <item name="carbon_overScroll">ifContentScrolls</item>
     </style>
 
-    <style name="carbon_MenuStrip.Tools">
+    <style name="carbon_ToolStrip" parent="carbon_MenuStrip">
         <item name="android:paddingTop">@null</item>
         <item name="android:paddingBottom">@null</item>
         <item name="android:orientation">horizontal</item>
+        <item name="android:fadeScrollbars">true</item>
     </style>
 
 </resources>

@@ -90,6 +90,25 @@ public class MotionLayout extends androidx.constraintlayout.motion.widget.Motion
         BehaviorView,
         MarginView {
 
+    public abstract static class SimpleTransitionListener implements TransitionListener {
+
+        @Override
+        public void onTransitionStarted(androidx.constraintlayout.motion.widget.MotionLayout motionLayout, int startId, int endId) {
+        }
+
+        @Override
+        public void onTransitionChange(androidx.constraintlayout.motion.widget.MotionLayout motionLayout, int startId, int endId, float progress) {
+        }
+
+        @Override
+        public void onTransitionCompleted(androidx.constraintlayout.motion.widget.MotionLayout motionLayout, int currentId) {
+        }
+
+        @Override
+        public void onTransitionTrigger(androidx.constraintlayout.motion.widget.MotionLayout motionLayout, int triggerId, boolean positive, float progress) {
+        }
+    }
+
     private OnTouchListener onDispatchTouchListener;
 
     public MotionLayout(Context context) {

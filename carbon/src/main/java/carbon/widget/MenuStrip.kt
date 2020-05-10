@@ -26,6 +26,7 @@ import carbon.recycler.RowFactory
 import carbon.view.SelectionMode
 import java.io.Serializable
 
+
 open class MenuStrip : RecyclerView {
 
     open class Item : Serializable {

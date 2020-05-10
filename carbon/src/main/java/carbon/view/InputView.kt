@@ -1,5 +1,6 @@
 package carbon.view
 
+import carbon.widget.OnValidChangedListener
 import carbon.widget.OnValidateListener
 
 /**
@@ -29,4 +30,23 @@ interface InputView : ValidStateView {
      * Removes all listeners
      */
     fun clearOnValidateListeners()
+
+    /**
+     * Adds a listener
+     *
+     * @param listener cannot be null
+     */
+    fun addOnValidChangedListener(listener: OnValidChangedListener)
+
+    /**
+     * Removes a listener
+     *
+     * @param listener cannot be null
+     */
+    fun removeOnValidChangedListener(listener: OnValidChangedListener)
+
+    /**
+     * Removes all listeners
+     */
+    fun clearOnValidChangedListeners()
 }

@@ -628,9 +628,6 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 
         if (rippleDrawable != null)
             rippleDrawable.setBounds(0, 0, getWidth(), getHeight());
-
-        for (ViewItemDecoration itemDecoration : viewItemDecorations)
-            itemDecoration.layout(this);
     }
 
     private void updateCorners() {
@@ -1422,8 +1419,6 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.EXACTLY);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
-        for (ViewItemDecoration itemDecoration : viewItemDecorations)
-            itemDecoration.measure(this);
     }
 
 

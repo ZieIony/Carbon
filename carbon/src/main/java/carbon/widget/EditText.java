@@ -125,13 +125,13 @@ public class EditText extends android.widget.EditText
 
     private boolean valid = true;
     private boolean skipValidate = false;
+    private List<OnValidChangedListener> validChangedListeners = new ArrayList<>();
 
     private CharSequence prefix, suffix;
     private StaticLayout prefixLayout, suffixLayout;
     private int prefixPadding, prefixTextPadding, suffixPadding, suffixTextPadding;
 
     private List<OnValidateListener> validateListeners = new ArrayList<>();
-    private boolean clearFocusOnTouchOutside = false;
 
     public EditText(Context context) {
         super(context);
@@ -277,7 +277,7 @@ public class EditText extends android.widget.EditText
             @Override
             public void afterTextChanged(@NotNull Editable editable) {
                 if (!skipValidate)
-                    validateInternalEvent();
+                    validate();
             }
         });
 
@@ -429,11 +429,17 @@ public class EditText extends android.widget.EditText
     }
 
     public void validate() {
-        validateInternal();
-        postInvalidate();
+        boolean v = validateInternal();
+        for (OnValidateListener validateListener : validateListeners) {
+            if (!validateListener.onValidate()) {
+                v = false;
+                break;
+            }
+        }
+        setValid(v);
     }
 
-    private void validateInternal() {
+    private boolean validateInternal() {
         String s = getText().toString();
         // dictionary suggestions vs s.length()>0
         /*try {
@@ -459,15 +465,7 @@ public class EditText extends android.widget.EditText
             }
         }
 
-        valid = requiredOk && !drawMatchingViewError && drawPatternOk && !counterError;
-
-        refreshDrawableState();
-    }
-
-    private void validateInternalEvent() {
-        validateInternal();
-        fireOnValidateEvent();
-        postInvalidate();
+        return requiredOk && !drawMatchingViewError && drawPatternOk && !counterError;
     }
 
     public void addOnValidateListener(@NonNull OnValidateListener listener) {
@@ -480,11 +478,6 @@ public class EditText extends android.widget.EditText
 
     public void clearOnValidateListeners() {
         validateListeners.clear();
-    }
-
-    private void fireOnValidateEvent() {
-        for (OnValidateListener validateListener : validateListeners)
-            validateListener.onValidate(valid);
     }
 
     /**
@@ -521,6 +514,8 @@ public class EditText extends android.widget.EditText
         if (this.valid == valid)
             return;
         this.valid = valid;
+        for(OnValidChangedListener listener: validChangedListeners)
+            listener.onValidChanged(valid);
         refreshDrawableState();
     }
 
@@ -531,6 +526,21 @@ public class EditText extends android.widget.EditText
     @Override
     public boolean isEmpty() {
         return getText().length() == 0;
+    }
+
+    @Override
+    public void addOnValidChangedListener(@NotNull OnValidChangedListener listener) {
+        validChangedListeners.add(listener);
+    }
+
+    @Override
+    public void removeOnValidChangedListener(@NotNull OnValidChangedListener listener) {
+        validChangedListeners.remove(listener);
+    }
+
+    @Override
+    public void clearOnValidChangedListeners() {
+        validChangedListeners.clear();
     }
 
     RevealAnimator revealAnimator;
@@ -606,45 +616,8 @@ public class EditText extends android.widget.EditText
         this.matchingView = viewId;
     }
 
-    @Override
-    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
-        super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        if (focused) {
-            if (clearFocusOnTouchOutside) {
-                PopupWindow popupWindow = new PopupWindow(getContext());
-                popupWindow.setBackgroundDrawable(new ColorDrawable(0x7fff0000));
-                popupWindow.setTouchable(true);
-                popupWindow.setAnimationStyle(0);
-                View view = new View(getContext());
-                view.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                popupWindow.setContentView(view);
-                popupWindow.setTouchInterceptor((v, event) -> {
-                    popupWindow.dismiss();
-                    ViewGroup rootView = (ViewGroup) getRootView();
-                    boolean focusable = rootView.isFocusable();
-                    boolean focusableInTouchMode = rootView.isFocusableInTouchMode();
-                    int focusability = rootView.getDescendantFocusability();
-                    rootView.setFocusable(true);
-                    rootView.setFocusableInTouchMode(true);
-                    rootView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-                    rootView.requestFocus();
-                    rootView.setDescendantFocusability(focusability);
-                    //rootView.setFocusableInTouchMode(focusableInTouchMode);
-                    //rootView.setFocusable(focusable);
-                    rootView.dispatchTouchEvent(event);
-                    return true;
-                });
-                popupWindow.setWidth(getRootView().getWidth());
-                popupWindow.setHeight(getRootView().getHeight());
-                popupWindow.showAtLocation(getRootView(), Gravity.START | Gravity.TOP, 0, 0);
-            }
-        }
-        if (!focused)
-            validateInternalEvent();
-    }
-
+    @Deprecated
     public void setClearFocusOnTouchOutside(boolean enabled) {
-        clearFocusOnTouchOutside = enabled;
     }
 
 

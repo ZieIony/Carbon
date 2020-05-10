@@ -30,27 +30,21 @@ public class ViewItemDecoration extends RecyclerView.ItemDecoration {
         this.view = view;
     }
 
-    public void measure(RecyclerView parent) {
+    private void measureAndLayout(androidx.recyclerview.widget.RecyclerView parent) {
         if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
-            view.measure(View.MeasureSpec.makeMeasureSpec(parent.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
+            view.measure(View.MeasureSpec.makeMeasureSpec(parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight(), View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        } else {
-            view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(parent.getMeasuredHeight(), View.MeasureSpec.EXACTLY));
-        }
-    }
-
-    public void layout(RecyclerView parent) {
-        if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
             view.layout(parent.getPaddingLeft(),
                     0,
-                    parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight(),
+                    parent.getWidth() - parent.getPaddingRight(),
                     view.getMeasuredHeight());
         } else {
+            view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(parent.getMeasuredHeight() - parent.getPaddingTop() - parent.getPaddingBottom(), View.MeasureSpec.EXACTLY));
             view.layout(0,
                     parent.getPaddingTop(),
                     view.getMeasuredWidth(),
-                    parent.getHeight() - parent.getPaddingTop() - parent.getPaddingBottom());
+                    parent.getHeight() - parent.getPaddingBottom());
         }
     }
 
@@ -60,6 +54,9 @@ public class ViewItemDecoration extends RecyclerView.ItemDecoration {
         int position = parent.getChildAdapterPosition(child);
         if (position == -1)
             return;
+
+        if (view.getMeasuredWidth() == 0 || view.getMeasuredHeight() == 0)
+            measureAndLayout(parent);
 
         if (drawAfterRules != null && drawAfterRules.draw(position)) {
             if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
@@ -80,8 +77,8 @@ public class ViewItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void onDraw(@NonNull Canvas c, @NonNull androidx.recyclerview.widget.RecyclerView parent, @NonNull androidx.recyclerview.widget.RecyclerView.State state) {
         // Initialization needed to avoid compiler warning
-        int left = 0;
-        int top = 0;
+        int left = parent.getPaddingLeft();
+        int top = parent.getPaddingTop();
         int orientation = getOrientation(parent);
         int childCount = parent.getChildCount();
 
@@ -94,7 +91,7 @@ public class ViewItemDecoration extends RecyclerView.ItemDecoration {
 
                 if (orientation == LinearLayoutManager.VERTICAL) {
                     top = (int) (child.getBottom() + child.getTranslationY());
-                } else {    // horizontal
+                } else { // horizontal
                     left = (int) (child.getRight() + child.getTranslationX());
                 }
                 view.setAlpha(child.getAlpha());
@@ -107,7 +104,7 @@ public class ViewItemDecoration extends RecyclerView.ItemDecoration {
 
                 if (orientation == LinearLayoutManager.VERTICAL) {
                     top = (int) (child.getTop() + child.getTranslationY() - view.getMeasuredHeight());
-                } else {    // horizontal
+                } else { // horizontal
                     left = (int) (child.getLeft() + child.getTranslationX() - view.getMeasuredWidth());
                 }
                 view.setAlpha(child.getAlpha());
