@@ -88,7 +88,8 @@ public class InputLayout extends RelativeLayout {
         voiceInputImageView = findViewById(R.id.carbon_voiceInput);
         container = findViewById(R.id.carbon_inputLayoutContainer);
 
-        setAddStatesFromChildren(true);
+        setAddStatesFromChildren(addStatesFromChildren());
+        setDuplicateParentStateEnabled(isDuplicateParentStateEnabled());
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.InputLayout, defStyleAttr, defStyleRes);
 
@@ -127,6 +128,10 @@ public class InputLayout extends RelativeLayout {
 
     private void setInputChild(View child) {
         this.child = child;
+        if (child.isDuplicateParentStateEnabled())
+            container.setDuplicateParentStateEnabled(true);
+        if (child instanceof ViewGroup && ((ViewGroup) child).addStatesFromChildren())
+            container.setAddStatesFromChildren(true);
 
         if (child.getId() == NO_ID)
             child.setId(R.id.carbon_input);
@@ -333,5 +338,25 @@ public class InputLayout extends RelativeLayout {
         super.setGravity(gravity);
         if (labelTextView != null)
             labelTextView.setGravity(gravity);
+    }
+
+    @Override
+    public void setDuplicateParentStateEnabled(boolean enabled) {
+        super.setDuplicateParentStateEnabled(enabled);
+        if (container != null) {
+            container.setDuplicateParentStateEnabled(enabled);
+            if (enabled)
+                container.setAddStatesFromChildren(false);
+        }
+    }
+
+    @Override
+    public void setAddStatesFromChildren(boolean addsStates) {
+        super.setAddStatesFromChildren(addsStates);
+        if (container != null) {
+            if (addsStates)
+                container.setDuplicateParentStateEnabled(false);
+            container.setAddStatesFromChildren(addsStates);
+        }
     }
 }
