@@ -20,7 +20,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
@@ -39,7 +38,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.AttrRes;
@@ -480,6 +478,20 @@ public class EditText extends android.widget.EditText
         validateListeners.clear();
     }
 
+    public void setOnFocusGainedListener(OnFocusGainedListener listener) {
+        setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus)
+                listener.onFocusGained();
+        });
+    }
+
+    public void setOnFocusLostListener(OnFocusLostListener listener) {
+        setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus)
+                listener.onFocusLost();
+        });
+    }
+
     /**
      * Changes text transformation method to caps.
      *
@@ -514,7 +526,7 @@ public class EditText extends android.widget.EditText
         if (this.valid == valid)
             return;
         this.valid = valid;
-        for(OnValidChangedListener listener: validChangedListeners)
+        for (OnValidChangedListener listener : validChangedListeners)
             listener.onValidChanged(valid);
         refreshDrawableState();
     }

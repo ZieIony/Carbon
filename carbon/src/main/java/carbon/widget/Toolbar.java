@@ -203,7 +203,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
         toolStrip.setMenu(menu);
     }
 
-    public void setOnMenuItemClicked(RecyclerView.OnItemClickedListener<MenuStrip.Item> listener){
+    public void setOnMenuItemClicked(RecyclerView.OnItemClickedListener<MenuStrip.Item> listener) {
         toolStrip.setOnItemClickedListener(listener);
     }
 
@@ -385,6 +385,10 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar
     @Override
     public void setNavigationOnClickListener(OnClickListener listener) {
         getIconView().setOnClickListener(listener);
+    }
+
+    public ToolStrip getToolStrip() {
+        return toolStrip;
     }
 
     public int getCurrentContentInsetStart() {
