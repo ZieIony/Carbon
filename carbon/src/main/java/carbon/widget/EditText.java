@@ -17,7 +17,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -107,16 +106,11 @@ public class EditText extends android.widget.EditText
         MarginView,
         TextAppearanceView {
 
-    private Field mIgnoreActionUpEventField;
-    private Object editor;
-
     boolean required = false;
     private int minCharacters;
     private int maxCharacters = Integer.MAX_VALUE;
 
     TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-
-    private int cursorColor;
 
     private Pattern pattern;
     private int matchingView;
@@ -232,8 +226,6 @@ public class EditText extends android.widget.EditText
             }
         }
 
-        setCursorColor(a.getColor(R.styleable.EditText_carbon_cursorColor, 0));
-
         setPattern(a.getString(R.styleable.EditText_carbon_pattern));
         setMinCharacters(a.getInt(R.styleable.EditText_carbon_minCharacters, 0));
         setMaxCharacters(a.getInt(R.styleable.EditText_carbon_maxCharacters, Integer.MAX_VALUE));
@@ -268,9 +260,6 @@ public class EditText extends android.widget.EditText
 
         a.recycle();
 
-        if (!isInEditMode())
-            initSelectionHandle();
-
         addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(@NotNull Editable editable) {
@@ -282,75 +271,13 @@ public class EditText extends android.widget.EditText
         setSelection(length());
     }
 
-    private void initSelectionHandle() {
-        try {
-            final Field fEditor = android.widget.TextView.class.getDeclaredField("mEditor");
-            fEditor.setAccessible(true);
-            editor = fEditor.get(this);
-
-            mIgnoreActionUpEventField = editor.getClass().getDeclaredField("mIgnoreActionUpEvent");
-            mIgnoreActionUpEventField.setAccessible(true);
-
-            final Field fSelectHandleLeft = editor.getClass().getDeclaredField("mSelectHandleLeft");
-            final Field fSelectHandleRight = editor.getClass().getDeclaredField("mSelectHandleRight");
-            final Field fSelectHandleCenter = editor.getClass().getDeclaredField("mSelectHandleCenter");
-
-            fSelectHandleLeft.setAccessible(true);
-            fSelectHandleRight.setAccessible(true);
-            fSelectHandleCenter.setAccessible(true);
-
-            Drawable leftHandle = getResources().getDrawable(R.drawable.carbon_selecthandle_left);
-            leftHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorSecondary), PorterDuff.Mode.SRC_IN);
-            fSelectHandleLeft.set(editor, leftHandle);
-
-            Drawable rightHandle = getResources().getDrawable(R.drawable.carbon_selecthandle_right);
-            rightHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorSecondary), PorterDuff.Mode.SRC_IN);
-            fSelectHandleRight.set(editor, rightHandle);
-
-            Drawable middleHandle = getResources().getDrawable(R.drawable.carbon_selecthandle_middle);
-            middleHandle.setColorFilter(Carbon.getThemeColor(getContext(), R.attr.colorSecondary), PorterDuff.Mode.SRC_IN);
-            fSelectHandleCenter.set(editor, middleHandle);
-        } catch (final Exception ignored) {
-        }
-    }
-
+    @Deprecated
     public void setCursorColor(int cursorColor) {
-        this.cursorColor = cursorColor;
-        try {
-            Field mHighlightPaintField = android.widget.TextView.class.getDeclaredField("mHighlightPaint");
-            mHighlightPaintField.setAccessible(true);
-            mHighlightPaintField.set(this, new Paint() {
-                @Override
-                public void setColor(int color) {
-                    if (getSelectionStart() == getSelectionEnd()) {
-                        super.setColor(cursorColor);
-                    } else {
-                        super.setColor(color);
-                    }
-                }
-            });
-
-            Field mEditorField = android.widget.TextView.class.getDeclaredField("mEditor");
-            mEditorField.setAccessible(true);
-            Object mEditor = mEditorField.get(this);
-            Field mCursorDrawableField = mEditor.getClass().getDeclaredField("mCursorDrawable");
-            mCursorDrawableField.setAccessible(true);
-            Drawable[] mCursorDrawable = (Drawable[]) mCursorDrawableField.get(mEditor);
-
-            Drawable drawable = getResources().getDrawable(R.drawable.carbon_textcursor);
-            drawable.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.SRC_IN));
-            mCursorDrawable[0] = drawable;
-
-            Drawable drawable2 = getResources().getDrawable(R.drawable.carbon_textcursor);
-            drawable2.setColorFilter(new PorterDuffColorFilter(cursorColor, PorterDuff.Mode.SRC_IN));
-            mCursorDrawable[1] = drawable2;
-        } catch (Exception e) {
-            //Carbon.logReflectionError(e);
-        }
     }
 
+    @Deprecated
     public int getCursorColor() {
-        return cursorColor;
+        return 0;
     }
 
     public CharSequence getPrefix() {
@@ -699,6 +626,7 @@ public class EditText extends android.widget.EditText
                         outline.setRect(0, 0, getWidth(), getHeight());
                     } else {
                         shadowDrawable.setBounds(0, 0, getWidth(), getHeight());
+                        shadowDrawable.setShadowCompatibilityMode(MaterialShapeDrawable.SHADOW_COMPAT_MODE_NEVER);
                         shadowDrawable.getOutline(outline);
                     }
                 }
@@ -712,14 +640,14 @@ public class EditText extends android.widget.EditText
     public void drawInternal(@NonNull Canvas canvas) {
         super.draw(canvas);
         if (prefixLayout != null) {
-            canvas.translate(getPaddingLeft() - prefixPadding - prefixTextPadding, 0);
+            canvas.translate(getPaddingLeft() - prefixPadding - prefixTextPadding, getBaseline() - prefixLayout.getLineBaseline(0));
             prefixLayout.draw(canvas);
-            canvas.translate(-getPaddingLeft() + prefixPadding + prefixTextPadding, 0);
+            canvas.translate(-getPaddingLeft() + prefixPadding + prefixTextPadding, -getBaseline() + prefixLayout.getLineBaseline(0));
         }
         if (suffixLayout != null) {
-            canvas.translate(getWidth() - getPaddingLeft() - getPaddingRight() + suffixPadding + suffixTextPadding, 0);
+            canvas.translate(getWidth() - getPaddingLeft() - getPaddingRight() + suffixPadding + suffixTextPadding, getBaseline() - suffixLayout.getLineBaseline(0));
             suffixLayout.draw(canvas);
-            canvas.translate(-getWidth() + getPaddingLeft() + getPaddingRight() - suffixPadding - suffixTextPadding, 0);
+            canvas.translate(-getWidth() + getPaddingLeft() + getPaddingRight() - suffixPadding - suffixTextPadding, -getBaseline() + suffixLayout.getLineBaseline(0));
         }
 
         if (isFocused() && isEnabled()) {
@@ -1027,6 +955,7 @@ public class EditText extends android.widget.EditText
 
         shadowDrawable.setFillColor(spotShadowColor);
         shadowDrawable.setShadowColor(spotShadowColor != null ? spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()) : 0xff000000);
+        shadowDrawable.setShadowCompatibilityMode(MaterialShapeDrawable.SHADOW_COMPAT_MODE_ALWAYS);
         shadowDrawable.setAlpha(0x44);
         shadowDrawable.setElevation(z);
         shadowDrawable.setShadowVerticalOffset(0);

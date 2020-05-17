@@ -30,7 +30,7 @@ import carbon.view.MarginView;
 import carbon.view.TintedView;
 import carbon.view.VisibleView;
 
-public class ScrollView extends android.widget.ScrollView implements TintedView, VisibleView, MarginView {
+public class NestedScrollView extends androidx.core.widget.NestedScrollView implements TintedView, VisibleView, MarginView {
     private int mTouchSlop;
     EdgeEffect topGlow;
     EdgeEffect bottomGlow;
@@ -43,24 +43,23 @@ public class ScrollView extends android.widget.ScrollView implements TintedView,
     public static final int OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
     public static final int OVER_SCROLL_NEVER = 2;
 
-    public ScrollView(Context context) {
+    public NestedScrollView(Context context) {
         super(context);
         initScrollView(null, android.R.attr.scrollViewStyle, R.style.carbon_ScrollView);
     }
 
-    public ScrollView(Context context, AttributeSet attrs) {
+    public NestedScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initScrollView(attrs, android.R.attr.scrollViewStyle, R.style.carbon_ScrollView);
     }
 
-    public ScrollView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public NestedScrollView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initScrollView(attrs, defStyleAttr, R.style.carbon_ScrollView);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ScrollView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    public NestedScrollView(Context context, AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+        super(context, attrs, defStyleAttr);
         initScrollView(attrs, defStyleAttr, defStyleRes);
     }
 

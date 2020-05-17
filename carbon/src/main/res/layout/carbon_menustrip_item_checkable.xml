@@ -8,4 +8,5 @@
     android:paddingLeft="@dimen/carbon_margin"
     android:paddingRight="@dimen/carbon_margin"
     android:textAppearance="?attr/carbon_textAppearanceBody1"
-    app:carbon_rippleColor="?attr/carbon_rippleColor" />
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
+    app:carbon_tint="@null" />

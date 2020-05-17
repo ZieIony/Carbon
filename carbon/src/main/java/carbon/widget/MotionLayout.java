@@ -443,6 +443,7 @@ public class MotionLayout extends androidx.constraintlayout.motion.widget.Motion
                         outline.setRect(0, 0, getWidth(), getHeight());
                     } else {
                         shadowDrawable.setBounds(0, 0, getWidth(), getHeight());
+                        shadowDrawable.setShadowCompatibilityMode(MaterialShapeDrawable.SHADOW_COMPAT_MODE_NEVER);
                         shadowDrawable.getOutline(outline);
                     }
                 }
@@ -742,6 +743,7 @@ public class MotionLayout extends androidx.constraintlayout.motion.widget.Motion
 
         shadowDrawable.setFillColor(spotShadowColor);
         shadowDrawable.setShadowColor(spotShadowColor != null ? spotShadowColor.getColorForState(getDrawableState(), spotShadowColor.getDefaultColor()) : 0xff000000);
+        shadowDrawable.setShadowCompatibilityMode(MaterialShapeDrawable.SHADOW_COMPAT_MODE_ALWAYS);
         shadowDrawable.setAlpha(0x44);
         shadowDrawable.setElevation(z);
         shadowDrawable.setShadowVerticalOffset(0);

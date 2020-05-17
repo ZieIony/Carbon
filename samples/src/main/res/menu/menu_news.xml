@@ -7,6 +7,7 @@
         app:iconTint="@color/menu_selector" />
 
     <item
+        android:enabled="false"
         android:icon="@drawable/ic_email_black_24dp"
         android:title="Mail"
         app:iconTint="@color/menu_selector" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,32 +7,50 @@
 
     <include layout="@layout/view_debugtoolbar" />
 
-    <carbon.widget.Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_margin"
-        android:text="show menu" />
+    <carbon.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <carbon.widget.MenuStrip
-        android:id="@+id/menuStrip"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/carbon_margin"
-        android:background="?attr/carbon_colorForeground"
-        app:carbon_cornerRadius="@dimen/carbon_cornerRadiusMenu"
-        app:carbon_elevation="@dimen/carbon_elevationMenu"
-        app:carbon_menu="@menu/menu_navigation"
-        app:carbon_selectionMode="multi" />
+        <carbon.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <carbon.widget.ToolStrip
-        android:id="@+id/tools"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_margin="@dimen/carbon_margin"
-        android:background="?attr/carbon_colorForeground"
-        app:carbon_cornerRadius="@dimen/carbon_cornerRadiusCard"
-        app:carbon_elevation="@dimen/carbon_elevationToolbar"
-        app:carbon_menu="@menu/menu_news"
-        app:carbon_selectionMode="single" />
-</LinearLayout>
+            <carbon.widget.Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_margin"
+                android:text="show menu" />
+
+            <carbon.widget.MenuStrip
+                android:id="@+id/menuStrip"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/carbon_margin"
+                android:background="?attr/carbon_colorForeground"
+                app:carbon_cornerRadius="@dimen/carbon_cornerRadiusMenu"
+                app:carbon_elevation="@dimen/carbon_elevationMenu"
+                app:carbon_menu="@menu/menu_navigation"
+                app:carbon_selectionMode="multi" />
+
+            <carbon.widget.ToolStrip
+                android:id="@+id/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/carbon_margin"
+                android:background="?attr/carbon_colorForeground"
+                app:carbon_cornerRadius="@dimen/carbon_cornerRadiusCard"
+                app:carbon_elevation="@dimen/carbon_elevationToolbar"
+                app:carbon_menu="@menu/menu_news"
+                app:carbon_selectionMode="single" />
+
+            <carbon.widget.Toolbar
+                style="@style/carbon_Toolbar.ActionBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:carbon_menu="@menu/menu_news" />
+        </carbon.widget.LinearLayout>
+    </carbon.widget.ScrollView>
+
+</carbon.widget.LinearLayout>

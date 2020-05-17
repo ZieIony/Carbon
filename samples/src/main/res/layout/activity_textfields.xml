@@ -7,7 +7,30 @@
     android:orientation="vertical"
     app:carbon_insetColor="?attr/colorPrimary">
 
-    <include layout="@layout/view_debugtoolbar" />
+    <carbon.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/carbon_Toolbar.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeightDouble"
+        app:carbon_menu="@menu/menu_samples">
+
+        <carbon.widget.FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <carbon.widget.EditText
+                style="@style/carbon_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/carbon_toolbarHeight"
+                android:layout_gravity="bottom"
+                android:gravity="center_vertical"
+                android:hint="Amount"
+                android:inputType="numberDecimal"
+                android:tag="enable"
+                android:text="20"
+                app:carbon_prefix="$" />
+        </carbon.widget.FrameLayout>
+    </carbon.widget.Toolbar>
 
     <carbon.widget.ScrollView
         android:layout_width="match_parent"
@@ -81,16 +104,6 @@
                     app:carbon_maxCharacters="10"
                     app:carbon_minCharacters="3" />
             </carbon.widget.InputLayout>
-
-            <carbon.widget.EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/carbon_margin"
-                android:hint="Amount"
-                android:inputType="numberDecimal"
-                android:tag="enable"
-                android:text="20"
-                app:carbon_prefix="$" />
 
             <carbon.widget.InputLayout
                 android:layout_width="match_parent"

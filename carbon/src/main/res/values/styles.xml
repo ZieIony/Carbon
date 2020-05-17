@@ -151,7 +151,7 @@
         <item name="carbon_cornerRadius">2dp</item>
     </style>
 
-    <style name="carbon_EditText" parent="@android:style/Widget.EditText">
+    <style name="carbon_EditText" parent="@style/Widget.AppCompat.EditText">
         <item name="android:textColor">@null</item>
         <item name="carbon_rippleColor">@null</item>
         <item name="android:textAppearance">?attr/carbon_textAppearanceSubhead</item>

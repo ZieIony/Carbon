@@ -98,7 +98,8 @@ open class MenuStrip : RecyclerView {
                 root.id = data.id
                 root.isEnabled = data.isEnabled
                 carbonIcon.setImageDrawable(data.icon)
-                carbonIcon.setTintList(data.iconTintList)
+                carbonIcon.setTintList(data.iconTintList
+                        ?: ColorStateListFactory.makeIcon(parent.context))
                 carbonText.text = data.title
                 carbonText.textColor = data.iconTintList
                         ?: ColorStateListFactory.makePrimaryText(parent.context)
@@ -114,11 +115,12 @@ open class MenuStrip : RecyclerView {
                 root.id = data.id
                 root.isEnabled = data.isEnabled
                 carbonCheckBox.isChecked = data.isChecked
-                carbonCheckBox.setTintList(data.iconTintList)
+                carbonCheckBox.setTintList(data.iconTintList
+                        ?: ColorStateListFactory.makeIcon(parent.context))
                 carbonCheckBox.text = data.title.toString()
                 carbonCheckBox.setTextColor(data.iconTintList
                         ?: ColorStateListFactory.makePrimaryText(parent.context))
-                carbonCheckBox.setOnCheckedChangeListener { buttonView, isChecked -> data.isChecked = isChecked == CheckedState.CHECKED }
+                carbonCheckBox.setOnCheckedChangeListener { _, isChecked -> data.isChecked = isChecked == CheckedState.CHECKED }
             }
         }
     }
@@ -135,7 +137,8 @@ open class MenuStrip : RecyclerView {
                 } catch (e: java.lang.Exception) {
                 }
                 carbonIcon.setImageDrawable(data.icon)
-                carbonIcon.setTintList(data.iconTintList)
+                carbonIcon.setTintList(data.iconTintList
+                        ?: ColorStateListFactory.makeIcon(parent.context))
             }
         }
     }
@@ -152,8 +155,9 @@ open class MenuStrip : RecyclerView {
                 } catch (e: java.lang.Exception) {
                 }
                 carbonCheckBox.isChecked = data.isChecked
-                carbonCheckBox.setTintList(data.iconTintList)
-                carbonCheckBox.setOnCheckedChangeListener { buttonView, isChecked -> data.isChecked = isChecked == CheckedState.CHECKED }
+                carbonCheckBox.setTintList(data.iconTintList
+                        ?: ColorStateListFactory.makeIcon(parent.context))
+                carbonCheckBox.setOnCheckedChangeListener { _, isChecked -> data.isChecked = isChecked == CheckedState.CHECKED }
             }
         }
     }

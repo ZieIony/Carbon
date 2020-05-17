@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carbon.widget.CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/carbon_checkBox"
-    style="@style/carbon_CheckBox.IconButton" />
+    style="@style/carbon_CheckBox.IconButton"
+    app:carbon_tint="@null" />

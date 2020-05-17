@@ -26,7 +26,7 @@ class BottomNavigationViewActivity : ThemedActivity() {
                     iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                 },
                 BadgeItem().apply {
-                    icon = resources.getDrawable(R.drawable.ic_calendar_black_24dp)
+                    icon = resources.getDrawable(R.drawable.ic_today_black_24dp)
                     title = "Calendar"
                     iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                     notificationCount = 346
@@ -45,7 +45,7 @@ class BottomNavigationViewActivity : ThemedActivity() {
                     iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                 },
                 BottomNavigationView.Item().apply {
-                    icon = resources.getDrawable(R.drawable.ic_calendar_black_24dp)
+                    icon = resources.getDrawable(R.drawable.ic_today_black_24dp)
                     title = "Calendar"
                     iconTintList = ColorStateListFactory.makeIconSecondary(this@BottomNavigationViewActivity)
                 },
