@@ -8,7 +8,8 @@
     <include layout="@layout/view_debugtoolbar" />
 
     <carbon.component.ComponentView
+        android:id="@+id/songComponent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:carbon_layout="@layout/row_player_song" />
+        app:carbon_type="tk.zielony.carbonsamples.demo.SongRow" />
 </carbon.widget.LinearLayout>

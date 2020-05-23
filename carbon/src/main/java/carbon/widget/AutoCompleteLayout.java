@@ -66,19 +66,13 @@ public class AutoCompleteLayout extends LinearLayout {
         search.setDataProvider(dataProvider);
     }
 
-    public static class AutoCompleteRow implements Component<AutoCompleteEditText.FilterResult> {
+    public static class AutoCompleteRow extends Component<AutoCompleteEditText.FilterResult> {
 
         private final carbon.widget.TextView text;
-        private final View view;
 
         public AutoCompleteRow(ViewGroup parent) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carbon_autocompletelayout_row, parent, false);
             text = view.findViewById(R.id.carbon_autoCompleteLayoutRowText);
-        }
-
-        @Override
-        public View getView() {
-            return view;
         }
 
         @Override

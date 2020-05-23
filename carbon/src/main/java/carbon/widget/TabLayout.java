@@ -203,7 +203,7 @@ public class TabLayout extends HorizontalScrollView {
 
         for (int i = 0; i < items.length; i++) {
             Component<Item> component = itemFactory.create(this);
-            component.bind(items[i]);
+            component.setData(items[i]);
             content.addView(component.getView(), new LinearLayout.LayoutParams(fixed ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
             component.getView().setSelected(i == 0);
             final int finalI = i;

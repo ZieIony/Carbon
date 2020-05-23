@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:icon="@drawable/ic_skip_previous_black_24dp" />
+
+    <item android:icon="@drawable/ic_play_arrow_black_24dp" />
+
+    <item android:icon="@drawable/ic_skip_next_black_24dp" />
+</menu>

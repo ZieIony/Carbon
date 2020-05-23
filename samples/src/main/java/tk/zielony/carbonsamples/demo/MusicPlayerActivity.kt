@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import carbon.recycler.RowFactory
 import carbon.recycler.RowListAdapter
 import kotlinx.android.synthetic.main.activity_musicplayer.*
-import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.R
+import tk.zielony.carbonsamples.SampleAnnotation
 import tk.zielony.carbonsamples.ThemedActivity
 import java.io.Serializable
 
@@ -34,7 +34,7 @@ class MusicPlayerActivity : ThemedActivity() {
         )
 
         recycler.layoutManager = LinearLayoutManager(this)
-      //  recycler.adapter = RowListAdapter(songs, RowFactory { parent -> DataBindingComponent<SongItem>(parent, R.layout.row_player_song) })
+        recycler.adapter = RowListAdapter(songs, RowFactory { SongRow(it) })
     }
 
     override fun applyTheme() {

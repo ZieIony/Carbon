@@ -8,6 +8,8 @@ import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import org.jetbrains.annotations.NotNull;
+
 import carbon.R;
 import carbon.drawable.ColorStateListDrawable;
 import carbon.drawable.ColorStateListFactory;
@@ -34,7 +36,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, androidx.recyclerview.widget.RecyclerView parent, androidx.recyclerview.widget.RecyclerView.State state) {
+    public void getItemOffsets(@NotNull Rect outRect, @NotNull View view, @NotNull androidx.recyclerview.widget.RecyclerView parent, @NotNull androidx.recyclerview.widget.RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         if (drawable == null)
             return;
@@ -59,7 +61,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDrawOver(Canvas c, androidx.recyclerview.widget.RecyclerView parent, androidx.recyclerview.widget.RecyclerView.State state) {
+    public void onDrawOver(@NotNull Canvas c, @NotNull androidx.recyclerview.widget.RecyclerView parent, @NotNull androidx.recyclerview.widget.RecyclerView.State state) {
         if (drawable == null) {
             super.onDrawOver(c, parent, state);
             return;

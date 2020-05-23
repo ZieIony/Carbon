@@ -40,20 +40,17 @@ public class ComponentView extends FrameLayout {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ComponentView, 0, 0);
 
         int id = a.getResourceId(R.styleable.ComponentView_carbon_id, 0);
-        int layout = a.getResourceId(R.styleable.ComponentView_carbon_layout, 0);
         String type = a.getString(R.styleable.ComponentView_carbon_type);
         try {
-            if (layout != 0 && type == null) {
-                component = new LayoutComponent(this, layout);
-            } else if (type != null) {
+            if (type != null) {
                 Constructor<?> constructor = Class.forName(type).getConstructor(ViewGroup.class);
                 component = (Component) constructor.newInstance(this);
-            }
-            if (component != null) {
                 View view = component.getView();
                 view.setTag(component);
                 view.setId(id);
                 addView(view);
+            } else {
+                throw new IllegalStateException("ComponentView needs a component type");
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

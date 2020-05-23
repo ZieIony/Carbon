@@ -63,7 +63,7 @@ public class RowListAdapter<Type> extends ListAdapter<RowViewHolder<Type>, Type>
         Type data = getItem(position);
         Component<Type> component = holder.getComponent();
         ItemTransformer transformer = factories.get(getItemViewType(position)).transformer;
-        component.bind((Type) transformer.transform(data));
+        component.setData((Type) transformer.transform(data));
         if (getSelectionMode() != SelectionMode.NONE)
             component.getView().setSelected(getSelectedIndices().contains(position));
     }
@@ -74,7 +74,7 @@ public class RowListAdapter<Type> extends ListAdapter<RowViewHolder<Type>, Type>
         Type data = getItem(position);
         Component<Type> component = holder.getComponent();
         ItemTransformer transformer = factories.get(getItemViewType(position)).transformer;
-        component.bind((Type) transformer.transform(data));
+        component.setData((Type) transformer.transform(data));
         if (getSelectionMode() != SelectionMode.NONE)
             component.getView().setSelected(getSelectedIndices().contains(position));
     }

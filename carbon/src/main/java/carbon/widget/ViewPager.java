@@ -1,6 +1,7 @@
 package carbon.widget;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -40,6 +41,7 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
     private boolean drag = true;
     private float prevX;
     private int overscrollMode;
+    private boolean swipeEnabled;
 
     public static final int OVER_SCROLL_ALWAYS = 0;
     public static final int OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
@@ -117,6 +119,8 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
             int attr = a.getIndex(i);
             if (attr == R.styleable.ViewPager_carbon_overScroll) {
                 setOverScrollMode(a.getInt(attr, OVER_SCROLL_ALWAYS));
+            } else if (attr == R.styleable.ViewPager_carbon_swipeEnabled) {
+                setSwipeEnabled(a.getBoolean(attr, true));
             }
         }
 
@@ -142,6 +146,25 @@ public class ViewPager extends androidx.viewpager.widget.ViewPager implements Ti
             }
         }
         return scrollRange;
+    }
+
+    public void setSwipeEnabled(boolean swipeEnabled) {
+        this.swipeEnabled = swipeEnabled;
+    }
+
+    public boolean isSwipeEnabled() {
+        return swipeEnabled;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return swipeEnabled && super.onTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return swipeEnabled && super.onInterceptTouchEvent(ev);
     }
 
     @Override

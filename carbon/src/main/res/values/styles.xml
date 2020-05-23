@@ -95,7 +95,9 @@
         <item name="android:theme">?attr/actionBarTheme</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="carbon_navigationIcon">@drawable/carbon_uparrow</item>
-        <item name="carbon_navigationIconContentDescription">@string/carbon_contentDescription_navigationIconUpButton</item>
+        <item name="carbon_navigationIconContentDescription">
+            @string/carbon_contentDescription_navigationIconUpButton
+        </item>
     </style>
 
     <style name="carbon_Toolbar.ActionBar.Flat">
@@ -240,6 +242,7 @@
         <item name="android:scrollbarThumbVertical">@drawable/carbon_scrollbar_thumb</item>
         <item name="android:scrollbarThumbHorizontal">@drawable/carbon_scrollbar_thumb</item>
         <item name="carbon_tint">?attr/colorPrimary</item>
+        <item name="carbon_swipeEnabled">true</item>
     </style>
 
     <style name="carbon_DialogAnimation" parent="android:Animation">

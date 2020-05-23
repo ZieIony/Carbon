@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import androidx.annotation.AttrRes;
 import androidx.annotation.StyleRes;
 import androidx.core.view.MenuItemCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.annimon.stream.Stream;
 
@@ -116,21 +115,10 @@ public class NavigationView extends RecyclerView {
     private static class CustomHeaderItem implements Serializable {
     }
 
-    private static class CustomHeaderRow implements Component<CustomHeaderItem> {
-
-        private View view;
+    private static class CustomHeaderRow extends Component<CustomHeaderItem> {
 
         CustomHeaderRow(View view) {
             this.view = view;
-        }
-
-        @Override
-        public View getView() {
-            return view;
-        }
-
-        @Override
-        public void bind(CustomHeaderItem data) {
         }
     }
 

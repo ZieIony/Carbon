@@ -134,6 +134,8 @@
         <enum name="ifContentScrolls" value="1" />
         <enum name="never" value="2" />
     </attr>
+    <attr name="carbon_swipeEnabled" format="boolean" />
+
     <attr name="carbon_htmlText" format="string" />
 
     <attr name="carbon_font" format="reference" />
@@ -177,7 +179,6 @@
     <declare-styleable name="ComponentView">
         <attr name="carbon_id" format="reference" />
         <attr name="carbon_type" format="string" />
-        <attr name="carbon_layout" format="reference" />
     </declare-styleable>
 
 
@@ -1290,6 +1291,7 @@
         <attr name="carbon_animateColorChanges" />
 
         <attr name="carbon_overScroll" />
+        <attr name="carbon_swipeEnabled" />
     </declare-styleable>
 
     <attr name="carbon_recyclerViewStyle" />

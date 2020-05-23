@@ -186,7 +186,7 @@ public class BottomNavigationView extends LinearLayout {
                     if (listener != null)
                         listener.onItemClicked(component.getView(), item, finalI);
                 });
-                component.bind(item);
+                component.setData(item);
                 addView(component.getView(), new LinearLayout.LayoutParams(width, height, 1));
             } else {
                 View view = new LinearLayout(getContext());
