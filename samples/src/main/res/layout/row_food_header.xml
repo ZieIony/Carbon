@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:layout_marginLeft="@dimen/carbon_contentSpace"
         android:paddingTop="@dimen/carbon_padding"
         android:paddingRight="@dimen/carbon_windowPadding"
         android:paddingBottom="@dimen/carbon_padding"

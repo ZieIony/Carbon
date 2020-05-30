@@ -31,8 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingStart="@dimen/carbon_contentPadding"
-            android:paddingLeft="@dimen/carbon_contentPadding"
+            android:paddingStart="@dimen/carbon_contentSpace"
+            android:paddingLeft="@dimen/carbon_contentSpace"
             android:paddingEnd="@dimen/carbon_toolbarItemMargin"
             android:paddingRight="@dimen/carbon_toolbarItemMargin"
             app:carbon_rippleColor="?attr/carbon_rippleColor">

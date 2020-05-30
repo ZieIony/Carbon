@@ -28,8 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/carbon_marker"
-        android:layout_marginStart="@dimen/carbon_contentPadding"
-        android:layout_marginLeft="@dimen/carbon_contentPadding"
+        android:layout_marginStart="@dimen/carbon_contentSpace"
+        android:layout_marginLeft="@dimen/carbon_contentSpace"
         android:layout_marginEnd="@dimen/carbon_windowPadding"
         android:layout_marginRight="@dimen/carbon_windowPadding"
         android:maxLines="1" />

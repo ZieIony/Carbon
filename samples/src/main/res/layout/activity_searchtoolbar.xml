@@ -45,8 +45,8 @@
                 android:id="@+id/searchEditText"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/carbon_toolbarHeight"
-                android:layout_marginLeft="@dimen/carbon_contentPadding"
-                android:layout_marginRight="@dimen/carbon_contentPadding"
+                android:layout_marginLeft="@dimen/carbon_contentSpace"
+                android:layout_marginRight="@dimen/carbon_contentSpace"
                 android:hint="Search" />
 
             <carbon.widget.ImageView

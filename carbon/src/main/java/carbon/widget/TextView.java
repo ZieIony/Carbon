@@ -296,6 +296,12 @@ public class TextView extends android.widget.TextView
         }
     }
 
+    public void setLineHeight(int lineHeight) {
+        final int fontHeight = getPaint().getFontMetricsInt(null);
+        if (lineHeight != fontHeight)
+            setLineSpacing(lineHeight - fontHeight, 1f);
+    }
+
     @Override
     public void setTextColor(@NotNull ColorStateList colors) {
         ColorStateList textColors = animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors;
@@ -1114,7 +1120,7 @@ public class TextView extends android.widget.TextView
         return tint;
     }
 
-    protected void updateTint(){
+    protected void updateTint() {
         Drawable[] drawables = getCompoundDrawables();
         if (tint != null && tintMode != null) {
             for (Drawable drawable : drawables) {
@@ -1174,7 +1180,7 @@ public class TextView extends android.widget.TextView
         return backgroundTint;
     }
 
-    protected void updateBackgroundTint(){
+    protected void updateBackgroundTint() {
         Drawable background = getBackground();
         if (background instanceof RippleDrawable)
             background = ((RippleDrawable) background).getBackground();

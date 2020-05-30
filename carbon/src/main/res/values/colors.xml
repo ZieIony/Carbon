@@ -58,7 +58,6 @@
     <color name="carbon_textColorDisabled_light">@color/carbon_black_38</color>
 
 
-    <color name="carbon_debug">#ffDE3226</color>
     <color name="carbon_tooltip">#e5616161</color>
 
 

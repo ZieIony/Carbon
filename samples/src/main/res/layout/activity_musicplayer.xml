@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="vertical"
-            android:paddingStart="@dimen/carbon_contentPadding"
-            android:paddingLeft="@dimen/carbon_contentPadding"
+            android:paddingStart="@dimen/carbon_contentSpace"
+            android:paddingLeft="@dimen/carbon_contentSpace"
             android:paddingBottom="@dimen/carbon_paddingHalf">
 
             <carbon.widget.TextView

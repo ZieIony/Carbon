@@ -56,8 +56,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/carbon_contentPadding"
-                        android:layout_marginLeft="@dimen/carbon_contentPadding"
+                        android:layout_marginStart="@dimen/carbon_contentSpace"
+                        android:layout_marginLeft="@dimen/carbon_contentSpace"
                         android:text="Visit website" />
                 </carbon.widget.FrameLayout>
 
@@ -79,8 +79,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/carbon_contentPadding"
-                        android:layout_marginLeft="@dimen/carbon_contentPadding"
+                        android:layout_marginStart="@dimen/carbon_contentSpace"
+                        android:layout_marginLeft="@dimen/carbon_contentSpace"
                         android:text="Report issue" />
                 </carbon.widget.FrameLayout>
             </LinearLayout>

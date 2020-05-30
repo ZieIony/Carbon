@@ -39,6 +39,7 @@ public class Label extends View implements TextAppearanceView {
     private StaticLayout layout;
     private TransformationMethod transformationMethod;
     private int gravity;
+    private float spacingMul = 1, spacingAdd = 0;
     ValueAnimator.AnimatorUpdateListener textColorAnimatorListener = animation -> postInvalidate();
 
     public Label(Context context) {
@@ -128,6 +129,25 @@ public class Label extends View implements TextAppearanceView {
         layout = null;
     }
 
+    public void setLineHeight(int lineHeight) {
+        final int fontHeight = getPaint().getFontMetricsInt(null);
+        if (lineHeight != fontHeight)
+            setLineSpacing(lineHeight - fontHeight, 1f);
+    }
+
+    public void setLineSpacing(float add, float mult) {
+        if (spacingAdd != add || spacingMul != mult) {
+            spacingAdd = add;
+            spacingMul = mult;
+
+            if (layout != null) {
+                layout = null;
+                requestLayout();
+                invalidate();
+            }
+        }
+    }
+
     @Override
     public void setTypeface(@NotNull Typeface typeface, int style) {
         paint.setTypeface(typeface);
@@ -202,7 +222,7 @@ public class Label extends View implements TextAppearanceView {
                 alignment = Layout.Alignment.ALIGN_CENTER;
             }
             CharSequence transformedText = transformationMethod != null ? transformationMethod.getTransformation(text, this) : text;
-            layout = new StaticLayout(transformedText, paint, getWidth() - getPaddingLeft() - getPaddingRight(), alignment, 1.0f, 0.0f, false);
+            layout = new StaticLayout(transformedText, paint, getWidth() - getPaddingLeft() - getPaddingRight(), alignment, spacingMul, spacingAdd, false);
         }
     }
 

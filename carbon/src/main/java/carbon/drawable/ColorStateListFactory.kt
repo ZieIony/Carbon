@@ -7,7 +7,7 @@ import carbon.R
 
 object ColorStateListFactory {
     private fun make(context: Context, defaultColor: Int, activated: Int, disabled: Int,
-                     invalid: Int = Carbon.getThemeColor(context, R.attr.carbon_colorError)): ColorStateList {
+                     invalid: Int = Carbon.getThemeColor(context, R.attr.colorError)): ColorStateList {
         return ColorStateList(
                 arrayOf(
                         intArrayOf(-android.R.attr.state_enabled),
@@ -34,7 +34,7 @@ object ColorStateListFactory {
     }
 
     private fun makeAlpha(context: Context, defaultColor: Int, activated: Int, disabled: Int,
-                          invalid: Int = Carbon.getThemeColor(context, R.attr.carbon_colorError)): ColorStateList {
+                          invalid: Int = Carbon.getThemeColor(context, R.attr.colorError)): ColorStateList {
         return AlphaWithParentDrawable.AlphaWithParentColorStateList(
                 arrayOf(
                         intArrayOf(-android.R.attr.state_enabled),
@@ -61,7 +61,7 @@ object ColorStateListFactory {
     }
 
     private fun make2(context: Context, defaultColor: Int, disabled: Int,
-                      invalid: Int = Carbon.getThemeColor(context, R.attr.carbon_colorError)): ColorStateList {
+                      invalid: Int = Carbon.getThemeColor(context, R.attr.colorError)): ColorStateList {
         return ColorStateList(
                 arrayOf(
                         intArrayOf(-android.R.attr.state_enabled),
@@ -78,7 +78,7 @@ object ColorStateListFactory {
     }
 
     private fun makeAlpha2(context: Context, defaultColor: Int, disabled: Int,
-                           invalid: Int = Carbon.getThemeColor(context, R.attr.carbon_colorError)): ColorStateList {
+                           invalid: Int = Carbon.getThemeColor(context, R.attr.colorError)): ColorStateList {
         return AlphaWithParentDrawable.AlphaWithParentColorStateList(
                 arrayOf(
                         intArrayOf(-android.R.attr.state_enabled),
@@ -98,20 +98,20 @@ object ColorStateListFactory {
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorControlActivated) and 0xffffff)),
             0,
-            (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorError) and 0xffffff)))
+            (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorError) and 0xffffff)))
 
     fun makeHighlightPrimary(context: Context) = make(context,
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorPrimary) and 0xffffff)),
             0,
-            (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorError) and 0xffffff))
+            (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorError) and 0xffffff))
     )
 
     fun makeHighlightSecondary(context: Context) = make(context,
             0,
             (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorSecondary) and 0xffffff)),
             0,
-            (0x12000000 or (Carbon.getThemeColor(context, R.attr.carbon_colorError) and 0xffffff))
+            (0x12000000 or (Carbon.getThemeColor(context, R.attr.colorError) and 0xffffff))
     )
 
     fun makeMenuSelection(context: Context) = MenuSelectionDrawable(

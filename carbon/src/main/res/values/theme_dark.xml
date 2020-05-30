@@ -3,8 +3,6 @@
     <style name="carbon_Theme.Dark" parent="Theme.MaterialComponents">
         <item name="carbon_themeOverlayInverse">@style/carbon_ThemeOverlay.Light</item>
 
-        <item name="carbon_colorError">#ffF44336</item>
-
         <item name="android:buttonStyle">@style/carbon_Button.Colored.Inverse</item>
         <item name="android:textViewStyle">@style/carbon_TextView</item>
         <item name="android:scrollViewStyle">@style/carbon_ScrollView</item>

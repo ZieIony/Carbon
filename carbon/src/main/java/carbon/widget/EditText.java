@@ -432,6 +432,12 @@ public class EditText extends android.widget.EditText
         }
     }
 
+    public void setLineHeight(int lineHeight) {
+        final int fontHeight = getPaint().getFontMetricsInt(null);
+        if (lineHeight != fontHeight)
+            setLineSpacing(lineHeight - fontHeight, 1f);
+    }
+
     @Override
     public void setTextColor(@NonNull ColorStateList colors) {
         super.setTextColor(animateColorChanges && !(colors instanceof AnimatedColorStateList) ? AnimatedColorStateList.fromList(colors, textColorAnimatorListener) : colors);

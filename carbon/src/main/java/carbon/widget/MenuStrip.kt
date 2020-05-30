@@ -35,7 +35,8 @@ open class MenuStrip : RecyclerView {
         var title: CharSequence? = null
         var iconTintList: ColorStateList? = null
         var groupId = 0
-        var isEnabled = false
+        var isEnabled = true
+        var isVisible = true
 
         constructor()
 
@@ -55,6 +56,7 @@ open class MenuStrip : RecyclerView {
             iconTintList = MenuItemCompat.getIconTintList(menuItem)
             groupId = menuItem.groupId
             isEnabled = menuItem.isEnabled
+            isVisible = menuItem.isVisible
         }
 
         override fun equals(other: Any?): Boolean {
@@ -266,13 +268,13 @@ open class MenuStrip : RecyclerView {
         initItems()
     }
 
+    fun getItem(id: Int) = items?.find { it.id == id }
+
     private fun initItems() {
-        if (items == null)
-            return
-
-        initAdapter()
-
-        adapter.items = items
+        items?.let { items ->
+            initAdapter()
+            adapter.items = items.filter { it.isVisible }.toTypedArray()
+        }
     }
 
     private fun initAdapter() {
@@ -283,6 +285,10 @@ open class MenuStrip : RecyclerView {
         adapter.setOnItemClickedListener(onItemClickedListener)
 
         setAdapter(adapter)
+    }
+
+    fun refresh() {
+        adapter.items = adapter.items
     }
 
     override fun setDivider(divider: Drawable?, height: Int): DividerItemDecoration? {

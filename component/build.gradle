@@ -6,9 +6,8 @@ android {
     compileSdkVersion 29
     buildToolsVersion = '29.0.2'
 
-    viewBinding {
-        enabled = true
-    }
+    buildFeatures.viewBinding = true
+
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
@@ -32,9 +31,5 @@ android {
 
 dependencies {
     api project(':carbon')
-    implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-repositories {
-    mavenCentral()
 }

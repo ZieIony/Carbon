@@ -103,7 +103,7 @@ public class TextMarker extends View {
     protected void onDraw(Canvas canvas) {
         if (isInEditMode()) {
             @SuppressLint("DrawAllocation") Paint paint = new Paint();
-            paint.setColor(Carbon.getThemeColor(getContext(), R.attr.carbon_colorError));
+            paint.setColor(Carbon.getThemeColor(getContext(), R.attr.colorError));
             canvas.drawLine(0, getBaseline(), getWidth(), getBaseline(), paint);
         }
     }
