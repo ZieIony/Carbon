@@ -30,7 +30,7 @@ import tk.zielony.carbonsamples.ThemedActivity;
         iconId = R.drawable.ic_power_settings_new_black_24dp
 )
 public class PowerMenuActivity extends ThemedActivity {
-    boolean vibration = false, volume = true, airplaneMode = false;
+    boolean vibration = false, volume = false, airplaneMode = false;
 
     Button button;
     LinearLayout powerMenu, screenPowerMenu;
@@ -165,11 +165,11 @@ public class PowerMenuActivity extends ThemedActivity {
         findViewById(R.id.vibration).setOnClickListener(view -> {
             if (vibration) {
                 vibration = false;
-                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_colorBackground));
+                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, android.R.attr.colorBackground));
                 ((ImageView) view).setTint(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_iconColor));
             } else {
                 vibration = true;
-                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_colorBackgroundInverse));
+                view.setBackgroundColor(getResources().getColor(R.color.carbon_black_54o));
                 ((ImageView) view).setTint(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_iconColorInverse));
                 Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(500);
@@ -180,11 +180,11 @@ public class PowerMenuActivity extends ThemedActivity {
         findViewById(R.id.volume).setOnClickListener(view -> {
             if (volume) {
                 volume = false;
-                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_colorBackground));
+                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, android.R.attr.colorBackground));
                 ((ImageView) view).setTint(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_iconColor));
             } else {
                 volume = true;
-                view.setBackgroundColor(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_colorBackgroundInverse));
+                view.setBackgroundColor(getResources().getColor(R.color.carbon_black_54o));
                 ((ImageView) view).setTint(Carbon.getThemeColor(PowerMenuActivity.this, R.attr.carbon_iconColorInverse));
                 view.playSoundEffect(SoundEffectConstants.CLICK);
             }

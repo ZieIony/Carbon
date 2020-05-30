@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    app:carbon_insetColor="?attr/colorPrimary">
+    android:fitsSystemWindows="true">
 
     <carbon.widget.BackdropLayout
         android:id="@+id/backdrop_backdropLayout"
@@ -36,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/carbon_toolbarHeight"
             android:layout_marginLeft="@dimen/carbon_toolbarHeight"
-            android:background="?attr/carbon_colorBackground"
+            android:background="?android:attr/colorBackground"
             android:orientation="vertical"
             app:carbon_elevation="@dimen/carbon_elevationDrawer">
 

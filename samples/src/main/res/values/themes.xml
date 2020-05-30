@@ -3,14 +3,14 @@
 
     <style name="AppTheme.Shrine">
         <item name="colorPrimary">#fedbd0</item>
-        <item name="colorPrimaryDark">#fedbd0</item>
+        <item name="colorPrimaryVariant">#fedbd0</item>
         <item name="colorSecondary">#442c2e</item>
         <item name="carbon_font">@font/rubik_regular</item>
     </style>
 
     <style name="AppTheme.Crane" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
         <item name="colorPrimary">#720d5d</item>
-        <item name="colorPrimaryDark">#4e0d3a</item>
+        <item name="colorPrimaryVariant">#4e0d3a</item>
         <item name="colorSecondary">#e30425</item>
         <item name="carbon_font">@font/raleway_regular</item>
     </style>
@@ -20,7 +20,7 @@
 
     <style name="AppTheme.Basil">
         <item name="colorPrimary">#356859</item>
-        <item name="colorPrimaryDark">#356859</item>
+        <item name="colorPrimaryVariant">#356859</item>
         <item name="colorSecondary">#fd5523</item>
         <item name="android:windowBackground">@color/basilBackground</item>
         <item name="carbon_font">@font/lekton_regular</item>
@@ -28,7 +28,7 @@
 
     <style name="AppTheme.Food" parent="carbon_Theme.Light.DarkPrimaryColor.NoActionBar">
         <item name="colorPrimary">@color/carbon_deepOrange_400</item>
-        <item name="colorPrimaryDark">@color/carbon_deepOrange_700</item>
+        <item name="colorPrimaryVariant">@color/carbon_deepOrange_700</item>
         <item name="colorAccent">@color/carbon_green_a400</item>
     </style>
 
@@ -78,8 +78,8 @@
         <item name="carbon_bottomNavigationViewStyle">@style/WindowsTheme.BottomNavigationView
         </item>
         <item name="android:windowBackground">@color/carbon_black</item>
-        <item name="carbon_colorBackground">@color/carbon_black</item>
-        <item name="carbon_colorForeground">@color/carbon_black</item>
+        <item name="android:colorBackground">@color/carbon_black</item>
+        <item name="colorSurface">@color/carbon_black</item>
         <item name="carbon_textAppearanceTitle">@style/WindowsTheme.TextAppearance.Title</item>
         <item name="carbon_textAppearanceSubhead">@style/WindowsTheme.TextAppearance.Subhead</item>
         <item name="carbon_textAppearanceButton">@style/WindowsTheme.TextAppearance.Button</item>

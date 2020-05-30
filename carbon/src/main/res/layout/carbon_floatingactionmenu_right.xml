@@ -24,7 +24,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/carbon_paddingHalf"
         android:layout_marginRight="@dimen/carbon_paddingHalf"
-        android:background="?attr/carbon_colorForeground"
+        android:background="?attr/colorSurface"
         android:clickable="false"
         android:duplicateParentState="true"
         android:focusable="false" />

@@ -51,7 +51,7 @@ public class PopupMenu extends PopupWindow {
         int marginHalf = (int) res.getDimension(R.dimen.carbon_paddingHalf);
 
         int selectedItem = 0;
-        ArrayAdapter adapter = menuStrip.getAdapter();
+        ArrayAdapter adapter = (ArrayAdapter) menuStrip.getAdapter();
 
         if (getAnchorView() instanceof android.widget.TextView) {
             android.widget.TextView textView = (TextView) getAnchorView();

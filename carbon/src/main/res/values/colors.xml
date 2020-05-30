@@ -26,13 +26,9 @@
     <color name="carbon_iconColor_dark">@color/carbon_white</color>
     <color name="carbon_iconColorDisabled_dark">@color/carbon_white_50</color>
 
-    <color name="carbon_colorPrimaryDark_dark">@color/carbon_black</color>
-    <color name="carbon_colorPrimary_dark">@color/carbon_grey_900</color>
     <color name="carbon_colorControl_dark">@color/carbon_white_12</color>
     <color name="carbon_colorControlDisabled_dark">@color/carbon_white_10</color>
     <color name="carbon_colorControlActivated_dark">@color/carbon_white_50</color>
-    <color name="carbon_colorBackground_dark">#ff303030</color>
-    <color name="carbon_colorForeground_dark">@color/carbon_grey_800</color>
 
     <color name="carbon_textColorPrimary_dark">@color/carbon_white</color>
     <color name="carbon_textColorSecondary_dark">@color/carbon_white_70</color>
@@ -44,13 +40,9 @@
     <color name="carbon_iconColor_light">@color/carbon_black_54</color>
     <color name="carbon_iconColorDisabled_light">@color/carbon_black_38</color>
 
-    <color name="carbon_colorPrimaryDark_light">@color/carbon_grey_300</color>
-    <color name="carbon_colorPrimary_light">@color/carbon_grey_100</color>
     <color name="carbon_colorControl_light">@color/carbon_black_12</color>
     <color name="carbon_colorControlDisabled_light">@color/carbon_black_6</color>
     <color name="carbon_colorControlActivated_light">@color/carbon_black_38</color>
-    <color name="carbon_colorBackground_light">@color/carbon_grey_50</color>
-    <color name="carbon_colorForeground_light">@color/carbon_white</color>
 
     <color name="carbon_textColorPrimary_light">@color/carbon_black_87</color>
     <color name="carbon_textColorSecondary_light">@color/carbon_black_54</color>

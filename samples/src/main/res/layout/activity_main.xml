@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <carbon.widget.Toolbar
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         app:carbon_menu="@menu/menu_main"
-        app:carbon_navigationIcon="@null"/>
+        app:carbon_navigationIcon="@null" />
 
     <carbon.widget.RecyclerView
         android:id="@+id/recycler"

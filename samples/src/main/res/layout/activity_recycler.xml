@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+    android:orientation="vertical">
 
     <include layout="@layout/view_debugtoolbar" />
 

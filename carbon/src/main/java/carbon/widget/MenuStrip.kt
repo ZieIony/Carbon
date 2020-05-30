@@ -271,10 +271,8 @@ open class MenuStrip : RecyclerView {
     fun getItem(id: Int) = items?.find { it.id == id }
 
     private fun initItems() {
-        items?.let { items ->
-            initAdapter()
-            adapter.items = items.filter { it.isVisible }.toTypedArray()
-        }
+        initAdapter()
+        refresh()
     }
 
     private fun initAdapter() {
@@ -288,7 +286,9 @@ open class MenuStrip : RecyclerView {
     }
 
     fun refresh() {
-        adapter.items = adapter.items
+        items?.let {
+            adapter.items = it.filter { it.isVisible }.toTypedArray()
+        }
     }
 
     override fun setDivider(divider: Drawable?, height: Int): DividerItemDecoration? {

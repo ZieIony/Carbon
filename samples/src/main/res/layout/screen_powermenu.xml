@@ -158,7 +158,7 @@
             style="@style/carbon_FloatingActionButton.Small"
             android:layout_marginLeft="@dimen/carbon_padding"
             android:layout_marginRight="@dimen/carbon_padding"
-            android:background="?attr/carbon_colorBackground"
+            android:background="?android:attr/colorBackground"
             android:padding="@dimen/carbon_paddingHalf"
             android:tag="animate"
             app:carbon_elevation="0dp"
@@ -171,13 +171,13 @@
             android:id="@+id/volume"
             style="@style/carbon_FloatingActionButton.Small"
             android:layout_marginRight="@dimen/carbon_padding"
-            android:background="?attr/carbon_colorBackgroundInverse"
+            android:background="?android:attr/colorBackground"
             android:padding="@dimen/carbon_paddingHalf"
             android:tag="animate"
             app:carbon_elevation="0dp"
             app:carbon_inAnimation="pop"
             app:carbon_outAnimation="none"
             app:carbon_src="@raw/ic_volume_up_24px"
-            app:carbon_tint="?attr/carbon_iconColorInverse" />
+            app:carbon_tint="?attr/carbon_iconColor" />
     </carbon.widget.LinearLayout>
 </carbon.widget.LinearLayout>

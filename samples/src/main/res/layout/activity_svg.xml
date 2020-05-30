@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+    android:orientation="vertical">
 
     <include layout="@layout/view_debugtoolbar" />
 
@@ -30,28 +29,28 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_dns_24px"
-            app:carbon_tint="?attr/carbon_colorBackgroundInverse" />
+            app:carbon_tint="?attr/carbon_iconColor" />
 
         <carbon.widget.ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_face_24px"
-            app:carbon_tint="?attr/carbon_colorBackgroundInverse" />
+            app:carbon_tint="?attr/carbon_iconColor" />
 
         <carbon.widget.ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_print_24px"
-            app:carbon_tint="?attr/carbon_colorBackgroundInverse" />
+            app:carbon_tint="?attr/carbon_iconColor" />
 
         <carbon.widget.ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/carbon_padding"
             app:carbon_src="@raw/ic_settings_input_svideo_24px"
-            app:carbon_tint="?attr/carbon_colorBackgroundInverse" />
+            app:carbon_tint="?attr/carbon_iconColor" />
     </carbon.widget.LinearLayout>
 
     <carbon.widget.LinearLayout

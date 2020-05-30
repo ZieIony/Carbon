@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+    android:orientation="vertical">
 
     <carbon.widget.FrameLayout
         android:layout_width="match_parent"
@@ -29,7 +28,7 @@
             android:id="@+id/searchbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/carbon_colorForeground"
+            android:background="?attr/colorSurface"
             android:orientation="horizontal"
             android:visibility="invisible">
 

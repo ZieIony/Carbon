@@ -2,10 +2,6 @@
 <resources>
     <attr name="carbon_themeOverlayInverse" format="reference" />
 
-    <attr name="carbon_colorBackground" format="color" />
-    <attr name="carbon_colorBackgroundInverse" format="color" />
-    <attr name="carbon_colorForeground" format="color" />
-
     <attr name="carbon_colorControl" format="color" />
     <attr name="carbon_colorControlInverse" format="color" />
     <attr name="carbon_colorControlDisabled" format="color" />

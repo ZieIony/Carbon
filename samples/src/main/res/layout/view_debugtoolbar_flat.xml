@@ -6,18 +6,6 @@
     style="@style/carbon_Toolbar.Flat"
     android:layout_width="match_parent"
     android:layout_height="@dimen/carbon_toolbarHeight"
+    app:carbon_menu="@menu/menu_samples"
     app:carbon_navigationIcon="@drawable/carbon_uparrow"
-    tools:text="test title">
-
-    <carbon.widget.ImageView
-        android:id="@+id/debug"
-        style="@style/carbon_ImageView.IconButton"
-        app:carbon_src="@drawable/ic_bug_report_black_24dp"
-        app:carbon_tooltipText="Show debug options" />
-
-    <carbon.widget.CheckBox
-        android:id="@+id/enabled"
-        style="@style/carbon_CheckBox.IconButton"
-        android:checked="true"
-        app:carbon_tooltipText="Enable/disable views" />
-</carbon.widget.Toolbar>
+    tools:text="test title" />

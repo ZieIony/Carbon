@@ -25,6 +25,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/collapsingToolbarActivity_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </carbon.widget.MotionLayout>

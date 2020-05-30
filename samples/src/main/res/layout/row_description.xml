@@ -12,7 +12,7 @@
     <carbon.widget.TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/carbon_colorForeground"
+        android:background="?attr/colorSurface"
         android:paddingStart="@dimen/carbon_contentSpace"
         android:paddingLeft="@dimen/carbon_contentSpace"
         android:paddingTop="@dimen/carbon_padding"

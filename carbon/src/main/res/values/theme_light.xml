@@ -60,9 +60,7 @@
         <item name="carbon_snackbarTheme">@style/carbon_ThemeOverlay.Dark</item>
         <item name="carbon_dropDownPopupTheme">@style/carbon_ThemeOverlay.Light</item>
 
-        <item name="colorPrimary">@color/carbon_colorPrimary_light</item>
-        <item name="colorPrimaryDark">@color/carbon_colorPrimaryDark_light</item>
-        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorPrimaryDark">?attr/colorPrimaryVariant</item>
 
         <item name="android:textColorPrimary">@color/carbon_textColorPrimary_light</item>
         <item name="android:textColorSecondary">@color/carbon_textColorSecondary_light</item>
@@ -72,9 +70,6 @@
         <item name="android:textColorSecondaryInverse">@color/carbon_textColorSecondary_dark</item>
         <item name="android:textColorTertiaryInverse">@color/carbon_textColorHint_dark</item>
 
-        <item name="carbon_colorBackground">@color/carbon_colorBackground_light</item>
-        <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
-        <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
         <item name="carbon_inputLayoutBoxColor">@color/carbon_black_6</item>
         <item name="carbon_inputLayoutBoxPadding">0dp</item>
         <item name="carbon_rippleColor">@color/carbon_rippleColor_light</item>
@@ -129,7 +124,6 @@
             @style/carbon_TextAppearance.Button.Inverse
         </item>
 
-        <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
         <item name="android:windowContentOverlay">@null</item>
 
         <item name="carbon_font">@null</item>
@@ -149,9 +143,6 @@
         <item name="android:textColorSecondaryInverse">@color/carbon_textColorSecondary_dark</item>
         <item name="android:textColorTertiaryInverse">@color/carbon_textColorHint_dark</item>
 
-        <item name="carbon_colorBackground">@color/carbon_colorBackground_light</item>
-        <item name="carbon_colorBackgroundInverse">@color/carbon_colorBackground_dark</item>
-        <item name="carbon_colorForeground">@color/carbon_colorForeground_light</item>
         <item name="carbon_inputLayoutBoxColor">@color/carbon_black_6</item>
         <item name="carbon_rippleColor">@color/carbon_rippleColor_light</item>
         <item name="carbon_rippleColorInverse">@color/carbon_rippleColor_dark</item>
@@ -204,8 +195,6 @@
         <item name="carbon_textAppearanceButtonInverse">
             @style/carbon_TextAppearance.Button.Inverse
         </item>
-
-        <item name="android:windowBackground">@drawable/carbon_windowbackground_light</item>
     </style>
 
     <style name="carbon_Theme.Light.NoActionBar">

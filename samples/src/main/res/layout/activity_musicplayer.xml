@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:carbon_menu="@menu/menu_player"
-        app:carbon_navigationIcon="@drawable/carbon_uparrow"/>
+        app:carbon_navigationIcon="@drawable/carbon_uparrow" />
 
     <carbon.widget.RecyclerView
         android:id="@+id/recycler"

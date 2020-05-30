@@ -43,7 +43,7 @@ public class ShareToolbarActivity extends ThemedActivity {
                 shareToolbar.layout((int) left, shareToolbar.getTop(), (int) right, shareToolbar.getBottom());
                 shareToolbar.setElevation(frac);
                 int inColor = Carbon.getThemeColor(this, R.attr.colorSecondary);
-                int outColor = Carbon.getThemeColor(this, R.attr.carbon_colorForeground);
+                int outColor = Carbon.getThemeColor(this, R.attr.colorSurface);
                 shareToolbar.setBackgroundColor(AnimUtils.lerpColor(frac, inColor, outColor));
             });
             animator.setDuration(300);

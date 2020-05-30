@@ -8,7 +8,7 @@
 
     <style name="carbon_Snackbar" parent="carbon_LinearLayout">
         <item name="carbon_elevation">@dimen/carbon_elevationSnackbar</item>
-        <item name="android:background">?attr/carbon_colorForeground</item>
+        <item name="android:background">?attr/colorSurface</item>
         <item name="android:fitsSystemWindows">false</item>
         <item name="carbon_maxHeight">80dp</item>
         <item name="carbon_maxWidth">568dp</item>
@@ -76,7 +76,7 @@
 
     <style name="carbon_Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:layout_height">@dimen/carbon_toolbarHeight</item>
-        <item name="android:background">?attr/carbon_colorForeground</item>
+        <item name="android:background">?attr/colorSurface</item>
         <item name="carbon_elevation">@dimen/carbon_elevationToolbar</item>
         <item name="contentInsetLeft">0dp</item>
         <item name="contentInsetStart">0dp</item>
@@ -131,7 +131,7 @@
     </style>
 
     <style name="carbon_RecyclerView.TransparentComponentsThemeOverlay">
-        <item name="carbon_colorForeground">@null</item>
+        <item name="colorSurface">@null</item>
     </style>
 
     <style name="carbon_RecyclerView.TransparentComponents">
@@ -148,7 +148,7 @@
     </style>
 
     <style name="carbon_CardView" parent="carbon_LinearLayout">
-        <item name="android:background">?attr/carbon_colorForeground</item>
+        <item name="android:background">?attr/colorSurface</item>
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
         <item name="carbon_cornerRadius">2dp</item>
     </style>
@@ -251,7 +251,7 @@
     </style>
 
     <style name="carbon_Dialog" parent="carbon_LinearLayout">
-        <item name="android:background">?attr/carbon_colorForeground</item>
+        <item name="android:background">?attr/colorSurface</item>
         <item name="android:minWidth">@dimen/carbon_dialogMinimumWidth</item>
         <item name="carbon_cornerRadius">@dimen/carbon_cornerRadiusDialog</item>
         <item name="carbon_elevation">@dimen/carbon_elevationDialog</item>
@@ -296,7 +296,7 @@
     </style>
 
     <style name="carbon_AutoCompleteLayout" parent="carbon_LinearLayout">
-        <item name="android:background">?attr/carbon_colorForeground</item>
+        <item name="android:background">?attr/colorSurface</item>
         <item name="carbon_cornerRadius">2dp</item>
         <item name="carbon_elevation">@dimen/carbon_elevationCard</item>
     </style>

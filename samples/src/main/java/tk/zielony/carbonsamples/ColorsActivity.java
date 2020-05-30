@@ -49,10 +49,10 @@ public class ColorsActivity extends ThemedActivity {
     }
 
     public static Item[] styles = new Item[]{
-            new Item("Dark", R.style.ThemeDark, R.color.carbon_colorBackground_dark),
-            new Item("Dark.DarkPrimaryColor", R.style.ThemeDark_Inverse, R.color.carbon_colorBackground_dark),
-            new Item("Light", R.style.ThemeLight, R.color.carbon_colorBackground_light),
-            new Item("Light.DarkPrimaryColor", R.style.ThemeLight_Inverse, R.color.carbon_colorBackground_light),
+            new Item("Dark", R.style.ThemeDark, R.color.design_dark_default_color_background),
+            new Item("Dark.DarkPrimaryColor", R.style.ThemeDark_Inverse, R.color.design_dark_default_color_background),
+            new Item("Light", R.style.ThemeLight, R.color.design_default_color_background),
+            new Item("Light.DarkPrimaryColor", R.style.ThemeLight_Inverse, R.color.design_default_color_background),
             new Item("DayNight", R.style.ThemeDayNight, R.color.carbon_black_38),
             new Item("DayNight.DarkPrimaryColor", R.style.ThemeDayNight_Inverse, R.color.carbon_black_38)
     };

@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        app:carbon_insetColor="?attr/colorPrimary">
+        android:orientation="vertical">
 
         <include layout="@layout/view_debugtoolbar" />
 
@@ -33,7 +32,7 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="?attr/carbon_colorBackground"
+        android:background="?android:attr/colorBackground"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         app:carbon_elevation="@dimen/carbon_elevationDrawer"

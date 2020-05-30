@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+    android:orientation="vertical">
 
     <carbon.widget.Toolbar
         android:id="@+id/toolbar"
@@ -41,7 +40,7 @@
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginBottom="@dimen/carbon_marginHalf"
-                android:background="?attr/colorPrimaryDark"
+                android:background="?attr/colorPrimaryVariant"
                 android:clickable="true"
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusButton"
                 app:carbon_rippleColor="?attr/carbon_rippleColor">
@@ -67,7 +66,7 @@
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginBottom="@dimen/carbon_marginHalf"
-                android:background="?attr/colorPrimaryDark"
+                android:background="?attr/colorPrimaryVariant"
                 android:clickable="true"
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusButton"
                 app:carbon_rippleColor="?attr/carbon_rippleColor">
@@ -93,7 +92,7 @@
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginBottom="@dimen/carbon_marginHalf"
-                android:background="?attr/colorPrimaryDark"
+                android:background="?attr/colorPrimaryVariant"
                 android:clickable="true"
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusButton"
                 app:carbon_rippleColor="?attr/carbon_rippleColor">
@@ -119,7 +118,7 @@
                 android:layout_marginLeft="@dimen/carbon_windowPadding"
                 android:layout_marginRight="@dimen/carbon_windowPadding"
                 android:layout_marginBottom="@dimen/carbon_margin"
-                android:background="?attr/colorPrimaryDark"
+                android:background="?attr/colorPrimaryVariant"
                 android:clickable="true"
                 app:carbon_cornerRadius="@dimen/carbon_cornerRadiusButton"
                 app:carbon_rippleColor="?attr/carbon_rippleColor">

@@ -4,22 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+    android:orientation="vertical">
 
     <include layout="@layout/view_debugtoolbar" />
 
     <carbon.widget.FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/carbon_colorBackground">
+        android:background="?android:attr/colorBackground">
 
         <carbon.widget.LinearLayout
             style="@style/carbon_CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/carbon_windowPadding"
-            android:background="?attr/carbon_colorForeground"
+            android:background="?attr/colorSurface"
             android:orientation="vertical"
             android:padding="@dimen/carbon_padding">
 

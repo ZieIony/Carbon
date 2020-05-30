@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:carbon_insetColor="?attr/colorPrimary">
+    android:orientation="vertical">
 
     <include layout="@layout/view_debugtoolbar" />
 
@@ -65,8 +64,9 @@
             <carbon.widget.LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/carbon_colorBackgroundInverse"
-                android:orientation="vertical">
+                android:background="?android:attr/colorBackground"
+                android:orientation="vertical"
+                android:theme="?attr/carbon_themeOverlayInverse">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -76,8 +76,7 @@
                         style="@style/sectionDescription"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:text="Inversed styles"
-                        android:theme="?attr/carbon_themeOverlayInverse" />
+                        android:text="Inversed styles" />
 
                     <carbon.widget.ImageView
                         android:id="@+id/code_buttonsInversed"
@@ -164,8 +163,9 @@
             <carbon.widget.LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/carbon_colorBackgroundInverse"
-                android:orientation="vertical">
+                android:background="?android:attr/colorBackground"
+                android:orientation="vertical"
+                android:theme="?attr/carbon_themeOverlayInverse">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -175,8 +175,7 @@
                         style="@style/sectionDescription"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:text="Colored, inversed styles"
-                        android:theme="?attr/carbon_themeOverlayInverse" />
+                        android:text="Colored, inversed styles" />
 
                     <carbon.widget.ImageView
                         android:id="@+id/code_buttonsColoredInversed"

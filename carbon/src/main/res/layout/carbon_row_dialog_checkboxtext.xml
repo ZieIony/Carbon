@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/carbon_listItemHeight"
-    android:background="?attr/carbon_colorForeground"
+    android:background="?attr/colorSurface"
     android:clickable="true"
     android:focusable="true"
     app:carbon_rippleColor="?attr/carbon_rippleColor">
