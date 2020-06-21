@@ -500,10 +500,10 @@ public class DropDown extends EditText {
             final int top;
             switch (verticalGravity) {
                 case Gravity.BOTTOM:
-                    top = Math.max(getPaddingTop(), getHeight() - drawableHeight - getPaddingBottom());
+                    top = getHeight() - drawableHeight - getPaddingBottom();
                     break;
                 case Gravity.CENTER_VERTICAL:
-                    top = Math.max(getPaddingTop(), (getHeight() - drawableHeight) / 2);
+                    top = (getHeight() - drawableHeight - getPaddingTop() - getPaddingBottom()) / 2 + getPaddingTop();
                     break;
                 default:
                     top = getPaddingTop();

@@ -41,10 +41,11 @@
                     android:id="@+id/month"
                     style="@style/carbon_DropDown.Underlined"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="103dp"
                     android:layout_marginLeft="@dimen/carbon_marginHalf"
                     android:layout_marginRight="@dimen/carbon_marginHalf"
                     android:layout_weight="1"
+                    android:gravity="bottom"
                     android:text="Jan"
                     app:carbon_buttonGravity="left" />
 
@@ -52,7 +53,7 @@
                     android:id="@+id/year"
                     style="@style/carbon_DropDown.Underlined"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:layout_weight="1"
                     android:inputType="number"
                     android:maxLength="4"

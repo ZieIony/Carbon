@@ -173,8 +173,6 @@
     <style name="carbon_EditText.Underlined">
         <item name="android:background">@color/carbon_colorUnderline</item>
         <item name="android:paddingBottom">@dimen/carbon_padding</item>
-        <item name="android:paddingRight">@dimen/carbon_paddingHalf</item>
-        <item name="android:paddingEnd">@dimen/carbon_paddingHalf</item>
         <item name="carbon_backgroundTint">@color/carbon_defaultColorControlPrimary</item>
     </style>
 
@@ -204,7 +202,7 @@
 
     <style name="carbon_DropDown.Underlined">
         <item name="android:background">@color/carbon_colorUnderline</item>
-        <item name="android:paddingBottom">120dp</item>
+        <item name="android:paddingBottom">@dimen/carbon_padding</item>
         <item name="carbon_backgroundTint">@color/carbon_defaultColorControlPrimary</item>
     </style>
 
