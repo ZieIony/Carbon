@@ -273,7 +273,7 @@
         <item name="carbon_value2">4</item>
         <item name="carbon_tick">true</item>
         <item name="carbon_tickStep">1</item>
-        <item name="carbon_tickColor">@color/carbon_defaultColorControl</item>
+        <item name="carbon_tickColor">?attr/colorControlActivated</item>
         <item name="carbon_labelFormat">%.0f</item>
     </style>
 

@@ -16,6 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
+import androidx.core.view.ViewCompat;
 
 import carbon.Carbon;
 import carbon.R;
@@ -151,26 +152,40 @@ public class SeekBar extends View {
     public void draw(@NonNull Canvas canvas) {
         super.draw(canvas);
 
+        boolean ltr = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_LTR;
+
         float v = (value - min) / (max - min);
+        if (!ltr)
+            v = 1 - v;
         int thumbX = (int) (v * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
         int thumbY = getHeight() / 2;
 
         paint.setStrokeWidth(STROKE_WIDTH);
         if (!isInEditMode())
             paint.setColor(tint != null ? tint.getColorForState(getDrawableState(), tint.getDefaultColor()) : Color.WHITE);
-        if (getPaddingLeft() < thumbX - thumbRadius)
-            canvas.drawLine(getPaddingLeft(), thumbY, thumbX - thumbRadius, thumbY, paint);
+        if (ltr) {
+            if (getPaddingLeft() < thumbX - thumbRadius)
+                canvas.drawLine(getPaddingLeft(), thumbY, thumbX - thumbRadius, thumbY, paint);
+        } else {
+            if (thumbX - thumbRadius < getWidth() - getPaddingRight())
+                canvas.drawLine(thumbX - thumbRadius, thumbY, getWidth() - getPaddingRight(), thumbY, paint);
+        }
 
         paint.setColor(colorControl);
-        if (thumbX + thumbRadius < getWidth() - getPaddingLeft())
-            canvas.drawLine(thumbX + thumbRadius, thumbY, getWidth() - getPaddingLeft(), thumbY, paint);
+        if (ltr) {
+            if (thumbX + thumbRadius < getWidth() - getPaddingRight())
+                canvas.drawLine(thumbX + thumbRadius, thumbY, getWidth() - getPaddingRight(), thumbY, paint);
+        } else {
+            if (getPaddingLeft() < thumbX + thumbRadius)
+                canvas.drawLine(getPaddingLeft(), thumbY, thumbX + thumbRadius, thumbY, paint);
+        }
 
         if (style == Style.Discrete && tick) {
             paint.setColor(tickColor);
             float range = (max - min) / step;
             for (int i = 0; i < range; i += tickStep)
-                canvas.drawCircle(i / range * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft(), getHeight() / 2, STROKE_WIDTH / 2, paint);
-            canvas.drawCircle(getWidth() - getPaddingRight(), getHeight() / 2, STROKE_WIDTH / 2, paint);
+                canvas.drawCircle(i / range * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft(), getHeight() / 2.0f, STROKE_WIDTH / 2, paint);
+            canvas.drawCircle(getWidth() - getPaddingRight(), getHeight() / 2.0f, STROKE_WIDTH / 2, paint);
         }
 
         if (!isInEditMode())
@@ -303,6 +318,7 @@ public class SeekBar extends View {
         if (!isEnabled())
             return false;
 
+        boolean ltr = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_LTR;
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (radiusAnimator != null)
                 radiusAnimator.end();
@@ -329,7 +345,13 @@ public class SeekBar extends View {
                 valueAnimator.setInterpolator(interpolator);
                 valueAnimator.addUpdateListener(animation -> {
                     value = (float) animation.getAnimatedValue();
-                    int thumbX = (int) ((value - min) / (max - min) * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
+                    float v = (value - min) / (max - min);
+                    int thumbX;
+                    if(ltr) {
+                        thumbX = (int) (v * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
+                    }else {
+                        thumbX = (int) ((1-v) * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
+                    }
                     int thumbY = getHeight() / 2;
                     int radius = rippleDrawable.getRadius();
                     rippleDrawable.setBounds(thumbX - radius, thumbY - radius, thumbX + radius, thumbY + radius);
@@ -356,7 +378,12 @@ public class SeekBar extends View {
 
         float v = (event.getX() - getPaddingLeft()) / (getWidth() - getPaddingLeft() - getPaddingRight());
         v = Math.max(0, Math.min(v, 1));
-        float newValue = v * (max - min) + min;
+        float newValue;
+        if (ltr) {
+            newValue = v * (max - min) + min;
+        } else {
+            newValue = (1 - v) * (max - min) + min;
+        }
 
         int thumbX = (int) (v * (getWidth() - getPaddingLeft() - getPaddingRight()) + getPaddingLeft());
         int thumbY = getHeight() / 2;

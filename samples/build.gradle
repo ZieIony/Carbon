@@ -44,11 +44,11 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.2.0-beta01'
+    implementation 'com.google.android.material:material:1.2.0'
     implementation 'com.github.ZieIony:randomdata:2734da711b'
     compileOnly 'com.github.ZieIony.RandomData:person:2734da711b'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

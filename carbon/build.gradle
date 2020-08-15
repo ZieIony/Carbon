@@ -31,12 +31,12 @@ android {
 }
 
 dependencies {
-    api 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0-beta01'
+    api 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.caverock:androidsvg-aar:1.4'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta6'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
     implementation 'com.annimon:stream:1.2.1'
     implementation "androidx.vectordrawable:vectordrawable:1.1.0"
     implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
