@@ -1,6 +1,7 @@
 package tk.zielony.carbonsamples.widget;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.annimon.stream.Stream;
@@ -46,12 +47,14 @@ public class FlowLayoutActivity extends ThemedActivity {
 
         EditText addChip = findViewById(R.id.addChip);
         addChip.setOnEditorActionListener((textView, i, keyEvent) -> {
-            Chip chip = new Chip(FlowLayoutActivity.this);
-            chip.setText(addChip.getText());
-            chip.setRemovable(random.nextBoolean());
-            chip.setSelected(random.nextBoolean());
-            layout.addView(chip);
-            addChip.setText("");
+            if(keyEvent.getAction()== KeyEvent.ACTION_DOWN) {
+                Chip chip = new Chip(FlowLayoutActivity.this);
+                chip.setText(addChip.getText());
+                chip.setRemovable(random.nextBoolean());
+                chip.setSelected(random.nextBoolean());
+                layout.addView(chip);
+                addChip.setText("");
+            }
             return true;
         });
     }

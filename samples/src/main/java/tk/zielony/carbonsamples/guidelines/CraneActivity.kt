@@ -21,7 +21,7 @@ class CraneActivity : SamplesActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        crane_search.setOnClickListener { crane_backdropLayout.toggleLayout() }
+        toolbar.setOnMenuItemClicked { view, item, position -> crane_backdropLayout.toggleLayout() }
 
         val randomData = RandomData().apply {
             addGenerator(Drawable::class.java, DrawableImageGenerator(this@CraneActivity))

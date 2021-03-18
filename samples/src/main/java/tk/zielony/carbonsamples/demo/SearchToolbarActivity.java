@@ -21,6 +21,7 @@ import carbon.widget.FrameLayout;
 import carbon.widget.ListSearchAdapter;
 import carbon.widget.RecyclerView;
 import carbon.widget.SearchEditText;
+import carbon.widget.Toolbar;
 import tk.zielony.carbonsamples.R;
 import tk.zielony.carbonsamples.SampleAnnotation;
 import tk.zielony.carbonsamples.ThemedActivity;
@@ -37,7 +38,6 @@ public class SearchToolbarActivity extends ThemedActivity {
 
     SearchEditText searchEditText;
     FrameLayout searchBar;
-    View searchButton;
     View closeButton;
 
     @Override
@@ -73,8 +73,9 @@ public class SearchToolbarActivity extends ThemedActivity {
         findViewById(R.id.clear).setOnClickListener(v -> searchEditText.setText(""));
 
         searchBar = findViewById(R.id.searchbar);
-        searchButton = findViewById(R.id.search);
-        searchButton.setOnClickListener(v -> openSearch());
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClicked((view, item, position) -> openSearch(view));
 
         closeButton = findViewById(R.id.close);
         closeButton.setOnClickListener(v -> closeSearch());
@@ -84,7 +85,7 @@ public class SearchToolbarActivity extends ThemedActivity {
         int[] setLocation = new int[2];
         searchBar.getLocationOnScreen(setLocation);
         int[] sbLocation = new int[2];
-        searchButton.getLocationOnScreen(sbLocation);
+        closeButton.getLocationOnScreen(sbLocation);
         Animator animator = searchBar.createCircularReveal(sbLocation[0] - setLocation[0] + closeButton.getWidth() / 2, searchBar.getHeight() / 2, searchBar.getWidth(), 0);
         animator.setInterpolator(new FastOutSlowInInterpolator());
         animator.addListener(new AnimatorListenerAdapter() {
@@ -97,13 +98,13 @@ public class SearchToolbarActivity extends ThemedActivity {
         searchEditText.clearFocus();
     }
 
-    private void openSearch() {
+    private void openSearch(View view) {
         searchBar.setVisibility(View.VISIBLE);
         int[] setLocation = new int[2];
         searchBar.getLocationOnScreen(setLocation);
         int[] sbLocation = new int[2];
-        searchButton.getLocationOnScreen(sbLocation);
-        Animator animator = searchBar.createCircularReveal(sbLocation[0] - setLocation[0] + searchButton.getWidth() / 2, searchBar.getHeight() / 2, 0, searchBar.getWidth());
+        view.getLocationOnScreen(sbLocation);
+        Animator animator = searchBar.createCircularReveal(sbLocation[0] - setLocation[0] + view.getWidth() / 2, searchBar.getHeight() / 2, 0, searchBar.getWidth());
         animator.setInterpolator(new FastOutSlowInInterpolator());
         animator.start();
         searchEditText.requestFocus();

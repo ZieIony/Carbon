@@ -22,12 +22,16 @@ class CodeActivity : ThemedActivity() {
         val codeString = intent.getStringExtra(CODE)
         code.text = colorSyntax(codeString!!)
 
-        share.setOnClickListener {
-            val sharingIntent = Intent(Intent.ACTION_SEND);
-            sharingIntent.type = "text/plain";
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Carbon code");
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, code.text);
-            startActivity(Intent.createChooser(sharingIntent, "Share"));
+        toolbar?.setOnMenuItemClicked { view, item, position ->
+            when (item.id) {
+                R.id.share -> {
+                    val sharingIntent = Intent(Intent.ACTION_SEND);
+                    sharingIntent.type = "text/plain";
+                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Carbon code");
+                    sharingIntent.putExtra(Intent.EXTRA_TEXT, code.text);
+                    startActivity(Intent.createChooser(sharingIntent, "Share"));
+                }
+            }
         }
     }
 

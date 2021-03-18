@@ -13,13 +13,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:text="Crane"
-        app:carbon_elevation="0dp">
-
-        <carbon.widget.ImageView
-            android:id="@+id/crane_search"
-            style="@style/carbon_ImageView.IconButton"
-            app:carbon_src="@drawable/carbon_search" />
-    </carbon.widget.Toolbar>
+        app:carbon_menu="@menu/menu_search"
+        app:carbon_elevation="0dp"/>
 
     <carbon.widget.BackdropLayout
         android:id="@+id/crane_backdropLayout"

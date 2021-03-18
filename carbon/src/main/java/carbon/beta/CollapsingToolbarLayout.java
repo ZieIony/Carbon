@@ -404,7 +404,8 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
 
     private void updateCorners() {
         if (Carbon.IS_LOLLIPOP_OR_HIGHER) {
-            setClipToOutline(true);
+            if (!Carbon.isShapeRect(shapeModel, boundsRect))
+                setClipToOutline(true);
             setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {

@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion = '29.0.2'
 
     buildFeatures.dataBinding = true
@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "tk.zielony.carbonsamples"
         minSdkVersion 14
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -40,11 +40,11 @@ dependencies {
     implementation 'com.annimon:stream:1.2.1'
     implementation "androidx.vectordrawable:vectordrawable:1.1.0"
     implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'com.github.ZieIony:randomdata:2734da711b'
     compileOnly 'com.github.ZieIony.RandomData:person:2734da711b'
     implementation 'com.github.ZieIony:LandscapeView:94187526bb'

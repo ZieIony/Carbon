@@ -12,17 +12,13 @@
         app:carbon_elevation="@dimen/carbon_elevationToolbar">
 
         <carbon.widget.Toolbar
+            android:id="@+id/toolbar"
             style="@style/carbon_Toolbar.ActionBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
             android:text="Search"
-            app:carbon_elevation="0dp">
-
-            <carbon.widget.ImageView
-                android:id="@+id/search"
-                style="@style/carbon_ImageView.IconButton"
-                app:carbon_src="@raw/ic_search_24px" />
-        </carbon.widget.Toolbar>
+            app:carbon_menu="@menu/menu_search"
+            app:carbon_elevation="0dp"/>
 
         <carbon.widget.FrameLayout
             android:id="@+id/searchbar"

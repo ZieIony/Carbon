@@ -3,14 +3,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion = '29.0.2'
 
     buildFeatures.viewBinding = true
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 50
         versionName "0.17.0"
     }

@@ -10,13 +10,8 @@
         style="@style/carbon_Toolbar.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:carbon_icon="@drawable/carbon_uparrow">
-
-        <carbon.widget.ImageView
-            android:id="@+id/share"
-            style="@style/carbon_ImageView.IconButton"
-            app:carbon_src="@drawable/ic_share_black_24dp" />
-    </carbon.widget.Toolbar>
+        app:carbon_menu="@menu/menu_code"
+        app:carbon_icon="@drawable/carbon_uparrow"/>
 
     <carbon.widget.Label
         style="@style/sectionDescription"

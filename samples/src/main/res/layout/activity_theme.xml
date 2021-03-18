@@ -18,12 +18,8 @@
             style="@style/carbon_Toolbar.ActionBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
-            android:text="Dark theme">
-
-            <carbon.widget.ImageView
-                style="@style/carbon_ImageView.IconButton"
-                app:carbon_src="@raw/ic_search_24px" />
-        </carbon.widget.Toolbar>
+            android:text="Dark theme"
+            app:carbon_menu="@menu/menu_search" />
 
         <carbon.widget.Button
             android:layout_width="wrap_content"
@@ -67,12 +63,8 @@
             style="@style/carbon_Toolbar.ActionBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/carbon_toolbarHeight"
-            android:text="Light theme">
-
-            <carbon.widget.ImageView
-                style="@style/carbon_ImageView.IconButton"
-                app:carbon_src="@raw/ic_search_24px" />
-        </carbon.widget.Toolbar>
+            android:text="Light theme"
+            app:carbon_menu="@menu/menu_search" />
 
         <carbon.widget.Button
             android:layout_width="wrap_content"
