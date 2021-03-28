@@ -696,14 +696,12 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
         boolean maskShadow = getBackground() != null && alpha != 1;
         boolean r = revealAnimator != null && revealAnimator.isRunning();
 
-        if (alpha != 255) {
-            paint.setAlpha((int) (127 * alpha));
-            saveCount = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), paint, Canvas.ALL_SAVE_FLAG);
+        if (alpha != 1.0f) {
+            paint.setAlpha((int) (255 * alpha));
+            saveCount = canvas.saveLayer(-z, -z, canvas.getWidth() + z, canvas.getHeight() + z, paint, Canvas.ALL_SAVE_FLAG);
         } else {
             saveCount = canvas.save();
         }
-        Matrix matrix = getMatrix();
-        canvas.setMatrix(matrix);
 
         if (r) {
             canvas.clipRect(
@@ -721,7 +719,6 @@ public class CollapsingToolbarLayout extends com.google.android.material.appbar.
         shadowDrawable.draw(canvas);
 
         canvas.translate(this.getLeft(), this.getTop());
-        canvas.concat(matrix);
         paint.setXfermode(Carbon.CLEAR_MODE);
         if (maskShadow) {
             cornersMask.setFillType(Path.FillType.WINDING);
