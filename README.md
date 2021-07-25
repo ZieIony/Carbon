@@ -1,6 +1,6 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Carbon-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1491)&nbsp;&nbsp;
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.16.0.1-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.16.0.1/)&nbsp;&nbsp;
-[![JitPack](https://img.shields.io/badge/JitPack-29574a1cd8-brightgreen.svg)](https://jitpack.io/#ZieIony/carbon/29574a1cd8)&nbsp;&nbsp;
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.17.0-brightgreen.svg)](https://oss.sonatype.org/content/groups/public/tk/zielony/carbon/0.17.0/)&nbsp;&nbsp;
+[![JitPack](https://img.shields.io/badge/JitPack-29574a1cd8-brightgreen.svg)](https://jitpack.io/#ZieIony/carbon/3e929fcff4)&nbsp;&nbsp;
 [![Dropbox](https://img.shields.io/badge/Dropbox-Sample%20app-brightgreen.svg)](https://www.dropbox.com/s/wllgpan9cl01mh3/samples.apk?raw=1)&nbsp;&nbsp;
 ![Can I drop Jetifier?](https://img.shields.io/badge/Can%20I%20drop%20Jetifier-yes-brightgreen)
 
